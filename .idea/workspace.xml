@@ -20,9 +20,9 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/comdero/src/assets/estilos-principal/images" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
     <property name="ts.external.directory.path" value="C:\Users\sttef\Documents\GitHub\PlataformaWebB2C\comdero\node_modules\typescript\lib" />
   </component>
   <component name="RecentsManager">
@@ -63,6 +63,11 @@
       <workItem from="1576029190716" duration="2418000" />
       <workItem from="1576167482371" duration="826000" />
       <workItem from="1576253886460" duration="43565000" />
+      <workItem from="1577396100265" duration="117000" />
+      <workItem from="1577396238170" duration="199000" />
+      <workItem from="1577396782072" duration="170000" />
+      <workItem from="1577398244828" duration="593000" />
+      <workItem from="1577398860649" duration="247000" />
     </task>
     <servers />
   </component>
@@ -70,6 +75,14 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="414" y="176" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1577398432956">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="414" y="176" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1577398432956" />
+    <state x="709" y="357" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog" timestamp="1577396803176">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="709" y="357" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1577396803176" />
     <state x="2333" y="110" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1576389240069">
       <screen x="1920" y="0" width="1366" height="728" />
     </state>
@@ -78,17 +91,19 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="524" y="266" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1576454249221" />
-    <state x="2408" y="148" key="FileChooserDialogImpl" timestamp="1576376905242">
-      <screen x="1920" y="0" width="1366" height="728" />
+    <state x="686" y="211" key="FileChooserDialogImpl" timestamp="1577396131678">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="2408" y="148" key="FileChooserDialogImpl/0.0.1536.824/1920.0.1366.728@1920.0.1366.728" timestamp="1576376905242" />
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1576168307312" />
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1576030891337" />
-    <state x="277" y="54" key="SettingsEditor" timestamp="1576254297387">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="686" y="211" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1577396131678" />
+    <state x="346" y="68" key="SettingsEditor" timestamp="1577396432729">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="277" y="54" key="SettingsEditor/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1576254297387" />
     <state x="277" y="54" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1576031803247" />
+    <state x="346" y="68" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1577396432729" />
     <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1576436971662">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
