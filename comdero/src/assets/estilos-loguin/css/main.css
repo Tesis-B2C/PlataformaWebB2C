@@ -204,25 +204,11 @@ iframe {
 /*//////////////////////////////////////////////////////////////////
 [ login ]*/
 .limiter {
-  width: 100%;
+  width: 25%;
   margin: 0 auto;
 }
 
-@media (max-width: 2000px) {
-  .limiter {
-    width: 28%;
-    margin: 0 auto;
-  }
 
-}
-
-@media (max-width: 1500px) {
-  .limiter {
-    width: 28%;
-    margin: 0 auto;
-  }
-
-}
 
 @media (max-width: 1200px) {
   .limiter {
@@ -253,6 +239,14 @@ iframe {
   }
 }
 
+@media (max-width: 465px) {
+  .limiter {
+    width: 90%;
+    margin: 0 auto;
+
+  }
+}
+
 @media (max-width: 312px) {
   .limiter {
     width: 85%;
@@ -260,12 +254,6 @@ iframe {
   }
 }
 
-@media (max-width: 465px) {
-  .limiter {
-    width: 90%;
-    margin: 0 auto;
-  }
-}
 
 .container-login100 {
   width: 100%;

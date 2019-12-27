@@ -1,10 +1,11 @@
 
-body {
+.body {
   /* background: linear-gradient(to right, #0062E6, #33AEFF);*/
   background-image: url('./../../../assets/estilos-loguin/images/fondo-loguin.png');
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
+  background-size: initial;
+
 
 }
 
