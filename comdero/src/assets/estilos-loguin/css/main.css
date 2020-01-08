@@ -38,7 +38,7 @@ body, html {
 
 /*---------------------------------------------*/
 a {
-  font-family: Poppins-Regular;
+  font-family: Poppins-Regular, sans-serif;
   font-size: 14px;
   line-height: 1.7;
   color: #666666;
@@ -208,7 +208,11 @@ iframe {
   margin: 0 auto;
 }
 
-
+@media (max-width: 1365px) {
+  .limiter {
+    width: 35%;
+    margin: 0 auto;
+  }
 
 @media (max-width: 1200px) {
   .limiter {
