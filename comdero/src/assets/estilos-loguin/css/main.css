@@ -34,6 +34,7 @@
 body, html {
   height: 100%;
   font-family: Poppins-Regular, sans-serif;
+  background-color: #f1f3f4;
 }
 
 /*---------------------------------------------*/
@@ -270,6 +271,7 @@ iframe {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  /*background-color: #0c5460;*/
 }
 
 .wrap-login100 {
@@ -290,7 +292,7 @@ iframe {
 .login100-form-title {
   display: block;
   font-weight: bold;
-  font-size: 25px;
+  font-size: 20px;
   color: #333333;
   line-height: 1.2;
   text-align: center;
