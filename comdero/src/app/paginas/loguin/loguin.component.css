@@ -1,14 +1,7 @@
 
-.body {
-  /* background: linear-gradient(to right, #0062E6, #33AEFF);*/
-  background-image: url('./../../../assets/estilos-loguin/images/fondo-loguin.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: initial;
-}
 
 #imagenLogo {
-  width: 70%;
+  width: 65%;
   margin: 0 auto;
   display: block;
 }

@@ -1,0 +1,19 @@
+#imagenLogo {
+  width: 35%;
+  margin: 0 auto;
+  display: block;
+}
+
+#divImagenLogo {
+  width: 100%;
+  margin: 0px auto;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.wrap-login100 {
+  width: 500px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
