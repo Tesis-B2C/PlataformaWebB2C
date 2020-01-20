@@ -343,7 +343,7 @@ iframe {
 
 .focus-input100::after {
   content: attr(data-symbol);
-  font-family: Material-Design-Iconic-Font;
+  font-family: "FontAwesome";
   color: #adadad;
   font-size: 22px;
 
@@ -387,7 +387,7 @@ iframe {
 }
 
 .input100:focus + .focus-input100::after {
-  color: #a64bf4;
+  color: #fca147;
 }
 
 .has-val.input100 + .focus-input100::after {
@@ -566,4 +566,8 @@ iframe {
     padding-left: 15px;
     padding-right: 15px;
   }
+
+
 }
+
+
