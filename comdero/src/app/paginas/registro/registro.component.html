@@ -8,50 +8,67 @@
 </head>
 <body>
 
+<div class="mx-auto  wrap-register100" style="max-width:500px; margin-top:15px;">
+  <article class="card-body">
+    <div class="rubberBand" id="divImagenLogo">
+      <img id="imagenLogo" src="./../assets/images/logoValid2.png">
+    </div>
+    <header class="mb-4"><h4 class="card-title">Registrate</h4></header>
+    <form>
 
+      <div class="form-group">
+        <label class="custom-control custom-radio custom-control-inline">
+          <input class="custom-control-input" checked="" type="radio" name="gender" value="option1" (change)="selectAdminsitrador()">
+          <span class="custom-control-label"> Persona Natural  </span>
+        </label>
+        <label class="custom-control custom-radio custom-control-inline">
+          <input class="custom-control-input" type="radio" name="gender" value="option2" (change)="selectAdminsitrador()">
+          <span class="custom-control-label"> Empresa </span>
+        </label>
+      </div> <!-- form-group end.// -->
 
-<!-- ========================= SECTION CONTENT ========================= -->
-
-  <!-- ============================ COMPONENT REGISTER   ================================= -->
-  <div class="wrap-login100  mx-auto" style="max-width:520px; margin-top:15px;">
-    <article class="card-body">
-      <div class="rubberBand" id="divImagenLogo">
-        <img id="imagenLogo" src="./../assets/images/logoValid2.png">
-      </div>
-      <header class="mb-4"><h4 class="card-title">Registrate</h4></header>
-      <form>
-        <div class="form-row">
-          <div class="col form-group">
-            <label>First name</label>
-            <input type="text" class="form-control" placeholder="">
-          </div> <!-- form-group end.// -->
-          <div class="col form-group">
-            <label>Last name</label>
-            <input type="text" class="form-control" placeholder="">
-          </div> <!-- form-group end.// -->
-        </div> <!-- form-row end.// -->
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" class="form-control" placeholder="">
-          <small class="form-text text-muted">We'll never share your email with anyone else.</small>
+      <div  *ngIf="bandetTipo"  class="form-row">
+        <div class="col form-group">
+          <label>Nombre</label>
+          <input type="text" class="form-control" placeholder="">
         </div> <!-- form-group end.// -->
-        <div class="form-group">
-          <label class="custom-control custom-radio custom-control-inline">
-            <input class="custom-control-input" checked="" type="radio" name="gender" value="option1">
-            <span class="custom-control-label"> Male </span>
-          </label>
-          <label class="custom-control custom-radio custom-control-inline">
-            <input class="custom-control-input" type="radio" name="gender" value="option2">
-            <span class="custom-control-label"> Female </span>
-          </label>
+        <div class="col form-group">
+          <label>Apellido</label>
+          <input type="text" class="form-control" placeholder="">
         </div> <!-- form-group end.// -->
+      </div> <!-- form-row end.// -->
+
+      <div  *ngIf="!bandetTipo" class="form-group">
+        <label>Razon Social</label>
+        <input type="text" class="form-control" placeholder="">
+        <!--<small class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+      </div> <!-- form-group end.// -->
+
+      <div class="form-row">
+        <div class="col form-group">
+          <label *ngIf="bandetTipo">Cédula</label>
+          <label *ngIf="!bandetTipo" >RUC</label>
+          <input type="text" class="form-control" placeholder="">
+        </div> <!-- form-group end.// -->
+        <div class="col form-group">
+          <label>Teléfono Celular</label>
+          <input type="text" class="form-control" placeholder="">
+        </div> <!-- form-group end.// -->
+      </div> <!-- form-row end.// -->
+
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" class="form-control" placeholder="">
+        <small class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div> <!-- form-group end.// -->
+
+      <label>Dirección</label>
+
+      <div class=" form-group">
+
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label>City</label>
-            <input type="text" class="form-control">
-          </div> <!-- form-group end.// -->
-          <div class="form-group col-md-6">
-            <label>Country</label>
+            <label>Provincia</label>
             <select id="inputState" class="form-control">
               <option> Choose...</option>
               <option>Uzbekistan</option>
@@ -61,29 +78,53 @@
               <option>Afganistan</option>
             </select>
           </div> <!-- form-group end.// -->
+          <div class="form-group col-md-6">
+            <label>Ciudad</label>
+            <input type="text" class="form-control">
+          </div> <!-- form-group end.// -->
+
         </div> <!-- form-row.// -->
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label>Create password</label>
-            <input class="form-control" type="password">
-          </div> <!-- form-group end.// -->
-          <div class="form-group col-md-6">
-            <label>Repeat password</label>
-            <input class="form-control" type="password">
-          </div> <!-- form-group end.// -->
+
+        <label>Calle Principal</label>
+        <input type="text" class="form-control" placeholder="">
+      </div> <!-- form-group end.// -->
+
+      <div class="form-row">
+        <div class="col-8 form-group">
+          <label>Calle Secundaria</label>
+          <input type="text" class="form-control" placeholder="">
         </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary btn-block"> Register  </button>
-        </div> <!-- form-group// -->
-        <div class="form-group">
-          <label class="custom-control custom-checkbox"> <input type="checkbox" class="custom-control-input" checked=""> <div class="custom-control-label"> I am agree with <a href="#">terms and contitions</a>  </div> </label>
+        <div class=" col-4 form-group">
+          <label>Codigo Postal</label>
+          <input type="text" class="form-control" placeholder="">
         </div> <!-- form-group end.// -->
-      </form>
-    </article><!-- card-body.// -->
-  </div> <!-- card .// -->
-  <p class="text-center mt-4">Have an account? <a href="">Log In</a></p>
-  <br><br>
-  <!-- ============================ COMPONENT REGISTER  END.// ================================= -->
+
+
+      </div>
+
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label>Contraseña</label>
+          <input class="form-control" type="password">
+        </div> <!-- form-group end.// -->
+        <div class="form-group col-md-6">
+          <label>Repetir contraseña</label>
+          <input class="form-control" type="password">
+        </div> <!-- form-group end.// -->
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block"> Registrarse  </button>
+      </div> <!-- form-group// -->
+      <div class="form-group">
+        <label class="custom-control custom-checkbox"> <input type="checkbox" class="custom-control-input" checked=""> <div class="custom-control-label"> Estoy de acuerdo con los<a href="#">terminos y condiciones</a>  </div> </label>
+      </div> <!-- form-group end.// -->
+    </form>
+  </article><!-- card-body.// -->
+</div> <!-- card .// -->
+<p class="text-center mt-4">Tienes una cuenta? <a href="">Inicia sesión</a></p>
+<br><br>
+<!-- ============================ COMPONENT REGISTER  END.// ================================= -->
 
 
 
