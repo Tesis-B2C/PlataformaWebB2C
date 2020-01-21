@@ -19,7 +19,7 @@ export class RegistroComponent implements OnInit ,DoCheck {
   {
 
   }
-selectAdminsitrador(tipo)
+selectAdminsitrador()
   {
   this.bandetTipo = !this.bandetTipo;
   console.log(this.bandetTipo);
