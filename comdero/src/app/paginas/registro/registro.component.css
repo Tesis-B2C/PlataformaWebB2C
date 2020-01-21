@@ -5,7 +5,7 @@
 }
 
 #divImagenLogo {
-  width: 60%;
+  width: 50%;
   margin: 0px auto;
   display: block;
   margin-bottom: 15px;
@@ -115,4 +115,12 @@
   animation-duration: 1s;
   -webkit-animation-name: rubberBand;
   animation-name: rubberBand;
+}
+.login100-form-title-registro {
+  display: block;
+  font-weight: bold;
+  font-size: 20px;
+  color: #333333;
+  line-height: 1.2;
+
 }
