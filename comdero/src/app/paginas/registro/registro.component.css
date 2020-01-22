@@ -126,10 +126,16 @@
 }
 .lineaSeparacion
 {
-  margin-bottom: 25px;
-  margin-top: 25px
+  margin-top: 20px;
+  margin-bottom: 10px;
+  
 }
+.lineaSeparacion2
+{
+  margin-top: 8px;
+  margin-bottom: 8px;
 
+}
 .tamanioCampos
 {
   font-size: small;

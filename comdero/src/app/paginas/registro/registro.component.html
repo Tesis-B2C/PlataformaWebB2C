@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="pragma" content="no-cache" />
-  <meta http-equiv="cache-control" content="max-age=604800" />
+  <meta http-equiv="pragma" content="no-cache"/>
+  <meta http-equiv="cache-control" content="max-age=604800"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
@@ -18,52 +18,53 @@
 
       <div class="form-group">
         <label class="custom-control custom-radio custom-control-inline">
-          <input class="custom-control-input" checked="" type="radio" name="gender" value="option1" (change)="selectAdminsitrador()">
-          <span class="custom-control-label"  > Persona Natural  </span>
+          <input class="custom-control-input" checked="" type="radio" name="gender" value="option1"
+                 (change)="selectAdminsitrador()">
+          <span class="custom-control-label"> Persona Natural  </span>
         </label>
         <label class="custom-control custom-radio custom-control-inline">
-          <input class="custom-control-input" type="radio" name="gender" value="option2" (change)="selectAdminsitrador()">
-          <span class="custom-control-label" > Empresa </span>
+          <input class="custom-control-input" type="radio" name="gender" value="option2"
+                 (change)="selectAdminsitrador()">
+          <span class="custom-control-label"> Empresa </span>
         </label>
       </div> <!-- form-group end.// -->
 
-      <div  *ngIf="bandetTipo"  class="form-row">
+      <div *ngIf="bandetTipo" class="form-row">
         <div class="col form-group">
-          <label  class="tamanioCampos">Nombre</label>
-          <input  type="text" class="tamanioCampos form-control" placeholder="">
+          <label class="tamanioCampos">Nombre</label>
+          <input type="text" class="tamanioCampos form-control" placeholder="">
         </div> <!-- form-group end.// -->
-        <div class="col form-group" >
-          <label  class="tamanioCampos" >Apellido</label>
-          <input   type="text" class="tamanioCampos form-control " placeholder="">
+        <div class="col form-group">
+          <label class="tamanioCampos">Apellido</label>
+          <input type="text" class="tamanioCampos form-control " placeholder="">
         </div> <!-- form-group end.// -->
       </div> <!-- form-row end.// -->
 
-      <div  *ngIf="!bandetTipo" class="form-group">
+      <div *ngIf="!bandetTipo" class="form-group">
         <label class="tamanioCampos">Razon Social</label>
-        <input   type="text" class="tamanioCampos form-control" placeholder="">
+        <input type="text" class="tamanioCampos form-control" placeholder="">
         <!--<small class="form-text text-muted">We'll never share your email with anyone else.</small>-->
       </div> <!-- form-group end.// -->
 
       <div class="form-row">
         <div class="col form-group">
-          <label *ngIf="bandetTipo"  style="font-size: small" >Cédula</label>
-          <label *ngIf="!bandetTipo"  style="font-size: small"  >RUC</label>
-          <input    type="text" class="tamanioCampos form-control" placeholder="">
+          <label *ngIf="bandetTipo" style="font-size: small">Cédula</label>
+          <label *ngIf="!bandetTipo" style="font-size: small">RUC</label>
+          <input type="text" class="tamanioCampos form-control" placeholder="">
         </div> <!-- form-group end.// -->
         <div class="col form-group">
-          <label  class="tamanioCampos" >Teléfono Celular</label>
-          <input  style="font-size: small" type="text" class="tamanioCampos form-control" placeholder="">
+          <label class="tamanioCampos">Teléfono Celular</label>
+          <input style="font-size: small" type="text" class="tamanioCampos form-control" placeholder="">
         </div> <!-- form-group end.// -->
       </div> <!-- form-row end.// -->
 
       <div class="form-group">
-        <label  class="tamanioCampos">Email</label>
-        <input  type="email" class="tamanioCampos form-control" placeholder="">
-<!--        <small class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+        <label class="tamanioCampos">Email</label>
+        <input type="email" class="tamanioCampos form-control" placeholder="">
+        <!--        <small class="form-text text-muted">We'll never share your email with anyone else.</small>-->
       </div> <!-- form-group end.// -->
       <hr class="lineaSeparacion">
       <div class=" form-group">
-
         <div class="form-row">
           <div class="form-group col-md-6">
             <label class="tamanioCampos">Provincia</label>
@@ -98,38 +99,39 @@
         </div> <!-- form-group end.// -->
       </div>
 
-      <hr class="lineaSeparacion">
+      <hr class="lineaSeparacion2">
       <div class="form-row">
         <div class="form-group col-md-6">
           <label class="tamanioCampos">Contraseña</label>
           <input class="tamanioCampos form-control" type="password">
         </div> <!-- form-group end.// -->
         <div class="form-group col-md-6">
-          <label  class="tamanioCampos">Repetir contraseña</label>
+          <label class="tamanioCampos">Repetir contraseña</label>
           <input class="tamanioCampos form-control" type="password">
         </div> <!-- form-group end.// -->
       </div>
-<br>
+      <br>
       <div class="container-login100-form-btn">
         <div class="wrap-login100-form-btn">
           <div class="login100-form-bgbtn"></div>
           <button class="login100-form-btn">
-           Crea tu cuenta en condero
+            Crea tu cuenta en condero
           </button>
         </div>
       </div>
       <br>
 
       <div class="form-group">
-        <label class="custom-control custom-checkbox"> <input type="checkbox" class="custom-control-input" checked=""> <div class="custom-control-label"> Estoy de acuerdo con los<a href="#">terminos y condiciones</a>  </div> </label>
+        <label class="custom-control custom-checkbox"> <input type="checkbox" class="custom-control-input" checked="">
+          <div class="custom-control-label" style="font-size: smaller"> Estoy de acuerdo con los<a href="#" style="font-size: smaller">terminos y condiciones</a></div>
+        </label>
       </div> <!-- form-group end.// -->
     </form>
   </article><!-- card-body.// -->
 </div> <!-- card .// -->
-<p class="text-center mt-4">Tienes una cuenta? <a href="">Inicia sesión</a></p>
+<p class="text-center mt-4" style="font-size: smaller">Tienes una cuenta? <a style="font-size: smaller" href="">Inicia sesión</a></p>
 <br><br>
 <!-- ============================ COMPONENT REGISTER  END.// ================================= -->
-
 
 
 <!-- ========================= SECTION CONTENT END// ========================= -->
