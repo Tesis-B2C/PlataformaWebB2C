@@ -124,3 +124,13 @@
   line-height: 1.2;
 
 }
+.lineaSeparacion
+{
+  margin-bottom: 25px;
+  margin-top: 25px
+}
+
+.tamanioCampos
+{
+  font-size: small;
+}
