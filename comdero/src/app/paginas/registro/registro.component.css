@@ -128,7 +128,7 @@
 {
   margin-top: 20px;
   margin-bottom: 10px;
-  
+
 }
 .lineaSeparacion2
 {
@@ -139,4 +139,22 @@
 .tamanioCampos
 {
   font-size: small;
+}
+.container-registro
+{
+  max-width:450px;
+  margin-top: 15px;
+}
+
+@media (max-width: 1366px) {
+  .container-registro
+  {
+    max-width:380px;
+    margin-top: 15px;
+  }
+
+  .tamanioCampos
+  {
+    font-size: 0.8em;
+  }
 }
