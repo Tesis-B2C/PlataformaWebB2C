@@ -3,14 +3,13 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
+
+
 //Notificaciones
-
-
-
 
 //cargar Rutas
 
-//var docente_rutes = require('./routes/docente');
+const agente_rutas = require('./routes/agente');
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -28,7 +27,7 @@ app.use((req, res, next) => {
 
 // rutas base
 
-//app.use('/api', docente_rutes);
+app.use('/api', agente_rutas);
 
 
 

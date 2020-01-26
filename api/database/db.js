@@ -17,10 +17,12 @@ const sequelize = new Sequelize("basetesis","root", "",{
 
 });
 
+
 db.sequelize=sequelize;
 db.Sequelize=Sequelize;
 
-sequelize.authenticate()
+sequelize
+    .authenticate()
   .then(() => {
     console.log('Connection has been established successfully.');
   })

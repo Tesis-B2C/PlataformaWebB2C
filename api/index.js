@@ -10,7 +10,7 @@ const Sequelize= require("sequelize");
 // coenxion base
 
 let app = require('./appi');
-let mysql = require('mysql2');
+let mysql = require('mysql');
 let port = process.env.PORT || 3977;
 
 app.listen(port, function () {
