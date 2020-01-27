@@ -1,8 +1,8 @@
 'use strict'
 
-var jwt = require('jwt-simple');
-var moment = require('moment'); // ayuda a que se regisrtere feha de inicio y de expiracion de la creacion del token
-var secret = 'clave_secreta_curso';
+ const jwt = require('jwt-simple');
+const moment = require('moment'); // ayuda a que se regisrtere feha de inicio y de expiracion de la creacion del token
+const secret = 'clave_secreta_curso';
 
 
 

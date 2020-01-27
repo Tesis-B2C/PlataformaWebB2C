@@ -9,7 +9,7 @@ var app = express();
 
 //cargar Rutas
 
-const agente_rutas = require('./routes/agente');
+var agente_rutas = require('./routes/agente');
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
