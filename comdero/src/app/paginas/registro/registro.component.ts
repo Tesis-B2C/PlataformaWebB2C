@@ -1,15 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.css']
 })
-export class RegistroComponent implements OnInit {
+export class RegistroComponent implements OnInit ,DoCheck {
+  public bandetTipo;
+  constructor()
+  {
 
-  constructor() { }
-
-  ngOnInit() {
   }
 
+  ngOnInit() {
+  this.bandetTipo=true;
+  }
+  ngDoCheck()
+  {
+
+  }
+selectAdminsitrador()
+  {
+  this.bandetTipo = !this.bandetTipo;
+  console.log(this.bandetTipo);
+  }
 }

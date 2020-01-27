@@ -1,20 +1,13 @@
 
-.body {
-  /* background: linear-gradient(to right, #0062E6, #33AEFF);*/
-  background-image: url('./../../../assets/estilos-loguin/images/fondo-loguin.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: initial;
-}
 
 #imagenLogo {
-  width: 70%;
+  width: 55%;
   margin: 0 auto;
   display: block;
 }
 
 #divImagenLogo {
-  width: 100%;
+  width: 70%;
   margin: 0px auto;
   display: block;
   margin-bottom: 15px;
@@ -100,3 +93,7 @@
   animation-name: rubberBand;
 }
 
+.mx-auto {
+  margin-right: auto !important;
+  margin-left: auto !important;
+}

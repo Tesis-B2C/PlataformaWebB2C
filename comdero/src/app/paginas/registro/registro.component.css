@@ -1,0 +1,160 @@
+#imagenLogo {
+  width: 150px;
+  margin: 0 auto;
+  display: block;
+}
+
+#divImagenLogo {
+  width: 50%;
+  margin: 0px auto;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.container-login100 {
+  width: 100%;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  /*background-color: #0c5460;*/
+}
+
+.wrap-register100 {
+
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+
+@-webkit-keyframes rubberBand {
+  from {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+
+  30% {
+    -webkit-transform: scale3d(1.25, 0.75, 1);
+    transform: scale3d(1.25, 0.75, 1);
+  }
+
+  40% {
+    -webkit-transform: scale3d(0.75, 1.25, 1);
+    transform: scale3d(0.75, 1.25, 1);
+  }
+
+  50% {
+    -webkit-transform: scale3d(1.15, 0.85, 1);
+    transform: scale3d(1.15, 0.85, 1);
+  }
+
+  65% {
+    -webkit-transform: scale3d(0.95, 1.05, 1);
+    transform: scale3d(0.95, 1.05, 1);
+  }
+
+  75% {
+    -webkit-transform: scale3d(1.05, 0.95, 1);
+    transform: scale3d(1.05, 0.95, 1);
+  }
+
+  to {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes rubberBand {
+  from {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+
+  30% {
+    -webkit-transform: scale3d(1.25, 0.75, 1);
+    transform: scale3d(1.25, 0.75, 1);
+  }
+
+  40% {
+    -webkit-transform: scale3d(0.75, 1.25, 1);
+    transform: scale3d(0.75, 1.25, 1);
+  }
+
+  50% {
+    -webkit-transform: scale3d(1.15, 0.85, 1);
+    transform: scale3d(1.15, 0.85, 1);
+  }
+
+  65% {
+    -webkit-transform: scale3d(0.95, 1.05, 1);
+    transform: scale3d(0.95, 1.05, 1);
+  }
+
+  75% {
+    -webkit-transform: scale3d(1.05, 0.95, 1);
+    transform: scale3d(1.05, 0.95, 1);
+  }
+
+  to {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.rubberBand {
+  animation-duration: 1s;
+  -webkit-animation-name: rubberBand;
+  animation-name: rubberBand;
+}
+.login100-form-title-registro {
+  display: block;
+  font-weight: bold;
+  font-size: 20px;
+  color: #333333;
+  line-height: 1.2;
+
+}
+.lineaSeparacion
+{
+  margin-top: 20px;
+  margin-bottom: 10px;
+
+}
+.lineaSeparacion2
+{
+  margin-top: 8px;
+  margin-bottom: 8px;
+
+}
+.tamanioCampos
+{
+  font-size: small;
+}
+.container-registro
+{
+  max-width:450px;
+  margin-top: 15px;
+}
+
+@media (max-width: 1366px) {
+  .container-registro
+  {
+    max-width:380px;
+    margin-top: 15px;
+  }
+
+  .tamanioCampos
+  {
+    font-size: 0.8em;
+  }
+}
