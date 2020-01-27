@@ -61,9 +61,6 @@ const Agente = db.sequelize.define('Agente', {
             },
 
 
-
-
-
     },
 
     {
