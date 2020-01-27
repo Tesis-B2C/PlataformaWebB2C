@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
-var Tienda = require("./tienda")
+var Tienda = require("./tienda");
+
 const Agente = db.sequelize.define('Agente', {
 
         ID_AGENTE: {
