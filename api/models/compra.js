@@ -1,11 +1,11 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 var Compra_Producto = require("./compra_producto");
-const Compra = db.sequelize.define('Compra', {
+const Compra= db.sequelize.define('Compra', {
         NUM_COMPRA: {
             type: Sequelize.BIGINT,
             autoIncrement: true,
-            primaryKey: true,
+            primaryKey:true,
             allowNull: false
         },
         ID_AGENTE: {
@@ -33,14 +33,13 @@ const Compra = db.sequelize.define('Compra', {
         NUMERO_CASA_ENTREGA:
             {
                 type: Sequelize.STRING,
-
                 allowNull: false
             }
     },
 
 
     {
-        timestamps: false,
+        timestamps:false,
         //id:false
     })
 Compra.hasMany(Compra_Producto, {foreignKey: 'NUM_COMPRA', sourceKey: 'NUM_COMPRA'});
