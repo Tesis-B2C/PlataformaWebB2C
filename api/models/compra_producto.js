@@ -1,52 +1,63 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 
-const Sucursal= db.sequelize.define('Sucursal', {
-        NUM_SUCURSAL: {
-            type: Sequelize.BIGINT,
-            autoIncrement: true,
-            primaryKey:true,
-            allowNull: false
-        },
-        NUM_TIENDA: {
+const Compra_Producto= db.sequelize.define('Compra_Producto', {
+        ID_PRODUCTO: {
             type: Sequelize.INTEGER,
             primaryKey:true,
             allowNull: false
         },
-        NUM_COD_POSTAL:
+        COD_PRODUCTO: {
+            type: Sequelize.INTEGER,
+            primaryKey:true,
+            allowNull: false
+        },
+        NUM_COMPRA:
             {
-                type: Sequelize.STRING,
+                primaryKey:true,
+                type: Sequelize.INTEGER,
                 allowNull: false
             },
-        ID_AGENTE:
+
+        CANTIDAD:
             {
                 type: Sequelize.INTEGER,
                 allowNull: false
             },
-        CALLE_PRINCIPAL_SUCURSAL:
+
+        SUB_TOTAL:
             {
-                type: Sequelize.STRING,
+                type: Sequelize.FLOAT(8,2),
                 allowNull: false
             },
-        CALLE_SECUNDARIA:
+        SUB_TOTAL_ENVIO:
             {
-                type: Sequelize.STRING,
+                type: Sequelize.FLOAT(8,2),
                 allowNull: false
             },
-        TELEFONO_SUCURSAL:
+       FECHA_ENTREGAS:
+            {
+                type: Sequelize.DATEONLY,
+
+                allowNull: false
+            },
+        FECHA_ENVIO:
+            {
+                type: Sequelize.DATEONLY,
+
+                allowNull: false
+            },
+        ESTADO_COMPRA:
             {
                 type: Sequelize.INTEGER,
-                allowNull: false
-            },
-        RUC:
-            {
-                type: Sequelize.STRING,
                 allowNull: false
             }
+
     },
+
     {
         timestamps:false,
         //id:false
     })
 
-module.exports = Sucursal;
+module.exports = Compra_Producto;

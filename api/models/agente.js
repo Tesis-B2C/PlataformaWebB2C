@@ -7,7 +7,8 @@ const Agente = db.sequelize.define('Agente', {
         ID_AGENTE: {
             type: Sequelize.BIGINT,
             primaryKey: true,
-            allowNull: false
+            allowNull: false,
+            autoIncrement: true
         },
         NUM_COD_POSTAL:
             {
@@ -69,5 +70,5 @@ const Agente = db.sequelize.define('Agente', {
     })
 
 Agente.hasMany(Tienda, {foreignKey: 'ID_AGENTE', sourceKey: 'ID_AGENTE'});
-Tienda.belongsTo(Agente, {foreignKey: 'ID_AGENTE', sourceKey: 'ID_AGENTE'})
+Tienda.belongsTo(Agente, {foreignKey: 'ID_AGENTE', sourceKey: 'ID_AGENTE'});
 module.exports = Agente;

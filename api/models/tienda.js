@@ -4,6 +4,7 @@ var Sucursal = require("./sucursal");
 
 const Tienda= db.sequelize.define('Tienda', {
         NUM_TIENDA: {
+
             type: Sequelize.INTEGER,
             primaryKey:true,
             allowNull: false
@@ -11,7 +12,14 @@ const Tienda= db.sequelize.define('Tienda', {
         ID_AGENTE: {
             type: Sequelize.BIGINT,
             primaryKey:true,
+            autoIncrement: true,
             allowNull: false
+        },
+        ID_AGENTE: {
+            type: Sequelize.INTEGER,
+            primaryKey:true,
+            allowNull: false
+
         },
        RAZON_SOCIAL:
             {
