@@ -1,47 +1,52 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
-var Compra_Producto = require("./compra_producto");
-const Compra = db.sequelize.define('Compra', {
-        NUM_COMPRA: {
+
+const Sucursal= db.sequelize.define('Sucursal', {
+        NUM_SUCURSAL: {
             type: Sequelize.BIGINT,
             autoIncrement: true,
-            primaryKey: true,
+            primaryKey:true,
             allowNull: false
         },
-        ID_AGENTE: {
+        NUM_TIENDA: {
             type: Sequelize.INTEGER,
+            primaryKey:true,
             allowNull: false
         },
-        FECHA_COMPRA:
-            {
-                type: Sequelize.DATE,
-                allowNull: false
-            },
-
-        CALLE_PRINCIPAL_ENTREGA:
+        NUM_COD_POSTAL:
             {
                 type: Sequelize.STRING,
                 allowNull: false
             },
-
-        CALLE_SECUNDARIA_ENTREGA:
+        ID_AGENTE:
+            {
+                type: Sequelize.INTEGER,
+                allowNull: false
+            },
+        CALLE_PRINCIPAL_SUCURSAL:
             {
                 type: Sequelize.STRING,
                 allowNull: false
             },
-
-        NUMERO_CASA_ENTREGA:
+        CALLE_SECUNDARIA:
+            {
+                type: Sequelize.STRING,
+                allowNull: false
+            },
+        TELEFONO_SUCURSAL:
+            {
+                type: Sequelize.INTEGER,
+                allowNull: false
+            },
+        RUC:
             {
                 type: Sequelize.STRING,
                 allowNull: false
             }
     },
-
-
     {
-        timestamps: false,
+        timestamps:false,
         //id:false
     })
-Compra.hasMany(Compra_Producto, {foreignKey: 'NUM_COMPRA', sourceKey: 'NUM_COMPRA'});
-Compra_Producto.belongsTo(Compra, {foreignKey: 'NUM_COMPRA', sourceKey: 'NUM_COMPRA'});
-module.exports = Compra;
+
+module.exports = Sucursal;
