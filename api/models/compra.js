@@ -31,6 +31,7 @@ const Compra= db.sequelize.define('Compra', {
         NUMERO_CASA_ENTREGA:
            {
                 type: Sequelize.STRING,
+
                 allowNull: false
            }
 
