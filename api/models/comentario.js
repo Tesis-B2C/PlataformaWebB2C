@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
-var Sucursal = require("./sucursal");
+
 
 const Comentario = db.sequelize.define('Comentario', {
 
@@ -34,4 +34,4 @@ const Comentario = db.sequelize.define('Comentario', {
 
 
 
-module.exports = Codigo_Postal;
+module.exports = Comentario;

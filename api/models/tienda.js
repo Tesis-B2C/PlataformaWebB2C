@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 var Sucursal = require("./sucursal");
-
+var Oferta = require("./oferta");
 const Tienda= db.sequelize.define('Tienda', {
         NUM_TIENDA: {
 
@@ -77,8 +77,18 @@ const Tienda= db.sequelize.define('Tienda', {
         //id:false
     })
 
-
+//TIENDA-SUCURSAL
 Tienda.hasMany(Sucursal, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
-Sucursal.belongsTo(Tienda, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'})
+Sucursal.belongsTo(Tienda, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
 
+// TIENDA-OFERTA
+Tienda.hasMany(Oferta, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
+Tienda.hasMany(Oferta, {foreignKey: 'ID_AGENTE', sourceKey: 'ID_AGENTE'});
+Oferta.belongsTo(Tienda, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
+Oferta.belongsTo(Tienda, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
+// SUCURSAL-TIENDA
+Tienda.hasMany(Sucursal, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
+Tienda.hasMany(Sucursal, {foreignKey: 'ID_AGENTE', sourceKey: 'ID_AGENTE'});
+Sucursal.belongsTo(Tienda, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
+Sucursal.belongsTo(Tienda, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
 module.exports = Tienda;
