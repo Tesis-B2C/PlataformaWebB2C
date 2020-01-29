@@ -38,13 +38,11 @@ const Compra_Producto= db.sequelize.define('Compra_Producto', {
        FECHA_ENTREGAS:
             {
                 type: Sequelize.DATEONLY,
-
                 allowNull: false
             },
         FECHA_ENVIO:
             {
                 type: Sequelize.DATEONLY,
-
                 allowNull: false
             },
         ESTADO_COMPRA:
