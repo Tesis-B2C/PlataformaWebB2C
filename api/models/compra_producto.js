@@ -8,7 +8,7 @@ const Compra_Producto= db.sequelize.define('Compra_Producto', {
             allowNull: false
         },
         COD_PRODUCTO: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.STRING,
             primaryKey:true,
             allowNull: false
         },
