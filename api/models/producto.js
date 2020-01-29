@@ -5,6 +5,8 @@ var Comentario = require("./comentario");
 var Producto_Descuento = require("./producto_descuento");
 var Calificacion = require("./calificacion");
 var Imagen_Producto = require("./imagen_producto");
+var Variante = require("./variante");
+var Producto_Categoria = require("./producto_categoria");
 
 const Producto = db.sequelize.define('Producto', {
         ID_PRODUCTO: {
@@ -69,6 +71,7 @@ const Producto = db.sequelize.define('Producto', {
         timestamps: false,
         //id:false
     })
+
 //PRODUCTO - COMPRA_PRODUCTO
 Producto.hasMany(Compra_Producto, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
 Producto.hasMany(Compra_Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
@@ -98,5 +101,16 @@ Producto.hasMany(Imagen_Producto, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRO
 Producto.hasMany(Imagen_Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
 Imagen_Producto.belongsTo(Producto, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
 Imagen_Producto.belongsTo(Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
+//PRODUCTO - VARIANTE
+Producto.hasMany(Variante, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
+Producto.hasMany(Variante, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
+Variante.belongsTo(Producto, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
+Variante.belongsTo(Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
+
+//PRODUCTO - PRODUCTO_CATEGORIA
+Producto.hasMany(Producto_Categoria, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
+Producto.hasMany(Producto_Categoria, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
+Producto_Categoria.belongsTo(Producto, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
+Producto_Categoria.belongsTo(Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
 
 module.exports = Producto;
