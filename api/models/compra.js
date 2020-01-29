@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 var Compra_Producto = require("./compra_producto");
+
 const Compra= db.sequelize.define('Compra', {
         NUM_COMPRA: {
             type: Sequelize.BIGINT,

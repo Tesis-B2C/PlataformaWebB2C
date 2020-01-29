@@ -1,13 +1,10 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
-var Sucursal = require("./sucursal");
 
-const Comentario = db.sequelize.define('Comentario', {
-
-        ID_COMENTARIO:
+const Variante = db.sequelize.define('Variante', {
+        NUM_VARIANTE:
             {
-                type: Sequelize.BIGINT,
-                autoIncrement: true,
+                type: Sequelize.INTEGER,
                 primaryKey: true,
                 allowNull: false
             },
@@ -21,15 +18,24 @@ const Comentario = db.sequelize.define('Comentario', {
                 type: Sequelize.STRING,
                 allowNull: false
             },
-        COMENTARIO:
+        COLOR:
+            {
+                type: Sequelize.STRING,
+                allowNull: false
+            },
+        TALLA:
+            {
+                type: Sequelize.STRING,
+                allowNull: false
+            },
+        MATERIAL:
             {
                 type: Sequelize.STRING,
                 allowNull: false
             }
     },
     {
-        timestamps: false,
-        //id:false
+        timestamps: false
     })
 
-module.exports = Codigo_Postal;
+module.exports = Variante;
