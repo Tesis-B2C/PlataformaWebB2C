@@ -33,7 +33,8 @@ const Categoria = db.sequelize.define('Categoria', {
             }
     },
     {
-        timestamps: false
+        timestamps: false,
+        id:false
     })
 
 //CATEGORIA - PRODUCTO_CATEGORIA

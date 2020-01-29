@@ -20,7 +20,8 @@ const Producto_Categoria = db.sequelize.define('Producto_Categoria', {
             }
     },
     {
-        timestamps:false
+        timestamps:false,
+        id:false
     })
 
 module.exports = Producto_Categoria;

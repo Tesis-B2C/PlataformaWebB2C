@@ -66,7 +66,7 @@ const Agente = db.sequelize.define('Agente', {
     },
     {
         timestamps: false,
-        //id:false
+        id:false
     })
 
 Agente.hasMany(Tienda, {foreignKey: 'ID_AGENTE', sourceKey: 'ID_AGENTE'});

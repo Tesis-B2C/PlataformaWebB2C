@@ -29,7 +29,7 @@ const Comentario = db.sequelize.define('Comentario', {
     },
     {
         timestamps: false,
-        //id:false
+        id:false
     })
 
 

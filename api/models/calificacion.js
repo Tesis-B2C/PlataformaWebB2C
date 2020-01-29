@@ -27,7 +27,8 @@ const Calificacion = db.sequelize.define('Calificacion', {
             }
     },
     {
-        timestamps: false
+        timestamps: false,
+        id:false
     })
 
 module.exports = Calificacion;

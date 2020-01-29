@@ -16,7 +16,8 @@ const Categoria_Categoria = db.sequelize.define('Categoria_Categoria', {
             }
     },
     {
-        timestamps: false
+        timestamps: false,
+        id:false
     })
 
 module.exports = Categoria_Categoria;

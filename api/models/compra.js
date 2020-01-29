@@ -41,7 +41,7 @@ const Compra= db.sequelize.define('Compra', {
 
     {
         timestamps:false,
-        //id:false
+        id:false
     })
 Compra.hasMany(Compra_Producto, {foreignKey: 'NUM_COMPRA', sourceKey: 'NUM_COMPRA'});
 Compra_Producto.belongsTo(Compra, {foreignKey: 'NUM_COMPRA', sourceKey: 'NUM_COMPRA'});
