@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
-var Producto_Descuento = require("./producto_descuento");
 
 const Calificacion = db.sequelize.define('Calificacion', {
 
@@ -11,32 +10,24 @@ const Calificacion = db.sequelize.define('Calificacion', {
                 allowNull: false,
                 autoIncrement: true
             },
-        MOTIVO_DESCUENTO:
+        ID_PRODUCTO:
+            {
+                type: Sequelize.INTEGER,
+                allowNull: false
+            },
+        COD_PRODUCTO:
             {
                 type: Sequelize.STRING,
                 allowNull: false
             },
-        VALOR:
+        NUM_ESTRELLAS:
             {
-                type: Sequelize.FLOAT,
-                allowNull: false
-            },
-        FECHA_INICIO:
-            {
-                type: Sequelize.DATEONLY,
-                allowNull: false
-            },
-        FECHA_FIN:
-            {
-                type: Sequelize.DATEONLY,
+                type: Sequelize.INTEGER,
                 allowNull: false
             }
     },
     {
         timestamps: false
     })
-
-Descuento.hasMany(Producto_Descuento, {foreignKey: 'ID_DESCUENTO', sourceKey: 'ID_DESCUENTO'});
-Producto_Descuento.belongsTo(Descuento, {foreignKey: 'ID_DESCUENTO', sourceKey: 'ID_DESCUENTO'});
 
 module.exports = Calificacion;
