@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 var Compra_Producto = require("./compra_producto");
+var Comentario = require("./comentario")
 const Producto = db.sequelize.define('Producto', {
         ID_PRODUCTO: {
             type: Sequelize.BIGINT,
@@ -65,7 +66,11 @@ const Producto = db.sequelize.define('Producto', {
         //id:false
     })
 Producto.hasMany(Compra_Producto, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
-Producto.hasMany(Compra_Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'})
+Producto.hasMany(Compra_Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
+Producto.hasMany(Comentario, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
+Producto.hasMany(Comentario, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
 Compra_Producto.belongsTo(Producto, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
 Compra_Producto.belongsTo(Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
+Comentario.belongsTo(Producto, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
+Comentario.belongsTo(Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
 module.exports = Producto;

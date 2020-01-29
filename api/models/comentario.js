@@ -4,15 +4,26 @@ var Sucursal = require("./sucursal");
 
 const Comentario = db.sequelize.define('Comentario', {
 
-        NUM_COD_POSTAL:
+        ID_COMENTARIO:
             {
-                type: Sequelize.STRING,
+                type: Sequelize.BIGINT,
+                autoIncrement: true,
                 primaryKey: true,
                 allowNull: false
             },
-        COD_DPA:
+        ID_PRODUCTO:
             {
                 type: Sequelize.INTEGER,
+                allowNull: false
+            },
+        COD_PRODUCTO:
+            {
+                type: Sequelize.STRING,
+                allowNull: false
+            },
+        COMENTARIO:
+            {
+                type: Sequelize.STRING,
                 allowNull: false
             }
     },
@@ -21,7 +32,6 @@ const Comentario = db.sequelize.define('Comentario', {
         //id:false
     })
 
-Codigo_Postal.hasMany(Sucursal, {foreignKey: 'NUM_COD_POSTAL', sourceKey: 'NUM_COD_POSTAL'});
-Sucursal.belongsTo(Codigo_Postal, {foreignKey: 'NUM_COD_POSTAL', sourceKey: 'NUM_COD_POSTAL'});
+
 
 module.exports = Codigo_Postal;
