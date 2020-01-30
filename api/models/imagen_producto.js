@@ -44,7 +44,7 @@ const Imagen_Producto = db.sequelize.define('Imagen_Producto', {
     },
     {
         timestamps: false,
-        //id:false
+        id:false
     })
 
 

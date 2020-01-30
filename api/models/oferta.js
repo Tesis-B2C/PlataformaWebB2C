@@ -50,7 +50,7 @@ const Oferta = db.sequelize.define('Oferta', {
     },
     {
         timestamps: false,
-        //id:false
+        id:false
     })
 
 Oferta.hasOne(Producto, {foreignKey: 'ID_OFERTA', sourceKey: 'ID_OFERTA'});

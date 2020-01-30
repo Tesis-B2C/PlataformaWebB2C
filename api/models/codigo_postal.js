@@ -18,7 +18,7 @@ const Codigo_Postal = db.sequelize.define('Codigo_Postal', {
     },
     {
         timestamps: false,
-        //id:false
+        id:false
     })
 
 //CODIGO_POSTAL - SUCURSAL

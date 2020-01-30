@@ -26,7 +26,8 @@ const Dpa = db.sequelize.define('Dpa', {
             }
     },
     {
-        timestamps: false
+        timestamps: false,
+        id:false
     })
 
 //DPA - CODIGO_POSTAL

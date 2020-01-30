@@ -34,10 +34,9 @@ const Carrito_Producto = db.sequelize.define('Carrito_Producto', {
     },
     {
         timestamps: false,
-        //id:false
+        id:false
     })
 
-Carrito.hasMany(Carrito_Producto, {foreignKey: 'ID_CARRITO', sourceKey: 'ID_CARRITO'});
-Carrito_Producto.belongsTo(Carrito, {foreignKey: 'ID_CARRITO', sourceKey: 'ID_CARRITO'});
 
-module.exports = Carrito;
+
+module.exports = Carrito_Producto;

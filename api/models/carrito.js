@@ -24,7 +24,7 @@ const Carrito = db.sequelize.define('Carrito', {
     },
     {
         timestamps: false,
-        //id:false
+        id:false
     })
 
 Carrito.hasMany(Carrito_Producto, {foreignKey: 'ID_CARRITO', sourceKey: 'ID_CARRITO'});

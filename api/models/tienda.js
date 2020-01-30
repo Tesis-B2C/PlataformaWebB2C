@@ -74,7 +74,7 @@ const Tienda= db.sequelize.define('Tienda', {
     },
     {
         timestamps:false,
-        //id:false
+        id:false
     })
 
 //TIENDA-SUCURSAL

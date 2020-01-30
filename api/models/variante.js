@@ -35,7 +35,8 @@ const Variante = db.sequelize.define('Variante', {
             }
     },
     {
-        timestamps: false
+        timestamps: false,
+        id:false
     })
 
 module.exports = Variante;

@@ -33,7 +33,8 @@ const Descuento = db.sequelize.define('Descuento', {
             }
     },
     {
-        timestamps: false
+        timestamps: false,
+        id:false
     })
 
 Descuento.hasMany(Producto_Descuento, {foreignKey: 'ID_DESCUENTO', sourceKey: 'ID_DESCUENTO'});

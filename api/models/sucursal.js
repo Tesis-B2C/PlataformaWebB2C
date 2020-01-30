@@ -46,7 +46,7 @@ const Sucursal= db.sequelize.define('Sucursal', {
     },
     {
         timestamps:false,
-        //id:false
+        id:false
     })
 
 module.exports = Sucursal;
