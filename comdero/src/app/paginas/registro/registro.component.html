@@ -14,7 +14,7 @@
       <img id="imagenLogo" src="./../assets/images/logoValid2.png">
     </div>
     <header class="login100-form-title-registro"><h5 class="card-title">Registrate</h5></header>
-    <form>
+    <form [formGroup]="contactForm">
 
       <div class="form-group">
         <label class="custom-control custom-radio custom-control-inline">
@@ -29,38 +29,46 @@
         </label>
       </div> <!-- form-group end.// -->
 
+
+
+
+
       <div *ngIf="bandetTipo" class="form-row">
-        <div class="col form-group">
+        <div [formGroup]="contactForm"  class="col form-group">
           <label class="tamanioCampos">Nombre</label>
-          <input type="text" class="tamanioCampos form-control" placeholder="">
+          <input type="text" style="text-transform:uppercase;" class="tamanioCampos form-control" formControlName="nombre" placeholder="">
         </div> <!-- form-group end.// -->
         <div class="col form-group">
           <label class="tamanioCampos">Apellido</label>
-          <input type="text" class="tamanioCampos form-control " placeholder="">
+          <input type="text" class="tamanioCampos form-control " formControlName="apellido" placeholder="">
         </div> <!-- form-group end.// -->
       </div> <!-- form-row end.// -->
 
       <div *ngIf="!bandetTipo" class="form-group">
-        <label class="tamanioCampos">Razon Social</label>
-        <input type="text" class="tamanioCampos form-control" placeholder="">
-        <!--<small class="form-text text-muted">We'll never share your email with anyone else.</small>-->
-      </div> <!-- form-group end.// -->
+      <label class="tamanioCampos">Razon Social</label>
+      <input type="text" class="tamanioCampos form-control" formControlName="razonSocial" placeholder="">
+      <!--<small class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+    </div> <!-- form-group end.// -->
+
 
       <div class="form-row">
-        <div class="col form-group">
-          <label *ngIf="bandetTipo" style="font-size: small">Cédula</label>
-          <label *ngIf="!bandetTipo" style="font-size: small">RUC</label>
-          <input type="text" class="tamanioCampos form-control" placeholder="">
+        <div *ngIf="bandetTipo"  class="col form-group">
+          <label style="font-size: small">Cédula</label>
+          <input type="text" class="tamanioCampos form-control" formControlName="cedula" placeholder="">
+        </div> <!-- form-group end.// -->
+        <div *ngIf="!bandetTipo" class="col form-group">
+          <label  style="font-size: small">RUC</label>
+          <input type="text" class="tamanioCampos form-control" formControlName="ruc" placeholder="">
         </div> <!-- form-group end.// -->
         <div class="col form-group">
           <label class="tamanioCampos">Teléfono Celular</label>
-          <input style="font-size: small" type="text" class="tamanioCampos form-control" placeholder="">
+          <input style="font-size: small" type="text" class="tamanioCampos form-control" formControlName="celular" placeholder="">
         </div> <!-- form-group end.// -->
       </div> <!-- form-row end.// -->
 
       <div class="form-group">
         <label class="tamanioCampos">Email</label>
-        <input type="email" class="tamanioCampos form-control" placeholder="">
+        <input type="email" class="tamanioCampos form-control" formControlName="email" placeholder="">
         <!--        <small class="form-text text-muted">We'll never share your email with anyone else.</small>-->
       </div> <!-- form-group end.// -->
       <hr class="lineaSeparacion">
@@ -68,7 +76,7 @@
         <div class="form-row">
           <div class="form-group col-md-6">
             <label class="tamanioCampos">Provincia</label>
-            <select id="inputState" class="tamanioCampos form-control">
+            <select  class="tamanioCampos form-control" formControlName="provincia">
               <option> Choose...</option>
               <option>Uzbekistan</option>
               <option>Russia</option>
@@ -79,23 +87,30 @@
           </div> <!-- form-group end.// -->
           <div class="form-group col-md-6">
             <label class="tamanioCampos">Ciudad</label>
-            <input type="text" class="tamanioCampos form-control">
+            <select  class="tamanioCampos form-control" formControlName="ciudad">
+              <option> Choose...</option>
+              <option>Uzbekistan</option>
+              <option>Russia</option>
+              <option selected="">United States</option>
+              <option>India</option>
+              <option>Afganistan</option>
+            </select>
           </div> <!-- form-group end.// -->
 
         </div> <!-- form-row.// -->
 
         <label class="tamanioCampos">Calle Principal</label>
-        <input type="text" class="tamanioCampos form-control" placeholder="">
+        <input type="text" class="tamanioCampos form-control" formControlName="callePrincipal" placeholder="">
       </div> <!-- form-group end.// -->
 
       <div class="form-row">
         <div class="col-lg-8 form-group">
           <label class="tamanioCampos">Calle Secundaria</label>
-          <input type="text" class="tamanioCampos form-control" placeholder="">
+          <input type="text" class="tamanioCampos form-control"  formControlName="calleSecundaria" placeholder="">
         </div>
         <div class=" col-lg-4 form-group">
           <label class="tamanioCampos">Codigo Postal</label>
-          <input type="text" class=" tamanioCampos form-control" placeholder="">
+          <input type="text" class=" tamanioCampos form-control" formControlName="codigoPostal" placeholder="">
         </div> <!-- form-group end.// -->
       </div>
 
@@ -103,11 +118,11 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <label class="tamanioCampos">Contraseña</label>
-          <input class="tamanioCampos form-control" type="password">
+          <input class="tamanioCampos form-control"  formControlName="password" type="password">
         </div> <!-- form-group end.// -->
         <div class="form-group col-md-6">
           <label class="tamanioCampos">Repetir contraseña</label>
-          <input class="tamanioCampos form-control" type="password">
+          <input class="tamanioCampos form-control" formControlName="passwordR" type="password">
         </div> <!-- form-group end.// -->
       </div>
       <br>
