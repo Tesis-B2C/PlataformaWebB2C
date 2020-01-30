@@ -1,0 +1,72 @@
+.container-login100 {
+  width: 100%;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  /*background-color: #0c5460;*/
+}
+
+.titulo{
+  text-align: center;
+}
+
+.wrap-register100 {
+
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.login100-form-title-registro {
+  display: block;
+  font-weight: bold;
+  font-size: 20px;
+  color: #333333;
+  line-height: 1.2;
+
+}
+.lineaSeparacion
+{
+  margin-top: 20px;
+  margin-bottom: 10px;
+
+}
+.lineaSeparacion2
+{
+  margin-top: 8px;
+  margin-bottom: 8px;
+
+}
+.tamanioCampos
+{
+  font-size: small;
+}
+
+.container-registro
+{
+  max-width:450px;
+  margin-top: 15px;
+}
+
+@media (max-width: 1366px) {
+  .container-registro
+  {
+    max-width:380px;
+    margin-top: 15px;
+  }
+
+  .tamanioCampos
+  {
+    font-size: 0.8em;
+  }
+}

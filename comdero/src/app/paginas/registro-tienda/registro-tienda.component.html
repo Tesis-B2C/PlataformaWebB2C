@@ -5,54 +5,63 @@
   <meta http-equiv="pragma" content="no-cache"/>
   <meta http-equiv="cache-control" content="max-age=604800"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <title>Registro</title>
-
+  <title>Registro Tienda</title>
 </head>
+
 <body>
 
-<div class="mx-auto  container-login100  container-registro" >
+<div class="mx-auto  container-login100  container-registro">
   <article class=" wrap-register100 card-body">
-    <div class="rubberBand" id="divImagenLogo">
-      <img id="imagenLogo" src="./../assets/images/logoValid2.png">
-    </div>
-    <header class="login100-form-title-registro"><h5 class="card-title">Regístrate</h5></header>
+
+    <header class="login100-form-title-registro"><h5 class="card-title titulo">Cuéntanos sobre tu empresa o negocio</h5>
+    </header>
+
     <form>
 
       <div class="form-group">
-        <label class="custom-control custom-radio custom-control-inline">
-          <input class="custom-control-input" checked="" type="radio" name="gender" value="option1"
-                 (change)="selectAdminsitrador()">
-          <span class="custom-control-label"> Persona Natural  </span>
-        </label>
-        <label class="custom-control custom-radio custom-control-inline">
-          <input class="custom-control-input" type="radio" name="gender" value="option2"
-                 (change)="selectAdminsitrador()">
-          <span class="custom-control-label"> Empresa </span>
-        </label>
+        <label class="tamanioCampos">Nombre de su empresa o negocio</label>
+        <input type="text" class="tamanioCampos form-control" placeholder="">
       </div> <!-- form-group end.// -->
 
-      <div *ngIf="bandetTipo" class="form-row">
+      <div class="form-group">
+        <label class="tamanioCampos">RUC</label>
+        <input type="text" class="tamanioCampos form-control" placeholder="">
+      </div> <!-- form-group end.// -->
+
+      <label class="tamanioCampos">¿Cuenta con un espacio físico?</label>
+      <div class="form-row">
         <div class="col form-group">
-          <label class="tamanioCampos">Nombre</label>
-          <input type="text" class="tamanioCampos form-control" placeholder="">
+          <label class="custom-control custom-radio custom-control-inline">
+            <input class="custom-control-input" checked="" type="radio" name="espacioFisico" value="option1"
+                   (change)="selectEspacioFisico()">
+            <span class="custom-control-label"> Si  </span>
+          </label>
         </div> <!-- form-group end.// -->
         <div class="col form-group">
-          <label class="tamanioCampos">Apellido</label>
-          <input type="text" class="tamanioCampos form-control " placeholder="">
+          <label class="custom-control custom-radio custom-control-inline">
+            <input class="custom-control-input" type="radio" name="espacioFisico" value="option2"
+                   (change)="selectEspacioFisico()">
+            <span class="custom-control-label"> No </span>
+          </label>
         </div> <!-- form-group end.// -->
       </div> <!-- form-row end.// -->
 
-      <div *ngIf="!bandetTipo" class="form-group">
-        <label class="tamanioCampos">Razon Social</label>
+      <!-- Separacion de seccion// -->
+      <label style="font-size: large">Sucursales</label>
+
+      <div class="form-group">
+        <label class="tamanioCampos">Dirección</label>
         <input type="text" class="tamanioCampos form-control" placeholder="">
-        <!--<small class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+      </div> <!-- form-group end.// -->
+
+      <div class="form-group">
+        <label class="tamanioCampos">Provincia</label>
+        <input type="text" class="tamanioCampos form-control" placeholder="">
       </div> <!-- form-group end.// -->
 
       <div class="form-row">
         <div class="col form-group">
-          <label *ngIf="bandetTipo" style="font-size: small">Cédula</label>
-          <label *ngIf="!bandetTipo" style="font-size: small">RUC</label>
+          <label style="font-size: small">RUC</label>
           <input type="text" class="tamanioCampos form-control" placeholder="">
         </div> <!-- form-group end.// -->
         <div class="col form-group">
@@ -126,19 +135,16 @@
 
       <div class="form-group">
         <label class="custom-control custom-checkbox"> <input type="checkbox" class="custom-control-input" checked="">
-          <div class="custom-control-label" style="font-size: smaller"> Estoy de acuerdo con los<a href="#" style="font-size: smaller">terminos y condiciones</a></div>
+          <div class="custom-control-label" style="font-size: smaller"> Estoy de acuerdo con los<a href="#"
+                                                                                                   style="font-size: smaller">terminos
+            y condiciones</a></div>
         </label>
       </div> <!-- form-group end.// -->
+
     </form>
   </article><!-- card-body.// -->
-</div> <!-- card .// -->
-<p class="text-center mt-4" style="font-size: smaller">Tienes una cuenta? <a style="font-size: smaller" href="">Inicia sesión</a></p>
-<br><br>
-<!-- ============================ COMPONENT REGISTER  END.// ================================= -->
-
-
-<!-- ========================= SECTION CONTENT END// ========================= -->
-
+</div>
 
 </body>
 </html>
+
