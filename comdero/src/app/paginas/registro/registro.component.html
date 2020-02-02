@@ -14,8 +14,7 @@
       <img id="imagenLogo" src="./../assets/images/logoValid2.png">
     </div>
     <header class="login100-form-title-registro"><h5 class="card-title">Registrate</h5></header>
-    <form [formGroup]="contactForm">
-
+    <form id="form_registro" [formGroup]="contactForm">
       <div class="form-group">
         <label class="custom-control custom-radio custom-control-inline">
           <input class="custom-control-input" checked="" type="radio" name="gender" value="option1"
@@ -29,24 +28,44 @@
         </label>
       </div> <!-- form-group end.// -->
 
-
-
-
-
       <div *ngIf="bandetTipo" class="form-row">
-        <div [formGroup]="contactForm"  class="col form-group">
+        <div class="col form-group">
           <label class="tamanioCampos">Nombre</label>
-          <input type="text" style="text-transform:uppercase;" class="tamanioCampos form-control" formControlName="nombre" placeholder="">
+          <input type="text" style="text-transform:uppercase" class="tamanioCampos form-control" formControlName="nombre" placeholder="">
+          <div  *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+            <div class="alert alert-danger" *ngIf="nombre.errors.required">
+              Nombre es requerido
+            </div>
+            <div class="alert alert-danger" *ngIf="nombre.errors.pattern">
+             Nombre debe contener solo letras.
+            </div>
+          </div>
         </div> <!-- form-group end.// -->
         <div class="col form-group">
           <label class="tamanioCampos">Apellido</label>
           <input type="text" class="tamanioCampos form-control " formControlName="apellido" placeholder="">
+          <div  *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)">
+            <div class="alert alert-danger" *ngIf="apellido.errors.required">
+              Apellido es requerido
+            </div>
+            <div class="alert alert-danger" *ngIf="apellido.errors.pattern">
+              Apellido debe contener solo letras.
+            </div>
+          </div>
         </div> <!-- form-group end.// -->
       </div> <!-- form-row end.// -->
 
       <div *ngIf="!bandetTipo" class="form-group">
       <label class="tamanioCampos">Razon Social</label>
       <input type="text" class="tamanioCampos form-control" formControlName="razonSocial" placeholder="">
+        <div  *ngIf="razonSocial.invalid && (razonSocial.dirty || razonSocial.touched)">
+          <div class="alert alert-danger" *ngIf="razonSocial.errors.required">
+            Razon Social es requerido
+          </div>
+          <div class="alert alert-danger" *ngIf="razonSocial.errors.pattern">
+            Razon Social debe contener solo letras.
+          </div>
+        </div>
       <!--<small class="form-text text-muted">We'll never share your email with anyone else.</small>-->
     </div> <!-- form-group end.// -->
 
@@ -55,10 +74,38 @@
         <div *ngIf="bandetTipo"  class="col form-group">
           <label style="font-size: small">Cédula</label>
           <input type="text" class="tamanioCampos form-control" formControlName="cedula" placeholder="">
+          <div  *ngIf="cedula.invalid && (cedula.dirty || cedula.touched)">
+            <div class="alert alert-danger" *ngIf="cedula.errors.required">
+             Cédula es requerido.
+            </div>
+            <div class="alert alert-danger" *ngIf="cedula.errors.minlength">
+              Cédula debe tener minimo 10 digitos.
+            </div>
+            <div class="alert alert-danger" *ngIf="cedula.errors.maxlength">
+              Cédula debe tener maximo 10 digitos.
+            </div>
+            <div class="alert alert-danger" *ngIf="cedula.errors.pattern">
+              Cédula debe contener solo numeros.
+            </div>
+          </div>
         </div> <!-- form-group end.// -->
         <div *ngIf="!bandetTipo" class="col form-group">
           <label  style="font-size: small">RUC</label>
           <input type="text" class="tamanioCampos form-control" formControlName="ruc" placeholder="">
+          <div  *ngIf="ruc.invalid && (ruc.dirty || ruc.touched)">
+            <div class="alert alert-danger" *ngIf="ruc.errors.required">
+              Ruc es requerido.
+            </div>
+            <div class="alert alert-danger" *ngIf="ruc.errors.minlength">
+              Ruc debe tener minimo 13 digitos.
+            </div>
+            <div class="alert alert-danger" *ngIf="ruc.errors.maxlength">
+              Ruc debe tener maximo 13 digitos.
+            </div>
+            <div class="alert alert-danger" *ngIf="ruc.errors.pattern">
+              Ruc Social debe contener solo numeros.
+            </div>
+          </div>
         </div> <!-- form-group end.// -->
         <div class="col form-group">
           <label class="tamanioCampos">Teléfono Celular</label>
@@ -129,7 +176,7 @@
       <div class="container-login100-form-btn">
         <div class="wrap-login100-form-btn">
           <div class="login100-form-bgbtn"></div>
-          <button class="login100-form-btn">
+          <button class="login100-form-btn" (click)="onSaveForm()">
             Crea tu cuenta en condero
           </button>
         </div>

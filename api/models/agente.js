@@ -5,13 +5,10 @@ const Agente = db.sequelize.define('Agente', {
 
         ID_AGENTE: {
             type: Sequelize.BIGINT,
-<<<<<<< Updated upstream
-            primaryKey: true
-=======
             primaryKey: true,
             allowNull: false,
             autoIncrement: true
->>>>>>> Stashed changes
+
         },
         NUM_COD_POSTAL:
             {
