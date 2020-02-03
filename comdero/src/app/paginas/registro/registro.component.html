@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<div class="mx-auto  container-login100  container-registro" >
+<div class="mx-auto  container-login100  container-registro">
   <article class=" wrap-register100 card-body">
     <div class="rubberBand" id="divImagenLogo">
       <img id="imagenLogo" src="./../assets/images/logoValid2.png">
@@ -31,20 +31,20 @@
       <div *ngIf="bandetTipo" class="form-row">
         <div class="col form-group">
           <label class="tamanioCampos">Nombre</label>
-          <input type="text" style="text-transform:uppercase" class="tamanioCampos form-control" formControlName="nombre" placeholder="">
-          <div  *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+          <input type="text" class="tamanioCampos form-control" formControlName="nombre" placeholder="">
+          <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
             <div class="alert alert-danger" *ngIf="nombre.errors.required">
               Nombre es requerido
             </div>
             <div class="alert alert-danger" *ngIf="nombre.errors.pattern">
-             Nombre debe contener solo letras.
+              Nombre debe contener solo letras.
             </div>
           </div>
         </div> <!-- form-group end.// -->
         <div class="col form-group">
           <label class="tamanioCampos">Apellido</label>
           <input type="text" class="tamanioCampos form-control " formControlName="apellido" placeholder="">
-          <div  *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)">
+          <div *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)">
             <div class="alert alert-danger" *ngIf="apellido.errors.required">
               Apellido es requerido
             </div>
@@ -56,9 +56,9 @@
       </div> <!-- form-row end.// -->
 
       <div *ngIf="!bandetTipo" class="form-group">
-      <label class="tamanioCampos">Razon Social</label>
-      <input type="text" class="tamanioCampos form-control" formControlName="razonSocial" placeholder="">
-        <div  *ngIf="razonSocial.invalid && (razonSocial.dirty || razonSocial.touched)">
+        <label class="tamanioCampos">Razon Social</label>
+        <input type="text" class="tamanioCampos form-control" formControlName="razonSocial" placeholder="">
+        <div *ngIf="razonSocial.invalid && (razonSocial.dirty || razonSocial.touched)">
           <div class="alert alert-danger" *ngIf="razonSocial.errors.required">
             Razon Social es requerido
           </div>
@@ -66,17 +66,17 @@
             Razon Social debe contener solo letras.
           </div>
         </div>
-      <!--<small class="form-text text-muted">We'll never share your email with anyone else.</small>-->
-    </div> <!-- form-group end.// -->
+        <!--<small class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+      </div> <!-- form-group end.// -->
 
 
       <div class="form-row">
-        <div *ngIf="bandetTipo"  class="col form-group">
+        <div *ngIf="bandetTipo" class="col form-group">
           <label style="font-size: small">Cédula</label>
           <input type="text" class="tamanioCampos form-control" formControlName="cedula" placeholder="">
-          <div  *ngIf="cedula.invalid && (cedula.dirty || cedula.touched)">
+          <div *ngIf="cedula.invalid && (cedula.dirty || cedula.touched)">
             <div class="alert alert-danger" *ngIf="cedula.errors.required">
-             Cédula es requerido.
+              Cédula es requerido.
             </div>
             <div class="alert alert-danger" *ngIf="cedula.errors.minlength">
               Cédula debe tener minimo 10 digitos.
@@ -90,9 +90,9 @@
           </div>
         </div> <!-- form-group end.// -->
         <div *ngIf="!bandetTipo" class="col form-group">
-          <label  style="font-size: small">RUC</label>
+          <label style="font-size: small">RUC</label>
           <input type="text" class="tamanioCampos form-control" formControlName="ruc" placeholder="">
-          <div  *ngIf="ruc.invalid && (ruc.dirty || ruc.touched)">
+          <div *ngIf="ruc.invalid && (ruc.dirty || ruc.touched)">
             <div class="alert alert-danger" *ngIf="ruc.errors.required">
               Ruc es requerido.
             </div>
@@ -109,21 +109,48 @@
         </div> <!-- form-group end.// -->
         <div class="col form-group">
           <label class="tamanioCampos">Teléfono Celular</label>
-          <input style="font-size: small" type="text" class="tamanioCampos form-control" formControlName="celular" placeholder="">
+          <input style="font-size: small" type="text" class="tamanioCampos form-control" formControlName="celular"
+                 placeholder="">
+          <div *ngIf="celular.invalid && (celular.dirty) "> <!--(celular.dirty|| celular.touched)-->
+            <div class="alert alert-danger" *ngIf="celular.errors.required">
+              Telefono es requerido.
+            </div>
+            <div class="alert alert-danger" *ngIf="celular.errors.minlength">
+              Telefono debe tener minimo 10 digitos.
+            </div>
+            <div class="alert alert-danger" *ngIf="celular.errors.maxlength">
+              Telefono debe tener maximo 10 digitos.
+            </div>
+            <div class="alert alert-danger" *ngIf="celular.errors.pattern">
+              Telefono Social debe contener solo numeros.
+            </div>
+          </div>
         </div> <!-- form-group end.// -->
       </div> <!-- form-row end.// -->
 
+
       <div class="form-group">
         <label class="tamanioCampos">Email</label>
-        <input type="email" class="tamanioCampos form-control" formControlName="email" placeholder="">
-        <!--        <small class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+        <input type="email" class="form-control tamanioCampos" formControlName="email" placeholder=""
+               [ngClass]="{
+        'is-invalid': email.invalid && (email.dirty || email.touched),
+        'is-valid': email.valid && (email.dirty || email.touched)}">
+        <!--<small class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+        <div *ngIf="email.invalid && (email.touched||email.dirty)">
+          <div class="tamanioCampos errorValidacion" *ngIf="email.errors.required">
+            Correo electronico es requerido.
+          </div>
+          <div class="alert alert-danger" *ngIf="email.errors.pattern">
+            Correo electronico debe cumplir con el formato
+          </div>
+        </div>
       </div> <!-- form-group end.// -->
       <hr class="lineaSeparacion">
       <div class=" form-group">
         <div class="form-row">
           <div class="form-group col-md-6">
             <label class="tamanioCampos">Provincia</label>
-            <select  class="tamanioCampos form-control" formControlName="provincia">
+            <select class="tamanioCampos form-control" formControlName="provincia">
               <option> Choose...</option>
               <option>Uzbekistan</option>
               <option>Russia</option>
@@ -131,10 +158,17 @@
               <option>India</option>
               <option>Afganistan</option>
             </select>
+            <div *ngIf="provincia.invalid && (provincia.touched||provincia.dirty)">
+              <div class="tamanioCampos errorValidacion" *ngIf="provincia.errors.required">
+                Provincia es requerida.
+              </div>
+
+            </div>
           </div> <!-- form-group end.// -->
+
           <div class="form-group col-md-6">
             <label class="tamanioCampos">Ciudad</label>
-            <select  class="tamanioCampos form-control" formControlName="ciudad">
+            <select class="tamanioCampos form-control" formControlName="ciudad">
               <option> Choose...</option>
               <option>Uzbekistan</option>
               <option>Russia</option>
@@ -142,22 +176,48 @@
               <option>India</option>
               <option>Afganistan</option>
             </select>
+            <div *ngIf="ciudad.invalid && (ciudad.touched||ciudad.dirty)">
+              <div class="tamanioCampos errorValidacion" *ngIf="ciudad.errors.required">
+                Ciudad es requerida.
+              </div>
+            </div>
           </div> <!-- form-group end.// -->
 
         </div> <!-- form-row.// -->
-
+      </div> <!-- form-group end.// -->
+        <div class="form-group">
         <label class="tamanioCampos">Calle Principal</label>
         <input type="text" class="tamanioCampos form-control" formControlName="callePrincipal" placeholder="">
+          <div *ngIf="callePrincipal.invalid && (callePrincipal.touched||callePrincipal.dirty)">
+            <div class="tamanioCampos errorValidacion" *ngIf="callePrincipal.errors.required">
+              Calle principal es requerida.
+            </div>
+          </div>
       </div> <!-- form-group end.// -->
 
       <div class="form-row">
         <div class="col-lg-8 form-group">
           <label class="tamanioCampos">Calle Secundaria</label>
-          <input type="text" class="tamanioCampos form-control"  formControlName="calleSecundaria" placeholder="">
+          <input type="text" class="tamanioCampos form-control" formControlName="calleSecundaria" placeholder="">
+          <div *ngIf="calleSecundaria.invalid && (calleSecundaria.touched||calleSecundaria.dirty)">
+            <div class="tamanioCampos errorValidacion" *ngIf="calleSecundaria.errors.required">
+              Calle principal es requerida.
+            </div>
+
+          </div>
         </div>
         <div class=" col-lg-4 form-group">
           <label class="tamanioCampos">Codigo Postal</label>
           <input type="text" class=" tamanioCampos form-control" formControlName="codigoPostal" placeholder="">
+          <div *ngIf="codigoPostal.invalid && (codigoPostal.touched||codigoPostal.dirty)">
+            <div class="tamanioCampos errorValidacion" *ngIf="codigoPostal.errors.required">
+              Calle principal es requerida.
+            </div>
+            <div class="tamanioCampos errorValidacion" *ngIf="codigoPostal.errors.maxlength">
+              No mas de 12 caracteres.
+            </div>
+
+          </div>
         </div> <!-- form-group end.// -->
       </div>
 
@@ -165,11 +225,27 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <label class="tamanioCampos">Contraseña</label>
-          <input class="tamanioCampos form-control"  formControlName="password" type="password">
+          <input class="tamanioCampos form-control" formControlName="password" type="password">
+          <div *ngIf="password.invalid && (password.touched||password.dirty)">
+            <div class="tamanioCampos errorValidacion" *ngIf="password.errors.required">
+              Contraseña es requerida.
+            </div>
+            <div class="tamanioCampos errorValidacion" *ngIf="password.errors.minlength">
+              La contraseña no puede tener menos de 6 caracteres.
+            </div>
+          </div>
         </div> <!-- form-group end.// -->
         <div class="form-group col-md-6">
           <label class="tamanioCampos">Repetir contraseña</label>
-          <input class="tamanioCampos form-control" formControlName="passwordR" type="password">
+          <input class="tamanioCampos form-control" formControlName="passwordR" type="password"  >
+          <div *ngIf="passwordR.invalid && (passwordR.touched||passwordR.dirty)">
+            <div class="tamanioCampos errorValidacion" *ngIf="passwordR.errors.required">
+              Contraseña es requerida.
+            </div>
+            <div class="tamanioCampos errorValidacion" *ngIf="passwordR.errors.pattern">
+              {{password.value}}La contraseña no coincide{{passwordR.value}}.
+            </div>
+          </div>
         </div> <!-- form-group end.// -->
       </div>
       <br>
@@ -185,13 +261,16 @@
 
       <div class="form-group">
         <label class="custom-control custom-checkbox"> <input type="checkbox" class="custom-control-input" checked="">
-          <div class="custom-control-label" style="font-size: smaller"> Estoy de acuerdo con los<a href="#" style="font-size: smaller">terminos y condiciones</a></div>
+          <div class="custom-control-label" style="font-size: smaller"> Estoy de acuerdo con los<a href="#"
+                                                                                                   style="font-size: smaller">terminos
+            y condiciones</a></div>
         </label>
       </div> <!-- form-group end.// -->
     </form>
   </article><!-- card-body.// -->
 </div> <!-- card .// -->
-<p class="text-center mt-4" style="font-size: smaller">Tienes una cuenta? <a style="font-size: smaller" href="">Inicia sesión</a></p>
+<p class="text-center mt-4" style="font-size: smaller">Tienes una cuenta? <a style="font-size: smaller" href="">Inicia
+  sesión</a></p>
 <br><br>
 <!-- ============================ COMPONENT REGISTER  END.// ================================= -->
 

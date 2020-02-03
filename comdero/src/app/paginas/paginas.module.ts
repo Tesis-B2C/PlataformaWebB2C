@@ -4,7 +4,7 @@ import { LoguinComponent } from './loguin/loguin.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { PrincipalComponent } from './principal/principal.component';
 import { RegistroComponent } from './registro/registro.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import { FormsModule , ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -12,6 +12,7 @@ import {ReactiveFormsModule} from "@angular/forms";
     imports: [
         CommonModule,
         NgbModule,
+        FormsModule,
         ReactiveFormsModule
     ]
 })
