@@ -146,22 +146,43 @@
   margin-top: 15px;
 }
 
-@media (max-width: 1366px) {
+@media (max-width: 1364px) {
   .container-registro
   {
     max-width:380px;
     margin-top: 15px;
   }
 
-  .tamanioCampos
-  {
-    font-size: 0.8em;
-  }
+
 }
  /* estilos para herrores  */
-
-.errorValidacion
+.tamanioCampos
 {
-  color: red;
+  font-size: small;
+  font-weight: bolder;
+
+}
+.tamanioInputs
+{
+  font-size: small;
+
+
 }
 
+
+.advertenciaValidacion
+{
+  font-size: smaller;
+  color: #1da1f2;
+  border: br 5px solid;
+}
+
+.alert{
+  font-size: smaller;
+  padding: 0;
+  background-color: white;
+  border: none;
+  color: #bd2130;
+  margin-left: 4px;
+
+}

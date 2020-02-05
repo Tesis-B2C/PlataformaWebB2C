@@ -1,5 +1,5 @@
 import {Component, OnInit, DoCheck} from '@angular/core';
-
+import { Agente } from "../modelos/agente";
 
 @Component({
   selector: 'app-registro',
@@ -8,16 +8,18 @@ import {Component, OnInit, DoCheck} from '@angular/core';
 })
 export class RegistroComponent implements OnInit, DoCheck {
   public bandetTipo;
- public nombre;
+  public Agente;
   //tslint:disable-next-line: max-line-length
-  private emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  public soloLetrasPattern;
-  private LetrasNumerosPattern: any = /^[ a-z 0-9 ][ a-z 0-9 ]*$/
-  private soloNumerosPattern: any = /^[0-9][0-9]*$[A-Z]{0}/
-  private passwordPattern:any = null;
+  private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
+  public soloLetrasPattern:any="[ a-zA-Z ][ a-zA-Z ]*$[0-9]{0}";
+  private LetrasNumerosPattern: any = "[ .a-z 0-9 ][ .a-z 0-9 ]*$";
+  private soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
+
 
   constructor() {
-    this.soloLetrasPattern= "[ a-zA-Z ][ a-zA-Z ]*$[0-9]{0}";
+    this.Agente= new Agente("","","",
+      "","","","","","",
+      "","",);
   }
 
 
