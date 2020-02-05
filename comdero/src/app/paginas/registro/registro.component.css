@@ -186,3 +186,12 @@
   margin-left: 4px;
 
 }
+
+.errorSelect
+{
+  border: 1px solid red ;
+}
+.satisfactorioSelect
+{
+  border: 1px solid limegreen ;
+}
