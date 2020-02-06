@@ -15,6 +15,7 @@ export class RegistroComponent implements OnInit, DoCheck {
   private LetrasNumerosPattern: any = "[ .a-z 0-9 ][ .a-z 0-9 ]*$";
   private soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
 
+  public banderToast:boolean;
 
   constructor() {
     this.Agente= new Agente("","","",
@@ -26,11 +27,11 @@ export class RegistroComponent implements OnInit, DoCheck {
 
   ngOnInit() {
     this.bandetTipo = true;
-
+    this.banderToast=false;
   }
 
   ngDoCheck() {
-
+    this.banderToast;
   }
 
   selectAdminsitrador() {
@@ -38,6 +39,16 @@ export class RegistroComponent implements OnInit, DoCheck {
     console.log(this.bandetTipo);
   }
 
+  registrarAgente(validador){
+  console.log(validador);
+  if(validador=="0"){
+    //this.banderToast=false;
 
+  }else{
+    console.log("entre");
+    this.banderToast=true;
+    window.scroll(0,0);
+  }
+  }
 
 }

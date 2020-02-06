@@ -7,14 +7,17 @@
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 </head>
 <body>
+<div class="bounceInRight alert alert-danger" id="toast" *ngIf="banderToast && !FormRegistro.checkValidity()" >
+  * <strong>!Opps</strong> al parecer existen errores, revisa nuevamente el formulario
+</div>
 
 <div class="mx-auto  container-login100  container-registro">
   <article class=" wrap-register100 card-body">
-    <div class="rubberBand" id="divImagenLogo">
+    <div   id="divImagenLogo">
       <img id="imagenLogo" src="./../assets/images/logoValid2.png">
     </div>
     <header class="login100-form-title-registro"><h5 class="card-title">Registrate</h5></header>
-    <form id="form_registro">
+    <form id="formRegistro" #FormRegistro>
       <div class="form-group">
         <label class="custom-control custom-radio custom-control-inline">
           <input (change)="selectAdminsitrador()" checked="" class="custom-control-input" name="gender" type="radio"
@@ -32,7 +35,8 @@
         <div class="col form-group">
           <label class="tamanioCampos">Nombres y Apellidos</label>
           <input #NombreA="ngModel" [(ngModel)]="this.Agente.Nombre" [ngClass]="{'is-invalid': NombreA.invalid && (NombreA.dirty || NombreA.touched),
-                 'is-valid': NombreA.valid && (NombreA.dirty || NombreA.touched)}" [pattern]='this.soloLetrasPattern'
+                 'is-valid': NombreA.valid && (NombreA.dirty || (NombreA.touched || NombreA.untouched))}"
+                 [pattern]='this.soloLetrasPattern'
                  class="tamanioInputs form-control" name="nombreA" placeholder="" required
                  type="text">
           <div *ngIf="NombreA.invalid && (NombreA.dirty || NombreA.touched)">
@@ -50,7 +54,8 @@
       <div *ngIf="!bandetTipo" class="form-group">
         <label class="tamanioCampos">Razon Social</label>
         <input #Razon_Social="ngModel" [(ngModel)]="this.Agente.Razon_Social" [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched),
-                 'is-valid': Razon_Social.valid && (Razon_Social.dirty || Razon_Social.touched)}" [pattern]='this.LetrasNumerosPattern'
+                 'is-valid': Razon_Social.valid && (Razon_Social.dirty || Razon_Social.touched)}"
+               [pattern]='this.LetrasNumerosPattern'
                class="tamanioInputs form-control" name="razon_Social" placeholder=""
                required type="text">
         <div *ngIf="Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched)">
@@ -67,10 +72,11 @@
 
 
       <div class="form-row">
-        <div *ngIf="bandetTipo" class="col form-group">
+        <div *ngIf="bandetTipo" class="col-lg-6 form-group">
           <label class="tamanioCampos">Cédula</label>
           <input #Cedula="ngModel" [(ngModel)]="this.Agente.Cedula" [ngClass]="{'is-invalid': Cedula.invalid && (Cedula.dirty || Cedula.touched),
-                 'is-valid': Cedula.valid && (Cedula.dirty || Cedula.touched)}" [pattern]='this.soloNumerosPattern' class="tamanioInputs form-control" maxlength="10"
+                 'is-valid': Cedula.valid && (Cedula.dirty || Cedula.touched)}" [pattern]='this.soloNumerosPattern'
+                 class="tamanioInputs form-control" maxlength="10"
                  minlength="10" name="cedula" placeholder="" required
                  type="text">
           <div *ngIf="Cedula.invalid && (Cedula.dirty || Cedula.touched)">
@@ -93,10 +99,11 @@
             </div>
           </div>
         </div><!--form-group end.;-->
-        <div *ngIf="!bandetTipo" class="col form-group">
+        <div *ngIf="!bandetTipo" class="col-lg-6 col form-group">
           <label class="tamanioCampos">RUC</label>
           <input #Ruc="ngModel" [(ngModel)]="this.Agente.Ruc" [ngClass]="{'is-invalid': Ruc.invalid && (Ruc.dirty || Ruc.touched),
-                 'is-valid': Ruc.valid && (Ruc.dirty || Ruc.touched)}" [pattern]='this.soloNumerosPattern' class="tamanioCampos form-control" maxlength="13"
+                 'is-valid': Ruc.valid && (Ruc.dirty || Ruc.touched)}" [pattern]='this.soloNumerosPattern'
+                 class="tamanioCampos form-control" maxlength="13"
                  minlength="13" name="ruc" placeholder="" required type="text">
           <div *ngIf="Ruc.invalid && (Ruc.dirty || Ruc.touched)">
             <div *ngIf="Ruc.errors.required">
@@ -118,7 +125,7 @@
             </div>
           </div>
         </div> <!-- form-group end.-->
-        <div class="col form-group">
+        <div class="col-lg-6 form-group">
           <label class="tamanioCampos">Teléfono Celular</label>
           <input #Telefono="ngModel" [(ngModel)]="this.Agente.Telefono" [ngClass]="{'is-invalid': Telefono.invalid && (Telefono.dirty || Telefono.touched),
                  'is-valid': Telefono.valid && (Telefono.dirty || Telefono.touched)}"
@@ -151,7 +158,8 @@
         <label class="tamanioCampos">Email</label>
         <input #Email="ngModel" [(ngModel)]="this.Agente.Correo" [ngClass]="{
           'is-invalid': Email.invalid && (Email.dirty || Email.touched),
-          'is-valid': Email.valid && (Email.dirty || Email.touched)}" [pattern]='this.emailPattern' class="form-control tamanioInputs"
+          'is-valid': Email.valid && (Email.touched || Email.dirty )}" [pattern]='this.emailPattern'
+               class="form-control tamanioInputs"
                name="email" placeholder="" required type="email"
                type="email">
 
@@ -198,7 +206,7 @@
           'errorSelect': Ciudad.invalid && (Ciudad.dirty || Ciudad.touched),
           'satisfactorioSelect': Ciudad.valid && (Ciudad.dirty || Ciudad.touched)}"
                     [pattern]='this.soloLetrasPattern' class="tamanioCampos form-control" name="ciudad" placeholder=""
-                    required >
+                    required>
               <option> Choose...</option>
               <option>Uzbekistan</option>
               <option>Russia</option>
@@ -207,7 +215,7 @@
               <option>Afganistan</option>
             </select>
             <div *ngIf="Ciudad.invalid && (Ciudad.touched||Ciudad.dirty)">
-              <div *ngIf="Ciudad.errors.required" >
+              <div *ngIf="Ciudad.errors.required">
                 <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                   Ciudad es requerida.</p>
               </div>
@@ -218,12 +226,13 @@
       </div> <!-- form-group end.// -->
       <div class="form-group">
         <label class="tamanioCampos">Calle Principal</label>
-        <input #CallePrincipal="ngModel" [(ngModel)]="this.Agente.Calle_Principal_Agente" class="tamanioCampos form-control" name="callePrincipal"
-               placeholder="" required type="text" [ngClass]="{
+        <input #CallePrincipal="ngModel" [(ngModel)]="this.Agente.Calle_Principal_Agente"
+               [ngClass]="{
           'is-invalid': CallePrincipal.invalid && (CallePrincipal.dirty || CallePrincipal.touched),
-          'is-valid': CallePrincipal.valid && (CallePrincipal.dirty || CallePrincipal.touched)}">
+          'is-valid': CallePrincipal.valid && (CallePrincipal.dirty || CallePrincipal.touched)}" class="tamanioCampos form-control"
+               name="callePrincipal" placeholder="" required type="text">
         <div *ngIf="CallePrincipal.invalid && (CallePrincipal.touched||CallePrincipal.dirty)">
-          <div *ngIf="CallePrincipal.errors.required" >
+          <div *ngIf="CallePrincipal.errors.required">
             <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
               Calle principal es requerida.</p>
           </div>
@@ -233,12 +242,13 @@
       <div class="form-row">
         <div class="col-lg-7 form-group">
           <label class="tamanioCampos">Calle Secundaria</label>
-          <input #CalleSecundaria="ngModel" [(ngModel)]="this.Agente.Calle_Secundaria_Agente" class="tamanioCampos form-control" name="calleSecundaria"
-                 placeholder="" required type="text" [ngClass]="{
+          <input #CalleSecundaria="ngModel" [(ngModel)]="this.Agente.Calle_Secundaria_Agente"
+                 [ngClass]="{
           'is-invalid': CalleSecundaria.invalid && (CalleSecundaria.dirty || CalleSecundaria.touched),
-          'is-valid': CalleSecundaria.valid && (CalleSecundaria.dirty || CalleSecundaria.touched)}">
+          'is-valid': CalleSecundaria.valid && (CalleSecundaria.dirty || CalleSecundaria.touched)}" class="tamanioCampos form-control"
+                 name="calleSecundaria" placeholder="" required type="text">
           <div *ngIf="CalleSecundaria.invalid && (CalleSecundaria.touched||CalleSecundaria.dirty)">
-            <div *ngIf="CalleSecundaria.errors.required" >
+            <div *ngIf="CalleSecundaria.errors.required">
               <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                 Calle Secundaria es requerida.</p>
             </div>
@@ -247,16 +257,17 @@
         </div>
         <div class=" col-lg-5 form-group">
           <label class="tamanioCampos">Codigo Postal</label>
-          <input #CodigoPostal="ngModel" [(ngModel)]="this.Agente.Numero_Casa_Agente" class=" tamanioCampos form-control" maxlength="12" name="codigoPostal"
-                 placeholder="" required type="text" [ngClass]="{
+          <input #CodigoPostal="ngModel" [(ngModel)]="this.Agente.Numero_Casa_Agente"
+                 [ngClass]="{
           'is-invalid': CodigoPostal.invalid && (CodigoPostal.dirty || CodigoPostal.touched),
-          'is-valid': CodigoPostal.valid && (CodigoPostal.dirty || CodigoPostal.touched)}">
+          'is-valid': CodigoPostal.valid && (CodigoPostal.dirty || CodigoPostal.touched)}" class=" tamanioCampos form-control" maxlength="12"
+                 name="codigoPostal" placeholder="" required type="text">
           <div *ngIf="CodigoPostal.invalid && (CodigoPostal.touched||CodigoPostal.dirty)">
-            <div *ngIf="CodigoPostal.errors.required" >
+            <div *ngIf="CodigoPostal.errors.required">
               <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-               Campo Requerido</p>
+                Campo Requerido</p>
             </div>
-            <div *ngIf="CodigoPostal.errors.maxlength" >
+            <div *ngIf="CodigoPostal.errors.maxlength">
               <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                 No mas de 12 caracteres.</p>
             </div>
@@ -268,16 +279,17 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <label class="tamanioCampos">Contraseña</label>
-          <input #Password="ngModel" [(ngModel)]="this.Agente.Contrasenia" class="tamanioCampos form-control" minlength="6" name="password"
-                 placeholder="" required type="password"  [ngClass]="{
+          <input #Password="ngModel" [(ngModel)]="this.Agente.Contrasenia" [ngClass]="{
           'is-invalid': Password.invalid && (Password.dirty || Password.touched),
-          'is-valid': Password.valid && (Password.dirty || Password.touched)}">
+          'is-valid': Password.valid && (Password.dirty || Password.touched)}"
+                 class="tamanioCampos form-control" minlength="6"
+                 name="password" placeholder="" required type="password">
           <div *ngIf="Password.invalid && (Password.touched||Password.dirty)">
-            <div *ngIf="Password.errors.required" >
+            <div *ngIf="Password.errors.required">
               <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                 Contraseña es requerida.</p>
             </div>
-            <div *ngIf="Password.errors.minlength" >
+            <div *ngIf="Password.errors.minlength">
               <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                 No puede tener menos de 6 caracteres.</p>
             </div>
@@ -285,16 +297,17 @@
         </div>  <!--form-group end.-->
         <div class="form-group col-md-6">
           <label class="tamanioCampos">Repetir contraseña</label>
-          <input #PasswordR="ngModel" [(ngModel)]="this.Agente.Contrasenia2" [pattern]='this.Agente.Contrasenia' class="tamanioCampos form-control"
-                 name="passwordR" placeholder="" required type="password"  [ngClass]="{
+          <input #PasswordR="ngModel" [(ngModel)]="this.Agente.Contrasenia2" [ngClass]="{
           'is-invalid': PasswordR.invalid && (PasswordR.dirty || PasswordR.touched),
-          'is-valid': PasswordR.valid && (PasswordR.dirty || PasswordR.touched)}">
+          'is-valid': PasswordR.valid && (PasswordR.dirty || PasswordR.touched)}"
+                 [pattern]='this.Agente.Contrasenia'
+                 class="tamanioCampos form-control" name="passwordR" placeholder="" required type="password">
           <div *ngIf="PasswordR.invalid && (PasswordR.touched||PasswordR.dirty)">
-            <div *ngIf="PasswordR.errors.required" >
+            <div *ngIf="PasswordR.errors.required">
               <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                 Contraseña es requerida.</p>
             </div>
-            <div *ngIf="PasswordR.errors.pattern" >
+            <div *ngIf="PasswordR.errors.pattern">
               <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                 La contraseña no coincide+.</p>
             </div>
@@ -305,8 +318,11 @@
       <div class="container-login100-form-btn">
         <div class="wrap-login100-form-btn">
           <div class="login100-form-bgbtn"></div>
-          <button class="login100-form-btn">
+          <button (click)="registrarAgente('0')" [hidden]="!FormRegistro.checkValidity()" class="login100-form-btn">
             Crea tu cuenta en condero
+          </button>
+          <button id="btnToast" (click)="registrarAgente('1')" [hidden]="FormRegistro.checkValidity()" class="login100-form-btn">
+            Crea tu cuenta en condero 2
           </button>
         </div>
       </div>
@@ -327,9 +343,7 @@
 <br><br>
 <!-- ============================ COMPONENT REGISTER  END.// ================================= -->
 
-
 <!-- ========================= SECTION CONTENT END// ========================= -->
-
 
 </body>
 </html>
