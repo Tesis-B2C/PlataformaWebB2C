@@ -5,13 +5,17 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { PrincipalComponent } from './principal/principal.component';
 import { RegistroComponent } from './registro/registro.component';
 import { RegistroTiendaComponent } from './registro-tienda/registro-tienda.component';
+import { FormsModule} from "@angular/forms";
 
 
 @NgModule({
   declarations: [LoguinComponent, PrincipalComponent, RegistroComponent, RegistroTiendaComponent],
-  imports: [
-    CommonModule,
-    NgbModule
-  ]
+    imports: [
+        CommonModule,
+        NgbModule,
+        FormsModule,
+
+
+    ]
 })
 export class PaginasModule { }

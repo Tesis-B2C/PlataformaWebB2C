@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 
+
 @Component({
   selector: 'app-loguin',
   templateUrl: './loguin.component.html',
@@ -7,7 +8,12 @@ import {Component, OnInit} from '@angular/core';
 })
 export class LoguinComponent implements OnInit {
 
+
+  // tslint:disable-next-line: max-line-length
+
+
   constructor() {
+
   }
 
   ngOnInit() {

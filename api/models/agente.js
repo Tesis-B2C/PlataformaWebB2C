@@ -9,6 +9,7 @@ const Agente = db.sequelize.define('Agente', {
             primaryKey: true,
             allowNull: false,
             autoIncrement: true
+
         },
         NUM_COD_POSTAL:
             {
@@ -23,27 +24,17 @@ const Agente = db.sequelize.define('Agente', {
                 allowNull: false
             },
 
-        APELLIDO:
-            {
-                type: Sequelize.STRING,
-                allowNull: false
-            },
-        CEDULA:
-            {
-                type: Sequelize.STRING,
-                allowNull: false
-            },
         TELEFONO:
             {
                 type:Sequelize.INTEGER,
                 allowNull:false
             },
-        CALLE_PRINCIPAL:
+        CALLE_PRINCIPAL_AGENTE:
             {
                 type:Sequelize.STRING,
                 allowNull:false
             },
-        CALLE_SECUNDARIA:
+        CALLE_SECUNDARIA_AGENTE:
             {
                 type:Sequelize.STRING,
                 allowNull:false

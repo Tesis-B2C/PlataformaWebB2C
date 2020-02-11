@@ -10,16 +10,12 @@ const Tienda= db.sequelize.define('Tienda', {
             allowNull: false
         },
         ID_AGENTE: {
+
             type: Sequelize.BIGINT,
+            autoIncrement: true,
             primaryKey:true,
             autoIncrement: true,
             allowNull: false
-        },
-        ID_AGENTE: {
-            type: Sequelize.INTEGER,
-            primaryKey:true,
-            allowNull: false
-
         },
        RAZON_SOCIAL:
             {
