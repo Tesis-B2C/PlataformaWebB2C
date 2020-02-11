@@ -7,17 +7,17 @@
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 </head>
 <body>
-<div class="bounceInRight alert alert-danger" id="toast" *ngIf="banderToast && !FormRegistro.checkValidity()" >
+<div *ngIf="banderToast && !FormRegistro.checkValidity()" class="bounceInRight alert alert-danger" id="toast">
   * <strong>!Opps</strong> al parecer existen errores, revisa nuevamente el formulario
 </div>
 
 <div class="mx-auto  container-login100  container-registro">
   <article class=" wrap-register100 card-body">
-    <div   id="divImagenLogo">
+    <div id="divImagenLogo">
       <img id="imagenLogo" src="./../assets/images/logoValid2.png">
     </div>
     <header class="login100-form-title-registro"><h5 class="card-title">Registrate</h5></header>
-    <form id="formRegistro" #FormRegistro>
+    <form #FormRegistro id="formRegistro">
       <div class="form-group">
         <label class="custom-control custom-radio custom-control-inline">
           <input (change)="selectAdminsitrador()" checked="" class="custom-control-input" name="gender" type="radio"
@@ -229,7 +229,8 @@
         <input #CallePrincipal="ngModel" [(ngModel)]="this.Agente.Calle_Principal_Agente"
                [ngClass]="{
           'is-invalid': CallePrincipal.invalid && (CallePrincipal.dirty || CallePrincipal.touched),
-          'is-valid': CallePrincipal.valid && (CallePrincipal.dirty || CallePrincipal.touched)}" class="tamanioCampos form-control"
+          'is-valid': CallePrincipal.valid && (CallePrincipal.dirty || CallePrincipal.touched)}"
+               class="tamanioCampos form-control"
                name="callePrincipal" placeholder="" required type="text">
         <div *ngIf="CallePrincipal.invalid && (CallePrincipal.touched||CallePrincipal.dirty)">
           <div *ngIf="CallePrincipal.errors.required">
@@ -245,7 +246,8 @@
           <input #CalleSecundaria="ngModel" [(ngModel)]="this.Agente.Calle_Secundaria_Agente"
                  [ngClass]="{
           'is-invalid': CalleSecundaria.invalid && (CalleSecundaria.dirty || CalleSecundaria.touched),
-          'is-valid': CalleSecundaria.valid && (CalleSecundaria.dirty || CalleSecundaria.touched)}" class="tamanioCampos form-control"
+          'is-valid': CalleSecundaria.valid && (CalleSecundaria.dirty || CalleSecundaria.touched)}"
+                 class="tamanioCampos form-control"
                  name="calleSecundaria" placeholder="" required type="text">
           <div *ngIf="CalleSecundaria.invalid && (CalleSecundaria.touched||CalleSecundaria.dirty)">
             <div *ngIf="CalleSecundaria.errors.required">
@@ -260,7 +262,8 @@
           <input #CodigoPostal="ngModel" [(ngModel)]="this.Agente.Numero_Casa_Agente"
                  [ngClass]="{
           'is-invalid': CodigoPostal.invalid && (CodigoPostal.dirty || CodigoPostal.touched),
-          'is-valid': CodigoPostal.valid && (CodigoPostal.dirty || CodigoPostal.touched)}" class=" tamanioCampos form-control" maxlength="12"
+          'is-valid': CodigoPostal.valid && (CodigoPostal.dirty || CodigoPostal.touched)}"
+                 class=" tamanioCampos form-control" maxlength="12"
                  name="codigoPostal" placeholder="" required type="text">
           <div *ngIf="CodigoPostal.invalid && (CodigoPostal.touched||CodigoPostal.dirty)">
             <div *ngIf="CodigoPostal.errors.required">
@@ -321,7 +324,8 @@
           <button (click)="registrarAgente('0')" [hidden]="!FormRegistro.checkValidity()" class="login100-form-btn">
             Crea tu cuenta en condero
           </button>
-          <button id="btnToast" (click)="registrarAgente('1')" [hidden]="FormRegistro.checkValidity()" class="login100-form-btn">
+          <button (click)="registrarAgente('1')" [hidden]="FormRegistro.checkValidity()" class="login100-form-btn"
+                  id="btnToast">
             Crea tu cuenta en condero 2
           </button>
         </div>
