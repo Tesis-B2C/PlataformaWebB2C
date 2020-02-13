@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 var Sucursal = require("./sucursal");
-
+var Agente = require("./agente");
 const Codigo_Postal = db.sequelize.define('Codigo_Postal', {
 
         NUM_COD_POSTAL:

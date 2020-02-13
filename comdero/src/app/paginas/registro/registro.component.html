@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="pragma" content="no-cache"/>
-  <meta http-equiv="cache-control" content="max-age=604800"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="no-cache" http-equiv="pragma"/>
+  <meta content="max-age=604800" http-equiv="cache-control"/>
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 
   <title>Registro</title>
 
@@ -188,12 +188,9 @@
           'satisfactorioSelect': Provincia.valid && (Provincia.dirty || Provincia.touched)}"
                     [pattern]='this.soloLetrasPattern' class="tamanioCampos form-control" name="provincia"
                     placeholder="" required>
-              <option> Choose...</option>
-              <option>Uzbekistan</option>
-              <option>Russia</option>
-              <option selected="">United States</option>
-              <option>India</option>
-              <option>Afganistan</option>
+              <option selected> Selecciona la provincia</option>
+              <option *ngFor="let provincia of this.provincias"> {{provincia.NOMBRE}}</option>
+
             </select>
             <div *ngIf="Provincia.invalid && (Provincia.touched||Provincia.dirty)">
               <div *ngIf="Provincia.errors.required">
@@ -240,7 +237,7 @@
           <div *ngIf="CallePrincipal.errors.required">
             <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
               Calle principal es requerida.</p>
-          </div>
+          </div>provincias
         </div>
       </div><!-- form-group end.// -->
 

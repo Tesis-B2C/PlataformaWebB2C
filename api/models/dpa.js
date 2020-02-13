@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 var Codigo_Postal = require("./codigo_postal");
 
-const Dpa = db.sequelize.define('Dpa', {
+const Dpa = db.sequelize.define('DPA', {
         COD_DPA:
             {
                 type: Sequelize.INTEGER,

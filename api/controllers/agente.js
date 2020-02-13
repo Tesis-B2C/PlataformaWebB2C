@@ -9,7 +9,7 @@ var jwt = require('../services/jwt');
 
 
 
-var mysql = require('mysql2');
+var mysql = require('mysql');
 
 async  function guardarAgente(req, res) {
 

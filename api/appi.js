@@ -9,7 +9,7 @@ var app = express();
 
 //cargar Rutas
 
-var agente_rutas = require('./routes/agente');
+var dpa_rutas = require('./routes/dpa');
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 
 // rutas base
 
-app.use('/api', agente_rutas);
+app.use('/api', dpa_rutas);
 
 
 
