@@ -1,8 +1,5 @@
 import { Injectable } from "@angular/core";
 import { HttpClient,HttpResponse, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/filter';
 import { GLOBAL } from "./global";
 //import { Http, Headers } from "@angular/http";
 
@@ -20,10 +17,14 @@ export class DpaServicio {
     this.url = GLOBAL.url;
   }
 
-  getAllDpa()
+  getDpaProvincias(buscar)
   {
     let headers = new HttpHeaders({ "Content-type": "application/json" });
-    return this._http.get<objeto>(this.url + "getAllDpa/" , { headers: headers });
+    return this._http.get<objeto>(this.url + "getDpaProvincias/"+buscar , { headers: headers });
   }
-
+  getDpaCiudades(buscar)
+  {
+    let headers = new HttpHeaders({ "Content-type": "application/json" });
+    return this._http.get<objeto>(this.url + "getDpaCiudades/"+buscar , { headers: headers });
+  }
 }

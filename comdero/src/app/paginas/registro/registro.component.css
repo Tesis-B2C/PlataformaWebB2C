@@ -68,7 +68,6 @@
   max-width:450px;
   margin-top: 15px;
   position: static;
-  float: center;
   clear: top;
 
 }
@@ -218,6 +217,4 @@
   -webkit-animation-name: bounceInRight;
   animation-name: bounceInRight;
 }
-
-
 

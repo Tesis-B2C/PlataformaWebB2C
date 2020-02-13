@@ -1,43 +1,39 @@
 import {Component, DoCheck, OnInit} from '@angular/core';
 import {Agente} from "../modelos/agente";
 import {DpaServicio} from "../../servicios/dpa.servicio"
-
+import {Observable} from 'rxjs';
+import {debounceTime, distinctUntilChanged, filter, map} from 'rxjs/operators';
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.css']
 })
+
 export class RegistroComponent implements OnInit, DoCheck {
   public bandetTipo;
   public Agente;
-  //tslint:disable-next-line: max-line-length
   private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
-  public soloLetrasPattern: any = "[ a-zA-Z ][ a-zA-Z ]*$[0-9]{0}";
+  public soloLetrasPattern: any = "[ a-zA-ZÑñ ][ a-zA-ZÑñ ]*$[0-9]{0}";
   private LetrasNumerosPattern: any = "[ .a-z 0-9 ][ .a-z 0-9 ]*$";
   private soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
   public banderToast: boolean;
-
-
   public provincias;
+  public ciudades;
+
 
   constructor(private _dpaServicio: DpaServicio) {
     this.Agente = new Agente("", "", "",
       "", "", "", "", "", "",
       "", "",);
   }
-
-
-
-  ngOnInit() {
+  async ngOnInit() {
     console.log("!INIT");
     this.bandetTipo = true;
     this.banderToast = false;
-    this.obtenerProvincias();
-
+    await this.getDpaProvincias("P");
   }
 
   ngDoCheck() {
-    this.banderToast;
   }
 
   selectAdminsitrador() {
@@ -48,31 +44,30 @@ export class RegistroComponent implements OnInit, DoCheck {
   registrarAgente(validador) {
     console.log(validador);
     if (validador == "0") {
-      //this.banderToast=false;
-
+      this.banderToast = false;
     } else {
-      console.log("entre");
       this.banderToast = true;
       window.scroll(0, 0);
     }
   }
-
-  async obtenerProvincias() {
-
+  async getDpaProvincias(buscar) {
     try {
-      let response=  await this._dpaServicio.getAllDpa().toPromise();
-      console.log("ee",response)
-      this.provincias=response.data;
-
-    }catch (e) {
-      console.log("error:"+JSON.stringify((e).error.message));
+      let response = await this._dpaServicio.getDpaProvincias(buscar).toPromise();
+      this.provincias = response.data;
+    } catch (e) {
+      console.log("error:" + JSON.stringify((e).error.message));
     }
 
-
   }
+  async getDpaCiudades(buscar){
 
-
-
+    try {
+      let response = await this._dpaServicio.getDpaCiudades(buscar).toPromise();
+      this.ciudades = response.data;
+    } catch (e) {
+      console.log("error:" + JSON.stringify((e).error.message));
+    }
+  }
 
 
 }
