@@ -10,7 +10,7 @@ var app = express();
 //cargar Rutas
 
 var dpa_rutas = require('./routes/dpa');
-
+var agente_rustas = require('./routes/agente');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json()); //convertir a json als peticiones
@@ -28,7 +28,7 @@ app.use((req, res, next) => {
 // rutas base
 
 app.use('/api', dpa_rutas);
-
+app.use('/api',agente_rustas)
 
 
 /*app.use('/api', user_routes);

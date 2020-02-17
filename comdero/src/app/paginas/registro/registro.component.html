@@ -59,7 +59,7 @@ shadow-lg p-3 mb-5 bg-white rounded " id="toast">
 
       <div *ngIf="!bandetTipo" class="form-group">
         <label class="tamanioCampos">Razon Social</label>
-        <input #Razon_Social="ngModel" [(ngModel)]="this.Agente.Razon_Social" [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched),
+        <input #Razon_Social="ngModel" [(ngModel)]="this.Agente.Id_Agente" [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched),
                  'is-valid': Razon_Social.valid && (Razon_Social.dirty || Razon_Social.touched)}"
                [pattern]='this.LetrasNumerosPattern'
                class="tamanioInputs form-control" name="razon_Social" placeholder=""
@@ -80,7 +80,7 @@ shadow-lg p-3 mb-5 bg-white rounded " id="toast">
       <div class="form-row">
         <div *ngIf="bandetTipo" class="col-lg-6 form-group">
           <label class="tamanioCampos">Cédula</label>
-          <input #Cedula="ngModel" [(ngModel)]="this.Agente.Cedula" [ngClass]="{'is-invalid': Cedula.invalid && (Cedula.dirty || Cedula.touched),
+          <input #Cedula="ngModel" [(ngModel)]="this.Agente.Id_Agente" [ngClass]="{'is-invalid': Cedula.invalid && (Cedula.dirty || Cedula.touched),
                  'is-valid': Cedula.valid && (Cedula.dirty || Cedula.touched)}" [pattern]='this.soloNumerosPattern'
                  class="tamanioInputs form-control" maxlength="10"
                  minlength="10" name="cedula" placeholder="" required
@@ -107,7 +107,7 @@ shadow-lg p-3 mb-5 bg-white rounded " id="toast">
         </div><!--form-group end.;-->
         <div *ngIf="!bandetTipo" class="col-lg-6 col form-group">
           <label class="tamanioCampos">RUC</label>
-          <input #Ruc="ngModel" [(ngModel)]="this.Agente.Ruc" [ngClass]="{'is-invalid': Ruc.invalid && (Ruc.dirty || Ruc.touched),
+          <input #Ruc="ngModel" [(ngModel)]="this.Agente.Id_Agente" [ngClass]="{'is-invalid': Ruc.invalid && (Ruc.dirty || Ruc.touched),
                  'is-valid': Ruc.valid && (Ruc.dirty || Ruc.touched)}" [pattern]='this.soloNumerosPattern'
                  class="tamanioInputs form-control" maxlength="13"
                  minlength="13" name="ruc" placeholder="" required type="text">
@@ -190,7 +190,6 @@ shadow-lg p-3 mb-5 bg-white rounded " id="toast">
           'errorSelect': Provincia.invalid && (Provincia.dirty || Provincia.touched),
           'satisfactorioSelect': Provincia.valid && (Provincia.dirty || Provincia.touched)}" class="tamanioInputs form-control" name="provincia"
                     required>
-              <option selected value="..">..</option>
               <option *ngFor="let provincia of this.provincias"
                       value="{{provincia.COD_DPA}}"> {{provincia.NOMBRE }}</option>
             </select>
@@ -210,7 +209,6 @@ shadow-lg p-3 mb-5 bg-white rounded " id="toast">
           'satisfactorioSelect': Ciudad.valid && (Ciudad.dirty || Ciudad.touched)}"
                     class="tamanioInputs form-control" name="ciudad" placeholder=""
                     required>
-              <option selected>..</option>
               <option *ngFor="let ciudad of this.ciudades" value="{{ciudad.COD_DPA}}"> {{ciudad.NOMBRE }}</option>
             </select>
             <div *ngIf="Ciudad.invalid && (Ciudad.touched||Ciudad.dirty)">
@@ -236,7 +234,6 @@ shadow-lg p-3 mb-5 bg-white rounded " id="toast">
             <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
               Campo requerido.</p>
           </div>
-          provincias
         </div>
       </div><!-- form-group end.// -->
 
@@ -259,7 +256,7 @@ shadow-lg p-3 mb-5 bg-white rounded " id="toast">
         </div>
         <div class=" col-lg-5 form-group">
           <label class="tamanioCampos">Codigo Postal</label>
-          <input #CodigoPostal="ngModel" [(ngModel)]="this.Agente.Numero_Casa_Agente"
+          <input #CodigoPostal="ngModel" [(ngModel)]="this.Agente.Num_Cod_Postal"
                  [ngClass]="{
           'is-invalid': CodigoPostal.invalid && (CodigoPostal.dirty || CodigoPostal.touched),
           'is-valid': CodigoPostal.valid && (CodigoPostal.dirty || CodigoPostal.touched)}"
@@ -300,7 +297,7 @@ shadow-lg p-3 mb-5 bg-white rounded " id="toast">
         </div>  <!--form-group end.-->
         <div class="form-group col-md-6">
           <label class="tamanioCampos">Repetir contraseña</label>
-          <input #PasswordR="ngModel" [(ngModel)]="this.Agente.Contrasenia2" [ngClass]="{
+          <input #PasswordR="ngModel" [(ngModel)]="this.ComprarContrasenia" [ngClass]="{
           'is-invalid': PasswordR.invalid && (PasswordR.dirty || PasswordR.touched),
           'is-valid': PasswordR.valid && (PasswordR.dirty || PasswordR.touched)}"
                  [pattern]='this.Agente.Contrasenia'

@@ -1,8 +1,7 @@
 import {Component, DoCheck, OnInit} from '@angular/core';
 import {Agente} from "../modelos/agente";
 import {DpaServicio} from "../../servicios/dpa.servicio"
-import {Observable} from 'rxjs';
-import {debounceTime, distinctUntilChanged, filter, map} from 'rxjs/operators';
+import {AgenteServicio} from "../../servicios/agente.servicio"
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
@@ -19,12 +18,12 @@ export class RegistroComponent implements OnInit, DoCheck {
   public banderToast: boolean;
   public provincias;
   public ciudades;
+  public ComprarContrasenia;
 
-
-  constructor(private _dpaServicio: DpaServicio) {
-    this.Agente = new Agente("", "", "",
-      "", "", "", "", "", "",
-      "", "",);
+  constructor(private _dpaServicio: DpaServicio, private _agenteServicio:AgenteServicio) {
+    this.Agente = new Agente(null, null, null,
+      null, null, null, 0, null, null,
+      null, null,);
   }
   async ngOnInit() {
     console.log("!INIT");
@@ -41,10 +40,16 @@ export class RegistroComponent implements OnInit, DoCheck {
     console.log(this.bandetTipo);
   }
 
-  registrarAgente(validador) {
+  async registrarAgente(validador) {
     console.log(validador);
     if (validador == "0") {
       this.banderToast = false;
+      try{
+      let response = await this._agenteServicio.registrarAgente(this.Agente).toPromise();
+
+      }catch (e) {
+        console.log("error:" + JSON.stringify((e).error.message));
+      }
     } else {
       this.banderToast = true;
       window.scroll(0, 0);
@@ -68,6 +73,7 @@ export class RegistroComponent implements OnInit, DoCheck {
       console.log("error:" + JSON.stringify((e).error.message));
     }
   }
+
 
 
 }

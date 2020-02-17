@@ -8,11 +8,11 @@ async function getDpaProvincias(req, res) {
     var busqueda = req.params.id;
     console.log(busqueda);
     try {
-        let dpa = await DPA.findAll({where: {Tipo: req.params.id}});
+        let provinciasObtenidas = await DPA.findAll({where: {TIPO: req.params.id}});
 
-        if (dpa.length) {
+        if (provinciasObtenidas.length) {
             res.status(200).send({
-                data: dpa,
+                data: provinciasObtenidas,
                 message: "Dpa cargado correctamente"
             });
         } else {
@@ -33,11 +33,11 @@ async function getDpaCiudades(req, res) {
     var busqueda = req.params.id;
     console.log(busqueda);
     try {
-        let dpa = await DPA.findAll({where: {DPA_COD_DPA: req.params.id}});
+        let ciudadesObtenidas = await DPA.findAll({where: {DPA_COD_DPA: req.params.id}});
 
-        if (dpa.length) {
+        if (ciudadesObtenidas.length) {
             res.status(200).send({
-                data: dpa,
+                data: ciudadesObtenidas,
                 message: "Dpa cargado correctamente"
             });
         } else {

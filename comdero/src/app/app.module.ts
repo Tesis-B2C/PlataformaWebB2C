@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import {PaginasModule} from './paginas/paginas.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {DpaServicio} from "./servicios/dpa.servicio";
+import {AgenteServicio} from "./servicios/agente.servicio";
 @NgModule({
   declarations: [
     AppComponent
@@ -17,7 +18,7 @@ import {DpaServicio} from "./servicios/dpa.servicio";
     NgbModule,
     HttpClientModule
   ],
-  providers: [DpaServicio],
+  providers: [DpaServicio,AgenteServicio],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

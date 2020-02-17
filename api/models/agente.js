@@ -2,10 +2,10 @@ const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 var Tienda = require("./tienda");
 
-const Agente = db.sequelize.define('Agente', {
+const  AGENTE = db.sequelize.define('AGENTE', {
 
         ID_AGENTE: {
-            type: Sequelize.BIGINT,
+            type: Sequelize.STRING,
             primaryKey: true,
             allowNull: false,
             autoIncrement: true
@@ -39,8 +39,14 @@ const Agente = db.sequelize.define('Agente', {
                 type:Sequelize.STRING,
                 allowNull:false
             },
+        NUM_CASA_AGENTE:
+            {
+                type:Sequelize.STRING,
+                allowNull:false,
+            },
         CORREO:
             {
+                primaryKey: true,
                 type:Sequelize.STRING,
                 allowNull:false
             },
@@ -54,12 +60,18 @@ const Agente = db.sequelize.define('Agente', {
                 type:Sequelize.INTEGER,
                 allowNull:false
             },
+        CONTRASENIA:
+            {
+                type:Sequelize.STRING,
+                allowNull:false
+            },
     },
     {
         timestamps: false,
         id:false
     })
 
-Agente.hasMany(Tienda, {foreignKey: 'ID_AGENTE', sourceKey: 'ID_AGENTE'});
-Tienda.belongsTo(Agente, {foreignKey: 'ID_AGENTE', sourceKey: 'ID_AGENTE'});
-module.exports = Agente;
+AGENTE.hasMany(Tienda, {foreignKey: 'ID_AGENTE', sourceKey: 'ID_AGENTE'});
+Tienda.belongsTo(AGENTE, {foreignKey: 'ID_AGENTE', sourceKey: 'ID_AGENTE'});
+
+module.exports = AGENTE;
