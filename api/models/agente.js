@@ -26,7 +26,7 @@ const  AGENTE = db.sequelize.define('AGENTE', {
 
         TELEFONO:
             {
-                type:Sequelize.INTEGER,
+                type:Sequelize.STRING,
                 allowNull:false
             },
         CALLE_PRINCIPAL_AGENTE:

@@ -8,7 +8,7 @@ async function getDpaProvincias(req, res) {
     var busqueda = req.params.id;
     console.log(busqueda);
     try {
-        let provinciasObtenidas = await DPA.findAll({where: {TIPO: req.params.id}});
+        let provinciasObtenidas = await DPA.findAll({where: {TIPO: req.params.id},order:[['NOMBRE','ASC']]});
 
         if (provinciasObtenidas.length) {
             res.status(200).send({
@@ -33,7 +33,7 @@ async function getDpaCiudades(req, res) {
     var busqueda = req.params.id;
     console.log(busqueda);
     try {
-        let ciudadesObtenidas = await DPA.findAll({where: {DPA_COD_DPA: req.params.id}});
+        let ciudadesObtenidas = await DPA.findAll({where: {DPA_COD_DPA: req.params.id},order:[['NOMBRE','ASC']]});
 
         if (ciudadesObtenidas.length) {
             res.status(200).send({

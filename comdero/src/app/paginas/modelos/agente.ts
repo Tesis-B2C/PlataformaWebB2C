@@ -3,7 +3,7 @@ export class Agente {
     public Id_Agente: String,
     public Num_Cod_Postal: String,
     public Nombre: String,
-    public Telefono: Number,
+    public Telefono: String,
     public Correo: String,
     public Tipo: String,
     public Estado: Number,

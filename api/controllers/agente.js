@@ -8,7 +8,7 @@ var mysql = require('mysql');
 
 async function registrarAgente(req, res) {
 
-    const datosAgente = {
+    let datosAgente = {
         ID_AGENTE: req.body.Id_Agente,
         NOMBRE: req.body.Nombre,
         TELEFONO: req.body.Telefono,
@@ -18,7 +18,7 @@ async function registrarAgente(req, res) {
         ESTADO: req.body.Estado,
         CALLE_PRINCIPAL_AGENTE: req.body.Calle_Principal_Agente,
         CALLE_SECUNDARIA_AGENTE: req.body.Calle_Secundaria_Agente,
-        NUM_CASA_AGENTE:  req.body.Num_Casa.Agente,
+        NUM_CASA_AGENTE:  req.body.Num_Casa_Agente,
         CONTRASENIA: req.body.Contrasenia
     }
     try {

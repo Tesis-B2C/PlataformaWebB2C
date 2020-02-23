@@ -11,18 +11,21 @@
 </head>
 <body>
 <div *ngIf="banderToast && !FormRegistro.checkValidity()" class="bounceInRight alert alert-danger
-shadow-lg p-3 mb-5 bg-white rounded " id="toast">
+shadow-lg p-3 mb-5 bg-white rounded toastValidacion">
   * <strong>!Opps</strong> al parecer existen errores, revisa nuevamente el formulario
-
 </div>
 
-<div class="mx-auto  container-login100  container-registro shadow-lg p-3 mb-5 bg-white rounded">
+<div *ngIf="banderToastCedula" class="bounceInRight alert alert-danger
+shadow-lg p-3 mb-5 bg-white rounded toastValidacion " >
+  * <strong>!Opps</strong> Al parecer no introduciste una cédula válida
+</div>
+<div class="mx-auto  container-login100  container-registro shadow-lg p-3 bg-white rounded">
   <article class=" wrap-register100 card-body">
     <div id="divImagenLogo">
       <img id="imagenLogo" src="./../assets/images/logoValid2.png">
     </div>
     <header class="login100-form-title-registro"><h5 class="card-title">Regístrate</h5></header>
-    <form #FormRegistro>
+    <form #FormRegistro id="formRegistro">
 
       <div class="form-group">
         <label class="custom-control custom-radio custom-control-inline">
@@ -59,7 +62,7 @@ shadow-lg p-3 mb-5 bg-white rounded " id="toast">
 
       <div *ngIf="!bandetTipo" class="form-group">
         <label class="tamanioCampos">Razon Social</label>
-        <input #Razon_Social="ngModel" [(ngModel)]="this.Agente.Id_Agente" [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched),
+        <input #Razon_Social="ngModel" [(ngModel)]="this.Agente.Nombre" [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched),
                  'is-valid': Razon_Social.valid && (Razon_Social.dirty || Razon_Social.touched)}"
                [pattern]='this.LetrasNumerosPattern'
                class="tamanioInputs form-control" name="razon_Social" placeholder=""
@@ -185,10 +188,12 @@ shadow-lg p-3 mb-5 bg-white rounded " id="toast">
         <div class="form-row">
           <div class="form-group col-md-6">
             <label class="tamanioCampos">Provincia</label>
-            <select #Provincia="ngModel" (change)="getDpaCiudades($event.target.value)" [(ngModel)]="this.Agente.provincia"
+            <select #Provincia="ngModel" (change)="getDpaCiudades($event.target.value)"
+                    [(ngModel)]="this.Agente.provincia"
                     [ngClass]="{
           'errorSelect': Provincia.invalid && (Provincia.dirty || Provincia.touched),
-          'satisfactorioSelect': Provincia.valid && (Provincia.dirty || Provincia.touched)}" class="tamanioInputs form-control" name="provincia"
+          'satisfactorioSelect': Provincia.valid && (Provincia.dirty || Provincia.touched)}"
+                    class=" tamanioInputs form-control"  name="provincia"
                     required>
               <option *ngFor="let provincia of this.provincias"
                       value="{{provincia.COD_DPA}}"> {{provincia.NOMBRE }}</option>
@@ -220,6 +225,11 @@ shadow-lg p-3 mb-5 bg-white rounded " id="toast">
           </div> <!--form-group end.-->
 
         </div>  <!--form-row.-->
+
+
+
+
+
       </div> <!-- form-group end.// -->
       <div class="form-group">
         <label class="tamanioCampos">Calle Principal</label>
@@ -236,25 +246,40 @@ shadow-lg p-3 mb-5 bg-white rounded " id="toast">
           </div>
         </div>
       </div><!-- form-group end.// -->
-
-      <div class="form-row">
-        <div class="col-lg-7 form-group">
-          <label class="tamanioCampos">Calle Secundaria</label>
-          <input #CalleSecundaria="ngModel" [(ngModel)]="this.Agente.Calle_Secundaria_Agente"
-                 [ngClass]="{
+      <div class="form-group">
+        <label class="tamanioCampos">Calle Secundaria</label>
+        <input #CalleSecundaria="ngModel" [(ngModel)]="this.Agente.Calle_Secundaria_Agente"
+               [ngClass]="{
           'is-invalid': CalleSecundaria.invalid && (CalleSecundaria.dirty || CalleSecundaria.touched),
           'is-valid': CalleSecundaria.valid && (CalleSecundaria.dirty || CalleSecundaria.touched)}"
+               class="tamanioInputs form-control"
+               name="calleSecundaria" placeholder="" required type="text">
+        <div *ngIf="CalleSecundaria.invalid && (CalleSecundaria.touched||CalleSecundaria.dirty)">
+          <div *ngIf="CalleSecundaria.errors.required">
+            <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+              Campo requerido.</p>
+          </div>
+
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-lg-6 form-group">
+          <label class="tamanioCampos">Número de referencia</label>
+          <input #NumCasaAgente="ngModel" [(ngModel)]="this.Agente.Num_Casa_Agente"
+                 [ngClass]="{
+          'is-invalid': NumCasaAgente.invalid && (NumCasaAgente.dirty || NumCasaAgente.touched),
+          'is-valid': NumCasaAgente.valid && (NumCasaAgente.dirty || NumCasaAgente.touched)}"
                  class="tamanioInputs form-control"
-                 name="calleSecundaria" placeholder="" required type="text">
-          <div *ngIf="CalleSecundaria.invalid && (CalleSecundaria.touched||CalleSecundaria.dirty)">
-            <div *ngIf="CalleSecundaria.errors.required">
+                 name="numCasaAgente" placeholder="" required type="text">
+          <div *ngIf="NumCasaAgente.invalid && (NumCasaAgente.touched||NumCasaAgente.dirty)">
+            <div *ngIf="NumCasaAgente.errors.required">
               <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                 Campo requerido.</p>
             </div>
 
           </div>
         </div>
-        <div class=" col-lg-5 form-group">
+        <div class=" col-lg-6 form-group">
           <label class="tamanioCampos">Codigo Postal</label>
           <input #CodigoPostal="ngModel" [(ngModel)]="this.Agente.Num_Cod_Postal"
                  [ngClass]="{
@@ -318,11 +343,11 @@ shadow-lg p-3 mb-5 bg-white rounded " id="toast">
       <div class="container-login100-form-btn">
         <div class="wrap-login100-form-btn">
           <div class="login100-form-bgbtn"></div>
-          <button (click)="registrarAgente('0')" [hidden]="!FormRegistro.checkValidity()" class="login100-form-btn"> >
+          <button (click)="registrarAgente('0')" [hidden]="!FormRegistro.checkValidity()" class="login100-form-btn">
             Crea tu cuenta en condero
           </button>
-          <button (click)="registrarAgente('1')" [hidden]="FormRegistro.checkValidity()" class="login100-form-btn">
-            Crea tu cuenta en condero
+          <button  (click)="registrarAgente('1')" [hidden]="FormRegistro.checkValidity()" class="login100-form-btn">
+            Crea tu cuenta en condero2
           </button>
         </div>
       </div>
@@ -330,8 +355,7 @@ shadow-lg p-3 mb-5 bg-white rounded " id="toast">
 
       <div class="form-group">
         <label class="custom-control custom-checkbox"> <input checked="" class="custom-control-input" type="checkbox">
-          <div class="custom-control-label" style="font-size: smaller"> Estoy de acuerdo con los<a href="#"
-                                                                                                   style="font-size: smaller">terminos
+          <div class="custom-control-label" style="font-size: smaller"> Estoy de acuerdo con los<a href="#" style="font-size: smaller">terminos
             y condiciones</a></div>
         </label>
       </div> <!-- form-group end.// -->
