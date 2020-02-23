@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 var Tienda = require("./tienda");
 
-const  AGENTE = db.sequelize.define('AGENTE', {
+const  Agente = db.sequelize.define('AGENTE', {
 
         ID_AGENTE: {
             type: Sequelize.STRING,
@@ -71,7 +71,7 @@ const  AGENTE = db.sequelize.define('AGENTE', {
         id:false
     })
 
-AGENTE.hasMany(Tienda, {foreignKey: 'ID_AGENTE', sourceKey: 'ID_AGENTE'});
-Tienda.belongsTo(AGENTE, {foreignKey: 'ID_AGENTE', sourceKey: 'ID_AGENTE'});
+Agente.hasMany(Tienda, {foreignKey: 'ID_AGENTE', sourceKey: 'ID_AGENTE'});
+Tienda.belongsTo(Agente, {foreignKey: 'ID_AGENTE', sourceKey: 'ID_AGENTE'});
 
-module.exports = AGENTE;
+module.exports = Agente;

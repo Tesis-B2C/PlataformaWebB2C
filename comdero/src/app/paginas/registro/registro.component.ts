@@ -13,7 +13,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
   public bandetTipo;
   public Agente;
   private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
-  public soloLetrasPattern: any = "[ a-zA-ZÑñ ][ a-zA-ZÑñ ]*$[0-9]{0}";
+  public soloLetrasPattern: any = "[ a-zA-ZÑñáéíóúÁÉÍÓÚ ][ a-zA-ZÑñáéíóúÁÉÍÓÚ ]*$[0-9]{0}";
   private LetrasNumerosPattern: any = "[ .a-z 0-9 ][ .a-z 0-9 ]*$";
   private soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
   public banderToast: boolean;
@@ -25,7 +25,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
   constructor(private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio) {
     this.Agente = new Agente(null, null, null,
       null, null, null, 0, null, null,
-      null, null,);
+      null, null,null, null);
   }
 
   async ngOnInit() {
@@ -81,9 +81,11 @@ export class RegistroComponent implements OnInit, OnDestroy {
       this.bandetTipo == true ? this.Agente.Tipo = 'Persona' : this.Agente.Tipo = 'Empresa';
       if (this.validarCedula() == true || this.Agente.Tipo == "Empresa") {
         this.banderToastCedula = false;
+        console.log("objeto a enviar", this.Agente);
         try {
           let response = await this._agenteServicio.registrarAgente(this.Agente).toPromise();
           document.forms["formRegistro"].reset();
+          window.scroll(0, 0);
         } catch (e) {
           console.log("error:" + JSON.stringify((e).error.message));
         }

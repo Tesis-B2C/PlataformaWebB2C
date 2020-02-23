@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 var Sucursal = require("./sucursal");
 var Agente = require("./agente");
-const Codigo_Postal = db.sequelize.define('Codigo_Postal', {
+const Codigo_Postal= db.sequelize.define('CODIGO_POSTAL', {
 
         NUM_COD_POSTAL:
             {
@@ -12,7 +12,7 @@ const Codigo_Postal = db.sequelize.define('Codigo_Postal', {
             },
         COD_DPA:
             {
-                type: Sequelize.INTEGER,
+                type: Sequelize.STRING,
                 allowNull: false
             }
     },

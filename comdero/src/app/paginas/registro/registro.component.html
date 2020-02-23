@@ -189,12 +189,13 @@ shadow-lg p-3 mb-5 bg-white rounded toastValidacion " >
           <div class="form-group col-md-6">
             <label class="tamanioCampos">Provincia</label>
             <select #Provincia="ngModel" (change)="getDpaCiudades($event.target.value)"
-                    [(ngModel)]="this.Agente.provincia"
+                    [(ngModel)]="this.Agente.Provincia"
                     [ngClass]="{
           'errorSelect': Provincia.invalid && (Provincia.dirty || Provincia.touched),
           'satisfactorioSelect': Provincia.valid && (Provincia.dirty || Provincia.touched)}"
                     class=" tamanioInputs form-control"  name="provincia"
                     required>
+              <option selected="true" disabled="true" >Selecciona una.. </option>
               <option *ngFor="let provincia of this.provincias"
                       value="{{provincia.COD_DPA}}"> {{provincia.NOMBRE }}</option>
             </select>
@@ -209,11 +210,12 @@ shadow-lg p-3 mb-5 bg-white rounded toastValidacion " >
 
           <div class="form-group col-md-6">
             <label class="tamanioCampos">Ciudad</label>
-            <select #Ciudad="ngModel" [(ngModel)]="this.Agente.ciudad" [ngClass]="{
+            <select #Ciudad="ngModel" [(ngModel)]="this.Agente.Ciudad " [ngClass]="{
           'errorSelect': Ciudad.invalid && (Ciudad.dirty || Ciudad.touched),
           'satisfactorioSelect': Ciudad.valid && (Ciudad.dirty || Ciudad.touched)}"
                     class="tamanioInputs form-control" name="ciudad" placeholder=""
                     required>
+              <option selected="true" disabled="true" >Selecciona una.. </option>
               <option *ngFor="let ciudad of this.ciudades" value="{{ciudad.COD_DPA}}"> {{ciudad.NOMBRE }}</option>
             </select>
             <div *ngIf="Ciudad.invalid && (Ciudad.touched||Ciudad.dirty)">

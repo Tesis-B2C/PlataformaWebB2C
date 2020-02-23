@@ -10,7 +10,9 @@ export class Agente {
     public Calle_Principal_Agente: String,
     public Calle_Secundaria_Agente: String,
     public Num_Casa_Agente: String,
-    public Contrasenia:String
+    public Contrasenia:String,
+    public Ciudad:String,
+    public Provincia:String
   ) {
   }
 }
