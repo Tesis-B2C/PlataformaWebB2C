@@ -237,10 +237,10 @@ shadow-lg p-3 mb-5 bg-white rounded toastValidacion " >
         <label class="tamanioCampos">Calle Principal</label>
         <input #CallePrincipal="ngModel" [(ngModel)]="this.Agente.Calle_Principal_Agente"
                [ngClass]="{
-          'is-invalid': CallePrincipal.invalid && (CallePrincipal.dirty || CallePrincipal.touched),
-          'is-valid': CallePrincipal.valid && (CallePrincipal.dirty || CallePrincipal.touched)}"
+          'errorSelect': CallePrincipal.invalid && (CallePrincipal.dirty || CallePrincipal.touched),
+          'satisfactorioSelect': CallePrincipal.valid && (CallePrincipal.dirty || CallePrincipal.touched)}"
                class="tamanioInputs form-control"
-               name="callePrincipal" placeholder="" required type="text">
+               name="callePrincipal" placeholder="" required type="text" id="callePrincipal">
         <div *ngIf="CallePrincipal.invalid && (CallePrincipal.touched||CallePrincipal.dirty)">
           <div *ngIf="CallePrincipal.errors.required">
             <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
@@ -252,10 +252,10 @@ shadow-lg p-3 mb-5 bg-white rounded toastValidacion " >
         <label class="tamanioCampos">Calle Secundaria</label>
         <input #CalleSecundaria="ngModel" [(ngModel)]="this.Agente.Calle_Secundaria_Agente"
                [ngClass]="{
-          'is-invalid': CalleSecundaria.invalid && (CalleSecundaria.dirty || CalleSecundaria.touched),
-          'is-valid': CalleSecundaria.valid && (CalleSecundaria.dirty || CalleSecundaria.touched)}"
+          'errorSelect': CalleSecundaria.invalid && (CalleSecundaria.dirty || CalleSecundaria.touched),
+          'satisfactorioSelect': CalleSecundaria.valid && (CalleSecundaria.dirty || CalleSecundaria.touched)}"
                class="tamanioInputs form-control"
-               name="calleSecundaria" placeholder="" required type="text">
+               name="calleSecundaria" placeholder="" required type="text" id="calleSecundaria">
         <div *ngIf="CalleSecundaria.invalid && (CalleSecundaria.touched||CalleSecundaria.dirty)">
           <div *ngIf="CalleSecundaria.errors.required">
             <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;

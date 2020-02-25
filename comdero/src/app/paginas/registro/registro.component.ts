@@ -1,7 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Agente} from "../modelos/agente";
-import {DpaServicio} from "../../servicios/dpa.servicio"
-import {AgenteServicio} from "../../servicios/agente.servicio"
+import {DpaServicio} from "../../servicios/dpa.servicio";
+import {AgenteServicio} from "../../servicios/agente.servicio";
+declare const require: any;
+const  places =require("../../../../node_modules/places.js/dist/cdn/places.js");
 
 @Component({
   selector: 'app-registro',
@@ -29,6 +31,37 @@ export class RegistroComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
+
+    var placesAutocomplete = places({
+      container: document.querySelector('#callePrincipal'),
+      templates: {
+        value: function(suggestion) {
+          return suggestion.name;
+        }
+      }
+    }).configure({
+      type: 'address',
+      countries:['ec'],
+
+
+    });
+    placesAutocomplete.on('change',(e)=>{console.log(e.suggestion)});
+
+    var placesAutocomplete2 = places({
+      container: document.querySelector('#calleSecundaria'),
+      templates: {
+        value: function(suggestion) {
+          return suggestion.name;
+        }
+      }
+    }).configure({
+      type: 'address',
+      countries:['ec'],
+
+
+    });
+    placesAutocomplete2.on('change',(e)=>{console.log(e.suggestion)});
+
     console.log("Inicio Registro");
     this.bandetTipo = true;
     this.banderToast = false;
