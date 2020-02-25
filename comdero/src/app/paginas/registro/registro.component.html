@@ -185,6 +185,7 @@ shadow-lg p-3 mb-5 bg-white rounded toastValidacion " >
       </div> <!-- form-group end.// -->
       <hr class="lineaSeparacion">
       <div class=" form-group">
+
         <div class="form-row">
           <div class="form-group col-md-6">
             <label class="tamanioCampos">Provincia</label>
@@ -228,19 +229,19 @@ shadow-lg p-3 mb-5 bg-white rounded toastValidacion " >
 
         </div>  <!--form-row.-->
 
-
-
-
-
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="customCheck" name="example1" (change)="activarDireccion()">
+          <label class="custom-control-label" for="customCheck" style="font-size: small">¿Desea establecer su direccion ahora?</label>
+        </div>
       </div> <!-- form-group end.// -->
-      <div class="form-group">
+      <div class="form-group" *ngIf="this.banderDirecciones">
         <label class="tamanioCampos">Calle Principal</label>
         <input #CallePrincipal="ngModel" [(ngModel)]="this.Agente.Calle_Principal_Agente"
                [ngClass]="{
           'errorSelect': CallePrincipal.invalid && (CallePrincipal.dirty || CallePrincipal.touched),
           'satisfactorioSelect': CallePrincipal.valid && (CallePrincipal.dirty || CallePrincipal.touched)}"
                class="tamanioInputs form-control"
-               name="callePrincipal" placeholder="" required type="text" id="callePrincipal">
+               name="callePrincipal" placeholder="" required type="search" id="CallePrincipal">
         <div *ngIf="CallePrincipal.invalid && (CallePrincipal.touched||CallePrincipal.dirty)">
           <div *ngIf="CallePrincipal.errors.required">
             <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
@@ -248,7 +249,7 @@ shadow-lg p-3 mb-5 bg-white rounded toastValidacion " >
           </div>
         </div>
       </div><!-- form-group end.// -->
-      <div class="form-group">
+      <div class="form-group"  *ngIf="this.banderDirecciones">
         <label class="tamanioCampos">Calle Secundaria</label>
         <input #CalleSecundaria="ngModel" [(ngModel)]="this.Agente.Calle_Secundaria_Agente"
                [ngClass]="{
@@ -264,7 +265,7 @@ shadow-lg p-3 mb-5 bg-white rounded toastValidacion " >
 
         </div>
       </div>
-      <div class="form-row">
+      <div class="form-row"  *ngIf="this.banderDirecciones">
         <div class="col-lg-6 form-group">
           <label class="tamanioCampos">Número de referencia</label>
           <input #NumCasaAgente="ngModel" [(ngModel)]="this.Agente.Num_Casa_Agente"

@@ -1,7 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, DoCheck} from '@angular/core';
 import {Agente} from "../modelos/agente";
 import {DpaServicio} from "../../servicios/dpa.servicio";
 import {AgenteServicio} from "../../servicios/agente.servicio";
+import {Observable} from "rxjs";
+import {isLineBreak} from "codelyzer/angular/sourceMappingVisitor";
 declare const require: any;
 const  places =require("../../../../node_modules/places.js/dist/cdn/places.js");
 
@@ -11,7 +13,7 @@ const  places =require("../../../../node_modules/places.js/dist/cdn/places.js");
   styleUrls: ['./registro.component.css']
 })
 
-export class RegistroComponent implements OnInit, OnDestroy {
+export class RegistroComponent implements OnInit, OnDestroy, DoCheck {
   public bandetTipo;
   public Agente;
   private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
@@ -23,6 +25,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
   public provincias;
   public ciudades;
   public ComprarContrasenia;
+  public banderDirecciones;
 
   constructor(private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio) {
     this.Agente = new Agente(null, null, null,
@@ -31,36 +34,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-
-    var placesAutocomplete = places({
-      container: document.querySelector('#callePrincipal'),
-      templates: {
-        value: function(suggestion) {
-          return suggestion.name;
-        }
-      }
-    }).configure({
-      type: 'address',
-      countries:['ec'],
-
-
-    });
-    placesAutocomplete.on('change',(e)=>{console.log(e.suggestion)});
-
-    var placesAutocomplete2 = places({
-      container: document.querySelector('#calleSecundaria'),
-      templates: {
-        value: function(suggestion) {
-          return suggestion.name;
-        }
-      }
-    }).configure({
-      type: 'address',
-      countries:['ec'],
-
-
-    });
-    placesAutocomplete2.on('change',(e)=>{console.log(e.suggestion)});
+    this.banderDirecciones=false;
 
     console.log("Inicio Registro");
     this.bandetTipo = true;
@@ -152,6 +126,49 @@ export class RegistroComponent implements OnInit, OnDestroy {
       console.log("error:" + JSON.stringify((e).error.message));
     }
   }
+
+   ngDoCheck(): void {
+
+
+ if(document.getElementById("CallePrincipal")){
+    console.log("Entre a cargar direcciones");
+    var placesAutocomplete =  places({
+      container: document.querySelector('#CallePrincipal'),
+      templates: {
+        value: function (suggestion) {
+          return suggestion.name;
+        }
+      }
+    }).configure({
+      type: 'address',
+      countries: ['ec'],
+
+
+    });
+    placesAutocomplete.on('change', (e) => {
+      console.log(e.suggestion)
+    });
+
+    var placesAutocomplete2 =  places({
+      container: document.querySelector('#calleSecundaria'),
+      templates: {
+        value: function(suggestion) {
+          return suggestion.name;
+        }
+      }
+    }).configure({
+      type: 'address',
+      countries:['ec'],
+
+
+    });
+    placesAutocomplete2.on('change',(e)=>{console.log(e.suggestion)});
+
+}
+  }
+  activarDireccion(){
+   this.banderDirecciones=  !this.banderDirecciones;
+    }
 
 
 }

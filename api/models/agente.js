@@ -32,12 +32,12 @@ const  Agente = db.sequelize.define('AGENTE', {
         CALLE_PRINCIPAL_AGENTE:
             {
                 type:Sequelize.STRING,
-                allowNull:false
+                allowNull:true
             },
         CALLE_SECUNDARIA_AGENTE:
             {
                 type:Sequelize.STRING,
-                allowNull:false
+                allowNull:true
             },
         NUM_CASA_AGENTE:
             {
