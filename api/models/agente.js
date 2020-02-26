@@ -14,7 +14,7 @@ const  Agente = db.sequelize.define('AGENTE', {
         NUM_COD_POSTAL:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull: true
                 //references:'COD_POSTAL',
                 //referencesKey:'NUM_COD_POSTAL'
             },
@@ -42,7 +42,7 @@ const  Agente = db.sequelize.define('AGENTE', {
         NUM_CASA_AGENTE:
             {
                 type:Sequelize.STRING,
-                allowNull:false,
+                allowNull:true,
             },
         CORREO:
             {

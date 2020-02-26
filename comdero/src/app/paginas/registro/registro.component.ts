@@ -1,11 +1,10 @@
-import {Component, OnDestroy, OnInit, DoCheck} from '@angular/core';
+import {Component, DoCheck, OnDestroy, OnInit} from '@angular/core';
 import {Agente} from "../modelos/agente";
 import {DpaServicio} from "../../servicios/dpa.servicio";
 import {AgenteServicio} from "../../servicios/agente.servicio";
-import {Observable} from "rxjs";
-import {isLineBreak} from "codelyzer/angular/sourceMappingVisitor";
+
 declare const require: any;
-const  places =require("../../../../node_modules/places.js/dist/cdn/places.js");
+const places = require("../../../../node_modules/places.js/dist/cdn/places.js");
 
 @Component({
   selector: 'app-registro',
@@ -26,16 +25,15 @@ export class RegistroComponent implements OnInit, OnDestroy, DoCheck {
   public ciudades;
   public ComprarContrasenia;
   public banderDirecciones;
-
+  public bandera=true;
   constructor(private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio) {
     this.Agente = new Agente(null, null, null,
       null, null, null, 0, null, null,
-      null, null,null, null);
+      null, null, null, null);
   }
 
   async ngOnInit() {
-    this.banderDirecciones=false;
-
+    this.banderDirecciones = false;
     console.log("Inicio Registro");
     this.bandetTipo = true;
     this.banderToast = false;
@@ -86,6 +84,14 @@ export class RegistroComponent implements OnInit, OnDestroy, DoCheck {
     if (validador == "0") {
       this.banderToast = false;
       this.bandetTipo == true ? this.Agente.Tipo = 'Persona' : this.Agente.Tipo = 'Empresa';
+      if(this.banderDirecciones==false)
+      {
+        this.Agente.Num_Cod_Postal=null;
+        this.Agente.Num_Casa_Agente=null;
+        this.Agente.Calle_Principal_Agente=null;
+        this.Agente.Calle_Secundaria_Agente
+
+      }
       if (this.validarCedula() == true || this.Agente.Tipo == "Empresa") {
         this.banderToastCedula = false;
         console.log("objeto a enviar", this.Agente);
@@ -127,48 +133,55 @@ export class RegistroComponent implements OnInit, OnDestroy, DoCheck {
     }
   }
 
-   ngDoCheck(): void {
 
+  ngDoCheck(): void {
 
- if(document.getElementById("CallePrincipal")){
-    console.log("Entre a cargar direcciones");
-    var placesAutocomplete =  places({
-      container: document.querySelector('#CallePrincipal'),
-      templates: {
-        value: function (suggestion) {
-          return suggestion.name;
+    if (document.getElementById("CallePrincipal") && this.bandera == true) {
+
+      console.log("Entre a cargar direcciones");
+      var placesAutocomplete = places({
+        container: document.querySelector('#CallePrincipal'),
+        templates: {
+          value: function (suggestion) {
+            return suggestion.name;
+          }
         }
-      }
-    }).configure({
-      type: 'address',
-      countries: ['ec'],
+      }).configure({
+        type: 'address',
+        countries: ['ec'],
 
 
-    });
-    placesAutocomplete.on('change', (e) => {
-      console.log(e.suggestion)
-    });
+      });
+      placesAutocomplete.on('change', (e) => {
+        console.log(e.suggestion)
+      });
 
-    var placesAutocomplete2 =  places({
-      container: document.querySelector('#calleSecundaria'),
-      templates: {
-        value: function(suggestion) {
-          return suggestion.name;
+      var placesAutocomplete2 = places({
+        container: document.querySelector('#calleSecundaria'),
+        templates: {
+          value: function (suggestion) {
+            return suggestion.name;
+          }
         }
-      }
-    }).configure({
-      type: 'address',
-      countries:['ec'],
+      }).configure({
+        type: 'address',
+        countries: ['ec'],
 
 
-    });
-    placesAutocomplete2.on('change',(e)=>{console.log(e.suggestion)});
-
-}
-  }
-  activarDireccion(){
-   this.banderDirecciones=  !this.banderDirecciones;
+      });
+      placesAutocomplete2.on('change', (e) => {
+        console.log(e.suggestion)
+      });
+      this.bandera = false;
     }
+  }
+
+  activarDireccion() {
+
+    this.bandera=true;
+    this.banderDirecciones = !this.banderDirecciones;
+
+  }
 
 
 }
