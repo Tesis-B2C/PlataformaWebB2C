@@ -36,19 +36,21 @@ async function registrarAgente(req, res) {
             where: {ID_AGENTE: req.body.Id_Agente, CORREO: req.body.Correo}, defaults: datosAgente // default se pone cuando no se compara todos los parametros anterior mente
         }).spread(function (agente, creado) {
             if (creado) {
-                CODIGO_POSTAL.findOrCreate({
-                    where: {NUM_COD_POSTAL: req.body.Num_Cod_Postal, COD_DPA: req.body.Ciudad}, datosCodigoPostal // aqui no se poen default por que comparamos el objeto entero
-                }).spread(function (codigo_postal, creado) {
-                    if (creado || !creado) {
-                        res.status(200).send({
-                            message: 'Los datos han sido registrados exitosamente',
-                        });
-                    } else {
-                        res.status(404).send({
-                            message: 'No se ha registrado el código postal'
-                        });
-                    }
-                });
+                if (req.body.Num_Cod_Postal != null) {
+                    CODIGO_POSTAL.findOrCreate({
+                        where: {NUM_COD_POSTAL: req.body.Num_Cod_Postal, COD_DPA: req.body.Ciudad}, datosCodigoPostal // aqui no se poen default por que comparamos el objeto entero
+                    }).spread(function (codigo_postal, creado) {
+                        if (creado || !creado) {
+                            res.status(200).send({
+                                message: 'Los datos han sido registrados exitosamente',
+                            });
+                        }
+                    });
+                } else {
+                    res.status(200).send({
+                        message: 'No se ha registrado una direccion aun, esperamos lo puedas hacer pronto'
+                    });
+                }
             } else {
                 res.status(404).send({
                     message: 'Usuario ya Existe Intente con otro correo u otra cedula'
@@ -58,7 +60,7 @@ async function registrarAgente(req, res) {
 
     } catch (err) {
         res.status(500).send({
-            message: 'error:' + err
+            message: err.name
         });
     }
 }
