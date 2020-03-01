@@ -100,6 +100,7 @@ export class RegistroComponent implements OnInit, OnDestroy, DoCheck {
       }
       if (this.validarCedula() == true || this.Agente.Tipo == "Empresa") {
         this.banderToastCedula = false;
+
         console.log("objeto a enviar", this.Agente);
         try {
           let response = await this._agenteServicio.registrarAgente(this.Agente).toPromise();

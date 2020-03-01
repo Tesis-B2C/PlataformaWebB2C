@@ -1,6 +1,6 @@
 'use strcit'
 
-const bcrypt = require('bcrypt-nodejs');
+var bcrypt = require('bcrypt-nodejs');
 const moment = require('moment');
 var AGENTE = require('../models/agente'); //importar el modelo del usuario  o lo que son las clases comunes
 var CODIGO_POSTAL = require('../models/codigo_postal'); //importar el modelo del usuario  o lo que son las clases comunes
@@ -28,7 +28,8 @@ async function registrarAgente(req, res) {
             COD_DPA: req.body.Ciudad
         }
 
-        await bcrypt.hash(req.body.contrasena, null, null, function (err, hash) {
+        console.log("contrasenia antes de guardar",req.body.Contrasenia);
+        await bcrypt.hash(req.body.Contrasenia, null, null, function (err, hash) {
             datosAgente.CONTRASENIA = hash;
         });
 
@@ -66,8 +67,38 @@ async function registrarAgente(req, res) {
 }
 
 
+async function autenticarAgente(req, res) {
+    try {
+        var params = req.body;
+        var correo = params.Correo;
+        var contrasenia = params.Contrasenia;
+        let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: correo}});
+        if (!agente) {
+            res.status(404).send({message: 'El Usuario no existe'});
+        } else {
+           let result =  bcrypt.compareSync(contrasenia,agente._previousDataValues.CONTRASENIA);
+                if (result) {
+                    if (params.getHash) {
+                        res.status(200).send({token: jwt.createToken(agente)});
+                    } else {
+                        res.status(200).send({
+                            data:agente
+                        });
+                    }
+                } else {
+                    res.status(404).send({message: 'Error al ingresar, contraseña incorrecta.'});
+                }
+        }
+
+    } catch (err) {
+        res.status(500).send({
+            message: err.name
+        });
+    }
+}
+
 module.exports = {          // para exportar todas las funciones de este modulo
 
     registrarAgente,
-
+    autenticarAgente
 };

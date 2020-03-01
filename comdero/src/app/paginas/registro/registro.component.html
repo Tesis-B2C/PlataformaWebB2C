@@ -12,12 +12,12 @@
 <body>
 
 
-<div *ngIf="banderToast && !FormRegistro.checkValidity()" class="bounceInRight alert alert-danger
+<div *ngIf="banderToast && !FormRegistro.checkValidity()" class="bounceInRight  animated alert alert-danger
 shadow-lg p-3 mb-5 bg-white rounded toastValidacion">
   * <strong>!Opps</strong> al parecer existen errores, revisa nuevamente el formulario
 </div>
 
-<div *ngIf="banderToastCedula" class="bounceInRight alert alert-danger
+<div *ngIf="banderToastCedula" class="bounceInRight animated alert alert-danger
 shadow-lg p-3 mb-5 bg-white rounded toastValidacion " >
   * <strong>!Opps</strong> Al parecer no introduciste una cédula válida
 </div>

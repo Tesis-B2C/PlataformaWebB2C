@@ -4,7 +4,9 @@ import { GLOBAL } from "./global";
 //import { Http, Headers } from "@angular/http";
 
 interface objeto {
-  data:JSON
+  data:JSON,
+  message:JSON,
+  token:JSON
 }
 
 @Injectable()
@@ -23,4 +25,16 @@ registrarAgente(agente){
   return this._http.post<objeto>(this.url + "registrarAgente" , params,{ headers: headers });
 }
 
+  autenticarAgente(agente, getHash) {
+    if (getHash) {
+      console.log("aqui va el hash", getHash);
+      agente.getHash = getHash;
+      console.log(agente.getHash);
+    }
+    let params = JSON.stringify(agente);
+    console.log(params);
+    let headers = new HttpHeaders({ "Content-type": "application/json" });
+    return this._http.post<objeto>(this.url + "autenticarAgente" , params,{ headers: headers });
+
+  }
 }

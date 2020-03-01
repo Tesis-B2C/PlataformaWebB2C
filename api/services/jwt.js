@@ -5,11 +5,10 @@ var secret = 'clave_secreta_curso';
 
 exports.createToken = function (user) {
     var payload = {
-        sub: user.id_Agente,// para guardar el id del objeto usuario  -----leer esto esta diciendo que nomas va en el hash codificado
-        mane: user.nombre,
-        email: user.correo,
-        tipo: user.tipo,
-        image: user.image,
+        sub: user.Id_Agente,// para guardar el id del objeto usuario  -----leer esto esta diciendo que nomas va en el hash codificado
+        mane: user.Nombre,
+        email: user.Correo,
+        tipo: user.Tipo,
         iat: moment().unix(), // fechar creacion del token
         exp: moment().add(200, 'days').unix
     }

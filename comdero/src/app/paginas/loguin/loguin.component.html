@@ -3,16 +3,28 @@
 <head>
   <title>Login V4</title>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
 
 </head>
+<!--<div class="my-container">
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+</div>-->
+<div *ngIf="loading" class="fondoAnimacionCarga">
+  <div class="pulse animated infinite" style="position: absolute;z-index: 150;">
+    <img id="imagenCarga" src="./../assets/images/cargando.png">
+    <br><br>
+    <div>
+      <label style="color: white; text-align: center">Espere porfavor..</label>
+    </div>
+  </div>
+</div>
 <body style="height:100%;">
 
-<div class="limiter">
-  <div class=" container-login100">
-    <div class="  mx-auto wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-      <form   class=" login100-form  validate-form">
-        <div class="rubberBand" id="divImagenLogo">
+<div class="limiter  ">
+  <div class=" container-login100 ">
+    <div class=" shadow-lg   rounded mx-auto wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+      <form class=" login100-form  validate-form">
+        <div class="rubberBand  animated " id="divImagenLogo">
           <img id="imagenLogo" src="./../assets/images/logoValid2.png">
         </div>
         <span class="login100-form-title p-b-49 ">
@@ -21,14 +33,16 @@
 
 
         <div class="wrap-input100 validate-input m-b-23" data-validate="Username is required">
-          <span class="label-input100" >Nombre de usuario</span>
-          <input class="input100" type="email" name="username"  placeholder="Ingrese su nombre">
+          <span class="label-input100">Ingrese un usuario </span>
+          <input #CorreoA="ngModel" [(ngModel)]="this.obj.Correo" class="input100" name="correoA" placeholder="Usuario o correo electrónico"
+                 type="email">
           <span class="focus-input100" data-symbol="&#xf007;"></span>
         </div>
 
         <div class="wrap-input100 validate-input" data-validate="Password is required">
-          <span class="label-input100">Contraseña</span>
-          <input class="input100" type="password" name="pass" placeholder="Ingrese su contraseña">
+          <span class="label-input100">Ingrese contraseña</span>
+          <input #ContraseniaA="ngModel" [(ngModel)]="this.obj.Contrasenia" class="input100" name="contraseniaA"
+                 placeholder="Contraseña" type="password">
           <span class="focus-input100" data-symbol="&#xf023;"></span>
         </div>
 
@@ -40,7 +54,7 @@
         <div class="container-login100-form-btn">
           <div class="wrap-login100-form-btn">
             <div class="login100-form-bgbtn"></div>
-            <button class="login100-form-btn">
+            <button (click)="this.loguin()" class="login100-form-btn">
               Iniciar sesión
             </button>
           </div>
@@ -52,22 +66,22 @@
         </div>
 
         <div class="flex-c-m">
-          <a href="#" class="login100-social-item bg1">
+          <a class="login100-social-item bg1" href="#">
             <i class="fa fa-facebook"></i>
           </a>
 
-          <a href="#" class="login100-social-item bg2">
+          <a class="login100-social-item bg2" href="#">
             <i class="fa fa-twitter"></i>
           </a>
 
-          <a href="#" class="login100-social-item bg3">
+          <a class="login100-social-item bg3" href="#">
             <i class="fa fa-google"></i>
           </a>
         </div>
 
         <div class="flex-col-c p-t-155">
 
-          <a href="#" class="txt2">
+          <a class="txt2" href="#">
             Registrate
           </a>
         </div>
@@ -75,8 +89,6 @@
     </div>
   </div>
 </div>
-
-
 
 
 </body>
