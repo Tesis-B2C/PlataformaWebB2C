@@ -19,7 +19,7 @@ export class RegistroComponent implements OnInit, OnDestroy, DoCheck {
   public Agente;
   private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
   public soloLetrasPattern: any = "[ a-zA-ZÑñáéíóúÁÉÍÓÚ ][ a-zA-ZÑñáéíóúÁÉÍÓÚ ]*$[0-9]{0}";
-  private LetrasNumerosPattern: any = "[ .a-z 0-9 ][ .a-z 0-9 ]*$";
+  private LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
   private soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
   public banderToast: boolean;
   public banderToastCedula: boolean;
