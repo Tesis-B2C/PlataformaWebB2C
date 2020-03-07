@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import Swal from "sweetalert2";
 
@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
   templateUrl: './loguin.component.html',
   styleUrls: ['./loguin.component.css']
 })
-export class LoguinComponent implements OnInit {
+export class LoguinComponent  {
   public obj = {
     Correo: null,
     Contrasenia: null
@@ -18,9 +18,6 @@ export class LoguinComponent implements OnInit {
 
   constructor(private _agenteServicio: AgenteServicio) {
 
-  }
-
-  ngOnInit() {
   }
 
   public async loguin() {
