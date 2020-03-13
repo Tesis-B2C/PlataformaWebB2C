@@ -12,7 +12,7 @@ const routes: Routes = [
   {path: 'registro', component: RegistroComponent},
   {path: 'registro-tienda', component: RegistroTiendaComponent},
   {path: 'olvido-contrasenia', component: OlvidoContraseniaComponent},
-  {path: 'olvido-contrasenia-paso2', component: OlvidoContraseniaPaso2Component},
+  {path: 'olvido-contrasenia-paso2/:token', component: OlvidoContraseniaPaso2Component},
 ];
 
 @NgModule({

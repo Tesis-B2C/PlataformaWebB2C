@@ -37,4 +37,10 @@ registrarAgente(agente){
     return this._http.post<objeto>(this.url + "autenticarAgente" , params,{ headers: headers });
 
   }
+
+  resetearContrasenia(obj){
+    let params = JSON.stringify(obj);
+    let headers = new HttpHeaders({ "Content-type": "application/json" });
+    return this._http.post<objeto>(this.url + "resetearContrasenia" , params,{ headers: headers });
+  }
 }

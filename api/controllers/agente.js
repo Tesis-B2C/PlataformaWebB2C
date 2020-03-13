@@ -6,7 +6,7 @@ var AGENTE = require('../models/agente'); //importar el modelo del usuario  o lo
 var CODIGO_POSTAL = require('../models/codigo_postal'); //importar el modelo del usuario  o lo que son las clases comunes
 var jwt = require('../services/jwt');
 var mysql = require('mysql');
-
+var nodemailer = require('nodemailer');
 async function registrarAgente(req, res) {
     try {
         let datosAgente = {
@@ -97,8 +97,57 @@ async function autenticarAgente(req, res) {
     }
 }
 
+
+async function resetearContrasenia(req,res){
+    try{
+    var params = req.body;
+
+    let agente= await AGENTE.findOne({where: {ESTADO: '0', CORREO: params.Correo}});
+    if(!agente){
+        res.status(200).send({
+            message:'Usuario no encontrado'
+        });
+    }else {
+        let TOKENTEMPORAL = jwt.createToken({user: agente._previousDataValues.NOMBRE}, {email: agente._previousDataValues.CORREO}, {exp: '24h'})
+        // agente.create();
+        var transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+                user: 'doginotificaciones@gmail.com',
+                pass: 'dogi12345.'
+            }
+        });
+        var mailOptions = {
+            from: 'doginotificaciones@gmail.com',
+            to: agente._previousDataValues.CORREO,
+            subject: 'Localhost Activation Link',
+            text: 'Hola' + agente._previousDataValues.NOMBRE + ', Gracias por registrarte en "COMDERO". Porfavor da click en el siguiente link para completar la activacion: http://localhost:4200/olvido-contrasenia-paso2/' + TOKENTEMPORAL,
+            html: 'Hola<strong> ' + agente._previousDataValues.NOMBRE + '</strong>,<br><br>Gracias por registrarte en "COMDERO". Porfavor da click en el siguiente link para completar la activacion:<br><br><a href="http://localhost:4200/olvido-contrasenia-paso2/' + TOKENTEMPORAL + '">http://localhost:4200/olvido-contrasenia-paso2/</a>'
+        };
+        // Function to send e-mail to the user
+        transporter.sendMail(mailOptions, function (error) {
+            if (error) {
+                console.log(error);
+                res.send(500, err.message);
+            } else {
+                console.log("Email sent");
+                res.status(200).send({
+                    message: 'Porfavor revisa tu correo electronico para resetear tu contraseña'
+                });
+            }
+        });
+
+    }
+    }catch (e) {
+        res.status(500).send({
+            message: err.name
+        });
+    }
+
+}
 module.exports = {          // para exportar todas las funciones de este modulo
 
     registrarAgente,
-    autenticarAgente
+    autenticarAgente,
+    resetearContrasenia
 };

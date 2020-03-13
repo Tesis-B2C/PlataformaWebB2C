@@ -46,7 +46,7 @@ shadow-lg p-3 mb-5 bg-white rounded toastValidacion " >
       <div *ngIf="bandetTipo" class="form-row">
         <div class="col form-group">
           <label class="tamanioCampos">Nombres y Apellidos</label>
-          <input #NombreA="ngModel" [(ngModel)]="this.Agente.Nombre" [ngClass]="{'is-invalid': NombreA.invalid && (NombreA.dirty || NombreA.touched),
+          <input #NombreA="ngModel" style="text-transform: uppercase;" [(ngModel)]="this.Agente.Nombre" [ngClass]="{'is-invalid': NombreA.invalid && (NombreA.dirty || NombreA.touched),
                  'is-valid': NombreA.valid && (NombreA.dirty || (NombreA.touched || NombreA.untouched))}"
                  [pattern]='this.soloLetrasPattern'
                  class="tamanioInputs form-control " name="nombreA" placeholder="" required
@@ -65,7 +65,7 @@ shadow-lg p-3 mb-5 bg-white rounded toastValidacion " >
 
       <div *ngIf="!bandetTipo" class="form-group">
         <label class="tamanioCampos">Razon Social</label>
-        <input #Razon_Social="ngModel" [(ngModel)]="this.Agente.Nombre" [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched),
+        <input #Razon_Social="ngModel"  style="text-transform: uppercase;" [(ngModel)]="this.Agente.Nombre" [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched),
                  'is-valid': Razon_Social.valid && (Razon_Social.dirty || Razon_Social.touched)}"
                [pattern]='this.LetrasNumerosPattern'
                class="tamanioInputs form-control" name="razon_Social" placeholder=""

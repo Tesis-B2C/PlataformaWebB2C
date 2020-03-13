@@ -5,7 +5,7 @@ var AgenteController = require('../controllers/agente');
 var md_auth = require('../middleware/authenticated');
 var api = express.Router(); // esto sirve para crear las rutas
 api.post('/registrarAgente', AgenteController.registrarAgente);
-api.post('/autenticarAgente', AgenteController.autenticarAgente);
+api.post('/resetearContrasenia', AgenteController.resetearContrasenia);
 /*api.get('/buscarDocentes/:busqueda', md_auth.ensureAuth, DocenteController.busquedaDocentes);
 api.put('/update-docente/:id', md_auth.ensureAuth, DocenteController.updateDocente);
 api.get('/getListadoDocentes',md_auth.ensureAuth, DocenteController.getDocentes);*/
