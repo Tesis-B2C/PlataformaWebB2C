@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Login V4</title>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+
+</head>
+<!--<div class="my-container">
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+</div>-->
+<div *ngIf="loading" class="fondoAnimacionCarga">
+  <div class="pulse animated infinite" style="position: absolute;z-index: 150;">
+    <img id="imagenCarga" src="./../assets/images/cargando.png">
+    <br><br>
+    <div>
+      <label style="color: white; text-align: center">Espere porfavor..</label>
+    </div>
+  </div>
+</div>
+<body style="height:100%;">
+
+<div class="limiter">
+  <div class="container-login100">
+    <div class=" shadow-lg   rounded mx-auto wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54 ">
+      <form class=" login100-form  validate-form">
+        <span class="login100-form-title p-b-49 ">
+						Recuperar contraseña
+					</span>
+
+<br>
+        <div class="wrap-input100 validate-input m-b-23" data-validate="Username is required">
+          <span class="label-input100">Ingrese su correo electronico registrado </span>
+          <input #CorreoA="ngModel" [(ngModel)]="this.obj.Correo" class="input100" name="correoA" placeholder="Correo electrónico"
+                 type="email">
+          <span class="focus-input100" data-symbol="&#xf007;"></span>
+        </div>
+
+        <div class="container-login100-form-btn">
+          <div class="wrap-login100-form-btn">
+            <div class="login100-form-bgbtn"></div>
+            <button (click)="this.loguin()" class="login100-form-btn">
+             Enviar
+            </button>
+          </div>
+        </div>
+
+
+      </form>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>

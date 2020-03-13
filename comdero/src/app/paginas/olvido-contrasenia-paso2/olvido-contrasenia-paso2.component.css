@@ -1,0 +1,15 @@
+.mx-auto {
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+.limiter{
+  width: 100%;
+
+}
+.container-login100{
+
+  min-height: 40vh;
+}
+.wrap-login100{
+  width: 600px;
+}
