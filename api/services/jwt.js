@@ -5,13 +5,30 @@ var secret = 'clave_secreta_curso';
 
 exports.createToken = function (user) {
     var payload = {
-        sub: user.Id_Agente,// para guardar el id del objeto usuario  -----leer esto esta diciendo que nomas va en el hash codificado
-        mane: user.Nombre,
-        email: user.Correo,
-        tipo: user.Tipo,
+        id: user.ID_AGENTE,// para guardar el id del objeto usuario  -----leer esto esta diciendo que nomas va en el hash codificado
+        name: user.NOMBRE,
+        email: user.CORREO,
+        type: user.TIPO,
         iat: moment().unix(), // fechar creacion del token
         exp: moment().add(200, 'days').unix
     }
 
+
     return jwt.encode(payload, secret)
+
+}
+
+exports.createToken24h = function (user) {
+    var payload = {
+        id: user.ID_AGENTE,// para guardar el id del objeto usuario  -----leer esto esta diciendo que nomas va en el hash codificado
+        name: user.NOMBRE,
+        email: user.CORREO,
+        type: user.TIPO,
+        iat: moment().unix(), // fechar creacion del token
+        exp: moment().add(24, 'hours').unix
+    }
+
+
+    return jwt.encode(payload, secret)
+
 }

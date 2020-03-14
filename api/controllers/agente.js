@@ -28,7 +28,6 @@ async function registrarAgente(req, res) {
             COD_DPA: req.body.Ciudad
         }
 
-        console.log("contrasenia antes de guardar",req.body.Contrasenia);
         await bcrypt.hash(req.body.Contrasenia, null, null, function (err, hash) {
             datosAgente.CONTRASENIA = hash;
         });
@@ -76,10 +75,10 @@ async function autenticarAgente(req, res) {
         if (!agente) {
             res.status(404).send({message: 'El Usuario no existe'});
         } else {
-           let result =  bcrypt.compareSync(contrasenia,agente._previousDataValues.CONTRASENIA);
+           let result =  bcrypt.compareSync(contrasenia,agente.dataValues.CONTRASENIA);
                 if (result) {
                     if (params.getHash) {
-                        res.status(200).send({token: jwt.createToken(agente)});
+                        res.status(200).send({token: jwt.createToken(agente.dataValues)});
                     } else {
                         res.status(200).send({
                             data:agente
@@ -104,11 +103,12 @@ async function resetearContrasenia(req,res){
 
     let agente= await AGENTE.findOne({where: {ESTADO: '0', CORREO: params.Correo}});
     if(!agente){
-        res.status(200).send({
+        res.status(404).send({
             message:'Usuario no encontrado'
         });
     }else {
-        let TOKENTEMPORAL = jwt.createToken({user: agente._previousDataValues.NOMBRE}, {email: agente._previousDataValues.CORREO}, {exp: '24h'})
+        console.log("agente que regresa",agente.dataValues);
+        let TOKENTEMPORAL = jwt.createToken24h(agente.dataValues);
         // agente.create();
         var transporter = nodemailer.createTransport({
             service: 'Gmail',
@@ -119,10 +119,10 @@ async function resetearContrasenia(req,res){
         });
         var mailOptions = {
             from: 'doginotificaciones@gmail.com',
-            to: agente._previousDataValues.CORREO,
+            to: agente.dataValues.CORREO,
             subject: 'Localhost Activation Link',
-            text: 'Hola' + agente._previousDataValues.NOMBRE + ', Gracias por registrarte en "COMDERO". Porfavor da click en el siguiente link para completar la activacion: http://localhost:4200/olvido-contrasenia-paso2/' + TOKENTEMPORAL,
-            html: 'Hola<strong> ' + agente._previousDataValues.NOMBRE + '</strong>,<br><br>Gracias por registrarte en "COMDERO". Porfavor da click en el siguiente link para completar la activacion:<br><br><a href="http://localhost:4200/olvido-contrasenia-paso2/' + TOKENTEMPORAL + '">http://localhost:4200/olvido-contrasenia-paso2/</a>'
+            text: 'Hola' + agente.dataValues.NOMBRE + ', Gracias por registrarte en "COMDERO". Porfavor da click en el siguiente link para completar la activacion: http://localhost:4200/olvido-contrasenia-paso2/' + TOKENTEMPORAL,
+            html: 'Hola<strong> ' + agente.dataValues.NOMBRE + '</strong>,<br><br>Gracias por registrarte en "COMDERO". Porfavor da click en el siguiente link para completar la activacion:<br><br><a href="http://localhost:4200/olvido-contrasenia-paso2/' + TOKENTEMPORAL + '">http://localhost:4200/olvido-contrasenia-paso2/</a>'
         };
         // Function to send e-mail to the user
         transporter.sendMail(mailOptions, function (error) {
@@ -145,9 +145,43 @@ async function resetearContrasenia(req,res){
     }
 
 }
+async function resetearContrasenia2 (req,res){
+    console.log("token", req.user.id,"obje", req.body);
+    try{
+        let agente= await AGENTE.findOne({where: {ID_AGENTE:req.user.id}});
+        if(!agente){
+            res.status(500).send({
+                message: "token no valido"
+            });
+        }else{
+
+            var nuevaContrasenia;
+            await bcrypt.hash(req.body.Contrasenia2, null, null, function (err, hash) {
+                nuevaContrasenia = hash;
+               let agenteActualizado =  agente.update({CONTRASENIA:nuevaContrasenia});
+                if(!agenteActualizado){
+                    res.status(500).send({
+                        message: "La contrasenia no pudo ser actualizada"
+                    });
+                }else{
+                    res.status(200).send({
+                        message: "Tu contraseña ha sido actualizada"
+                    });
+                }
+            });
+
+
+        }
+    }catch (e) {
+        res.status(500).send({
+            message: err.name
+        });
+    }
+}
 module.exports = {          // para exportar todas las funciones de este modulo
 
     registrarAgente,
     autenticarAgente,
-    resetearContrasenia
+    resetearContrasenia,
+    resetearContrasenia2
 };

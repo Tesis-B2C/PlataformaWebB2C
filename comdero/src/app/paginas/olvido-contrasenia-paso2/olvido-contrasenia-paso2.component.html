@@ -23,7 +23,7 @@
 <div class="limiter">
   <div class="container-login100">
     <div class=" shadow-lg   rounded mx-auto wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54 ">
-      <form class=" login100-form  validate-form">
+      <form #FormResetearContrasenia class=" login100-form  validate-form">
         <span class="login100-form-title p-b-49 ">
 						Recuperar contraseña
 					</span>
@@ -31,21 +31,39 @@
         <br>
         <div class="wrap-input100 validate-input" data-validate="Password is required">
           <span class="label-input100">Ingrese nueva contraseña</span>
-          <input #ContraseniaA="ngModel" [(ngModel)]="this.obj.Contrasenia" class="input100" name="contraseniaA"
+          <input required #ContraseniaA="ngModel" [(ngModel)]="this.obj.Contrasenia" class="input100" name="contraseniaA"
                  placeholder="Contraseña" type="password">
           <span class="focus-input100" data-symbol="&#xf023;"></span>
+
         </div>
+        <div *ngIf="ContraseniaA.invalid && (ContraseniaA.touched||ContraseniaA.dirty)">
+          <div *ngIf="ContraseniaA.errors.required">
+            <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+              Campo requerido.</p>
+          </div>
+        </div>
+        <br>
         <div class="wrap-input100 validate-input" data-validate="Password is required">
           <span class="label-input100">Vuelva a ingresar la contraseña</span>
-          <input #ContraseniaA="ngModel" [(ngModel)]="this.obj.Contrasenia" class="input100" name="contraseniaA"
+          <input   required [pattern]='this.obj.Contrasenia' #ContraseniaAR="ngModel" [(ngModel)]="this.obj.Contrasenia2" class="input100" name="contraseniaAR"
                  placeholder="Repetir contraseña" type="password">
           <span class="focus-input100" data-symbol="&#xf023;"></span>
+        </div>
+        <div *ngIf="ContraseniaAR.invalid && (ContraseniaAR.touched||ContraseniaAR.dirty)">
+          <div *ngIf="ContraseniaAR.errors.required">
+            <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+              Campo requerido.</p>
+          </div>
+          <div *ngIf="ContraseniaAR.errors.pattern">
+            <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+              La contraseña no coincide.</p>
+          </div>
         </div>
         <br>
         <div class="container-login100-form-btn">
           <div class="wrap-login100-form-btn">
             <div class="login100-form-bgbtn"></div>
-            <button (click)="this.loguin()" class="login100-form-btn">
+            <button  [disabled]="!FormResetearContrasenia.checkValidity()"  (click)="this.resetearContraseniaPaso2()" class="login100-form-btn">
               Enviar
             </button>
           </div>
