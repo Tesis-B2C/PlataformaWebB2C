@@ -198,7 +198,6 @@ async function resetearContrasenia(req, res) {
                 message: 'Usuario no encontrado'
             });
         } else {
-            console.log("agente que regresa", agente.dataValues);
             let TOKENTEMPORAL = jwt.createToken24h(agente.dataValues);
             // agente.create();
             var mailOptions = {

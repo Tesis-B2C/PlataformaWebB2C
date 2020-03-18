@@ -9,6 +9,16 @@
   <title>Registro</title>
 
 </head>
+
+<div *ngIf="loading" class="fondoAnimacionCarga">
+  <div class="pulse animated infinite" style="position: absolute;z-index: 150;">
+    <img id="imagenCarga" src="./../assets/images/cargando.png">
+    <br><br>
+    <div>
+      <label style="color: white; text-align: center">Espere porfavor..</label>
+    </div>
+  </div>
+</div>
 <body>
 
 

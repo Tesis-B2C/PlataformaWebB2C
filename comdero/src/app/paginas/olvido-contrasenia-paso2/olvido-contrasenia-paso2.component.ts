@@ -31,7 +31,10 @@ export class OlvidoContraseniaPaso2Component implements OnInit {
        this.loading=false;
 
     }catch (e) {
-
+      this.loading = false;
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
     }
 
   }
@@ -60,7 +63,7 @@ export class OlvidoContraseniaPaso2Component implements OnInit {
       position: 'center',
       width: 600,
       buttonsStyling: false,
-
+      footer: '<a href="http://localhost:4200/loguin"><b><u>Autentificate Ahora</u></b></a>',
       customClass: {
         confirmButton: 'btn btn-primary px-5',
         //icon:'sm'
