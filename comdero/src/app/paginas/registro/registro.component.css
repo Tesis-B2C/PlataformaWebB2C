@@ -105,6 +105,16 @@
 
 }
 
+.alert2{
+  font-size: smaller;
+  padding: 0;
+  background-color: white;
+  border: none;
+  color: #1da1f2;
+  margin-left: 4px;
+
+}
+
 .selectbox-scrollable{
   overflow-y:scroll;
   position:absolute;

@@ -7,6 +7,15 @@ var CODIGO_POSTAL = require('../models/codigo_postal'); //importar el modelo del
 var jwt = require('../services/jwt');
 var mysql = require('mysql');
 var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: 'doginotificaciones@gmail.com',
+        pass: 'dogi12345.'
+    }
+});
+
 async function registrarAgente(req, res) {
     try {
         let datosAgente = {
@@ -33,7 +42,7 @@ async function registrarAgente(req, res) {
         });
 
         await AGENTE.findOrCreate({
-            where: {ID_AGENTE: req.body.Id_Agente, CORREO: req.body.Correo}, defaults: datosAgente // default se pone cuando no se compara todos los parametros anterior mente
+            where: {CORREO: req.body.Correo}, defaults: datosAgente // default se pone cuando no se compara todos los parametros anterior mente
         }).spread(function (agente, creado) {
             if (creado) {
                 if (req.body.Num_Cod_Postal != null) {
@@ -41,19 +50,58 @@ async function registrarAgente(req, res) {
                         where: {NUM_COD_POSTAL: req.body.Num_Cod_Postal, COD_DPA: req.body.Ciudad}, datosCodigoPostal // aqui no se poen default por que comparamos el objeto entero
                     }).spread(function (codigo_postal, creado) {
                         if (creado || !creado) {
-                            res.status(200).send({
-                                message: 'Los datos han sido registrados exitosamente',
+                            let TOKENTEMPORAL = jwt.createToken24h(agente.dataValues);
+                            // agente.create();
+                            var mailOptions = {
+                                from: 'doginotificaciones@gmail.com',
+                                to: agente.dataValues.CORREO,
+                                subject: 'Activación de cuenta',
+                                text: 'Hola' + agente.dataValues.NOMBRE + ', Gracias por registrarte en "COMDERO". Porfavor da click en el siguiente link para completar la activacion: http://localhost:4200/loguin/' + TOKENTEMPORAL,
+                                html: 'Hola<strong> ' + agente.dataValues.NOMBRE + '</strong>,<br><br>Gracias por registrarte en "COMDERO". Porfavor da click en el siguiente link para completar la activacion:<br><br><a href="http://localhost:4200/loguin/' + TOKENTEMPORAL + '">http://localhost:4200/loguin/</a>'
+                            };
+                            // Function to send e-mail to the user
+                            transporter.sendMail(mailOptions, function (error) {
+                                if (error) {
+                                    console.log(error);
+                                    res.send(500, err.message);
+                                } else {
+                                    console.log("Email sent");
+                                    res.status(200).send({
+                                        message: 'Porfavor revisa tu correo electronico para activar tu cuenta '
+                                    });
+                                }
                             });
                         }
                     });
                 } else {
+                    let TOKENTEMPORAL = jwt.createToken24h(agente.dataValues);
+                    // agente.create();
+                    var mailOptions = {
+                        from: 'doginotificaciones@gmail.com',
+                        to: agente.dataValues.CORREO,
+                        subject: 'Activación de cuenta',
+                        text: 'Hola' + agente.dataValues.NOMBRE + ', Gracias por registrarte en "COMDERO". Porfavor da click en el siguiente link para completar la activacion: http://localhost:4200/loguin/' + TOKENTEMPORAL,
+                        html: 'Hola<strong> ' + agente.dataValues.NOMBRE + '</strong>,<br><br>Gracias por registrarte en "COMDERO". Porfavor da click en el siguiente link para completar la activacion:<br><br><a href="http://localhost:4200/loguin/' + TOKENTEMPORAL + '">http://localhost:4200/loguin/</a>'
+                    };
+                    // Function to send e-mail to the user
+                    transporter.sendMail(mailOptions, function (error) {
+                        if (error) {
+                            console.log(error);
+                            res.send(500, err.message);
+                        } else {
+                            console.log("Email sent");
+                            res.status(200).send({
+                                message: 'Porfavor revisa tu correo electronico para activar tu cuenta '
+                            });
+                        }
+                    });
                     res.status(200).send({
                         message: 'No se ha registrado una direccion aun, esperamos lo puedas hacer pronto'
                     });
                 }
             } else {
                 res.status(404).send({
-                    message: 'Usuario ya Existe Intente con otro correo u otra cedula'
+                    message: 'Este correo electronico ya esta vinculado a una cuenta'
                 });
             }
         });
@@ -75,18 +123,18 @@ async function autenticarAgente(req, res) {
         if (!agente) {
             res.status(404).send({message: 'El Usuario no existe'});
         } else {
-           let result =  bcrypt.compareSync(contrasenia,agente.dataValues.CONTRASENIA);
-                if (result) {
-                    if (params.getHash) {
-                        res.status(200).send({token: jwt.createToken(agente.dataValues)});
-                    } else {
-                        res.status(200).send({
-                            data:agente
-                        });
-                    }
+            let result = bcrypt.compareSync(contrasenia, agente.dataValues.CONTRASENIA);
+            if (result) {
+                if (params.getHash) {
+                    res.status(200).send({token: jwt.createToken(agente.dataValues)});
                 } else {
-                    res.status(404).send({message: 'Error al ingresar, contraseña incorrecta.'});
+                    res.status(200).send({
+                        data: agente
+                    });
                 }
+            } else {
+                res.status(404).send({message: 'Error al ingresar, contraseña incorrecta.'});
+            }
         }
 
     } catch (err) {
@@ -97,91 +145,125 @@ async function autenticarAgente(req, res) {
 }
 
 
-async function resetearContrasenia(req,res){
-    try{
-    var params = req.body;
+async function autenticarActivarAgente(req, res) {
+    try {
+        var params = req.body;
+        var correo = params.Correo;
+        var contrasenia = params.Contrasenia;
 
-    let agente= await AGENTE.findOne({where: {ESTADO: '0', CORREO: params.Correo}});
-    if(!agente){
-        res.status(404).send({
-            message:'Usuario no encontrado'
-        });
-    }else {
-        console.log("agente que regresa",agente.dataValues);
-        let TOKENTEMPORAL = jwt.createToken24h(agente.dataValues);
-        // agente.create();
-        var transporter = nodemailer.createTransport({
-            service: 'Gmail',
-            auth: {
-                user: 'doginotificaciones@gmail.com',
-                pass: 'dogi12345.'
-            }
-        });
-        var mailOptions = {
-            from: 'doginotificaciones@gmail.com',
-            to: agente.dataValues.CORREO,
-            subject: 'Localhost Activation Link',
-            text: 'Hola' + agente.dataValues.NOMBRE + ', Gracias por registrarte en "COMDERO". Porfavor da click en el siguiente link para completar la activacion: http://localhost:4200/olvido-contrasenia-paso2/' + TOKENTEMPORAL,
-            html: 'Hola<strong> ' + agente.dataValues.NOMBRE + '</strong>,<br><br>Gracias por registrarte en "COMDERO". Porfavor da click en el siguiente link para completar la activacion:<br><br><a href="http://localhost:4200/olvido-contrasenia-paso2/' + TOKENTEMPORAL + '">http://localhost:4200/olvido-contrasenia-paso2/</a>'
-        };
-        // Function to send e-mail to the user
-        transporter.sendMail(mailOptions, function (error) {
-            if (error) {
-                console.log(error);
-                res.send(500, err.message);
-            } else {
-                console.log("Email sent");
-                res.status(200).send({
-                    message: 'Porfavor revisa tu correo electronico para resetear tu contraseña'
+        if (correo != req.user.email) {
+            res.status(500).send({
+                message: "token no valido"
+            });
+        } else {
+            let agente = await AGENTE.findOne({where: {CORREO: req.user.email}});
+            if (!agente) {
+                res.status(500).send({
+                    message: "Al parecer el usuario no ha sido registrado"
                 });
+            } else {
+                let agenteActualizado = agente.update({ESTADO: "0"});
+                if (!agenteActualizado) {
+                    res.status(404).send({message: 'El Usuario no ha sido activado'});
+                } else {
+                    let result = bcrypt.compareSync(contrasenia, agente.dataValues.CONTRASENIA);
+                    if (result) {
+                        if (params.getHash) {
+                            res.status(200).send({token: jwt.createToken(agente.dataValues)});
+                        } else {
+                            res.status(200).send({
+                                data: agente
+                            });
+                        }
+                    } else {
+                        res.status(404).send({message: 'Error, contraseña incorrecta.'});
+                    }
+                }
             }
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: err.name
         });
-
     }
-    }catch (e) {
+}
+
+
+async function resetearContrasenia(req, res) {
+    try {
+        var params = req.body;
+        let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: params.Correo}});
+        if (!agente) {
+            res.status(404).send({
+                message: 'Usuario no encontrado'
+            });
+        } else {
+            console.log("agente que regresa", agente.dataValues);
+            let TOKENTEMPORAL = jwt.createToken24h(agente.dataValues);
+            // agente.create();
+            var mailOptions = {
+                from: 'doginotificaciones@gmail.com',
+                to: agente.dataValues.CORREO,
+                subject: 'Cambio de contraseña',
+                text: 'Hola' + agente.dataValues.NOMBRE + ', Gracias por registrarte en "COMDERO". Porfavor da click en el siguiente link para poder cambiar su contraseña: http://localhost:4200/olvido-contrasenia-paso2/' + TOKENTEMPORAL,
+                html: 'Hola<strong> ' + agente.dataValues.NOMBRE + '</strong>,<br><br>Gracias por registrarte en "COMDERO". Porfavor da click en el siguiente link para poder cambiar su contraseña:<br><br><a href="http://localhost:4200/olvido-contrasenia-paso2/' + TOKENTEMPORAL + '">http://localhost:4200/olvido-contrasenia-paso2/</a>'
+            };
+            // Function to send e-mail to the user
+            transporter.sendMail(mailOptions, function (error) {
+                if (error) {
+                    res.send(500, err.message);
+                } else {
+                    res.status(200).send({
+                        message: 'Porfavor revisa tu correo electronico para resetear tu contraseña'
+                    });
+                }
+            });
+
+        }
+    } catch (e) {
         res.status(500).send({
             message: err.name
         });
     }
 
 }
-async function resetearContrasenia2 (req,res){
-    console.log("token", req.user.id,"obje", req.body);
-    try{
-        let agente= await AGENTE.findOne({where: {ID_AGENTE:req.user.id}});
-        if(!agente){
+
+async function resetearContrasenia2(req, res) {
+
+    try {
+        let agente = await AGENTE.findOne({where: {CORREO: req.user.email}});
+        if (!agente) {
             res.status(500).send({
                 message: "token no valido"
             });
-        }else{
-
+        } else {
             var nuevaContrasenia;
             await bcrypt.hash(req.body.Contrasenia2, null, null, function (err, hash) {
                 nuevaContrasenia = hash;
-               let agenteActualizado =  agente.update({CONTRASENIA:nuevaContrasenia});
-                if(!agenteActualizado){
+                let agenteActualizado = agente.update({CONTRASENIA: nuevaContrasenia});
+                if (!agenteActualizado) {
                     res.status(500).send({
-                        message: "La contrasenia no pudo ser actualizada"
+                        message: "La contrasenña no pudo ser actualizada"
                     });
-                }else{
+                } else {
                     res.status(200).send({
                         message: "Tu contraseña ha sido actualizada"
                     });
                 }
             });
-
-
         }
-    }catch (e) {
+    } catch (e) {
         res.status(500).send({
             message: err.name
         });
     }
 }
+
 module.exports = {          // para exportar todas las funciones de este modulo
 
     registrarAgente,
     autenticarAgente,
+    autenticarActivarAgente,
     resetearContrasenia,
     resetearContrasenia2
 };

@@ -32,12 +32,12 @@ shadow-lg p-3 mb-5 bg-white rounded toastValidacion " >
 
       <div class="form-group">
         <label class="custom-control custom-radio custom-control-inline">
-          <input (change)="selectAdminsitrador()" checked="" class="custom-control-input" name="gender" type="radio"
+          <input (change)="selectTipoAgente()" checked="" class="custom-control-input" name="gender" type="radio"
                  value="option1">
           <span class="custom-control-label"> Persona Natural  </span>
         </label>
         <label class="custom-control custom-radio custom-control-inline">
-          <input (change)="selectAdminsitrador()" class="custom-control-input" name="gender" type="radio"
+          <input (change)="selectTipoAgente()" class="custom-control-input" name="gender" type="radio"
                  value="option2">
           <span class="custom-control-label"> Empresa </span>
         </label>
@@ -271,18 +271,11 @@ shadow-lg p-3 mb-5 bg-white rounded toastValidacion " >
       <div class="form-row"  *ngIf="this.banderDirecciones">
         <div class="col-lg-6 form-group">
           <label class="tamanioCampos">Número de referencia</label>
-          <input #NumCasaAgente="ngModel" [(ngModel)]="this.Agente.Num_Casa_Agente"
-                 [ngClass]="{
-          'is-invalid': NumCasaAgente.invalid && (NumCasaAgente.dirty || NumCasaAgente.touched),
-          'is-valid': NumCasaAgente.valid && (NumCasaAgente.dirty || NumCasaAgente.touched)}"
-                 class="tamanioInputs form-control"
-                 name="numCasaAgente" placeholder="" required type="text">
-          <div *ngIf="NumCasaAgente.invalid && (NumCasaAgente.touched||NumCasaAgente.dirty)">
-            <div *ngIf="NumCasaAgente.errors.required">
-              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                Campo requerido.</p>
-            </div>
+          <input #NumCasaAgente="ngModel" [(ngModel)]="this.Agente.Num_Casa_Agente" class="tamanioInputs form-control"  name="numCasaAgente" placeholder=""  type="text">
 
+            <div>
+              <p class="alert2 alert-primary"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                Campo opcional.</p>
           </div>
         </div>
         <div class=" col-lg-6 form-group">

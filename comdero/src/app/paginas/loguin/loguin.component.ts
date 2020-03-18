@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import Swal from "sweetalert2";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-loguin',
@@ -15,17 +16,28 @@ export class LoguinComponent  {
   public identity;
   public token;
   public loading = false;
-
-  constructor(private _agenteServicio: AgenteServicio) {
+  public tokenTemporal;
+  public response;
+  constructor(private route: ActivatedRoute, private _agenteServicio: AgenteServicio) {
 
   }
 
   public async loguin() {
-
-    this.loading = true;
     try {
-      let response = await this._agenteServicio.autenticarAgente(this.obj, "").toPromise();
-      this.identity = response.data;
+    this.loading = true;
+    this.route.paramMap.subscribe(params => {
+      this.tokenTemporal=params['params'].token;
+      console.log("this.token",this.tokenTemporal);
+    });
+
+    if(!this.tokenTemporal){
+     this.response = await this._agenteServicio.autenticarAgente(this.obj, "").toPromise();
+    }else {
+      this.response = await this._agenteServicio.autenticarActivarAgente(this.obj, "",this.tokenTemporal).toPromise();
+    }
+
+
+      this.identity = this.response.data;
       if (!this.identity.ID_AGENTE) {
         this.mensageError("el usuario no se ha logueado correctamente");
 

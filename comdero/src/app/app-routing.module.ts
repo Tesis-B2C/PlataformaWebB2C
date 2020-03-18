@@ -7,6 +7,7 @@ import { RegistroTiendaComponent } from './paginas/registro-tienda/registro-tien
 import {OlvidoContraseniaComponent} from './paginas/olvido-contrasenia/olvido-contrasenia.component';
 import { OlvidoContraseniaPaso2Component } from './paginas/olvido-contrasenia-paso2/olvido-contrasenia-paso2.component';
 const routes: Routes = [
+  {path: 'loguin/:token', component: LoguinComponent},
   {path: 'loguin', component: LoguinComponent},
   {path:'principal', component:PrincipalComponent},
   {path: 'registro', component: RegistroComponent},

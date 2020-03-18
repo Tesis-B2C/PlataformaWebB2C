@@ -31,7 +31,7 @@ export class RegistroComponent implements OnInit, OnDestroy, DoCheck {
   loading: boolean = false;
   constructor(private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio) {
     this.Agente = new Agente(null, null, null,
-      null, null, null, 0, null, null,
+      null, null, null, 1, null, null,
       null, null, null, null);
   }
 
@@ -51,7 +51,7 @@ export class RegistroComponent implements OnInit, OnDestroy, DoCheck {
     console.log("Destruccion Registro");
   }
 
-  selectAdminsitrador() {
+  selectTipoAgente() {
     this.bandetTipo = !this.bandetTipo;
     console.log(this.bandetTipo);
   }

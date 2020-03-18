@@ -38,6 +38,21 @@ registrarAgente(agente){
 
   }
 
+  autenticarActivarAgente(agente, getHash, token) {
+    if (getHash) {
+      console.log("aqui va el hash", getHash);
+      agente.getHash = getHash;
+      console.log(agente.getHash);
+    }
+    let params = JSON.stringify(agente);
+    console.log(params);
+    let headers = new HttpHeaders({ "Content-type": "application/json","Authorization":token });
+    return this._http.post<objeto>(this.url + "autenticarActivarAgente" , params,{ headers: headers });
+
+  }
+
+
+
   resetearContrasenia(obj){
     let params = JSON.stringify(obj);
     let headers = new HttpHeaders({ "Content-type": "application/json" });
