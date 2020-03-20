@@ -1,5 +1,5 @@
 import {Component, DoCheck, OnDestroy, OnInit} from '@angular/core';
-import {Agente} from "../modelos/agente";
+import {Agente} from "../../modelos/agente";
 import {DpaServicio} from "../../servicios/dpa.servicio";
 import {AgenteServicio} from "../../servicios/agente.servicio";
 //import Swal from 'sweetalert2'

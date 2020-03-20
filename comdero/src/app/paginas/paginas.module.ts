@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoguinComponent } from './loguin/loguin.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { PrincipalComponent } from './principal/principal.component';
 import { RegistroComponent } from './registro/registro.component';
 import { RegistroTiendaComponent } from './registro-tienda/registro-tienda.component';
 import { FormsModule} from "@angular/forms";
@@ -11,7 +10,7 @@ import { OlvidoContraseniaPaso2Component } from './olvido-contrasenia-paso2/olvi
 
 
 @NgModule({
-  declarations: [LoguinComponent, PrincipalComponent, RegistroComponent, RegistroTiendaComponent, OlvidoContraseniaComponent, OlvidoContraseniaPaso2Component],
+  declarations: [LoguinComponent, RegistroComponent, RegistroTiendaComponent, OlvidoContraseniaComponent, OlvidoContraseniaPaso2Component],
     imports: [
         CommonModule,
         NgbModule,

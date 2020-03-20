@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import Swal from "sweetalert2";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-loguin',
@@ -18,7 +18,7 @@ export class LoguinComponent  {
   public loading = false;
   public tokenTemporal;
   public response;
-  constructor(private route: ActivatedRoute, private _agenteServicio: AgenteServicio) {
+  constructor(private route: ActivatedRoute, private _agenteServicio: AgenteServicio, public router: Router) {
 
   }
 
@@ -29,14 +29,11 @@ export class LoguinComponent  {
       this.tokenTemporal=params['params'].token;
       console.log("this.token",this.tokenTemporal);
     });
-
     if(!this.tokenTemporal){
      this.response = await this._agenteServicio.autenticarAgente(this.obj, "").toPromise();
     }else {
       this.response = await this._agenteServicio.autenticarActivarAgente(this.obj, "",this.tokenTemporal).toPromise();
     }
-
-
       this.identity = this.response.data;
       if (!this.identity.ID_AGENTE) {
         this.mensageError("el usuario no se ha logueado correctamente");
@@ -50,8 +47,7 @@ export class LoguinComponent  {
           this.mensageError("el token nose ha generado");
         } else {
           localStorage.setItem("Token", this.token);
-          location.reload(true);
-
+          this.router.navigate(['/menu/principal']);
         }
       }
     } catch (e) {
