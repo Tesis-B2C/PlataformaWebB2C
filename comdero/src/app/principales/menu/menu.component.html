@@ -1,21 +1,17 @@
 <header class="section-header">
+
   <section class="header-main border-bottom">
-    <div class="container">
+    <div class="container-fluid container-menu">
       <div class="row align-items-center">
-        <div class="col-lg-3 col-sm-4 col-12">
-          <div class="brand-wrap">
-            <img class="logo" src="bootstrap-ecommerce-html/images/logo.png">
-          </div> <!-- brand-wrap.// -->
+        <div class="col-lg-2 col-4">
+          <a href="http://bootstrap-ecommerce.com" class="brand-wrap">
+            <img class="logo" src="../../../assets/images/logoValid4.png">
+          </a> <!-- brand-wrap.// -->
         </div>
-        <div class="col-lg-4 col-xl-5 col-sm-8 col-9">
-          <form   class="search">
+        <div class="col-lg-6 col-sm-12">
+          <form action="#" class="search">
             <div class="input-group w-100">
-              <input type="text" class="form-control" style="width:55%;" placeholder="Search">
-              <select class="custom-select" name="category_name">
-                <option value="">All type</option><option value="codex">Special</option>
-                <option value="comments">Only best</option>
-                <option value="content">Latest</option>
-              </select>
+              <input type="text" class="form-control" placeholder="Search">
               <div class="input-group-append">
                 <button class="btn btn-primary" type="submit">
                   <i class="fa fa-search"></i>
@@ -24,53 +20,31 @@
             </div>
           </form> <!-- search-wrap .end// -->
         </div> <!-- col.// -->
-        <div class="col-lg-5 col-xl-4 col-sm-12">
+        <div class="col-lg-3 col-sm-6 col-12">
           <div class="widgets-wrap float-md-right">
-            <a href="#" class="widget-header mr-2">
-              <div class="icon">
-                <i class="icon-sm rounded-circle border fa fa-shopping-cart"></i>
-                <span class="notify">0</span>
-              </div>
-            </a>
-            <a href="#" class="widget-header mr-2">
-              <div class="icon">
-                <i class="icon-sm rounded-circle border fa fa-heart"></i>
-              </div>
-            </a>
-            <div class="widget-header dropdown">
-              <a href="#" data-toggle="dropdown" data-offset="20,10">
-                <div class="icontext">
-                  <div class="icon">
-                    <i class="icon-sm rounded-circle border fa fa-user"></i>
-                  </div>
-                  <div class="text">
-                    <small class="text-muted">Sign in | Join</small>
-                    <div>My account <i class="fa fa-caret-down"></i> </div>
-                  </div>
+            <div class="widget-header  mr-3">
+              <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
+              <span class="badge badge-pill badge-danger notify">0</span>
+            </div>
+            <div class="widget-header  mr-3">
+              <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
+              <span class="badge badge-pill badge-danger notify">0</span>
+            </div>
+            <div class="widget-header icontext">
+              <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a>
+              <div class="text">
+                <span class="text-muted">Welcome!</span>
+                <div>
+                  <a href="#">Sign in</a> |
+                  <a href="#"> Register</a>
                 </div>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right">
-                <form  class="px-4 py-3">
-                  <div class="form-group">
-                    <label>Email address</label>
-                    <input type="email" class="form-control" placeholder="email@example.com">
-                  </div>
-                  <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" class="form-control" placeholder="Password">
-                  </div>
-                  <button type="submit" class="btn btn-primary">Sign in</button>
-                </form>
-                <hr class="dropdown-divider">
-                <a class="dropdown-item" href="#">Have account? Sign up</a>
-                <a class="dropdown-item" href="#">Forgot password?</a>
-              </div> <!--  dropdown-menu .// -->
-            </div>  <!-- widget-header .// -->
+              </div>
+            </div>
+
           </div> <!-- widgets-wrap.// -->
         </div> <!-- col.// -->
       </div> <!-- row.// -->
     </div> <!-- container.// -->
   </section> <!-- header-main .// -->
 </header> <!-- section-header.// -->
-
 <router-outlet></router-outlet>

@@ -1,6 +1,6 @@
 .section-header
 {
-  background-color: #3a4e74;
+  background-color: white;
 }
 
 
@@ -8,4 +8,21 @@
 {
   clear: both;
   float: none;
+}
+.logo{
+  max-height: 55px;
+}
+
+
+
+
+
+@media (min-width: 1035px) {
+  .container-menu{
+    padding-right: 0px;
+    padding-left: 100px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
 }
