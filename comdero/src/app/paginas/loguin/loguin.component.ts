@@ -25,10 +25,8 @@ export class LoguinComponent  {
   public async loguin() {
     try {
     this.loading = true;
-    this.route.paramMap.subscribe(params => {
-      this.tokenTemporal=params['params'].token;
+      this.tokenTemporal=this.route.snapshot.params.token;
       console.log("this.token",this.tokenTemporal);
-    });
     if(!this.tokenTemporal){
      this.response = await this._agenteServicio.autenticarAgente(this.obj, "").toPromise();
     }else {

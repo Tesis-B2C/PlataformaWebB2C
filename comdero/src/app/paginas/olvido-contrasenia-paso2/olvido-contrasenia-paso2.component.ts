@@ -21,11 +21,12 @@ export class OlvidoContraseniaPaso2Component implements OnInit {
    async resetearContraseniaPaso2(){
     this.loading=true;
     try {
-    this.route.paramMap.subscribe(params => {
+   /* this.route.paramMap.subscribe(params => {
         this.tokenTemporal=params['params'].token;
         console.log("this.token",this.tokenTemporal);
-      });
-
+      });*/
+    this.tokenTemporal=this.route.snapshot.params.token;
+      console.log("this.token",this.tokenTemporal);
       let response = await this._agenteServicio.resetearContrasenia2(this.tokenTemporal, this.obj).toPromise();
        this.mensageCorrecto(response.message);
        this.loading=false;
