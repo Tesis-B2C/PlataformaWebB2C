@@ -8,6 +8,7 @@ import {PrincipalesModule} from './principales/principales.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {DpaServicio} from "./servicios/dpa.servicio";
 import {AgenteServicio} from "./servicios/agente.servicio";
+import {AdministradorTiendaModule} from "./administrador-tienda/administrador-tienda.module";
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import {AgenteServicio} from "./servicios/agente.servicio";
     AppRoutingModule,
     PaginasModule,
     PrincipalesModule,
+    AdministradorTiendaModule,
     NgbModule,
     HttpClientModule
   ],

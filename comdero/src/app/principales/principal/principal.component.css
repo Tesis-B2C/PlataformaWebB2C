@@ -33,7 +33,7 @@
 
 .nav-link:hover {
    padding: 4px;
-  background-color: #fca147;
+ /* background-color: #fca147;*/
   font-weight: bold;
   color: white;
 }
