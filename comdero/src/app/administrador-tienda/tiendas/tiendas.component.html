@@ -1,44 +1,55 @@
 
-<div class=" border-bottom colorNavbar col-12 py-2" >
- <p class="container encabezado"> Catalogo de tiendas</p>
+  <div class=" border-bottom colorNavbar col-12 py-2">
+    <p class="container encabezado"> Catalogo de tiendas</p>
   </div> <!-- container .// -->
 
-<section class="catalogo-tiendas  pr-lg-5 pl-lg-5">
-  <div class="container bg-white pr-lg-5 pl-lg-5  shadow">
-<div class="row pt-5 pr-lg-5 pl-lg-5 shadow" >
-<div class="col-md-4">
-  <a href=""> <img src="./../assets/images/tienda1.png"  width="100%" class="img-fluid m-x-auto"></a>
-</div>
 
-  <div class="col-md-4">
-    <a href="">
-    <img src="./../assets/images/tienda1.png"   width="100%" class="img-fluid m-x-auto  ">
-    </a>
-  </div>
-  <div class="col-md-4">
-    <a href=""> <img src="./../assets/images/tienda1.png"   width="100%"  class="img-fluid m-x-auto ">  </a>
-  </div>
-  <div class="col-md-4">
-    <a href="">  <img src="./../assets/images/tienda1.png"  width="100%"  class="img-fluid m-x-auto  ">  </a>
-  </div>
-  <div class="col-md-4">
-    <a href="">   <img src="./../assets/images/tienda1.png"   width="100%"  class="img-fluid m-x-auto  ">  </a>
-  </div>
-  <div class="col-md-4">
-    <a href=""> <img src="./../assets/images/tienda1.png"   width="100%"  class="img-fluid m-x-auto">  </a>
-  </div>
-  <div class="col-md-4">
-    <a href=""> <img src="./../assets/images/tienda1.png"   width="100%"  class="img-fluid m-x-auto">  </a>
-  </div>
-  <div class="col-md-4">
-    <a href=""> <img src="./../assets/images/tienda1.png"   width="100%"  class="img-fluid m-x-auto">  </a>
-  </div>
-  <div class="col-md-4">
-    <a href=""> <img src="./../assets/images/tienda1.png"   width="100%"  class="img-fluid m-x-auto">  </a>
+  <div *ngIf="this.banderMensaje" class=" jackInTheBox  animated alert alert-info alert-dismissible fade show otra" role="alert">
+    <strong>Empecemos!</strong> <p>Selecciona una de las tiendas para empezar a gestionarla.</p>
+    <button aria-label="Close" class="close" data-dismiss="alert" type="button">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
 
 
-</div>
-  </div>
-</section>
+  <section class="catalogo-tiendas pr-lg-5 pl-lg-5 py-5">
+    <div class="container bg-white pr-lg-5 pl-lg-5 shadow" >
+      <div class="row pt-5 pr-lg-5 pl-lg-5  " >
+
+        <div class="col-md-4">
+          <a href=""> <img class="img-fluid m-x-auto" src="./../assets/images/tienda1.png" width="100%"></a>
+        </div>
+
+        <div class="col-md-4">
+          <a href="">
+            <img class="img-fluid m-x-auto  " src="./../assets/images/tienda1.png" width="100%">
+          </a>
+        </div>
+        <div class="col-md-4">
+          <a href=""> <img class="img-fluid m-x-auto " src="./../assets/images/tienda1.png" width="100%"> </a>
+        </div>
+        <div class="col-md-4">
+          <a href=""> <img class="img-fluid m-x-auto  " src="./../assets/images/tienda1.png" width="100%"> </a>
+        </div>
+        <div class="col-md-4">
+          <a href=""> <img class="img-fluid m-x-auto  " src="./../assets/images/tienda1.png" width="100%"> </a>
+        </div>
+        <div class="col-md-4">
+          <a href=""> <img class="img-fluid m-x-auto" src="./../assets/images/tienda1.png" width="100%"> </a>
+        </div>
+
+        <div class="col-md-4">
+          <a href=""> <img class="img-fluid m-x-auto" src="./../assets/images/tienda1.png" width="100%"> </a>
+        </div>
+        <div class="col-md-4">
+          <a href=""> <img class="img-fluid m-x-auto" src="./../assets/images/tienda1.png" width="100%"> </a>
+        </div>
+        <div class="col-md-4">
+          <a href=""> <img class="img-fluid m-x-auto" src="./../assets/images/tienda1.png" width="100%"> </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
 

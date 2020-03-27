@@ -43,3 +43,13 @@
     margin-left: auto;
   }
 }
+
+.footer {
+  background-color: white ;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  padding-top: 0;
+
+
+}

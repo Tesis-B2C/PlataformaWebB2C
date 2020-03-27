@@ -9,8 +9,18 @@
 
 }
 .catalogo-tiendas{
-  margin-top: 2%;
+
   background-color: #f1f3f4;
+  display: block;
+  max-height: 79%;
+ overflow: auto;
+}
+
+.otra{
+  position: absolute;
+  z-index: 100;
+  padding: o%; margin: 2px;
+
 }
 
 .catalogo-tiendas a{
@@ -25,4 +35,8 @@
 .catalogo-tiendas img:hover {
  transform: scale(1.5);
 }
+
+
+
+
 
