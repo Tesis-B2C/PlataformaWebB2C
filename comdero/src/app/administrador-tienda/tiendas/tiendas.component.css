@@ -12,14 +12,14 @@
 
   background-color: #f1f3f4;
   display: block;
-  max-height: 79%;
- overflow: auto;
+
+
 }
 
 .otra{
   position: absolute;
   z-index: 100;
-  padding: o%; margin: 2px;
+  padding: 1%; margin: 2px;
 
 }
 
@@ -37,6 +37,14 @@
 }
 
 
+
+@media (min-width: 1920px) {
+  .contairner-tiendas {
+    height: 42.5rem;
+    overflow: auto;
+
+  }
+}
 
 
 

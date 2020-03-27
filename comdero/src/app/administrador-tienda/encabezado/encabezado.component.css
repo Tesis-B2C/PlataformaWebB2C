@@ -44,12 +44,12 @@
   }
 }
 
-.footer {
-  background-color: white ;
-  position: relative;
-  bottom: 0;
-  width: 100%;
-  padding-top: 0;
+.footer2 {
 
+  align-self: flex-end;
+  margin-top: 2%;
+  max-height: 55px;
 
 }
+
+
