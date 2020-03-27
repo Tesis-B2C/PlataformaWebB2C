@@ -1,0 +1,28 @@
+.colorNavbar{
+  background-color: #2a4c75;
+
+}
+
+.encabezado{
+  font-size: larger;
+  color: white;
+
+}
+.catalogo-tiendas{
+  margin-top: 2%;
+  background-color: #f1f3f4;
+}
+
+.catalogo-tiendas a{
+  display: block;
+  overflow: hidden;
+  margin-bottom: 2rem;
+
+}
+.catalogo-tiendas img{
+  transition: all 1s ease;
+}
+.catalogo-tiendas img:hover {
+ transform: scale(1.5);
+}
+

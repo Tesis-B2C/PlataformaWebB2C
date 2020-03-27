@@ -40,7 +40,8 @@
     margin-left: auto;
   }
   .search{
-    margin-left: 120px;
+    margin-left: 140px;
+    margin-right: -100px;
   }
 
 }
