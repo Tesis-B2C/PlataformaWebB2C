@@ -1,1 +1,58 @@
-<p>gestionar-tienda works!</p>
+
+<div class=" row border-bottom colorNavbar  py-2 ">
+ <button  (click)="_toggleOpened()"><i class=" col-sm-2  container fa fa-bars px-4  " ></i></button>
+  <p class=" col-10   encabezado  "> Opciones de Administracion</p>
+
+
+</div>
+
+<ng-sidebar-container
+  (onBackdropClicked)="_onBackdropClicked()">
+  <ng-sidebar
+    [(opened)]="_opened"
+    [mode]="_MODES[_modeNum]"
+    [keyClose]="_keyClose"
+    [position]="_POSITIONS[_positionNum]"
+    [dock]="_dock"
+    [dockedSize]="'50px'"
+    [autoCollapseHeight]="_autoCollapseHeight"
+    [autoCollapseWidth]="_autoCollapseWidth"
+    [closeOnClickOutside]="_closeOnClickOutside"
+    [closeOnClickBackdrop]="_closeOnClickBackdrop"
+    [showBackdrop]="_showBackdrop"
+    [animate]="_animate"
+    [trapFocus]="_trapFocus"
+    [autoFocus]="_autoFocus"
+    [ariaLabel]="'My sidebar'"
+    (onOpenStart)="_onOpenStart()"
+    (onOpened)="_onOpened()"
+    (onCloseStart)="_onCloseStart()"
+    (onClosed)="_onClosed()"
+    (onTransitionEnd)="_onTransitionEnd()" class="shadow">
+    <p>Sidebar contents</p>
+
+    <button class="demo-control" (click)="_toggleOpened()">Close sidebar</button>
+    <p><a closeSidebar>This will close the sidebar too</a></p>
+
+    <hr>
+
+    <p>Throwup on your pillow.</p>
+
+    <p>Use lap as chair hide head under .</p>
+
+
+  </ng-sidebar>
+
+  <div ng-sidebar-content>
+
+
+    <section class="demo-contents">
+      <div>
+        <img  class="imagenFondo" src="  ./../../../assets/images/fondo-administrador.png">
+      </div>
+
+
+
+    </section>
+  </div>
+</ng-sidebar-container>

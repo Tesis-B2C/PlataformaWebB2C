@@ -1,12 +1,11 @@
 .colorNavbar{
-  background-color: #2a4c75;
+  background: -webkit-repeating-linear-gradient(right, #2a4c75, #ff6500, #2a4c75, #ff6500);
 
 }
 
 .encabezado{
-  font-size: larger;
+  font-size: large;
   color: white;
-
 }
 .catalogo-tiendas{
 

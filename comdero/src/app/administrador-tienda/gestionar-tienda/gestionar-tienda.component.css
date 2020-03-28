@@ -1,0 +1,74 @@
+.encabezado {
+  font-size: larger;
+  color: white;
+}
+
+.colorNavbar {
+  background: -webkit-repeating-linear-gradient(right, #2a4c75, #ff6500, #2a4c75, #ff6500);
+}
+
+.colorNavbar i {
+  color: white;
+}
+
+.imagenFondo {
+  width: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10rem;
+}
+
+::selection {
+  background-color: #0273d4;
+  color: #fff;
+}
+
+a {
+  color: #0273d4;
+  text-decoration: none;
+}
+
+a:hover {
+  border-bottom: 1px dotted #0273d4;
+}
+
+::ng-deep aside {
+
+  padding: 2em 1em;
+  background: white;
+  border: 3px solid transparent;
+  -moz-border-image: -moz-linear-gradient(top, #2a4c75 0%, #ff6500 100%);
+  -webkit-border-image: -webkit-linear-gradient(top, #2a4c75 0%, #ff6500 100%);
+  border-image: linear-gradient(to bottom, #2a4c75 0%, #ff6500 100%);
+  border-image-slice: 1;
+  border-top: none;
+  width: 300px;
+}
+
+
+.demo-header__toggle:after {
+  background: #fff;
+  content: '';
+  height: 0.15rem;
+  left: 0;
+  margin-top: -0.075rem;
+  position: absolute;
+  top: 50%;
+  width: 100%;
+}
+
+.demo-contents {
+  padding: 0 2em;
+}
+
+
+@media (max-width: 500px) {
+  ::ng-deep aside {
+    width: 100%;
+  }
+
+}
+
+
+
