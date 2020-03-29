@@ -1,7 +1,6 @@
-
 <div class=" row border-bottom colorNavbar  py-2 ">
- <button  (click)="_toggleOpened()"><i class=" col-sm-2  container fa fa-bars px-4  " ></i></button>
-  <p class=" col-10   encabezado  "> Opciones de Administracion</p>
+  <button (click)="_toggleOpened()"><i class=" col-sm-2  container fa fa-bars px-4  "></i></button>
+  <p class=" col-10   encabezado  "> Gestion de tienda</p>
 
 
 </div>
@@ -9,37 +8,113 @@
 <ng-sidebar-container
   (onBackdropClicked)="_onBackdropClicked()">
   <ng-sidebar
-    [(opened)]="_opened"
-    [mode]="_MODES[_modeNum]"
-    [keyClose]="_keyClose"
-    [position]="_POSITIONS[_positionNum]"
-    [dock]="_dock"
-    [dockedSize]="'50px'"
-    [autoCollapseHeight]="_autoCollapseHeight"
-    [autoCollapseWidth]="_autoCollapseWidth"
-    [closeOnClickOutside]="_closeOnClickOutside"
-    [closeOnClickBackdrop]="_closeOnClickBackdrop"
-    [showBackdrop]="_showBackdrop"
-    [animate]="_animate"
-    [trapFocus]="_trapFocus"
-    [autoFocus]="_autoFocus"
-    [ariaLabel]="'My sidebar'"
-    (onOpenStart)="_onOpenStart()"
-    (onOpened)="_onOpened()"
     (onCloseStart)="_onCloseStart()"
     (onClosed)="_onClosed()"
-    (onTransitionEnd)="_onTransitionEnd()" class="shadow">
-    <p>Sidebar contents</p>
+    (onOpenStart)="_onOpenStart()"
+    (onOpened)="_onOpened()"
+    (onTransitionEnd)="_onTransitionEnd()"
+    [(opened)]="_opened"
+    [animate]="_animate"
+    [ariaLabel]="'My sidebar'"
+    [autoCollapseHeight]="_autoCollapseHeight"
+    [autoCollapseWidth]="_autoCollapseWidth"
+    [autoFocus]="_autoFocus"
+    [closeOnClickBackdrop]="_closeOnClickBackdrop"
+    [closeOnClickOutside]="_closeOnClickOutside"
+    [dock]="_dock"
+    [dockedSize]="'50px'"
+    [keyClose]="_keyClose"
+    [mode]="_MODES[_modeNum]"
+    [position]="_POSITIONS[_positionNum]"
+    [showBackdrop]="_showBackdrop"
+    [trapFocus]="_trapFocus" class="shadow">
+    <h6 class="ml-3">Opciones de Administración</h6>
+<br>
 
-    <button class="demo-control" (click)="_toggleOpened()">Close sidebar</button>
-    <p><a closeSidebar>This will close the sidebar too</a></p>
+    <ul class="navbar-nav navbar-sidenav ml-3" >
+      <li class="nav-item" data-placement="right " data-toggle="tooltip">
+        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#nvusuario">
+          <i class="fa fa-fw fa-home "></i>
+        <span class="nav-link-text ml-2">Inicio</span>
+        </a>
+        <ul class="sidenav-second-level collapse" id="nvusuario">
+          <li (click)="apareceIngreseUsuario()" style="cursor:pointer " class="ml-4 subOpcion">  &nbsp;  &nbsp;    Nuevo</li>
+        </ul>
+      </li>
+    </ul>
 
-    <hr>
+    <ul class="navbar-nav navbar-sidenav mt-4 ml-3" >
+      <li class="nav-item" data-placement="right " data-toggle="tooltip">
+        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#nvusuario">
+          <i class="fa fa-fw fa-tags "></i>
+          <span class="nav-link-text ml-2">Productos</span>
+        </a>
+        <ul class="sidenav-second-level collapse" id="nvusuario">
+          <li (click)="apareceIngreseUsuario()" style="cursor:pointer " class="ml-4 subOpcion">  &nbsp;  &nbsp;    Nuevo</li>
+        </ul>
+      </li>
+    </ul>
 
-    <p>Throwup on your pillow.</p>
+    <ul class="navbar-nav navbar-sidenav mt-4 ml-3" >
+      <li class="nav-item" data-placement="right " data-toggle="tooltip">
+        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#nvusuario">
+          <i class="fa fa-fw fa-truck " ></i>
 
-    <p>Use lap as chair hide head under .</p>
+          <span class="nav-link-text ml-2">Pedidos</span>
+        </a>
+        <ul class="sidenav-second-level collapse" id="nvusuario">
+          <li (click)="apareceIngreseUsuario()" style="cursor:pointer " class="ml-4 subOpcion">  &nbsp;  &nbsp;    Nuevo</li>
+        </ul>
+      </li>
+    </ul>
 
+    <ul class="navbar-nav navbar-sidenav mt-4 ml-3" >
+      <li class="nav-item" data-placement="right " data-toggle="tooltip">
+        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#nvusuario">
+          <i class="fa fa-fw fa-users "></i>
+          <span class="nav-link-text ml-2">Clientes</span>
+        </a>
+        <ul class="sidenav-second-level collapse" id="nvusuario">
+          <li (click)="apareceIngreseUsuario()" style="cursor:pointer " class="ml-4 subOpcion">  &nbsp;  &nbsp;    Nuevo</li>
+        </ul>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav navbar-sidenav mt-4 ml-3" >
+      <li class="nav-item" data-placement="right " data-toggle="tooltip">
+        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#nvusuario">
+          <i class="fa fa-fw fa-bar-chart "></i>
+          <span class="nav-link-text ml-2">Estadisticas</span>
+        </a>
+        <ul class="sidenav-second-level collapse" id="nvusuario">
+          <li (click)="apareceIngreseUsuario()" style="cursor:pointer " class="ml-4 subOpcion">  &nbsp;  &nbsp;    Nuevo</li>
+        </ul>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav navbar-sidenav mt-4 ml-3" >
+      <li class="nav-item" data-placement="right " data-toggle="tooltip">
+        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#nvusuario">
+          <i class="fa fa-fw fa-shopping-bag "></i>
+          <span class="nav-link-text ml-2">Tienda</span>
+        </a>
+        <ul class="sidenav-second-level collapse" id="nvusuario">
+          <li (click)="apareceIngreseUsuario()" style="cursor:pointer " class="ml-4 subOpcion">  &nbsp;  &nbsp;    Nuevo</li>
+        </ul>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav navbar-sidenav mt-4 ml-3" >
+      <li class="nav-item" data-placement="right " data-toggle="tooltip">
+        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#nvusuario">
+          <i class="fa fa-fw fa-map-marker "></i>
+          <span class="nav-link-text ml-2">Puntos de venta</span>
+        </a>
+        <ul class="sidenav-second-level collapse" id="nvusuario">
+          <li (click)="apareceIngreseUsuario()" style="cursor:pointer " class="ml-4 subOpcion">  &nbsp;  &nbsp;    Nuevo</li>
+        </ul>
+      </li>
+    </ul>
 
   </ng-sidebar>
 
@@ -48,9 +123,8 @@
 
     <section class="demo-contents">
       <div>
-        <img  class="imagenFondo" src="  ./../../../assets/images/fondo-administrador.png">
+        <img class="imagenFondo" src="  ./../../../assets/images/fondo-administrador.png">
       </div>
-
 
 
     </section>

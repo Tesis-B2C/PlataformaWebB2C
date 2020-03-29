@@ -17,33 +17,38 @@
   margin-left: auto;
   margin-right: auto;
   margin-top: 10rem;
+
 }
 
 ::selection {
-  background-color: #0273d4;
+  background-color: #12345f;
   color: #fff;
 }
 
 a {
-  color: #0273d4;
+  color: #12345f;
   text-decoration: none;
+  font-size: medium;
 }
-
+.subOpcion{
+  font-size: 1rem;
+}
+i{
+  color: #fca147;
+}
 a:hover {
-  border-bottom: 1px dotted #0273d4;
+  color: #ff6500;
+
 }
 
 ::ng-deep aside {
 
   padding: 2em 1em;
-  background: white;
-  border: 3px solid transparent;
-  -moz-border-image: -moz-linear-gradient(top, #2a4c75 0%, #ff6500 100%);
-  -webkit-border-image: -webkit-linear-gradient(top, #2a4c75 0%, #ff6500 100%);
-  border-image: linear-gradient(to bottom, #2a4c75 0%, #ff6500 100%);
-  border-image-slice: 1;
+
+  border-right: 1px solid  #ca6900 ;
   border-top: none;
-  width: 300px;
+  width: 280px;
+
 }
 
 
@@ -68,6 +73,13 @@ a:hover {
     width: 100%;
   }
 
+  .imagenFondo {
+    width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10rem;
+  }
 }
 
 
