@@ -30,6 +30,10 @@ a {
   text-decoration: none;
   font-size: small;
 }
+
+.fa{
+  font-size:1.2rem;
+}
 .subOpcion{
   font-size: smaller;
 }

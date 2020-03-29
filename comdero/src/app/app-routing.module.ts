@@ -8,8 +8,9 @@ import {OlvidoContraseniaComponent} from './paginas/olvido-contrasenia/olvido-co
 import { OlvidoContraseniaPaso2Component } from './paginas/olvido-contrasenia-paso2/olvido-contrasenia-paso2.component';
 
 const routes: Routes = [
-  {path: '', loadChildren:'./principales/principales.module#PrincipalesModule'},
-  {path: '', loadChildren:'./administrador-tienda/administrador-tienda.module#AdministradorTiendaModule'},
+
+  {path: 'principales', loadChildren:'./principales/principales.module#PrincipalesModule'},
+  {path: 'administrador', loadChildren:'./administrador-tienda/administrador-tienda.module#AdministradorTiendaModule'},
   {path: 'loguin/:token', component: LoguinComponent},
   {path: 'loguin', component: LoguinComponent},
  // {path:'principal', component:PrincipalComponent},
@@ -17,7 +18,9 @@ const routes: Routes = [
   {path: 'registro-tienda', component: RegistroTiendaComponent},
   {path: 'olvido-contrasenia', component: OlvidoContraseniaComponent},
   {path: 'olvido-contrasenia-paso2/:token', component: OlvidoContraseniaPaso2Component},
-  {path: '**', redirectTo: 'principal'},
+  {path: '**', redirectTo: 'principales/menu/principal'},
+
+
 ];
 
 @NgModule({

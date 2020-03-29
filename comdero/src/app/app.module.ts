@@ -9,7 +9,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {DpaServicio} from "./servicios/dpa.servicio";
 import {AgenteServicio} from "./servicios/agente.servicio";
 import {AdministradorTiendaModule} from "./administrador-tienda/administrador-tienda.module";
-
+import {GestionarTiendasModule} from "./administrador-tienda/gestionar-tiendas/gestionar-tiendas.module";
 
 @NgModule({
   declarations: [
@@ -25,6 +25,7 @@ import {AdministradorTiendaModule} from "./administrador-tienda/administrador-ti
     PaginasModule,
     PrincipalesModule,
     AdministradorTiendaModule,
+    GestionarTiendasModule,
     NgbModule,
     HttpClientModule
   ],

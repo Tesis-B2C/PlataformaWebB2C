@@ -17,13 +17,13 @@
     [mode]="_MODES[_modeNum]"
     [position]="_POSITIONS[_positionNum]">
     <h5 class="ml-2">Opciones de Administración</h5>
-<br>
+    <br>
 
     <ul class="navbar-nav navbar-sidenav ml-2" >
       <li class="nav-item" data-placement="right " data-toggle="tooltip">
         <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#nvusuario">
           <i class="fa fa-fw fa-home "></i>
-        <span class="nav-link-text ml-2">Inicio</span>
+          <span class="nav-link-text ml-2">Inicio</span>
         </a>
         <ul class="sidenav-second-level collapse" id="nvusuario">
           <li (click)="apareceIngreseUsuario()" style="cursor:pointer " class="ml-4 subOpcion">  &nbsp;  &nbsp;    Nuevo</li>
@@ -95,7 +95,7 @@
     <ul class="navbar-nav navbar-sidenav mt-3 ml-2" >
       <li class="nav-item" data-placement="right " data-toggle="tooltip">
         <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#nvusuario">
-          <i class="fa fa-fw fa-map "></i>
+          <i class="fa fa-fw fa-map  "></i>
           <span class="nav-link-text ml-2">Puntos de venta</span>
         </a>
         <ul class="sidenav-second-level collapse" id="nvusuario">
@@ -111,9 +111,9 @@
 
     <section class="demo-contents">
       <div>
-        <img class="imagenFondo" src="  ./../../../assets/images/fondo-administrador.png">
+        <img class="imagenFondo" src="../../../../assets/images/fondo-administrador.png">
       </div>
-
+      <router-outlet></router-outlet>
 
     </section>
   </div>

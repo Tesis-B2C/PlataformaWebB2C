@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-gestionar-tienda',
-  templateUrl: './gestionar-tienda.component.html',
-  styleUrls: ['./gestionar-tienda.component.css']
+  selector: 'app-menu-gestion-tiendas',
+  templateUrl: './menu-gestion-tiendas.component.html',
+  styleUrls: ['./menu-gestion-tiendas.component.css']
 })
-export class GestionarTiendaComponent  {
+export class MenuGestionTiendasComponent {
+
+  constructor() { }
+
   private _opened: boolean = true;
   private _modeNum: number = 1;
   private _positionNum: number = 0;

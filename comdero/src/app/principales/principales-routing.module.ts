@@ -5,9 +5,12 @@ import {PrincipalComponent} from "./principal/principal.component";
 
 
 const routes: Routes = [
+
   {path:'menu', component:MenuComponent,
   children: [
-  { path: 'principal', component: PrincipalComponent }]}];
+  { path: 'principal', component: PrincipalComponent }]},
+
+  ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
