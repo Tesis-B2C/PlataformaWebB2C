@@ -28,7 +28,7 @@
 a {
   color: #12345f;
   text-decoration: none;
-  font-size: medium;
+  font-size: small;
 }
 .subOpcion{
   font-size: 1rem;
@@ -39,6 +39,7 @@ i{
 a:hover {
   color: #ff6500;
 
+  font-size: large;
 }
 
 ::ng-deep aside {
@@ -82,5 +83,8 @@ a:hover {
   }
 }
 
+h5{
+  font-size: medium;
+}
 
 

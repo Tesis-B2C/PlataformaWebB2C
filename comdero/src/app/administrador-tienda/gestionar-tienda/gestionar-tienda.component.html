@@ -1,34 +1,22 @@
 <div class=" row border-bottom colorNavbar  py-2 ">
   <button (click)="_toggleOpened()"><i class=" col-sm-2  container fa fa-bars px-4  "></i></button>
-  <p class=" col-10   encabezado  "> Gestion de tienda</p>
-
+  <p class=" col-10  encabezado  "> Gestion de tienda</p>
 
 </div>
 
-<ng-sidebar-container
-  (onBackdropClicked)="_onBackdropClicked()">
+<ng-sidebar-container>
   <ng-sidebar
     (onCloseStart)="_onCloseStart()"
     (onClosed)="_onClosed()"
     (onOpenStart)="_onOpenStart()"
     (onOpened)="_onOpened()"
-    (onTransitionEnd)="_onTransitionEnd()"
     [(opened)]="_opened"
     [animate]="_animate"
-    [ariaLabel]="'My sidebar'"
     [autoCollapseHeight]="_autoCollapseHeight"
     [autoCollapseWidth]="_autoCollapseWidth"
-    [autoFocus]="_autoFocus"
-    [closeOnClickBackdrop]="_closeOnClickBackdrop"
-    [closeOnClickOutside]="_closeOnClickOutside"
-    [dock]="_dock"
-    [dockedSize]="'50px'"
-    [keyClose]="_keyClose"
     [mode]="_MODES[_modeNum]"
-    [position]="_POSITIONS[_positionNum]"
-    [showBackdrop]="_showBackdrop"
-    [trapFocus]="_trapFocus" class="shadow">
-    <h6 class="ml-3">Opciones de Administración</h6>
+    [position]="_POSITIONS[_positionNum]">
+    <h5 class="ml-3">Opciones de Administración</h5>
 <br>
 
     <ul class="navbar-nav navbar-sidenav ml-3" >
@@ -107,7 +95,7 @@
     <ul class="navbar-nav navbar-sidenav mt-4 ml-3" >
       <li class="nav-item" data-placement="right " data-toggle="tooltip">
         <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#nvusuario">
-          <i class="fa fa-fw fa-map-marker "></i>
+          <i class="fa fa-fw fa-map "></i>
           <span class="nav-link-text ml-2">Puntos de venta</span>
         </a>
         <ul class="sidenav-second-level collapse" id="nvusuario">
