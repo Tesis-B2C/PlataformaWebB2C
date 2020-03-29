@@ -31,7 +31,7 @@ a {
   font-size: small;
 }
 .subOpcion{
-  font-size: 1rem;
+  font-size: smaller;
 }
 i{
   color: #fca147;
@@ -39,14 +39,14 @@ i{
 a:hover {
   color: #ff6500;
 
-  font-size: large;
+  font-size: medium;
 }
 
 ::ng-deep aside {
 
   padding: 2em 1em;
 
-  border-right: 1px solid  #ca6900 ;
+  border-right: 0.05px solid  #ca6900 ;
   border-top: none;
   width: 280px;
 
