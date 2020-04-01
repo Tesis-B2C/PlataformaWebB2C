@@ -1,0 +1,92 @@
+<div class="container mt-5" >
+  <div class="row  justify-content-md-center">
+    <h5 class="card-title col-5  ">Agregar Producto</h5>
+    <hr class="col-10">
+  </div>
+
+
+  <div class="row  justify-content-md-center" >
+    <div class="col-7">
+      <article>
+        <form class=" card card-body  shadow">
+          <div class="form-row">
+            <div class="col  input-group-sm ">
+              <p><strong>Nombre </strong></p>
+              <input class="form-control py-3 " placeholder="Ej: Refrigeradora Mabe" type="text">
+            </div>
+          </div>
+          <br>
+          <div class="form-group">
+            <div>
+              <p><strong>Descripción </strong></p>
+              <app-ngx-editor [(ngModel)]="this.htmlcomponent" [config]="editorConfig"
+                              [placeholder]="'Inserte el texto aquí...'"
+                              [spellcheck]="true" name="CorreoA"></app-ngx-editor>
+
+              <!--<div [innerHTML]=this.htmlcomponent>
+              </div>  para cuando quieras mostrar con stilos-->
+            </div>
+          </div> <!-- form-group end.// -->
+        </form>
+
+        <br>
+
+        <form class="card card-body  shadow">
+          <div class="form-row">
+            <div class="col  input-group-sm ">
+              <p><strong>Imagenes del producto </strong></p>
+              <input type="file" (change)="cargandoImagen($event.target.files)" multiple>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="file">File</label>
+            <input
+
+              id="file"
+              type="file"
+              class="form-control"
+              multiple=""
+              (change)="onFileChange($event)">
+            <div  class="alert alert-danger">
+              <div>File is required.</div>
+            </div>
+          </div>
+
+          <div  *ngFor='let url of images; let i = index ' >
+          <img [src]="url" height="150" width="200px" style="margin: 3px;">
+
+            <input type="button" (click)="quitar(i,$event)" value="asd" >
+
+          </div>
+
+          <input type="file" (change)="fileChangeListener($event)" multiple>
+
+
+          <video controls *ngIf="data.video"  width="200px">
+            <source [src]="data.video" type="{{ data.type }}" >
+          </video>
+
+
+          <button class="btn btn-primary" type="submit">Submit</button>
+          <button class="btn btn-primary" type="submit">Submit</button>
+          <button class="btn btn-primary" type="submit">Submit</button>
+          <button class="btn btn-primary" type="submit">Submit</button>
+          <button class="btn btn-primary" type="submit">Submit</button>
+          <button class="btn btn-primary" type="submit">Submit</button>
+          <button class="btn btn-primary" type="submit">Submit</button>
+
+          <br>
+          <div class="form-group">
+            <div>
+
+            </div>
+          </div> <!-- form-group end.// -->
+        </form>
+      </article> <!-- card-body end .// -->
+    </div>
+    <div class="card   shadow col-3 ml-3">
+
+    </div>
+  </div>
+</div>

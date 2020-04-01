@@ -10,6 +10,7 @@ import {DpaServicio} from "./servicios/dpa.servicio";
 import {AgenteServicio} from "./servicios/agente.servicio";
 import {AdministradorTiendaModule} from "./administrador-tienda/administrador-tienda.module";
 import {GestionarTiendasModule} from "./administrador-tienda/gestionar-tiendas/gestionar-tiendas.module";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {GestionarTiendasModule} from "./administrador-tienda/gestionar-tiendas/g
     AdministradorTiendaModule,
     GestionarTiendasModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
   ],
   providers: [DpaServicio,AgenteServicio],
   bootstrap: [AppComponent]

@@ -1,10 +1,13 @@
 .encabezado {
+
   font-size: larger;
   color: white;
+
 }
 
 .colorNavbar {
   background: -webkit-repeating-linear-gradient(right, #2a4c75, #ff6500, #2a4c75, #ff6500);
+
 }
 
 .colorNavbar i {
@@ -34,25 +37,40 @@ a {
 .fa{
   font-size:1.2rem;
 }
-.subOpcion{
-  font-size: smaller;
+
+
+
+
+
+ li a:hover{
+  color:#ca6900;
+  background-color: #d3d3d4;
+  padding-right: 30%;
 }
+
+
+li a:focus{
+  color:#ca6900;
+  font-size: medium;
+
+}
+
+
+
+
 i{
   color: #fca147;
 }
-a:hover {
-  color: #ff6500;
 
-  font-size: medium;
-}
+
 
 ::ng-deep aside {
 
-  padding: 2em 1em;
-
+  padding: 1.2em 1em;
   border-right: 0.05px solid  #ca6900 ;
   border-top: none;
-  width: 280px;
+  width: 230px;
+  height: 100%;
 
 }
 
@@ -69,9 +87,13 @@ a:hover {
 }
 
 .demo-contents {
-  padding: 0 2em;
+ height: 100%;
+
 }
 
+ng-sidebar-container{
+  max-height: 100%;
+}
 
 @media (max-width: 500px) {
   ::ng-deep aside {
@@ -88,7 +110,9 @@ a:hover {
 }
 
 h5{
-  font-size: medium;
+  font-size: small;
 }
+
+
 
 
