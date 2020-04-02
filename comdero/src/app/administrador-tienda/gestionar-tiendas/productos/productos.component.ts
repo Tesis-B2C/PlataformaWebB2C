@@ -9,7 +9,7 @@ import {Component, OnInit} from '@angular/core';
 export class ProductosComponent implements OnInit {
 
   public htmlcomponent;
-
+  public url2="./../assets/images/imagenes-fondo.png"
 
   public editorConfig = {
     "editable": true,
@@ -27,7 +27,7 @@ export class ProductosComponent implements OnInit {
       ["fontName", "fontSize",],
       ["justifyLeft", "justifyCenter", "justifyRight", "justifyFull", "indent", "outdent"],
       ["cut", "copy", "delete", "removeFormat", "undo", "redo"],
-      ["paragraph", "blockquote", "removeBlockquote", "horizontalLine", "orderedList", "unorderedList"],
+      ["paragraph", "blockquote", "removeBlockquote", "horizontalLine"],
     ]
   }
 
@@ -39,7 +39,7 @@ export class ProductosComponent implements OnInit {
   }
 
   images = [];
-
+ banderaAgregarImagen:boolean=false;
   onFileChange(event) {
     if (event.target.files && event.target.files[0]) {
       var filesAmount = event.target.files.length;
@@ -49,8 +49,8 @@ export class ProductosComponent implements OnInit {
         reader.onload = (event: any) => {
           console.log(event.target.result);
           this.images.push(event.target.result);
-
-
+          this.banderaAgregarImagen=true;
+          document.forms["form"].reset();
         }
 
         reader.readAsDataURL(event.target.files[i]);
@@ -78,11 +78,11 @@ export class ProductosComponent implements OnInit {
     }
   }
 
-  quitar(images: any, event) {
+  quitar(images: any) {
     console.log("as", images, this.images);
     this.images.splice(images, 1);
     console.log("cortado", this.images);
-
+    document.forms["form"].reset();
 
   }
 
