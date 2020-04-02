@@ -14,8 +14,8 @@ export class ProductosComponent implements OnInit {
   public editorConfig = {
     "editable": true,
     "spellcheck": true,
-    "height": "200px",
-    "minHeight": "150px",
+    "height": "150px",
+    "minHeight": "100px",
     "width": "auto",
     "minWidth": "0",
     "translate": "yes",
