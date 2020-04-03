@@ -4,7 +4,6 @@
     <hr class="col-10">
   </div>
 
-
   <div class="row  justify-content-md-center">
     <div class="col-7">
       <article>
@@ -12,7 +11,7 @@
           <div class="form-row">
             <div class="col   ">
               <p><strong>Nombre </strong></p>
-              <input class="form-control py-3 "  type="text">
+              <input class="form-control py-3 " type="text">
             </div>
           </div>
           <br>
@@ -21,7 +20,7 @@
               <p><strong>Descripción </strong></p>
               <app-ngx-editor [(ngModel)]="this.htmlcomponent" [config]="editorConfig"
                               [placeholder]="'Inserte el texto aquí...'"
-                              [spellcheck]="true" name="CorreoA"></app-ngx-editor>
+                              [spellcheck]="true" name="descripcionProducto"></app-ngx-editor>
 
               <!--<div [innerHTML]=this.htmlcomponent>
               </div>  para cuando quieras mostrar con stilos-->
@@ -31,17 +30,18 @@
 
         <br>
 
-        <form #form class="card card-body  " name="form">
-
+        <form  class="card card-body  " name="form">
           <div class="form-group ">
-            <a class="ml-2 mt-5"><strong>Imagenes del producto </strong></a>
-
-            <div class="row borde-imagenes  mt-3 mx-2 ">
+            <a class="ml-2 mt-5">
+              <strong>Imagenes del producto </strong>
+              <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
+            <div [ngClass]="{'borde-imagenes':!banderaAgregarImagen,'borde-imagenes1':banderaAgregarImagen }" class="row  mt-3 mx-2 ">
               <div *ngFor='let url of images; let i = index ' class="ml-2">
-                <div class="col-auto card    mt-2 px-0 pb-2">
+                <div class="col-auto card mt-2 px-0 pb-2">
                   <label style="border: none;  ">
                     <img [src]="url" class="px-0" height="140px" width="140px">
-                    <input (change)="onFileChange($event)" class="file" multiple name="files" type="file">
+                    <input (change)="onFileChange($event)" accept="image/*" class="file" multiple name="files"
+                           type="file">
                   </label>
                   <button (click)="quitar(i)" class="boton-cerrar btn-outline-danger px-0 py-0 ">Eliminar</button>
                 </div>
@@ -51,78 +51,72 @@
                   <label class="imagen-agregar ">
                     <i class="fa fa-picture-o fa-4x"></i>
                     <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                    <input (change)="onFileChange($event)" class="file" multiple type="file">
+                    <input (change)="onFileChange($event)" accept="image/*" class="file" multiple type="file">
                   </label>
                 </div>
               </div>
-              <div  *ngIf="!banderaAgregarImagen"  class=" col-12 pb-5 mx-auto ">
-              <p class="link-agregar-imagenes ">Click para Agregar imagenes</p>
+              <div *ngIf="!banderaAgregarImagen" class=" col-12 pb-5 mx-auto ">
+                <p class="link-agregar-imagenes ">Click para Agregar imagenes</p>
               </div>
 
-
-                <div *ngIf="banderaAgregarImagen" class="py-2">
+              <div *ngIf="banderaAgregarImagen && images.length<6" class="py-2">
                 <div class="col-auto  py-4  card  ml-2 ">
                   <label class="imagen-agregar">
                     <i class="fa fa-picture-o fa-4x ml-4"></i>
                     <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                    <input (change)="onFileChange($event)" class="file" multiple type="file">
+                    <input (change)="onFileChange($event)" accept="image/*" class="file" multiple type="file">
                     <br>
-                    <p class=" pb-4 pt-3 link-agregar-imagenes2">Agregar imagenes </p>
+                    <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imagenes </p>
+                    <p class=" link-agregar-imagenes2">maximo 6</p>
+
                   </label>
                 </div>
               </div>
             </div>
-
             <br>
-            <a class="ml-2 mt-5"><strong>Video promocional del producto </strong></a>
-            <div class="row borde-imagenes  mt-3 mx-2 ">
+            <a class="ml-2 mt-5"><strong>Video promocional del producto </strong>
+              <span *ngIf="banderaMensajeMaximoVideo" class="ml-2" style="color: red">* Recuerda Maximo 150MB</span></a>
+            <div [ngClass]="{'borde-imagenes':!data.video,'borde-imagenes1':data.video }" class="row mt-3 mx-2 ">
+              <div class=" col-12 mx-auto">
+                <div *ngIf="this.banderaAnimacionVideo==true">
+                  <div class="fondoAnimacionCarga py-5">
+                    <div class="pulse animated infinite py-5  ">
+                      <img class="imagenCarga" src="./../assets/images/cargando.png">
+                      <br><br>
+                      <div>
+                      </div>
+                    </div>
+                    <label style="color: white; text-align: center">Cargando previsualización, espere
+                      porfavor....</label>
+                  </div>
 
+                </div>
+              </div>
+              <div class=" col-12 mx-auto">
+                <div *ngIf="data.video">
+
+                  <div class="mx-auto fondo-animacion-carga-video">
+                    <video class="video-carga" controls height="auto" width="auto">
+                      <source [src]="data.video" type="{{ data.type }}">
+                    </video>
+                  </div>
+                </div>
+              </div>
               <div class=" col-auto  mx-auto">
                 <div class=" pt-4 ml-2  ">
                   <label class="imagen-agregar ">
                     <i class="fa fa-film fa-4x  "></i>
                     <i class="fa fa-plus-circle fa-2x ml-1 "></i>
-                    <input (change)="fileChangeListener($event)" class="file" type="file">
+                    <input (change)="onVideoChange($event)" accept="video/*" class="file" type="file">
                   </label>
                 </div>
               </div>
-             <div class=" col-12 mx-auto ">
-              <p class="link-agregar-imagenes pb-5">Click para Agregar un video promocional del producto</p>
-             </div>
-              <div class=" col-12 mx-auto">
-               <div *ngIf="!data.video">
-                 <div class="fondoAnimacionCarga py-5">
-                    <div class="pulse animated infinite py-5  " >
-                      <img id="imagenCarga" src="./../assets/images/cargando.png">
-                      <br><br>
-                      <div>
-
-                      </div>
-                    </div>
-                   <label style="color: white; text-align: center">Cargando previsualización, espere porfavor....</label>
-                  </div>
-
-                  </div>
-               </div>
-              <div *ngIf="data.video">
-                <br>
-                <p class="txt1 ml-3 ">Previsualizacion</p>
-                <br>
-                  <video class="col-auto" controls height="auto" width="90%">
-                    <source [src]="data.video" type="{{ data.type }}">
-
-                  </video>
-                </div>
+              <div class=" col-12 mx-auto ">
+                <p class="link-agregar-imagenes pb-5">Click para Agregar un video promocional del producto</p>
               </div>
             </div>
-
-
-
-
-
+          </div>
           <button class="btn btn-primary" type="submit">Submit</button>
-
-
           <br>
           <div class="form-group">
             <div>
@@ -132,7 +126,7 @@
         </form>
       </article> <!-- card-body end .// -->
     </div>
-    <div class="card    col-3 ml-2">
+    <div class="card col-3 ml-2">
 
     </div>
   </div>
