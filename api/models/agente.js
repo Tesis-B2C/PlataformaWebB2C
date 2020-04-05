@@ -8,7 +8,7 @@ const  Agente = db.sequelize.define('AGENTE', {
             type: Sequelize.STRING,
             primaryKey: true,
             allowNull: false,
-            autoIncrement: true
+            //autoIncrement: true
 
         },
         NUM_COD_POSTAL:

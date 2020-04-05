@@ -1,0 +1,42 @@
+<header class="bg-white">
+
+  <section class="header-main border-bottom ">
+    <div class="container-fluid container-menu">
+      <div class="row ">
+        <div class="col-lg-2  col-sm-12 mx-auto">
+          <a class="" href="http://bootstrap-ecommerce.com">
+            <img class="logo" src="../../../assets/images/logoValid4.png">
+          </a> <!-- brand-wrap.// -->
+        </div>
+        <div class="col-lg-8 col-sm-12 ">
+          <div class="input-group w-100  mx-auto my-3">
+            <h4>Panel Administrativo</h4>
+          </div>
+        </div> <!-- col.// -->
+        <div class="col-lg-2 col-sm-6 ">
+          <div class="widgets-wrap float-md-right">
+
+            <div class="widget-header icontext">
+              <a class="icon icon-sm rounded-circle border" href="#"><i class="fa fa-user"></i></a>
+              <div class="text">
+                <span class="text-muted">Bienvenido!</span>
+                <div>
+                  <a [routerLink]="['/loguin']">Principal</a> |
+                  <a [routerLink]="['/registro']"> Salir</a>
+                </div>
+              </div>
+            </div>
+
+          </div> <!-- widgets-wrap.// -->
+        </div> <!-- col.// -->
+      </div> <!-- row.// -->
+    </div> <!-- container.// -->
+  </section> <!-- header-main .// -->
+</header> <!-- section-header.// -->
+
+
+<router-outlet></router-outlet>
+
+
+
+

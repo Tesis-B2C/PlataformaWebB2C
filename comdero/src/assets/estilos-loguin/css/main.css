@@ -21,6 +21,10 @@
   src: url('../fonts/poppins/Poppins-SemiBold.ttf');
 }
 
+@font-face {
+  font-family: Poppins-Thin;
+  src: url('../fonts/poppins/Poppins-Thin.ttf');
+}
 
 /*//////////////////////////////////////////////////////////////////
 [ RESTYLE TAG ]*/
@@ -159,9 +163,11 @@ textarea:-ms-input-placeholder {
 
 /*---------------------------------------------*/
 button {
+
   outline: none !important;
   border: none;
   background: transparent;
+
 }
 
 button:hover {

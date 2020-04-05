@@ -1,0 +1,50 @@
+<header class="section-header">
+
+  <section class="header-main border-bottom">
+    <div class="container-fluid container-menu">
+      <div class="row align-items-center">
+        <div class="col-lg-2  col-sm-12 divlogo ">
+          <a href="http://bootstrap-ecommerce.com" class="brand-wrap">
+            <img class="logo mx-auto" src="../../../assets/images/logoValid4.png">
+          </a> <!-- brand-wrap.// -->
+        </div>
+        <div class="col-lg-6 col-sm-12 mx-auto">
+
+            <div class="input-group search  ">
+              <input type="text" class="form-control " placeholder="Buscar">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </div>
+
+        </div> <!-- col.// -->
+        <div class="col-lg-4 col-sm-6 col-12">
+          <div class="widgets-wrap float-md-right">
+            <div class="widget-header  mr-3">
+              <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-bell" aria-hidden="true"></i></a>
+              <span class="badge badge-pill badge-danger notify">0</span>
+            </div>
+            <div class="widget-header  mr-3">
+              <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
+              <span class="badge badge-pill badge-danger notify">0</span>
+            </div>
+            <div class="widget-header icontext">
+              <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a>
+              <div class="text">
+                <span class="text-muted">Bienvenido!</span>
+                <div>
+                  <a [routerLink]="['/loguin']" >Loguin</a> |
+                  <a [routerLink]="['/registro']"> Registro</a>
+                </div>
+              </div>
+            </div>
+
+          </div> <!-- widgets-wrap.// -->
+        </div> <!-- col.// -->
+      </div> <!-- row.// -->
+    </div> <!-- container.// -->
+  </section> <!-- header-main .// -->
+</header> <!-- section-header.// -->
+<router-outlet></router-outlet>

@@ -1,0 +1,46 @@
+.colorNavbar{
+  background: -webkit-repeating-linear-gradient(right, #2a4c75, #ff6500, #2a4c75, #ff6500);
+
+}
+
+.encabezado{
+   font-size: large;
+   color: white;
+ }
+
+.catalogo-tiendas{
+  background-color: #f1f3f4;
+  display: block;
+
+}
+
+.otra{
+  position: absolute;
+  z-index: 100;
+  padding: 1%; margin: 2px;
+
+}
+
+.catalogo-tiendas a{
+  display: block;
+  overflow: hidden;
+  margin-bottom: 2rem;
+
+}
+.catalogo-tiendas img{
+  transition: all 0.5s ease;
+}
+.catalogo-tiendas img:hover {
+ transform: scale(1.5);
+}
+
+@media (min-width: 1920px) {
+  .contairner-tiendas {
+    height: 42.5rem;
+    overflow: auto;
+
+  }
+}
+
+
+

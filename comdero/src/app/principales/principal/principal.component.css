@@ -1,0 +1,39 @@
+.section-header
+{
+  background-color: #3a4e74;
+}
+
+
+.clearfix
+{
+  clear: both;
+  float: none;
+}
+
+
+.colorNavbar{
+  background-color: #2a4c75;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.nav-link{
+  color: white;
+  font-weight: normal;
+
+}
+
+.navbar-toggler {
+  padding:0px;
+}
+
+.navbar-toggler-icon{
+   color: #FFF;
+}
+
+.nav-link:hover {
+   padding: 4px;
+ /* background-color: #fca147;*/
+  font-weight: bold;
+  color: white;
+}

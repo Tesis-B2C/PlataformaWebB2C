@@ -1,0 +1,111 @@
+.encabezado {
+
+  font-size: larger;
+  color: white;
+
+}
+
+.colorNavbar {
+  background: -webkit-repeating-linear-gradient(right, #2a4c75, #ff6500, #2a4c75, #ff6500);
+
+}
+
+.colorNavbar i {
+  color: white;
+}
+
+.imagenFondo {
+  width: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10rem;
+
+}
+
+::selection {
+  background-color: #12345f;
+  color: #fff;
+}
+
+a {
+  color: #12345f;
+  text-decoration: none;
+  font-size: small;
+}
+
+.fa {
+  font-size: 1.2rem;
+}
+
+
+li a:hover {
+  color: #ca6900;
+  background-color: #d3d3d4;
+  padding-right: 30%;
+}
+
+
+li a:focus {
+  color: #ca6900;
+  font-size: medium;
+
+}
+
+
+i {
+  color: #fca147;
+}
+
+
+::ng-deep aside {
+
+  padding: 1.2em 1em;
+  border-right: 0.05px solid #ca6900;
+  border-top: none;
+  width: 230px;
+  height: 100%;
+
+}
+
+.demo-header__toggle:after {
+  background: #fff;
+  content: '';
+  height: 0.15rem;
+  left: 0;
+  margin-top: -0.075rem;
+  position: absolute;
+  top: 50%;
+  width: 100%;
+}
+
+.demo-contents {
+  height: 100%;
+
+}
+
+ng-sidebar-container {
+  max-height: 100%;
+}
+
+@media (max-width: 500px) {
+  ::ng-deep aside {
+    width: 100%;
+  }
+
+  .imagenFondo {
+    width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10rem;
+  }
+}
+
+h5 {
+  font-size: small;
+}
+
+
+
+

@@ -1,0 +1,33 @@
+
+.logo{
+
+  max-height: 55px;
+  align-items: center;
+  position: center;
+
+}
+
+.mx-auto {
+  margin-right: auto !important;
+  margin-left: auto !important;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 1035px) {
+  .container-menu {
+    padding-right: 150px;
+    padding-left: 150px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+
+
