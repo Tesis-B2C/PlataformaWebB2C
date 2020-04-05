@@ -135,9 +135,7 @@ export class RegistroComponent implements OnInit, OnDestroy, DoCheck {
     }
   }
 
-
   ngDoCheck(): void {
-
     if (document.getElementById("CallePrincipal") && this.bandera == true) {
 
       var placesAutocomplete = places({

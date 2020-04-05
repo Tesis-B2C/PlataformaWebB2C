@@ -12,6 +12,8 @@ import {AdministradorTiendaModule} from "./administrador-tienda/administrador-ti
 import {GestionarTiendasModule} from "./administrador-tienda/gestionar-tiendas/gestionar-tiendas.module";
 import {FormsModule} from "@angular/forms";
 
+import { ArchwizardModule } from 'angular-archwizard';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,6 +23,7 @@ import {FormsModule} from "@angular/forms";
 
   ],
   imports: [
+    ArchwizardModule,
     BrowserModule,
     AppRoutingModule,
     PaginasModule,
