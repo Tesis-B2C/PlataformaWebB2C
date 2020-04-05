@@ -85,8 +85,6 @@ export class RegistroComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   async registrarAgente(validador) {
-
-
     console.log(validador);
     if (validador == "0") {
       this.banderToast = false;
@@ -147,9 +145,7 @@ export class RegistroComponent implements OnInit, OnDestroy, DoCheck {
     }
   }
 
-
   ngDoCheck(): void {
-
     if (document.getElementById("CallePrincipal") && this.bandera == true) {
 
       console.log("Entre a cargar direcciones");
@@ -191,10 +187,8 @@ export class RegistroComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   activarDireccion() {
-
     this.bandera=true;
     this.banderDirecciones = !this.banderDirecciones;
-
   }
 
   mensageError(mensaje)

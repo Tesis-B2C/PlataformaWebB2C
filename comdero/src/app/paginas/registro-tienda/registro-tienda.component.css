@@ -61,6 +61,13 @@
 .tamanioCampos
 {
   font-size: small;
+  font-weight: bolder;
+  font-size: 0.8em;
+}
+
+.tamanioInputs
+{
+  font-size: small;
 }
 
 .container-registro
@@ -74,10 +81,5 @@
   {
     max-width: 750px;
     margin-top: 15px;
-  }
-
-  .tamanioCampos
-  {
-    font-size: 0.8em;
   }
 }

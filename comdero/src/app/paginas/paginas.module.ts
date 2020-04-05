@@ -10,11 +10,13 @@ import { OlvidoContraseniaComponent } from './olvido-contrasenia/olvido-contrase
 import { OlvidoContraseniaPaso2Component } from './olvido-contrasenia-paso2/olvido-contrasenia-paso2.component';
 
 import { ArchwizardModule } from 'angular-archwizard';
+import { NgxEditorModule } from 'ngx-editor';
 
 @NgModule({
   declarations: [LoguinComponent, PrincipalComponent, RegistroComponent, RegistroTiendaComponent, OlvidoContraseniaComponent, OlvidoContraseniaPaso2Component],
     imports: [
       ArchwizardModule,
+      NgxEditorModule,
         CommonModule,
         NgbModule,
         FormsModule

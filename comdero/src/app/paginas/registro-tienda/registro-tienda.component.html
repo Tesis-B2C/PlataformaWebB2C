@@ -9,8 +9,6 @@
 </head>
 
 <body>
-
-
 <div class="mx-auto  container-login100  container-registro">
   <article class=" wrap-register100 card-body">
 
@@ -23,22 +21,121 @@
       <aw-wizard-step [stepTitle]="'Steptitle 1'">
         <ng-template awWizardStepSymbol><i class="fa fa-search"></i></ng-template>
         <div class="datosregistro">
+
+
           <div class="form-group">
             <label class="tamanioCampos">Nombre comercial de su empresa o negocio</label>
-            <input type="text" class="tamanioCampos form-control" placeholder="">
+            <input #Nombre_Comercial="ngModel" [(ngModel)]="this.Tienda.Nombre_Comercial" [ngClass]="{'is-invalid': Nombre_Comercial.invalid && (Nombre_Comercial.dirty || Nombre_Comercial.touched),
+                 'is-valid': Nombre_Comercial.valid && (Nombre_Comercial.dirty || Nombre_Comercial.touched)}"
+                   [pattern]='this.LetrasNumerosPattern'
+                   class="tamanioInputs form-control" name="nombre_Comercial" placeholder=""
+                   required type="text">
+            <div *ngIf="Nombre_Comercial.invalid && (Nombre_Comercial.dirty || Nombre_Comercial.touched)">
+              <div *ngIf="Nombre_Comercial.errors.required">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+              </div>
+              <div *ngIf="Nombre_Comercial.errors.pattern">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
+                  numeros.</p>
+              </div>
+            </div>
+          </div> <!-- form-group end.// -->
+
+
+          <div class="form-group">
+            <label class="tamanioCampos">Razón Social</label>
+            <input #Razon_Social="ngModel" [(ngModel)]="this.Tienda.Razon_Social" [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched),
+                 'is-valid': Razon_Social.valid && (Razon_Social.dirty || Razon_Social.touched)}"
+                   [pattern]='this.LetrasNumerosPattern'
+                   class="tamanioInputs form-control" name="razon_Social" placeholder=""
+                   required type="text">
+            <div *ngIf="Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched)">
+              <div *ngIf="Razon_Social.errors.required">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+              </div>
+              <div *ngIf="Razon_Social.errors.pattern">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
+                  numeros.</p>
+              </div>
+            </div>
+          </div> <!-- form-group end.// -->
+
+
+          <div class="form-row">
+            <div class="col-lg-6 form-group">
+              <label class="tamanioCampos">Página Web</label>
+              <input #Link_Pagina="ngModel" [(ngModel)]="this.Tienda.Link_Pagina" [ngClass]="{
+          'is-invalid': Link_Pagina.invalid && (Link_Pagina.dirty || Link_Pagina.touched),
+          'is-valid': Link_Pagina.valid && (Link_Pagina.touched || Link_Pagina.dirty )}" [pattern]='this.emailPattern'
+                     class="form-control tamanioInputs"
+                     name="link_Pagina" placeholder="" required type="url">
+
+              <div *ngIf="Link_Pagina.invalid && (Link_Pagina.touched||Link_Pagina.dirty)">
+                <div *ngIf="Link_Pagina.errors.required">
+                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                    Campo requerido.</p>
+                </div>
+                <div *ngIf="Link_Pagina.errors.pattern">
+                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                    Debe cumplir con el formato</p>
+                </div>
+              </div>
+            </div> <!-- form-group end.// -->
+
+            <div class="col-lg-6 form-group">
+              <label class="tamanioCampos">Facebook</label>
+              <input #Link_Facebook="ngModel" [(ngModel)]="this.Tienda.Link_Facebook" [ngClass]="{
+          'is-invalid': Link_Facebook.invalid && (Link_Facebook.dirty || Link_Facebook.touched),
+          'is-valid': Link_Facebook.valid && (Link_Facebook.touched || Link_Facebook.dirty )}" [pattern]='this.emailPattern'
+                     class="form-control tamanioInputs"
+                     name="link_Facebook" placeholder="" required type="url">
+
+              <div *ngIf="Link_Facebook.invalid && (Link_Facebook.touched||Link_Facebook.dirty)">
+                <div *ngIf="Link_Facebook.errors.required">
+                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                    Campo requerido.</p>
+                </div>
+                <div *ngIf="Link_Facebook.errors.pattern">
+                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                    Debe cumplir con el formato</p>
+                </div>
+              </div>
+            </div> <!-- form-group end.// -->
+          </div> <!-- form-row end.// -->
+
+          <div class="form-group">
+            <label class="tamanioCampos">Descripción del negocio</label>
+            <textarea rows="3" style="font-size: small; resize: none;" #Descripcion_Tienda="ngModel" [(ngModel)]="this.Tienda.Descripcion_Tienda" [ngClass]="{'is-invalid': Descripcion_Tienda.invalid && (Nombre_Comercial.dirty || Nombre_Comercial.touched),
+                 'is-valid': Descripcion_Tienda.valid && (Descripcion_Tienda.dirty || Descripcion_Tienda.touched)}"
+                        class="form-control" name="descripcion_Tienda" placeholder=""
+                        required type="text" aria-label="With textarea"></textarea>
+            <div *ngIf="Descripcion_Tienda.invalid && (Descripcion_Tienda.dirty || Descripcion_Tienda.touched)">
+              <div *ngIf="Descripcion_Tienda.errors.required">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+              </div>
+            </div>
           </div> <!-- form-group end.// -->
 
           <div class="form-group">
-            <label class="tamanioCampos">Razón social</label>
-            <input type="text" class="tamanioCampos form-control" placeholder="">
+            <label class="tamanioCampos">Términos y Condiciones</label>
+
+            <app-ngx-editor #Terminos_Condiciones="ngModel" [(ngModel)]="this.Tienda.Terminos_Condiciones"
+                            [(ngModel)]="this.htmlcomponent" [config]="editorConfig"
+                            [placeholder]="'Inserte el texto aquí...'"
+                            [spellcheck]="true" class="editor_terminos"
+                            name="terminos_Condiciones"></app-ngx-editor>
+
+            <div *ngIf="Terminos_Condiciones.invalid && (Terminos_Condiciones.touched||Terminos_Condiciones.dirty)">
+              <div *ngIf="Terminos_Condiciones.errors.required">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                  Campo requerido.</p>
+              </div>
+              <div *ngIf="Terminos_Condiciones.errors.pattern">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                  Debe cumplir con el formato</p>
+              </div>
+            </div>
           </div> <!-- form-group end.// -->
-
-          <div class="form-group">
-            <label class="tamanioCampos">RUC</label>
-            <input type="text" class="tamanioCampos form-control" placeholder="">
-
-          </div> <!-- form-group end.// -->
-
         </div>
 
         <div class="btn-group">

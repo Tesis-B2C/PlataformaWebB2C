@@ -58,10 +58,6 @@
   margin-bottom: 8px;
 
 }
-.tamanioCampos
-{
-  font-size: small;
-}
 
 .container-registro
 {
@@ -87,12 +83,11 @@
 {
   font-size: small;
   font-weight: bolder;
-
 }
+
 .tamanioInputs
 {
   font-size: small;
-
 }
 
 .alert{
