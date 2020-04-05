@@ -1,3 +1,5 @@
+
+@import '../node_modules/angular-archwizard/archwizard.css';
 /* You can add global styles to this file, and also import other style files */
 body::-webkit-scrollbar {
   width:8px;
@@ -29,4 +31,3 @@ body::-webkit-scrollbar-thumb {
 }
 
 
-@import '../node_modules/angular-archwizard/archwizard.css';
