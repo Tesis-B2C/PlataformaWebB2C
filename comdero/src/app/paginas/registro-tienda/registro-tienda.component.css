@@ -70,6 +70,14 @@
   font-size: small;
 }
 
+.editor_terminos{
+  font-size: small;
+}
+
+.btn_continue{
+  max-width:150px
+}
+
 .container-registro
 {
   max-width:850px;

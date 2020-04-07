@@ -1,5 +1,6 @@
 import {Component, DoCheck, OnDestroy, OnInit} from '@angular/core';
 import {Tienda} from "../modelos/tienda";
+import {Sucursal} from "../modelos/sucursal";
 import {DpaServicio} from "../../servicios/dpa.servicio";
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import Swal from 'sweetalert2'
@@ -14,6 +15,7 @@ const places = require("../../../../node_modules/places.js/dist/cdn/places.js");
 
 export class RegistroTiendaComponent implements OnInit {
   public Tienda;
+  public Sucursal;
   public htmlcomponent;
 
   public editorConfig = {
@@ -44,6 +46,9 @@ export class RegistroTiendaComponent implements OnInit {
   constructor() {
     this.Tienda = new Tienda(null, null,null,null,
       null,null, null,null,null,null);
+
+    this.Sucursal = new Sucursal(null, null,null,null,
+      null);
   }
 
   ngOnInit() {
