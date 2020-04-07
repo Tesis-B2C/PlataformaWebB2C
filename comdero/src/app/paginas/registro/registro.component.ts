@@ -15,7 +15,7 @@ const places = require("../../../../node_modules/places.js/dist/cdn/places.js");
 })
 
 export class RegistroComponent implements OnInit, OnDestroy, DoCheck {
-  public bandetTipo;
+  public bandetTipo:boolean;
   public Agente;
   private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
   public soloLetrasPattern: any = "[ a-zA-ZÑñáéíóúÁÉÍÓÚ ][ a-zA-ZÑñáéíóúÁÉÍÓÚ ]*$[0-9]{0}";
@@ -26,9 +26,9 @@ export class RegistroComponent implements OnInit, OnDestroy, DoCheck {
   public provincias;
   public ciudades;
   public ComprarContrasenia;
-  public banderDirecciones;
+  public banderDirecciones:boolean=false;
   public bandera=true;
-  public  loading: boolean = false;
+  public loading: boolean = false;
   constructor(private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio) {
     this.Agente = new Agente(null, null, null,
       null, null, null, 1, null, null,
@@ -36,12 +36,11 @@ export class RegistroComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   async ngOnInit() {
-    this.banderDirecciones = true;
     this.bandetTipo = true;
     this.banderToast = false;
     this.banderToastCedula = false;
     await this.getDpaProvincias("P");
-    this.banderDirecciones = false;
+
   }
 
   ngOnDestroy() {
@@ -178,8 +177,9 @@ export class RegistroComponent implements OnInit, OnDestroy, DoCheck {
   activarDireccion() {
 
     this.bandera=!this.bandera;
-    this.banderDirecciones = !this.banderDirecciones;
-    if (this.banderDirecciones == false) {
+    this.banderDirecciones =!this.banderDirecciones;
+
+    if (!this.banderDirecciones) {
       this.Agente.Num_Cod_Postal = null;
       this.Agente.Num_Casa_Agente = null;
       this.Agente.Calle_Principal_Agente = null;
