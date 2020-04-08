@@ -18,6 +18,12 @@ export class ProductosComponent implements OnInit {
   public data: any = [];
   public banderaAnimacionVideo: boolean = false;
 
+  // banderas de envios a domicilio
+  public banderaEntregaDomicilioLocalidad: boolean = false;
+  public banderaEntregaDomicilioFueraLocalidad: boolean = false;
+  public banderaVariaciones: boolean = true;
+
+
   public editorConfig = {
     "editable": true,
     "spellcheck": true,
@@ -38,14 +44,14 @@ export class ProductosComponent implements OnInit {
     ]
   }
 
-
+  public vectorOpciones=new Array(0);
   constructor() {
   }
 
   ngOnInit() {
   }
 
-  onFileChange(event) {
+  public onFileChange(event) {
 
     if (event.target.files && event.target.files[0]) {
       var filesAmount = event.target.files.length;
@@ -83,7 +89,7 @@ export class ProductosComponent implements OnInit {
     this.data = {};
     if (fileList.length > 0) {
       let file: File = fileList[0];
-    /*  console.log('video seleccionado', file);*/
+      /*  console.log('video seleccionado', file);*/
       if (file.size < 150000000) {
         this.banderaMensajeMaximoVideo = false
         let myReader: FileReader = new FileReader();
@@ -102,9 +108,38 @@ export class ProductosComponent implements OnInit {
     }
   }
 
- public quitar(images: any) {
+  public quitar(images: any) {
     this.images.splice(images, 1);
     document.forms["form"].reset();
   }
 
+
+  public opcionEntregaLocalidad() {
+
+    this.banderaEntregaDomicilioLocalidad = !this.banderaEntregaDomicilioLocalidad;
+    debugger
+
+  }
+
+  public opcionEntregaFueraLocalidad() {
+    this.banderaEntregaDomicilioFueraLocalidad = !this.banderaEntregaDomicilioFueraLocalidad;
+  }
+
+  public opcionVariaciones() {
+    this.banderaVariaciones=!this.banderaVariaciones;
+    this.vectorOpciones=[];
+
+  }
+
+
+
+  public agregarOpciones(){
+  this.vectorOpciones.push(1);
+
+  }
+
+  public borrarOpciones(pocicion:number){
+  debugger
+    this.vectorOpciones.splice(pocicion,1)
+  }
 }

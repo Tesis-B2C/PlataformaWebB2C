@@ -1,133 +1,353 @@
 <div class="container mt-5">
-  <div class="row  justify-content-md-center">
-    <h5 class="card-title col-5  ">Agregar Producto</h5>
-    <hr class="col-10">
+  <div class="row justify-content-center">
+    <h4 class=" col-11  ">Agregar Producto</h4>
+    <hr class="col-11  ">
   </div>
 
   <div class="row  justify-content-md-center">
-    <div class="col-7">
-      <article>
-        <form class=" card card-body  ">
+    <div class="col-md-7">
+
+      <form class="card card-body ">
+        <h6>Información</h6>
+        <hr>
+        <div class="container">
           <div class="form-row">
-            <div class="col   ">
-              <p><strong>Nombre </strong></p>
+            <div class="col-md-6">
+              <label>Nombre</label>
+              <input class=" form-control py-3 " type="text">
+            </div>
+            <div class="col-md-6">
+              <label>Codigo </label>
               <input class="form-control py-3 " type="text">
             </div>
           </div>
-          <br>
+
+          <div class="form-group mt-3">
+            <label>Descripción del producto </label>
+            <textarea rows="3" style="font-size: small; resize: none;" class="form-control" name="descripcion_Tienda"
+                      placeholder="" required type="text" aria-label="With textarea"></textarea>
+          </div>
+
+
           <div class="form-group">
-            <div>
-              <p><strong>Descripción </strong></p>
-              <app-ngx-editor [(ngModel)]="this.htmlcomponent" [config]="editorConfig"
-                              [placeholder]="'Inserte el texto aquí...'"
-                              [spellcheck]="true" name="descripcionProducto"></app-ngx-editor>
+            <label>Detalles del producto </label>
+            <app-ngx-editor [(ngModel)]="this.htmlcomponent" [config]="editorConfig"
+                            [placeholder]="'Aquí puedes agregar la descripcion técnica o tablas con caracteristicas más detalladas del producto'"
+                            [spellcheck]="true" name="descripcionProducto"></app-ngx-editor>
 
-              <!--<div [innerHTML]=this.htmlcomponent>
-              </div>  para cuando quieras mostrar con stilos-->
-            </div>
+            <!--<div [innerHTML]=this.htmlcomponent>
+            </div>  para cuando quieras mostrar con stilos-->
           </div> <!-- form-group end.// -->
-        </form>
+        </div>
+      </form>
 
-        <br>
+      <br>
 
-        <form  class="card card-body  " name="form">
-          <div class="form-group ">
-            <a class="ml-2 mt-5">
-              <strong>Imagenes del producto </strong>
-              <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
-            <div [ngClass]="{'borde-imagenes':!banderaAgregarImagen,'borde-imagenes1':banderaAgregarImagen }" class="row  mt-3 mx-2 ">
-              <div *ngFor='let url of images; let i = index ' class="ml-2">
-                <div class="col-auto card mt-2 px-0 pb-2">
-                  <label style="border: none;  ">
-                    <img [src]="url" class="px-0" height="140px" width="140px">
-                    <input (change)="onFileChange($event)" accept="image/*" class="file" multiple name="files"
-                           type="file">
-                  </label>
-                  <button (click)="quitar(i)" class="boton-cerrar btn-outline-danger px-0 py-0 ">Eliminar</button>
-                </div>
-              </div>
-              <div *ngIf="!banderaAgregarImagen" class="mx-auto ">
-                <div class="col-auto pt-4">
-                  <label class="imagen-agregar ">
-                    <i class="fa fa-picture-o fa-4x"></i>
-                    <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                    <input (change)="onFileChange($event)" accept="image/*" class="file" multiple type="file">
-                  </label>
-                </div>
-              </div>
-              <div *ngIf="!banderaAgregarImagen" class=" col-12 pb-5 mx-auto ">
-                <p class="link-agregar-imagenes ">Click para Agregar imagenes</p>
-              </div>
-
-              <div *ngIf="banderaAgregarImagen && images.length<6" class="py-2">
-                <div class="col-auto  py-4  card  ml-2 ">
-                  <label class="imagen-agregar">
-                    <i class="fa fa-picture-o fa-4x ml-4"></i>
-                    <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                    <input (change)="onFileChange($event)" accept="image/*" class="file" multiple type="file">
-                    <br>
-                    <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imagenes </p>
-                    <p class=" link-agregar-imagenes2">maximo 6</p>
-
-                  </label>
-                </div>
+      <form class="card card-body  " name="form"> <!--Multimedia -->
+        <h6>Multimedia</h6>
+        <hr>
+        <div class="form-group ">
+          <a class="ml-2 mt-5">
+            <label>Imagenes del producto </label>
+            <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
+          <div [ngClass]="{'borde-imagenes':!banderaAgregarImagen,'borde-imagenes1':banderaAgregarImagen }"
+               class="row  mt-3 mx-2 ">
+            <div *ngFor='let url of images; let i = index ' class="ml-2">
+              <div class="col-auto card mt-2 px-0 pb-2">
+                <label style="border: none;  ">
+                  <img [src]="url" class="px-0" height="140px" width="140px">
+                  <input (change)="onFileChange($event)" accept="image/*" class="file" multiple name="files"
+                         type="file">
+                </label>
+                <button (click)="quitar(i)" class="boton-cerrar btn-outline-danger px-0 py-0 ">Eliminar</button>
               </div>
             </div>
-            <br>
-            <a class="ml-2 mt-5"><strong>Video promocional del producto </strong>
-              <span *ngIf="banderaMensajeMaximoVideo" class="ml-2" style="color: red">* Recuerda Maximo 150MB</span></a>
-            <div [ngClass]="{'borde-imagenes':!data.video,'borde-imagenes1':data.video }" class="row mt-3 mx-2 ">
-              <div class=" col-12 mx-auto">
-                <div *ngIf="this.banderaAnimacionVideo==true">
-                  <div class="fondoAnimacionCarga py-5">
-                    <div class="pulse animated infinite py-5  ">
-                      <img class="imagenCarga" src="./../assets/images/cargando.png">
-                      <br><br>
-                      <div>
-                      </div>
-                    </div>
-                    <label style="color: white; text-align: center">Cargando previsualización, espere
-                      porfavor....</label>
-                  </div>
+            <div *ngIf="!banderaAgregarImagen" class="mx-auto ">
+              <div class="col-auto pt-4">
+                <label class="imagen-agregar ">
+                  <i class="fa fa-picture-o fa-4x"></i>
+                  <i class="fa fa-plus-circle fa-2x ml-1"></i>
+                  <input (change)="onFileChange($event)" accept="image/*" class="file" multiple type="file">
+                </label>
+              </div>
+            </div>
+            <div *ngIf="!banderaAgregarImagen" class=" col-12 pb-5 mx-auto ">
+              <p class="link-agregar-imagenes ">Click para Agregar imagenes</p>
+            </div>
 
-                </div>
-              </div>
-              <div class=" col-12 mx-auto">
-                <div *ngIf="data.video">
+            <div *ngIf="banderaAgregarImagen && images.length<6" class="py-2">
+              <div class="col-auto  py-4  card  ml-2 ">
+                <label class="imagen-agregar">
+                  <i class="fa fa-picture-o fa-4x ml-4"></i>
+                  <i class="fa fa-plus-circle fa-2x ml-1"></i>
+                  <input (change)="onFileChange($event)" accept="image/*" class="file" multiple type="file">
+                  <br>
+                  <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imagenes </p>
+                  <p class=" link-agregar-imagenes2">maximo 6</p>
 
-                  <div class="mx-auto fondo-animacion-carga-video">
-                    <video class="video-carga" controls height="auto" width="auto">
-                      <source [src]="data.video" type="{{ data.type }}">
-                    </video>
-                  </div>
-                </div>
-              </div>
-              <div class=" col-auto  mx-auto">
-                <div class=" pt-4 ml-2  ">
-                  <label class="imagen-agregar ">
-                    <i class="fa fa-film fa-4x  "></i>
-                    <i class="fa fa-plus-circle fa-2x ml-1 "></i>
-                    <input (change)="onVideoChange($event)" accept="video/*" class="file" type="file">
-                  </label>
-                </div>
-              </div>
-              <div class=" col-12 mx-auto ">
-                <p class="link-agregar-imagenes pb-5">Click para Agregar un video promocional del producto</p>
+                </label>
               </div>
             </div>
           </div>
-          <button class="btn btn-primary" type="submit">Submit</button>
-          <br>
-          <div class="form-group">
-            <div>
+        </div> <!-- form-group end.// -->
 
+        <br>
+        <div class="form-group ">
+          <a class="ml-2"><label>Video promocional del producto </label>
+            <span *ngIf="banderaMensajeMaximoVideo" class="ml-2" style="color: red">* Recuerda Maximo 150MB</span></a>
+          <div [ngClass]="{'borde-imagenes':!data.video,'borde-imagenes1':data.video }" class="row mt-3 mx-2 ">
+            <div class=" col-12 mx-auto">
+              <div *ngIf="this.banderaAnimacionVideo==true">
+                <div class="fondoAnimacionCarga py-5">
+                  <div class="pulse animated infinite py-5  ">
+                    <img class="imagenCarga" src="./../assets/images/cargando.png">
+                    <br><br>
+                    <div>
+                    </div>
+                  </div>
+                  <label style="color: white; text-align: center">Cargando previsualización, espere
+                    porfavor....</label>
+                </div>
+
+              </div>
             </div>
-          </div> <!-- form-group end.// -->
-        </form>
-      </article> <!-- card-body end .// -->
-    </div>
-    <div class="card col-3 ml-2">
+            <div class=" col-12 mx-auto">
+              <div *ngIf="data.video">
 
+                <div class="mx-auto fondo-animacion-carga-video">
+                  <video class="video-carga" controls height="auto" width="auto">
+                    <source [src]="data.video" type="{{ data.type }}">
+                  </video>
+                </div>
+              </div>
+            </div>
+            <div class=" col-auto  mx-auto">
+              <div class=" pt-4 ml-2  ">
+                <label class="imagen-agregar ">
+                  <i class="fa fa-film fa-4x  "></i>
+                  <i class="fa fa-plus-circle fa-2x ml-1 "></i>
+                  <input (change)="onVideoChange($event)" accept="video/*" class="file" type="file">
+                </label>
+              </div>
+            </div>
+            <div class=" col-12 mx-auto ">
+              <p class="link-agregar-imagenes pb-5">Click para Agregar un video promocional del producto</p>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+        <br>
+        <div class="form-group">
+          <div>
+
+          </div>
+        </div>
+      </form>
+
+      <br>
+      <form class=" card card-body ">
+        <h6>Precios</h6>
+        <hr>
+        <div class="container">
+          <div class="form-row">
+            <div class="col">
+              <label> Precio unitario sin iva </label>
+              <input class="form-control py-3 " placeholder="$0.00" type="text">
+            </div>
+            <div class="col">
+              <label>Porcentaje de Iva </label>
+              <input class="form-control py-3 " placeholder="12%" type="text">
+            </div>
+          </div>
+
+
+          <hr>
+
+          <div class="form-group">
+
+            <label>¿Desea ofrecer el servicio de entrega a domicilio dentro de la localidad?</label>
+
+
+            <div class="form-group">
+              <label class="custom-control custom-radio custom-control-inline">
+                <input (change)="opcionEntregaLocalidad()" class="custom-control-input" name="entregasLocalidad"
+                       type="radio"
+                       value="option1">
+                <span class="custom-control-label"> Si  </span>
+              </label>
+              <label class="custom-control custom-radio custom-control-inline">
+                <input (change)="opcionEntregaLocalidad()" checked="" class="custom-control-input"
+                       name="entregasLocalidad" type="radio"
+                       value="option2">
+                <span class="custom-control-label"> No </span>
+              </label>
+            </div> <!-- form-group end.// -->
+          </div>
+
+          <div *ngIf="this.banderaEntregaDomicilioLocalidad" class="col-md-5 mt-3 form-group">
+            <label>Precio</label>
+            <input class="form-control py-3 " placeholder="$0.00" type="text">
+          </div>
+
+
+          <hr>
+          <div class="form-group">
+
+            <label>¿Desea ofrecer el servicio de entrega a domicilio dentro de la localidad?</label>
+
+
+            <div class="form-group">
+              <label class="custom-control custom-radio custom-control-inline">
+                <input (change)="opcionEntregaFueraLocalidad()" class="custom-control-input"
+                       name="entregasFueraLocalidad"
+                       type="radio"
+                       value="option1">
+                <span class="custom-control-label"> Si  </span>
+              </label>
+              <label class="custom-control custom-radio custom-control-inline">
+                <input (change)="opcionEntregaFueraLocalidad()" checked class="custom-control-input"
+                       name="entregasFueraLocalidad" type="radio"
+                       value="option2">
+                <span class="custom-control-label"> No </span>
+              </label>
+            </div> <!-- form-group end.// -->
+          </div>
+
+          <div *ngIf="banderaEntregaDomicilioFueraLocalidad" class="col-md-5 mt-3 form-group">
+            <label>Precio</label>
+            <input class="form-control py-3 " placeholder="$0.00" type="text">
+          </div>
+          <hr>
+          <br>
+        </div>
+      </form>
+
+      <br>
+      <form class=" card card-body ">
+
+        <h6>Inventario</h6>
+        <hr>
+        <div class="container">
+          <div class="form-group ml-2">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="rastrearCantidad">
+              <label class="custom-control-label" for="rastrearCantidad" style="font-size: small">Rastrear la
+                cantidad</label>
+            </div>
+          </div>
+
+          <div class="form-group ml-2">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="venderDespuesAgotado">
+              <label class="custom-control-label" for="venderDespuesAgotado" style="font-size: small">Continuar
+                vendiendo cuando
+                se haya agotado</label>
+            </div>
+          </div>
+
+
+          <div class="form-group col-5">
+            <label>Cantidad disponible</label>
+            <input class="form-control py-3 " placeholder="0" type="number">
+          </div>
+
+
+          <div class="form-group ml-2">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="permitirReservaProducto">
+              <label class="custom-control-label" for="permitirReservaProducto" style="font-size: small">Permitir la
+                reserva del
+                producto</label>
+            </div>
+          </div>
+
+          <br>
+        </div>
+      </form>
+
+      <br>
+      <form class=" card card-body ">
+
+        <h6>Variaciones</h6>
+        <hr>
+        <div class="form-group ml-2">
+          <label>Este producto contiene multiples opciones, asi como clores, marca y materiales?</label>
+
+          <div class="form-group">
+            <label class="custom-control custom-radio custom-control-inline">
+              <input (change)="opcionVariaciones()" checked class="custom-control-input" name="variaciones"
+                     type="radio"
+                     value="option1">
+              <span class="custom-control-label"> Si  </span>
+            </label>
+            <label class="custom-control custom-radio custom-control-inline">
+              <input (change)="opcionVariaciones()" class="custom-control-input" name="variaciones" type="radio"
+                     value="option2">
+              <span class="custom-control-label"> No </span>
+            </label>
+          </div>
+        </div>
+
+        <div *ngIf="banderaVariaciones" class="form-row container" >
+
+          <div class="form-group col-md-3">
+            <label>Color</label>
+            <input class="form-control " placeholder="Ej. Amarillo" type="text">
+          </div>
+          <div class="form-group  col-md-3">
+            <label> Talla </label>
+            <input class="form-control " placeholder="Ej. xl/34/etc" type="text">
+          </div>
+          <div class="form-group  col-md-4">
+            <label>Material</label>
+            <input class="form-control  " placeholder="Ej. Gamusa/algodon" type="text">
+          </div>
+          <div class="form-group  col-md-1 ">
+            <label style="opacity: 0">Más</label>
+            <button (click)="agregarOpciones()" class="form-control btn btn-outline-primary">
+              <span class="fa fa-plus "></span>
+            </button>
+          </div>
+          <div class="form-group  col-md-1 " style="opacity: 0" >
+            <label >Más</label>
+            <button (click)="agregarOpciones()" class="form-control btn btn-outline-primary">
+              <span class="fa fa-plus "></span>
+            </button>
+          </div>
+        </div>
+          <div *ngFor="let item of this.vectorOpciones; index as i" class="form-row container">
+            <div class="form-group col-md-3">
+              <label>Color</label>
+              <input class="form-control " placeholder="Ej. Amarillo" type="text">
+            </div>
+            <div class="form-group  col-md-3">
+              <label> Talla </label>
+              <input class="form-control " placeholder="Ej. xl/34/etc" type="text">
+            </div>
+            <div class="form-group  col-md-4">
+              <label>Material</label>
+              <input class="form-control  " placeholder="Ej. Gamusa/algodon" type="text">
+            </div>
+            <div class="form-group  col-md-1 ">
+              <label style="opacity: 0">Más</label>
+              <button (click)="agregarOpciones()" class="form-control btn btn-outline-primary">
+                <span class="fa fa-plus "></span>
+              </button>
+            </div>
+            <div class="form-group  col-md-1 ">
+              <label style="opacity: 0">boorar</label>
+              <button (click)="borrarOpciones(i)" class="form-control btn btn-outline-danger">
+                <span class="fa fa-trash "></span>
+              </button>
+            </div>
+
+        </div>
+      </form>
+
+
+    </div>
+    <div class="card col-md-3 ml-2">
+      <p>categorias</p>
     </div>
   </div>
 </div>
