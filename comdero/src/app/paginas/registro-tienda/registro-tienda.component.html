@@ -155,6 +155,49 @@
         <div>
           <div class="datosregistro">
 
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label class="tamanioCampos">Provincia</label>
+                <select #Provincia="ngModel" (change)="getDpaCiudades($event.target.value)"
+                        [(ngModel)]="this.Agente.Provincia"
+                        [ngClass]="{
+          'errorSelect': Provincia.invalid && (Provincia.dirty || Provincia.touched),
+          'satisfactorioSelect': Provincia.valid && (Provincia.dirty || Provincia.touched)}"
+                        class=" tamanioInputs form-control"  name="provincia"
+                        required>
+                  <option selected="true" disabled="true" >Selecciona una.. </option>
+                  <option *ngFor="let provincia of this.provincias"
+                          value="{{provincia.COD_DPA}}"> {{provincia.NOMBRE }}</option>
+                </select>
+                <div *ngIf="Provincia.invalid && (Provincia.touched||Provincia.dirty)">
+                  <div *ngIf="Provincia.errors.required">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                      Campo equerido</p>
+                  </div>
+
+                </div>
+              </div> <!--form-group end.-->
+
+              <div class="form-group col-md-6">
+                <label class="tamanioCampos">Ciudad</label>
+                <select #Ciudad="ngModel" [(ngModel)]="this.Agente.Ciudad " [ngClass]="{
+          'errorSelect': Ciudad.invalid && (Ciudad.dirty || Ciudad.touched),
+          'satisfactorioSelect': Ciudad.valid && (Ciudad.dirty || Ciudad.touched)}"
+                        class="tamanioInputs form-control" name="ciudad" placeholder=""
+                        required>
+                  <option selected="true" disabled="true" >Selecciona una.. </option>
+                  <option *ngFor="let ciudad of this.ciudades" value="{{ciudad.COD_DPA}}"> {{ciudad.NOMBRE }}</option>
+                </select>
+                <div *ngIf="Ciudad.invalid && (Ciudad.touched||Ciudad.dirty)">
+                  <div *ngIf="Ciudad.errors.required">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                      Campo requerido.</p>
+                  </div>
+                </div>
+              </div> <!--form-group end.-->
+
+            </div>  <!--form-row.-->
+
             <div class="form-group">
               <label class="tamanioCampos">Calle Principal</label>
               <input #CallePrincipal="ngModel" [(ngModel)]="this.Sucursal.Calle_Principal"

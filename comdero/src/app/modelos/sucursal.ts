@@ -5,7 +5,9 @@ export class Sucursal {
     public Telefono_Sucursal: String,
     public Ruc: String,
     public Calle_Secundaria_Sucursal: String,
-    public Num_Cod_Postal: String
+    public Num_Cod_Postal: String,
+    public Ciudad:String,
+    public Provincia:String
   ) {
   }
 }

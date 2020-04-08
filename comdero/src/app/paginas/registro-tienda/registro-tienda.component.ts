@@ -1,6 +1,6 @@
 import {Component, DoCheck, OnDestroy, OnInit} from '@angular/core';
-import {Tienda} from "../modelos/tienda";
-import {Sucursal} from "../modelos/sucursal";
+import {Sucursal} from "../../modelos/sucursal";
+import {Tienda} from "../../modelos/tienda";
 import {DpaServicio} from "../../servicios/dpa.servicio";
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import Swal from 'sweetalert2'
@@ -48,7 +48,7 @@ export class RegistroTiendaComponent implements OnInit {
       null,null, null,null,null,null);
 
     this.Sucursal = new Sucursal(null, null,null,null,
-      null);
+      null,null,null,null);
   }
 
   ngOnInit() {
