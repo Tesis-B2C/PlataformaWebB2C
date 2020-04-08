@@ -163,33 +163,57 @@
 
           <hr>
 
-          <div class="form-group ml-2">
-            <div class="col-auto custom-control custom-checkbox ">
-              <input type="checkbox" class="custom-control-input" id="checkEntreDomicilioLocalidad"
-                     (change)="activarDireccion()">
-              <label class="custom-control-label" for="checkEntreDomicilioLocalidad" style="font-size: small">¿Desea
-                ofrecer el servicio de entrega a domicilio dentro de la localidad?</label>
-            </div>
+          <div class="form-group">
 
+            <label>¿Desea ofrecer el servicio de entrega a domicilio dentro de la localidad?</label>
+
+
+            <div class="form-group">
+              <label class="custom-control custom-radio custom-control-inline">
+                <input (change)="opcionEntregaLocalidad()" class="custom-control-input" name="entregasLocalidad"
+                       type="radio"
+                       value="option1">
+                <span class="custom-control-label"> Si  </span>
+              </label>
+              <label class="custom-control custom-radio custom-control-inline">
+                <input (change)="opcionEntregaLocalidad()" checked="" class="custom-control-input"
+                       name="entregasLocalidad" type="radio"
+                       value="option2">
+                <span class="custom-control-label"> No </span>
+              </label>
+            </div> <!-- form-group end.// -->
           </div>
-          <div class="col-md-5 mt-3 form-group">
+
+          <div *ngIf="this.banderaEntregaDomicilioLocalidad" class="col-md-5 mt-3 form-group">
             <label>Precio</label>
             <input class="form-control py-3 " placeholder="$0.00" type="text">
           </div>
 
 
           <hr>
+          <div class="form-group">
 
-          <div class="form-group ml-2">
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="checkEntreDomicilioFueraLocalidad"
-                     (change)="activarDireccion()">
-              <label class="custom-control-label " for="checkEntreDomicilioFueraLocalidad" style="font-size: small">¿Desea
-                ofrecer el servicio
-                de entrega a domicilio fuera de la localidad ?</label>
-            </div>
+            <label>¿Desea ofrecer el servicio de entrega a domicilio dentro de la localidad?</label>
+
+
+            <div class="form-group">
+              <label class="custom-control custom-radio custom-control-inline">
+                <input (change)="opcionEntregaFueraLocalidad()" class="custom-control-input"
+                       name="entregasFueraLocalidad"
+                       type="radio"
+                       value="option1">
+                <span class="custom-control-label"> Si  </span>
+              </label>
+              <label class="custom-control custom-radio custom-control-inline">
+                <input (change)="opcionEntregaFueraLocalidad()" checked class="custom-control-input"
+                       name="entregasFueraLocalidad" type="radio"
+                       value="option2">
+                <span class="custom-control-label"> No </span>
+              </label>
+            </div> <!-- form-group end.// -->
           </div>
-          <div class="col-5 mt-3 form-group">
+
+          <div *ngIf="banderaEntregaDomicilioFueraLocalidad" class="col-md-5 mt-3 form-group">
             <label>Precio</label>
             <input class="form-control py-3 " placeholder="$0.00" type="text">
           </div>
@@ -204,9 +228,9 @@
         <h6>Inventario</h6>
         <hr>
         <div class="container">
-          <div class="form-group ml-2" >
+          <div class="form-group ml-2">
             <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input"  id="rastrearCantidad">
+              <input type="checkbox" class="custom-control-input" id="rastrearCantidad">
               <label class="custom-control-label" for="rastrearCantidad" style="font-size: small">Rastrear la
                 cantidad</label>
             </div>
@@ -214,8 +238,9 @@
 
           <div class="form-group ml-2">
             <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input"  id="venderDespuesAgotado">
-              <label class="custom-control-label" for="venderDespuesAgotado" style="font-size: small">Continuar vendiendo cuando
+              <input type="checkbox" class="custom-control-input" id="venderDespuesAgotado">
+              <label class="custom-control-label" for="venderDespuesAgotado" style="font-size: small">Continuar
+                vendiendo cuando
                 se haya agotado</label>
             </div>
           </div>
@@ -229,8 +254,9 @@
 
           <div class="form-group ml-2">
             <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input"  id="permitirReservaProducto">
-              <label class="custom-control-label" for="permitirReservaProducto" style="font-size: small">Permitir la reserva del
+              <input type="checkbox" class="custom-control-input" id="permitirReservaProducto">
+              <label class="custom-control-label" for="permitirReservaProducto" style="font-size: small">Permitir la
+                reserva del
                 producto</label>
             </div>
           </div>
@@ -242,47 +268,81 @@
       <br>
       <form class=" card card-body ">
 
-  <h6>Variaciones</h6>
+        <h6>Variaciones</h6>
         <hr>
         <div class="form-group ml-2">
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" name="example1">
-            <label class="custom-control-label" for="customCheck" style="font-size: small">Este prodiucto contiene
-              multiples opciones, asi como  clores,marca y materiales
+          <label>Este producto contiene multiples opciones, asi como clores, marca y materiales?</label>
+
+          <div class="form-group">
+            <label class="custom-control custom-radio custom-control-inline">
+              <input (change)="opcionVariaciones()" checked class="custom-control-input" name="variaciones"
+                     type="radio"
+                     value="option1">
+              <span class="custom-control-label"> Si  </span>
+            </label>
+            <label class="custom-control custom-radio custom-control-inline">
+              <input (change)="opcionVariaciones()" class="custom-control-input" name="variaciones" type="radio"
+                     value="option2">
+              <span class="custom-control-label"> No </span>
             </label>
           </div>
         </div>
 
-        <div class="form-row container">
-        <div class="form-group col-4">
-          <label>Color</label>
-          <input class="form-control py-3 " placeholder="0" type="text">
-        </div>
+        <div *ngIf="banderaVariaciones" class="form-row container" >
 
-          <div class="form-group  col-2">
-           <label> Talla </label>
-            <input class="form-control py-3 " placeholder="0" type="text">
+          <div class="form-group col-md-3">
+            <label>Color</label>
+            <input class="form-control " placeholder="Ej. Amarillo" type="text">
           </div>
-
-          <div class="form-group  col-4">
-           <label>Material</label>
-            <input class="form-control py-3 " placeholder="0" type="text">
+          <div class="form-group  col-md-3">
+            <label> Talla </label>
+            <input class="form-control " placeholder="Ej. xl/34/etc" type="text">
           </div>
-
-            <div class="form-group  col-2 ">
-            <label>Mas Opciones</label>
-            <button class="form-control btn btn-outline-primary">
-            <span class="fa fa-plus "></span>
+          <div class="form-group  col-md-4">
+            <label>Material</label>
+            <input class="form-control  " placeholder="Ej. Gamusa/algodon" type="text">
+          </div>
+          <div class="form-group  col-md-1 ">
+            <label style="opacity: 0">Más</label>
+            <button (click)="agregarOpciones()" class="form-control btn btn-outline-primary">
+              <span class="fa fa-plus "></span>
             </button>
-
-
           </div>
+          <div class="form-group  col-md-1 " style="opacity: 0" >
+            <label >Más</label>
+            <button (click)="agregarOpciones()" class="form-control btn btn-outline-primary">
+              <span class="fa fa-plus "></span>
+            </button>
+          </div>
+        </div>
+          <div *ngFor="let item of this.vectorOpciones; index as i" class="form-row container">
+            <div class="form-group col-md-3">
+              <label>Color</label>
+              <input class="form-control " placeholder="Ej. Amarillo" type="text">
+            </div>
+            <div class="form-group  col-md-3">
+              <label> Talla </label>
+              <input class="form-control " placeholder="Ej. xl/34/etc" type="text">
+            </div>
+            <div class="form-group  col-md-4">
+              <label>Material</label>
+              <input class="form-control  " placeholder="Ej. Gamusa/algodon" type="text">
+            </div>
+            <div class="form-group  col-md-1 ">
+              <label style="opacity: 0">Más</label>
+              <button (click)="agregarOpciones()" class="form-control btn btn-outline-primary">
+                <span class="fa fa-plus "></span>
+              </button>
+            </div>
+            <div class="form-group  col-md-1 ">
+              <label style="opacity: 0">boorar</label>
+              <button (click)="borrarOpciones(i)" class="form-control btn btn-outline-danger">
+                <span class="fa fa-trash "></span>
+              </button>
+            </div>
 
         </div>
-
       </form>
-
-
 
 
     </div>
