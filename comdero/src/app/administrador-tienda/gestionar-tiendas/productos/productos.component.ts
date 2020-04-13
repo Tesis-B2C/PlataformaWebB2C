@@ -43,8 +43,8 @@ export class ProductosComponent implements OnInit {
       ["paragraph", "blockquote", "removeBlockquote", "horizontalLine"],
     ]
   }
-
-  public vectorOpciones=new Array(0);
+  public vectorOpciones:Array<number>=[1]; // las dos formas swon validas pero la activa es ams facil
+  /*public vectorOpciones=new Array(0);*/
   constructor() {
   }
 

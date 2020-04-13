@@ -1,14 +1,4 @@
-<!DOCTYPE HTML>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta content="no-cache" http-equiv="pragma"/>
-  <meta content="max-age=604800" http-equiv="cache-control"/>
-  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 
-  <title>Registro</title>
-
-</head>
 
 <div *ngIf="loading" class="fondoAnimacionCarga">
   <div class="pulse animated infinite" style="position: absolute;z-index: 150;">
@@ -19,11 +9,13 @@
     </div>
   </div>
 </div>
-<body>
+
+
+<body [ngClass]="{'body-con-animacion': loading}" >
 
 
 <div *ngIf="banderToast && !FormRegistro.checkValidity()" class="bounceInRight  animated alert alert-danger
-shadow-lg p-3 mb-5 bg-white rounded toastValidacion">
+shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion">
   * <strong>!Opps</strong> al parecer existen errores, revisa nuevamente el formulario
 </div>
 
@@ -32,8 +24,9 @@ shadow-lg p-3 mb-5 bg-white rounded toastValidacion " >
   * <strong>!Opps</strong> Al parecer no introduciste una cédula válida
 </div>
 
+<br>
 <div class="mx-auto  container-registro shadow-lg p-3 bg-white rounded">
-  <article class=" wrap-register100 card-body">
+  <article class="  wrap-register100 card-body">
     <div id="divImagenLogo">
       <img id="imagenLogo" src="./../assets/images/logoValid2.png">
     </div>
@@ -370,7 +363,7 @@ shadow-lg p-3 mb-5 bg-white rounded toastValidacion " >
       </div>
     </form>
   </article><!-- card-body.// -->
-  <p class="text-center mt-4" style="font-size: small">Tienes una cuenta? <a href="/loguin" style="font-size: small">Inicia
+  <p class="text-center " style="font-size: small">Tienes una cuenta? <a href="/loguin" style="font-size: small">Inicia
     sesión</a></p>
 </div> <!-- card .// -->
 
@@ -380,4 +373,4 @@ shadow-lg p-3 mb-5 bg-white rounded toastValidacion " >
 <!-- ========================= SECTION CONTENT END// ========================= -->
 
 </body>
-</html>
+
