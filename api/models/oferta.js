@@ -36,12 +36,27 @@ const Oferta = db.sequelize.define('Oferta', {
                 type: Sequelize.INTEGER,
                 allowNull: false
             },
-        OFRECE_ENVIO:
+        OFRECE_ENVIO_LOCAL:
             {
                 type: Sequelize.INTEGER,
                 allowNull: false
             },
-        PRECIO_ENVIO:
+        PRECIO_ENVIO_LOCAL:
+            {
+                type: Sequelize.INTEGER,
+                allowNull: false
+            },
+        OFRECE_ENVIO_EXTERNO:
+            {
+                type: Sequelize.INTEGER,
+                allowNull: false
+            },
+        PRECIO_ENVIO_EXTERNO:
+            {
+                type: Sequelize.INTEGER,
+                allowNull: false
+            },
+        RESERVA:
             {
                 type: Sequelize.INTEGER,
                 allowNull: false

@@ -65,6 +65,16 @@ const  Agente = db.sequelize.define('AGENTE', {
                 type:Sequelize.STRING,
                 allowNull:false
             },
+        COD_DPA:
+            {
+                type:Sequelize.STRING,
+                allowNull:false
+            },
+        HORARIO_ATENCION:
+            {
+                type:Sequelize.STRING,
+                allowNull:false
+            },
     },
     {
         timestamps: false,

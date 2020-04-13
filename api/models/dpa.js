@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
-var Codigo_Postal = require("./codigo_postal");
+var Agente = require("./agente.js");
+var Sucursal =require("./sucursal.js");
 
 const Dpa = db.sequelize.define('DPA', {
         COD_DPA:
@@ -30,9 +31,13 @@ const Dpa = db.sequelize.define('DPA', {
         id:false
     })
 
-//DPA - CODIGO_POSTAL
-Dpa.hasMany(Codigo_Postal, {foreignKey: 'COD_DPA', sourceKey: 'COD_DPA'});
-Codigo_Postal.belongsTo(Dpa, {foreignKey: 'COD_DPA', sourceKey: 'COD_DPA'});
+//DPA - Agente
+Dpa.hasMany(Agente, {foreignKey: 'COD_DPA', sourceKey: 'COD_DPA'});
+Agente.belongsTo(Dpa, {foreignKey: 'COD_DPA', sourceKey: 'COD_DPA'});
+
+//DPA - Agente
+Dpa.hasMany(Sucursal, {foreignKey: 'COD_DPA', sourceKey: 'COD_DPA'});
+Sucursal.belongsTo(Dpa, {foreignKey: 'COD_DPA', sourceKey: 'COD_DPA'});
 
 //DPA - DPA
 Dpa.hasMany(Dpa, {foreignKey: 'DPA_COD_DPA', sourceKey: 'COD_DPA'});

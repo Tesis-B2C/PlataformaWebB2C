@@ -42,7 +42,12 @@ const Sucursal= db.sequelize.define('Sucursal', {
             {
                 type: Sequelize.STRING,
                 allowNull: false
-            }
+            },
+        COD_DPA:
+            {
+                type:Sequelize.STRING,
+                allowNull:false
+            },
     },
     {
         timestamps:false,
