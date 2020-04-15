@@ -1,10 +1,11 @@
-import {Component, DoCheck, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Agente} from "../../modelos/agente";
 import {DpaServicio} from "../../servicios/dpa.servicio";
 import {AgenteServicio} from "../../servicios/agente.servicio";
 //import Swal from 'sweetalert2'
 //import swal from 'sweetalert2/src/sweetalert2.js'
 import Swal from 'sweetalert2'
+
 declare const require: any;
 const places = require("../../../../node_modules/places.js/dist/cdn/places.js");
 
@@ -14,8 +15,9 @@ const places = require("../../../../node_modules/places.js/dist/cdn/places.js");
   styleUrls: ['./registro.component.css']
 })
 
-export class RegistroComponent implements OnInit, OnDestroy, DoCheck {
-  public bandetTipo:boolean;
+export class RegistroComponent implements OnInit, OnDestroy {
+
+  public bandetTipo: boolean;
   public Agente;
   private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
   public soloLetrasPattern: any = "[ a-zA-ZÑñáéíóúÁÉÍÓÚ ][ a-zA-ZÑñáéíóúÁÉÍÓÚ ]*$[0-9]{0}";
@@ -26,8 +28,8 @@ export class RegistroComponent implements OnInit, OnDestroy, DoCheck {
   public provincias;
   public ciudades;
   public ComprarContrasenia;
-  public banderDirecciones:boolean=false;
-  public bandera=true;
+  public banderDirecciones: boolean = false;
+  public bandera = false;
   public loading: boolean = false;
 
   constructor(private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio) {
@@ -81,7 +83,7 @@ export class RegistroComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   async registrarAgente(validador) {
-    this.loading=true;
+    this.loading = true;
     if (validador == "0") {
       this.banderToast = false;
       this.bandetTipo == true ? this.Agente.Tipo = 'Persona' : this.Agente.Tipo = 'Empresa';
@@ -93,25 +95,25 @@ export class RegistroComponent implements OnInit, OnDestroy, DoCheck {
           document.forms["formRegistro"].reset();
           window.scroll(0, 0);
           this.mensageCorrecto(response['message']);
-          this.loading=false;
+          this.loading = false;
         } catch (e) {
           console.log("error:" + JSON.stringify((e).error.message));
           if (JSON.stringify((e).error.message))
-          this.mensageError(JSON.stringify((e).error.message));
+            this.mensageError(JSON.stringify((e).error.message));
           else this.mensageError("Error de conexión intentelo mas tarde");
-          this.loading=false;
+          this.loading = false;
         }
       } else {
         this.banderToast = false;
         this.banderToastCedula = true;
         window.scroll(0, 0);
-        this.loading=false;
+        this.loading = false;
       }
     } else {
       this.banderToastCedula = false;
       this.banderToast = true;
       window.scroll(0, 0);
-      this.loading=false;
+      this.loading = false;
 
     }
   }
@@ -134,8 +136,23 @@ export class RegistroComponent implements OnInit, OnDestroy, DoCheck {
     }
   }
 
-  ngDoCheck(): void {
-    if (document.getElementById("CallePrincipal") && this.bandera == true) {
+
+  activarDireccion() {
+
+    this.bandera = true;
+    this.banderDirecciones = !this.banderDirecciones;
+    if (!this.banderDirecciones) {
+      this.Agente.Num_Cod_Postal = null;
+      this.Agente.Num_Casa_Agente = null;
+      this.Agente.Calle_Principal_Agente = null;
+      this.Agente.Calle_Secundaria_Agente = null;
+    }
+  }
+
+
+  buscadorDirecciones() {
+
+    if (this.bandera == true) {
 
       var placesAutocomplete = places({
         container: document.querySelector('#CallePrincipal'),
@@ -170,27 +187,14 @@ export class RegistroComponent implements OnInit, OnDestroy, DoCheck {
       placesAutocomplete2.on('change', (e) => {
         console.log(e.suggestion)
       });
-     this.bandera = false;
-    }
-  }
-
-  activarDireccion() {
-
-    this.bandera=!this.bandera;
-    this.banderDirecciones =!this.banderDirecciones;
-
-    if (!this.banderDirecciones) {
-      this.Agente.Num_Cod_Postal = null;
-      this.Agente.Num_Casa_Agente = null;
-      this.Agente.Calle_Principal_Agente = null;
-      this.Agente.Calle_Secundaria_Agente = null;
+      this.bandera = false;
 
     }
-
+    document.getElementById('CallePrincipal').focus();
   }
 
-  mensageError(mensaje)
-  {
+
+  mensageError(mensaje) {
     Swal.fire({
       icon: 'error',
       title: '<header class="login100-form-title-registro"><h5 class="card-title">!Error..</h5></header>',
@@ -205,8 +209,9 @@ export class RegistroComponent implements OnInit, OnDestroy, DoCheck {
     });
   }
 
-  mensageCorrecto(mensaje)
-  {
+
+
+  mensageCorrecto(mensaje) {
     Swal.fire({
       icon: 'success',
       title: '<header class="login100-form-title-registro"><h5 class="card-title">!Correcto..</h5></header>',

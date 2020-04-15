@@ -1,11 +1,10 @@
 'use strcit'
 
-const bcrypt = require('bcrypt-nodejs');
-var DPA = require('../models/dpa'); //importar el modelo del usuario  o lo que son las clases comunes
-var mysql = require('mysql');
+const DPA = require('../models/dpa'); //importar el modelo del usuario  o lo que son las clases comunes
+
 
 async function getDpaProvincias(req, res) {
-    var busqueda = req.params.id;
+    let busqueda = req.params.id;
     console.log(busqueda);
     try {
         let provinciasObtenidas = await DPA.findAll({where: {TIPO: req.params.id},order:[['NOMBRE','ASC']]});
@@ -30,7 +29,7 @@ async function getDpaProvincias(req, res) {
 }
 
 async function getDpaCiudades(req, res) {
-    var busqueda = req.params.id;
+    let busqueda = req.params.id;
     console.log(busqueda);
     try {
         let ciudadesObtenidas = await DPA.findAll({where: {DPA_COD_DPA: req.params.id},order:[['NOMBRE','ASC']]});

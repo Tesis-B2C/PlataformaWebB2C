@@ -58,11 +58,7 @@ const Producto = db.sequelize.define('Producto', {
                 type: Sequelize.STRING,
                 allowNull: false
             },
-        ETIQUETAS_BUSQUEDA:
-            {
-                type: Sequelize.STRING,
-                allowNull: false
-            },
+      
 
     },
 

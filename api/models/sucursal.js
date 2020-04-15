@@ -1,19 +1,19 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 
-const Sucursal= db.sequelize.define('Sucursal', {
+const Sucursal = db.sequelize.define('Sucursal', {
         NUM_SUCURSAL: {
             type: Sequelize.BIGINT,
             autoIncrement: true,
-            primaryKey:true,
+            primaryKey: true,
             allowNull: false
         },
         NUM_TIENDA: {
             type: Sequelize.INTEGER,
-            primaryKey:true,
+            primaryKey: true,
             allowNull: false
         },
-        NUM_COD_POSTAL:
+        COD_POSTAL:
             {
                 type: Sequelize.STRING,
                 allowNull: false
@@ -42,11 +42,21 @@ const Sucursal= db.sequelize.define('Sucursal', {
             {
                 type: Sequelize.STRING,
                 allowNull: false
-            }
+            },
+        COD_DPA:
+            {
+                type: Sequelize.STRING,
+                allowNull: false
+            },
+        HORARIO_ATENCION:
+            {
+                type: Sequelize.STRING,
+                allowNull: false
+            },
     },
     {
-        timestamps:false,
-        id:false
+        timestamps: false,
+        id: false
     })
 
 module.exports = Sucursal;

@@ -1,9 +1,12 @@
 
 @import '../node_modules/angular-archwizard/archwizard.css';
 /* You can add global styles to this file, and also import other style files */
+
+/*scroll bar general*/
 body::-webkit-scrollbar {
-  width:8px;
+  width:5px;
 }
+
 body::-webkit-scrollbar-track {
   background-color: rgba(35, 35, 35, 0.1);
 }
@@ -12,14 +15,14 @@ body::-webkit-scrollbar-thumb {
 
 }
 
-
+/*scroll bar general*/
 .scrollbar{
   max-height: 1000px;
   overflow: auto;
 }
 
 .scrollbar::-webkit-scrollbar {
-  width:8px;
+  width:5px;
 }
 .scrollbar::-webkit-scrollbar-track {
   background-color: rgba(35, 35, 35, 0.1);
@@ -28,4 +31,8 @@ body::-webkit-scrollbar-thumb {
 .scrollbar::-webkit-scrollbar-thumb {
   background-color: rgba(255, 101, 0, 0.8);
 
+}
+
+body{
+  overflow-x: hidden;
 }

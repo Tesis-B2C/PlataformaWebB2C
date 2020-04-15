@@ -11,24 +11,6 @@
   margin-bottom: 15px;
 }
 
-.container-login100 {
-  width: 100%;
-  min-height: 100vh;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  padding: 0px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-
-  /*background-color: #0c5460;*/
-}
 
 .wrap-register100 {
 
@@ -46,51 +28,49 @@
   line-height: 1.2;
 
 }
-.lineaSeparacion
-{
+
+.lineaSeparacion {
   margin-top: 20px;
   margin-bottom: 10px;
 
 }
-.lineaSeparacion2
-{
+
+.lineaSeparacion2 {
   margin-top: 8px;
   margin-bottom: 8px;
 
 }
 
-.container-registro
-{
-  max-width:450px;
+.container-registro {
+  max-width: 450px;
+  position: relative;
   margin-top: 15px;
-  position: static;
   clear: top;
+
 
 }
 
 @media (max-width: 1364px) {
-  .container-registro
-  {
-    max-width:380px;
+  .container-registro {
+    max-width: 380px;
     margin-top: 15px;
     position: relative;
   }
 
 
 }
- /* estilos para herrores  */
-.tamanioCampos
-{
+
+/* estilos para herrores  */
+.tamanioCampos {
   font-size: small;
   font-weight: bolder;
 }
 
-.tamanioInputs
-{
+.tamanioInputs {
   font-size: small;
 }
 
-.alert{
+.alert {
   font-size: smaller;
   padding: 0;
   background-color: white;
@@ -100,7 +80,7 @@
 
 }
 
-.alert2{
+.alert2 {
   font-size: smaller;
   padding: 0;
   background-color: white;
@@ -110,26 +90,19 @@
 
 }
 
-.selectbox-scrollable{
-  overflow-y:scroll;
-  position:absolute;
-  padding:0 7px 0 0;
-  width: calc(100% + 17px);
-  height:100%;
-  border:0;
+
+.errorSelect {
+  border: 1px solid red;
 }
 
-.errorSelect
-{
-  border: 1px solid red ;
-}
-.satisfactorioSelect
-{
-  border: 1px solid limegreen ;
+.satisfactorioSelect {
+  border: 1px solid limegreen;
 }
 
-.toastValidacion{
-  padding: 1%; margin: 0; border: red 2px solid;
+.toastValidacion {
+  padding: 1%;
+  margin: 0;
+  border: red 2px solid;
   margin-left: 75%;
   position: absolute;
   z-index: 2;
@@ -137,22 +110,26 @@
   background-color: snow;
 }
 
-.fondoAnimacionCarga{
-
-  background-color:rgba(0, 0, 0, 0.7);
-  width:100%;
-  height:100%;
-  position: absolute; z-index: 100;display: flex;
+.fondoAnimacionCarga {
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  z-index: 100;
+  display: flex;
   justify-content: center;
   align-items: center;
+
 }
-#imagenCarga{
+
+
+#imagenCarga {
   width: 60%;
   margin-left: 18px;
 }
 
 @media all and (max-width: 500px) {
-  .toastValidacion{
+  .toastValidacion {
     border: red 1px solid;
     position: absolute;
     z-index: 5;
@@ -163,5 +140,8 @@
 
 }
 
+.body-con-animacion{
+  overflow: hidden;
 
+}
 
