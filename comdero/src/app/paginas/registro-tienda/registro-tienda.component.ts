@@ -1,6 +1,6 @@
 import {Component, DoCheck, OnDestroy, OnInit} from '@angular/core';
-import {Sucursal} from "../../modelos/sucursal";
 import {Tienda} from "../../modelos/tienda";
+import {Sucursal} from "../../modelos/sucursal";
 import {DpaServicio} from "../../servicios/dpa.servicio";
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import Swal from 'sweetalert2'
@@ -43,15 +43,36 @@ export class RegistroTiendaComponent implements OnInit {
   private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
   private urlPattern: any = "(https?://)?([\\\\da-z.-]+)\\\\.([a-z.]{2,6})[/\\\\w .-]*/?";
 
-  constructor() {
+  public provincias;
+  public ciudades;
+
+  constructor(private _dpaServicio: DpaServicio) {
     this.Tienda = new Tienda(null, null,null,null,
       null,null, null,null,null,null);
 
     this.Sucursal = new Sucursal(null, null,null,null,
-      null,null,null,null);
+      null, null,null,null);
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.getDpaProvincias("P");
   }
 
+  async getDpaProvincias(buscar) {
+    try {
+      let response = await this._dpaServicio.getDpaProvincias(buscar).toPromise();
+      this.provincias = response.data;
+    } catch (e) {
+      console.log("error:" + JSON.stringify((e).error.message));
+    }
+  }
+
+  async getDpaCiudades(buscar) {
+    try {
+      let response = await this._dpaServicio.getDpaCiudades(buscar).toPromise();
+      this.ciudades = response.data;
+    } catch (e) {
+      console.log("error:" + JSON.stringify((e).error.message));
+    }
+  }
 }

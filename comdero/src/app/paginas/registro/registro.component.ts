@@ -29,6 +29,7 @@ export class RegistroComponent implements OnInit, OnDestroy, DoCheck {
   public banderDirecciones:boolean=false;
   public bandera=true;
   public loading: boolean = false;
+
   constructor(private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio) {
     this.Agente = new Agente(null, null, null,
       null, null, null, 1, null, null,
@@ -122,7 +123,6 @@ export class RegistroComponent implements OnInit, OnDestroy, DoCheck {
     } catch (e) {
       console.log("error:" + JSON.stringify((e).error.message));
     }
-
   }
 
   async getDpaCiudades(buscar) {

@@ -153,13 +153,14 @@
       <aw-wizard-step [stepTitle]="'Steptitle 2'">
         <ng-template awWizardStepSymbol><i class="fa fa-upload"></i></ng-template>
         <div>
-          <div class="datosregistro">
 
+
+          <div class="datosregistro">
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label class="tamanioCampos">Provincia</label>
                 <select #Provincia="ngModel" (change)="getDpaCiudades($event.target.value)"
-                        [(ngModel)]="this.Agente.Provincia"
+                        [(ngModel)]="this.Sucursal.Provincia"
                         [ngClass]="{
           'errorSelect': Provincia.invalid && (Provincia.dirty || Provincia.touched),
           'satisfactorioSelect': Provincia.valid && (Provincia.dirty || Provincia.touched)}"
@@ -180,7 +181,7 @@
 
               <div class="form-group col-md-6">
                 <label class="tamanioCampos">Ciudad</label>
-                <select #Ciudad="ngModel" [(ngModel)]="this.Agente.Ciudad " [ngClass]="{
+                <select #Ciudad="ngModel" [(ngModel)]="this.Sucursal.Ciudad " [ngClass]="{
           'errorSelect': Ciudad.invalid && (Ciudad.dirty || Ciudad.touched),
           'satisfactorioSelect': Ciudad.valid && (Ciudad.dirty || Ciudad.touched)}"
                         class="tamanioInputs form-control" name="ciudad" placeholder=""
@@ -262,7 +263,42 @@
               </div> <!--form-group end.-->
             </div>
 
+            <div class="form-row">
+              <div class="col-lg-6 form-group">
+                <label class="tamanioCampos">Teléfono Celular</label>
+                <input #Telefono="ngModel" [(ngModel)]="this.Sucursal.Telefono" [ngClass]="{'is-invalid': Telefono.invalid && (Telefono.dirty || Telefono.touched),
+                 'is-valid': Telefono.valid && (Telefono.dirty || Telefono.touched)}"
+                       [pattern]='this.soloNumerosPattern' class="tamanioInputs form-control" maxlength="10" minlength="10"
+                       name="telefono" placeholder="" required
+                       style="font-size: small" type="text">
+                <div *ngIf="Telefono.invalid && (Telefono.dirty|| Telefono.touched) ">
+                  <div *ngIf="Telefono.errors.required">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                      Campo requerido.</p>
+                  </div>
+                  <div *ngIf="Telefono.errors.minlength">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                      Minimo 10 digitos.</p>
+                  </div>
+                  <div *ngIf="Telefono.errors.maxlength">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                      Maximo 10 digitos.</p>
+                  </div>
+                  <div *ngIf="Telefono.errors.pattern">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                      Utilice solo numeros.</p>
+                  </div>
+                </div>
+              </div> <!-- form-group end.//-->
+              <div class="col-lg-6 form-group">
+              </div><!--form-group end.;-->
+
+            </div> <!-- form-row end.// -->
+            <hr class="lineaSeparacion">
+
           </div>
+
+
           <div class="btn-group">
             <button type="button" class="btn btn-secondary" awPreviousStep>Back</button>
             <button type="button" class="btn btn-secondary" awNextStep>Continue</button>
@@ -286,127 +322,8 @@
       </aw-wizard-step>
 
     </aw-wizard>
-
-
-    <form>
-
-
-      <label class="tamanioCampos">¿Cuenta con un espacio físico?</label>
-      <div class="form-row">
-        <div class="col form-group">
-          <label class="custom-control custom-radio custom-control-inline">
-            <input class="custom-control-input" checked="" type="radio" name="espacioFisico" value="option1"
-                   (change)="selectEspacioFisico()">
-            <span class="custom-control-label"> Si  </span>
-          </label>
-        </div> <!-- form-group end.// -->
-        <div class="col form-group">
-          <label class="custom-control custom-radio custom-control-inline">
-            <input class="custom-control-input" type="radio" name="espacioFisico" value="option2"
-                   (change)="selectEspacioFisico()">
-            <span class="custom-control-label"> No </span>
-          </label>
-        </div> <!-- form-group end.// -->
-      </div> <!-- form-row end.// -->
-
-      <!-- Separacion de seccion// -->
-      <label style="font-size: large">Sucursales</label>
-
-      <div class="form-group">
-        <label class="tamanioCampos">Dirección</label>
-        <input type="text" class="tamanioCampos form-control" placeholder="">
-      </div> <!-- form-group end.// -->
-
-      <div class="form-group">
-        <label class="tamanioCampos">Provincia</label>
-        <input type="text" class="tamanioCampos form-control" placeholder="">
-      </div> <!-- form-group end.// -->
-
-      <div class="form-row">
-        <div class="col form-group">
-          <label style="font-size: small">RUC</label>
-          <input type="text" class="tamanioCampos form-control" placeholder="">
-        </div> <!-- form-group end.// -->
-        <div class="col form-group">
-          <label class="tamanioCampos">Teléfono Celular</label>
-          <input style="font-size: small" type="text" class="tamanioCampos form-control" placeholder="">
-        </div> <!-- form-group end.// -->
-      </div> <!-- form-row end.// -->
-
-      <div class="form-group">
-        <label class="tamanioCampos">Email</label>
-        <input type="email" class="tamanioCampos form-control" placeholder="">
-        <!--        <small class="form-text text-muted">We'll never share your email with anyone else.</small>-->
-      </div> <!-- form-group end.// -->
-      <hr class="lineaSeparacion">
-      <div class=" form-group">
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label class="tamanioCampos">Provincia</label>
-            <select id="inputState" class="tamanioCampos form-control">
-              <option> Choose...</option>
-              <option>Uzbekistan</option>
-              <option>Russia</option>
-              <option selected="">United States</option>
-              <option>India</option>
-              <option>Afganistan</option>
-            </select>
-          </div> <!-- form-group end.// -->
-          <div class="form-group col-md-6">
-            <label class="tamanioCampos">Ciudad</label>
-            <input type="text" class="tamanioCampos form-control">
-          </div> <!-- form-group end.// -->
-
-        </div> <!-- form-row.// -->
-
-        <label class="tamanioCampos">Calle Principal</label>
-        <input type="text" class="tamanioCampos form-control" placeholder="">
-      </div> <!-- form-group end.// -->
-
-      <div class="form-row">
-        <div class="col-lg-8 form-group">
-          <label class="tamanioCampos">Calle Secundaria</label>
-          <input type="text" class="tamanioCampos form-control" placeholder="">
-        </div>
-        <div class=" col-lg-4 form-group">
-          <label class="tamanioCampos">Codigo Postal</label>
-          <input type="text" class=" tamanioCampos form-control" placeholder="">
-        </div> <!-- form-group end.// -->
-      </div>
-
-      <hr class="lineaSeparacion2">
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label class="tamanioCampos">Contraseña</label>
-          <input class="tamanioCampos form-control" type="password">
-        </div> <!-- form-group end.// -->
-        <div class="form-group col-md-6">
-          <label class="tamanioCampos">Repetir contraseña</label>
-          <input class="tamanioCampos form-control" type="password">
-        </div> <!-- form-group end.// -->
-      </div>
-      <br>
-      <div class="container-login100-form-btn">
-        <div class="wrap-login100-form-btn">
-          <div class="login100-form-bgbtn"></div>
-          <button class="login100-form-btn">
-            Crea tu cuenta en condero
-          </button>
-        </div>
-      </div>
-      <br>
-
-      <div class="form-group">
-        <label class="custom-control custom-checkbox"> <input type="checkbox" class="custom-control-input" checked="">
-          <div class="custom-control-label" style="font-size: smaller"> Estoy de acuerdo con los<a href="#" style="font-size: smaller">terminos
-            y condiciones</a></div>
-        </label>
-      </div> <!-- form-group end.// -->
-
-    </form>
   </article><!-- card-body.// -->
 </div>
-
 </body>
 </html>
 

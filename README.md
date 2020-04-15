@@ -32,3 +32,8 @@ https://www.zkreations.com/2018/02/personalizar-scrollbar-facil-custom-scrollbar
 - UTILIZAR EL WIZARD DE REGISTRO TIENDA
        npm i angular-archwizard@5.0.0
        https://www.npmjs.com/package/angular-archwizard/v/5.0.0
+       
+
+---- MAPBOX MAPAS
+https://www.youtube.com/watch?v=gdKWeboPxgY
+npm install mapbox-gl --save

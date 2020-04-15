@@ -118,7 +118,6 @@ export class ProductosComponent implements OnInit {
 
     this.banderaEntregaDomicilioLocalidad = !this.banderaEntregaDomicilioLocalidad;
     debugger
-
   }
 
   public opcionEntregaFueraLocalidad() {
@@ -128,14 +127,10 @@ export class ProductosComponent implements OnInit {
   public opcionVariaciones() {
     this.banderaVariaciones=!this.banderaVariaciones;
     this.vectorOpciones=[];
-
   }
-
-
 
   public agregarOpciones(){
   this.vectorOpciones.push(1);
-
   }
 
   public borrarOpciones(pocicion:number){
