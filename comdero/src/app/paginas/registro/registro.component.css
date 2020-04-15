@@ -11,24 +11,6 @@
   margin-bottom: 15px;
 }
 
-.container-login100 {
-  width: 100%;
-  min-height: 100vh;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  padding: 0px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-
-  /*background-color: #0c5460;*/
-}
 
 .wrap-register100 {
 
@@ -62,8 +44,8 @@
 .container-registro {
   max-width: 450px;
   position: relative;
+  margin-top: 15px;
   clear: top;
-
 
 
 }
@@ -108,14 +90,6 @@
 
 }
 
-.selectbox-scrollable {
-  overflow-y: scroll;
-  position: absolute;
-  padding: 0 7px 0 0;
-  width: calc(100% + 17px);
-  height: 100%;
-  border: 0;
-}
 
 .errorSelect {
   border: 1px solid red;
@@ -165,7 +139,6 @@
   }
 
 }
-
 
 .body-con-animacion{
   overflow: hidden;
