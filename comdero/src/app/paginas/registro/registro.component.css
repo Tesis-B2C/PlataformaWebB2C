@@ -90,6 +90,15 @@
 
 }
 
+.alert3 {
+  font-size: smaller;
+  padding: 0;
+  background-color: white;
+  border: none;
+  color: #1a56e9;
+
+
+}
 
 .errorSelect {
   border: 1px solid red;

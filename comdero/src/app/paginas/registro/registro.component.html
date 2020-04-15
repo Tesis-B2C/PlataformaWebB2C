@@ -1,27 +1,41 @@
-
-
 <div *ngIf="loading" class="fondoAnimacionCarga">
   <div class="pulse animated infinite" style="position: absolute;z-index: 150;">
     <img id="imagenCarga" src="./../assets/images/cargando.png">
     <br><br>
     <div>
-      <label style="color: white; text-align: center">Espere porfavor..</label>
+      <label style="color: white; text-align: center">Espere por favor..</label>
     </div>
   </div>
 </div>
 
 
-<body [ngClass]="{'body-con-animacion': loading}" >
+<body [ngClass]="{'body-con-animacion': loading}">
 
 
 <div *ngIf="banderToast && !FormRegistro.checkValidity()" class="bounceInRight  animated alert alert-danger
-shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion">
-  * <strong>!Opps</strong> al parecer existen errores, revisa nuevamente el formulario
+shadow-lg p-2  mt-4 mr-lg-2 bg-white rounded toastValidacion">
+<div class="form-row">
+ <div class="col-2">
+  <img class="mx-auto p-0  m-0 mensaje-mascota " src="../../../assets/images/mascota-condero-pensativo.png" width="70%">
+ </div>
+  <div class="col-10">
+  * <strong>!Opps</strong> Asegurate de llenar todos los campos obligatorios marcados con <strong>*</strong>
+  </div>
+</div>
 </div>
 
 <div *ngIf="banderToastCedula" class="bounceInRight animated alert alert-danger
-shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
-  * <strong>!Opps</strong> Al parecer no introduciste una cédula válida
+shadow-lg p-2 mb-5 mt-4 bg-white rounded toastValidacion ">
+
+  <div class="form-row">
+    <div class="col-2">
+      <img class="mx-auto p-0  m-0 mensaje-mascota " src="../../../assets/images/mascota-condero-pensativo.png" width="70%">
+    </div>
+    <div class="col-10">
+      * <strong>!Opps</strong> Al parecer no introduciste una cédula válida
+    </div>
+  </div>
+
 </div>
 
 
@@ -30,9 +44,12 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
     <div id="divImagenLogo">
       <img id="imagenLogo" src="./../assets/images/logoValid2.png">
     </div>
-    <header class="login100-form-title-registro"><h5 class="card-title">Regístrate</h5></header>
-    <form #FormRegistro id="formRegistro">
+    <header class="login100-form-title-registro" ><h5 class="card-title">Regístrate
+      </h5>
 
+    </header>
+
+    <form #FormRegistro id="formRegistro">
       <div class="form-group">
         <label class="custom-control custom-radio custom-control-inline">
           <input (change)="selectTipoAgente()" checked="" class="custom-control-input" name="gender" type="radio"
@@ -44,9 +61,14 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
                  value="option2">
           <span class="custom-control-label"> Empresa </span>
         </label>
+
       </div> <!-- form-group end.// -->
+      <p class="alert3 justify-content-center"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+         Los campos marcados con <strong>*</strong> son obligatorios.</p>
+
 
       <div *ngIf="bandetTipo" class="form-row">
+
         <div class="col form-group">
           <label class="tamanioCampos">Nombres y Apellidos</label>
           <input #NombreA="ngModel" style="text-transform: uppercase;" [(ngModel)]="this.Agente.Nombre" [ngClass]="{'is-invalid': NombreA.invalid && (NombreA.dirty || NombreA.touched),
@@ -68,7 +90,7 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
 
       <div *ngIf="!bandetTipo" class="form-group">
         <label class="tamanioCampos">Razon Social</label>
-        <input #Razon_Social="ngModel"  style="text-transform: uppercase;" [(ngModel)]="this.Agente.Nombre" [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched),
+        <input #Razon_Social="ngModel" style="text-transform: uppercase;" [(ngModel)]="this.Agente.Nombre" [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched),
                  'is-valid': Razon_Social.valid && (Razon_Social.dirty || Razon_Social.touched)}"
                [pattern]='this.LetrasNumerosPattern'
                class="tamanioInputs form-control" name="razon_Social" placeholder=""
@@ -200,9 +222,9 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
                     [ngClass]="{
           'errorSelect': Provincia.invalid && (Provincia.dirty || Provincia.touched),
           'satisfactorioSelect': Provincia.valid && (Provincia.dirty || Provincia.touched)}"
-                    class=" tamanioInputs form-control"  name="provincia"
+                    class=" tamanioInputs form-control" name="provincia"
                     required>
-              <option selected="true" disabled="true" >Selecciona una.. </option>
+              <option selected="true" disabled="true">Selecciona una..</option>
               <option *ngFor="let provincia of this.provincias"
                       value="{{provincia.COD_DPA}}"> {{provincia.NOMBRE }}</option>
             </select>
@@ -222,7 +244,7 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
           'satisfactorioSelect': Ciudad.valid && (Ciudad.dirty || Ciudad.touched)}"
                     class="tamanioInputs form-control" name="ciudad" placeholder=""
                     required>
-              <option selected="true" disabled="true" >Selecciona una.. </option>
+              <option selected="true" disabled="true">Selecciona una..</option>
               <option *ngFor="let ciudad of this.ciudades" value="{{ciudad.COD_DPA}}"> {{ciudad.NOMBRE }}</option>
             </select>
             <div *ngIf="Ciudad.invalid && (Ciudad.touched||Ciudad.dirty)">
@@ -236,13 +258,16 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
         </div>  <!--form-row.-->
 
         <div class="custom-control custom-checkbox">
-          <input type="checkbox" class="custom-control-input" id="customCheck" name="example1" (change)="activarDireccion()">
-          <label class="custom-control-label" for="customCheck" style="font-size: small">¿Desea agregar su direccion domiciliaria ahora para futuras entregas?</label>
+          <input type="checkbox" class="custom-control-input" id="customCheck" name="example1"
+                 (change)="activarDireccion()">
+          <label class="custom-control-label" for="customCheck" style="font-size: small">¿Desea agregar su direccion
+            domiciliaria ahora para futuras entregas?</label>
         </div>
       </div> <!-- form-group end.// -->
       <div class="form-group" *ngIf="this.banderDirecciones">
         <label class="tamanioCampos">Calle Principal</label>
-        <input (keyup)="buscadorDirecciones()"  #CallePrincipal="ngModel" [(ngModel)]="this.Agente.Calle_Principal_Agente"
+        <input (keyup)="buscadorDirecciones()" #CallePrincipal="ngModel"
+               [(ngModel)]="this.Agente.Calle_Principal_Agente"
                [ngClass]="{
           'errorSelect': CallePrincipal.invalid && (CallePrincipal.dirty || CallePrincipal.touched),
           'satisfactorioSelect': CallePrincipal.valid && (CallePrincipal.dirty || CallePrincipal.touched)}"
@@ -256,7 +281,7 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
         </div>
       </div><!-- form-group end.// -->
 
-      <div class="form-group"  *ngIf="this.banderDirecciones">
+      <div class="form-group" *ngIf="this.banderDirecciones">
         <label class="tamanioCampos">Calle Secundaria</label>
         <input #CalleSecundaria="ngModel" [(ngModel)]="this.Agente.Calle_Secundaria_Agente"
                [ngClass]="{
@@ -273,14 +298,15 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
         </div>
       </div>
 
-      <div class="form-row"  *ngIf="this.banderDirecciones">
+      <div class="form-row" *ngIf="this.banderDirecciones">
         <div class="col-lg-6 form-group">
           <label class="tamanioCampos">Número de referencia</label>
-          <input #NumCasaAgente="ngModel" [(ngModel)]="this.Agente.Num_Casa_Agente" class="tamanioInputs form-control"  name="numCasaAgente" placeholder=""  type="text">
+          <input #NumCasaAgente="ngModel" [(ngModel)]="this.Agente.Num_Casa_Agente" class="tamanioInputs form-control"
+                 name="numCasaAgente" placeholder="" type="text">
 
-            <div>
-              <p class="alert2 alert-primary"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                Campo opcional.</p>
+          <div>
+            <p class="alert2 alert-primary"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+              Campo opcional.</p>
           </div>
         </div>
         <div class=" col-lg-6 form-group">
@@ -346,7 +372,8 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
       </div>
       <div class="form-group">
         <label class="custom-control custom-checkbox"> <input checked="" class="custom-control-input" type="checkbox">
-          <div class="custom-control-label" style="font-size: smaller"> Estoy de acuerdo con los &nbsp;<a href="#" style="font-size: small">terminos
+          <div class="custom-control-label" style="font-size: smaller"> Estoy de acuerdo con los &nbsp;<a href="#"
+                                                                                                          style="font-size: small">terminos
             y condiciones</a></div>
         </label>
       </div> <!-- form-group end.// -->
@@ -356,14 +383,14 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
           <button (click)="registrarAgente('0')" [hidden]="!FormRegistro.checkValidity()" class="login100-form-btn">
             Crea tu cuenta en condero
           </button>
-          <button  (click)="registrarAgente('1')" [hidden]="FormRegistro.checkValidity()" class="login100-form-btn">
+          <button (click)="registrarAgente('1')" [hidden]="FormRegistro.checkValidity()" class="login100-form-btn">
             Crea tu cuenta en condero
           </button>
         </div>
       </div>
     </form>
   </article><!-- card-body.// -->
-  <p class="text-center mt-4 " style="font-size: small">Tienes una cuenta? <a href="/loguin" style="font-size: small">Inicia
+  <p class="text-center mt-2 " style="font-size: small">Tienes una cuenta? <a href="/loguin" style="font-size: small">Inicia
     sesión</a></p>
 </div> <!-- card .// -->
 
