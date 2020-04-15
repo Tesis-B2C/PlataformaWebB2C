@@ -35,7 +35,7 @@ const Dpa = db.sequelize.define('DPA', {
 Dpa.hasMany(Agente, {foreignKey: 'COD_DPA', sourceKey: 'COD_DPA'});
 Agente.belongsTo(Dpa, {foreignKey: 'COD_DPA', sourceKey: 'COD_DPA'});
 
-//DPA - Agente
+//DPA - Sucursal
 Dpa.hasMany(Sucursal, {foreignKey: 'COD_DPA', sourceKey: 'COD_DPA'});
 Sucursal.belongsTo(Dpa, {foreignKey: 'COD_DPA', sourceKey: 'COD_DPA'});
 

@@ -20,11 +20,11 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion">
 </div>
 
 <div *ngIf="banderToastCedula" class="bounceInRight animated alert alert-danger
-shadow-lg p-3 mb-5 bg-white rounded toastValidacion " >
+shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
   * <strong>!Opps</strong> Al parecer no introduciste una cédula válida
 </div>
 
-<br>
+
 <div class="mx-auto  container-registro shadow-lg p-3 bg-white rounded">
   <article class="  wrap-register100 card-body">
     <div id="divImagenLogo">
@@ -242,7 +242,7 @@ shadow-lg p-3 mb-5 bg-white rounded toastValidacion " >
       </div> <!-- form-group end.// -->
       <div class="form-group" *ngIf="this.banderDirecciones">
         <label class="tamanioCampos">Calle Principal</label>
-        <input #CallePrincipal="ngModel" [(ngModel)]="this.Agente.Calle_Principal_Agente"
+        <input (keyup)="buscadorDirecciones()"  #CallePrincipal="ngModel" [(ngModel)]="this.Agente.Calle_Principal_Agente"
                [ngClass]="{
           'errorSelect': CallePrincipal.invalid && (CallePrincipal.dirty || CallePrincipal.touched),
           'satisfactorioSelect': CallePrincipal.valid && (CallePrincipal.dirty || CallePrincipal.touched)}"

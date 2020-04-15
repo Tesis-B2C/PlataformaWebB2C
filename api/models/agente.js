@@ -11,7 +11,7 @@ const  Agente = db.sequelize.define('AGENTE', {
             //autoIncrement: true
 
         },
-        NUM_COD_POSTAL:
+        COD_POSTAL:
             {
                 type: Sequelize.STRING,
                 allowNull: true
@@ -70,11 +70,7 @@ const  Agente = db.sequelize.define('AGENTE', {
                 type:Sequelize.STRING,
                 allowNull:false
             },
-        HORARIO_ATENCION:
-            {
-                type:Sequelize.STRING,
-                allowNull:false
-            },
+
     },
     {
         timestamps: false,
