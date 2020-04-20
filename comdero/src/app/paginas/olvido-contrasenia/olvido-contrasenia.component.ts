@@ -9,8 +9,7 @@ import Swal from "sweetalert2";
 export class OlvidoContraseniaComponent implements OnInit {
 
   public Correo;
-
-  public  loading=false;
+  public  loading:boolean=false;
   constructor(private _agenteServicio: AgenteServicio) { }
 
   ngOnInit() {

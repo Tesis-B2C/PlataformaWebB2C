@@ -17,20 +17,22 @@ const places = require("../../../../node_modules/places.js/dist/cdn/places.js");
 
 export class RegistroComponent implements OnInit, OnDestroy {
 
-  public bandetTipo: boolean;
-  public Agente;
   private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
   public soloLetrasPattern: any = "[ a-zA-ZÑñáéíóúÁÉÍÓÚ ][ a-zA-ZÑñáéíóúÁÉÍÓÚ ]*$[0-9]{0}";
   private LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
   private soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
-  public banderToast: boolean;
-  public banderToastCedula: boolean;
   public provincias;
   public ciudades;
   public ComprarContrasenia;
+  public Agente;
+
+  //banderas
+  public banderToast: boolean=false;
+  public banderToastCedula: boolean=false;
   public banderDirecciones: boolean = false;
-  public bandera = false;
+  public bandera:boolean = false;
   public loading: boolean = false;
+  public bandetTipo: boolean=true;
 
   constructor(private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio) {
     this.Agente = new Agente(null, null, null,
@@ -38,11 +40,8 @@ export class RegistroComponent implements OnInit, OnDestroy {
       null, null, null, null);
   }
 
-  async ngOnInit() {
-    this.bandetTipo = true;
-    this.banderToast = false;
-    this.banderToastCedula = false;
-    await this.getDpaProvincias("P");
+   ngOnInit() {
+    this.getDpaProvincias("P");
 
   }
 
@@ -147,6 +146,8 @@ export class RegistroComponent implements OnInit, OnDestroy {
       this.Agente.Num_Casa_Agente = null;
       this.Agente.Calle_Principal_Agente = null;
       this.Agente.Calle_Secundaria_Agente = null;
+      this.Agente.Provincia=null;
+      this.Agente.Ciudad=null;
     }
   }
 

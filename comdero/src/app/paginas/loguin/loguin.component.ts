@@ -8,30 +8,31 @@ import {ActivatedRoute, Router} from "@angular/router";
   templateUrl: './loguin.component.html',
   styleUrls: ['./loguin.component.css']
 })
-export class LoguinComponent  {
+export class LoguinComponent {
   public obj = {
     Correo: null,
     Contrasenia: null
   };
   public identity;
   public token;
-  public loading = false;
+  public loading: boolean = false;
   public tokenTemporal;
   public response;
+
   constructor(private route: ActivatedRoute, private _agenteServicio: AgenteServicio, public router: Router) {
 
   }
 
   public async loguin() {
     try {
-    this.loading = true;
-      this.tokenTemporal=this.route.snapshot.params.token;
-      console.log("this.token",this.tokenTemporal);
-    if(!this.tokenTemporal){
-     this.response = await this._agenteServicio.autenticarAgente(this.obj, "").toPromise();
-    }else {
-      this.response = await this._agenteServicio.autenticarActivarAgente(this.obj, "",this.tokenTemporal).toPromise();
-    }
+      this.loading = true;
+      this.tokenTemporal = this.route.snapshot.params.token;
+      console.log("this.token", this.tokenTemporal);
+      if (!this.tokenTemporal) {
+        this.response = await this._agenteServicio.autenticarAgente(this.obj, "").toPromise();
+      } else {
+        this.response = await this._agenteServicio.autenticarActivarAgente(this.obj, "", this.tokenTemporal).toPromise();
+      }
       this.identity = this.response.data;
       if (!this.identity.ID_AGENTE) {
         this.mensageError("el usuario no se ha logueado correctamente");
@@ -57,8 +58,7 @@ export class LoguinComponent  {
   }
 
 
-  mensageError(mensaje)
-  {
+  mensageError(mensaje) {
     Swal.fire({
       icon: 'error',
       title: '<header class="login100-form-title-registro"><h5 class="card-title">!Error..</h5></header>',
@@ -72,7 +72,6 @@ export class LoguinComponent  {
       }
     });
   }
-
 
 
 }
