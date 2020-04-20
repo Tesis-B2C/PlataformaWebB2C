@@ -11,22 +11,18 @@ const Categoria = db.sequelize.define('Categoria', {
                 allowNull: false,
                 autoIncrement: true
             },
-        DESCRIPCION_CATEGORIA:
-            {
-                type: Sequelize.STRING,
-                allowNull: false
-            },
-        FECHA_CREACION_CATEGORIA:
-            {
-                type: Sequelize.DATEONLY,
-                allowNull: false
-            },
+
         ESTADO_CATEGORIA:
             {
                 type: Sequelize.INTEGER,
                 allowNull: false
             },
         NOMBRE:
+            {
+                type: Sequelize.STRING,
+                allowNull: false
+            },
+        TIPO:
             {
                 type: Sequelize.STRING,
                 allowNull: false
@@ -43,8 +39,7 @@ Producto_Categoria.belongsTo(Categoria, {foreignKey: 'ID_CATEGORIA', sourceKey: 
 
 //CATEGORIA - CATEGORIA_CATEGORIA
 Categoria.hasMany(Categoria_Categoria, {foreignKey: 'ID_CATEGORIA', sourceKey: 'ID_CATEGORIA'});
-Categoria.hasMany(Categoria_Categoria, {foreignKey: 'CAD_ID_CATEGORIA', sourceKey: 'ID_CATEGORIA'});
 Categoria_Categoria.belongsTo(Categoria, {foreignKey: 'ID_CATEGORIA', sourceKey: 'ID_CATEGORIA'});
-Categoria_Categoria.belongsTo(Categoria, {foreignKey: 'CAD_ID_CATEGORIA', sourceKey: 'ID_CATEGORIA'});
+
 
 module.exports = Categoria;

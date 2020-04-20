@@ -58,14 +58,26 @@ const Producto = db.sequelize.define('Producto', {
                 type: Sequelize.STRING,
                 allowNull: false
             },
-      
+        LLEVAR_STOCK: {
+            type: Sequelize.INTEGER,
+            allowNull: false
+        },
+        VENDER_SIN_STOCK: {
+            type: Sequelize.INTEGER,
+            allowNull: false
+        },
+        CONDICION: {
+            type: Sequelize.STRING,
+            allowNull: false
+        }
+
 
     },
 
 
     {
         timestamps: false,
-        id:false
+        id: false
     })
 
 //PRODUCTO - COMPRA_PRODUCTO
