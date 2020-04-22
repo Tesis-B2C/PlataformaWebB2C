@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
-var Sucursal = require("./sucursal");
+var Producto_Imagenes_Producto = require("./producto_imagenes_producto");
+
 
 const Imagen_Producto = db.sequelize.define('Imagen_Producto', {
 
@@ -50,3 +51,6 @@ const Imagen_Producto = db.sequelize.define('Imagen_Producto', {
 
 
 module.exports = Imagen_Producto;
+Imagen_Producto.hasMany(Producto_Imagenes_Producto, {foreignKey: 'ID_IMAGEN', sourceKey: 'ID_IMAGEN'});
+Producto_Imagenes_Producto.belongsTo(Imagen_Producto, {foreignKey: 'ID_IMAGEN', sourceKey: 'ID_IMAGEN'});
+
