@@ -138,7 +138,6 @@
 
 
       </form>
-
       <br>
       <form class=" card card-body ">
         <h6>Precios</h6>
@@ -162,10 +161,41 @@
             </div>
           </div>
 
-
           <hr>
 
+          <br>
+        </div>
+      </form>
+      <br>
+      <form class=" card card-body ">
+        <h6>Retiros y Envios</h6>
+        <hr>
+        <div class="container">
+
           <div class="form-group">
+
+
+            <label>¿Desea ofrecer retiro en persona?</label>
+
+
+            <div class="form-group">
+              <label class="custom-control custom-radio custom-control-inline">
+                <input (change)="opcionEntregaLocalidad()" class="custom-control-input" name="entregasLocalidad"
+                       type="radio"
+                       value="option1">
+                <span class="custom-control-label"> Si  </span>
+              </label>
+              <label class="custom-control custom-radio custom-control-inline">
+                <input (change)="opcionEntregaLocalidad()" checked="" class="custom-control-input"
+                       name="entregasLocalidad" type="radio"
+                       value="option2">
+                <span class="custom-control-label"> No </span>
+              </label>
+            </div> <!-- form-group end.// -->
+          </div>
+
+          <div class="form-group">
+
 
             <label>¿Desea ofrecer el servicio de entrega a domicilio dentro de la localidad?</label>
 
@@ -186,16 +216,27 @@
             </div> <!-- form-group end.// -->
           </div>
 
-          <div *ngIf="this.banderaEntregaDomicilioLocalidad" class="col-md-5 mt-3 form-group">
-            <label>Precio</label>
-            <input class="form-control py-3 " placeholder="$0.00" type="text">
+          <div *ngIf="this.banderaEntregaDomicilioLocalidad" class="col-12 mt-3 form-group">
+            <div *ngFor=" let opcion of vectorOpcionesEntregaLocal" class="form-row">
+              <div class="form-group col-md-5">
+                <label>Opcion</label>
+                <select class="form-control " placeholder="Ej. Amarillo"></select>
+              </div>
+              <div class="form-group  col-md-3">
+                <label> Precio </label>
+                <input class="form-control " placeholder="Ej. xl/34/etc" type="text">
+              </div>
+
+            </div>
+
+            <p (click)="agregarOpcionesEntregaLocal()" id="agregarProducto">
+              <span class="fa fa-plus "></span> &nbsp;Agregar opcion
+            </p>
           </div>
 
-
-          <hr>
           <div class="form-group">
 
-            <label>¿Desea ofrecer el servicio de entrega a domicilio dentro de la localidad?</label>
+            <label>¿Desea ofrecer el servicio de entrega a domicilio fuera de la localidad?</label>
 
 
             <div class="form-group">
@@ -215,11 +256,24 @@
             </div> <!-- form-group end.// -->
           </div>
 
-          <div *ngIf="banderaEntregaDomicilioFueraLocalidad" class="col-md-5 mt-3 form-group">
-            <label>Precio</label>
-            <input class="form-control py-3 " placeholder="$0.00" type="text">
+          <div *ngIf="banderaEntregaDomicilioFueraLocalidad" class="col-12 mt-3 ">
+            <div *ngFor=" let opcion of vectorOpcionesEntregaFueraLocalidad" class="form-row">
+              <div class="form-group col-md-5">
+                <label>Opcion</label>
+                <select class="form-control " placeholder="Ej. Amarillo"></select>
+              </div>
+              <div class="form-group  col-md-3">
+                <label> Precio </label>
+                <input class="form-control " placeholder="Ej. xl/34/etc" type="text">
+              </div>
+
+            </div>
+
+            <p (click)="agregarOpcionesEntregaFueraLocalidad()" id="agregarProducto">
+              <span class="fa fa-plus "></span> &nbsp;Agregar opcion
+            </p>
           </div>
-          <hr>
+
           <br>
         </div>
       </form>
@@ -268,6 +322,42 @@
       </form>
 
       <br>
+
+      <form class=" card card-body ">
+        <h6>Ofrecer Garantia</h6>
+        <hr>
+        <div class="container">
+          <label>Seleccione el tipo de garantia ofrecida por este producto</label>
+          <br><br>
+          <div class="form-group">
+            <label class="custom-control custom-radio custom-control-inline">
+              <input (change)="opcionEntregaFueraLocalidad()" checked class="custom-control-input"
+                     name="entregasFueraLocalidad" type="radio"
+                     value="option2">
+              <span class="custom-control-label"> Garantia del vendedor </span>
+            </label>
+          </div>
+          <div class="form-group">
+            <label class="custom-control custom-radio custom-control-inline">
+              <input (change)="opcionEntregaFueraLocalidad()" checked class="custom-control-input"
+                     name="entregasFueraLocalidad" type="radio"
+                     value="option2">
+              <span class="custom-control-label"> Garantia de fabrica </span>
+            </label>
+          </div>
+          <div class="form-group">
+            <label class="custom-control custom-radio custom-control-inline">
+              <input (change)="opcionEntregaFueraLocalidad()" checked class="custom-control-input"
+                     name="entregasFueraLocalidad" type="radio"
+                     value="option2">
+              <span class="custom-control-label"> Sin garantia </span>
+            </label>
+          </div>
+
+          <br>
+        </div>
+      </form>
+      <br>
       <form class=" card card-body ">
 
         <h6>Variaciones</h6>
@@ -294,7 +384,8 @@
         <div *ngIf="banderaVariaciones" class="form-row container">
           <div class="form-group">
             <div class="alert alert-secondary" role="alert">
-              Primero establesca las opciones base del producto, es decir las correspondientes a las imagenes que agregó anterior mente,
+              Primero establesca las opciones base del producto, es decir las correspondientes a las imagenes que agregó
+              anterior mente,
               luego si desea agregar mas opciones , ademas imagenes, y un precio diferente de click en agregar
             </div>
           </div>
@@ -391,9 +482,7 @@
             </div>
 
 
-
           </div>
-
 
 
         </div>
@@ -404,6 +493,7 @@
         </div>
       </form>
       <br>
+
       <button class="btn btn-primary" type="submit">Crear producto</button>
       <br> <br>
     </div>
