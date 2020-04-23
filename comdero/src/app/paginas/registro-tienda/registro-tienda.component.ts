@@ -4,6 +4,10 @@ import {Sucursal} from "../../modelos/sucursal";
 import {DpaServicio} from "../../servicios/dpa.servicio";
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import Swal from 'sweetalert2'
+
+import {environment} from "../../../environments/environment.prod";
+import * as Mapboxgl from 'mapbox-gl';
+
 declare const require: any;
 const places = require("../../../../node_modules/places.js/dist/cdn/places.js");
 
@@ -46,6 +50,12 @@ export class RegistroTiendaComponent implements OnInit {
   public provincias;
   public ciudades;
 
+  //Mapa
+  mapa:Mapboxgl.Map;
+
+  public vectorOpciones:Array<number>=[1]; // las dos formas swon validas pero la activa es ams facil
+  /*public vectorOpciones=new Array(0);*/
+
   constructor(private _dpaServicio: DpaServicio) {
     this.Tienda = new Tienda(null, null,null,null,
       null,null, null,null,null,null);
@@ -56,6 +66,22 @@ export class RegistroTiendaComponent implements OnInit {
 
   async ngOnInit() {
     await this.getDpaProvincias("P");
+
+    Mapboxgl.accessToken = environment.mapboxkey;
+    this.mapa = new Mapboxgl.Map({
+      container: 'mapa-mapbox', // Id del container
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [-77.0364,38.8951], // Coordenadas que aparece centrado
+      zoom: 9 // zoom
+    });
+
+    this.mapa.addControl(new Mapboxgl.NavigationControl());
+    this.mapa.addControl(new Mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true
+      },
+      trackUserLocation: true
+    }));
   }
 
   async getDpaProvincias(buscar) {
@@ -74,5 +100,14 @@ export class RegistroTiendaComponent implements OnInit {
     } catch (e) {
       console.log("error:" + JSON.stringify((e).error.message));
     }
+  }
+
+  public agregarOpciones(){
+    this.vectorOpciones.push(1);
+  }
+
+  public borrarOpciones(pocicion:number){
+    debugger
+    this.vectorOpciones.splice(pocicion,1)
   }
 }

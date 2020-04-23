@@ -21,7 +21,6 @@
       <aw-wizard-step [stepTitle]="'Steptitle 1'">
         <ng-template awWizardStepSymbol><i class="fa fa-search"></i></ng-template>
         <div class="datosregistro">
-
           <div class="form-group">
             <label class="tamanioCampos">Nombre comercial de su empresa o negocio</label>
             <input #Nombre_Comercial="ngModel" [(ngModel)]="this.Tienda.Nombre_Comercial" [ngClass]="{'is-invalid': Nombre_Comercial.invalid && (Nombre_Comercial.dirty || Nombre_Comercial.touched),
@@ -152,9 +151,7 @@
 
       <aw-wizard-step [stepTitle]="'Steptitle 2'">
         <ng-template awWizardStepSymbol><i class="fa fa-upload"></i></ng-template>
-        <div>
-
-
+        <div *ngFor="let item of this.vectorOpciones; index as i" class="container">
           <div class="datosregistro">
             <div class="form-row">
               <div class="form-group col-md-6">
@@ -200,7 +197,7 @@
             </div>  <!--form-row.-->
 
             <div class="form-group">
-              <label class="tamanioCampos">Calle Principal</label>
+              <label class="tamanioCampos">Dirección</label>
               <input #CallePrincipal="ngModel" [(ngModel)]="this.Sucursal.Calle_Principal"
                      [ngClass]="{
           'errorSelect': CallePrincipal.invalid && (CallePrincipal.dirty || CallePrincipal.touched),
@@ -215,21 +212,14 @@
               </div>
             </div><!-- form-group end.// -->
 
+
             <div class="form-group">
-              <label class="tamanioCampos">Calle Secundaria</label>
-              <input #CalleSecundaria="ngModel" [(ngModel)]="this.Sucursal.Calle_Secundaria_Sucursal"
-                     [ngClass]="{
-          'errorSelect': CalleSecundaria.invalid && (CalleSecundaria.dirty || CalleSecundaria.touched),
-          'satisfactorioSelect': CalleSecundaria.valid && (CalleSecundaria.dirty || CalleSecundaria.touched)}"
-                     class="tamanioInputs form-control"
-                     name="calleSecundaria" placeholder="" required type="text" id="calleSecundaria">
-              <div *ngIf="CalleSecundaria.invalid && (CalleSecundaria.touched||CalleSecundaria.dirty)">
-                <div *ngIf="CalleSecundaria.errors.required">
-                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                    Campo requerido.</p>
-                </div>
+              <label class="tamanioCampos">Seleccione la ubicación de su tienda</label>
+              <hr class="lineaSeparacion">
+              <div id="mapa-mapbox" style="width: 100%; height: 270px;margin: 0;">
               </div>
-            </div>
+            </div> <!-- form-group end.// -->
+
 
             <div class="form-row">
               <div class="col-lg-6 form-group">
@@ -290,20 +280,38 @@
                   </div>
                 </div>
               </div> <!-- form-group end.//-->
-              <div class="col-lg-6 form-group">
-              </div><!--form-group end.;-->
-
             </div> <!-- form-row end.// -->
-            <hr class="lineaSeparacion">
-
           </div>
+
+
+              <div class="form-group  col-md-1 ">
+                <label style="opacity: 0">Más</label>
+                <button (click)="agregarOpciones()" class="form-control btn btn-outline-primary">
+                  <span class="fa fa-plus "></span>
+                </button>
+              </div>
+              <div class="form-group  col-md-1 ">
+                <label style="opacity: 0">boorar</label>
+                <button (click)="borrarOpciones(i)" class="form-control btn btn-outline-danger">
+                  <span class="fa fa-trash "></span>
+                </button>
+              </div>
+
+            </div>
+
+
+
+            <hr class="lineaSeparacion1">
+
+
+
+
 
 
           <div class="btn-group">
             <button type="button" class="btn btn-secondary" awPreviousStep>Back</button>
             <button type="button" class="btn btn-secondary" awNextStep>Continue</button>
           </div>
-        </div>
       </aw-wizard-step>
 
 
