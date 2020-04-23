@@ -40,12 +40,12 @@ async function registrarAgente(req, res) {
                     });
                 } else if (req.body.Num_Cod_Postal) {
                     res.status(200).send({
-                        message: 'Porfavor revisa tu correo electronico para activar tu cuenta '
+                        message: 'Por favor revisa tu correo electrónico para activar tu cuenta '
                     });
                 } else {
                     res.status(200).send({
-                        message: 'No se ha registrado una direccion aun, esperamos lo puedas hacer pronto,' +
-                            'Porfavor revisa tu correo electronico para activar tu cuenta'
+                        message: 'No se ha registrado una dirección aun, esperamos lo puedas hacer pronto,' +
+                            'Porfavor revisa tu correo electrónico para activar tu cuenta'
                     });
                 }
             } else {
@@ -154,13 +154,13 @@ async function resetearContrasenia(req, res) {
             let respuestaCorreo = await correo.EnviarCorreo(agente.dataValues.CORREO, 'Cambio de contraseña', agente.dataValues.NOMBRE, TOKENTEMPORAL);
 
             // Function to send e-mail to the user
-            if(respuestaCorreo){
-                res.status(200).send({
-                    message: 'Porfavor revisa tu correo electronico para resetear tu contraseña'
-                });
-            }else {
+            if(respuestaCorreo=='error'){
                 res.status(500).send({
                     message: 'Al parecer existe un problema intentalo más tarde'
+                });
+            }else {
+                res.status(200).send({
+                    message: 'Por favor revisa tu correo electrónico para resetear tu contraseña'
                 });
             }
         }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import Swal from "sweetalert2";
 @Component({
@@ -12,7 +12,7 @@ export class OlvidoContraseniaPaso2Component implements OnInit {
   public obj={Contrasenia:null,Contrasenia2:null}
   public tokenTemporal;
   public loading=false;
-  constructor(private route: ActivatedRoute,private _agenteServicio: AgenteServicio) { }
+  constructor(private route: ActivatedRoute,private _agenteServicio: AgenteServicio,public router: Router) { }
 
 
   ngOnInit() {
@@ -29,6 +29,7 @@ export class OlvidoContraseniaPaso2Component implements OnInit {
       console.log("this.token",this.tokenTemporal);
       let response = await this._agenteServicio.resetearContrasenia2(this.tokenTemporal, this.obj).toPromise();
        this.mensageCorrecto(response.message);
+      this.router.navigate(['loguin']);
        this.loading=false;
 
     }catch (e) {

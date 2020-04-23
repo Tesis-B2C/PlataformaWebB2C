@@ -138,7 +138,6 @@
 
 
       </form>
-
       <br>
       <form class=" card card-body ">
         <h6>Precios</h6>
@@ -147,7 +146,14 @@
           <div class="form-row">
             <div class="col">
               <label> Precio unitario sin iva </label>
-              <input class="form-control py-3 " placeholder="$0.00" type="text">
+
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="$0.00">
+                <div class="input-group-append">
+                  <span class="input-group-text">$</span>
+                </div>
+              </div>
+
             </div>
             <div class="col">
               <label>Porcentaje de Iva </label>
@@ -155,10 +161,41 @@
             </div>
           </div>
 
-
           <hr>
 
+          <br>
+        </div>
+      </form>
+      <br>
+      <form class=" card card-body ">
+        <h6>Retiros y Envios</h6>
+        <hr>
+        <div class="container">
+
           <div class="form-group">
+
+
+            <label>¿Desea ofrecer retiro en persona?</label>
+
+
+            <div class="form-group">
+              <label class="custom-control custom-radio custom-control-inline">
+                <input (change)="opcionEntregaLocalidad()" class="custom-control-input" name="entregasLocalidad"
+                       type="radio"
+                       value="option1">
+                <span class="custom-control-label"> Si  </span>
+              </label>
+              <label class="custom-control custom-radio custom-control-inline">
+                <input (change)="opcionEntregaLocalidad()" checked="" class="custom-control-input"
+                       name="entregasLocalidad" type="radio"
+                       value="option2">
+                <span class="custom-control-label"> No </span>
+              </label>
+            </div> <!-- form-group end.// -->
+          </div>
+
+          <div class="form-group">
+
 
             <label>¿Desea ofrecer el servicio de entrega a domicilio dentro de la localidad?</label>
 
@@ -179,16 +216,27 @@
             </div> <!-- form-group end.// -->
           </div>
 
-          <div *ngIf="this.banderaEntregaDomicilioLocalidad" class="col-md-5 mt-3 form-group">
-            <label>Precio</label>
-            <input class="form-control py-3 " placeholder="$0.00" type="text">
+          <div *ngIf="this.banderaEntregaDomicilioLocalidad" class="col-12 mt-3 form-group">
+            <div *ngFor=" let opcion of vectorOpcionesEntregaLocal" class="form-row">
+              <div class="form-group col-md-5">
+                <label>Opcion</label>
+                <select class="form-control " placeholder="Ej. Amarillo"></select>
+              </div>
+              <div class="form-group  col-md-3">
+                <label> Precio </label>
+                <input class="form-control " placeholder="Ej. xl/34/etc" type="text">
+              </div>
+
+            </div>
+
+            <p (click)="agregarOpcionesEntregaLocal()" id="agregarProducto">
+              <span class="fa fa-plus "></span> &nbsp;Agregar opcion
+            </p>
           </div>
 
-
-          <hr>
           <div class="form-group">
 
-            <label>¿Desea ofrecer el servicio de entrega a domicilio dentro de la localidad?</label>
+            <label>¿Desea ofrecer el servicio de entrega a domicilio fuera de la localidad?</label>
 
 
             <div class="form-group">
@@ -208,11 +256,24 @@
             </div> <!-- form-group end.// -->
           </div>
 
-          <div *ngIf="banderaEntregaDomicilioFueraLocalidad" class="col-md-5 mt-3 form-group">
-            <label>Precio</label>
-            <input class="form-control py-3 " placeholder="$0.00" type="text">
+          <div *ngIf="banderaEntregaDomicilioFueraLocalidad" class="col-12 mt-3 ">
+            <div *ngFor=" let opcion of vectorOpcionesEntregaFueraLocalidad" class="form-row">
+              <div class="form-group col-md-5">
+                <label>Opcion</label>
+                <select class="form-control " placeholder="Ej. Amarillo"></select>
+              </div>
+              <div class="form-group  col-md-3">
+                <label> Precio </label>
+                <input class="form-control " placeholder="Ej. xl/34/etc" type="text">
+              </div>
+
+            </div>
+
+            <p (click)="agregarOpcionesEntregaFueraLocalidad()" id="agregarProducto">
+              <span class="fa fa-plus "></span> &nbsp;Agregar opcion
+            </p>
           </div>
-          <hr>
+
           <br>
         </div>
       </form>
@@ -261,6 +322,42 @@
       </form>
 
       <br>
+
+      <form class=" card card-body ">
+        <h6>Ofrecer Garantia</h6>
+        <hr>
+        <div class="container">
+          <label>Seleccione el tipo de garantia ofrecida por este producto</label>
+          <br><br>
+          <div class="form-group">
+            <label class="custom-control custom-radio custom-control-inline">
+              <input (change)="opcionEntregaFueraLocalidad()" checked class="custom-control-input"
+                     name="entregasFueraLocalidad" type="radio"
+                     value="option2">
+              <span class="custom-control-label"> Garantia del vendedor </span>
+            </label>
+          </div>
+          <div class="form-group">
+            <label class="custom-control custom-radio custom-control-inline">
+              <input (change)="opcionEntregaFueraLocalidad()" checked class="custom-control-input"
+                     name="entregasFueraLocalidad" type="radio"
+                     value="option2">
+              <span class="custom-control-label"> Garantia de fabrica </span>
+            </label>
+          </div>
+          <div class="form-group">
+            <label class="custom-control custom-radio custom-control-inline">
+              <input (change)="opcionEntregaFueraLocalidad()" checked class="custom-control-input"
+                     name="entregasFueraLocalidad" type="radio"
+                     value="option2">
+              <span class="custom-control-label"> Sin garantia </span>
+            </label>
+          </div>
+
+          <br>
+        </div>
+      </form>
+      <br>
       <form class=" card card-body ">
 
         <h6>Variaciones</h6>
@@ -283,13 +380,21 @@
           </div>
         </div>
 
-        <div *ngIf="banderaVariaciones" class="form-row container" >
 
-          <div class="form-group col-md-3">
+        <div *ngIf="banderaVariaciones" class="form-row container">
+          <div class="form-group">
+            <div class="alert alert-secondary" role="alert">
+              Primero establesca las opciones base del producto, es decir las correspondientes a las imagenes que agregó
+              anterior mente,
+              luego si desea agregar mas opciones , ademas imagenes, y un precio diferente de click en agregar
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
             <label>Color</label>
             <input class="form-control " placeholder="Ej. Amarillo" type="text">
           </div>
-          <div class="form-group  col-md-3">
+          <div class="form-group  col-md-4">
             <label> Talla </label>
             <input class="form-control " placeholder="Ej. xl/34/etc" type="text">
           </div>
@@ -297,50 +402,100 @@
             <label>Material</label>
             <input class="form-control  " placeholder="Ej. Gamusa/algodon" type="text">
           </div>
-          <div class="form-group  col-md-1 ">
-            <label style="opacity: 0">Más</label>
-            <button (click)="agregarOpciones()" class="form-control btn btn-outline-primary">
-              <span class="fa fa-plus "></span>
-            </button>
-          </div>
-          <div class="form-group  col-md-1 " style="opacity: 0" >
-            <label >Más</label>
-            <button (click)="agregarOpciones()" class="form-control btn btn-outline-primary">
-              <span class="fa fa-plus "></span>
-            </button>
-          </div>
+
         </div>
-          <div *ngFor="let item of this.vectorOpciones; index as i" class="form-row container">
-            <div class="form-group col-md-3">
-              <label>Color</label>
-              <input class="form-control " placeholder="Ej. Amarillo" type="text">
+        <div *ngFor="let item of this.vectorOpciones; index as i" class="form-row container">
+          <div class="form-group col-md-12 mt-4">
+            <p style="font-weight: bolder">Opcion {{i + 1}}</p>
+          </div>
+          <div class="form-group col-md-3">
+            <label>Color</label>
+            <input class="form-control " placeholder="Ej. Amarillo" type="text">
+          </div>
+          <div class="form-group  col-md-4">
+            <label> Talla </label>
+            <input class="form-control " placeholder="Ej. xl/34/etc" type="text">
+          </div>
+          <div class="form-group  col-md-4">
+            <label>Material</label>
+            <input class="form-control  " placeholder="Ej. Gamusa/algodon" type="text">
+          </div>
+
+          <div class="form-group  col-md-1 ">
+            <label style="opacity: 0">boorar</label>
+            <button (click)="borrarOpciones(i)" class="form-control btn btn-outline-danger">
+              <span class="fa fa-trash "></span>
+            </button>
+          </div>
+
+          <div class="form-group col-12">
+            <a class="ml-2 mt-5">
+              <label>Imagenes del producto </label>
+              <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
+            <div [ngClass]="{'borde-imagenes':!banderaAgregarImagen,'borde-imagenes1':banderaAgregarImagen }"
+                 class="row  mt-3 mx-2 ">
+              <div *ngFor='let url of images; let i = index ' class="ml-2">
+                <div class="col-auto card mt-2 px-0 pb-2">
+                  <label style="border: none;  ">
+                    <img [src]="url" class="px-0" height="140px" width="140px">
+                    <input (change)="onFileChange($event)" accept="image/*" class="file" multiple name="files"
+                           type="file">
+                  </label>
+                  <button (click)="quitar(i)" class="boton-cerrar btn-outline-danger px-0 py-0 ">Eliminar</button>
+                </div>
+              </div>
+              <div *ngIf="!banderaAgregarImagen" class="mx-auto ">
+                <div class="col-auto pt-4">
+                  <label class="imagen-agregar ">
+                    <i class="fa fa-picture-o fa-4x"></i>
+                    <i class="fa fa-plus-circle fa-2x ml-1"></i>
+                    <input (change)="onFileChange($event)" accept="image/*" class="file" multiple type="file">
+                  </label>
+                </div>
+              </div>
+              <div *ngIf="!banderaAgregarImagen" class=" col-12 pb-5 mx-auto ">
+                <p class="link-agregar-imagenes ">Click para Agregar imagenes</p>
+              </div>
+
+              <div *ngIf="banderaAgregarImagen && images.length<6" class="py-2">
+                <div class="col-auto  py-4  card  ml-2 ">
+                  <label class="imagen-agregar">
+                    <i class="fa fa-picture-o fa-4x ml-4"></i>
+                    <i class="fa fa-plus-circle fa-2x ml-1"></i>
+                    <input (change)="onFileChange($event)" accept="image/*" class="file" multiple type="file">
+                    <br>
+                    <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imagenes </p>
+                    <p class=" link-agregar-imagenes2">maximo 6</p>
+
+                  </label>
+                </div>
+              </div>
             </div>
-            <div class="form-group  col-md-3">
-              <label> Talla </label>
-              <input class="form-control " placeholder="Ej. xl/34/etc" type="text">
-            </div>
-            <div class="form-group  col-md-4">
-              <label>Material</label>
-              <input class="form-control  " placeholder="Ej. Gamusa/algodon" type="text">
-            </div>
-            <div class="form-group  col-md-1 ">
-              <label style="opacity: 0">Más</label>
-              <button (click)="agregarOpciones()" class="form-control btn btn-outline-primary">
-                <span class="fa fa-plus "></span>
-              </button>
-            </div>
-            <div class="form-group  col-md-1 ">
-              <label style="opacity: 0">boorar</label>
-              <button (click)="borrarOpciones(i)" class="form-control btn btn-outline-danger">
-                <span class="fa fa-trash "></span>
-              </button>
+          </div> <!-- form-group end.// -->
+          <div class="form-group  col-md-4">
+            <label>Precio</label>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+              <div class="input-group-append">
+                <span class="input-group-text">$</span>
+              </div>
             </div>
 
+
+          </div>
+
+
+        </div>
+        <div *ngIf="banderaVariaciones" class="form-group col-md-12">
+          <p (click)="agregarOpciones()" id="agregarProducto">
+            <span class="fa fa-plus "></span> &nbsp;Agregar opcion
+          </p>
         </div>
       </form>
       <br>
+
       <button class="btn btn-primary" type="submit">Crear producto</button>
-      <br>  <br>
+      <br> <br>
     </div>
     <div class="card col-md-3 ml-2">
       <p>categorias</p>

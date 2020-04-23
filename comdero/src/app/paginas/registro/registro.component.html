@@ -1,27 +1,41 @@
-
-
 <div *ngIf="loading" class="fondoAnimacionCarga">
   <div class="pulse animated infinite" style="position: absolute;z-index: 150;">
     <img id="imagenCarga" src="./../assets/images/cargando.png">
     <br><br>
     <div>
-      <label style="color: white; text-align: center">Espere porfavor..</label>
+      <label style="color: white; text-align: center">Espere por favor..</label>
     </div>
   </div>
 </div>
 
 
-<body [ngClass]="{'body-con-animacion': loading}" >
+<body [ngClass]="{'body-con-animacion': loading}">
 
 
 <div *ngIf="banderToast && !FormRegistro.checkValidity()" class="bounceInRight  animated alert alert-danger
-shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion">
-  * <strong>!Opps</strong> al parecer existen errores, revisa nuevamente el formulario
+shadow-lg p-2  mt-4 mr-lg-2 bg-white rounded toastValidacion">
+<div class="form-row">
+ <div class="col-2">
+  <img class="mx-auto p-0  m-0 mensaje-mascota " src="../../../assets/images/mascota-condero-pensativo.png" width="70%">
+ </div>
+  <div class="col-10">
+  * <strong>!Opps</strong> Asegurate de llenar todos los campos obligatorios marcados con <strong>*</strong>
+  </div>
+</div>
 </div>
 
 <div *ngIf="banderToastCedula" class="bounceInRight animated alert alert-danger
-shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
-  * <strong>!Opps</strong> Al parecer no introduciste una cédula válida
+shadow-lg p-2 mb-5 mt-4 bg-white rounded toastValidacion ">
+
+  <div class="form-row">
+    <div class="col-2">
+      <img class="mx-auto p-0  m-0 mensaje-mascota " src="../../../assets/images/mascota-condero-pensativo.png" width="70%">
+    </div>
+    <div class="col-10">
+      * <strong>!Opps</strong> Al parecer no introduciste una cédula válida
+    </div>
+  </div>
+
 </div>
 
 
@@ -30,9 +44,12 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
     <div id="divImagenLogo">
       <img id="imagenLogo" src="./../assets/images/logoValid2.png">
     </div>
-    <header class="login100-form-title-registro"><h5 class="card-title">Regístrate</h5></header>
-    <form #FormRegistro id="formRegistro">
+    <header class="login100-form-title-registro" ><h5 class="card-title">Regístrate
+      </h5>
 
+    </header>
+
+    <form #FormRegistro id="formRegistro">
       <div class="form-group">
         <label class="custom-control custom-radio custom-control-inline">
           <input (change)="selectTipoAgente()" checked="" class="custom-control-input" name="gender" type="radio"
@@ -44,11 +61,16 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
                  value="option2">
           <span class="custom-control-label"> Empresa </span>
         </label>
+
       </div> <!-- form-group end.// -->
+      <p class="alert3 justify-content-center pb-2"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+         Los campos marcados con <strong>*</strong> son obligatorios.</p>
+
 
       <div *ngIf="bandetTipo" class="form-row">
+
         <div class="col form-group">
-          <label class="tamanioCampos">Nombres y Apellidos</label>
+          <label class="tamanioCampos">* Nombres y Apellidos</label>
           <input #NombreA="ngModel" style="text-transform: uppercase;" [(ngModel)]="this.Agente.Nombre" [ngClass]="{'is-invalid': NombreA.invalid && (NombreA.dirty || NombreA.touched),
                  'is-valid': NombreA.valid && (NombreA.dirty || (NombreA.touched || NombreA.untouched))}"
                  [pattern]='this.soloLetrasPattern'
@@ -67,8 +89,8 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
       </div> <!-- form-row end.// -->
 
       <div *ngIf="!bandetTipo" class="form-group">
-        <label class="tamanioCampos">Razon Social</label>
-        <input #Razon_Social="ngModel"  style="text-transform: uppercase;" [(ngModel)]="this.Agente.Nombre" [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched),
+        <label class="tamanioCampos">* Razon Social</label>
+        <input #Razon_Social="ngModel" style="text-transform: uppercase;" [(ngModel)]="this.Agente.Nombre" [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched),
                  'is-valid': Razon_Social.valid && (Razon_Social.dirty || Razon_Social.touched)}"
                [pattern]='this.LetrasNumerosPattern'
                class="tamanioInputs form-control" name="razon_Social" placeholder=""
@@ -88,7 +110,7 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
 
       <div class="form-row">
         <div *ngIf="bandetTipo" class="col-lg-6 form-group">
-          <label class="tamanioCampos">Cédula</label>
+          <label class="tamanioCampos">* Cédula</label>
           <input #Cedula="ngModel" [(ngModel)]="this.Agente.Id_Agente" [ngClass]="{'is-invalid': Cedula.invalid && (Cedula.dirty || Cedula.touched),
                  'is-valid': Cedula.valid && (Cedula.dirty || Cedula.touched)}" [pattern]='this.soloNumerosPattern'
                  class="tamanioInputs form-control" maxlength="10"
@@ -115,7 +137,7 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
           </div>
         </div><!--form-group end.;-->
         <div *ngIf="!bandetTipo" class="col-lg-6 col form-group">
-          <label class="tamanioCampos">RUC</label>
+          <label class="tamanioCampos">* RUC</label>
           <input #Ruc="ngModel" [(ngModel)]="this.Agente.Id_Agente" [ngClass]="{'is-invalid': Ruc.invalid && (Ruc.dirty || Ruc.touched),
                  'is-valid': Ruc.valid && (Ruc.dirty || Ruc.touched)}" [pattern]='this.soloNumerosPattern'
                  class="tamanioInputs form-control" maxlength="13"
@@ -141,7 +163,7 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
           </div>
         </div> <!-- form-group end.-->
         <div class="col-lg-6 form-group">
-          <label class="tamanioCampos">Teléfono Celular</label>
+          <label class="tamanioCampos">* Teléfono Celular</label>
           <input #Telefono="ngModel" [(ngModel)]="this.Agente.Telefono" [ngClass]="{'is-invalid': Telefono.invalid && (Telefono.dirty || Telefono.touched),
                  'is-valid': Telefono.valid && (Telefono.dirty || Telefono.touched)}"
                  [pattern]='this.soloNumerosPattern' class="tamanioInputs form-control" maxlength="10" minlength="10"
@@ -170,7 +192,7 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
 
 
       <div class="form-group">
-        <label class="tamanioCampos">Email</label>
+        <label class="tamanioCampos">* Email</label>
         <input #Email="ngModel" [(ngModel)]="this.Agente.Correo" [ngClass]="{
           'is-invalid': Email.invalid && (Email.dirty || Email.touched),
           'is-valid': Email.valid && (Email.touched || Email.dirty )}" [pattern]='this.emailPattern'
@@ -192,17 +214,29 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
       <hr class="lineaSeparacion">
       <div class=" form-group">
 
+
+
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="customCheck" name="example1"
+                 (change)="activarDireccion()">
+          <label class="custom-control-label" for="customCheck" style="font-size: small">¿Desea agregar su direccion
+            domiciliaria ahora para futuras entregas?</label>
+        </div>
+      </div> <!-- form-group end.// -->
+      <div class="form-group" *ngIf="this.banderDirecciones">
+
+
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label class="tamanioCampos">Provincia</label>
+            <label class="tamanioCampos">* Provincia</label>
             <select #Provincia="ngModel" (change)="getDpaCiudades($event.target.value)"
                     [(ngModel)]="this.Agente.Provincia"
                     [ngClass]="{
           'errorSelect': Provincia.invalid && (Provincia.dirty || Provincia.touched),
           'satisfactorioSelect': Provincia.valid && (Provincia.dirty || Provincia.touched)}"
-                    class=" tamanioInputs form-control"  name="provincia"
+                    class=" tamanioInputs form-control" name="provincia"
                     required>
-              <option selected="true" disabled="true" >Selecciona una.. </option>
+              <option selected="true" disabled="true">Selecciona una..</option>
               <option *ngFor="let provincia of this.provincias"
                       value="{{provincia.COD_DPA}}"> {{provincia.NOMBRE }}</option>
             </select>
@@ -216,13 +250,13 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
           </div> <!--form-group end.-->
 
           <div class="form-group col-md-6">
-            <label class="tamanioCampos">Ciudad</label>
+            <label class="tamanioCampos">* Ciudad</label>
             <select #Ciudad="ngModel" [(ngModel)]="this.Agente.Ciudad " [ngClass]="{
           'errorSelect': Ciudad.invalid && (Ciudad.dirty || Ciudad.touched),
           'satisfactorioSelect': Ciudad.valid && (Ciudad.dirty || Ciudad.touched)}"
                     class="tamanioInputs form-control" name="ciudad" placeholder=""
                     required>
-              <option selected="true" disabled="true" >Selecciona una.. </option>
+              <option selected="true" disabled="true">Selecciona una..</option>
               <option *ngFor="let ciudad of this.ciudades" value="{{ciudad.COD_DPA}}"> {{ciudad.NOMBRE }}</option>
             </select>
             <div *ngIf="Ciudad.invalid && (Ciudad.touched||Ciudad.dirty)">
@@ -234,15 +268,9 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
           </div> <!--form-group end.-->
 
         </div>  <!--form-row.-->
-
-        <div class="custom-control custom-checkbox">
-          <input type="checkbox" class="custom-control-input" id="customCheck" name="example1" (change)="activarDireccion()">
-          <label class="custom-control-label" for="customCheck" style="font-size: small">¿Desea agregar su direccion domiciliaria ahora para futuras entregas?</label>
-        </div>
-      </div> <!-- form-group end.// -->
-      <div class="form-group" *ngIf="this.banderDirecciones">
-        <label class="tamanioCampos">Calle Principal</label>
-        <input (keyup)="buscadorDirecciones()"  #CallePrincipal="ngModel" [(ngModel)]="this.Agente.Calle_Principal_Agente"
+        <label class="tamanioCampos">* Calle Principal</label>
+        <input (keyup)="buscadorDirecciones()" #CallePrincipal="ngModel"
+               [(ngModel)]="this.Agente.Calle_Principal_Agente"
                [ngClass]="{
           'errorSelect': CallePrincipal.invalid && (CallePrincipal.dirty || CallePrincipal.touched),
           'satisfactorioSelect': CallePrincipal.valid && (CallePrincipal.dirty || CallePrincipal.touched)}"
@@ -256,8 +284,8 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
         </div>
       </div><!-- form-group end.// -->
 
-      <div class="form-group"  *ngIf="this.banderDirecciones">
-        <label class="tamanioCampos">Calle Secundaria</label>
+      <div class="form-group" *ngIf="this.banderDirecciones">
+        <label class="tamanioCampos">* Calle Secundaria</label>
         <input #CalleSecundaria="ngModel" [(ngModel)]="this.Agente.Calle_Secundaria_Agente"
                [ngClass]="{
           'errorSelect': CalleSecundaria.invalid && (CalleSecundaria.dirty || CalleSecundaria.touched),
@@ -273,14 +301,12 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
         </div>
       </div>
 
-      <div class="form-row"  *ngIf="this.banderDirecciones">
+      <div class="form-row" *ngIf="this.banderDirecciones">
         <div class="col-lg-6 form-group">
           <label class="tamanioCampos">Número de referencia</label>
-          <input #NumCasaAgente="ngModel" [(ngModel)]="this.Agente.Num_Casa_Agente" class="tamanioInputs form-control"  name="numCasaAgente" placeholder=""  type="text">
-
-            <div>
-              <p class="alert2 alert-primary"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                Campo opcional.</p>
+          <input #NumCasaAgente="ngModel" [(ngModel)]="this.Agente.Num_Casa_Agente" class="tamanioInputs form-control"
+                 name="numCasaAgente" placeholder="" type="text">
+          <div>
           </div>
         </div>
         <div class=" col-lg-6 form-group">
@@ -308,7 +334,7 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
       <hr class="lineaSeparacion2">
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label class="tamanioCampos">Contraseña</label>
+          <label class="tamanioCampos">* Contraseña</label>
           <input #Password="ngModel" [(ngModel)]="this.Agente.Contrasenia" [ngClass]="{
           'is-invalid': Password.invalid && (Password.dirty || Password.touched),
           'is-valid': Password.valid && (Password.dirty || Password.touched)}"
@@ -326,7 +352,7 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
           </div>
         </div>  <!--form-group end.-->
         <div class="form-group col-md-6">
-          <label class="tamanioCampos">Repetir contraseña</label>
+          <label class="tamanioCampos">* Repetir contraseña</label>
           <input #PasswordR="ngModel" [(ngModel)]="this.ComprarContrasenia" [ngClass]="{
           'is-invalid': PasswordR.invalid && (PasswordR.dirty || PasswordR.touched),
           'is-valid': PasswordR.valid && (PasswordR.dirty || PasswordR.touched)}"
@@ -346,7 +372,8 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
       </div>
       <div class="form-group">
         <label class="custom-control custom-checkbox"> <input checked="" class="custom-control-input" type="checkbox">
-          <div class="custom-control-label" style="font-size: smaller"> Estoy de acuerdo con los &nbsp;<a href="#" style="font-size: small">terminos
+          <div class="custom-control-label" style="font-size: smaller"> Estoy de acuerdo con los &nbsp;<a href="#"
+                                                                                                          style="font-size: small">terminos
             y condiciones</a></div>
         </label>
       </div> <!-- form-group end.// -->
@@ -356,14 +383,14 @@ shadow-lg p-3 mb-5 mt-4 bg-white rounded toastValidacion " >
           <button (click)="registrarAgente('0')" [hidden]="!FormRegistro.checkValidity()" class="login100-form-btn">
             Crea tu cuenta en condero
           </button>
-          <button  (click)="registrarAgente('1')" [hidden]="FormRegistro.checkValidity()" class="login100-form-btn">
+          <button (click)="registrarAgente('1')" [hidden]="FormRegistro.checkValidity()" class="login100-form-btn">
             Crea tu cuenta en condero
           </button>
         </div>
       </div>
     </form>
   </article><!-- card-body.// -->
-  <p class="text-center mt-4 " style="font-size: small">Tienes una cuenta? <a href="/loguin" style="font-size: small">Inicia
+  <p class="text-center mt-2 " style="font-size: small">Tienes una cuenta? <a href="/loguin" style="font-size: small">Inicia
     sesión</a></p>
 </div> <!-- card .// -->
 
