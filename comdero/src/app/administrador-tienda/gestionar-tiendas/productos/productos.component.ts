@@ -22,7 +22,7 @@ export class ProductosComponent implements OnInit {
   public banderaEntregaDomicilioLocalidad: boolean = false;
   public banderaEntregaDomicilioFueraLocalidad: boolean = false;
   public banderaVariaciones: boolean = true;
-
+  public banderaRastrearCantidad:boolean=false
 
   public editorConfig = {
     "editable": true,
@@ -167,5 +167,10 @@ export class ProductosComponent implements OnInit {
   public borrarOpcionesEntregaLocal(pocicion: number) {
 
     this.vectorOpcionesEntregaLocal.splice(pocicion, 1)
+  }
+
+
+  opcionRastrearCantidad(){
+    this.banderaRastrearCantidad=!this.banderaRastrearCantidad;
   }
 }

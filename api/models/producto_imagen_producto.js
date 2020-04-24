@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 
-const Producto_Imagenes_producto = db.sequelize.define('Producto_Imagenes_producto', {
+const Producto_imagen_producto = db.sequelize.define('Producto_Imagenes_producto', {
         ID_IMAGEN: {
             primaryKey: true,
             type: Sequelize.INTEGER,
@@ -19,4 +19,4 @@ const Producto_Imagenes_producto = db.sequelize.define('Producto_Imagenes_produc
         id: false
     })
 
-module.exports = Producto_Imagenes_producto;
+module.exports = Producto_imagen_producto;

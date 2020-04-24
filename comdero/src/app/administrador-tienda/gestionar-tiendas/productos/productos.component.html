@@ -286,10 +286,15 @@
         <div class="container">
           <div class="form-group ml-2">
             <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="rastrearCantidad">
+              <input type="checkbox" class="custom-control-input" id="rastrearCantidad" (change)="opcionRastrearCantidad()">
               <label class="custom-control-label" for="rastrearCantidad" style="font-size: small">Rastrear la
                 cantidad</label>
             </div>
+          </div>
+
+          <div *ngIf="banderaRastrearCantidad" class="form-group col-5">
+            <label>Cantidad disponible</label>
+            <input class="form-control py-3 " placeholder="0" type="number">
           </div>
 
           <div class="form-group ml-2">
@@ -299,12 +304,6 @@
                 vendiendo cuando
                 se haya agotado</label>
             </div>
-          </div>
-
-
-          <div class="form-group col-5">
-            <label>Cantidad disponible</label>
-            <input class="form-control py-3 " placeholder="0" type="number">
           </div>
 
 

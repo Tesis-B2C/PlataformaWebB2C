@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 var Producto = require("./producto");
-var Opciones_Envio = require("./opciones_envio");
+var Opcion_Envio_Producto = require("./opcion_envio_producto");
 const Oferta = db.sequelize.define('Oferta', {
 
         ID_OFERTA:
@@ -71,6 +71,6 @@ const Oferta = db.sequelize.define('Oferta', {
 
 Oferta.hasOne(Producto, {foreignKey: 'ID_OFERTA', sourceKey: 'ID_OFERTA'});
 Producto.belongsTo(Oferta, {foreignKey: 'ID_OFERTA', sourceKey: 'ID_OFERTA'});
-Oferta.hasOne(Opciones_Envio, {foreignKey: 'ID_OFERTA', sourceKey: 'ID_OFERTA'});
-Opciones_Envio.belongsTo(Oferta, {foreignKey: 'ID_OFERTA', sourceKey: 'ID_OFERTA'});
+Oferta.hasMany(Opcion_Envio_Producto, {foreignKey: 'ID_OFERTA', sourceKey: 'ID_OFERTA'});
+Opcion_Envio_Producto.belongsTo(Oferta, {foreignKey: 'ID_OFERTA', sourceKey: 'ID_OFERTA'});
 module.exports = Oferta;
