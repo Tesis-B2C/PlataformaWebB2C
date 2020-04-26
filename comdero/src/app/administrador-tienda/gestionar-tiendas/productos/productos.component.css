@@ -129,6 +129,12 @@ label
   font-weight: normal;
 }
 
+input{
+  font-size: small;
+}
+.unidades{
+  font-size: small;
+}
 
 .alert{
   font-size: smaller;
@@ -166,3 +172,6 @@ label
 
 }
 
+#selectUnidades{
+  font-size: small;
+}

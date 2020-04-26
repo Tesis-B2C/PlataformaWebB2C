@@ -52,11 +52,11 @@
             <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
           <div [ngClass]="{'borde-imagenes':!banderaAgregarImagen,'borde-imagenes1':banderaAgregarImagen }"
                class="row  mt-3 mx-2 ">
-            <div *ngFor='let url of images; let i = index ' class="ml-2">
+            <div *ngFor='let url of images[0]; let i = index ' class="ml-2">
               <div class="col-auto card mt-2 px-0 pb-2">
                 <label style="border: none;  ">
                   <img [src]="url" class="px-0" height="140px" width="140px">
-                  <input (change)="onFileChange($event)" accept="image/*" class="file" multiple name="files"
+                  <input (change)="onFileChange($event,0)" accept="image/*" class="file" multiple name="files"
                          type="file">
                 </label>
                 <button (click)="quitar(i)" class="boton-cerrar btn-outline-danger px-0 py-0 ">Eliminar</button>
@@ -67,7 +67,7 @@
                 <label class="imagen-agregar ">
                   <i class="fa fa-picture-o fa-4x"></i>
                   <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                  <input (change)="onFileChange($event)" accept="image/*" class="file" multiple type="file">
+                  <input (change)="onFileChange($event,0)" accept="image/*" class="file" multiple type="file">
                 </label>
               </div>
             </div>
@@ -75,12 +75,12 @@
               <p class="link-agregar-imagenes ">Click para Agregar imagenes</p>
             </div>
 
-            <div *ngIf="banderaAgregarImagen && images.length<6" class="py-2">
+            <div *ngIf="banderaAgregarImagen && images[0].length<6" class="py-2">
               <div class="col-auto  py-4  card  ml-2 ">
                 <label class="imagen-agregar">
                   <i class="fa fa-picture-o fa-4x ml-4"></i>
                   <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                  <input (change)="onFileChange($event)" accept="image/*" class="file" multiple type="file">
+                  <input (change)="onFileChange($event,0)" accept="image/*" class="file" multiple type="file">
                   <br>
                   <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imagenes </p>
                   <p class=" link-agregar-imagenes2">maximo 6</p>
@@ -150,7 +150,7 @@
               <div class="input-group mb-3">
                 <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="$0.00">
                 <div class="input-group-append">
-                  <span class="input-group-text">$</span>
+                  <span class="input-group-text unidades">$</span>
                 </div>
               </div>
 
@@ -180,14 +180,14 @@
 
             <div class="form-group">
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionEntregaLocalidad()" class="custom-control-input" name="entregasLocalidad"
+                <input  class="custom-control-input" name="entregaPersonal"
                        type="radio"
                        value="option1">
                 <span class="custom-control-label"> Si  </span>
               </label>
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionEntregaLocalidad()" checked="" class="custom-control-input"
-                       name="entregasLocalidad" type="radio"
+                <input  checked="" class="custom-control-input"
+                       name="entregaPersonal" type="radio"
                        value="option2">
                 <span class="custom-control-label"> No </span>
               </label>
@@ -226,7 +226,15 @@
                 <label> Precio </label>
                 <input class="form-control " placeholder="Ej. xl/34/etc" type="text">
               </div>
-
+              <div class="form-group  col-md-4">
+                <label>Tiempo de entrega </label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                  <div class="input-group-append">
+                    <span class="input-group-text unidades">Dia/s</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <p (click)="agregarOpcionesEntregaLocal()" id="agregarProducto">
@@ -266,7 +274,15 @@
                 <label> Precio </label>
                 <input class="form-control " placeholder="Ej. xl/34/etc" type="text">
               </div>
-
+              <div class="form-group  col-md-4">
+                <label>Tiempo de entrega </label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                  <div class="input-group-append">
+                    <span class="input-group-text unidades">Dia/s</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <p (click)="agregarOpcionesEntregaFueraLocalidad()" id="agregarProducto">
@@ -284,18 +300,32 @@
         <h6>Inventario</h6>
         <hr>
         <div class="container">
+          <div class="form-group">
+            <label>Ingresse la cantidad y la unidad de medida en la cual se ofertara el producto</label>
+          </div>
+          <div class="form-group col-6">
+            <div class="input-group">
+
+              <input type="text" class="form-control" aria-label="Text input with dropdown button">
+
+              <select class="browser-default form-control col-5 " id="selectUnidades">
+                <option selected>Unidades</option>
+                <option value="1">Lb</option>
+                <option value="2">Kg</option>
+                <option value="3">Onz</option>
+              </select>
+
+            </div>
+          </div>
+
           <div class="form-group ml-2">
             <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="rastrearCantidad" (change)="opcionRastrearCantidad()">
+              <input type="checkbox" class="custom-control-input" id="rastrearCantidad">
               <label class="custom-control-label" for="rastrearCantidad" style="font-size: small">Rastrear la
                 cantidad</label>
             </div>
           </div>
 
-          <div *ngIf="banderaRastrearCantidad" class="form-group col-5">
-            <label>Cantidad disponible</label>
-            <input class="form-control py-3 " placeholder="0" type="number">
-          </div>
 
           <div class="form-group ml-2">
             <div class="custom-control custom-checkbox">
@@ -330,24 +360,24 @@
           <br><br>
           <div class="form-group">
             <label class="custom-control custom-radio custom-control-inline">
-              <input (change)="opcionEntregaFueraLocalidad()" checked class="custom-control-input"
-                     name="entregasFueraLocalidad" type="radio"
+              <input  class="custom-control-input"
+                     name="garantia" type="radio"
                      value="option2">
               <span class="custom-control-label"> Garantia del vendedor </span>
             </label>
           </div>
           <div class="form-group">
             <label class="custom-control custom-radio custom-control-inline">
-              <input (change)="opcionEntregaFueraLocalidad()" checked class="custom-control-input"
-                     name="entregasFueraLocalidad" type="radio"
+              <input   class="custom-control-input"
+                     name="garantia" type="radio"
                      value="option2">
               <span class="custom-control-label"> Garantia de fabrica </span>
             </label>
           </div>
           <div class="form-group">
             <label class="custom-control custom-radio custom-control-inline">
-              <input (change)="opcionEntregaFueraLocalidad()" checked class="custom-control-input"
-                     name="entregasFueraLocalidad" type="radio"
+              <input  checked class="custom-control-input"
+                     name="garantia" type="radio"
                      value="option2">
               <span class="custom-control-label"> Sin garantia </span>
             </label>
@@ -429,18 +459,18 @@
 
           <div class="form-group col-12">
             <a class="ml-2 mt-5">
-              <label>Imagenes del producto </label>
+              <label>Imagenes del producto 4 </label>
               <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
             <div [ngClass]="{'borde-imagenes':!banderaAgregarImagen,'borde-imagenes1':banderaAgregarImagen }"
                  class="row  mt-3 mx-2 ">
-              <div *ngFor='let url of images; let i = index ' class="ml-2">
+              <div *ngFor='let url of images[i+1]; index as j ' class="ml-2">
                 <div class="col-auto card mt-2 px-0 pb-2">
                   <label style="border: none;  ">
                     <img [src]="url" class="px-0" height="140px" width="140px">
-                    <input (change)="onFileChange($event)" accept="image/*" class="file" multiple name="files"
+                    <input (change)="onFileChange($event,i+1)" accept="image/*" class="file" multiple name="files"
                            type="file">
                   </label>
-                  <button (click)="quitar(i)" class="boton-cerrar btn-outline-danger px-0 py-0 ">Eliminar</button>
+                  <button (click)="quitar(j)" class="boton-cerrar btn-outline-danger px-0 py-0 ">Eliminar</button>
                 </div>
               </div>
               <div *ngIf="!banderaAgregarImagen" class="mx-auto ">
@@ -448,7 +478,7 @@
                   <label class="imagen-agregar ">
                     <i class="fa fa-picture-o fa-4x"></i>
                     <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                    <input (change)="onFileChange($event)" accept="image/*" class="file" multiple type="file">
+                    <input (change)="onFileChange($event,i+1)" accept="image/*" class="file" multiple type="file">
                   </label>
                 </div>
               </div>
@@ -461,7 +491,7 @@
                   <label class="imagen-agregar">
                     <i class="fa fa-picture-o fa-4x ml-4"></i>
                     <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                    <input (change)="onFileChange($event)" accept="image/*" class="file" multiple type="file">
+                    <input (change)="onFileChange($event,i+1)" accept="image/*" class="file" multiple type="file">
                     <br>
                     <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imagenes </p>
                     <p class=" link-agregar-imagenes2">maximo 6</p>
@@ -471,16 +501,31 @@
               </div>
             </div>
           </div> <!-- form-group end.// -->
+
+          <div class="form-group col-6">
+            <label> Stock y unidad de medida del producto</label>
+            <div class="input-group">
+
+              <input type="text" class="form-control" aria-label="Text input with dropdown button">
+
+              <select class="browser-default form-control col-5 " id="selectUnidades">
+                <option selected>Unidades</option>
+                <option value="1">Lb</option>
+                <option value="2">Kg</option>
+                <option value="3">Onz</option>
+              </select>
+
+            </div>
+          </div>
+
           <div class="form-group  col-md-4">
             <label>Precio</label>
             <div class="input-group mb-3">
               <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
               <div class="input-group-append">
-                <span class="input-group-text">$</span>
+                <span class="input-group-text unidades">$</span>
               </div>
             </div>
-
-
           </div>
 
 

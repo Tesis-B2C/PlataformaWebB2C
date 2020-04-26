@@ -6,8 +6,7 @@ const  Agente = db.sequelize.define('AGENTE', {
 
         ID_AGENTE: {
             type: Sequelize.STRING,
-            primaryKey: true,
-            allowNull: false,
+            allowNull: true,
             //autoIncrement: true
 
         },
@@ -27,7 +26,7 @@ const  Agente = db.sequelize.define('AGENTE', {
         TELEFONO:
             {
                 type:Sequelize.STRING,
-                allowNull:false
+                allowNull:true
             },
         CALLE_PRINCIPAL_AGENTE:
             {
