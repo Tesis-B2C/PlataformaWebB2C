@@ -17,20 +17,22 @@ const places = require("../../../../node_modules/places.js/dist/cdn/places.js");
 
 export class RegistroComponent implements OnInit, OnDestroy {
 
-  public bandetTipo: boolean;
-  public Agente;
   private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
   public soloLetrasPattern: any = "[ a-zA-ZÑñáéíóúÁÉÍÓÚ ][ a-zA-ZÑñáéíóúÁÉÍÓÚ ]*$[0-9]{0}";
   private LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
   private soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
-  public banderToast: boolean;
-  public banderToastCedula: boolean;
   public provincias;
   public ciudades;
   public ComprarContrasenia;
-  public banderDirecciones: boolean = false;
-  public bandera = false;
+  public Agente;
+
+  //banderas
+  public banderaToast: boolean = false;
+  public banderaToastCedula: boolean = false;
+  public banderaDirecciones: boolean = false;
+  public bandera: boolean = false;
   public loading: boolean = false;
+  public banderaTipo: boolean = true;
 
   constructor(private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio) {
     this.Agente = new Agente(null, null, null,
@@ -38,11 +40,8 @@ export class RegistroComponent implements OnInit, OnDestroy {
       null, null, null, null);
   }
 
-  async ngOnInit() {
-    this.bandetTipo = true;
-    this.banderToast = false;
-    this.banderToastCedula = false;
-    await this.getDpaProvincias("P");
+  ngOnInit() {
+    this.getDpaProvincias("P");
 
   }
 
@@ -51,8 +50,8 @@ export class RegistroComponent implements OnInit, OnDestroy {
   }
 
   selectTipoAgente() {
-    this.bandetTipo = !this.bandetTipo;
-    console.log(this.bandetTipo);
+    this.banderaTipo = !this.banderaTipo;
+    console.log(this.banderaTipo);
   }
 
   validarCedula() {
@@ -85,36 +84,46 @@ export class RegistroComponent implements OnInit, OnDestroy {
   async registrarAgente(validador) {
     this.loading = true;
     if (validador == "0") {
-      this.banderToast = false;
-      this.bandetTipo == true ? this.Agente.Tipo = 'Persona' : this.Agente.Tipo = 'Empresa';
+      this.banderaToast = false;
+      this.banderaTipo == true ? this.Agente.Tipo = 'Persona' : this.Agente.Tipo = 'Empresa';
 
-      if (this.validarCedula() == true || this.Agente.Tipo == "Empresa") {
-        this.banderToastCedula = false;
-        try {
-          let response = await this._agenteServicio.registrarAgente(this.Agente).toPromise();
-          document.forms["formRegistro"].reset();
+      if (this.banderaDirecciones) {
+        if (this.validarCedula() == true || this.Agente.Tipo == "Empresa") {
+          this.banderaToastCedula = false;
+          this.registrarAgente1();
+        } else {
+          this.banderaToast = false;
+          this.banderaToastCedula = true;
           window.scroll(0, 0);
-          this.mensageCorrecto(response['message']);
-          this.loading = false;
-        } catch (e) {
-          console.log("error:" + JSON.stringify((e).error.message));
-          if (JSON.stringify((e).error.message))
-            this.mensageError(JSON.stringify((e).error.message));
-          else this.mensageError("Error de conexión intentelo mas tarde");
           this.loading = false;
         }
-      } else {
-        this.banderToast = false;
-        this.banderToastCedula = true;
-        window.scroll(0, 0);
-        this.loading = false;
+      }else {
+        this.registrarAgente1();
       }
+
+
     } else {
-      this.banderToastCedula = false;
-      this.banderToast = true;
+      this.banderaToastCedula = false;
+      this.banderaToast = true;
       window.scroll(0, 0);
       this.loading = false;
 
+    }
+  }
+
+  async registrarAgente1() {
+    try {
+      let response = await this._agenteServicio.registrarAgente(this.Agente).toPromise();
+      document.forms["formRegistro"].reset();
+      window.scroll(0, 0);
+      this.mensageCorrecto(response['message']);
+      this.loading = false;
+    } catch (e) {
+      console.log("error:" + JSON.stringify((e).error.message));
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+      this.loading = false;
     }
   }
 
@@ -141,12 +150,14 @@ export class RegistroComponent implements OnInit, OnDestroy {
   activarDireccion() {
 
     this.bandera = true;
-    this.banderDirecciones = !this.banderDirecciones;
-    if (!this.banderDirecciones) {
+    this.banderaDirecciones = !this.banderaDirecciones;
+    if (!this.banderaDirecciones) {
       this.Agente.Num_Cod_Postal = null;
       this.Agente.Num_Casa_Agente = null;
       this.Agente.Calle_Principal_Agente = null;
       this.Agente.Calle_Secundaria_Agente = null;
+      this.Agente.Id_Agente = null;
+      this.Agente.Telefono = null;
     }
   }
 
@@ -209,7 +220,6 @@ export class RegistroComponent implements OnInit, OnDestroy {
       }
     });
   }
-
 
 
   mensageCorrecto(mensaje) {

@@ -10,11 +10,11 @@ export class ProductosComponent implements OnInit {
 
   public htmlcomponent;
   public url2 = "./../assets/images/imagenes-fondo.png";
-  images = [];
-  banderaAgregarImagen: boolean = false;
-  banderaMaximoImagenes: boolean = true;
-  banderaMensajeMaximoImagenes: boolean = false;
-  banderaMensajeMaximoVideo: boolean = false;
+  public images=[[]];
+  public banderaAgregarImagen: boolean = false;
+  public banderaMaximoImagenes: boolean = true;
+  public banderaMensajeMaximoImagenes: boolean = false;
+  public banderaMensajeMaximoVideo: boolean = false;
   public data: any = [];
   public banderaAnimacionVideo: boolean = false;
 
@@ -43,16 +43,21 @@ export class ProductosComponent implements OnInit {
       ["paragraph", "blockquote", "removeBlockquote", "horizontalLine"],
     ]
   }
-  public vectorOpciones:Array<number>=[1]; // las dos formas swon validas pero la activa es ams facil
-  /*public vectorOpciones=new Array(0);*/
+  public vectorOpciones: Array<number> = []; // las dos formas swon validas pero la activa es ams facil
+  /*public vectorOpciones=new Array(0);
+    public vectorOpciones=[];
+  * */
+  public vectorOpcionesEntregaLocal: Array<number> = [1];
+  public vectorOpcionesEntregaFueraLocalidad: Array<number> = [1];
+
   constructor() {
   }
 
   ngOnInit() {
   }
 
-  public onFileChange(event) {
-
+  public onFileChange(event,indice) {
+    debugger
     if (event.target.files && event.target.files[0]) {
       var filesAmount = event.target.files.length;
       if (filesAmount > 6) {
@@ -62,11 +67,13 @@ export class ProductosComponent implements OnInit {
           var reader = new FileReader();
           reader.onload = (event: any) => {
             console.log(event.target.result);
-            this.images.push(event.target.result);
+            this.images.push([]);
+            this.images[indice].push(event.target.result);
+            debugger
             this.banderaAgregarImagen = true;
             document.forms["form"].reset();
-            if (this.images.length > 6) {
-              this.images = [];
+            if (this.images[indice].length > 6) {
+              this.images[indice] = [];
               document.forms["form"].reset();
               this.banderaAgregarImagen = false;
               this.banderaMensajeMaximoImagenes = true;
@@ -117,29 +124,53 @@ export class ProductosComponent implements OnInit {
   public opcionEntregaLocalidad() {
 
     this.banderaEntregaDomicilioLocalidad = !this.banderaEntregaDomicilioLocalidad;
-    debugger
+
 
   }
 
   public opcionEntregaFueraLocalidad() {
     this.banderaEntregaDomicilioFueraLocalidad = !this.banderaEntregaDomicilioFueraLocalidad;
+    this.vectorOpcionesEntregaFueraLocalidad = [1];
   }
 
   public opcionVariaciones() {
-    this.banderaVariaciones=!this.banderaVariaciones;
-    this.vectorOpciones=[];
+    this.banderaVariaciones = !this.banderaVariaciones;
+    this.vectorOpciones = [];
 
   }
 
 
-
-  public agregarOpciones(){
-  this.vectorOpciones.push(1);
+  public agregarOpciones() {
+    this.vectorOpciones.push(1);
 
   }
 
-  public borrarOpciones(pocicion:number){
-  debugger
-    this.vectorOpciones.splice(pocicion,1)
+  public borrarOpciones(pocicion: number) {
+
+    this.vectorOpciones.splice(pocicion, 1)
   }
+
+
+  public agregarOpcionesEntregaFueraLocalidad() {
+    this.vectorOpcionesEntregaFueraLocalidad.push(1);
+
+  }
+
+  public agregarOpcionesEntregaLocal() {
+    this.vectorOpcionesEntregaLocal.push(1);
+
+  }
+
+  public borrarOpcionesEntregaFueraLocalidad(pocicion: number) {
+
+    this.vectorOpcionesEntregaFueraLocalidad.splice(pocicion, 1)
+  }
+
+  public borrarOpcionesEntregaLocal(pocicion: number) {
+
+    this.vectorOpcionesEntregaLocal.splice(pocicion, 1)
+  }
+
+
+
 }

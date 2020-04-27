@@ -61,9 +61,9 @@
 }
 
 /* estilos para herrores  */
-.tamanioCampos {
+label {
   font-size: small;
-  font-weight: bolder;
+  font-weight: normal;
 }
 
 .tamanioInputs {
@@ -96,6 +96,7 @@
   background-color: white;
   border: none;
   color: #1a56e9;
+  font-weight: bolder;
 
 
 }

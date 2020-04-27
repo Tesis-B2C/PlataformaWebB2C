@@ -1,4 +1,4 @@
-import {Component, DoCheck, OnDestroy, OnInit} from '@angular/core';
+import {Component, DoCheck, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Sucursal} from "../../modelos/sucursal";
 import {Tienda} from "../../modelos/tienda";
 import {DpaServicio} from "../../servicios/dpa.servicio";
@@ -14,6 +14,7 @@ const places = require("../../../../node_modules/places.js/dist/cdn/places.js");
 })
 
 export class RegistroTiendaComponent implements OnInit {
+
   public Tienda;
   public Sucursal;
   public htmlcomponent;

@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 var Producto = require("./producto");
-
+var Opcion_Envio_Producto = require("./opcion_envio_producto");
 const Oferta = db.sequelize.define('Oferta', {
 
         ID_OFERTA:
@@ -41,17 +41,13 @@ const Oferta = db.sequelize.define('Oferta', {
                 type: Sequelize.INTEGER,
                 allowNull: false
             },
-        PRECIO_ENVIO_LOCAL:
-            {
-                type: Sequelize.INTEGER,
-                allowNull: false
-            },
+
         OFRECE_ENVIO_EXTERNO:
             {
                 type: Sequelize.INTEGER,
                 allowNull: false
             },
-        PRECIO_ENVIO_EXTERNO:
+        OFRECE_RETIRO_PERSONAL:
             {
                 type: Sequelize.INTEGER,
                 allowNull: false
@@ -59,6 +55,11 @@ const Oferta = db.sequelize.define('Oferta', {
         RESERVA:
             {
                 type: Sequelize.INTEGER,
+                allowNull: false
+            },
+        GARANTIA:
+            {
+                type: Sequelize.STRING,
                 allowNull: false
             }
 
@@ -70,5 +71,6 @@ const Oferta = db.sequelize.define('Oferta', {
 
 Oferta.hasOne(Producto, {foreignKey: 'ID_OFERTA', sourceKey: 'ID_OFERTA'});
 Producto.belongsTo(Oferta, {foreignKey: 'ID_OFERTA', sourceKey: 'ID_OFERTA'});
-
+Oferta.hasMany(Opcion_Envio_Producto, {foreignKey: 'ID_OFERTA', sourceKey: 'ID_OFERTA'});
+Opcion_Envio_Producto.belongsTo(Oferta, {foreignKey: 'ID_OFERTA', sourceKey: 'ID_OFERTA'});
 module.exports = Oferta;

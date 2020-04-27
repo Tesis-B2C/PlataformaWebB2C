@@ -1,12 +1,13 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
-
+var Producto_Imagen_Producto = require("./producto_imagen_producto");
 const Variante = db.sequelize.define('Variante', {
         NUM_VARIANTE:
             {
-                type: Sequelize.INTEGER,
+                type: Sequelize.BIGINT,
                 primaryKey: true,
-                allowNull: false
+                allowNull: false,
+                autoIncrement:true
             },
         ID_PRODUCTO:
             {
@@ -32,7 +33,12 @@ const Variante = db.sequelize.define('Variante', {
             {
                 type: Sequelize.STRING,
                 allowNull: false
-            }
+            },
+        PRECIO_UNITARIO:
+            {
+                type: Sequelize.FLOAT(8, 2),
+                allowNull: false
+            },
     },
     {
         timestamps: false,
@@ -40,3 +46,7 @@ const Variante = db.sequelize.define('Variante', {
     })
 
 module.exports = Variante;
+//PRODUCTO - IMAGEN_PRODUCTO
+Variante.hasMany(Producto_Imagen_Producto, {foreignKey: 'NUM_VARIANTE', sourceKey: 'NUM_VARIANTE'});
+Producto_Imagen_Producto.belongsTo(Variante, {foreignKey: 'NUM_VARIANTE', sourceKey: 'NUM_VARIANTE'});
+

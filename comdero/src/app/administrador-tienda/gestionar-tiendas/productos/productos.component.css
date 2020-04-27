@@ -126,9 +126,19 @@
 label
 {
   font-size: small;
-  font-weight: bold;
+  font-weight: normal;
 }
 
+input{
+  font-size: small;
+}
+.unidades{
+  font-size: small;
+}
+
+.alert{
+  font-size: smaller;
+}
 
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
   color: #ccc;
@@ -147,3 +157,21 @@ label
 }
 
 
+#agregarProducto{
+  color: #1a56e9;
+  cursor: pointer;
+  border-bottom: #1a56e9 solid 1.5px;
+}
+
+#agregarProducto:hover{
+  opacity: 0.8;
+
+}
+#agregarProducto span{
+ font-size: 12px;
+
+}
+
+#selectUnidades{
+  font-size: small;
+}
