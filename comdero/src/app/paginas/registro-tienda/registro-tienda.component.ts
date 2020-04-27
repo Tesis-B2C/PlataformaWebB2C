@@ -1,4 +1,4 @@
-import {Component, DoCheck, OnDestroy, OnInit} from '@angular/core';
+import {Component, DoCheck, ElementRef, OnDestroy, OnInit, OnChanges,AfterViewChecked, Renderer2, ViewChild} from '@angular/core';
 import {Tienda} from "../../modelos/tienda";
 import {Sucursal} from "../../modelos/sucursal";
 import {DpaServicio} from "../../servicios/dpa.servicio";
@@ -7,6 +7,7 @@ import Swal from 'sweetalert2'
 
 import {environment} from "../../../environments/environment.prod";
 import * as Mapboxgl from 'mapbox-gl';
+import {toNumber} from "ngx-bootstrap/timepicker/timepicker.utils";
 
 declare const require: any;
 const places = require("../../../../node_modules/places.js/dist/cdn/places.js");
@@ -17,7 +18,8 @@ const places = require("../../../../node_modules/places.js/dist/cdn/places.js");
   styleUrls: ['./registro-tienda.component.css']
 })
 
-export class RegistroTiendaComponent implements OnInit {
+export class RegistroTiendaComponent implements OnInit, AfterViewChecked {
+
   public Tienda;
   public Sucursal;
   public htmlcomponent;
@@ -51,38 +53,55 @@ export class RegistroTiendaComponent implements OnInit {
   public ciudades;
 
   //Mapa
-  mapa:Mapboxgl.Map;
+  mapa: Array<Mapboxgl.Map> = new Array<Mapboxgl.Map>();
 
-  public vectorOpciones:Array<number>=[1]; // las dos formas swon validas pero la activa es ams facil
+  public vectorOpciones: Array<number> = [1, 1]; // las dos formas swon validas pero la activa es ams facil
   /*public vectorOpciones=new Array(0);*/
 
-  constructor(private _dpaServicio: DpaServicio) {
-    this.Tienda = new Tienda(null, null,null,null,
-      null,null, null,null,null,null);
+  constructor(private _dpaServicio: DpaServicio, private renderer: Renderer2) {
+    this.Tienda = new Tienda(null, null, null, null,
+      null, null, null, null, null, null);
 
-    this.Sucursal = new Sucursal(null, null,null,null,
-      null, null,null,null);
+    this.Sucursal = new Sucursal(null, null, null, null,
+      null, null, null, null);
   }
 
   async ngOnInit() {
     await this.getDpaProvincias("P");
 
-    Mapboxgl.accessToken = environment.mapboxkey;
-    this.mapa = new Mapboxgl.Map({
-      container: 'mapa-mapbox', // Id del container
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [-77.0364,38.8951], // Coordenadas que aparece centrado
-      zoom: 9 // zoom
-    });
-
-    this.mapa.addControl(new Mapboxgl.NavigationControl());
-    this.mapa.addControl(new Mapboxgl.GeolocateControl({
-      positionOptions: {
-        enableHighAccuracy: true
-      },
-      trackUserLocation: true
-    }));
   }
+
+  ngAfterViewChecked(){
+
+
+
+
+  }
+
+  public cont = 0;
+ public banderaPrueba:boolean=true;
+  public mapas() {
+    this.banderaPrueba=false;
+
+      Mapboxgl.accessToken = environment.mapboxkey;
+      this.mapa[this.cont] = new Mapboxgl.Map({
+        container: 'mapa-mapbox'+ this.cont.toString(), // Id del container
+        style: 'mapbox://styles/mapbox/streets-v11',
+
+        center: [-77.0364, 38.8951], // Coordenadas que aparece centrado
+        zoom: 9 // zoom,
+
+      });
+
+      this.mapa[this.cont].addControl(new Mapboxgl.NavigationControl());
+      this.mapa[this.cont].addControl(new Mapboxgl.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true
+        },
+        trackUserLocation: true
+      }));
+      this.cont++;
+      }
 
   async getDpaProvincias(buscar) {
     try {
@@ -102,12 +121,17 @@ export class RegistroTiendaComponent implements OnInit {
     }
   }
 
-  public agregarOpciones(){
+  public async agregarOpciones() {
+
     this.vectorOpciones.push(1);
+
+    this.mapas();
+
+
   }
 
-  public borrarOpciones(pocicion:number){
+  public borrarOpciones(pocicion: number) {
     debugger
-    this.vectorOpciones.splice(pocicion,1)
+    this.vectorOpciones.splice(pocicion, 1)
   }
 }
