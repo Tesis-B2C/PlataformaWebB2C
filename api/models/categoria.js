@@ -3,7 +3,7 @@ var db = require("../database/db.js");
 var Producto_Categoria = require("./producto_categoria");
 
 
-const Categoria = db.sequelize.define('Categoria', {
+const Categoria = db.sequelize.define('CATEGORIA', {
         ID_CATEGORIA:
             {
                 type: Sequelize.STRING,
@@ -36,15 +36,16 @@ const Categoria = db.sequelize.define('Categoria', {
     {
         timestamps: false,
         id:false
-    })
+    });
+
 
 //CATEGORIA - PRODUCTO_CATEGORIA
 Categoria.hasMany(Producto_Categoria, {foreignKey: 'ID_CATEGORIA', sourceKey: 'ID_CATEGORIA'});
 Producto_Categoria.belongsTo(Categoria, {foreignKey: 'ID_CATEGORIA', sourceKey: 'ID_CATEGORIA'});
 
 //CATEGORIA - CATEGORIA
-Categoria.hasMany(Categoria_Categoria, {foreignKey: 'CAT_ID_CATEGORIA', sourceKey: 'ID_CATEGORIA'});
-Categoria_Categoria.belongsTo(Categoria, {foreignKey: 'CAT_ID_CATEGORIA', sourceKey: 'ID_CATEGORIA'});
+Categoria.hasMany(Categoria,{as:'CAT',foreignKey: 'CAT_ID_CATEGORIA', sourceKey: 'ID_CATEGORIA'});
+Categoria.belongsTo(Categoria, {foreignKey: 'CAT_ID_CATEGORIA',sourceKey: 'ID_CATEGORIA'});
 
 
 module.exports = Categoria;

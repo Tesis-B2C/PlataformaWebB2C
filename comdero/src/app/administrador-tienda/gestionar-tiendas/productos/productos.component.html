@@ -24,8 +24,8 @@
 
           <div class="form-group mt-3">
             <label>Descripción del producto </label>
-            <textarea rows="3" style="font-size: small; resize: none;" class="form-control" name="descripcion_Tienda"
-                      placeholder="" required type="text" aria-label="With textarea"></textarea>
+            <textarea aria-label="With textarea" class="form-control" name="descripcion_Tienda" placeholder=""
+                      required rows="3" style="font-size: small; resize: none;" type="text"></textarea>
           </div>
 
 
@@ -148,7 +148,7 @@
               <label> Precio unitario sin iva </label>
 
               <div class="input-group mb-3">
-                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="$0.00">
+                <input aria-label="Amount (to the nearest dollar)" class="form-control" placeholder="$0.00" type="text">
                 <div class="input-group-append">
                   <span class="input-group-text unidades">$</span>
                 </div>
@@ -180,13 +180,13 @@
 
             <div class="form-group">
               <label class="custom-control custom-radio custom-control-inline">
-                <input  class="custom-control-input" name="entregaPersonal"
+                <input class="custom-control-input" name="entregaPersonal"
                        type="radio"
                        value="option1">
                 <span class="custom-control-label"> Si  </span>
               </label>
               <label class="custom-control custom-radio custom-control-inline">
-                <input  checked="" class="custom-control-input"
+                <input checked="" class="custom-control-input"
                        name="entregaPersonal" type="radio"
                        value="option2">
                 <span class="custom-control-label"> No </span>
@@ -229,7 +229,7 @@
               <div class="form-group  col-md-4">
                 <label>Tiempo de entrega </label>
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                  <input aria-label="Amount (to the nearest dollar)" class="form-control" type="text">
                   <div class="input-group-append">
                     <span class="input-group-text unidades">Dia/s</span>
                   </div>
@@ -277,7 +277,7 @@
               <div class="form-group  col-md-4">
                 <label>Tiempo de entrega </label>
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                  <input aria-label="Amount (to the nearest dollar)" class="form-control" type="text">
                   <div class="input-group-append">
                     <span class="input-group-text unidades">Dia/s</span>
                   </div>
@@ -306,7 +306,7 @@
           <div class="form-group col-6">
             <div class="input-group">
 
-              <input type="text" class="form-control" aria-label="Text input with dropdown button">
+              <input aria-label="Text input with dropdown button" class="form-control" type="text">
 
               <select class="browser-default form-control col-5 " id="selectUnidades">
                 <option selected>Unidades</option>
@@ -320,7 +320,7 @@
 
           <div class="form-group ml-2">
             <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="rastrearCantidad">
+              <input class="custom-control-input" id="rastrearCantidad" type="checkbox">
               <label class="custom-control-label" for="rastrearCantidad" style="font-size: small">Rastrear la
                 cantidad</label>
             </div>
@@ -329,7 +329,7 @@
 
           <div class="form-group ml-2">
             <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="venderDespuesAgotado">
+              <input class="custom-control-input" id="venderDespuesAgotado" type="checkbox">
               <label class="custom-control-label" for="venderDespuesAgotado" style="font-size: small">Continuar
                 vendiendo cuando
                 se haya agotado</label>
@@ -339,7 +339,7 @@
 
           <div class="form-group ml-2">
             <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="permitirReservaProducto">
+              <input class="custom-control-input" id="permitirReservaProducto" type="checkbox">
               <label class="custom-control-label" for="permitirReservaProducto" style="font-size: small">Permitir la
                 reserva del
                 producto</label>
@@ -360,7 +360,7 @@
           <br><br>
           <div class="form-group">
             <label class="custom-control custom-radio custom-control-inline">
-              <input  class="custom-control-input"
+              <input class="custom-control-input"
                      name="garantia" type="radio"
                      value="option2">
               <span class="custom-control-label"> Garantia del vendedor </span>
@@ -368,7 +368,7 @@
           </div>
           <div class="form-group">
             <label class="custom-control custom-radio custom-control-inline">
-              <input   class="custom-control-input"
+              <input class="custom-control-input"
                      name="garantia" type="radio"
                      value="option2">
               <span class="custom-control-label"> Garantia de fabrica </span>
@@ -376,7 +376,7 @@
           </div>
           <div class="form-group">
             <label class="custom-control custom-radio custom-control-inline">
-              <input  checked class="custom-control-input"
+              <input checked class="custom-control-input"
                      name="garantia" type="radio"
                      value="option2">
               <span class="custom-control-label"> Sin garantia </span>
@@ -439,7 +439,7 @@
           </div>
           <div class="form-group col-md-3">
             <label>Color</label>
-            <input class="form-control " placeholder="Ej. Amarillo" type="text">
+            <input class="form-control" id="favcolor" name="favcolor" type="color" value="#ff0000">
           </div>
           <div class="form-group  col-md-4">
             <label> Talla </label>
@@ -506,7 +506,7 @@
             <label> Stock y unidad de medida del producto</label>
             <div class="input-group">
 
-              <input type="text" class="form-control" aria-label="Text input with dropdown button">
+              <input aria-label="Text input with dropdown button" class="form-control" type="text">
 
               <select class="browser-default form-control col-5 " id="selectUnidades">
                 <option selected>Unidades</option>
@@ -521,7 +521,7 @@
           <div class="form-group  col-md-4">
             <label>Precio</label>
             <div class="input-group mb-3">
-              <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+              <input aria-label="Amount (to the nearest dollar)" class="form-control" type="text">
               <div class="input-group-append">
                 <span class="input-group-text unidades">$</span>
               </div>
@@ -541,8 +541,39 @@
       <button class="btn btn-primary" type="submit">Crear producto</button>
       <br> <br>
     </div>
-    <div class="card col-md-3 ml-2">
-      <p>categorias</p>
+    <div class="card card-body col-md-4 ml-3  container-categoria  fix-height">
+      <div class="container">
+
+
+      <h6 class="mt-3">Categorias</h6>
+        <hr class="mb-0">
+        <label class="text-muted">Selecciona las categorias a las cuales pertenece el producto</label>
+        <div *ngFor="let c11 of this.c1">
+
+          <p class="categoria">{{c11.NOMBRE}} </p>
+          <hr  class="mb-2 mt-2">
+          <div class="form-row mb-3">
+            <div *ngFor="let c22 of this.c2">
+              <button (click)="busquedaCate(c22.ID_CATEGORIA)" *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA" class="chip  col  btn btn-light"
+                 style="color: blue">{{c22.NOMBRE}}</button>
+              <div class="form-row ">
+                <div *ngFor="let c33 of this.categoriaEncontrada">
+
+                  <button *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA && c22.ID_CATEGORIA==c33.CAT_ID_CATEGORIA"
+                          class="chip col btn btn-light">{{c33.NOMBRE}}</button>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <!-- <button (click)="cc($event)" class="col btn btn-light clicked">asd</button>-->
+
+
+        </div>
+      </div>
     </div>
   </div>
 </div>

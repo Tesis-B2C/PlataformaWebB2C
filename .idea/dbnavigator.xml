@@ -23,7 +23,11 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes />
+    <loaded-nodes>
+      <connection connection-id="61a3c8f0-5134-4f1d-be43-12068ea03bcc">
+        <schema name="basetesis" object-types="view, column, dataset trigger, index, table, procedure, constraint, function" />
+      </connection>
+    </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="61a3c8f0-5134-4f1d-be43-12068ea03bcc">
@@ -37,7 +41,14 @@
     <connection id="61a3c8f0-5134-4f1d-be43-12068ea03bcc" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="61a3c8f0-5134-4f1d-be43-12068ea03bcc" dataset="basetesis.IMAGEN_PRODUCTO" active-filter-id="" />
     <filter-actions connection-id="61a3c8f0-5134-4f1d-be43-12068ea03bcc" dataset="basetesis.AGENTE" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="61a3c8f0-5134-4f1d-be43-12068ea03bcc" dataset="basetesis.DPA" active-filter-id="b61fb868-8fb1-47a1-a196-4c0af5fab236">
+      <filter id="b61fb868-8fb1-47a1-a196-4c0af5fab236" name="Filter" temporary="false" custom-name="false" type="basic" join-type="AND" />
+    </filter-actions>
+    <filter-actions connection-id="61a3c8f0-5134-4f1d-be43-12068ea03bcc" dataset="basetesis.CATEGORIA" active-filter-id="e493780d-7109-4139-852d-f537bbd3563f">
+      <filter id="e493780d-7109-4139-852d-f537bbd3563f" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND" />
+    </filter-actions>
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />

@@ -2,8 +2,6 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Agente} from "../../modelos/agente";
 import {DpaServicio} from "../../servicios/dpa.servicio";
 import {AgenteServicio} from "../../servicios/agente.servicio";
-//import Swal from 'sweetalert2'
-//import swal from 'sweetalert2/src/sweetalert2.js'
 import Swal from 'sweetalert2'
 
 declare const require: any;

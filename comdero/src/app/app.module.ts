@@ -8,6 +8,7 @@ import {PrincipalesModule} from './principales/principales.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {DpaServicio} from "./servicios/dpa.servicio";
 import {AgenteServicio} from "./servicios/agente.servicio";
+import {CategoriaServicio} from "./servicios/categoria.servicio";
 import {AdministradorTiendaModule} from "./administrador-tienda/administrador-tienda.module";
 import {GestionarTiendasModule} from "./administrador-tienda/gestionar-tiendas/gestionar-tiendas.module";
 import {FormsModule} from "@angular/forms";
@@ -34,7 +35,7 @@ import { ArchwizardModule } from 'angular-archwizard';
     HttpClientModule,
     FormsModule,
   ],
-  providers: [DpaServicio,AgenteServicio],
+  providers: [DpaServicio,AgenteServicio,CategoriaServicio],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

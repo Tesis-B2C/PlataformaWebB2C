@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-
-
+import {CategoriaServicio} from "../../../servicios/categoria.servicio";
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
@@ -23,6 +22,8 @@ export class ProductosComponent implements OnInit {
   public banderaEntregaDomicilioFueraLocalidad: boolean = false;
   public banderaVariaciones: boolean = true;
 
+  //
+  public categorias:any;
 
   public editorConfig = {
     "editable": true,
@@ -49,11 +50,15 @@ export class ProductosComponent implements OnInit {
   * */
   public vectorOpcionesEntregaLocal: Array<number> = [1];
   public vectorOpcionesEntregaFueraLocalidad: Array<number> = [1];
+  visible = true;
 
-  constructor() {
+
+  constructor(private _categoriaServicio:CategoriaServicio) {
   }
 
+
   ngOnInit() {
+    this.getCategorias();
   }
 
   public onFileChange(event,indice) {
@@ -171,6 +176,47 @@ export class ProductosComponent implements OnInit {
     this.vectorOpcionesEntregaLocal.splice(pocicion, 1)
   }
 
+public c1=[];
+  public c2=[];
+  public c3=[];
+ public  async getCategorias() {
+    try {
+      let response = await this._categoriaServicio.getCategorias().toPromise();
 
+      this.categorias=response.data;
 
+      this.categorias.forEach(elemnt=>{
+        if(elemnt.TIPO=='C1'){
+        this.c1.push(elemnt)
+        }else if(elemnt.TIPO=='C2'){
+          this.c2.push(elemnt)
+        }else if(elemnt.TIPO=='C3')
+        {
+          this.c3.push(elemnt)
+        }
+      })
+
+      console.log("c1", this.c1)
+      console.log("c2", this.c2)
+      console.log("c3", this.c3)
+
+    } catch (e) {
+      console.log("error:" + JSON.stringify((e).error.message));
+    }
+
+  }
+  categoriaEncontrada=new Set();
+  busquedaCate(busqueda){
+   this.c3.forEach(c33=>{
+     if(c33.CAT_ID_CATEGORIA==busqueda)
+       this.categoriaEncontrada.add(c33);
+  });
+     console.log(this.categoriaEncontrada)
+  }
+  cc(event)
+  {
+    event.srcElement.style.backgroundColor='red'
+    console.log(event)
+
+  }
 }

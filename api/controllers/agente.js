@@ -9,18 +9,21 @@ const correo = require('./correo');
 
 async function registrarAgente(req, res) {
     try {
-        let agenteEncontrado = await AGENTE.findOne({where: {CORREO: req.body.Correo}});
+        console.log("asd",req.body.Correo)
+       let agenteEncontrado = await AGENTE.findOne({where: {CORREO: req.body.Correo}});
+
         if (agenteEncontrado) {
             res.status(404).send({
                 message: 'Este correo electronico ya esta vinculado a una cuenta'
             });
         } else {
+
             let agente = AGENTE.build();
             agente.ID_AGENTE = req.body.Id_Agente;
             agente.NOMBRE = req.body.Nombre;
             agente.TELEFONO = req.body.Telefono;
             agente.CORREO = req.body.Correo;
-            agente.COD_POSTAL = req.body.Num_Cod_Postal;
+            agente.NUM_COD_POSTAL = req.body.Num_Cod_Postal;
             agente.TIPO = req.body.Tipo;
             agente.ESTADO = req.body.Estado;
             agente.CALLE_PRINCIPAL_AGENTE = req.body.Calle_Principal_Agente;
