@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
-var Producto_Imagenes_Producto = require("./producto_imagenes_producto");
+var Producto_Imagenes_Producto = require("./producto_imagen_producto");
 
 
 const Imagen_Producto = db.sequelize.define('Imagen_Producto', {

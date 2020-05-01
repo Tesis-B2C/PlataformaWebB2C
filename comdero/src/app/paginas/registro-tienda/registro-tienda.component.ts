@@ -1,6 +1,7 @@
 import {Component, DoCheck, ElementRef, OnDestroy, OnInit, OnChanges,AfterViewChecked, Renderer2, ViewChild} from '@angular/core';
-import {Tienda} from "../../modelos/tienda";
+
 import {Sucursal} from "../../modelos/sucursal";
+import {Tienda} from "../../modelos/tienda";
 import {DpaServicio} from "../../servicios/dpa.servicio";
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import Swal from 'sweetalert2'

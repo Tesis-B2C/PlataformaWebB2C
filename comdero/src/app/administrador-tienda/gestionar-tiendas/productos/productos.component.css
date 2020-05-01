@@ -129,6 +129,12 @@ label
   font-weight: normal;
 }
 
+input{
+  font-size: small;
+}
+.unidades{
+  font-size: small;
+}
 
 .alert{
   font-size: smaller;
@@ -166,3 +172,43 @@ label
 
 }
 
+#selectUnidades{
+  font-size: small;
+}
+
+
+.chip {
+  border-radius: 25px;
+  background-color: #f1f1f1;
+  font-size: 12px;
+  font-weight: normal;
+  margin-top: 5px;
+  padding-bottom: 1px;
+  padding-top: 1px;
+
+}
+.categoria{
+  color: red;font-size: 15px;
+
+}
+
+.container-categoria{
+
+  height: 80vh;
+  overflow: auto;
+  background-color: #f9fafb;
+
+}
+
+.container-categoria::-webkit-scrollbar {
+  width:5px;
+}
+.container-categoria::-webkit-scrollbar-track {
+  background-color: rgba(35, 35, 35, 0.1);
+
+}
+.container-categoria::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 101, 0, 0.8);
+  border-radius: 50%;
+
+}

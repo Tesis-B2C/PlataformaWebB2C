@@ -6,12 +6,11 @@ const  Agente = db.sequelize.define('AGENTE', {
 
         ID_AGENTE: {
             type: Sequelize.STRING,
-            primaryKey: true,
-            allowNull: false,
+            allowNull: true,
             //autoIncrement: true
 
         },
-        COD_POSTAL:
+        NUM_COD_POSTAL:
             {
                 type: Sequelize.STRING,
                 allowNull: true
@@ -27,7 +26,7 @@ const  Agente = db.sequelize.define('AGENTE', {
         TELEFONO:
             {
                 type:Sequelize.STRING,
-                allowNull:false
+                allowNull:true
             },
         CALLE_PRINCIPAL_AGENTE:
             {
@@ -68,7 +67,7 @@ const  Agente = db.sequelize.define('AGENTE', {
         COD_DPA:
             {
                 type:Sequelize.STRING,
-                allowNull:true
+                allowNull:false
             },
 
     },
@@ -77,7 +76,7 @@ const  Agente = db.sequelize.define('AGENTE', {
         id:false
     })
 
-Agente.hasMany(Tienda, {foreignKey: 'ID_AGENTE', sourceKey: 'ID_AGENTE'});
-Tienda.belongsTo(Agente, {foreignKey: 'ID_AGENTE', sourceKey: 'ID_AGENTE'});
+Agente.hasMany(Tienda, {foreignKey: 'CORREO', sourceKey: 'CORREO'});
+Tienda.belongsTo(Agente, {foreignKey: 'CORREO', sourceKey: 'CORREO'});
 
 module.exports = Agente;

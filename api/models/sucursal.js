@@ -53,6 +53,16 @@ const Sucursal = db.sequelize.define('Sucursal', {
                 type: Sequelize.STRING,
                 allowNull: false
             },
+        LATITUD:
+            {
+                type: Sequelize.STRING,
+                allowNull: false
+            },
+        LONGITUD:
+            {
+                type: Sequelize.STRING,
+                allowNull: false
+            },
     },
     {
         timestamps: false,

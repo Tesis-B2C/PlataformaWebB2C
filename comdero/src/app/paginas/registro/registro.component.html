@@ -12,24 +12,26 @@
 <body [ngClass]="{'body-con-animacion': loading}">
 
 
-<div *ngIf="banderToast && !FormRegistro.checkValidity()" class="bounceInRight  animated alert alert-danger
+<div *ngIf="banderaToast && !FormRegistro.checkValidity()" class="bounceInRight  animated alert alert-danger
 shadow-lg p-2  mt-4 mr-lg-2 bg-white rounded toastValidacion">
-<div class="form-row">
- <div class="col-2">
-  <img class="mx-auto p-0  m-0 mensaje-mascota " src="../../../assets/images/mascota-condero-pensativo.png" width="70%">
- </div>
-  <div class="col-10">
-  * <strong>!Opps</strong> Asegurate de llenar todos los campos obligatorios marcados con <strong>*</strong>
+  <div class="form-row">
+    <div class="col-2">
+      <img class="mx-auto p-0  m-0 mensaje-mascota " src="../../../assets/images/mascota-condero-pensativo.png"
+           width="70%">
+    </div>
+    <div class="col-10">
+      * <strong>!Opps</strong> Asegurate de llenar todos los campos obligatorios marcados con <strong>*</strong>
+    </div>
   </div>
 </div>
-</div>
 
-<div *ngIf="banderToastCedula" class="bounceInRight animated alert alert-danger
+<div *ngIf="banderaToastCedula" class="bounceInRight animated alert alert-danger
 shadow-lg p-2 mb-5 mt-4 bg-white rounded toastValidacion ">
 
   <div class="form-row">
     <div class="col-2">
-      <img class="mx-auto p-0  m-0 mensaje-mascota " src="../../../assets/images/mascota-condero-pensativo.png" width="70%">
+      <img class="mx-auto p-0  m-0 mensaje-mascota " src="../../../assets/images/mascota-condero-pensativo.png"
+           width="70%">
     </div>
     <div class="col-10">
       * <strong>!Opps</strong> Al parecer no introduciste una cédula válida
@@ -44,8 +46,8 @@ shadow-lg p-2 mb-5 mt-4 bg-white rounded toastValidacion ">
     <div id="divImagenLogo">
       <img id="imagenLogo" src="./../assets/images/logoValid2.png">
     </div>
-    <header class="login100-form-title-registro" ><h5 class="card-title">Regístrate
-      </h5>
+    <header class="login100-form-title-registro"><h5 class="card-title">Regístrate
+    </h5>
 
     </header>
 
@@ -63,14 +65,12 @@ shadow-lg p-2 mb-5 mt-4 bg-white rounded toastValidacion ">
         </label>
 
       </div> <!-- form-group end.// -->
-      <p class="alert3 justify-content-center pb-2"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-         Los campos marcados con <strong>*</strong> son obligatorios.</p>
 
 
-      <div *ngIf="bandetTipo" class="form-row">
+      <div *ngIf="banderaTipo" class="form-row">
 
         <div class="col form-group">
-          <label class="tamanioCampos">* Nombres y Apellidos</label>
+          <label>* Nombres y Apellidos</label>
           <input #NombreA="ngModel" style="text-transform: uppercase;" [(ngModel)]="this.Agente.Nombre" [ngClass]="{'is-invalid': NombreA.invalid && (NombreA.dirty || NombreA.touched),
                  'is-valid': NombreA.valid && (NombreA.dirty || (NombreA.touched || NombreA.untouched))}"
                  [pattern]='this.soloLetrasPattern'
@@ -88,8 +88,8 @@ shadow-lg p-2 mb-5 mt-4 bg-white rounded toastValidacion ">
         </div> <!-- form-group end.// -->
       </div> <!-- form-row end.// -->
 
-      <div *ngIf="!bandetTipo" class="form-group">
-        <label class="tamanioCampos">* Razon Social</label>
+      <div *ngIf="!banderaTipo" class="form-group">
+        <label>* Razon Social</label>
         <input #Razon_Social="ngModel" style="text-transform: uppercase;" [(ngModel)]="this.Agente.Nombre" [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched),
                  'is-valid': Razon_Social.valid && (Razon_Social.dirty || Razon_Social.touched)}"
                [pattern]='this.LetrasNumerosPattern'
@@ -107,92 +107,58 @@ shadow-lg p-2 mb-5 mt-4 bg-white rounded toastValidacion ">
 
       </div> <!-- form-group end.// -->
 
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label>* Provincia</label>
+          <select #Provincia="ngModel" (change)="getDpaCiudades($event.target.value)"
+                  [(ngModel)]="this.Agente.Provincia"
+                  [ngClass]="{
+          'errorSelect': Provincia.invalid && (Provincia.dirty || Provincia.touched),
+          'satisfactorioSelect': Provincia.valid && (Provincia.dirty || Provincia.touched)}"
+                  class=" tamanioInputs form-control" name="provincia"
+                  required>
+            <option selected="true" disabled="true">Selecciona una..</option>
+            <option *ngFor="let provincia of this.provincias"
+                    value="{{provincia.COD_DPA}}"> {{provincia.NOMBRE }}</option>
+          </select>
+          <div *ngIf="Provincia.invalid && (Provincia.touched||Provincia.dirty)">
+            <div *ngIf="Provincia.errors.required">
+              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                Campo equerido</p>
+            </div>
+
+          </div>
+        </div> <!--form-group end.-->
+
+        <div class="form-group col-md-6">
+          <label>* Ciudad</label>
+          <select #Ciudad="ngModel" [(ngModel)]="this.Agente.Ciudad " [ngClass]="{
+          'errorSelect': Ciudad.invalid && (Ciudad.dirty || Ciudad.touched),
+          'satisfactorioSelect': Ciudad.valid && (Ciudad.dirty || Ciudad.touched)}"
+                  class="tamanioInputs form-control" name="ciudad" placeholder=""
+                  required>
+            <option selected="true" disabled="true">Selecciona una..</option>
+            <option *ngFor="let ciudad of this.ciudades" value="{{ciudad.COD_DPA}}"> {{ciudad.NOMBRE }}</option>
+          </select>
+          <div *ngIf="Ciudad.invalid && (Ciudad.touched||Ciudad.dirty)">
+            <div *ngIf="Ciudad.errors.required">
+              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                Campo requerido.</p>
+            </div>
+          </div>
+        </div> <!--form-group end.-->
+
+      </div>  <!--form-row.-->
+
 
       <div class="form-row">
-        <div *ngIf="bandetTipo" class="col-lg-6 form-group">
-          <label class="tamanioCampos">* Cédula</label>
-          <input #Cedula="ngModel" [(ngModel)]="this.Agente.Id_Agente" [ngClass]="{'is-invalid': Cedula.invalid && (Cedula.dirty || Cedula.touched),
-                 'is-valid': Cedula.valid && (Cedula.dirty || Cedula.touched)}" [pattern]='this.soloNumerosPattern'
-                 class="tamanioInputs form-control" maxlength="10"
-                 minlength="10" name="cedula" placeholder="" required
-                 type="text">
-          <div *ngIf="Cedula.invalid && (Cedula.dirty || Cedula.touched)">
-            <div *ngIf="Cedula.errors.required">
-              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo
-                requerido.</p>
-            </div>
-            <div *ngIf="Cedula.errors.minlength">
-              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                Minimo 10 digitos.</p>
-            </div>
-            <div *ngIf="Cedula.errors.maxlength">
-              <p class="alert alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
-                Maximo 10 digitos.</p>
-            </div>
-            <div *ngIf="Cedula.errors.pattern">
-              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                Utilice solo numeros. </p>
 
-            </div>
-          </div>
-        </div><!--form-group end.;-->
-        <div *ngIf="!bandetTipo" class="col-lg-6 col form-group">
-          <label class="tamanioCampos">* RUC</label>
-          <input #Ruc="ngModel" [(ngModel)]="this.Agente.Id_Agente" [ngClass]="{'is-invalid': Ruc.invalid && (Ruc.dirty || Ruc.touched),
-                 'is-valid': Ruc.valid && (Ruc.dirty || Ruc.touched)}" [pattern]='this.soloNumerosPattern'
-                 class="tamanioInputs form-control" maxlength="13"
-                 minlength="13" name="ruc" placeholder="" required type="text">
-          <div *ngIf="Ruc.invalid && (Ruc.dirty || Ruc.touched)">
-            <div *ngIf="Ruc.errors.required">
-              <p class="alert alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
-                Campo requerido.</p>
-            </div>
-            <div *ngIf="Ruc.errors.minlength">
-              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                Minimo 13 digitos.</p>
 
-            </div>
-            <div *ngIf="Ruc.errors.maxlength">
-              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                Maximo 13 digitos.</p>
-            </div>
-            <div *ngIf="Ruc.errors.pattern">
-              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                Use solo numeros.</p>
-            </div>
-          </div>
-        </div> <!-- form-group end.-->
-        <div class="col-lg-6 form-group">
-          <label class="tamanioCampos">* Teléfono Celular</label>
-          <input #Telefono="ngModel" [(ngModel)]="this.Agente.Telefono" [ngClass]="{'is-invalid': Telefono.invalid && (Telefono.dirty || Telefono.touched),
-                 'is-valid': Telefono.valid && (Telefono.dirty || Telefono.touched)}"
-                 [pattern]='this.soloNumerosPattern' class="tamanioInputs form-control" maxlength="10" minlength="10"
-                 name="telefono" placeholder="" required
-                 style="font-size: small" type="text">
-          <div *ngIf="Telefono.invalid && (Telefono.dirty|| Telefono.touched) ">
-            <div *ngIf="Telefono.errors.required">
-              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                Campo requerido.</p>
-            </div>
-            <div *ngIf="Telefono.errors.minlength">
-              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                Minimo 10 digitos.</p>
-            </div>
-            <div *ngIf="Telefono.errors.maxlength">
-              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                Maximo 10 digitos.</p>
-            </div>
-            <div *ngIf="Telefono.errors.pattern">
-              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                Utilice solo numeros.</p>
-            </div>
-          </div>
-        </div> <!-- form-group end.//-->
       </div> <!-- form-row end.// -->
 
 
       <div class="form-group">
-        <label class="tamanioCampos">* Email</label>
+        <label>* Email</label>
         <input #Email="ngModel" [(ngModel)]="this.Agente.Correo" [ngClass]="{
           'is-invalid': Email.invalid && (Email.dirty || Email.touched),
           'is-valid': Email.valid && (Email.touched || Email.dirty )}" [pattern]='this.emailPattern'
@@ -215,60 +181,95 @@ shadow-lg p-2 mb-5 mt-4 bg-white rounded toastValidacion ">
       <div class=" form-group">
 
 
-
         <div class="custom-control custom-checkbox">
           <input type="checkbox" class="custom-control-input" id="customCheck" name="example1"
                  (change)="activarDireccion()">
-          <label class="custom-control-label" for="customCheck" style="font-size: small">¿Desea agregar su direccion
-            domiciliaria ahora para futuras entregas?</label>
+          <label class="custom-control-label" for="customCheck" style="font-size: small">Agregar sus datos de
+            facturacion para futuras compras</label>
         </div>
       </div> <!-- form-group end.// -->
-      <div class="form-group" *ngIf="this.banderDirecciones">
-
-
+      <div class="form-group" *ngIf="this.banderaDirecciones">
+        <p class="alert3 justify-content-center pb-2"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+          Los campos marcados con <strong>*</strong> son obligatorios.</p>
         <div class="form-row">
-          <div class="form-group col-md-6">
-            <label class="tamanioCampos">* Provincia</label>
-            <select #Provincia="ngModel" (change)="getDpaCiudades($event.target.value)"
-                    [(ngModel)]="this.Agente.Provincia"
-                    [ngClass]="{
-          'errorSelect': Provincia.invalid && (Provincia.dirty || Provincia.touched),
-          'satisfactorioSelect': Provincia.valid && (Provincia.dirty || Provincia.touched)}"
-                    class=" tamanioInputs form-control" name="provincia"
-                    required>
-              <option selected="true" disabled="true">Selecciona una..</option>
-              <option *ngFor="let provincia of this.provincias"
-                      value="{{provincia.COD_DPA}}"> {{provincia.NOMBRE }}</option>
-            </select>
-            <div *ngIf="Provincia.invalid && (Provincia.touched||Provincia.dirty)">
-              <div *ngIf="Provincia.errors.required">
-                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Campo equerido</p>
+          <div *ngIf="banderaTipo" class="form-group col-lg-6">
+            <label>* Cédula</label>
+            <input #Cedula="ngModel" [(ngModel)]="this.Agente.Id_Agente" [ngClass]="{'is-invalid': Cedula.invalid && (Cedula.dirty || Cedula.touched),
+                 'is-valid': Cedula.valid && (Cedula.dirty || Cedula.touched)}" [pattern]='this.soloNumerosPattern'
+                   class="tamanioInputs form-control" maxlength="10"
+                   minlength="10" name="cedula" placeholder="" required
+                   type="text">
+            <div *ngIf="Cedula.invalid && (Cedula.dirty || Cedula.touched)">
+              <div *ngIf="Cedula.errors.required">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo
+                  requerido.</p>
               </div>
+              <div *ngIf="Cedula.errors.minlength">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                  Minimo 10 digitos.</p>
+              </div>
+              <div *ngIf="Cedula.errors.maxlength">
+                <p class="alert alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
+                  Maximo 10 digitos.</p>
+              </div>
+              <div *ngIf="Cedula.errors.pattern">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                  Utilice solo numeros. </p>
 
+              </div>
             </div>
-          </div> <!--form-group end.-->
+          </div><!--form-group end.;-->
 
-          <div class="form-group col-md-6">
-            <label class="tamanioCampos">* Ciudad</label>
-            <select #Ciudad="ngModel" [(ngModel)]="this.Agente.Ciudad " [ngClass]="{
-          'errorSelect': Ciudad.invalid && (Ciudad.dirty || Ciudad.touched),
-          'satisfactorioSelect': Ciudad.valid && (Ciudad.dirty || Ciudad.touched)}"
-                    class="tamanioInputs form-control" name="ciudad" placeholder=""
-                    required>
-              <option selected="true" disabled="true">Selecciona una..</option>
-              <option *ngFor="let ciudad of this.ciudades" value="{{ciudad.COD_DPA}}"> {{ciudad.NOMBRE }}</option>
-            </select>
-            <div *ngIf="Ciudad.invalid && (Ciudad.touched||Ciudad.dirty)">
-              <div *ngIf="Ciudad.errors.required">
+          <div *ngIf="!banderaTipo" class="form-group col-lg-6">
+            <label>* RUC</label>
+            <input #Ruc="ngModel" [(ngModel)]="this.Agente.Id_Agente" [ngClass]="{'is-invalid': Ruc.invalid && (Ruc.dirty || Ruc.touched),
+                 'is-valid': Ruc.valid && (Ruc.dirty || Ruc.touched)}" [pattern]='this.soloNumerosPattern'
+                   class="tamanioInputs form-control" maxlength="13"
+                   minlength="13" name="ruc" placeholder="" required type="text">
+            <div *ngIf="Ruc.invalid && (Ruc.dirty || Ruc.touched)">
+              <div *ngIf="Ruc.errors.required">
+                <p class="alert alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
+                  Campo requerido.</p>
+              </div>
+              <div *ngIf="Ruc.errors.minlength">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                  Minimo 13 digitos.</p>
+
+              </div>
+              <div *ngIf="Ruc.errors.maxlength">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                  Maximo 13 digitos.</p>
+              </div>
+              <div *ngIf="Ruc.errors.pattern">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                  Use solo numeros.</p>
+              </div>
+            </div>
+          </div> <!-- form-group end.-->
+
+          <div class="col-lg-6 form-group col-lg-6">
+            <label>* Celular / Convencional</label>
+            <input #Telefono="ngModel" [(ngModel)]="this.Agente.Telefono" [ngClass]="{'is-invalid': Telefono.invalid && (Telefono.dirty || Telefono.touched),
+                 'is-valid': Telefono.valid && (Telefono.dirty || Telefono.touched)}"
+                   [pattern]='this.soloNumerosPattern' class="tamanioInputs form-control" name="telefono" required
+                   type="tel">
+            <div *ngIf="Telefono.invalid && (Telefono.dirty|| Telefono.touched) ">
+              <div *ngIf="Telefono.errors.required">
                 <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                   Campo requerido.</p>
               </div>
-            </div>
-          </div> <!--form-group end.-->
 
-        </div>  <!--form-row.-->
-        <label class="tamanioCampos">* Calle Principal</label>
+              <div *ngIf="Telefono.errors.pattern">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                  Utilice solo numeros.</p>
+              </div>
+            </div>
+          </div> <!-- form-group end.//-->
+
+        </div>
+
+
+        <label>* Calle Principal</label>
         <input (keyup)="buscadorDirecciones()" #CallePrincipal="ngModel"
                [(ngModel)]="this.Agente.Calle_Principal_Agente"
                [ngClass]="{
@@ -284,8 +285,8 @@ shadow-lg p-2 mb-5 mt-4 bg-white rounded toastValidacion ">
         </div>
       </div><!-- form-group end.// -->
 
-      <div class="form-group" *ngIf="this.banderDirecciones">
-        <label class="tamanioCampos">* Calle Secundaria</label>
+      <div class="form-group" *ngIf="this.banderaDirecciones">
+        <label>* Calle Secundaria</label>
         <input #CalleSecundaria="ngModel" [(ngModel)]="this.Agente.Calle_Secundaria_Agente"
                [ngClass]="{
           'errorSelect': CalleSecundaria.invalid && (CalleSecundaria.dirty || CalleSecundaria.touched),
@@ -301,40 +302,26 @@ shadow-lg p-2 mb-5 mt-4 bg-white rounded toastValidacion ">
         </div>
       </div>
 
-      <div class="form-row" *ngIf="this.banderDirecciones">
+      <div class="form-row" *ngIf="this.banderaDirecciones">
         <div class="col-lg-6 form-group">
-          <label class="tamanioCampos">Número de referencia</label>
+          <label>Número de referencia</label>
           <input #NumCasaAgente="ngModel" [(ngModel)]="this.Agente.Num_Casa_Agente" class="tamanioInputs form-control"
                  name="numCasaAgente" placeholder="" type="text">
           <div>
           </div>
         </div>
         <div class=" col-lg-6 form-group">
-          <label class="tamanioCampos">Codigo Postal</label>
-          <input #CodigoPostal="ngModel" [(ngModel)]="this.Agente.Num_Cod_Postal"
-                 [ngClass]="{
-          'is-invalid': CodigoPostal.invalid && (CodigoPostal.dirty || CodigoPostal.touched),
-          'is-valid': CodigoPostal.valid && (CodigoPostal.dirty || CodigoPostal.touched)}"
-                 class="tamanioInputs form-control" maxlength="12"
-                 name="codigoPostal" placeholder="" required type="text">
-          <div *ngIf="CodigoPostal.invalid && (CodigoPostal.touched||CodigoPostal.dirty)">
-            <div *ngIf="CodigoPostal.errors.required">
-              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                Campo Requerido</p>
-            </div>
-            <div *ngIf="CodigoPostal.errors.maxlength">
-              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                No mas de 12 caracteres.</p>
-            </div>
+          <label>Codigo Postal</label>
+          <input #CodigoPostal="ngModel" [(ngModel)]="this.Agente.Num_Cod_Postal" class="tamanioInputs form-control"
+                 name="codigoPostal" type="text">
 
-          </div>
         </div> <!--form-group end.-->
       </div>
 
       <hr class="lineaSeparacion2">
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label class="tamanioCampos">* Contraseña</label>
+          <label>* Contraseña</label>
           <input #Password="ngModel" [(ngModel)]="this.Agente.Contrasenia" [ngClass]="{
           'is-invalid': Password.invalid && (Password.dirty || Password.touched),
           'is-valid': Password.valid && (Password.dirty || Password.touched)}"
@@ -352,7 +339,7 @@ shadow-lg p-2 mb-5 mt-4 bg-white rounded toastValidacion ">
           </div>
         </div>  <!--form-group end.-->
         <div class="form-group col-md-6">
-          <label class="tamanioCampos">* Repetir contraseña</label>
+          <label>* Repetir contraseña</label>
           <input #PasswordR="ngModel" [(ngModel)]="this.ComprarContrasenia" [ngClass]="{
           'is-invalid': PasswordR.invalid && (PasswordR.dirty || PasswordR.touched),
           'is-valid': PasswordR.valid && (PasswordR.dirty || PasswordR.touched)}"
