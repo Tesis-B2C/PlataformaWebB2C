@@ -183,21 +183,50 @@ input{
 
 .chip {
   border-radius: 25px;
-  background-color: #f1f1f1;
+  color: #102350;
+  font-weight: bold;
   font-size: 12px;
   font-weight: normal;
   margin-top: 5px;
   padding-bottom: 2px;
   padding-top: 2px;
-
+  background-color:rgba(35,35,35,0.05);
 }
+.chip:hover{
+
+  background-color: #2a4c75;
+  color: white;
+}
+
+.chip2 {
+  border-radius: 25px;
+  color: #102350;
+  font-size: 11px;
+  font-weight: normal;
+  margin-top: 5px;
+  padding-bottom: 2px;
+  padding-top: 2px;
+  border-color: #1da1f2;
+}
+.chip2:hover{
+  background-color: #2a4c75;
+  color: white;
+}
+
+
 .categoria{
-  color: #1a56e9;
-  font-size: 1rem;
+  color: #2a4c75;
+  font-size: small;
   font-weight: normal;
 
 }
 
+.categoria:focus{
+
+  font-size: 16px;
+  font-weight: bold;
+
+}
 .container-categoria{
 
   height: fit-content;
@@ -226,6 +255,6 @@ app-ngx-editor{
 }
 
 .iconos-categoria{
-  font-size: 1rem;
+  font-size: 1.2rem;
   align-content: center;
 }

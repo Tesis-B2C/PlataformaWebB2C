@@ -561,15 +561,16 @@
             <div class="form-row mb-3 collapse   justify-content-center" id="myModal{{i}}">
               <div *ngFor="let c22 of this.categoriaEncontrada2">
                 <button (click)="busquedaCate(c22.ID_CATEGORIA)" *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA"
-                        class="chip  col  btn btn-light"
-                        style="color: blue">{{c22.NOMBRE}}</button>
+                        class="chip  col btn"
+                       >{{c22.NOMBRE}}</button>
                 <div class="form-row  justify-content-center">
                   <div *ngFor="let c33 of this.categoriaEncontrada">
 
                     <button *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA && c22.ID_CATEGORIA==c33.CAT_ID_CATEGORIA"
-                            class="chip col btn btn-light">{{c33.NOMBRE}}</button>
+                            class="chip2 col btn btn-light">{{c33.NOMBRE}}</button>
 
                   </div>
+
                 </div>
               </div>
             </div>
