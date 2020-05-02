@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CategoriaServicio} from "../../../servicios/categoria.servicio";
+
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
@@ -9,7 +10,7 @@ export class ProductosComponent implements OnInit {
 
   public htmlcomponent;
   public url2 = "./../assets/images/imagenes-fondo.png";
-  public images=[[]];
+  public images = [[]];
   public banderaAgregarImagen: boolean = false;
   public banderaMaximoImagenes: boolean = true;
   public banderaMensajeMaximoImagenes: boolean = false;
@@ -23,12 +24,12 @@ export class ProductosComponent implements OnInit {
   public banderaVariaciones: boolean = true;
 
   //
-  public categorias:any;
+  public categorias: any;
 
   public editorConfig = {
     "editable": true,
     "spellcheck": true,
-    "height": "150px",
+    "height": "100px",
     "minHeight": "100px",
     "width": "auto",
     "minWidth": "0",
@@ -52,8 +53,13 @@ export class ProductosComponent implements OnInit {
   public vectorOpcionesEntregaFueraLocalidad: Array<number> = [1];
   visible = true;
 
+  public vectorIconos = ['fa fa-charging-station', 'fa fa-tshirt',
+    'fa fa-ring', 'fa fa-baby-carriage', 'fa fa-home',
+    'fa fa-gem', 'fa fa-palette', 'fa fa-laptop',
+    'fa fa-car', 'fa fa-dumbbell', 'fa fa-book',
+    'fa fa-dog', 'fa fa-gamepad','fa fa-grin-stars','fa fa-heartbeat','fa fa-building','fa fa-tractor'];
 
-  constructor(private _categoriaServicio:CategoriaServicio) {
+  constructor(private _categoriaServicio: CategoriaServicio) {
   }
 
 
@@ -61,7 +67,7 @@ export class ProductosComponent implements OnInit {
     this.getCategorias();
   }
 
-  public onFileChange(event,indice) {
+  public onFileChange(event, indice) {
     debugger
     if (event.target.files && event.target.files[0]) {
       var filesAmount = event.target.files.length;
@@ -176,22 +182,22 @@ export class ProductosComponent implements OnInit {
     this.vectorOpcionesEntregaLocal.splice(pocicion, 1)
   }
 
-public c1=[];
-  public c2=[];
-  public c3=[];
- public  async getCategorias() {
+  public c1 = [];
+  public c2 = [];
+  public c3 = [];
+
+  public async getCategorias() {
     try {
       let response = await this._categoriaServicio.getCategorias().toPromise();
 
-      this.categorias=response.data;
+      this.categorias = response.data;
 
-      this.categorias.forEach(elemnt=>{
-        if(elemnt.TIPO=='C1'){
-        this.c1.push(elemnt)
-        }else if(elemnt.TIPO=='C2'){
+      this.categorias.forEach(elemnt => {
+        if (elemnt.TIPO == 'C1') {
+          this.c1.push(elemnt)
+        } else if (elemnt.TIPO == 'C2') {
           this.c2.push(elemnt)
-        }else if(elemnt.TIPO=='C3')
-        {
+        } else if (elemnt.TIPO == 'C3') {
           this.c3.push(elemnt)
         }
       })
@@ -205,17 +211,30 @@ public c1=[];
     }
 
   }
-  categoriaEncontrada=new Set();
-  busquedaCate(busqueda){
-   this.c3.forEach(c33=>{
-     if(c33.CAT_ID_CATEGORIA==busqueda)
-       this.categoriaEncontrada.add(c33);
-  });
-     console.log(this.categoriaEncontrada)
+
+  categoriaEncontrada = new Set();
+
+  busquedaCate(busqueda) {
+    this.c3.forEach(c33 => {
+      if (c33.CAT_ID_CATEGORIA == busqueda)
+        this.categoriaEncontrada.add(c33);
+    });
+    console.log(this.categoriaEncontrada)
   }
-  cc(event)
-  {
-    event.srcElement.style.backgroundColor='red'
+
+  categoriaEncontrada2 = new Set();
+
+  busquedaCate2(busqueda) {
+
+    this.c2.forEach(c22 => {
+      if (c22.CAT_ID_CATEGORIA == busqueda)
+        this.categoriaEncontrada2.add(c22);
+    });
+
+  }
+
+  cc(event) {
+    event.srcElement.style.backgroundColor = 'red'
     console.log(event)
 
   }
