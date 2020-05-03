@@ -309,10 +309,9 @@
               <input aria-label="Text input with dropdown button" class="form-control" type="text">
 
               <select class="browser-default form-control col-5 " id="selectUnidades">
-                <option selected>Unidades</option>
-                <option value="1">Lb</option>
-                <option value="2">Kg</option>
-                <option value="3">Onz</option>
+
+                <option *ngFor="let unidad of this.unidades" selected>{{unidad.COD_UNIDAD_MEDIDA}}</option>
+
               </select>
 
             </div>

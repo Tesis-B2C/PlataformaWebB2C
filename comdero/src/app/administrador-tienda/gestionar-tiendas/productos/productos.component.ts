@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CategoriaServicio} from "../../../servicios/categoria.servicio";
-
+import {UnidadMedidaServicio} from "../../../servicios/unidad_medida.servicio";
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
@@ -59,12 +59,13 @@ export class ProductosComponent implements OnInit {
     'fa fa-car', 'fa fa-dumbbell', 'fa fa-book',
     'fa fa-dog', 'fa fa-gamepad','fa fa-grin-stars','fa fa-heartbeat','fa fa-building','fa fa-tractor'];
 
-  constructor(private _categoriaServicio: CategoriaServicio) {
+  constructor(private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio:UnidadMedidaServicio ) {
   }
 
 
   ngOnInit() {
     this.getCategorias();
+    this.getUnidadesMedida();
   }
 
   public onFileChange(event, indice) {
@@ -236,6 +237,21 @@ export class ProductosComponent implements OnInit {
   cc(event) {
     event.srcElement.style.backgroundColor = 'red'
     console.log(event)
+
+  }
+
+  public unidades:any;
+
+  async getUnidadesMedida(){
+
+      try {
+        let response = await this._unidadesMedidaServicio.getUnidadesMedida().toPromise();
+        this.unidades = response.data;
+        console.log("unidades", this.unidades)
+      } catch (e) {
+        console.log("error:" + JSON.stringify((e).error.message));
+      }
+
 
   }
 }
