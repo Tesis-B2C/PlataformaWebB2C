@@ -1,14 +1,4 @@
-import {
-  Component,
-  DoCheck,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  OnChanges,
-  AfterViewChecked,
-  Renderer2,
-  ViewChild
-} from '@angular/core';
+import {Component, DoCheck, ElementRef, OnDestroy, OnInit, OnChanges,AfterViewChecked, Renderer2, ViewChild} from '@angular/core';
 
 import {Sucursal} from "../../modelos/sucursal";
 import {Tienda} from "../../modelos/tienda";
@@ -29,12 +19,11 @@ const places = require("../../../../node_modules/places.js/dist/cdn/places.js");
   styleUrls: ['./registro-tienda.component.css']
 })
 
-export class RegistroTiendaComponent implements OnInit {
+export class RegistroTiendaComponent implements OnInit, AfterViewChecked {
+
   public Tienda;
   public Sucursal;
   public htmlcomponent;
-  public provincias;
-  public ciudades;
 
   public editorConfig = {
     "editable": true,
@@ -57,7 +46,12 @@ export class RegistroTiendaComponent implements OnInit {
   }
 
   private LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
+  private soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
   private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
+  private urlPattern: any = "(https?://)?([\\\\da-z.-]+)\\\\.([a-z.]{2,6})[/\\\\w .-]*/?";
+
+  public provincias;
+  public ciudades;
 
   //Mapa
   mapa: Array<Mapboxgl.Map> = new Array<Mapboxgl.Map>();
@@ -75,28 +69,40 @@ export class RegistroTiendaComponent implements OnInit {
 
   async ngOnInit() {
     await this.getDpaProvincias("P");
+
+  }
+
+  ngAfterViewChecked(){
+
+
+
+
   }
 
   public cont = 0;
-  public banderaPrueba: boolean = true;
+ public banderaPrueba:boolean=true;
   public mapas() {
-    this.banderaPrueba = false;
-    Mapboxgl.accessToken = environment.mapboxkey;
-    this.mapa[this.cont] = new Mapboxgl.Map({
-      container: 'mapa-mapbox' + this.cont.toString(), // Id del container
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [-77.0364, 38.8951], // Coordenadas que aparece centrado
-      zoom: 9 // zoom,
-    });
-    this.mapa[this.cont].addControl(new Mapboxgl.NavigationControl());
-    this.mapa[this.cont].addControl(new Mapboxgl.GeolocateControl({
-      positionOptions: {
-        enableHighAccuracy: true
-      },
-      trackUserLocation: true
-    }));
-    this.cont++;
-  }
+    this.banderaPrueba=false;
+
+      Mapboxgl.accessToken = environment.mapboxkey;
+      this.mapa[this.cont] = new Mapboxgl.Map({
+        container: 'mapa-mapbox'+ this.cont.toString(), // Id del container
+        style: 'mapbox://styles/mapbox/streets-v11',
+
+        center: [-77.0364, 38.8951], // Coordenadas que aparece centrado
+        zoom: 9 // zoom,
+
+      });
+
+      this.mapa[this.cont].addControl(new Mapboxgl.NavigationControl());
+      this.mapa[this.cont].addControl(new Mapboxgl.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true
+        },
+        trackUserLocation: true
+      }));
+      this.cont++;
+      }
 
   async getDpaProvincias(buscar) {
     try {
@@ -117,11 +123,16 @@ export class RegistroTiendaComponent implements OnInit {
   }
 
   public async agregarOpciones() {
+
     this.vectorOpciones.push(1);
+
     this.mapas();
+
+
   }
 
   public borrarOpciones(pocicion: number) {
+    debugger
     this.vectorOpciones.splice(pocicion, 1)
   }
 }

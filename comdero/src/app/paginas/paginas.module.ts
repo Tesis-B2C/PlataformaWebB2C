@@ -12,7 +12,13 @@ import { ArchwizardModule } from 'angular-archwizard';
 import { NgxEditorModule } from 'ngx-editor';
 
 @NgModule({
-  declarations: [LoguinComponent, RegistroComponent, RegistroTiendaComponent, OlvidoContraseniaComponent, OlvidoContraseniaPaso2Component],
+  declarations: [
+    LoguinComponent,
+    RegistroComponent,
+    RegistroTiendaComponent,
+    OlvidoContraseniaComponent,
+    OlvidoContraseniaPaso2Component
+  ],
     imports: [
       ArchwizardModule,
       NgxEditorModule,

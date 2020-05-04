@@ -17,11 +17,7 @@ import { ArchwizardModule } from 'angular-archwizard';
 
 @NgModule({
   declarations: [
-    AppComponent,
-
-
-
-
+    AppComponent
   ],
   imports: [
     ArchwizardModule,
