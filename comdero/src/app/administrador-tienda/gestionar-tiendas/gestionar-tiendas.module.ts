@@ -10,6 +10,7 @@ import { NgxEditorModule } from 'ngx-editor';
 
 import {FormsModule} from "@angular/forms";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { ColorPickerModule } from 'ngx-color-picker';
 @NgModule({
   declarations: [ MenuGestionTiendasComponent, ProductosComponent],
   imports: [
@@ -18,7 +19,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     NgxEditorModule,
     NgbModule,
     FormsModule,
-    GestionarTiendasRoutingModule
+    GestionarTiendasRoutingModule,
+    ColorPickerModule
   ]
 })
 export class GestionarTiendasModule { }

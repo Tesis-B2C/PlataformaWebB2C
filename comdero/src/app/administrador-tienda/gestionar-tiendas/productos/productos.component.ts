@@ -1,6 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewContainerRef} from '@angular/core';
 import {CategoriaServicio} from "../../../servicios/categoria.servicio";
 import {UnidadMedidaServicio} from "../../../servicios/unidad_medida.servicio";
+import {Cmyk, ColorPickerService} from "ngx-color-picker";
+
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
@@ -10,7 +12,7 @@ export class ProductosComponent implements OnInit {
 
   public htmlcomponent;
   public url2 = "./../assets/images/imagenes-fondo.png";
-  public images = [[]];
+  public imagenes = [[]];
   public banderaAgregarImagen: boolean = false;
   public banderaMaximoImagenes: boolean = true;
   public banderaMensajeMaximoImagenes: boolean = false;
@@ -21,7 +23,7 @@ export class ProductosComponent implements OnInit {
   // banderas de envios a domicilio
   public banderaEntregaDomicilioLocalidad: boolean = false;
   public banderaEntregaDomicilioFueraLocalidad: boolean = false;
-  public banderaVariaciones: boolean = true;
+  public banderaVariaciones: boolean = false;
 
   //
   public categorias: any;
@@ -51,15 +53,17 @@ export class ProductosComponent implements OnInit {
   * */
   public vectorOpcionesEntregaLocal: Array<number> = [1];
   public vectorOpcionesEntregaFueraLocalidad: Array<number> = [1];
-  visible = true;
-
+  public visible = true;
+  public color1: string = '#2889e9';
   public vectorIconos = ['fa fa-charging-station', 'fa fa-tshirt',
     'fa fa-ring', 'fa fa-baby-carriage', 'fa fa-home',
     'fa fa-gem', 'fa fa-palette', 'fa fa-laptop',
     'fa fa-car', 'fa fa-dumbbell', 'fa fa-book',
-    'fa fa-dog', 'fa fa-gamepad','fa fa-grin-stars','fa fa-heartbeat','fa fa-building','fa fa-tractor'];
+    'fa fa-dog', 'fa fa-gamepad', 'fa fa-grin-stars', 'fa fa-heartbeat', 'fa fa-building', 'fa fa-tractor'];
 
-  constructor(private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio:UnidadMedidaServicio ) {
+  constructor(private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio,
+              public vcRef: ViewContainerRef,
+              private cpService: ColorPickerService) {
   }
 
 
@@ -68,7 +72,7 @@ export class ProductosComponent implements OnInit {
     this.getUnidadesMedida();
   }
 
-  public onFileChange(event, indice) {
+  public subirImagenes(event, indice) {
     debugger
     if (event.target.files && event.target.files[0]) {
       var filesAmount = event.target.files.length;
@@ -79,17 +83,17 @@ export class ProductosComponent implements OnInit {
           var reader = new FileReader();
           reader.onload = (event: any) => {
             console.log(event.target.result);
-            this.images.push([]);
-            this.images[indice].push(event.target.result);
+            this.imagenes.push([]);
+            this.imagenes[indice].push(event.target.result);
             debugger
             this.banderaAgregarImagen = true;
             document.forms["form"].reset();
-            if (this.images[indice].length > 6) {
-              this.images[indice] = [];
+            if (this.imagenes[indice].length > 6) {
+              this.imagenes[indice] = [];
               document.forms["form"].reset();
               this.banderaAgregarImagen = false;
               this.banderaMensajeMaximoImagenes = true;
-            } else if (this.images.length == 6) {
+            } else if (this.imagenes[indice].length == 6) {
               this.banderaMensajeMaximoImagenes = false
               this.banderaMaximoImagenes = false;
             }
@@ -101,7 +105,7 @@ export class ProductosComponent implements OnInit {
   }
 
 
-  public onVideoChange($event) {
+  public subirVideo($event) {
     this.banderaAnimacionVideo = true;
     debugger
     let fileList: FileList = $event.target.files;
@@ -127,22 +131,30 @@ export class ProductosComponent implements OnInit {
     }
   }
 
-  public quitar(images: any) {
-    this.images.splice(images, 1);
+  public quitarImagenes(indice: any, imagen) {
+    debugger
+    this.imagenes[indice].splice(imagen, 1);
     document.forms["form"].reset();
   }
 
+  public opcionRetiroPersona(retiroPersona) {
+    console.log("Envio persona", retiroPersona);
+  }
 
-  public opcionEntregaLocalidad() {
+  public opcionEntregaLocalidad(entregaLocalidad) {
 
     this.banderaEntregaDomicilioLocalidad = !this.banderaEntregaDomicilioLocalidad;
 
 
   }
 
-  public opcionEntregaFueraLocalidad() {
+  public opcionEntregaFueraLocalidad(entregaFueraLocalidad) {
     this.banderaEntregaDomicilioFueraLocalidad = !this.banderaEntregaDomicilioFueraLocalidad;
     this.vectorOpcionesEntregaFueraLocalidad = [1];
+  }
+
+  public opcionGarantia(garantia) {
+    console.log("Garantia", garantia)
   }
 
   public opcionVariaciones() {
@@ -152,12 +164,12 @@ export class ProductosComponent implements OnInit {
   }
 
 
-  public agregarOpciones() {
+  public agregarOpcionesProducto() {
     this.vectorOpciones.push(1);
 
   }
 
-  public borrarOpciones(pocicion: number) {
+  public borrarOpcionesProducto(pocicion: number) {
 
     this.vectorOpciones.splice(pocicion, 1)
   }
@@ -240,18 +252,28 @@ export class ProductosComponent implements OnInit {
 
   }
 
-  public unidades:any;
+  public unidades: any;
 
-  async getUnidadesMedida(){
+  async getUnidadesMedida() {
 
-      try {
-        let response = await this._unidadesMedidaServicio.getUnidadesMedida().toPromise();
-        this.unidades = response.data;
-        console.log("unidades", this.unidades)
-      } catch (e) {
-        console.log("error:" + JSON.stringify((e).error.message));
-      }
+    try {
+      let response = await this._unidadesMedidaServicio.getUnidadesMedida().toPromise();
+      this.unidades = response.data;
+      console.log("unidades", this.unidades)
+    } catch (e) {
+      console.log("error:" + JSON.stringify((e).error.message));
+    }
+
+  }
+  public onChangeColor(color: string): Cmyk {
+    const hsva = this.cpService.stringToHsva(color);
+
+    const rgba = this.cpService.hsvaToRgba(hsva);
 
 
+    console.log(color);
+    console.log(rgba);
+
+    return this.cpService.rgbaToCmyk(rgba);
   }
 }

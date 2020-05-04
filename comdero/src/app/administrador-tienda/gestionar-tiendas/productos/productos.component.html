@@ -11,29 +11,31 @@
         <h6>Información</h6>
         <hr>
         <div class="container">
-          <div class="form-row">
-            <div class="col-md-6">
+          <div class="form-row ">
+            <div class="col-12">
               <label>Nombre</label>
-              <input class=" form-control py-3 " type="text">
+              <input class=" form-control py-3 " type="text" name="nombre">
             </div>
-            <div class="col-md-6">
-              <label>Codigo </label>
-              <input class="form-control py-3 " type="text">
+          </div>
+          <div class="form-row mt-2">
+            <div class="col-lg-6">
+              <label>Codigo</label>
+              <input class=" form-control py-3 " type="text" name="codigo">
+            </div>
+            <div class="col-lg-6">
+              <label>Marca </label>
+              <input class="form-control py-3 " type="text" name="marca">
             </div>
           </div>
 
-          <div class="form-group mt-3">
-            <label>Descripción del producto </label>
-            <textarea aria-label="With textarea" class="form-control" name="descripcion_Tienda" placeholder=""
-                      required rows="2" style="font-size: smaller; resize: none;" type="text"></textarea>
+          <div class="form-group mt-2">
+            <label>Descripción del producto </label> <textarea class="form-control" required rows="2" type="text" name="descripcion"></textarea>
           </div>
 
 
           <div class="form-group">
             <label>Detalles del producto </label>
-            <app-ngx-editor [(ngModel)]="this.htmlcomponent" [config]="editorConfig"
-                            [spellcheck]="true"
-                            name="descripcionProducto" placeholder=""></app-ngx-editor>
+            <app-ngx-editor [config]="editorConfig" name="Detalle" ></app-ngx-editor>
 
             <!--<div [innerHTML]=this.htmlcomponent>
             </div>  para cuando quieras mostrar con stilos-->
@@ -43,7 +45,7 @@
 
       <br>
 
-      <form class="card card-body  " name="form"> <!--Multimedia -->
+      <form class="card card-body" name="form"> <!--Multimedia -->
         <h6>Multimedia</h6>
         <hr>
         <div class="form-group ">
@@ -52,14 +54,14 @@
             <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
           <div [ngClass]="{'borde-imagenes':!banderaAgregarImagen,'borde-imagenes1':banderaAgregarImagen }"
                class="row  mt-3 mx-2 ">
-            <div *ngFor='let url of images[0]; let i = index ' class="ml-2">
+            <div *ngFor='let url of imagenes[0]; let i = index ' class="ml-2">
               <div class="col-auto card mt-2 px-0 pb-2">
                 <label style="border: none;  ">
                   <img [src]="url" class="px-0" height="140px" width="140px">
-                  <input (change)="onFileChange($event,0)" accept="image/*" class="file" multiple name="files"
+                  <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple name="files"
                          type="file">
                 </label>
-                <button (click)="quitar(i)" class="boton-cerrar btn-outline-danger px-0 py-0 ">Eliminar</button>
+                <button (click)="quitarImagenes(0,i)" class="boton-cerrar btn-outline-danger px-0 py-0 ">Eliminar</button>
               </div>
             </div>
             <div *ngIf="!banderaAgregarImagen" class="mx-auto ">
@@ -67,7 +69,7 @@
                 <label class="imagen-agregar ">
                   <i class="fa fa-picture-o fa-4x"></i>
                   <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                  <input (change)="onFileChange($event,0)" accept="image/*" class="file" multiple type="file">
+                  <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple type="file">
                 </label>
               </div>
             </div>
@@ -75,12 +77,12 @@
               <p class="link-agregar-imagenes ">Click para Agregar imagenes</p>
             </div>
 
-            <div *ngIf="banderaAgregarImagen && images[0].length<6" class="py-2">
+            <div *ngIf="banderaAgregarImagen && imagenes[0].length<6" class="py-2">
               <div class="col-auto  py-4  card  ml-2 ">
                 <label class="imagen-agregar">
                   <i class="fa fa-picture-o fa-4x ml-4"></i>
                   <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                  <input (change)="onFileChange($event,0)" accept="image/*" class="file" multiple type="file">
+                  <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple type="file">
                   <br>
                   <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imagenes </p>
                   <p class=" link-agregar-imagenes2">maximo 6</p>
@@ -126,7 +128,7 @@
                 <label class="imagen-agregar ">
                   <i class="fa fa-film fa-4x  "></i>
                   <i class="fa fa-plus-circle fa-2x ml-1 "></i>
-                  <input (change)="onVideoChange($event)" accept="video/*" class="file" type="file">
+                  <input (change)="subirVideo($event)" accept="video/*" class="file" type="file">
                 </label>
               </div>
             </div>
@@ -144,20 +146,25 @@
         <hr>
         <div class="container">
           <div class="form-row">
-            <div class="col">
+            <div class="col-lg-6">
               <label> Precio unitario sin iva </label>
 
               <div class="input-group mb-3">
-                <input aria-label="Amount (to the nearest dollar)" class="form-control" placeholder="$0.00" type="text">
+                <input class="form-control" placeholder="0.00" type="number">
                 <div class="input-group-append">
                   <span class="input-group-text unidades">$</span>
                 </div>
               </div>
 
             </div>
-            <div class="col">
+            <div class="col-lg-6">
               <label>Porcentaje de Iva </label>
-              <input class="form-control py-3 " placeholder="12%" type="text">
+              <div class="input-group mb-3">
+                <input class="form-control" placeholder="12" type="number">
+                <div class="input-group-append">
+                  <span class="input-group-text unidades">%</span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -171,73 +178,67 @@
         <h6>Retiros y Envios</h6>
         <hr>
         <div class="container">
-
           <div class="form-group">
-
-
             <label>¿Desea ofrecer retiro en persona?</label>
-
-
             <div class="form-group">
               <label class="custom-control custom-radio custom-control-inline">
-                <input class="custom-control-input" name="entregaPersonal"
-                       type="radio"
-                       value="option1">
+                <input (change)="opcionRetiroPersona(0)" class="custom-control-input" name="entregaPersonal"  type="radio"  value="Si">
                 <span class="custom-control-label"> Si  </span>
               </label>
               <label class="custom-control custom-radio custom-control-inline">
-                <input checked="" class="custom-control-input"
-                       name="entregaPersonal" type="radio"
-                       value="option2">
+                <input (change)="opcionRetiroPersona(1)" checked="true" class="custom-control-input" name="entregaPersonal" type="radio" value="No">
                 <span class="custom-control-label"> No </span>
               </label>
             </div> <!-- form-group end.// -->
           </div>
 
           <div class="form-group">
-
-
             <label>¿Desea ofrecer el servicio de entrega a domicilio dentro de la localidad?</label>
-
-
             <div class="form-group">
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionEntregaLocalidad()" class="custom-control-input" name="entregasLocalidad"
-                       type="radio"
-                       value="option1">
+                <input (change)="opcionEntregaLocalidad(0)" class="custom-control-input" name="entregaLocalidad" type="radio"  value="Si">
                 <span class="custom-control-label"> Si  </span>
               </label>
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionEntregaLocalidad()" checked="" class="custom-control-input"
-                       name="entregasLocalidad" type="radio"
-                       value="option2">
+                <input (change)="opcionEntregaLocalidad(1)" checked="" class="custom-control-input"  name="entregaLocalidad" type="radio"  value="No">
                 <span class="custom-control-label"> No </span>
               </label>
             </div> <!-- form-group end.// -->
           </div>
 
           <div *ngIf="this.banderaEntregaDomicilioLocalidad" class="col-12 mt-3 form-group">
-            <div *ngFor=" let opcion of vectorOpcionesEntregaLocal" class="form-row">
-              <div class="form-group col-md-5">
-                <label>Opcion</label>
-                <select class="form-control " placeholder="Ej. Amarillo"></select>
+            <div *ngFor=" let opcion of vectorOpcionesEntregaLocal; let i=index" class="form-row">
+              <div class="form-group col-lg-5">
+                <label>Opcion {{i+1}}</label>
+                <select class="form-control " ></select>
               </div>
-              <div class="form-group  col-md-3">
+              <div class="form-group  col-lg-3">
                 <label> Precio </label>
-                <input class="form-control " placeholder="Ej. xl/34/etc" type="text">
+                <div class="input-group mb-3">
+                  <input class="form-control" type="number" placeholder="0.00">
+                  <div class="input-group-append">
+                    <span class="input-group-text unidades">$</span>
+                  </div>
+                </div>
               </div>
-              <div class="form-group  col-md-4">
+              <div class="form-group  col-lg-3">
                 <label>Tiempo de entrega </label>
                 <div class="input-group mb-3">
-                  <input aria-label="Amount (to the nearest dollar)" class="form-control" type="text">
+                  <input  class="form-control" type="number" placeholder="2">
                   <div class="input-group-append">
                     <span class="input-group-text unidades">Dia/s</span>
                   </div>
                 </div>
               </div>
+              <div class="form-group  col-lg-1 ">
+                <label style="opacity: 0">boorar</label>
+                <button (click)="borrarOpcionesEntregaLocal(i)" class="form-control btn btn-outline-danger" style="font-size: smaller">
+                  <span class="fa fa-trash "></span>
+                </button>
+              </div>
             </div>
 
-            <p (click)="agregarOpcionesEntregaLocal()" id="agregarProducto">
+            <p (click)="agregarOpcionesEntregaLocal()" class="agregar" id="agregarOpcionesEntregaLocal">
               <span class="fa fa-plus "></span> &nbsp;Agregar opcion
             </p>
           </div>
@@ -249,43 +250,49 @@
 
             <div class="form-group">
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionEntregaFueraLocalidad()" class="custom-control-input"
-                       name="entregasFueraLocalidad"
-                       type="radio"
-                       value="option1">
+                <input (change)="opcionEntregaFueraLocalidad(0)" class="custom-control-input" name="entregaFueraLocalidad" type="radio"  value="Si">
                 <span class="custom-control-label"> Si  </span>
               </label>
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionEntregaFueraLocalidad()" checked class="custom-control-input"
-                       name="entregasFueraLocalidad" type="radio"
-                       value="option2">
+                <input (change)="opcionEntregaFueraLocalidad(1)" checked class="custom-control-input" name="entregaFueraLocalidad" type="radio"  value="No">
                 <span class="custom-control-label"> No </span>
               </label>
             </div> <!-- form-group end.// -->
           </div>
 
           <div *ngIf="banderaEntregaDomicilioFueraLocalidad" class="col-12 mt-3 ">
-            <div *ngFor=" let opcion of vectorOpcionesEntregaFueraLocalidad" class="form-row">
-              <div class="form-group col-md-5">
-                <label>Opcion</label>
-                <select class="form-control " placeholder="Ej. Amarillo"></select>
+            <div *ngFor=" let opcion of vectorOpcionesEntregaFueraLocalidad; let i =index" class="form-row">
+              <div class="form-group col-lg-5">
+                <label>Opcion {{i+1}}</label>
+                <select class="form-control " ></select>
               </div>
-              <div class="form-group  col-md-3">
+              <div class="form-group  col-lg-3">
                 <label> Precio </label>
-                <input class="form-control " placeholder="Ej. xl/34/etc" type="text">
+                <div class="input-group mb-3">
+                  <input class="form-control" type="number" placeholder="0.00">
+                  <div class="input-group-append">
+                    <span class="input-group-text unidades">$</span>
+                  </div>
+                </div>
               </div>
-              <div class="form-group  col-md-4">
+              <div class="form-group  col-lg-3">
                 <label>Tiempo de entrega </label>
                 <div class="input-group mb-3">
-                  <input aria-label="Amount (to the nearest dollar)" class="form-control" type="text">
+                  <input  class="form-control" type="number" placeholder="2">
                   <div class="input-group-append">
                     <span class="input-group-text unidades">Dia/s</span>
                   </div>
                 </div>
               </div>
+              <div class="form-group  col-lg-1 ">
+                <label style="opacity: 0">boorar</label>
+                <button (click)="borrarOpcionesEntregaFueraLocalidad(i)" class="form-control btn btn-outline-danger" style="font-size: smaller">
+                  <span class="fa fa-trash "></span>
+                </button>
+              </div>
             </div>
 
-            <p (click)="agregarOpcionesEntregaFueraLocalidad()" id="agregarProducto">
+            <p (click)="agregarOpcionesEntregaFueraLocalidad()" class="agregar" id="agregarOpcionesEntregaFueraLocalidad">
               <span class="fa fa-plus "></span> &nbsp;Agregar opcion
             </p>
           </div>
@@ -303,14 +310,14 @@
           <div class="form-group">
             <label>Ingresse la cantidad y la unidad de medida en la cual se ofertara el producto</label>
           </div>
-          <div class="form-group col-6">
+          <div class="form-group col-lg-8">
             <div class="input-group">
 
-              <input aria-label="Text input with dropdown button" class="form-control" type="text">
+              <input class="form-control" type="text"placeholder="20">
 
-              <select class="browser-default form-control col-5 " id="selectUnidades">
-
-                <option *ngFor="let unidad of this.unidades" selected>{{unidad.COD_UNIDAD_MEDIDA}}</option>
+              <select class="browser-default form-control col " id="selectUnidad" style="font-size: small">
+                <option selected disabled="true" value="unidad">Unidad</option>
+                <option *ngFor="let unidad of this.unidades" >{{unidad.COD_UNIDAD_MEDIDA}}</option>
 
               </select>
 
@@ -320,8 +327,7 @@
           <div class="form-group ml-2">
             <div class="custom-control custom-checkbox">
               <input class="custom-control-input" id="rastrearCantidad" type="checkbox">
-              <label class="custom-control-label" for="rastrearCantidad" style="font-size: small">Rastrear la
-                cantidad</label>
+              <label class="custom-control-label" for="rastrearCantidad">Rastrear la cantidad</label>
             </div>
           </div>
 
@@ -329,9 +335,7 @@
           <div class="form-group ml-2">
             <div class="custom-control custom-checkbox">
               <input class="custom-control-input" id="venderDespuesAgotado" type="checkbox">
-              <label class="custom-control-label" for="venderDespuesAgotado" style="font-size: small">Continuar
-                vendiendo cuando
-                se haya agotado</label>
+              <label class="custom-control-label" for="venderDespuesAgotado">Continuar vendiendo cuando se haya agotado</label>
             </div>
           </div>
 
@@ -339,45 +343,35 @@
           <div class="form-group ml-2">
             <div class="custom-control custom-checkbox">
               <input class="custom-control-input" id="permitirReservaProducto" type="checkbox">
-              <label class="custom-control-label" for="permitirReservaProducto" style="font-size: small">Permitir la
-                reserva del
-                producto</label>
+              <label class="custom-control-label" for="permitirReservaProducto" >Permitir la reserva del producto</label>
             </div>
           </div>
 
           <br>
         </div>
       </form>
-
       <br>
-
       <form class=" card card-body ">
-        <h6>Ofrecer Garantia</h6>
+        <h6>Garantia</h6>
         <hr>
         <div class="container">
           <label>Seleccione el tipo de garantia ofrecida por este producto</label>
           <br><br>
           <div class="form-group">
             <label class="custom-control custom-radio custom-control-inline">
-              <input class="custom-control-input"
-                     name="garantia" type="radio"
-                     value="option2">
+              <input class="custom-control-input" (click)="opcionGarantia($event.target.value)" checked name="garantia" type="radio" value="Garantia del vendedor">
               <span class="custom-control-label"> Garantia del vendedor </span>
             </label>
           </div>
           <div class="form-group">
             <label class="custom-control custom-radio custom-control-inline">
-              <input class="custom-control-input"
-                     name="garantia" type="radio"
-                     value="option2">
+              <input  (click)="opcionGarantia($event.target.value)" class="custom-control-input"  name="garantia" type="radio" value=" Garantia de fabrica">
               <span class="custom-control-label"> Garantia de fabrica </span>
             </label>
           </div>
           <div class="form-group">
             <label class="custom-control custom-radio custom-control-inline">
-              <input checked class="custom-control-input"
-                     name="garantia" type="radio"
-                     value="option2">
+              <input (click)="opcionGarantia($event.target.value)"  class="custom-control-input" name="garantia" type="radio" value=" Sin garantia">
               <span class="custom-control-label"> Sin garantia </span>
             </label>
           </div>
@@ -395,14 +389,11 @@
 
           <div class="form-group">
             <label class="custom-control custom-radio custom-control-inline">
-              <input (change)="opcionVariaciones()" checked class="custom-control-input" name="variaciones"
-                     type="radio"
-                     value="option1">
+              <input (change)="opcionVariaciones()"  class="custom-control-input" name="variaciones" type="radio" value="Si">
               <span class="custom-control-label"> Si  </span>
             </label>
             <label class="custom-control custom-radio custom-control-inline">
-              <input (change)="opcionVariaciones()" class="custom-control-input" name="variaciones" type="radio"
-                     value="option2">
+              <input (change)="opcionVariaciones()"  checked class="custom-control-input" name="variaciones" type="radio" value="No">
               <span class="custom-control-label"> No </span>
             </label>
           </div>
@@ -418,9 +409,10 @@
             </div>
           </div>
 
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-2 offset-lg-1 justify-content-center">
             <label>Color</label>
-            <input class="form-control " placeholder="Ej. Amarillo" type="text">
+
+            <input class="form-control input-colores"   [style.background]="color1" [(colorPicker)]="color1" (colorPickerChange)="onChangeColor($event)"/>
           </div>
           <div class="form-group  col-md-4">
             <label> Talla </label>
@@ -434,11 +426,13 @@
         </div>
         <div *ngFor="let item of this.vectorOpciones; index as i" class="form-row container">
           <div class="form-group col-md-12 mt-4">
-            <p style="font-weight: bolder">Opcion {{i + 1}}</p>
+            <p style="font-weight: bolder; font-size: medium">Opcion {{i + 1}}</p>
+            <hr>
           </div>
-          <div class="form-group col-md-3">
+
+          <div class="form-group col-md-2 offset-lg-1 justify-content-center">
             <label>Color</label>
-            <input class="form-control" id="favcolor" name="favcolor" type="color" value="#ff0000">
+            <input class="form-control input-colores"   [style.background]="color1" [(colorPicker)]="color1" (colorPickerChange)="onChangeColor($event)"/>
           </div>
           <div class="form-group  col-md-4">
             <label> Talla </label>
@@ -451,25 +445,25 @@
 
           <div class="form-group  col-md-1 ">
             <label style="opacity: 0">boorar</label>
-            <button (click)="borrarOpciones(i)" class="form-control btn btn-outline-danger">
+            <button (click)="borrarOpcionesProducto(i)" class="form-control btn btn-outline-danger" style="font-size: smaller">
               <span class="fa fa-trash "></span>
             </button>
           </div>
 
           <div class="form-group col-12">
             <a class="ml-2 mt-5">
-              <label>Imagenes del producto 4 </label>
+              <label>Imagenes de la opcion {{i+1}} </label>
               <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
             <div [ngClass]="{'borde-imagenes':!banderaAgregarImagen,'borde-imagenes1':banderaAgregarImagen }"
                  class="row  mt-3 mx-2 ">
-              <div *ngFor='let url of images[i+1]; index as j ' class="ml-2">
+              <div *ngFor='let url of imagenes[i+1]; index as j ' class="ml-2">
                 <div class="col-auto card mt-2 px-0 pb-2">
                   <label style="border: none;  ">
                     <img [src]="url" class="px-0" height="140px" width="140px">
-                    <input (change)="onFileChange($event,i+1)" accept="image/*" class="file" multiple name="files"
+                    <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple name="files"
                            type="file">
                   </label>
-                  <button (click)="quitar(j)" class="boton-cerrar btn-outline-danger px-0 py-0 ">Eliminar</button>
+                  <button (click)="quitarImagenes((i+1),j)" class="boton-cerrar btn-outline-danger px-0 py-0 ">Eliminar</button>
                 </div>
               </div>
               <div *ngIf="!banderaAgregarImagen" class="mx-auto ">
@@ -477,7 +471,7 @@
                   <label class="imagen-agregar ">
                     <i class="fa fa-picture-o fa-4x"></i>
                     <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                    <input (change)="onFileChange($event,i+1)" accept="image/*" class="file" multiple type="file">
+                    <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file">
                   </label>
                 </div>
               </div>
@@ -485,12 +479,12 @@
                 <p class="link-agregar-imagenes ">Click para Agregar imagenes</p>
               </div>
 
-              <div *ngIf="banderaAgregarImagen && images.length<6" class="py-2">
+              <div *ngIf="banderaAgregarImagen && imagenes.length<6" class="py-2">
                 <div class="col-auto  py-4  card  ml-2 ">
                   <label class="imagen-agregar">
                     <i class="fa fa-picture-o fa-4x ml-4"></i>
                     <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                    <input (change)="onFileChange($event,i+1)" accept="image/*" class="file" multiple type="file">
+                    <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file">
                     <br>
                     <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imagenes </p>
                     <p class=" link-agregar-imagenes2">maximo 6</p>
@@ -530,7 +524,7 @@
 
         </div>
         <div *ngIf="banderaVariaciones" class="form-group col-md-12">
-          <p (click)="agregarOpciones()" id="agregarProducto">
+          <p (click)="agregarOpcionesProducto()" class="agregar">
             <span class="fa fa-plus "></span> &nbsp;Agregar opcion
           </p>
         </div>
@@ -555,13 +549,14 @@
 
             <button (click)="busquedaCate2(c11.ID_CATEGORIA)" [attr.data-target]="'#myModal'+i"
                     aria-expanded="false" aria-haspopup="true" class="categoria dropdown-toggle dropdown-toggle-split"
-                    data-toggle="collapse"> <span class="{{this.vectorIconos[i]}} iconos-categoria"></span>&nbsp;&nbsp;&nbsp;&nbsp;{{c11.NOMBRE}} </button>
+                    data-toggle="collapse"><span class="{{this.vectorIconos[i]}} iconos-categoria"></span>&nbsp;&nbsp;&nbsp;&nbsp;{{c11.NOMBRE}}
+            </button>
 
             <div class="form-row mb-3 collapse   justify-content-center" id="myModal{{i}}">
               <div *ngFor="let c22 of this.categoriaEncontrada2">
                 <button (click)="busquedaCate(c22.ID_CATEGORIA)" *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA"
                         class="chip  col btn"
-                       >{{c22.NOMBRE}}</button>
+                >{{c22.NOMBRE}}</button>
                 <div class="form-row  justify-content-center">
                   <div *ngFor="let c33 of this.categoriaEncontrada">
 
