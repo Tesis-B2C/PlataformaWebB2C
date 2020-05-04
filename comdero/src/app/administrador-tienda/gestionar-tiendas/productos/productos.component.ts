@@ -14,6 +14,8 @@ export class ProductosComponent implements OnInit {
   public url2 = "./../assets/images/imagenes-fondo.png";
   public imagenes = [[]];
   public banderaAgregarImagen: boolean = false;
+  public vectorBanderaAgregarImagen = [false];
+
   public banderaMaximoImagenes: boolean = true;
   public banderaMensajeMaximoImagenes: boolean = false;
   public banderaMensajeMaximoVideo: boolean = false;
@@ -54,7 +56,7 @@ export class ProductosComponent implements OnInit {
   public vectorOpcionesEntregaLocal: Array<number> = [1];
   public vectorOpcionesEntregaFueraLocalidad: Array<number> = [1];
   public visible = true;
-  public color1: string = '#2889e9';
+  public color=['#2889e9'] ;
   public vectorIconos = ['fa fa-charging-station', 'fa fa-tshirt',
     'fa fa-ring', 'fa fa-baby-carriage', 'fa fa-home',
     'fa fa-gem', 'fa fa-palette', 'fa fa-laptop',
@@ -64,10 +66,14 @@ export class ProductosComponent implements OnInit {
   constructor(private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio,
               public vcRef: ViewContainerRef,
               private cpService: ColorPickerService) {
+
   }
 
 
   ngOnInit() {
+
+console.log("vecvtorboo",this.vectorBanderaAgregarImagen[0]);
+
     this.getCategorias();
     this.getUnidadesMedida();
   }
@@ -86,12 +92,12 @@ export class ProductosComponent implements OnInit {
             this.imagenes.push([]);
             this.imagenes[indice].push(event.target.result);
             debugger
-            this.banderaAgregarImagen = true;
+            this.vectorBanderaAgregarImagen[indice] = true;
             document.forms["form"].reset();
             if (this.imagenes[indice].length > 6) {
               this.imagenes[indice] = [];
               document.forms["form"].reset();
-              this.banderaAgregarImagen = false;
+              this.vectorBanderaAgregarImagen[indice] = false;
               this.banderaMensajeMaximoImagenes = true;
             } else if (this.imagenes[indice].length == 6) {
               this.banderaMensajeMaximoImagenes = false
@@ -101,7 +107,9 @@ export class ProductosComponent implements OnInit {
           reader.readAsDataURL(event.target.files[i]);
         }
       }
+
     }
+
   }
 
 
@@ -166,6 +174,9 @@ export class ProductosComponent implements OnInit {
 
   public agregarOpcionesProducto() {
     this.vectorOpciones.push(1);
+    this.color.push("#2889e9");
+    this.vectorBanderaAgregarImagen.push(false);
+
 
   }
 

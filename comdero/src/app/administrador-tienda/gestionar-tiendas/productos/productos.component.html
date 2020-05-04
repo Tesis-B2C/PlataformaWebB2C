@@ -52,7 +52,7 @@
           <a class="ml-2 mt-5">
             <label>Imagenes del producto </label>
             <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
-          <div [ngClass]="{'borde-imagenes':!banderaAgregarImagen,'borde-imagenes1':banderaAgregarImagen }"
+          <div [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[0]==false,'borde-imagenes1':vectorBanderaAgregarImagen[0]==true }"
                class="row  mt-3 mx-2 ">
             <div *ngFor='let url of imagenes[0]; let i = index ' class="ml-2">
               <div class="col-auto card mt-2 px-0 pb-2">
@@ -64,7 +64,7 @@
                 <button (click)="quitarImagenes(0,i)" class="boton-cerrar btn-outline-danger px-0 py-0 ">Eliminar</button>
               </div>
             </div>
-            <div *ngIf="!banderaAgregarImagen" class="mx-auto ">
+            <div *ngIf="vectorBanderaAgregarImagen[0]==false" class="mx-auto ">
               <div class="col-auto pt-4">
                 <label class="imagen-agregar ">
                   <i class="fa fa-picture-o fa-4x"></i>
@@ -73,11 +73,11 @@
                 </label>
               </div>
             </div>
-            <div *ngIf="!banderaAgregarImagen" class=" col-12 pb-5 mx-auto ">
+            <div *ngIf="vectorBanderaAgregarImagen[0]==false" class=" col-12 pb-5 mx-auto ">
               <p class="link-agregar-imagenes ">Click para Agregar imagenes</p>
             </div>
 
-            <div *ngIf="banderaAgregarImagen && imagenes[0].length<6" class="py-2">
+            <div *ngIf="vectorBanderaAgregarImagen[0]==true && imagenes[0].length<6" class="py-2">
               <div class="col-auto  py-4  card  ml-2 ">
                 <label class="imagen-agregar">
                   <i class="fa fa-picture-o fa-4x ml-4"></i>
@@ -412,7 +412,7 @@
           <div class="form-group col-md-2 offset-lg-1 justify-content-center">
             <label>Color</label>
 
-            <input class="form-control input-colores"   [style.background]="color1" [(colorPicker)]="color1" (colorPickerChange)="onChangeColor($event)"/>
+            <input class="form-control input-colores"   [style.background]=color[0] [(colorPicker)]=color[0] (colorPickerChange)="onChangeColor($event)"/>
           </div>
           <div class="form-group  col-md-4">
             <label> Talla </label>
@@ -425,14 +425,18 @@
 
         </div>
         <div *ngFor="let item of this.vectorOpciones; index as i" class="form-row container">
-          <div class="form-group col-md-12 mt-4">
+          <div class="form-group col-md-11 mt-4 mb-0">
             <p style="font-weight: bolder; font-size: medium">Opcion {{i + 1}}</p>
-            <hr>
           </div>
-
+          <div class="form-group  col-md-1 mt-4 mb-0">
+            <button (click)="borrarOpcionesProducto(i)" class="form-control " style=" border: none; color: red">
+              <span class="fa fa-trash "></span>
+            </button>
+          </div>
+          <hr class="col-12 mt-0">
           <div class="form-group col-md-2 offset-lg-1 justify-content-center">
             <label>Color</label>
-            <input class="form-control input-colores"   [style.background]="color1" [(colorPicker)]="color1" (colorPickerChange)="onChangeColor($event)"/>
+            <input class="form-control input-colores"   [style.background]=color[i+1] [(colorPicker)]=color[i+1] (colorPickerChange)="onChangeColor($event)"/>
           </div>
           <div class="form-group  col-md-4">
             <label> Talla </label>
@@ -443,30 +447,25 @@
             <input class="form-control  " placeholder="Ej. Gamusa/algodon" type="text">
           </div>
 
-          <div class="form-group  col-md-1 ">
-            <label style="opacity: 0">boorar</label>
-            <button (click)="borrarOpcionesProducto(i)" class="form-control btn btn-outline-danger" style="font-size: smaller">
-              <span class="fa fa-trash "></span>
-            </button>
-          </div>
+
 
           <div class="form-group col-12">
-            <a class="ml-2 mt-5">
+            <a class=" mt-5">
               <label>Imagenes de la opcion {{i+1}} </label>
               <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
-            <div [ngClass]="{'borde-imagenes':!banderaAgregarImagen,'borde-imagenes1':banderaAgregarImagen }"
-                 class="row  mt-3 mx-2 ">
+            <div [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[i+1]==false,'borde-imagenes1':vectorBanderaAgregarImagen[i+1]==true }"
+                 class="row  mt-3 ">
               <div *ngFor='let url of imagenes[i+1]; index as j ' class="ml-2">
                 <div class="col-auto card mt-2 px-0 pb-2">
                   <label style="border: none;  ">
                     <img [src]="url" class="px-0" height="140px" width="140px">
-                    <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple name="files"
+                    <input (change)="subirImagenes($event,(i+1))" accept="image/*" class="file" multiple name="files"
                            type="file">
                   </label>
                   <button (click)="quitarImagenes((i+1),j)" class="boton-cerrar btn-outline-danger px-0 py-0 ">Eliminar</button>
                 </div>
               </div>
-              <div *ngIf="!banderaAgregarImagen" class="mx-auto ">
+              <div *ngIf="vectorBanderaAgregarImagen[i+1]==false" class="mx-auto ">
                 <div class="col-auto pt-4">
                   <label class="imagen-agregar ">
                     <i class="fa fa-picture-o fa-4x"></i>
@@ -475,11 +474,11 @@
                   </label>
                 </div>
               </div>
-              <div *ngIf="!banderaAgregarImagen" class=" col-12 pb-5 mx-auto ">
+              <div *ngIf="vectorBanderaAgregarImagen[i+1]==false" class=" col-12 pb-5 mx-auto ">
                 <p class="link-agregar-imagenes ">Click para Agregar imagenes</p>
               </div>
 
-              <div *ngIf="banderaAgregarImagen && imagenes.length<6" class="py-2">
+              <div *ngIf="vectorBanderaAgregarImagen[i+1]==true && imagenes[i+1].length<6" class="py-2">
                 <div class="col-auto  py-4  card  ml-2 ">
                   <label class="imagen-agregar">
                     <i class="fa fa-picture-o fa-4x ml-4"></i>
@@ -495,17 +494,15 @@
             </div>
           </div> <!-- form-group end.// -->
 
-          <div class="form-group col-6">
+          <div class="form-group col-lg-7">
             <label> Stock y unidad de medida del producto</label>
             <div class="input-group">
 
-              <input aria-label="Text input with dropdown button" class="form-control" type="text">
+              <input aria-label="Text input with dropdown button" class="form-control" type="text" placeholder="200">
 
-              <select class="browser-default form-control col-5 " id="selectUnidades">
-                <option selected>Unidades</option>
-                <option value="1">Lb</option>
-                <option value="2">Kg</option>
-                <option value="3">Onz</option>
+              <select class="browser-default form-control col-lg-5 " id="selectUnidades">
+                <option selected disabled>Unidades</option>
+                <option *ngFor="let unidad of this.unidades" >{{unidad.COD_UNIDAD_MEDIDA}}</option>
               </select>
 
             </div>
@@ -514,7 +511,7 @@
           <div class="form-group  col-md-4">
             <label>Precio</label>
             <div class="input-group mb-3">
-              <input aria-label="Amount (to the nearest dollar)" class="form-control" type="text">
+              <input aria-label="Amount (to the nearest dollar)" class="form-control" type="text" placeholder="20">
               <div class="input-group-append">
                 <span class="input-group-text unidades">$</span>
               </div>
