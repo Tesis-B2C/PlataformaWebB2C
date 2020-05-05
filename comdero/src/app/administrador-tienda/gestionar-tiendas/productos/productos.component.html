@@ -14,28 +14,29 @@
           <div class="form-row ">
             <div class="col-12">
               <label>Nombre</label>
-              <input class=" form-control py-3 " type="text" name="nombre">
+              <input class=" form-control py-3 " name="nombre" type="text">
             </div>
           </div>
           <div class="form-row mt-2">
             <div class="col-lg-6">
               <label>Codigo</label>
-              <input class=" form-control py-3 " type="text" name="codigo">
+              <input class=" form-control py-3 " name="codigo" type="text">
             </div>
             <div class="col-lg-6">
               <label>Marca </label>
-              <input class="form-control py-3 " type="text" name="marca">
+              <input class="form-control py-3 " name="marca" type="text">
             </div>
           </div>
 
           <div class="form-group mt-2">
-            <label>Descripción del producto </label> <textarea class="form-control" required rows="2" type="text" name="descripcion"></textarea>
+            <label>Descripción del producto </label> <textarea class="form-control" name="descripcion" required rows="2"
+                                                               type="text"></textarea>
           </div>
 
 
           <div class="form-group">
             <label>Detalles del producto </label>
-            <app-ngx-editor [config]="editorConfig" name="Detalle" ></app-ngx-editor>
+            <app-ngx-editor [config]="editorConfig" name="Detalle"></app-ngx-editor>
 
             <!--<div [innerHTML]=this.htmlcomponent>
             </div>  para cuando quieras mostrar con stilos-->
@@ -52,8 +53,9 @@
           <a class="ml-2 mt-5">
             <label>Imagenes del producto </label>
             <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
-          <div [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[0]==false,'borde-imagenes1':vectorBanderaAgregarImagen[0]==true }"
-               class="row  mt-3 mx-2 ">
+          <div
+            [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[0]==false,'borde-imagenes1':vectorBanderaAgregarImagen[0]==true }"
+            class="row  mt-3 mx-2 ">
             <div *ngFor='let url of imagenes[0]; let i = index ' class="ml-2">
               <div class="col-auto card mt-2 px-0 pb-2">
                 <label style="border: none;  ">
@@ -61,7 +63,8 @@
                   <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple name="files"
                          type="file">
                 </label>
-                <button (click)="quitarImagenes(0,i)" class="boton-cerrar btn-outline-danger px-0 py-0 ">Eliminar</button>
+                <button (click)="quitarImagenes(0,i)" class="boton-cerrar btn-outline-danger px-0 py-0 ">Eliminar
+                </button>
               </div>
             </div>
             <div *ngIf="vectorBanderaAgregarImagen[0]==false" class="mx-auto ">
@@ -182,11 +185,13 @@
             <label>¿Desea ofrecer retiro en persona?</label>
             <div class="form-group">
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionRetiroPersona(0)" class="custom-control-input" name="entregaPersonal"  type="radio"  value="Si">
+                <input (change)="opcionRetiroPersona(0)" class="custom-control-input" name="entregaPersonal"
+                       type="radio" value="Si">
                 <span class="custom-control-label"> Si  </span>
               </label>
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionRetiroPersona(1)" checked="true" class="custom-control-input" name="entregaPersonal" type="radio" value="No">
+                <input (change)="opcionRetiroPersona(1)" checked="true" class="custom-control-input"
+                       name="entregaPersonal" type="radio" value="No">
                 <span class="custom-control-label"> No </span>
               </label>
             </div> <!-- form-group end.// -->
@@ -196,11 +201,13 @@
             <label>¿Desea ofrecer el servicio de entrega a domicilio dentro de la localidad?</label>
             <div class="form-group">
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionEntregaLocalidad(0)" class="custom-control-input" name="entregaLocalidad" type="radio"  value="Si">
+                <input (change)="opcionEntregaLocalidad(0)" class="custom-control-input" name="entregaLocalidad"
+                       type="radio" value="Si">
                 <span class="custom-control-label"> Si  </span>
               </label>
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionEntregaLocalidad(1)" checked="" class="custom-control-input"  name="entregaLocalidad" type="radio"  value="No">
+                <input (change)="opcionEntregaLocalidad(1)" checked="" class="custom-control-input"
+                       name="entregaLocalidad" type="radio" value="No">
                 <span class="custom-control-label"> No </span>
               </label>
             </div> <!-- form-group end.// -->
@@ -209,13 +216,13 @@
           <div *ngIf="this.banderaEntregaDomicilioLocalidad" class="col-12 mt-3 form-group">
             <div *ngFor=" let opcion of vectorOpcionesEntregaLocal; let i=index" class="form-row">
               <div class="form-group col-lg-5">
-                <label>Opcion {{i+1}}</label>
-                <select class="form-control " ></select>
+                <label>Opcion {{i + 1}}</label>
+                <select class="form-control "></select>
               </div>
               <div class="form-group  col-lg-3">
                 <label> Precio </label>
                 <div class="input-group mb-3">
-                  <input class="form-control" type="number" placeholder="0.00">
+                  <input class="form-control" placeholder="0.00" type="number">
                   <div class="input-group-append">
                     <span class="input-group-text unidades">$</span>
                   </div>
@@ -224,7 +231,7 @@
               <div class="form-group  col-lg-3">
                 <label>Tiempo de entrega </label>
                 <div class="input-group mb-3">
-                  <input  class="form-control" type="number" placeholder="2">
+                  <input class="form-control" placeholder="2" type="number">
                   <div class="input-group-append">
                     <span class="input-group-text unidades">Dia/s</span>
                   </div>
@@ -232,7 +239,8 @@
               </div>
               <div class="form-group  col-lg-1 ">
                 <label style="opacity: 0">boorar</label>
-                <button (click)="borrarOpcionesEntregaLocal(i)" class="form-control btn btn-outline-danger" style="font-size: smaller">
+                <button (click)="borrarOpcionesEntregaLocal(i)" class="form-control btn btn-outline-danger"
+                        style="font-size: smaller;border: none">
                   <span class="fa fa-trash "></span>
                 </button>
               </div>
@@ -250,11 +258,13 @@
 
             <div class="form-group">
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionEntregaFueraLocalidad(0)" class="custom-control-input" name="entregaFueraLocalidad" type="radio"  value="Si">
+                <input (change)="opcionEntregaFueraLocalidad(0)" class="custom-control-input"
+                       name="entregaFueraLocalidad" type="radio" value="Si">
                 <span class="custom-control-label"> Si  </span>
               </label>
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionEntregaFueraLocalidad(1)" checked class="custom-control-input" name="entregaFueraLocalidad" type="radio"  value="No">
+                <input (change)="opcionEntregaFueraLocalidad(1)" checked class="custom-control-input"
+                       name="entregaFueraLocalidad" type="radio" value="No">
                 <span class="custom-control-label"> No </span>
               </label>
             </div> <!-- form-group end.// -->
@@ -263,13 +273,13 @@
           <div *ngIf="banderaEntregaDomicilioFueraLocalidad" class="col-12 mt-3 ">
             <div *ngFor=" let opcion of vectorOpcionesEntregaFueraLocalidad; let i =index" class="form-row">
               <div class="form-group col-lg-5">
-                <label>Opcion {{i+1}}</label>
-                <select class="form-control " ></select>
+                <label>Opcion {{i + 1}}</label>
+                <select class="form-control "></select>
               </div>
               <div class="form-group  col-lg-3">
                 <label> Precio </label>
                 <div class="input-group mb-3">
-                  <input class="form-control" type="number" placeholder="0.00">
+                  <input class="form-control" placeholder="0.00" type="number">
                   <div class="input-group-append">
                     <span class="input-group-text unidades">$</span>
                   </div>
@@ -278,7 +288,7 @@
               <div class="form-group  col-lg-3">
                 <label>Tiempo de entrega </label>
                 <div class="input-group mb-3">
-                  <input  class="form-control" type="number" placeholder="2">
+                  <input class="form-control" placeholder="2" type="number">
                   <div class="input-group-append">
                     <span class="input-group-text unidades">Dia/s</span>
                   </div>
@@ -286,13 +296,15 @@
               </div>
               <div class="form-group  col-lg-1 ">
                 <label style="opacity: 0">boorar</label>
-                <button (click)="borrarOpcionesEntregaFueraLocalidad(i)" class="form-control btn btn-outline-danger" style="font-size: smaller">
+                <button (click)="borrarOpcionesEntregaFueraLocalidad(i)" class="form-control btn btn-outline-danger"
+                        style="font-size: smaller;border: none">
                   <span class="fa fa-trash "></span>
                 </button>
               </div>
             </div>
 
-            <p (click)="agregarOpcionesEntregaFueraLocalidad()" class="agregar" id="agregarOpcionesEntregaFueraLocalidad">
+            <p (click)="agregarOpcionesEntregaFueraLocalidad()" class="agregar"
+               id="agregarOpcionesEntregaFueraLocalidad">
               <span class="fa fa-plus "></span> &nbsp;Agregar opcion
             </p>
           </div>
@@ -313,11 +325,11 @@
           <div class="form-group col-lg-8">
             <div class="input-group">
 
-              <input class="form-control" type="text"placeholder="20">
+              <input class="form-control" placeholder="20" type="text">
 
               <select class="browser-default form-control col " id="selectUnidad" style="font-size: small">
-                <option selected disabled="true" value="unidad">Unidad</option>
-                <option *ngFor="let unidad of this.unidades" >{{unidad.COD_UNIDAD_MEDIDA}}</option>
+                <option disabled="true" selected value="unidad">Unidad</option>
+                <option *ngFor="let unidad of this.unidades">{{unidad.COD_UNIDAD_MEDIDA}}</option>
 
               </select>
 
@@ -335,7 +347,8 @@
           <div class="form-group ml-2">
             <div class="custom-control custom-checkbox">
               <input class="custom-control-input" id="venderDespuesAgotado" type="checkbox">
-              <label class="custom-control-label" for="venderDespuesAgotado">Continuar vendiendo cuando se haya agotado</label>
+              <label class="custom-control-label" for="venderDespuesAgotado">Continuar vendiendo cuando se haya
+                agotado</label>
             </div>
           </div>
 
@@ -343,7 +356,7 @@
           <div class="form-group ml-2">
             <div class="custom-control custom-checkbox">
               <input class="custom-control-input" id="permitirReservaProducto" type="checkbox">
-              <label class="custom-control-label" for="permitirReservaProducto" >Permitir la reserva del producto</label>
+              <label class="custom-control-label" for="permitirReservaProducto">Permitir la reserva del producto</label>
             </div>
           </div>
 
@@ -359,19 +372,22 @@
           <br><br>
           <div class="form-group">
             <label class="custom-control custom-radio custom-control-inline">
-              <input class="custom-control-input" (click)="opcionGarantia($event.target.value)" checked name="garantia" type="radio" value="Garantia del vendedor">
+              <input (click)="opcionGarantia($event.target.value)" checked class="custom-control-input" name="garantia"
+                     type="radio" value="Garantia del vendedor">
               <span class="custom-control-label"> Garantia del vendedor </span>
             </label>
           </div>
           <div class="form-group">
             <label class="custom-control custom-radio custom-control-inline">
-              <input  (click)="opcionGarantia($event.target.value)" class="custom-control-input"  name="garantia" type="radio" value=" Garantia de fabrica">
+              <input (click)="opcionGarantia($event.target.value)" class="custom-control-input" name="garantia"
+                     type="radio" value=" Garantia de fabrica">
               <span class="custom-control-label"> Garantia de fabrica </span>
             </label>
           </div>
           <div class="form-group">
             <label class="custom-control custom-radio custom-control-inline">
-              <input (click)="opcionGarantia($event.target.value)"  class="custom-control-input" name="garantia" type="radio" value=" Sin garantia">
+              <input (click)="opcionGarantia($event.target.value)" class="custom-control-input" name="garantia"
+                     type="radio" value=" Sin garantia">
               <span class="custom-control-label"> Sin garantia </span>
             </label>
           </div>
@@ -389,11 +405,13 @@
 
           <div class="form-group">
             <label class="custom-control custom-radio custom-control-inline">
-              <input (change)="opcionVariaciones()"  class="custom-control-input" name="variaciones" type="radio" value="Si">
+              <input (change)="opcionVariaciones()" class="custom-control-input" name="variaciones" type="radio"
+                     value="Si">
               <span class="custom-control-label"> Si  </span>
             </label>
             <label class="custom-control custom-radio custom-control-inline">
-              <input (change)="opcionVariaciones()"  checked class="custom-control-input" name="variaciones" type="radio" value="No">
+              <input (change)="opcionVariaciones()" checked class="custom-control-input" name="variaciones" type="radio"
+                     value="No">
               <span class="custom-control-label"> No </span>
             </label>
           </div>
@@ -412,7 +430,8 @@
           <div class="form-group col-md-2 offset-lg-1 justify-content-center">
             <label>Color</label>
 
-            <input class="form-control input-colores"   [style.background]=color[0] [(colorPicker)]=color[0] (colorPickerChange)="onChangeColor($event)"/>
+            <input (colorPickerChange)="cambiarColor($event)" [(colorPicker)]=color[0] [style.background]=color[0]
+                   class="form-control input-colores"/>
           </div>
           <div class="form-group  col-md-4">
             <label> Talla </label>
@@ -436,7 +455,8 @@
           <hr class="col-12 mt-0">
           <div class="form-group col-md-2 offset-lg-1 justify-content-center">
             <label>Color</label>
-            <input class="form-control input-colores"   [style.background]=color[i+1] [(colorPicker)]=color[i+1] (colorPickerChange)="onChangeColor($event)"/>
+            <input (colorPickerChange)="cambiarColor($event)" [(colorPicker)]=color[i+1] [style.background]=color[i+1]
+                   class="form-control input-colores"/>
           </div>
           <div class="form-group  col-md-4">
             <label> Talla </label>
@@ -448,13 +468,13 @@
           </div>
 
 
-
           <div class="form-group col-12">
             <a class=" mt-5">
-              <label>Imagenes de la opcion {{i+1}} </label>
+              <label>Imagenes de la opcion {{i + 1}} </label>
               <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
-            <div [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[i+1]==false,'borde-imagenes1':vectorBanderaAgregarImagen[i+1]==true }"
-                 class="row  mt-3 ">
+            <div
+              [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[i+1]==false,'borde-imagenes1':vectorBanderaAgregarImagen[i+1]==true }"
+              class="row  mt-3 ">
               <div *ngFor='let url of imagenes[i+1]; index as j ' class="ml-2">
                 <div class="col-auto card mt-2 px-0 pb-2">
                   <label style="border: none;  ">
@@ -462,7 +482,9 @@
                     <input (change)="subirImagenes($event,(i+1))" accept="image/*" class="file" multiple name="files"
                            type="file">
                   </label>
-                  <button (click)="quitarImagenes((i+1),j)" class="boton-cerrar btn-outline-danger px-0 py-0 ">Eliminar</button>
+                  <button (click)="quitarImagenes((i+1),j)" class="boton-cerrar btn-outline-danger px-0 py-0 ">
+                    Eliminar
+                  </button>
                 </div>
               </div>
               <div *ngIf="vectorBanderaAgregarImagen[i+1]==false" class="mx-auto ">
@@ -498,11 +520,11 @@
             <label> Stock y unidad de medida del producto</label>
             <div class="input-group">
 
-              <input aria-label="Text input with dropdown button" class="form-control" type="text" placeholder="200">
+              <input class="form-control" placeholder="200" type="text">
 
               <select class="browser-default form-control col-lg-5 " id="selectUnidades">
-                <option selected disabled>Unidades</option>
-                <option *ngFor="let unidad of this.unidades" >{{unidad.COD_UNIDAD_MEDIDA}}</option>
+                <option disabled selected>Unidades</option>
+                <option *ngFor="let unidad of this.unidades">{{unidad.COD_UNIDAD_MEDIDA}}</option>
               </select>
 
             </div>
@@ -511,7 +533,7 @@
           <div class="form-group  col-md-4">
             <label>Precio</label>
             <div class="input-group mb-3">
-              <input aria-label="Amount (to the nearest dollar)" class="form-control" type="text" placeholder="20">
+              <input aria-label="Amount (to the nearest dollar)" class="form-control" placeholder="20" type="text">
               <div class="input-group-append">
                 <span class="input-group-text unidades">$</span>
               </div>
@@ -527,6 +549,27 @@
         </div>
       </form>
       <br>
+
+      <form class=" card card-body ">
+        <h6>Categorias seleccionadas</h6>
+        <hr>
+        <div class="form-row">
+          <div class="alert alert-primary" role="alert" *ngIf="categoriasSeleccionadas.size==0">
+            No existen categorias seleccionadas
+          </div>
+          <div *ngFor="let cs of categoriasSeleccionadas">
+
+            <div class="mr-2">
+              <button class="col chip mt-2" style="font-size: smaller">{{cs.NOMBRE}} &nbsp; | <span (click)="eliminarCategoria(cs)"
+                                                                                                    class="fa fa-close"></span>
+              </button>
+            </div>
+
+
+          </div>
+        </div>
+      </form>
+
 
       <button class="btn btn-primary" type="submit">Crear producto</button>
       <br> <br>
@@ -544,21 +587,31 @@
 
           <div class="dropdown justify-content-center">
 
-            <button (click)="busquedaCate2(c11.ID_CATEGORIA)" [attr.data-target]="'#myModal'+i"
+            <button (click)="busquedaCategoria2(c11.ID_CATEGORIA)" [attr.data-target]="'#myModal'+i"
                     aria-expanded="false" aria-haspopup="true" class="categoria dropdown-toggle dropdown-toggle-split"
                     data-toggle="collapse"><span class="{{this.vectorIconos[i]}} iconos-categoria"></span>&nbsp;&nbsp;&nbsp;&nbsp;{{c11.NOMBRE}}
             </button>
 
             <div class="form-row mb-3 collapse   justify-content-center" id="myModal{{i}}">
-              <div *ngFor="let c22 of this.categoriaEncontrada2">
-                <button (click)="busquedaCate(c22.ID_CATEGORIA)" *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA"
-                        class="chip  col btn"
-                >{{c22.NOMBRE}}</button>
-                <div class="form-row  justify-content-center">
-                  <div *ngFor="let c33 of this.categoriaEncontrada">
+              <div *ngFor="let c22 of this.categoriaEncontrada2; let i = index">
+                <div class="checkbox">
+                  <label
+                    *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA" class="chip  col btn" for="checkCategoria{{i}}"
+                    id="labelcheckCategoria2{{i}}">{{c22.NOMBRE}}
+                    <input (change)="busquedaCategoria3(c22.ID_CATEGORIA,$event,c22,i)" id="checkCategoria{{i}}"
+                           style="display: none" type="checkbox">
+                  </label>
 
-                    <button *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA && c22.ID_CATEGORIA==c33.CAT_ID_CATEGORIA"
-                            class="chip2 col btn btn-light">{{c33.NOMBRE}}</button>
+                </div>
+                <div class="form-row  justify-content-center">
+                  <div *ngFor="let c33 of this.categoriaEncontrada; let i =index">
+
+                    <label *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA && c22.ID_CATEGORIA==c33.CAT_ID_CATEGORIA"
+                           class="chip2 col btn btn-light"
+                           for="checkCategoria3{{i}}" id="labelcheckCategoria3{{i}}">{{c33.NOMBRE}}
+                      <input (change)="seleccionarCategoria3($event,c33,i)" id="checkCategoria3{{i}}" style="display: none"
+                             type="checkbox">
+                    </label>
 
                   </div>
 

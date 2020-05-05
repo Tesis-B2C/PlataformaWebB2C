@@ -7,10 +7,10 @@ import { SidebarModule } from 'ng-sidebar';
 import { MenuGestionTiendasComponent } from './menu-gestion-tiendas/menu-gestion-tiendas.component';
 import { ProductosComponent } from './productos/productos.component';
 import { NgxEditorModule } from 'ngx-editor';
-
 import {FormsModule} from "@angular/forms";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ColorPickerModule } from 'ngx-color-picker';
+
 @NgModule({
   declarations: [ MenuGestionTiendasComponent, ProductosComponent],
   imports: [
@@ -20,7 +20,8 @@ import { ColorPickerModule } from 'ngx-color-picker';
     NgbModule,
     FormsModule,
     GestionarTiendasRoutingModule,
-    ColorPickerModule
+    ColorPickerModule,
+
   ]
 })
 export class GestionarTiendasModule { }

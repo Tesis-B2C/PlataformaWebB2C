@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewContainerRef} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CategoriaServicio} from "../../../servicios/categoria.servicio";
 import {UnidadMedidaServicio} from "../../../servicios/unidad_medida.servicio";
 import {Cmyk, ColorPickerService} from "ngx-color-picker";
@@ -10,12 +10,10 @@ import {Cmyk, ColorPickerService} from "ngx-color-picker";
 })
 export class ProductosComponent implements OnInit {
 
-  public htmlcomponent;
-  public url2 = "./../assets/images/imagenes-fondo.png";
-  public imagenes = [[]];
-  public banderaAgregarImagen: boolean = false;
-  public vectorBanderaAgregarImagen = [false];
 
+  public imagenes = [[]];
+  public unidades: any;
+  public vectorBanderaAgregarImagen = [false];
   public banderaMaximoImagenes: boolean = true;
   public banderaMensajeMaximoImagenes: boolean = false;
   public banderaMensajeMaximoVideo: boolean = false;
@@ -29,7 +27,6 @@ export class ProductosComponent implements OnInit {
 
   //
   public categorias: any;
-
   public editorConfig = {
     "editable": true,
     "spellcheck": true,
@@ -56,30 +53,31 @@ export class ProductosComponent implements OnInit {
   public vectorOpcionesEntregaLocal: Array<number> = [1];
   public vectorOpcionesEntregaFueraLocalidad: Array<number> = [1];
   public visible = true;
-  public color=['#2889e9'] ;
+  public color = ['#2889e9'];
+  public categoriasSeleccionadas = new Set();
   public vectorIconos = ['fa fa-charging-station', 'fa fa-tshirt',
     'fa fa-ring', 'fa fa-baby-carriage', 'fa fa-home',
     'fa fa-gem', 'fa fa-palette', 'fa fa-laptop',
     'fa fa-car', 'fa fa-dumbbell', 'fa fa-book',
     'fa fa-dog', 'fa fa-gamepad', 'fa fa-grin-stars', 'fa fa-heartbeat', 'fa fa-building', 'fa fa-tractor'];
 
-  constructor(private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio,
-              public vcRef: ViewContainerRef,
-              private cpService: ColorPickerService) {
+  // vector categorias
+  public c1 = [];
+  public c2 = [];
+  public c3 = [];
 
+  //
+  public categoriaEncontrada = new Set();
+ public  categoriaEncontrada2 = new Set();
+  constructor(private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
   }
 
-
   ngOnInit() {
-
-console.log("vecvtorboo",this.vectorBanderaAgregarImagen[0]);
-
     this.getCategorias();
     this.getUnidadesMedida();
   }
 
   public subirImagenes(event, indice) {
-    debugger
     if (event.target.files && event.target.files[0]) {
       var filesAmount = event.target.files.length;
       if (filesAmount > 6) {
@@ -140,7 +138,6 @@ console.log("vecvtorboo",this.vectorBanderaAgregarImagen[0]);
   }
 
   public quitarImagenes(indice: any, imagen) {
-    debugger
     this.imagenes[indice].splice(imagen, 1);
     document.forms["form"].reset();
   }
@@ -152,13 +149,14 @@ console.log("vecvtorboo",this.vectorBanderaAgregarImagen[0]);
   public opcionEntregaLocalidad(entregaLocalidad) {
 
     this.banderaEntregaDomicilioLocalidad = !this.banderaEntregaDomicilioLocalidad;
-
+    console.log("Entrega localidad", entregaLocalidad);
 
   }
 
   public opcionEntregaFueraLocalidad(entregaFueraLocalidad) {
     this.banderaEntregaDomicilioFueraLocalidad = !this.banderaEntregaDomicilioFueraLocalidad;
     this.vectorOpcionesEntregaFueraLocalidad = [1];
+    console.log("Entrega fuera localidad", entregaFueraLocalidad);
   }
 
   public opcionGarantia(garantia) {
@@ -206,9 +204,6 @@ console.log("vecvtorboo",this.vectorBanderaAgregarImagen[0]);
     this.vectorOpcionesEntregaLocal.splice(pocicion, 1)
   }
 
-  public c1 = [];
-  public c2 = [];
-  public c3 = [];
 
   public async getCategorias() {
     try {
@@ -236,55 +231,92 @@ console.log("vecvtorboo",this.vectorBanderaAgregarImagen[0]);
 
   }
 
-  categoriaEncontrada = new Set();
 
-  busquedaCate(busqueda) {
+  public busquedaCategoria3(busqueda, event, c22, i) {
+
+    let elemento = document.getElementById('labelcheckCategoria2' + i) as HTMLElement;
+    let banderaSeleccionarCategoria = false;
     this.c3.forEach(c33 => {
-      if (c33.CAT_ID_CATEGORIA == busqueda)
+      if (c33.CAT_ID_CATEGORIA == busqueda) {
         this.categoriaEncontrada.add(c33);
+        banderaSeleccionarCategoria = true;
+      }
     });
-    console.log(this.categoriaEncontrada)
+
+    if (event.target.checked) {
+      elemento.classList.add('chip-alternativo');
+    } else {
+      elemento.classList.remove('chip-alternativo');
+      elemento.classList.add('chip', 'col', 'btn', 'btn-light');
+    }
+    if (banderaSeleccionarCategoria == false && event.target.checked) {
+      c22.i = i;
+      this.categoriasSeleccionadas.add(c22);
+    } else {
+      this.categoriasSeleccionadas.delete(c22);
+    }
   }
 
-  categoriaEncontrada2 = new Set();
 
-  busquedaCate2(busqueda) {
+
+  busquedaCategoria2(busqueda) {
 
     this.c2.forEach(c22 => {
-      if (c22.CAT_ID_CATEGORIA == busqueda)
+      if (c22.CAT_ID_CATEGORIA == busqueda) {
         this.categoriaEncontrada2.add(c22);
+      }
     });
 
   }
 
-  cc(event) {
-    event.srcElement.style.backgroundColor = 'red'
-    console.log(event)
+  public seleccionarCategoria3(event, c33, i) {
+    let elemento = document.getElementById('labelcheckCategoria3' + i) as HTMLElement;
+    if (event.target.checked) {
+      elemento.classList.add('chip2-alternativo');
+      c33.i = i;
+      this.categoriasSeleccionadas.add(c33);
+    } else {
+      /* elemento.style.backgroundColor = 'white';*/
+      elemento.classList.remove('chip2-alternativo')
+      elemento.classList.add('chip2', 'col', 'btn', 'btn-light');
+      this.categoriasSeleccionadas.delete(c33);
+
+    }
+
 
   }
 
-  public unidades: any;
-
-  async getUnidadesMedida() {
+  public async getUnidadesMedida() {
 
     try {
       let response = await this._unidadesMedidaServicio.getUnidadesMedida().toPromise();
       this.unidades = response.data;
-      console.log("unidades", this.unidades)
     } catch (e) {
       console.log("error:" + JSON.stringify((e).error.message));
     }
 
   }
-  public onChangeColor(color: string): Cmyk {
+
+  public cambiarColor(color: string): Cmyk {
     const hsva = this.cpService.stringToHsva(color);
-
     const rgba = this.cpService.hsvaToRgba(hsva);
-
-
     console.log(color);
     console.log(rgba);
-
     return this.cpService.rgbaToCmyk(rgba);
+  }
+
+  public eliminarCategoria(cc) {
+
+    if (cc.TIPO == "C3") {
+      let elemento3 = document.getElementById('labelcheckCategoria3' + cc.i) as HTMLElement;
+      elemento3.classList.remove('chip2-alternativo')
+      elemento3.classList.add('chip2', 'col', 'btn', 'btn-light');
+    } else if (cc.TIPO == "C2") {
+      let elemento2 = document.getElementById('labelcheckCategoria2' + cc.i) as HTMLElement;
+      elemento2.classList.remove('chip-alternativo')
+      elemento2.classList.add('chip', 'col', 'btn', 'btn-light');
+    }
+
+    this.categoriasSeleccionadas.delete(cc);
   }
 }

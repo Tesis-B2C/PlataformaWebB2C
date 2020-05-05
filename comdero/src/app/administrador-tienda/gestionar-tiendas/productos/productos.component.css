@@ -1,9 +1,8 @@
 
-textarea{
+textarea {
   font-size: smaller;
   resize: none;
 }
-
 
 .file {
   display: none
@@ -63,11 +62,9 @@ textarea{
 }
 
 .color-imagen label img {
-
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
-
 
 .link-agregar-imagenes {
   text-align: center;
@@ -118,6 +115,7 @@ textarea{
   align-items: center;
 
 }
+
 .video-carga {
   width: 100%;
   height: 380px;
@@ -127,60 +125,41 @@ textarea{
 
 }
 
-label
-{
+label {
   font-size: small;
   font-weight: normal;
 }
 
-input{
-  font-size: small;
-}
-.unidades{
+input {
   font-size: small;
 }
 
-.alert{
+.unidades {
+  font-size: small;
+}
+
+.alert {
   font-size: smaller;
 }
 
-::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-  color: #ccc;
 
-}
-
-:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-  color: #ccc;
-  opacity: 1 /* esto es porque Firefox le reduce la opacidad por defecto */;
-
-}
-::-moz-placeholder { /* Mozilla Firefox 19+ */
-  color: #ccc;
-  opacity:  1;
-
-}
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: #ccc;
-
-}
-
-
-.agregar{
+.agregar {
   color: #1a56e9;
   cursor: pointer;
   border-bottom: #1a56e9 solid 1.5px;
 }
 
-#agregarProducto:hover{
+#agregarProducto:hover {
   opacity: 0.8;
 
 }
-#agregarProducto span{
- font-size: 12px;
+
+#agregarProducto span {
+  font-size: 12px;
 
 }
 
-#selectUnidades{
+#selectUnidades {
   font-size: small;
 }
 
@@ -191,12 +170,25 @@ input{
   font-weight: bold;
   font-size: 12px;
   font-weight: normal;
-  margin-top: 5px;
   padding-bottom: 2px;
   padding-top: 2px;
-  background-color:rgba(35,35,35,0.05);
+  background-color: rgba(35, 35, 35, 0.05);
+
 }
-.chip:hover{
+
+.chip-alternativo {
+  border-radius: 25px;
+  color: white;
+  font-weight: bold;
+  font-size: 12px;
+  font-weight: normal;
+  padding-bottom: 2px;
+  padding-top: 2px;
+  background-color: #2a4c75;
+
+}
+
+.chip:hover {
 
   background-color: #2a4c75;
   color: white;
@@ -207,46 +199,59 @@ input{
   color: #102350;
   font-size: 11px;
   font-weight: normal;
-  margin-top: 5px;
   padding-bottom: 2px;
   padding-top: 2px;
-  border-color: #1da1f2;
+
 }
-.chip2:hover{
+
+.chip2-alternativo {
+  border-radius: 25px;
+  color: white;
+  font-size: 11px;
+  font-weight: normal;
+  padding-bottom: 2px;
+  padding-top: 2px;
+  background-color: #2a4c75;
+
+}
+
+.chip2:hover {
   background-color: #2a4c75;
   color: white;
 }
 
 
-.categoria{
+.categoria {
   color: #2a4c75;
   font-size: small;
   font-weight: normal;
 
 }
 
-.categoria:focus{
+.categoria:focus {
 
   font-size: 16px;
   font-weight: bold;
 
 }
-.container-categoria{
 
+.container-categoria {
   height: fit-content;
-  max-height: 150vh;
+  max-height: 280vh;
   overflow: auto;
- background-color: #f9fafb;
+  background-color: #f9fafb;
 
 }
 
 .container-categoria::-webkit-scrollbar {
-  width:6px;
+  width: 6px;
 }
+
 .container-categoria::-webkit-scrollbar-track {
   background-color: rgba(35, 35, 35, 0.1);
 
 }
+
 .container-categoria::-webkit-scrollbar-thumb {
   background-color: rgba(35, 35, 35, 0.15);
   border-radius: 40px;
@@ -254,23 +259,39 @@ input{
 }
 
 
-app-ngx-editor{
-  font-size:smaller;
+app-ngx-editor {
+  font-size: smaller;
 }
 
-.iconos-categoria{
+.iconos-categoria {
   font-size: 1.2rem;
   align-content: center;
 }
 
-.input-colores{
+.input-colores {
 
-  width:40px;
-  height:40px;
+  width: 40px;
+  height: 40px;
   -webkit-border-radius: 50px;
   -moz-border-radius: 50px;
   border-radius: 50px;
 
+}
 
+::-webkit-input-placeholder {
+  color: #ccc;
+}
 
+:-moz-placeholder {
+  color: #ccc;
+  opacity: 1 ;
+}
+
+::-moz-placeholder {
+  color: #ccc;
+  opacity:  1;
+}
+
+:-ms-input-placeholder {
+  color: #ccc;
 }
