@@ -9,7 +9,7 @@ const correo = require('./correo');
 
 async function registrarAgente(req, res) {
     try {
-        console.log("asd",req.body.Correo)
+
        let agenteEncontrado = await AGENTE.findOne({where: {CORREO: req.body.Correo}});
 
         if (agenteEncontrado) {
