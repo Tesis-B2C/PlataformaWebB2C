@@ -23,11 +23,7 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes>
-      <connection connection-id="61a3c8f0-5134-4f1d-be43-12068ea03bcc">
-        <schema name="basetesis" object-types="view, column, dataset trigger, index, table, procedure, constraint, function" />
-      </connection>
-    </loaded-nodes>
+    <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="61a3c8f0-5134-4f1d-be43-12068ea03bcc">

@@ -5,7 +5,7 @@ const DPA = require('../models/dpa'); //importar el modelo del usuario  o lo que
 
 async function getDpaProvincias(req, res) {
     let busqueda = req.params.id;
-    console.log(busqueda);
+
     try {
         let provinciasObtenidas = await DPA.findAll({where: {TIPO: req.params.id},order:[['NOMBRE','ASC']]});
 

@@ -27,9 +27,11 @@ npm i ngx-bootstrap
 https://sibiraj.dev/ngx-editor/additional-documentation/configuration.html
 
 
---- buenos estilos de scroll
+------------ buenos estilos de scroll
 https://www.zkreations.com/2018/02/personalizar-scrollbar-facil-custom-scrollbars.html#style-2
-- UTILIZAR EL WIZARD DE REGISTRO TIENDA
+
+
+------- UTILIZAR EL WIZARD DE REGISTRO TIENDA
        npm i angular-archwizard@5.0.0
        https://www.npmjs.com/package/angular-archwizard/v/5.0.0
        
@@ -37,3 +39,7 @@ https://www.zkreations.com/2018/02/personalizar-scrollbar-facil-custom-scrollbar
 ---- MAPBOX MAPAS
 https://www.youtube.com/watch?v=gdKWeboPxgY
 npm install mapbox-gl --save
+
+----------- para la paleta de colores
+            npm i ngx-color-picker
+https://www.npmjs.com/package/ngx-color-picker

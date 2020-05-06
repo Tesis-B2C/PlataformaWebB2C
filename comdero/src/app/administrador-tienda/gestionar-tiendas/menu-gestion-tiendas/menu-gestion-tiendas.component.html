@@ -42,11 +42,11 @@
         </a>
         <ul class="sidenav-second-level collapse" id="producto-nuevo">
           <li>
-            <a (click)="apareceIngreseUsuario()" class="ml-4 " style="cursor:pointer "> &nbsp; &nbsp; - Nuevo</a>
+            <a routerLink="productos"  routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="ml-4  nav-item nav-link" > &nbsp; &nbsp; - Nuevo</a>
           </li>
 
           <br>
-          <li><a (click)="apareceIngreseUsuario2()" class="ml-4 " style="cursor:pointer "> &nbsp; &nbsp; - Listado</a>
+          <li><a  class="ml-4 "> &nbsp; &nbsp; - Listado</a>
           </li>
         </ul>
 

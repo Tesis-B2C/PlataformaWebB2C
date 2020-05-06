@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 
-const Unidad_Medida = db.sequelize.define('Unidad_Medida', {
+const Unidad_Medida = db.sequelize.define('UNIDAD_MEDIDA', {
         COD_UNIDAD_MEDIDA: {
             primaryKey: true,
             type: Sequelize.STRING,
