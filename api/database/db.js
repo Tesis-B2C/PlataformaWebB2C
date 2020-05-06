@@ -1,6 +1,9 @@
 const Sequelize = require("sequelize");
 const db = {}
 
+
+
+
 const sequelize = new Sequelize("basetesis", "root", "", {
 
     host: '192.168.175.130',
