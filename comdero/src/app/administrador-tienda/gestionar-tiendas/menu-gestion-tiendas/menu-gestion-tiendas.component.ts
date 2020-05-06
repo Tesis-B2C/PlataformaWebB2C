@@ -14,7 +14,7 @@ export class MenuGestionTiendasComponent {
   private _positionNum: number = 0;
   private _animate: boolean = true;
   private _autoCollapseHeight: number = null;
-  private _autoCollapseWidth: number = 500;
+  private _autoCollapseWidth: number = 600;
   private _MODES: Array<string> = ['over', 'push', 'slide'];
   private _POSITIONS: Array<string> = ['left', 'right', 'top', 'bottom'];
 

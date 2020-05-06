@@ -1,11 +1,11 @@
 <div class="container mt-5">
-  <div class="row justify-content-center">
-    <h4 class=" col-11  ">Agregar Producto</h4>
-    <hr class="col-11  ">
+  <div class="row  justify-content-center">
+    <h4 class=" col-10  ">Agregar Producto</h4>
+    <hr class="col-10  ">
   </div>
 
-  <div class="row ">
-    <div id="panelUno" class="col-md-7">
+  <div class="row justify-content-center">
+    <div class=" " id="panelUno">
 
       <form class="card card-body ">
         <h6>Información</h6>
@@ -329,7 +329,7 @@
 
               <select class="browser-default form-control col " id="selectUnidad" style="font-size: small">
 
-                <option    *ngFor="let unidad of this.unidades">{{unidad.COD_UNIDAD_MEDIDA}}</option>
+                <option *ngFor="let unidad of this.unidades">{{unidad.COD_UNIDAD_MEDIDA}}</option>
 
               </select>
 
@@ -524,7 +524,8 @@
 
               <select class="browser-default form-control col-lg-5 " id="selectUnidades">
 
-                <option [selected]="unidad.COD_UNIDAD_MEDIDA=='unidades'" *ngFor="let unidad of this.unidades">{{unidad.COD_UNIDAD_MEDIDA}}</option>
+                <option *ngFor="let unidad of this.unidades"
+                        [selected]="unidad.COD_UNIDAD_MEDIDA=='unidades'">{{unidad.COD_UNIDAD_MEDIDA}}</option>
               </select>
 
             </div>
@@ -560,8 +561,10 @@
           <div *ngFor="let cs of categoriasSeleccionadas">
 
             <div class="mr-2 btn-group">
-              <button class="col chip mt-2" style="font-size: smaller">{{cs.NOMBRE}} <button class="chip-resumen-categorias" (click)="eliminarCategoria(cs)"> &nbsp; |  x
-              </button></button>
+              <button class="col chip mt-2" style="font-size: smaller">{{cs.NOMBRE}}
+                <button (click)="eliminarCategoria(cs)" class="chip-resumen-categorias"> &nbsp; | x
+                </button>
+              </button>
             </div>
 
 
@@ -571,7 +574,7 @@
       </form>
 
     </div>
-    <div id="panelDos" class="card card-body col-md-4 ml-3 mr-3 mt-sm-4  mt-md-0 container-categoria ">
+    <div class="card card-body col-md-4   mt-sm-4 ml-md-3  mt-md-0 container-categoria " id="panelDos">
       <div class="container">
 
 
@@ -624,9 +627,17 @@
 
         </div>
       </div>
+
+
     </div>
 
-    <div class="col-md-7 ">
+
+  </div>
+
+
+
+  <div class="form-row justify-content-center">
+    <div class=" col-md-7">
 
       <br>
       <div class="card card-body  ">
@@ -634,24 +645,22 @@
           <h6>Acciones</h6>
           <hr>
 
-              <button class="btn btn-primary text-nowrap  col-md-4 mb-sm-4 mb-md-0  " type="button">
-                <span class="spinner-border spinner-border-sm mr-2"></span>
-                Publicar producto...
-              </button>
+          <button class="btn btn-outline-primary text-nowrap  col-md-5  mb-4 " type="button">
+            <span class="spinner-border spinner-border-sm mr-2"></span>
+            Publicar producto
+          </button>
 
 
-              <button class="btn btn-primary text-nowrap offset-md-4 col-md-4 " type="button">
-                <span class="spinner-border spinner-border-sm mr-2"></span>
-                Guardar Producto...
-              </button>
+          <button class="btn btn-outline-primary text-nowrap offset-md-2 col-md-5 mb-4" type="button">
+            <span class="spinner-border spinner-border-sm mr-2"></span>
+            Guardar Producto
+          </button>
 
 
         </div>
       </div>
     </div>
   </div>
-  <br>
 
-
-  <br>
+  <br>  <br>
 </div>

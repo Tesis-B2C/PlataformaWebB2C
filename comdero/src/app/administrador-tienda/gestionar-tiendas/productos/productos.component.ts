@@ -31,8 +31,8 @@ export class ProductosComponent implements OnInit,DoCheck ,OnChanges {
   public editorConfig = {
     "editable": true,
     "spellcheck": true,
-    "height": "100px",
-    "minHeight": "100px",
+    "height": "80px",
+    "minHeight": "80px",
     "width": "auto",
     "minWidth": "0",
     "translate": "yes",
@@ -40,7 +40,7 @@ export class ProductosComponent implements OnInit,DoCheck ,OnChanges {
     "showToolbar": true,
     "imageEndPoint": "",
     "toolbar": [
-      ["bold", "italic", "underline", "strikeThrough", "superscript", "subscript"],
+      ["bold", "italic", "underline", "strikeThrough"],
       ["fontName", "fontSize",],
       ["justifyLeft", "justifyCenter", "justifyRight", "justifyFull", "indent", "outdent"],
       ["cut", "copy", "delete", "removeFormat", "undo", "redo"],
