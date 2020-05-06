@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, DoCheck, OnInit} from '@angular/core';
 import {CategoriaServicio} from "../../../servicios/categoria.servicio";
 import {UnidadMedidaServicio} from "../../../servicios/unidad_medida.servicio";
 import {Cmyk, ColorPickerService} from "ngx-color-picker";
@@ -8,7 +8,7 @@ import {Cmyk, ColorPickerService} from "ngx-color-picker";
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css']
 })
-export class ProductosComponent implements OnInit {
+export class ProductosComponent implements OnInit,DoCheck {
 
 
   public imagenes = [[]];
@@ -72,10 +72,19 @@ export class ProductosComponent implements OnInit {
   constructor(private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
   }
 
+  public  panelUno;
+  public panelDos;
   ngOnInit() {
     this.getCategorias();
     this.getUnidadesMedida();
+    this.panelUno = document.getElementById('panelUno') as HTMLElement;
+    this.panelDos = document.getElementById('panelDos') as HTMLElement;
+
   }
+ngDoCheck(): void {
+    this.panelDos.style.maxHeight=this.panelUno.offsetHeight+'px';
+    console.log("height",this.panelUno.offsetHeight+'px')
+}
 
   public subirImagenes(event, indice) {
     if (event.target.files && event.target.files[0]) {

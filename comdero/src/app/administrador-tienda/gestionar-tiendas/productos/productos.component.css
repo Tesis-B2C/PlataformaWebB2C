@@ -220,7 +220,13 @@ input {
   color: white;
 }
 
+.chip-resumen-categorias{
+  font-size: small;
+}
 
+.chip-resumen-categorias:hover{
+  color: white;
+}
 .categoria {
   color: #2a4c75;
   font-size: small;
@@ -236,8 +242,8 @@ input {
 }
 
 .container-categoria {
-  height: fit-content;
-  max-height: 280vh;
+
+
   overflow: auto;
   background-color: #f9fafb;
 

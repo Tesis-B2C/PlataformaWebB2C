@@ -4,8 +4,8 @@
     <hr class="col-11  ">
   </div>
 
-  <div class="row  justify-content-md-center">
-    <div class="col-md-7">
+  <div class="row ">
+    <div id="panelUno" class="col-md-7">
 
       <form class="card card-body ">
         <h6>Información</h6>
@@ -554,33 +554,30 @@
         <h6>Categorias seleccionadas</h6>
         <hr>
         <div class="form-row">
-          <div class="alert alert-primary" role="alert" *ngIf="categoriasSeleccionadas.size==0">
+          <div *ngIf="categoriasSeleccionadas.size==0" class="alert alert-primary col-12" role="alert">
             No existen categorias seleccionadas
           </div>
           <div *ngFor="let cs of categoriasSeleccionadas">
 
-            <div class="mr-2">
-              <button class="col chip mt-2" style="font-size: smaller">{{cs.NOMBRE}} &nbsp; | <span (click)="eliminarCategoria(cs)"
-                                                                                                    class="fa fa-close"></span>
-              </button>
+            <div class="mr-2 btn-group">
+              <button class="col chip mt-2" style="font-size: smaller">{{cs.NOMBRE}} <button class="chip-resumen-categorias" (click)="eliminarCategoria(cs)"> &nbsp; |  x
+              </button></button>
             </div>
 
 
           </div>
         </div>
+
       </form>
 
-
-      <button class="btn btn-primary" type="submit">Crear producto</button>
-      <br> <br>
     </div>
-    <div class="card card-body col-md-4 ml-3 container-categoria ">
+    <div id="panelDos" class="card card-body col-md-4 ml-3 mr-3 mt-sm-4  mt-md-0 container-categoria ">
       <div class="container">
 
 
         <h6>Categorias</h6>
         <hr class="mb-0">
-        <label class="text-muted">Selecciona las categorias a las cuales pertenece el producto</label>
+        <label class="">Seleccione las categorias a las cuales pertenece el producto</label>
 
         <div *ngFor="let c11 of this.c1; let i = index">
           <hr class="mb-1 mt-1">
@@ -588,7 +585,7 @@
           <div class="dropdown justify-content-center">
 
             <button (click)="busquedaCategoria2(c11.ID_CATEGORIA)" [attr.data-target]="'#myModal'+i"
-                    aria-expanded="false" aria-haspopup="true" class="categoria dropdown-toggle dropdown-toggle-split"
+                    aria-expanded="false" aria-haspopup="true" class="categoria dropdown-toggle  dropdown-toggle-split"
                     data-toggle="collapse"><span class="{{this.vectorIconos[i]}} iconos-categoria"></span>&nbsp;&nbsp;&nbsp;&nbsp;{{c11.NOMBRE}}
             </button>
 
@@ -609,7 +606,8 @@
                     <label *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA && c22.ID_CATEGORIA==c33.CAT_ID_CATEGORIA"
                            class="chip2 col btn btn-light"
                            for="checkCategoria3{{i}}" id="labelcheckCategoria3{{i}}">{{c33.NOMBRE}}
-                      <input (change)="seleccionarCategoria3($event,c33,i)" id="checkCategoria3{{i}}" style="display: none"
+                      <input (change)="seleccionarCategoria3($event,c33,i)" id="checkCategoria3{{i}}"
+                             style="display: none"
                              type="checkbox">
                     </label>
 
@@ -627,5 +625,33 @@
         </div>
       </div>
     </div>
+
+    <div class="col-md-7 ">
+
+      <br>
+      <div class="card card-body  ">
+        <div class=" container ">
+          <h6>Acciones</h6>
+          <hr>
+
+              <button class="btn btn-primary text-nowrap  col-md-4 mb-sm-4 mb-md-0  " type="button">
+                <span class="spinner-border spinner-border-sm mr-2"></span>
+                Publicar producto...
+              </button>
+
+
+              <button class="btn btn-primary text-nowrap offset-md-4 col-md-4 " type="button">
+                <span class="spinner-border spinner-border-sm mr-2"></span>
+                Guardar Producto...
+              </button>
+
+
+        </div>
+      </div>
+    </div>
   </div>
+  <br>
+
+
+  <br>
 </div>
