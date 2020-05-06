@@ -328,8 +328,8 @@
               <input class="form-control" placeholder="20" type="text">
 
               <select class="browser-default form-control col " id="selectUnidad" style="font-size: small">
-                <option disabled="true" selected value="unidad">Unidad</option>
-                <option *ngFor="let unidad of this.unidades">{{unidad.COD_UNIDAD_MEDIDA}}</option>
+
+                <option    *ngFor="let unidad of this.unidades">{{unidad.COD_UNIDAD_MEDIDA}}</option>
 
               </select>
 
@@ -523,8 +523,8 @@
               <input class="form-control" placeholder="200" type="text">
 
               <select class="browser-default form-control col-lg-5 " id="selectUnidades">
-                <option disabled selected>Unidades</option>
-                <option *ngFor="let unidad of this.unidades">{{unidad.COD_UNIDAD_MEDIDA}}</option>
+
+                <option [selected]="unidad.COD_UNIDAD_MEDIDA=='unidades'" *ngFor="let unidad of this.unidades">{{unidad.COD_UNIDAD_MEDIDA}}</option>
               </select>
 
             </div>

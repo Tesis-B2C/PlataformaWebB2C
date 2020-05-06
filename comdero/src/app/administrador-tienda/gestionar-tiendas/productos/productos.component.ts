@@ -1,14 +1,15 @@
-import {Component, DoCheck, OnInit} from '@angular/core';
+import {Component, DoCheck, OnChanges, OnInit} from '@angular/core';
 import {CategoriaServicio} from "../../../servicios/categoria.servicio";
 import {UnidadMedidaServicio} from "../../../servicios/unidad_medida.servicio";
 import {Cmyk, ColorPickerService} from "ngx-color-picker";
+import {log} from "util";
 
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css']
 })
-export class ProductosComponent implements OnInit,DoCheck {
+export class ProductosComponent implements OnInit,DoCheck ,OnChanges {
 
 
   public imagenes = [[]];
@@ -83,9 +84,13 @@ export class ProductosComponent implements OnInit,DoCheck {
   }
 ngDoCheck(): void {
     this.panelDos.style.maxHeight=this.panelUno.offsetHeight+'px';
-    console.log("height",this.panelUno.offsetHeight+'px')
+
 }
 
+  ngOnChanges(): void {
+    this.panelDos.style.maxHeight=this.panelUno.offsetHeight+'px';
+    console.log("height |",this.panelUno.offsetHeight+'px')
+  }
   public subirImagenes(event, indice) {
     if (event.target.files && event.target.files[0]) {
       var filesAmount = event.target.files.length;
@@ -230,9 +235,7 @@ ngDoCheck(): void {
         }
       })
 
-      console.log("c1", this.c1)
-      console.log("c2", this.c2)
-      console.log("c3", this.c3)
+
 
     } catch (e) {
       console.log("error:" + JSON.stringify((e).error.message));
@@ -300,6 +303,7 @@ ngDoCheck(): void {
     try {
       let response = await this._unidadesMedidaServicio.getUnidadesMedida().toPromise();
       this.unidades = response.data;
+
     } catch (e) {
       console.log("error:" + JSON.stringify((e).error.message));
     }
