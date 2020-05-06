@@ -1,4 +1,4 @@
-import {Component, DoCheck, ElementRef, OnDestroy, OnInit, OnChanges,AfterViewChecked, Renderer2, ViewChild} from '@angular/core';
+import {Component, DoCheck, ElementRef, OnDestroy, OnInit, OnChanges, Renderer2} from '@angular/core';
 
 import {Sucursal} from "../../modelos/sucursal";
 import {Tienda} from "../../modelos/tienda";
@@ -19,7 +19,7 @@ const places = require("../../../../node_modules/places.js/dist/cdn/places.js");
   styleUrls: ['./registro-tienda.component.css']
 })
 
-export class RegistroTiendaComponent implements OnInit, AfterViewChecked {
+export class RegistroTiendaComponent implements OnInit {
 
   public Tienda;
   public Sucursal;
@@ -59,6 +59,8 @@ export class RegistroTiendaComponent implements OnInit, AfterViewChecked {
   public vectorOpciones: Array<number> = [1, 1]; // las dos formas swon validas pero la activa es ams facil
   /*public vectorOpciones=new Array(0);*/
 
+  public banderBotones: boolean = true;         /*Botones de Sucursales*/
+
   constructor(private _dpaServicio: DpaServicio, private renderer: Renderer2) {
     this.Tienda = new Tienda(null, null, null, null,
       null, null, null, null, null, null);
@@ -69,40 +71,30 @@ export class RegistroTiendaComponent implements OnInit, AfterViewChecked {
 
   async ngOnInit() {
     await this.getDpaProvincias("P");
-
   }
 
-  ngAfterViewChecked(){
+  public contSucursal = 0;
+  public banderaSucursal: boolean = true;
 
-
-
-
-  }
-
-  public cont = 0;
- public banderaPrueba:boolean=true;
   public mapas() {
-    this.banderaPrueba=false;
+    this.banderaSucursal = false;
+    Mapboxgl.accessToken = environment.mapboxkey;
+    this.mapa[this.contSucursal] = new Mapboxgl.Map({
+      container: 'mapa-mapbox' + this.contSucursal.toString(), // Id del container
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [-78.5248, -0.22521], // Coordenadas que aparece centrado
+      zoom: 12 // zoom
+    });
 
-      Mapboxgl.accessToken = environment.mapboxkey;
-      this.mapa[this.cont] = new Mapboxgl.Map({
-        container: 'mapa-mapbox'+ this.cont.toString(), // Id del container
-        style: 'mapbox://styles/mapbox/streets-v11',
-
-        center: [-77.0364, 38.8951], // Coordenadas que aparece centrado
-        zoom: 9 // zoom,
-
-      });
-
-      this.mapa[this.cont].addControl(new Mapboxgl.NavigationControl());
-      this.mapa[this.cont].addControl(new Mapboxgl.GeolocateControl({
-        positionOptions: {
-          enableHighAccuracy: true
-        },
-        trackUserLocation: true
-      }));
-      this.cont++;
-      }
+    this.mapa[this.contSucursal].addControl(new Mapboxgl.NavigationControl());
+    this.mapa[this.contSucursal].addControl(new Mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true
+      },
+      trackUserLocation: true
+    }));
+    this.contSucursal++;
+  }
 
   async getDpaProvincias(buscar) {
     try {
@@ -123,16 +115,16 @@ export class RegistroTiendaComponent implements OnInit, AfterViewChecked {
   }
 
   public async agregarOpciones() {
-
     this.vectorOpciones.push(1);
-
     this.mapas();
-
-
   }
 
   public borrarOpciones(pocicion: number) {
-    debugger
     this.vectorOpciones.splice(pocicion, 1)
+  }
+
+  public desdeCasa(){
+    this.banderaSucursal = true;
+    this.contSucursal = 0;
   }
 }

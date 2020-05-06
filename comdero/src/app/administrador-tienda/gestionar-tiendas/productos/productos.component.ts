@@ -141,17 +141,14 @@ export class ProductosComponent implements OnInit {
   public opcionVariaciones() {
     this.banderaVariaciones = !this.banderaVariaciones;
     this.vectorOpciones = [];
-
   }
 
 
   public agregarOpciones() {
     this.vectorOpciones.push(1);
-
   }
 
   public borrarOpciones(pocicion: number) {
-
     this.vectorOpciones.splice(pocicion, 1)
   }
 

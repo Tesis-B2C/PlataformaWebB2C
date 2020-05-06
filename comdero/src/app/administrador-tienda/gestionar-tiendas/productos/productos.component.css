@@ -165,11 +165,10 @@ input{
 
 #agregarProducto:hover{
   opacity: 0.8;
-
 }
+
 #agregarProducto span{
  font-size: 12px;
-
 }
 
 #selectUnidades{
