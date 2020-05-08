@@ -19,28 +19,28 @@
     [autoCollapseWidth]="_autoCollapseWidth"
     [mode]="_MODES[_modeNum]"
     [position]="_POSITIONS[_positionNum]">
-    <h5 class="ml-2">Opciones de Administración</h5>
-    <br>
+
+
 
     <ul class="navbar-nav navbar-sidenav ml-2">
       <li class="nav-item" data-placement="right " data-toggle="tooltip">
-        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#nvusuario">
+        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" routerLink="">
           <i class="fa fa-fw fa-home "></i>
           <span class="nav-link-text ml-2">Inicio</span>
         </a>
-        <ul class="sidenav-second-level collapse" id="nvusuario">
-          <li (click)="apareceIngreseUsuario()" class="ml-4 subOpcion" style="cursor:pointer "> &nbsp; &nbsp; Nuevo</li>
+        <ul class="sidenav-second-level collapse" >
+          <li class="ml-4 subOpcion" style="cursor:pointer "> &nbsp; &nbsp; Nuevo</li>
         </ul>
       </li>
     </ul>
 
     <ul class="navbar-nav navbar-sidenav mt-2 ml-2">
       <li class="nav-item" data-placement="right " data-toggle="tooltip">
-        <a a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#producto-nuevo">
+        <a a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#producto">
           <i class="fa fa-fw fa-tags "></i>
           <span class="nav-link-text ml-2">Productos</span>
         </a>
-        <ul class="sidenav-second-level collapse" id="producto-nuevo">
+        <ul class="sidenav-second-level collapse" id="producto">
           <li>
             <a routerLink="productos"  routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="ml-4  nav-item nav-link" > &nbsp; &nbsp; - Nuevo</a>
           </li>
@@ -56,12 +56,12 @@
 
     <ul class="navbar-nav navbar-sidenav mt-2 ml-2">
       <li class="nav-item" data-placement="right " data-toggle="tooltip">
-        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#nvusuario">
+        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#pedidos">
           <i class="fa fa-fw fa-truck "></i>
 
           <span class="nav-link-text ml-2">Pedidos</span>
         </a>
-        <ul class="sidenav-second-level collapse" id="nvusuario">
+        <ul class="sidenav-second-level collapse" id="pedidos">
           <li (click)="apareceIngreseUsuario()" class="ml-4 subOpcion" style="cursor:pointer "> &nbsp; &nbsp; Nuevo</li>
         </ul>
       </li>
@@ -69,11 +69,11 @@
 
     <ul class="navbar-nav navbar-sidenav mt-2 ml-2">
       <li class="nav-item" data-placement="right " data-toggle="tooltip">
-        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#nvusuario">
+        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#clientes">
           <i class="fa fa-fw fa-users "></i>
           <span class="nav-link-text ml-2">Clientes</span>
         </a>
-        <ul class="sidenav-second-level collapse" id="nvusuario">
+        <ul class="sidenav-second-level collapse" id="clientes">
           <li (click)="apareceIngreseUsuario()" class="ml-4 subOpcion" style="cursor:pointer "> &nbsp; &nbsp; Nuevo</li>
         </ul>
       </li>
@@ -81,11 +81,11 @@
 
     <ul class="navbar-nav navbar-sidenav mt-2 ml-2">
       <li class="nav-item" data-placement="right " data-toggle="tooltip">
-        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#nvusuario">
+        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#estadisticas">
           <i class="fa fa-fw fa-bar-chart "></i>
           <span class="nav-link-text ml-2">Estadisticas</span>
         </a>
-        <ul class="sidenav-second-level collapse" id="nvusuario">
+        <ul class="sidenav-second-level collapse" id="estadisticas">
           <li (click)="apareceIngreseUsuario()" class="ml-4 subOpcion" style="cursor:pointer "> &nbsp; &nbsp; Nuevo</li>
         </ul>
       </li>
@@ -93,11 +93,11 @@
 
     <ul class="navbar-nav navbar-sidenav mt-2 ml-2">
       <li class="nav-item" data-placement="right " data-toggle="tooltip">
-        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#nvusuario">
+        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#tienda">
           <i class="fa fa-fw fa-shopping-bag "></i>
           <span class="nav-link-text ml-2">Tienda</span>
         </a>
-        <ul class="sidenav-second-level collapse" id="nvusuario">
+        <ul class="sidenav-second-level collapse" id="tienda">
           <li (click)="apareceIngreseUsuario()" class="ml-4 subOpcion" style="cursor:pointer "> &nbsp; &nbsp; Nuevo</li>
         </ul>
       </li>
@@ -105,11 +105,11 @@
 
     <ul class="navbar-nav navbar-sidenav mt-2 ml-2">
       <li class="nav-item" data-placement="right " data-toggle="tooltip">
-        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#nvusuario">
+        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#puntos-venta">
           <i class="fa fa-fw fa-map  "></i>
           <span class="nav-link-text ml-2">Puntos de venta</span>
         </a>
-        <ul class="sidenav-second-level collapse" id="nvusuario">
+        <ul class="sidenav-second-level collapse" id="puntos-venta">
           <li (click)="apareceIngreseUsuario()" class="ml-4 subOpcion" style="cursor:pointer "> &nbsp; &nbsp; Nuevo</li>
         </ul>
       </li>

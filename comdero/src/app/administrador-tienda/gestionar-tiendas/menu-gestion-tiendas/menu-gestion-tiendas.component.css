@@ -32,6 +32,8 @@ a {
   color: #12345f;
   text-decoration: none;
   font-size: small;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .fa {
@@ -39,18 +41,12 @@ a {
 }
 
 
-li a:hover {
+li a:focus-within {
   color: #ca6900;
   background-color: #d3d3d4;
   padding-right: 30%;
 }
 
-
-li a:focus {
-  color: #ca6900;
-  font-size: medium;
-
-}
 
 
 i {
