@@ -21,14 +21,13 @@
     [position]="_POSITIONS[_positionNum]">
 
 
-
     <ul class="navbar-nav navbar-sidenav ml-2">
       <li class="nav-item" data-placement="right " data-toggle="tooltip">
         <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" routerLink="">
           <i class="fa fa-fw fa-home "></i>
           <span class="nav-link-text ml-2">Inicio</span>
         </a>
-        <ul class="sidenav-second-level collapse" >
+        <ul class="sidenav-second-level collapse">
           <li class="ml-4 subOpcion" style="cursor:pointer "> &nbsp; &nbsp; Nuevo</li>
         </ul>
       </li>
@@ -42,11 +41,12 @@
         </a>
         <ul class="sidenav-second-level collapse" id="producto">
           <li>
-            <a routerLink="productos"  routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="ml-4  nav-item nav-link" > &nbsp; &nbsp; - Nuevo</a>
+            <a [routerLinkActiveOptions]="{exact:true}" class="ml-4  nav-item nav-link opcion-interna "  routerLink="productos"
+               routerLinkActive="active"> &nbsp; &nbsp; - Nuevo</a>
           </li>
 
           <br>
-          <li><a  class="ml-4 "> &nbsp; &nbsp; - Listado</a>
+          <li><a class="ml-4 opcion-interna "> &nbsp; &nbsp; - Listado</a>
           </li>
         </ul>
 
@@ -62,7 +62,7 @@
           <span class="nav-link-text ml-2">Pedidos</span>
         </a>
         <ul class="sidenav-second-level collapse" id="pedidos">
-          <li (click)="apareceIngreseUsuario()" class="ml-4 subOpcion" style="cursor:pointer "> &nbsp; &nbsp; Nuevo</li>
+          <li (click)="apareceIngreseUsuario()" class="ml-4 opcion-interna" style="cursor:pointer "> &nbsp; &nbsp; Nuevo</li>
         </ul>
       </li>
     </ul>
@@ -74,7 +74,7 @@
           <span class="nav-link-text ml-2">Clientes</span>
         </a>
         <ul class="sidenav-second-level collapse" id="clientes">
-          <li (click)="apareceIngreseUsuario()" class="ml-4 subOpcion" style="cursor:pointer "> &nbsp; &nbsp; Nuevo</li>
+          <li (click)="apareceIngreseUsuario()" class="ml-4 opcion-interna" style="cursor:pointer "> &nbsp; &nbsp; Nuevo</li>
         </ul>
       </li>
     </ul>
@@ -86,7 +86,7 @@
           <span class="nav-link-text ml-2">Estadisticas</span>
         </a>
         <ul class="sidenav-second-level collapse" id="estadisticas">
-          <li (click)="apareceIngreseUsuario()" class="ml-4 subOpcion" style="cursor:pointer "> &nbsp; &nbsp; Nuevo</li>
+          <li (click)="apareceIngreseUsuario()" class="ml-4 opcion-interna" style="cursor:pointer "> &nbsp; &nbsp; Nuevo</li>
         </ul>
       </li>
     </ul>

@@ -5,7 +5,12 @@
 
 }
 
+@media (min-width: 720px) {
+  #panelFinal{
+    max-width: 52%;
+  }
 
+}
 
 textarea {
   font-size: smaller;
@@ -167,10 +172,18 @@ input {
 
 }
 
-#selectUnidades {
+select{
   font-size: small;
+
 }
 
+
+/*
+select:hover{
+  transform: rotate(-45deg); !* Giramos el cuadrado *!
+  transition: all 0.25s ease;
+}
+*/
 
 .chip {
   border-radius: 25px;

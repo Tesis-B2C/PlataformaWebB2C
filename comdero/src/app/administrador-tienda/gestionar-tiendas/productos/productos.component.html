@@ -12,31 +12,49 @@
         <hr>
         <div class="container">
           <div class="form-row ">
-            <div class="col-12">
+            <div class="col-6">
               <label>Nombre</label>
-              <input class=" form-control py-3 " name="nombre" type="text">
+              <input #NombreProducto="ngModel" [(ngModel)]="this.Producto.Nombre_Producto" class=" form-control py-3 " name="nombreProducto"
+                     type="text">
+            </div>
+            <div class="col-lg-6">
+              <label>Codigo</label>
+              <input #CodigoProducto="ngModel" [(ngModel)]="this.Producto.Cod_Producto" class=" form-control py-3 " name="codigoProducto"
+                     type="text">
             </div>
           </div>
           <div class="form-row mt-2">
-            <div class="col-lg-6">
-              <label>Codigo</label>
-              <input class=" form-control py-3 " name="codigo" type="text">
-            </div>
+
             <div class="col-lg-6">
               <label>Marca </label>
-              <input class="form-control py-3 " name="marca" type="text">
+              <input #Marca="ngModel" [(ngModel)]="this.Producto.Marca" class="form-control py-3 " name="marca"
+                     type="text">
+            </div>
+            <div class="col-lg-6">
+
+              <div class="form-group">
+                <label for="selectCondicion">Example select</label>
+                <select class="form-control" id="selectCondicion" (change)="opcionCondicionProducto($event.target.value)">
+                  <option value="Nuevo">Nuevo</option>
+                  <option value="Como nuevo">Como nuevo</option>
+                  <option value="Usado como nuevo">Usado como nuevo</option>
+                  <option value="Usado">Usado</option>
+
+                </select>
+              </div>
             </div>
           </div>
 
           <div class="form-group mt-2">
-            <label>Descripción del producto </label> <textarea class="form-control" name="descripcion" required rows="2"
-                                                               type="text"></textarea>
+            <label>Descripción del producto </label>
+            <textarea #DescripcionProducto="ngModel" [(ngModel)]="this.Producto.Descripcion_Producto" class="form-control" name="descripcionProducto" required
+                      rows="2" type="text"></textarea>
           </div>
 
 
           <div class="form-group">
             <label>Detalles del producto </label>
-            <app-ngx-editor [config]="editorConfig" name="Detalle"></app-ngx-editor>
+            <app-ngx-editor #DetalleProducto="ngModel" [(ngModel)]="this.Producto.Detalle_Producto" [config]="editorConfig" name="detalleProducto"></app-ngx-editor>
 
             <!--<div [innerHTML]=this.htmlcomponent>
             </div>  para cuando quieras mostrar con stilos-->
@@ -118,7 +136,6 @@
             </div>
             <div class=" col-12 mx-auto">
               <div *ngIf="data.video">
-
                 <div class="mx-auto fondo-animacion-carga-video">
                   <video class="video-carga" controls height="auto" width="auto">
                     <source [src]="data.video" type="{{ data.type }}">
@@ -153,7 +170,7 @@
               <label> Precio unitario sin iva </label>
 
               <div class="input-group mb-3">
-                <input class="form-control" placeholder="0.00" type="number">
+                <input class="form-control" placeholder="0.00" type="number" #PrecioUnitario0="ngModel" [(ngModel)]="this.Variantes[0].Precio_Unitario" name="precioUnitario0">
                 <div class="input-group-append">
                   <span class="input-group-text unidades">$</span>
                 </div>
@@ -163,7 +180,8 @@
             <div class="col-lg-6">
               <label>Porcentaje de Iva </label>
               <div class="input-group mb-3">
-                <input class="form-control" placeholder="12" type="number">
+                <input #Iva="ngModel" [(ngModel)]="this.Oferta.Iva" class="form-control" name="iva" placeholder="12"
+                       type="number">
                 <div class="input-group-append">
                   <span class="input-group-text unidades">%</span>
                 </div>
@@ -325,9 +343,9 @@
           <div class="form-group col-lg-8">
             <div class="input-group">
 
-              <input class="form-control" placeholder="20" type="text">
+              <input class="form-control" placeholder="20" type="number"  #Stock0="ngModel" [(ngModel)]="this.Variantes[0].Stock" name="stock0">
 
-              <select class="browser-default form-control col " id="selectUnidad" style="font-size: small">
+              <select class="browser-default form-control col " id="selectUnidad" #Unidad0="ngModel" [(ngModel)]="this.Variantes[0].Cod_Unidad" name="unidad0" >
 
                 <option *ngFor="let unidad of this.unidades">{{unidad.COD_UNIDAD_MEDIDA}}</option>
 
@@ -338,7 +356,8 @@
 
           <div class="form-group ml-2">
             <div class="custom-control custom-checkbox">
-              <input class="custom-control-input" id="rastrearCantidad" type="checkbox">
+              <input (click)="opcionRastrearStock($event)" class="custom-control-input" id="rastrearCantidad"
+                     type="checkbox">
               <label class="custom-control-label" for="rastrearCantidad">Rastrear la cantidad</label>
             </div>
           </div>
@@ -346,7 +365,8 @@
 
           <div class="form-group ml-2">
             <div class="custom-control custom-checkbox">
-              <input class="custom-control-input" id="venderDespuesAgotado" type="checkbox">
+              <input (click)="opcionVenderSinStock($event)" class="custom-control-input" id="venderDespuesAgotado"
+                     type="checkbox">
               <label class="custom-control-label" for="venderDespuesAgotado">Continuar vendiendo cuando se haya
                 agotado</label>
             </div>
@@ -355,7 +375,8 @@
 
           <div class="form-group ml-2">
             <div class="custom-control custom-checkbox">
-              <input class="custom-control-input" id="permitirReservaProducto" type="checkbox">
+              <input (click)="opcionReservarProducto($event)" class="custom-control-input" id="permitirReservaProducto"
+                     type="checkbox">
               <label class="custom-control-label" for="permitirReservaProducto">Permitir la reserva del producto</label>
             </div>
           </div>
@@ -401,7 +422,7 @@
         <h6>Variaciones</h6>
         <hr>
         <div class="form-group ml-2">
-          <label>Este producto contiene multiples opciones, asi como clores, marca y materiales?</label>
+          <label>Este producto tiene multiples opciones, asi como clores, marca y materiales?</label>
 
           <div class="form-group">
             <label class="custom-control custom-radio custom-control-inline">
@@ -430,16 +451,16 @@
           <div class="form-group col-md-2 offset-lg-1 justify-content-center">
             <label>Color</label>
 
-            <input (colorPickerChange)="cambiarColor($event)" [(colorPicker)]=color[0] [style.background]=color[0]
+            <input (colorPickerChange)="cambiarColor($event,0)" [(colorPicker)]=color[0] [style.background]=color[0]
                    class="form-control input-colores"/>
           </div>
           <div class="form-group  col-md-4">
             <label> Talla </label>
-            <input class="form-control " placeholder="Ej. xl/34/etc" type="text">
+            <input class="form-control " placeholder="Ej. xl/34/etc" type="text"  #Talla0="ngModel" [(ngModel)]="this.Variantes[0].Talla" name="talla0">
           </div>
           <div class="form-group  col-md-4">
             <label>Material</label>
-            <input class="form-control  " placeholder="Ej. Gamusa/algodon" type="text">
+            <input class="form-control  " placeholder="Ej. Gamusa/algodon" type="text" #Material0="ngModel" [(ngModel)]="this.Variantes[0].Material" name="material0">
           </div>
 
         </div>
@@ -455,16 +476,16 @@
           <hr class="col-12 mt-0">
           <div class="form-group col-md-2 offset-lg-1 justify-content-center">
             <label>Color</label>
-            <input (colorPickerChange)="cambiarColor($event)" [(colorPicker)]=color[i+1] [style.background]=color[i+1]
+            <input (colorPickerChange)="cambiarColor($event,i+1)" [(colorPicker)]=color[i+1] [style.background]=color[i+1]
                    class="form-control input-colores"/>
           </div>
           <div class="form-group  col-md-4">
             <label> Talla </label>
-            <input class="form-control " placeholder="Ej. xl/34/etc" type="text">
+            <input class="form-control " placeholder="Ej. xl/34/etc" type="text" #Talla="ngModel" [(ngModel)]="this.Variantes[i+1].Talla" name="talla{{i+1}}">
           </div>
           <div class="form-group  col-md-4">
             <label>Material</label>
-            <input class="form-control  " placeholder="Ej. Gamusa/algodon" type="text">
+            <input class="form-control  " placeholder="Ej. Gamusa/algodon" type="text"  #Material="ngModel" [(ngModel)]="this.Variantes[i+1].Material" name="material{{i+0}}">
           </div>
 
 
@@ -520,9 +541,9 @@
             <label> Stock y unidad de medida del producto</label>
             <div class="input-group">
 
-              <input class="form-control" placeholder="200" type="text">
+              <input class="form-control" placeholder="200" type="text"  #Stock="ngModel" [(ngModel)]="this.Variantes[i+1].Stock" name="stock{{i+1}}">
 
-              <select class="browser-default form-control col-lg-5 " id="selectUnidades">
+              <select class="browser-default form-control col-lg-5 " id="selectUnidades" #Unidad="ngModel" [(ngModel)]="this.Variantes[i+1].Cod_Unidad" name="unidad{{i+1}}">
 
                 <option *ngFor="let unidad of this.unidades"
                         [selected]="unidad.COD_UNIDAD_MEDIDA=='unidades'">{{unidad.COD_UNIDAD_MEDIDA}}</option>
@@ -534,7 +555,7 @@
           <div class="form-group  col-md-4">
             <label>Precio</label>
             <div class="input-group mb-3">
-              <input aria-label="Amount (to the nearest dollar)" class="form-control" placeholder="20" type="text">
+              <input aria-label="Amount (to the nearest dollar)" class="form-control" placeholder="20" type="text" #PrecioUnitario="ngModel" [(ngModel)]="this.Variantes[i+1].Precio_Unitario" name="precioUnitario{{i+1}}">
               <div class="input-group-append">
                 <span class="input-group-text unidades">$</span>
               </div>
@@ -572,7 +593,26 @@
         </div>
 
       </form>
+      <br>
+      <form class="card card-body  ">
+        <div class=" container ">
+          <h6>Acciones</h6>
+          <hr>
 
+          <button class="btn btn-outline-primary text-nowrap  col-md-5  mb-4 " type="button">
+            <span class="spinner-border spinner-border-sm mr-2"></span>
+            Publicar producto
+          </button>
+
+
+          <button class="btn btn-outline-primary text-nowrap offset-md-2 col-md-5 mb-4" type="button">
+            <span class="spinner-border spinner-border-sm mr-2"></span>
+            Guardar Producto
+          </button>
+
+
+        </div>
+      </form>
     </div>
     <div class="card card-body col-md-4   mt-sm-4 ml-md-3  mt-md-0 container-categoria " id="panelDos">
       <div class="container">
@@ -635,32 +675,10 @@
   </div>
 
 
+  <br>
+  <br>
+  <br>
+  <br>
 
-  <div class="form-row justify-content-center">
-    <div class=" col-md-7">
-
-      <br>
-      <div class="card card-body  ">
-        <div class=" container ">
-          <h6>Acciones</h6>
-          <hr>
-
-          <button class="btn btn-outline-primary text-nowrap  col-md-5  mb-4 " type="button">
-            <span class="spinner-border spinner-border-sm mr-2"></span>
-            Publicar producto
-          </button>
-
-
-          <button class="btn btn-outline-primary text-nowrap offset-md-2 col-md-5 mb-4" type="button">
-            <span class="spinner-border spinner-border-sm mr-2"></span>
-            Guardar Producto
-          </button>
-
-
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <br>  <br>
 </div>
+

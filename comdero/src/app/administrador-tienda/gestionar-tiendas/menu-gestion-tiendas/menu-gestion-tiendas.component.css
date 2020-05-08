@@ -48,11 +48,14 @@ li a:focus-within {
 }
 
 
-
 i {
   color: #fca147;
 }
 
+.opcion-interna{
+  font-weight: normal;
+
+}
 
 ::ng-deep aside {
 
@@ -83,7 +86,7 @@ i {
 ng-sidebar-container {
 
   max-height: 86vh;
-   overflow: hidden;
+  overflow: hidden;
 }
 
 @media (max-width: 500px) {
