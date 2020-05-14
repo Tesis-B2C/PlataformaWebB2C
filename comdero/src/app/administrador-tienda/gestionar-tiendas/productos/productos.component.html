@@ -1,18 +1,18 @@
 <div class="container mt-5">
   <div class="row  justify-content-center">
-    <h4 class=" col-10  ">Agregar Producto</h4>
-    <hr class="col-10  ">
+    <h4 class=" col-11  ">Agregar Producto</h4>
+    <hr class="col-11  ">
   </div>
 
   <div class="row justify-content-center">
-    <div class=" " id="panelUno">
+    <div class="col-md-7" id="panelUno">
 
       <form class="card card-body ">
         <h6>Información</h6>
         <hr>
         <div class="container">
           <div class="form-row ">
-            <div class="col-6">
+            <div class="col-md-6">
               <label>Nombre</label>
               <input #NombreProducto="ngModel" [(ngModel)]="this.Producto.Nombre_Producto" class=" form-control py-3 " name="nombreProducto"
                      type="text">
@@ -338,14 +338,14 @@
         <hr>
         <div class="container">
           <div class="form-group">
-            <label>Ingresse la cantidad y la unidad de medida en la cual se ofertara el producto</label>
+            <label>Ingresse la cantidad y la unidad de medida en la cual se ofertara el producto 1</label>
           </div>
           <div class="form-group col-lg-8">
             <div class="input-group">
 
               <input class="form-control" placeholder="20" type="number"  #Stock0="ngModel" [(ngModel)]="this.Variantes[0].Stock" name="stock0">
 
-              <select class="browser-default form-control col " id="selectUnidad" #Unidad0="ngModel" [(ngModel)]="this.Variantes[0].Cod_Unidad" name="unidad0" >
+              <select   class="browser-default form-control col " id="selectUnidad" #Unidad0="ngModel" [(ngModel)]="this.Variantes[0].Cod_Unidad" name="unidad0" >
 
                 <option *ngFor="let unidad of this.unidades">{{unidad.COD_UNIDAD_MEDIDA}}</option>
 
@@ -465,10 +465,10 @@
 
         </div>
         <div *ngFor="let item of this.vectorOpciones; index as i" class="form-row container">
-          <div class="form-group col-md-11 mt-4 mb-0">
+          <div class="form-group col-11  mt-4 mb-0">
             <p style="font-weight: bolder; font-size: medium">Opcion {{i + 1}}</p>
           </div>
-          <div class="form-group  col-md-1 mt-4 mb-0">
+          <div class="form-group  col-1 mt-4 mb-0">
             <button (click)="borrarOpcionesProducto(i)" class="form-control " style=" border: none; color: red">
               <span class="fa fa-trash "></span>
             </button>
@@ -538,14 +538,14 @@
           </div> <!-- form-group end.// -->
 
           <div class="form-group col-lg-7">
-            <label> Stock y unidad de medida del producto</label>
+            <label> Stock y unidad de medida del producto 2</label>
             <div class="input-group">
 
               <input class="form-control" placeholder="200" type="text"  #Stock="ngModel" [(ngModel)]="this.Variantes[i+1].Stock" name="stock{{i+1}}">
 
-              <select class="browser-default form-control col-lg-5 " id="selectUnidades" #Unidad="ngModel" [(ngModel)]="this.Variantes[i+1].Cod_Unidad" name="unidad{{i+1}}">
+              <select class=" form-control col-lg-5 " id="selectUnidades" #Unidad="ngModel" [(ngModel)]="this.Variantes[i+1].Cod_Unidad" name="unidad{{i+1}}">
 
-                <option *ngFor="let unidad of this.unidades"
+                <option   *ngFor="let unidad of this.unidades"
                         [selected]="unidad.COD_UNIDAD_MEDIDA=='unidades'">{{unidad.COD_UNIDAD_MEDIDA}}</option>
               </select>
 

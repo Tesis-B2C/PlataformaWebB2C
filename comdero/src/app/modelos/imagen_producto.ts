@@ -3,7 +3,7 @@ export class Imagen_Producto {
     public Nombre_Imagen: String,
     public Tipo_Imagen: String,
     public Imagen: String,
-    public Tamanio_Imagen: String,
+    public Tamanio_Imagen: Number,
   ) {
   }
 }

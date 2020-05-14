@@ -1,16 +1,5 @@
-@media (min-width: 720px) {
-  #panelUno{
-    max-width: 52%;
-  }
 
-}
 
-@media (min-width: 720px) {
-  #panelFinal{
-    max-width: 52%;
-  }
-
-}
 
 textarea {
   font-size: smaller;
@@ -172,8 +161,13 @@ input {
 
 }
 
-select{
-  font-size: small;
+select {
+ font-size: small;
+}
+
+select::-ms-expand{
+   overflow: auto;
+  max-height: 3px;
 
 }
 
