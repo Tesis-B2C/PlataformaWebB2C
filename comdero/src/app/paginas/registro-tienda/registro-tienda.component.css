@@ -45,21 +45,6 @@
   line-height: 1.2;
 }
 
-.lineaSeparacion1 {
-  margin-top: 20px;
-  margin-bottom: 10px;
-}
-
-.tamanioCampos {
-  font-size: small;
-  font-weight: bolder;
-  font-size: 0.8em;
-}
-
-.tamanioInputs {
-  font-size: small;
-}
-
 .editor_terminos {
   font-size: small;
 }
@@ -83,7 +68,6 @@
   }
 }
 
-
 .mapa-invisible {
   position: absolute;
   visibility: hidden;
@@ -100,6 +84,10 @@
   height: 100%;
 }
 
+.marcador{
+
+}
+
 /*Empezamos con revision*/
 .espacio-fisico{
   text-align: center;
@@ -114,6 +102,31 @@
 
 .agregar-sucursal:hover{
   opacity: 0.8;
+}
+
+.eliminar-sucursal{
+  color: #f90f0f;
+  cursor: pointer;
+  border-bottom: #f90f0f solid 1.5px;
+}
+
+.eliminar-sucursal:hover{
+  opacity: 0.8;
+}
+
+.lineaSeparacion1 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.tamanioCampos {
+  font-size: small;
+  font-weight: bolder;
+  font-size: 0.8em;
+}
+
+.tamanioInputs {
+  font-size: small;
 }
 
 .agregar-sucursal span{

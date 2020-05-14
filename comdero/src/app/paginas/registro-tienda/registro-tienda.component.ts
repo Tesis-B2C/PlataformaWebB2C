@@ -1,17 +1,12 @@
-import {Component, DoCheck, ElementRef, OnDestroy, OnInit, OnChanges, Renderer2} from '@angular/core';
-
+import {Component, OnInit, Renderer2} from '@angular/core';
 import {Sucursal} from "../../modelos/sucursal";
 import {Tienda} from "../../modelos/tienda";
 import {DpaServicio} from "../../servicios/dpa.servicio";
-import {AgenteServicio} from "../../servicios/agente.servicio";
-import Swal from 'sweetalert2'
 
 import {environment} from "../../../environments/environment.prod";
 import * as Mapboxgl from 'mapbox-gl';
-import {toNumber} from "ngx-bootstrap/timepicker/timepicker.utils";
 
 declare const require: any;
-const places = require("../../../../node_modules/places.js/dist/cdn/places.js");
 
 @Component({
   selector: 'app-registro-tienda',
@@ -20,7 +15,6 @@ const places = require("../../../../node_modules/places.js/dist/cdn/places.js");
 })
 
 export class RegistroTiendaComponent implements OnInit {
-
   public Tienda;
   public Sucursal;
   public htmlcomponent;
@@ -46,10 +40,8 @@ export class RegistroTiendaComponent implements OnInit {
   }
 
   private LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
-  private soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
   private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
-  private urlPattern: any = "(https?://)?([\\\\da-z.-]+)\\\\.([a-z.]{2,6})[/\\\\w .-]*/?";
-
+  private soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
   public provincias;
   public ciudades;
 
@@ -58,8 +50,6 @@ export class RegistroTiendaComponent implements OnInit {
 
   public vectorOpciones: Array<number> = [1, 1]; // las dos formas swon validas pero la activa es ams facil
   /*public vectorOpciones=new Array(0);*/
-
-  public banderBotones: boolean = true;         /*Botones de Sucursales*/
 
   constructor(private _dpaServicio: DpaServicio, private renderer: Renderer2) {
     this.Tienda = new Tienda(null, null, null, null,
@@ -82,10 +72,10 @@ export class RegistroTiendaComponent implements OnInit {
     this.mapa[this.contSucursal] = new Mapboxgl.Map({
       container: 'mapa-mapbox' + this.contSucursal.toString(), // Id del container
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [-78.5248, -0.22521], // Coordenadas que aparece centrado
+      center: [-78.5248, -0.22521], // Coordenadas que aparece centrado long. lat.
       zoom: 12 // zoom
     });
-
+    //Controles
     this.mapa[this.contSucursal].addControl(new Mapboxgl.NavigationControl());
     this.mapa[this.contSucursal].addControl(new Mapboxgl.GeolocateControl({
       positionOptions: {
@@ -93,7 +83,29 @@ export class RegistroTiendaComponent implements OnInit {
       },
       trackUserLocation: true
     }));
+    this.crearMarcador(-78.5248,-0.22521);
     this.contSucursal++;
+  }
+
+  crearMarcador(lng: number, lat:number){
+    const marcador = new Mapboxgl.Marker({
+      draggable: true
+    })
+      .setLngLat([-78.5248,-0.22521])
+      .addTo(this.mapa[this.contSucursal]);
+
+    /*Muestra coordenadas del puntero en consola
+    marcador.on('drag',()=>{
+      console.log(marcador.getLngLat());
+    })*/
+
+/*    function onDragEnd() {
+      var lngLat = marcador.getLngLat();
+      coordinates.style.display = 'block';
+      coordinates.innerHTML =
+        'Longitud: ' + lngLat.lng + '<br />Latitud: ' + lngLat.lat;
+    }
+    marcador.on('dragend', onDragEnd);*/
   }
 
   async getDpaProvincias(buscar) {

@@ -150,55 +150,188 @@
       <aw-wizard-step [stepTitle]="'Paso 2'">
         <ng-template awWizardStepSymbol><i class="fa fa-upload"></i></ng-template>
         <div class="datosregistro">
-          <label><b>¿Su negocio cuenta con un espacio fisico?</b></label>
 
+          <label><b>¿Su negocio cuenta con un espacio fisico?</b></label>
           <div class="form-row espacio-fisico py-4">
             <div class="col-md-6 form-group ">
-              <button class="btn btn-outline-secondary px-4 py-3" type="submit" (click)="mapas()">Mi negocio cuenta con un local comercial
+              <button class="btn btn-outline-secondary px-4 py-3" type="submit" (click)="mapas()">Mi negocio cuenta con
+                un local comercial
               </button>
             </div>
             <div class="col-md-6 form-group">
-              <button class="btn btn-outline-secondary px-4 py-3" type="submit" (click)="desdeCasa()">Manejo mi negocio desde casa
+              <button class="btn btn-outline-secondary px-4 py-3" type="submit" (click)="desdeCasa()">Manejo mi negocio
+                desde casa
               </button>
             </div>
           </div>
 
-          <!--Inicio de Agregar sucursales-->
-          <div *ngFor="let item of this.vectorOpciones; index as i" [ngClass]="{'mapa-invisible':this.banderaSucursal}">
-            <div [ngClass]="{'mapa-invisible':(this.vectorOpciones.length-1)==i,'mapa-visible':(this.vectorOpciones.length-1)!=i}">
-              <label class="mb-0 "><strong>Seleccione la ubicación de su tienda</strong></label>
-              <hr class="my-1">
-              <div id="mapa-mapbox{{i}}" style="width: auto; height: 30vh;"></div>
-              <div *ngIf="i!=0" class="form-group  col-md-1 ">
-                <button (click)="borrarOpciones(i)" class="form-control btn btn-outline-danger">
-                  <span class="fa fa-trash "></span>
-                </button>
-              </div>
-            </div>
-          </div> <!--Fin ngFor Opciones del mapa-->
+          <!--Empieza el modulo de Tengo Negocio Fisico -->
 
-          <div *ngIf="!this.banderaSucursal" class="form-group col-md-12">
+          <!--Inicio de Agregar sucursales-->
+          <div *ngFor="let item of this.vectorOpciones; index as i"
+               [ngClass]="{'mapa-invisible':this.banderaSucursal}">
+            <div [ngClass]="{'mapa-invisible':(this.vectorOpciones.length-1)==i,'mapa-visible':(this.vectorOpciones.length-1)!=i}">
+              <label *ngIf="i==0"><b>Ingrese los datos de su negocio (Sucursales en caso de existir)</b></label>
+              <hr *ngIf="i!=0" class="pt-2" class="lineaSeparacion1">
+              <label *ngIf="i!=0"><b>Sucursal&nbsp; {{i}}</b></label>
+
+              <div class="form-row">
+                <div class="form-group col-lg-6">
+                  <label class="tamanioCampos">* RUC</label>
+                  <input #Ruc="ngModel" [(ngModel)]="this.Sucursal.Ruc" [ngClass]="{'is-invalid': Ruc.invalid && (Ruc.dirty || Ruc.touched),
+                 'is-valid': Ruc.valid && (Ruc.dirty || Ruc.touched)}" [pattern]='this.soloNumerosPattern'
+                         class="tamanioInputs form-control" maxlength="13"
+                         minlength="13" name="ruc" placeholder="" required type="text">
+                  <div *ngIf="Ruc.invalid && (Ruc.dirty || Ruc.touched)">
+                    <div *ngIf="Ruc.errors.required">
+                      <p class="alert alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
+                        Campo requerido.</p>
+                    </div>
+                    <div *ngIf="Ruc.errors.minlength">
+                      <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                        Minimo 13 digitos.</p>
+
+                    </div>
+                    <div *ngIf="Ruc.errors.maxlength">
+                      <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                        Maximo 13 digitos.</p>
+                    </div>
+                    <div *ngIf="Ruc.errors.pattern">
+                      <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                        Use solo numeros.</p>
+                    </div>
+                  </div>
+                </div> <!-- form-group end.-->
+
+                <div class="col-lg-6 form-group">
+                  <label class="tamanioCampos" >* Celular / Convencional</label>
+                  <input #Telefono="ngModel" [(ngModel)]="this.Sucursal.Telefono" [ngClass]="{'is-invalid': Telefono.invalid && (Telefono.dirty || Telefono.touched),
+                 'is-valid': Telefono.valid && (Telefono.dirty || Telefono.touched)}"
+                         [pattern]='this.soloNumerosPattern' class="tamanioInputs form-control" name="telefono" required
+                         type="tel">
+                  <div *ngIf="Telefono.invalid && (Telefono.dirty|| Telefono.touched) ">
+                    <div *ngIf="Telefono.errors.required">
+                      <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                        Campo requerido.</p>
+                    </div>
+
+                    <div *ngIf="Telefono.errors.pattern">
+                      <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                        Utilice solo numeros.</p>
+                    </div>
+                  </div>
+                </div> <!-- form-group end.//-->
+
+              </div>
+
+
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label class="tamanioCampos">Provincia</label>
+                  <select #Provincia="ngModel" (change)="getDpaCiudades($event.target.value)"
+                          [(ngModel)]="this.Sucursal.Provincia"
+                          [ngClass]="{'errorSelect': Provincia.invalid && (Provincia.dirty || Provincia.touched),
+                      'satisfactorioSelect': Provincia.valid && (Provincia.dirty || Provincia.touched)}"
+                          class=" tamanioInputs form-control" name="provincia"
+                          required>
+                    <option selected="true" disabled="true">Selecciona una..</option>
+                    <option *ngFor="let provincia of this.provincias"
+                            value="{{provincia.COD_DPA}}"> {{provincia.NOMBRE }}</option>
+                  </select>
+                  <div *ngIf="Provincia.invalid && (Provincia.touched||Provincia.dirty)">
+                    <div *ngIf="Provincia.errors.required">
+                      <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                        Campo equerido</p>
+                    </div>
+                  </div>
+                </div> <!--form-group end.-->
+
+                <div class="form-group col-md-6">
+                  <label class="tamanioCampos">Ciudad</label>
+                  <select #Ciudad="ngModel" [(ngModel)]="this.Sucursal.Ciudad"
+                          [ngClass]="{'errorSelect': Ciudad.invalid && (Ciudad.dirty || Ciudad.touched),
+                      'satisfactorioSelect': Ciudad.valid && (Ciudad.dirty || Ciudad.touched)}"
+                          class="tamanioInputs form-control" name="ciudad" placeholder="" required>
+                    <option selected="true" disabled="true">Selecciona una..</option>
+                    <option *ngFor="let ciudad of this.ciudades" value="{{ciudad.COD_DPA}}"> {{ciudad.NOMBRE }}</option>
+                  </select>
+                  <div *ngIf="Ciudad.invalid && (Ciudad.touched||Ciudad.dirty)">
+                    <div *ngIf="Ciudad.errors.required">
+                      <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;Campo requerido.</p>
+                    </div>
+                  </div>
+                </div> <!--form-group end.-->
+              </div>  <!--form-row.-->
+
+              <div class="form-group">
+                <label class="tamanioCampos">Dirección</label>
+                <input #CallePrincipal="ngModel" [(ngModel)]="this.Sucursal.Calle_Principal"
+                       [ngClass]="{'errorSelect': CallePrincipal.invalid && (CallePrincipal.dirty || CallePrincipal.touched),
+                       'satisfactorioSelect': CallePrincipal.valid && (CallePrincipal.dirty || CallePrincipal.touched)}"
+                       class="tamanioInputs form-control"
+                       name="callePrincipal" placeholder="" required type="search" id="CallePrincipal">
+                <div *ngIf="CallePrincipal.invalid && (CallePrincipal.touched||CallePrincipal.dirty)">
+                  <div *ngIf="CallePrincipal.errors.required">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;Campo requerido.</p>
+                  </div>
+                </div>
+              </div><!-- form-group end.// -->
+
+              <div class="form-row">
+                <div class="col-lg-6 form-group">
+                  <label class="tamanioCampos">Número de referencia</label>
+                  <input #NumCasaAgente="ngModel" [(ngModel)]="this.Sucursal.Num_Casa_Sucursal"
+                         class="tamanioInputs form-control" name="numCasaAgente" placeholder="" type="text">
+                  <div>
+                    <p class="alert2 alert-primary"><i class='fa fa-exclamation-circle'> </i> &nbsp;Campo opcional.</p>
+                  </div>
+                </div>
+                <div class=" col-lg-6 form-group">
+                  <label class="tamanioCampos">Codigo Postal</label>
+                  <input #CodigoPostal="ngModel" [(ngModel)]="this.Sucursal.Num_Cod_Postal"
+                         [ngClass]="{'is-invalid': CodigoPostal.invalid && (CodigoPostal.dirty || CodigoPostal.touched),
+                          'is-valid': CodigoPostal.valid && (CodigoPostal.dirty || CodigoPostal.touched)}"
+                         class="tamanioInputs form-control" maxlength="12" name="codigoPostal" placeholder="" required type="text">
+                  <div *ngIf="CodigoPostal.invalid && (CodigoPostal.touched||CodigoPostal.dirty)">
+                    <div *ngIf="CodigoPostal.errors.required">
+                      <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;Campo Requerido</p>
+                    </div>
+                    <div *ngIf="CodigoPostal.errors.maxlength">
+                      <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;No mas de 12 caracteres.</p>
+                    </div>
+                  </div>
+                </div> <!--form-group end.-->
+              </div> <!-- form-row end.// -->
+
+
+              <label class="tamanioCampos">Seleccione la ubicación de su negocio</label>
+              <div id="mapa-mapbox{{i}}" style="width: auto; height: 30vh;"></div>
+
+
+
+
+              <div *ngIf="i!=0" class="form-group col-md-12 px-0 py-3 m-0">
+                <p (click)="borrarOpciones(i)" class="eliminar-sucursal">
+                  <span class="fa fa-trash"></span> &nbsp;Eliminar sucursal &nbsp; {{i}}
+                </p>
+              </div>
+
+            </div>
+          </div> <!--Fin ngFor-->
+
+          <div *ngIf="!this.banderaSucursal" class="form-group col-md-12 px-0 py-3 m-0">
             <p (click)="agregarOpciones()" class="agregar-sucursal">
               <span class="fa fa-plus "></span> &nbsp;Agregar sucursal
             </p>
           </div>
+          <!--Termina el modulo de Tengo Negocio Fisico -->
 
-        </div>
+          <div class="btn-group">
+            <button type="button" class="btn btn-secondary" awPreviousStep>Back</button>
+            <button type="button" class="btn btn-secondary" awNextStep>Continue</button>
+          </div>
+        </div> <!--Fin Datos Registro Card-->
 
-<!--        <div class="custom-control custom-checkbox">
-          <input type="checkbox" class="custom-control-input" id="customCheck" name="example1" (change)="mapas()">
-          <label class="custom-control-label" for="customCheck" style="font-size: small">¿cuenta con un espacio
-            fisico?</label>
-        </div>-->
-
-
-
-        <hr class="lineaSeparacion1">
-
-        <div class="btn-group">
-          <button type="button" class="btn btn-secondary" awPreviousStep>Back</button>
-          <button type="button" class="btn btn-secondary" awNextStep>Continue</button>
-        </div>
       </aw-wizard-step>
 
 
@@ -215,7 +348,6 @@
           </div>
         </div>
       </aw-wizard-step>
-
     </aw-wizard>
   </article><!-- card-body.// -->
 </div>
