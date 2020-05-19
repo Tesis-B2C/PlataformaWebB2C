@@ -11,4 +11,18 @@ p{
   font-size: small;
   font-weight: normal;
 
+
+}
+
+input {
+  font-size: small;
+}
+.unidades{
+  font-size: small;
+}
+label{
+  font-size: small;
+}
+select{
+  font-size: small;
 }

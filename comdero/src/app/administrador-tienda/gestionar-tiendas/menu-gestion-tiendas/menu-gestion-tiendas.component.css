@@ -87,6 +87,7 @@ i {
 
 .demo-contents {
   height: 100%;
+  display: block;
 
 }
 

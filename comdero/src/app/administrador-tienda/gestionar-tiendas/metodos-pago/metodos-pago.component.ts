@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, DoCheck, OnChanges, OnInit} from '@angular/core';
+
 
 @Component({
   selector: 'app-metodos-pago',
@@ -7,10 +8,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MetodosPagoComponent implements OnInit {
 
-  constructor() { }
 
-  ngOnInit() {
+
+
+
+  constructor(){;
   }
 
-}
+  ngOnInit() {
 
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

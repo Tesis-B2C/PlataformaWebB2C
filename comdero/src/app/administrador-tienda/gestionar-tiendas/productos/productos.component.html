@@ -33,7 +33,7 @@
             <div class="col-lg-6">
 
               <div class="form-group">
-                <label for="selectCondicion">Example select</label>
+                <label for="selectCondicion">Estado del producto</label>
                 <select class="form-control" id="selectCondicion" (change)="opcionCondicionProducto($event.target.value)">
                   <option value="Nuevo">Nuevo</option>
                   <option value="Como nuevo">Como nuevo</option>
@@ -235,7 +235,9 @@
             <div *ngFor=" let opcion of vectorOpcionesEntregaLocal; let i=index" class="form-row">
               <div class="form-group col-lg-5">
                 <label>Opcion {{i + 1}}</label>
-                <select class="form-control "></select>
+                <select class="form-control ">
+
+                </select>
               </div>
               <div class="form-group  col-lg-3">
                 <label> Precio </label>
