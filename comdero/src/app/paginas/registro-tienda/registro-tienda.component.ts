@@ -42,10 +42,10 @@ export class RegistroTiendaComponent implements OnInit{
   public provincias;
   public ciudades;
 
-  public vectorOpciones: Array<number> = [1, 1]; // las dos formas swon validas pero la activa es ams facil
+  public vectorOpciones: Array<number> = [1]; // las dos formas swon validas pero la activa es ams facil
   /*public vectorOpciones=new Array(0);*/
 
-  constructor(private _dpaServicio: DpaServicio, private renderer: Renderer2) {
+  constructor(private _dpaServicio: DpaServicio) {
     this.Tienda = new Tienda(null, null, null, null,
       null, null, null, null, null, null);
 
@@ -75,30 +75,23 @@ export class RegistroTiendaComponent implements OnInit{
     }
   }
 
-  public contSucursal = 0;
-  public banderaSucursal: boolean = true;
-  public banderaCasa: boolean = true;
-
-  public async mapas() {
-    this.banderaSucursal = false;
-    this.banderaCasa = true;
-    this.contSucursal++;
+  public bandAgregarSuc: boolean = false;
+  public banderaCasa: boolean = false;
+  public desdeNegocio() {
+    this.banderaCasa = false;
+    this.bandAgregarSuc=true;
   }
 
-  public async agregarOpciones() {
+  public desdeCasa() {
+    this.vectorOpciones=[1];
+    this.banderaCasa = true;
+  }
+
+  public agregarSucursal() {
     this.vectorOpciones.push(1);
   }
 
   public borrarOpciones(pocicion: number) {
-  }
-
-  public desdeCasa() {
-    this.banderaSucursal = true;
-    this.banderaCasa = false;
-  }
-
-  public desdeNegocio() {
-      this.vectorOpciones.push(1);
-      this.vectorOpciones.push(1);
+    this.vectorOpciones.splice(pocicion,1);
   }
 }

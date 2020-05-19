@@ -121,19 +121,3 @@ html,body{
 .agregar-sucursal span{
   font-size: 12px;
 }
-
-.mapa-invisible {
-  position: absolute;
-  visibility: hidden;
-  width: 100% !important;
-  height: 100% !important;
-}
-
-.mapa-visible{
-  width: 100% !important;
-}
-
-.mapa-box{
-  width: 100%;
-  height: 100%;
-}
