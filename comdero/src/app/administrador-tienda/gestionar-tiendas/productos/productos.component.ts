@@ -334,13 +334,11 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
 
 
   busquedaCategoria2(busqueda) {
-
     this.c2.forEach(c22 => {
       if (c22.CAT_ID_CATEGORIA == busqueda) {
         this.categoriaEncontrada2.add(c22);
       }
     });
-
   }
 
   public seleccionarCategoria3(event, c33, i) {
@@ -354,14 +352,10 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
       elemento.classList.remove('chip2-alternativo')
       elemento.classList.add('chip2', 'col', 'btn', 'btn-light');
       this.categoriasSeleccionadas.delete(c33);
-
     }
-
-
   }
 
   public async getUnidadesMedida() {
-
     try {
       let response = await this._unidadesMedidaServicio.getUnidadesMedida().toPromise();
       this.unidades = response.data;
@@ -369,7 +363,6 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
     } catch (e) {
       console.log("error:" + JSON.stringify((e).error.message));
     }
-
   }
 
   public cambiarColor(color: string, indice): Cmyk {
@@ -380,25 +373,17 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
     this.Variantes[indice].Color = rgba;
     console.log("Variante despuez de color", this.Variantes[indice]);
     return this.cpService.rgbaToCmyk(rgba);
-
   }
 
   public eliminarCategoria(cc) {
-
     if (cc.TIPO == "C3") {
-
       let elemento3 = document.getElementById('labelcheckCategoria3' + cc.i) as HTMLElement;
-
       elemento3.classList.remove('chip2-alternativo')
-
       elemento3.classList.add('chip2', 'col', 'btn', 'btn-light');
-
     } else if (cc.TIPO == "C2") {
-
       let elemento2 = document.getElementById('labelcheckCategoria2' + cc.i) as HTMLElement;
       elemento2.classList.remove('chip-alternativo')
       elemento2.classList.add('chip', 'col', 'btn', 'btn-light');
-
     }
     this.categoriasSeleccionadas.delete(cc);
   }
