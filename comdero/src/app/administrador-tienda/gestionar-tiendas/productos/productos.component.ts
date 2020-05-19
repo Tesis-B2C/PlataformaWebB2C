@@ -246,6 +246,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
     this.Variantes.push(new Variante(null, null, null, null, null, "unidades"));
     this.Imagenes_Producto.push([]);
     this.imagenes.push([]);
+    console.log("asdasd");
   }
 
   public borrarOpcionesProducto(pocicion: number) {
