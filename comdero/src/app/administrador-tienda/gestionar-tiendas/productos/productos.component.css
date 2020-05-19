@@ -1,6 +1,4 @@
 
-
-
 textarea {
   font-size: smaller;
   resize: none;
@@ -160,11 +158,11 @@ input {
 }
 
 select {
- font-size: small;
+  font-size: small;
 }
 
 select::-ms-expand{
-   overflow: auto;
+  overflow: auto;
   max-height: 3px;
 
 }
@@ -314,3 +312,5 @@ app-ngx-editor {
 :-ms-input-placeholder {
   color: #ccc;
 }
+
+
