@@ -73,8 +73,8 @@
             <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
           <div
             [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[0]==false,'borde-imagenes1':vectorBanderaAgregarImagen[0]==true }"
-            class="row  mt-3 mx-2 ">
-            <div *ngFor='let url of imagenes[0]; let i = index ' class="ml-2">
+            class="row  mt-3 mx-0 ">
+            <div *ngFor='let url of imagenes[0]; let i = index ' class="ml-1">
               <div class="col-auto card mt-2 px-0 pb-2">
                 <label style="border: none;  ">
                   <img [src]="url" class="px-0" height="140px" width="140px">
@@ -99,7 +99,7 @@
             </div>
 
             <div *ngIf="vectorBanderaAgregarImagen[0]==true && imagenes[0].length<6" class="py-2">
-              <div class="col-auto  py-4  card  ml-2 ">
+              <div class=" py-4  card  ml-1 px-2">
                 <label class="imagen-agregar">
                   <i class="fa fa-picture-o fa-4x ml-4"></i>
                   <i class="fa fa-plus-circle fa-2x ml-1"></i>
@@ -118,8 +118,8 @@
         <div class="form-group ">
           <a class="ml-2"><label>Video promocional del producto </label>
             <span *ngIf="banderaMensajeMaximoVideo" class="ml-2" style="color: red">* Recuerda Maximo 150MB</span></a>
-          <div [ngClass]="{'borde-imagenes':!data.video,'borde-imagenes1':data.video }" class="row mt-3 mx-2 ">
-            <div class=" col-12 mx-auto">
+          <div [ngClass]="{'borde-imagenes':!data.video,'borde-imagenes1':data.video }" class="row mt-3 mx-1 ">
+            <div class="  mx-auto">
               <div *ngIf="this.banderaAnimacionVideo==true">
                 <div class="fondoAnimacionCarga py-5">
                   <div class="pulse animated infinite py-5  ">
@@ -439,9 +439,10 @@
         </div>
 
 
-        <div *ngIf="banderaVariaciones" class="form-row container">
+        <div *ngIf="banderaVariaciones" class="form-row container px-0">
           <div class="form-group">
-            <div class="alert alert-secondary" role="alert">
+            <div class="alert alert-primary col-12" role="alert">
+              <a><span class="fa fa-exclamation fa-1x"></span></a>
               Primero establesca las opciones base del producto, es decir las correspondientes a las imagenes que agregó
               anterior mente,
               luego si desea agregar mas opciones , ademas imagenes, y un precio diferente de click en agregar
@@ -464,7 +465,7 @@
           </div>
 
         </div>
-        <div *ngFor="let item of this.vectorOpciones; index as i" class="form-row container">
+        <div *ngFor="let item of this.vectorOpciones; index as i" class="form-row container px-0 ">
           <div class="form-group col-11  mt-4 mb-0">
             <p style="font-weight: bolder; font-size: medium">Opcion {{i + 1}}</p>
           </div>
@@ -489,14 +490,14 @@
           </div>
 
 
-          <div class="form-group col-12">
+          <div class="form-group col-12 ">
             <a class=" mt-5">
               <label>Imagenes de la opcion {{i + 1}} </label>
               <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
             <div
               [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[i+1]==false,'borde-imagenes1':vectorBanderaAgregarImagen[i+1]==true }"
               class="row  mt-3 ">
-              <div *ngFor='let url of imagenes[i+1]; index as j ' class="ml-2">
+              <div *ngFor='let url of imagenes[i+1]; index as j ' class="ml-1">
                 <div class="col-auto card mt-2 px-0 pb-2">
                   <label style="border: none;  ">
                     <img [src]="url" class="px-0" height="140px" width="140px">
@@ -522,7 +523,7 @@
               </div>
 
               <div *ngIf="vectorBanderaAgregarImagen[i+1]==true && imagenes[i+1].length<6" class="py-2">
-                <div class="col-auto  py-4  card  ml-2 ">
+                <div class=" px-2 py-4  card  ml-2 ">
                   <label class="imagen-agregar">
                     <i class="fa fa-picture-o fa-4x ml-4"></i>
                     <i class="fa fa-plus-circle fa-2x ml-1"></i>
@@ -575,9 +576,12 @@
       <form class=" card card-body ">
         <h6>Categorias seleccionadas</h6>
         <hr>
-        <div class="form-row">
-          <div *ngIf="categoriasSeleccionadas.size==0" class="alert alert-primary col-12" role="alert">
-            No existen categorias seleccionadas
+        <div class="form-row ">
+          <div class="form-group">
+            <div class="alert alert-primary col-12" role="alert">
+              <a><span class="fa fa-exclamation fa-1x"></span></a>
+              No existe categorias seleccionadas
+            </div>
           </div>
           <div *ngFor="let cs of categoriasSeleccionadas">
 
@@ -614,7 +618,7 @@
         </div>
       </form>
     </div>
-    <div class="card card-body col-md-4   mt-sm-4 ml-md-3  mt-md-0 container-categoria " id="panelDos">
+    <div class="card card-body col-md-4   mt-sm-4 ml-md-2  mt-md-0 container-categoria " id="panelDos">
       <div class="container">
 
 

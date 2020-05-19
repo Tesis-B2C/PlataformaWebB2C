@@ -44,8 +44,7 @@
 .container-registro {
   max-width: 450px;
   position: relative;
-  margin-top: 15px;
-  clear: top;
+
 
 
 }
@@ -155,3 +154,8 @@ label {
 
 }
 
+select{
+
+  font-size: 5pt;
+
+}

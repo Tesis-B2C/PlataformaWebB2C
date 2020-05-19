@@ -1,0 +1,101 @@
+<div class="container mt-5">
+  <div class="row  justify-content-center">
+    <h4 class=" col-11  ">Metodos de Pago</h4>
+    <hr class="col-11  ">
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-11 container" id="panelUno">
+
+      <form class="card card-body p-5 ">
+        <div class="form-group">
+          <div class="alert alert-primary col-12" role="alert">
+            <a><span class="fa fa-exclamation fa-1x"></span></a>
+            Establezca los metodos de pago que desea implemetar en su tienda estas opciones se proporcionaran a todos
+            los productos que agregue en la tienda
+          </div>
+        </div>
+        <hr>
+
+        <div class="container">
+          <div class="form-row">
+            <div class="form-group col-8">
+              <p >¿Desea ofrecer pagos en efectivo?</p>
+              <label class="custom-control custom-radio custom-control-inline">
+                <input (change)="opcionRetiroPersona(0)" class="custom-control-input" name="entregaPersonal"
+                       type="radio" value="Si">
+                <span class="custom-control-label"> Si  </span>
+              </label>
+
+
+              <label class="custom-control custom-radio custom-control-inline">
+                <input (change)="opcionRetiroPersona(1)" checked="true" class="custom-control-input"
+                       name="entregaPersonal" type="radio" value="No">
+                <span class="custom-control-label"> No </span>
+              </label>
+                </div> <!-- form-group end.// -->
+                    <p class="col-auto"><span style="color: #2a4c75" class="fa fa-money-bill-wave fa-3x"></span></p>
+
+          </div>
+          <div class="form-row">
+            <div class="form-group col-8">
+              <p >¿Desea ofrecer transferencias bancarias?</p>
+              <label class="custom-control custom-radio custom-control-inline">
+                <input (change)="opcionRetiroPersona(0)" class="custom-control-input" name="entregaPersonal"
+                       type="radio" value="Si">
+                <span class="custom-control-label"> Si  </span>
+              </label>
+
+
+              <label class="custom-control custom-radio custom-control-inline">
+                <input (change)="opcionRetiroPersona(1)" checked="true" class="custom-control-input"
+                       name="entregaPersonal" type="radio" value="No">
+                <span class="custom-control-label"> No </span>
+              </label>
+            </div> <!-- form-group end.// -->
+            <p class="col-auto"><span  style="color: #2a4c75" class="fa fa-university fa-3x"></span></p>
+
+          </div>
+          <div class="form-row">
+            <div class="form-group col-8">
+              <p >¿Desea ofrecer pagos a traves de PayPal?</p>
+              <label class="custom-control custom-radio custom-control-inline">
+                <input (change)="opcionRetiroPersona(0)" class="custom-control-input" name="entregaPersonal"
+                       type="radio" value="Si">
+                <span class="custom-control-label"> Si  </span>
+              </label>
+
+
+              <label class="custom-control custom-radio custom-control-inline">
+                <input (change)="opcionRetiroPersona(1)" checked="true" class="custom-control-input"
+                       name="entregaPersonal" type="radio" value="No">
+                <span class="custom-control-label"> No </span>
+              </label>
+            </div> <!-- form-group end.// -->
+            <p class="col-auto"><span style="color: #2a4c75" class="fab fa-cc-paypal fa-3x"></span></p>
+
+          </div>
+          <div class="form-row">
+            <div class="form-group col-8">
+              <p >¿Desea ofrecer pagos a traves de tarjeta de credito?</p>
+              <label class="custom-control custom-radio custom-control-inline">
+                <input (change)="opcionRetiroPersona(0)" class="custom-control-input" name="entregaPersonal"
+                       type="radio" value="Si">
+                <span class="custom-control-label"> Si  </span>
+              </label>
+
+
+              <label class="custom-control custom-radio custom-control-inline">
+                <input (change)="opcionRetiroPersona(1)" checked="true" class="custom-control-input"
+                       name="entregaPersonal" type="radio" value="No">
+                <span class="custom-control-label"> No </span>
+              </label>
+            </div> <!-- form-group end.// -->
+            <p class="col-auto"><span style="color: #2a4c75" class="fa fa-credit-card fa-3x"></span></p>
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
