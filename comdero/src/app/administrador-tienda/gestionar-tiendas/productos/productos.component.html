@@ -549,7 +549,7 @@
               <select class=" form-control col-lg-5 " id="selectUnidades" #Unidad="ngModel" [(ngModel)]="this.Variantes[i+1].Cod_Unidad" name="unidad{{i+1}}">
 
                 <option   *ngFor="let unidad of this.unidades"
-                        [selected]="unidad.COD_UNIDAD_MEDIDA=='unidades'">{{unidad.COD_UNIDAD_MEDIDA}}</option>
+                          [selected]="unidad.COD_UNIDAD_MEDIDA=='unidades'">{{unidad.COD_UNIDAD_MEDIDA}}</option>
               </select>
 
             </div>
@@ -632,12 +632,10 @@
           <hr class="mb-1 mt-1">
 
           <div class="dropdown justify-content-center">
-
             <button (click)="busquedaCategoria2(c11.ID_CATEGORIA)" [attr.data-target]="'#myModal'+i"
                     aria-expanded="false" aria-haspopup="true" class="categoria dropdown-toggle  dropdown-toggle-split"
                     data-toggle="collapse"><span class="{{this.vectorIconos[i]}} iconos-categoria"></span>&nbsp;&nbsp;&nbsp;&nbsp;{{c11.NOMBRE}}
             </button>
-
             <div class="form-row mb-3 collapse   justify-content-center" id="myModal{{i}}">
               <div *ngFor="let c22 of this.categoriaEncontrada2; let i = index">
                 <div class="checkbox">
@@ -647,11 +645,9 @@
                     <input (change)="busquedaCategoria3(c22.ID_CATEGORIA,$event,c22,i)" id="checkCategoria{{i}}"
                            style="display: none" type="checkbox">
                   </label>
-
                 </div>
                 <div class="form-row  justify-content-center">
                   <div *ngFor="let c33 of this.categoriaEncontrada; let i =index">
-
                     <label *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA && c22.ID_CATEGORIA==c33.CAT_ID_CATEGORIA"
                            class="chip2 col btn btn-light"
                            for="checkCategoria3{{i}}" id="labelcheckCategoria3{{i}}">{{c33.NOMBRE}}
@@ -659,32 +655,19 @@
                              style="display: none"
                              type="checkbox">
                     </label>
-
                   </div>
-
                 </div>
               </div>
             </div>
           </div>
-
-
           <!-- <button (click)="cc($event)" class="col btn btn-light clicked">asd</button>-->
-
-
         </div>
       </div>
-
-
     </div>
-
-
   </div>
-
-
   <br>
   <br>
   <br>
   <br>
-
 </div>
 

@@ -1,17 +1,9 @@
-import {Component, DoCheck, ElementRef, OnDestroy, OnInit, OnChanges,AfterViewChecked, Renderer2, ViewChild} from '@angular/core';
-
+import {Component, OnInit, Renderer2, DoCheck } from '@angular/core';
 import {Sucursal} from "../../modelos/sucursal";
 import {Tienda} from "../../modelos/tienda";
 import {DpaServicio} from "../../servicios/dpa.servicio";
-import {AgenteServicio} from "../../servicios/agente.servicio";
-import Swal from 'sweetalert2'
-
-import {environment} from "../../../environments/environment.prod";
-import * as Mapboxgl from 'mapbox-gl';
-import {toNumber} from "ngx-bootstrap/timepicker/timepicker.utils";
 
 declare const require: any;
-const places = require("../../../../node_modules/places.js/dist/cdn/places.js");
 
 @Component({
   selector: 'app-registro-tienda',
@@ -19,8 +11,7 @@ const places = require("../../../../node_modules/places.js/dist/cdn/places.js");
   styleUrls: ['./registro-tienda.component.css']
 })
 
-export class RegistroTiendaComponent implements OnInit, AfterViewChecked {
-
+export class RegistroTiendaComponent implements OnInit{
   public Tienda;
   public Sucursal;
   public htmlcomponent;
@@ -46,20 +37,15 @@ export class RegistroTiendaComponent implements OnInit, AfterViewChecked {
   }
 
   private LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
-  private soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
   private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
-  private urlPattern: any = "(https?://)?([\\\\da-z.-]+)\\\\.([a-z.]{2,6})[/\\\\w .-]*/?";
-
+  private soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
   public provincias;
   public ciudades;
 
-  //Mapa
-  mapa: Array<Mapboxgl.Map> = new Array<Mapboxgl.Map>();
-
-  public vectorOpciones: Array<number> = [1, 1]; // las dos formas swon validas pero la activa es ams facil
+  public vectorOpciones: Array<number> = [1]; // las dos formas swon validas pero la activa es ams facil
   /*public vectorOpciones=new Array(0);*/
 
-  constructor(private _dpaServicio: DpaServicio, private renderer: Renderer2) {
+  constructor(private _dpaServicio: DpaServicio) {
     this.Tienda = new Tienda(null, null, null, null,
       null, null, null, null, null, null);
 
@@ -69,40 +55,7 @@ export class RegistroTiendaComponent implements OnInit, AfterViewChecked {
 
   async ngOnInit() {
     await this.getDpaProvincias("P");
-
   }
-
-  ngAfterViewChecked(){
-
-
-
-
-  }
-
-  public cont = 0;
- public banderaPrueba:boolean=true;
-  public mapas() {
-    this.banderaPrueba=false;
-
-      Mapboxgl.accessToken = environment.mapboxkey;
-      this.mapa[this.cont] = new Mapboxgl.Map({
-        container: 'mapa-mapbox'+ this.cont.toString(), // Id del container
-        style: 'mapbox://styles/mapbox/streets-v11',
-
-        center: [-77.0364, 38.8951], // Coordenadas que aparece centrado
-        zoom: 9 // zoom,
-
-      });
-
-      this.mapa[this.cont].addControl(new Mapboxgl.NavigationControl());
-      this.mapa[this.cont].addControl(new Mapboxgl.GeolocateControl({
-        positionOptions: {
-          enableHighAccuracy: true
-        },
-        trackUserLocation: true
-      }));
-      this.cont++;
-      }
 
   async getDpaProvincias(buscar) {
     try {
@@ -122,17 +75,26 @@ export class RegistroTiendaComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  public async agregarOpciones() {
+  public bandAgregarSuc: boolean = false;
+  public banderaCasa: boolean = false;
 
+  public desdeNegocio() {
+    this.banderaCasa = false;
+    this.bandAgregarSuc=true;
+  }
+
+  public desdeCasa() {
+    this.vectorOpciones=[1];
+    console.log(this.vectorOpciones);
+    this.banderaCasa = true;
+  }
+
+  public agregarSucursal() {
     this.vectorOpciones.push(1);
-
-    this.mapas();
-
-
+    console.log("negocio"+this.vectorOpciones);
   }
 
   public borrarOpciones(pocicion: number) {
-    debugger
-    this.vectorOpciones.splice(pocicion, 1)
+    this.vectorOpciones.splice(pocicion,1);
   }
 }

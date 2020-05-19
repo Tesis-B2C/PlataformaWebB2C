@@ -11,14 +11,11 @@
   margin-bottom: 15px;
 }
 
-
 .wrap-register100 {
-
   background: #fff;
   border-radius: 10px;
   overflow: hidden;
 }
-
 
 .login100-form-title-registro {
   display: block;
@@ -55,8 +52,6 @@
     margin-top: 15px;
     position: relative;
   }
-
-
 }
 
 /* estilos para herrores  */
@@ -76,7 +71,6 @@ label {
   border: none;
   color: #bd2130;
   margin-left: 4px;
-
 }
 
 .alert2 {
@@ -96,8 +90,6 @@ label {
   border: none;
   color: #1a56e9;
   font-weight: bolder;
-
-
 }
 
 .errorSelect {
@@ -128,9 +120,7 @@ label {
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
-
 
 #imagenCarga {
   width: 60%;
@@ -146,12 +136,10 @@ label {
     width: 100%;
     margin: 0;
   }
-
 }
 
 .body-con-animacion{
   overflow: hidden;
-
 }
 
 select{
