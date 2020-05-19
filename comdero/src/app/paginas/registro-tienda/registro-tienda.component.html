@@ -18,7 +18,7 @@
 
     <aw-wizard #wizard [navBarLayout]="'large-empty-symbols'">
       <aw-wizard-step [stepTitle]="'Steptitle 1'">
-        <ng-template awWizardStepSymbol><i class="fa fa-street-view"></i></ng-template>
+        <ng-template awWizardStepSymbol><i class="fas fa-edit"></i></ng-template>
         <div class="datosregistro">
           <div class="form-group">
             <label class="tamanioCampos">Nombre comercial de su empresa o negocio</label>
@@ -145,12 +145,12 @@
       </aw-wizard-step>
 
       <aw-wizard-step [stepTitle]="'Paso 2'">
-        <ng-template awWizardStepSymbol><i class="fa fa-upload"></i></ng-template>
+        <ng-template awWizardStepSymbol><i class="fas fa-store"></i></ng-template>
         <div class="datosregistro">
           <label><b>¿Su negocio cuenta con un espacio fisico?</b></label>
           <div class="form-row espacio-fisico py-4">
             <div class="col-md-6 form-group ">
-              <button class="btn btn-outline-secondary px-4 py-3" type="submit" (click)="desdeNegocio()">Mi negocio
+              <button [disabled]="" class="btn btn-outline-secondary px-4 py-3" type="submit" (click)="desdeNegocio()">Mi negocio
                 cuenta con
                 un local comercial
               </button>
@@ -413,9 +413,8 @@
 
       </aw-wizard-step>
 
-
       <aw-wizard-step [stepTitle]="'Steptitle 3'">
-        <ng-template awWizardStepSymbol><i class="fa fa-file"></i></ng-template>
+        <ng-template awWizardStepSymbol><i class="fa fa-images"></i></ng-template>
         <div class="centered-content">
           <div>
             Content: Step 3
@@ -427,6 +426,7 @@
           </div>
         </div>
       </aw-wizard-step>
+
     </aw-wizard>
   </article><!-- card-body.// -->
 </div>

@@ -77,6 +77,7 @@ export class RegistroTiendaComponent implements OnInit{
 
   public bandAgregarSuc: boolean = false;
   public banderaCasa: boolean = false;
+
   public desdeNegocio() {
     this.banderaCasa = false;
     this.bandAgregarSuc=true;
@@ -84,11 +85,13 @@ export class RegistroTiendaComponent implements OnInit{
 
   public desdeCasa() {
     this.vectorOpciones=[1];
+    console.log(this.vectorOpciones);
     this.banderaCasa = true;
   }
 
   public agregarSucursal() {
     this.vectorOpciones.push(1);
+    console.log("negocio"+this.vectorOpciones);
   }
 
   public borrarOpciones(pocicion: number) {
