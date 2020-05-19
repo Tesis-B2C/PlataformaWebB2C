@@ -10,9 +10,10 @@ import { NgxEditorModule } from 'ngx-editor';
 import {FormsModule} from "@angular/forms";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { MetodosPagoComponent } from './metodos-pago/metodos-pago.component';
 
 @NgModule({
-  declarations: [ MenuGestionTiendasComponent, ProductosComponent],
+  declarations: [ MenuGestionTiendasComponent, ProductosComponent, MetodosPagoComponent],
   imports: [
     CommonModule,
     SidebarModule,

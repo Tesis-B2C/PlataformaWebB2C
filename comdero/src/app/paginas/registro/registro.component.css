@@ -41,8 +41,9 @@
 .container-registro {
   max-width: 450px;
   position: relative;
-  margin-top: 15px;
-  clear: top;
+
+
+
 }
 
 @media (max-width: 1364px) {
@@ -141,3 +142,8 @@ label {
   overflow: hidden;
 }
 
+select{
+
+  font-size: 5pt;
+
+}

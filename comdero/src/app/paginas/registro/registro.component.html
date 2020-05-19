@@ -39,26 +39,26 @@ shadow-lg p-2 mb-5 mt-4 bg-white rounded toastValidacion ">
 </div>
 
 
-<div class="mx-auto  container-registro shadow-lg p-3 bg-white rounded">
+<div class="mx-auto mt-md-5 container-registro  p-3 bg-white rounded my-0">
   <article class="  wrap-register100 card-body">
     <div id="divImagenLogo">
       <img id="imagenLogo" src="./../assets/images/logoValid2.png">
     </div>
-    <header class="login100-form-title-registro"><h5 class="card-title">Regístrate
+    <header><h5 class="login100-form-title p-b-49 text-left" >Regístrate
     </h5>
 
     </header>
 
-    <form #FormRegistro id="formRegistro">
+    <form #FormRegistro id="formRegistro" class="login100-form  validate-form">
       <div class="form-group">
         <label class="custom-control custom-radio custom-control-inline">
-          <input (change)="selectTipoAgente()" checked="" class="custom-control-input" name="gender" type="radio"
-                 value="option1">
+          <input (change)="selectTipoAgente($event)" checked="" class="custom-control-input" name="gender" type="radio"
+                 value="Persona">
           <span class="custom-control-label"> Persona Natural  </span>
         </label>
         <label class="custom-control custom-radio custom-control-inline">
-          <input (change)="selectTipoAgente()" class="custom-control-input" name="gender" type="radio"
-                 value="option2">
+          <input (change)="selectTipoAgente($event)" class="custom-control-input" name="gender" type="radio"
+                 value="Empresa">
           <span class="custom-control-label"> Empresa </span>
         </label>
 
@@ -113,9 +113,9 @@ shadow-lg p-2 mb-5 mt-4 bg-white rounded toastValidacion ">
                   [ngClass]="{
           'errorSelect': Provincia.invalid && (Provincia.dirty || Provincia.touched),
           'satisfactorioSelect': Provincia.valid && (Provincia.dirty || Provincia.touched)}"
-                  class=" tamanioInputs form-control" name="provincia"
+                  class=" tamanioInputs form-control  "  data-size="4"   name="provincia"
                   required>
-            <option selected="true" disabled="true">Selecciona una..</option>
+            <option selecteddisabled="true">Selecciona una..</option>
             <option *ngFor="let provincia of this.provincias"
                     value="{{provincia.COD_DPA}}"> {{provincia.NOMBRE }}</option>
           </select>

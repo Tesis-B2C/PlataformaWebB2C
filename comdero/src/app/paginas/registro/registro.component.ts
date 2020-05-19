@@ -47,9 +47,10 @@ export class RegistroComponent implements OnInit, OnDestroy {
     delete this.Agente;
   }
 
-  selectTipoAgente() {
+  selectTipoAgente(event) {
     this.banderaTipo = !this.banderaTipo;
-    console.log(this.banderaTipo);
+
+    this.Agente.Tipo = event.target.value;
   }
 
   validarCedula() {
@@ -83,7 +84,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
     this.loading = true;
     if (validador == "0") {
       this.banderaToast = false;
-      this.banderaTipo == true ? this.Agente.Tipo = 'Persona' : this.Agente.Tipo = 'Empresa';
+
 
       if (this.banderaDirecciones) {
         if (this.validarCedula() == true || this.Agente.Tipo == "Empresa") {

@@ -1,0 +1,192 @@
+<div class="container mt-5">
+  <div class="row  justify-content-center">
+    <h4 class=" col-11  ">Métodos de pago</h4>
+    <hr class="col-11  ">
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-8" id="panelUno">
+
+      <form class="card card-body ">
+        <h6>Tipos de pagos aceptados</h6>
+        <hr>
+        <div class="form-group">
+          <div class="alert alert-primary col-12" role="alert">
+            <a><span class="fa fa-exclamation fa-1x"></span></a>
+            Establezca los metodos de pago que desea implemetar en su tienda estas opciones se proporcionaran a todos
+            los productos que agregue en la tienda
+          </div>
+        </div>
+        <hr>
+        <div class="container">
+          <div class="form-row ">
+            <div class="form-group col-md-8">
+              <label>¿Desea recivir pagos en efectivo?</label>
+              <div class="form-group">
+              <label class="custom-control custom-radio custom-control-inline">
+                <input (change)="opcionRetiroPersona(0)" class="custom-control-input" name="entregaPersonal"
+                       type="radio" value="Si">
+                <span class="custom-control-label"> Si  </span>
+              </label>
+
+              <label class="custom-control custom-radio custom-control-inline">
+                <input (change)="opcionRetiroPersona(1)" checked="true" class="custom-control-input"
+                       name="entregaPersonal" type="radio" value="No">
+                <span class="custom-control-label"> No </span>
+              </label>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <p>Porcentaje descuento</p>
+                  <div class="input-group">
+                    <input class="form-control" name="iva"
+                           type="number">
+                    <div class="input-group-append">
+                      <span class="input-group-text unidades">%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- form-group end.// -->
+
+            <div class=" mx-auto  d-flex align-items-center">
+              <div class="col-md-2">
+            <p ><span class="fa fa-money-bill-wave fa-4x" style="color: #2a4c75"></span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="container">
+          <div class="form-row ">
+            <div class="form-group col-md-8">
+              <label>¿Desea recivir transferencias bancarias?</label>
+              <div class="form-group">
+              <label class="custom-control custom-radio custom-control-inline">
+                <input (change)="opcionRetiroPersona(0)" class="custom-control-input" name="entregaPersonal"
+                       type="radio" value="Si">
+                <span class="custom-control-label"> Si  </span>
+              </label>
+
+
+              <label class="custom-control custom-radio custom-control-inline">
+                <input (change)="opcionRetiroPersona(1)" checked="true" class="custom-control-input"
+                       name="entregaPersonal" type="radio" value="No">
+                <span class="custom-control-label"> No </span>
+              </label>
+              </div>
+              <div class="form-row">
+                <div class="form-group  col-md-12">
+                  <p>Número de cuenta </p>
+                  <input class="form-control" name="api"  type="text">
+                </div>
+                <div class="form-group  col-md-6">
+                  <p>Tipo de cuenta</p>
+                  <select   class="browser-default form-control " id="tipoCuenta" name="tipoCuenta" >
+                    <option>Ahorros</option>
+                    <option>Corriente</option>
+                  </select>
+                </div>
+                <div class="form-group  col-md-6">
+                  <p>Banco al que pertenece</p>
+                  <input class="form-control" name="api"  type="text">
+                </div>
+                <div class="form-group col-md-6">
+                  <p>Porcentaje de recargo</p>
+                  <div class="input-group">
+                    <input class="form-control" name="iva"
+                           type="number">
+                    <div class="input-group-append">
+                      <span class="input-group-text unidades">%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div> <!-- form-group end.// -->
+
+
+            <div class=" mx-auto d-flex align-items-center " >
+              <div class="col-md-2  ">
+                <p  class=""  ><span class=" fa fa-university fa-5x" style="color: #2a4c75" ></span></p>
+              </div>
+            </div>
+
+
+
+
+          </div>
+
+
+        </div>
+        <hr>
+        <div class="container">
+          <div class="form-row ">
+            <div class="form-group col-md-8">
+              <label>¿Desea recivir pagos electronicos con tarjetas de débito o crédito a traves de la plataforma PayPal?</label>
+              <label class="custom-control custom-radio custom-control-inline">
+                <input (change)="opcionRetiroPersona(0)" class="custom-control-input" name="entregaPersonal"
+                       type="radio" value="Si">
+                <span class="custom-control-label"> Si  </span>
+              </label>
+
+
+              <label class="custom-control custom-radio custom-control-inline">
+                <input (change)="opcionRetiroPersona(1)" checked="true" class="custom-control-input"
+                       name="entregaPersonal" type="radio" value="No">
+                <span class="custom-control-label"> No </span>
+              </label>
+              <div class="form-row">
+                <div class="form-group  col-12">
+                  <p>Api Key PayPal </p>
+                  <input class="form-control" name="api"  type="text">
+                </div>
+                <div class="form-group col-md-6">
+                  <p>Porcentaje de recargo <span class="text-muted">Opcional</span> </p>
+                  <div class="input-group">
+                    <input class="form-control" name="iva"
+                           type="number">
+                    <div class="input-group-append">
+                      <span class="input-group-text unidades">%</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div> <!-- form-group end.// -->
+
+
+            <div class=" mx-auto d-flex align-items-center">
+              <div class="col-md-2 mt-3">
+                <p ><span class="fab fa-cc-paypal fa-4x" style="color: #2a4c75"></span></p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <hr>
+
+      </form>
+
+    </div>
+    <div class="card card-body col-md-3   mt-sm-4 ml-md-2  mt-md-0 container-categoria " id="panelDos">
+      <div class="container">
+
+
+        <h6>Categorias</h6>
+        <hr class="mb-0">
+        <label class="">Seleccione las categorias a las cuales pertenece el producto</label>
+
+
+      </div>
+
+
+    </div>
+  </div>
+
+
+
+</div>
+

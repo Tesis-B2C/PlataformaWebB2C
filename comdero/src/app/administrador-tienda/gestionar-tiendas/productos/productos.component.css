@@ -1,4 +1,6 @@
 
+
+
 textarea {
   font-size: smaller;
   resize: none;
@@ -157,10 +159,23 @@ input {
  font-size: 12px;
 }
 
-#selectUnidades {
-  font-size: small;
+select {
+ font-size: small;
 }
 
+select::-ms-expand{
+   overflow: auto;
+  max-height: 3px;
+
+}
+
+
+/*
+select:hover{
+  transform: rotate(-45deg); !* Giramos el cuadrado *!
+  transition: all 0.25s ease;
+}
+*/
 
 .chip {
   border-radius: 25px;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-menu-gestion-tiendas',
@@ -7,21 +7,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuGestionTiendasComponent {
 
-  constructor() { }
+  constructor() {
+  }
 
   private _opened: boolean = true;
   private _modeNum: number = 1;
   private _positionNum: number = 0;
   private _animate: boolean = true;
   private _autoCollapseHeight: number = null;
-  private _autoCollapseWidth: number = 500;
+  private _autoCollapseWidth: number = 600;
   private _MODES: Array<string> = ['over', 'push', 'slide'];
   private _POSITIONS: Array<string> = ['left', 'right', 'top', 'bottom'];
 
   private _toggleOpened(): void {
     this._opened = !this._opened;
   }
-
 
 
   private _onOpenStart(): void {
@@ -39,7 +39,6 @@ export class MenuGestionTiendasComponent {
   private _onClosed(): void {
     console.info('Sidebar closed');
   }
-
 
 
 }

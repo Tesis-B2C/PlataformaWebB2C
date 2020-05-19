@@ -32,6 +32,8 @@ a {
   color: #12345f;
   text-decoration: none;
   font-size: small;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .fa {
@@ -39,33 +41,37 @@ a {
 }
 
 
-li a:hover {
+li a:focus {
+  color: #ca6900;
+  background-color: #d3d3d4;
+  padding-right: 30%;
+}
+li a:active{
   color: #ca6900;
   background-color: #d3d3d4;
   padding-right: 30%;
 }
 
-
-li a:focus {
-  color: #ca6900;
-  font-size: medium;
-
-}
-
-
 i {
   color: #fca147;
 }
 
+.opcion-interna{
+  font-weight: normal;
+
+}
 
 ::ng-deep aside {
 
   padding: 1.2em 1em;
-  border-right: 0.05px solid #ca6900;
-  border-top: none;
-  width: 280px;
-  height: 100%;
 
+  border-top: none;
+  width: 240px;
+  height: 100%;
+   background-color: white;
+  -webkit-box-shadow: 13px -1px 19px 1px rgba(207,207,207,1);
+  -moz-box-shadow: 13px -1px 19px 1px rgba(207,207,207,1);
+  box-shadow: 13px -1px 19px 1px rgba(207,207,207,1);
 }
 
 .demo-header__toggle:after {
@@ -81,11 +87,14 @@ i {
 
 .demo-contents {
   height: 100%;
+  display: block;
 
 }
 
 ng-sidebar-container {
-  max-height: 100%;
+
+  max-height: 86vh;
+  overflow: hidden;
 }
 
 @media (max-width: 500px) {

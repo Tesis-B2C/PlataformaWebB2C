@@ -2,16 +2,19 @@ import {Component, DoCheck, OnChanges, OnInit} from '@angular/core';
 import {CategoriaServicio} from "../../../servicios/categoria.servicio";
 import {UnidadMedidaServicio} from "../../../servicios/unidad_medida.servicio";
 import {Cmyk, ColorPickerService} from "ngx-color-picker";
-import {log} from "util";
+import {Oferta} from "../../../modelos/oferta";
+import {Producto} from "../../../modelos/producto"
+import {Variante} from "../../../modelos/variante"
+import {Imagen_Producto} from "../../../modelos/imagen_producto"
 
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css']
 })
-export class ProductosComponent implements OnInit,DoCheck ,OnChanges {
-
-
+export class ProductosComponent implements OnInit, DoCheck, OnChanges {
+  public videoPorGuardar;
+  public Imagenes_Producto = [[]];
   public imagenes = [[]];
   public unidades: any;
   public vectorBanderaAgregarImagen = [false];
@@ -25,14 +28,14 @@ export class ProductosComponent implements OnInit,DoCheck ,OnChanges {
   public banderaEntregaDomicilioLocalidad: boolean = false;
   public banderaEntregaDomicilioFueraLocalidad: boolean = false;
   public banderaVariaciones: boolean = false;
-
+  public Variantes = [];
   //
   public categorias: any;
   public editorConfig = {
     "editable": true,
     "spellcheck": true,
-    "height": "100px",
-    "minHeight": "100px",
+    "height": "80px",
+    "minHeight": "80px",
     "width": "auto",
     "minWidth": "0",
     "translate": "yes",
@@ -40,7 +43,7 @@ export class ProductosComponent implements OnInit,DoCheck ,OnChanges {
     "showToolbar": true,
     "imageEndPoint": "",
     "toolbar": [
-      ["bold", "italic", "underline", "strikeThrough", "superscript", "subscript"],
+      ["bold", "italic", "underline", "strikeThrough"],
       ["fontName", "fontSize",],
       ["justifyLeft", "justifyCenter", "justifyRight", "justifyFull", "indent", "outdent"],
       ["cut", "copy", "delete", "removeFormat", "undo", "redo"],
@@ -69,12 +72,19 @@ export class ProductosComponent implements OnInit,DoCheck ,OnChanges {
 
   //
   public categoriaEncontrada = new Set();
- public  categoriaEncontrada2 = new Set();
+  public categoriaEncontrada2 = new Set();
+  public panelUno;
+  public panelDos;
+  // objetos
+  public Oferta: Oferta;
+  public Producto: Producto
+
   constructor(private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
+    this.Oferta = new Oferta(null, null, null, null, null, null);
+    this.Producto = new Producto(null, null, null, null, null, null, null, null);
+    this.Variantes.push(new Variante(null, null, null, null, null, "unidades"));
   }
 
-  public  panelUno;
-  public panelDos;
   ngOnInit() {
     this.getCategorias();
     this.getUnidadesMedida();
@@ -82,41 +92,46 @@ export class ProductosComponent implements OnInit,DoCheck ,OnChanges {
     this.panelDos = document.getElementById('panelDos') as HTMLElement;
 
   }
-ngDoCheck(): void {
-    this.panelDos.style.maxHeight=this.panelUno.offsetHeight+'px';
 
-}
+  ngDoCheck(): void {
+    this.panelDos.style.maxHeight = this.panelUno.offsetHeight + 'px';
+
+  }
 
   ngOnChanges(): void {
-    this.panelDos.style.maxHeight=this.panelUno.offsetHeight+'px';
-    console.log("height |",this.panelUno.offsetHeight+'px')
+    this.panelDos.style.maxHeight = this.panelUno.offsetHeight + 'px';
+    console.log("height |", this.panelUno.offsetHeight + 'px')
   }
-  public subirImagenes(event, indice) {
-    if (event.target.files && event.target.files[0]) {
-      var filesAmount = event.target.files.length;
+
+  public async subirImagenes(eventEntrante, indice) {
+    if(this.imagenes[indice]==null){
+      this.imagenes[indice]=[];
+    }
+    if (eventEntrante.target.files && eventEntrante.target.files[0]) {
+      var filesAmount = eventEntrante.target.files.length;
+      this.vectorBanderaAgregarImagen[indice] = true;
       if (filesAmount > 6) {
         this.banderaMensajeMaximoImagenes = true;
       } else {
         for (let i = 0; i < filesAmount; i++) {
+          this.Imagenes_Producto[indice].push(new Imagen_Producto(eventEntrante.target.files[i].name, eventEntrante.target.files[i].type, null, eventEntrante.target.files[i].size));
           var reader = new FileReader();
           reader.onload = (event: any) => {
-            console.log(event.target.result);
-            this.imagenes.push([]);
+            if( this.imagenes[indice]!=null)
             this.imagenes[indice].push(event.target.result);
-            debugger
-            this.vectorBanderaAgregarImagen[indice] = true;
             document.forms["form"].reset();
-            if (this.imagenes[indice].length > 6) {
-              this.imagenes[indice] = [];
-              document.forms["form"].reset();
-              this.vectorBanderaAgregarImagen[indice] = false;
-              this.banderaMensajeMaximoImagenes = true;
-            } else if (this.imagenes[indice].length == 6) {
-              this.banderaMensajeMaximoImagenes = false
-              this.banderaMaximoImagenes = false;
-            }
           }
-          reader.readAsDataURL(event.target.files[i]);
+          await reader.readAsDataURL(eventEntrante.target.files[i]);
+        }
+        if (this.Imagenes_Producto[indice].length > 6) {
+          this.imagenes[indice]=null;
+          this.Imagenes_Producto[indice].splice(0,  this.Imagenes_Producto[indice].length);
+          document.forms["form"].reset();
+          this.vectorBanderaAgregarImagen[indice] = false;
+          this.banderaMensajeMaximoImagenes = true;
+        } else if (this.Imagenes_Producto[indice].length == 6) {
+          this.banderaMensajeMaximoImagenes = false
+          this.banderaMaximoImagenes = false;
         }
       }
 
@@ -125,13 +140,14 @@ ngDoCheck(): void {
   }
 
 
-  public subirVideo($event) {
+  public subirVideo(event) {
     this.banderaAnimacionVideo = true;
-    debugger
-    let fileList: FileList = $event.target.files;
+    let fileList: FileList = event.target.files;
     this.data = {};
     if (fileList.length > 0) {
       let file: File = fileList[0];
+      this.videoPorGuardar=new Imagen_Producto(file.name, file.type, null, file.size);
+
       /*  console.log('video seleccionado', file);*/
       if (file.size < 150000000) {
         this.banderaMensajeMaximoVideo = false
@@ -154,16 +170,49 @@ ngDoCheck(): void {
   public quitarImagenes(indice: any, imagen) {
     this.imagenes[indice].splice(imagen, 1);
     document.forms["form"].reset();
+    this.Imagenes_Producto[indice].splice(imagen, 1);
+  }
+
+  public opcionCondicionProducto(condicion) {
+    this.Producto.Condicion = condicion;
+
+  }
+
+  public opcionRastrearStock(event) {
+    if (event.target.checked) {
+      this.Producto.Rastrear_Stock = 0;
+    } else {
+      this.Producto.Rastrear_Stock = 1;
+    }
+  }
+
+  public opcionVenderSinStock(event) {
+    if (event.target.checked) {
+      this.Producto.Vender_Sin_Stock = 0;
+    } else {
+      this.Producto.Vender_Sin_Stock = 1;
+    }
+  }
+
+  public opcionReservarProducto(event) {
+    if (event.target.checked) {
+      this.Oferta.Reserva = 0;
+    } else {
+      this.Oferta.Reserva = 1;
+    }
+
   }
 
   public opcionRetiroPersona(retiroPersona) {
     console.log("Envio persona", retiroPersona);
+    this.Oferta.Ofrece_Retiro_Personal = retiroPersona;
   }
 
   public opcionEntregaLocalidad(entregaLocalidad) {
 
     this.banderaEntregaDomicilioLocalidad = !this.banderaEntregaDomicilioLocalidad;
     console.log("Entrega localidad", entregaLocalidad);
+    this.Oferta.Ofrece_Envio_Local = entregaLocalidad;
 
   }
 
@@ -171,15 +220,19 @@ ngDoCheck(): void {
     this.banderaEntregaDomicilioFueraLocalidad = !this.banderaEntregaDomicilioFueraLocalidad;
     this.vectorOpcionesEntregaFueraLocalidad = [1];
     console.log("Entrega fuera localidad", entregaFueraLocalidad);
+    this.Oferta.Ofrece_Envio_Externo = entregaFueraLocalidad;
   }
 
   public opcionGarantia(garantia) {
     console.log("Garantia", garantia)
+    this.Oferta.Garantia = garantia;
   }
 
   public opcionVariaciones() {
     this.banderaVariaciones = !this.banderaVariaciones;
     this.vectorOpciones = [];
+
+
   }
 
 
@@ -190,11 +243,20 @@ ngDoCheck(): void {
   public borrarOpciones(pocicion: number) {
     this.color.push("#2889e9");
     this.vectorBanderaAgregarImagen.push(false);
+    this.Variantes.push(new Variante(null, null, null, null, null, "unidades"));
+    this.Imagenes_Producto.push([]);
+    this.imagenes.push([]);
   }
 
   public borrarOpcionesProducto(pocicion: number) {
 
-    this.vectorOpciones.splice(pocicion, 1)
+    this.vectorOpciones.splice(pocicion, 1);
+    this.Variantes.splice(pocicion + 1, 1);
+    this.Imagenes_Producto[pocicion + 1] = [];
+    this.imagenes[pocicion + 1] = [];
+    this.vectorBanderaAgregarImagen[pocicion + 1] = false;
+
+
   }
 
 
@@ -236,7 +298,6 @@ ngDoCheck(): void {
       })
 
 
-
     } catch (e) {
       console.log("error:" + JSON.stringify((e).error.message));
     }
@@ -268,7 +329,6 @@ ngDoCheck(): void {
       this.categoriasSeleccionadas.delete(c22);
     }
   }
-
 
 
   busquedaCategoria2(busqueda) {
@@ -310,12 +370,15 @@ ngDoCheck(): void {
 
   }
 
-  public cambiarColor(color: string): Cmyk {
+  public cambiarColor(color: string, indice): Cmyk {
     const hsva = this.cpService.stringToHsva(color);
     const rgba = this.cpService.hsvaToRgba(hsva);
     console.log(color);
     console.log(rgba);
+    this.Variantes[indice].Color = rgba;
+    console.log("Variante despuez de color", this.Variantes[indice]);
     return this.cpService.rgbaToCmyk(rgba);
+
   }
 
   public eliminarCategoria(cc) {
