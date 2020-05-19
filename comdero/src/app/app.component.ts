@@ -11,8 +11,6 @@ export class AppComponent implements OnInit{
   public token;
   public identity;
   constructor(private _agenteService: AgenteServicio) {
-
-
   }
 
   ngOnInit() {
@@ -20,7 +18,5 @@ export class AppComponent implements OnInit{
     this.token = this._agenteService.getToken();
     console.log("las vaibles del Storage");
     console.log(this.identity + this.token);
-
-
   }
 }

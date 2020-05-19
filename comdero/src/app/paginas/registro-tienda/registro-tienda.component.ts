@@ -1,10 +1,7 @@
-import {Component, OnInit, Renderer2} from '@angular/core';
+import {Component, OnInit, Renderer2, DoCheck } from '@angular/core';
 import {Sucursal} from "../../modelos/sucursal";
 import {Tienda} from "../../modelos/tienda";
 import {DpaServicio} from "../../servicios/dpa.servicio";
-
-import {environment} from "../../../environments/environment.prod";
-import * as Mapboxgl from 'mapbox-gl';
 
 declare const require: any;
 
@@ -14,7 +11,7 @@ declare const require: any;
   styleUrls: ['./registro-tienda.component.css']
 })
 
-export class RegistroTiendaComponent implements OnInit {
+export class RegistroTiendaComponent implements OnInit{
   public Tienda;
   public Sucursal;
   public htmlcomponent;
@@ -45,9 +42,6 @@ export class RegistroTiendaComponent implements OnInit {
   public provincias;
   public ciudades;
 
-  //Mapa
-  mapa: Array<Mapboxgl.Map> = new Array<Mapboxgl.Map>();
-
   public vectorOpciones: Array<number> = [1, 1]; // las dos formas swon validas pero la activa es ams facil
   /*public vectorOpciones=new Array(0);*/
 
@@ -61,51 +55,6 @@ export class RegistroTiendaComponent implements OnInit {
 
   async ngOnInit() {
     await this.getDpaProvincias("P");
-  }
-
-  public contSucursal = 0;
-  public banderaSucursal: boolean = true;
-
-  public mapas() {
-    this.banderaSucursal = false;
-    Mapboxgl.accessToken = environment.mapboxkey;
-    this.mapa[this.contSucursal] = new Mapboxgl.Map({
-      container: 'mapa-mapbox' + this.contSucursal.toString(), // Id del container
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [-78.5248, -0.22521], // Coordenadas que aparece centrado long. lat.
-      zoom: 12 // zoom
-    });
-    //Controles
-    this.mapa[this.contSucursal].addControl(new Mapboxgl.NavigationControl());
-    this.mapa[this.contSucursal].addControl(new Mapboxgl.GeolocateControl({
-      positionOptions: {
-        enableHighAccuracy: true
-      },
-      trackUserLocation: true
-    }));
-    this.crearMarcador(-78.5248,-0.22521);
-    this.contSucursal++;
-  }
-
-  crearMarcador(lng: number, lat:number){
-    const marcador = new Mapboxgl.Marker({
-      draggable: true
-    })
-      .setLngLat([-78.5248,-0.22521])
-      .addTo(this.mapa[this.contSucursal]);
-
-    /*Muestra coordenadas del puntero en consola
-    marcador.on('drag',()=>{
-      console.log(marcador.getLngLat());
-    })*/
-
-/*    function onDragEnd() {
-      var lngLat = marcador.getLngLat();
-      coordinates.style.display = 'block';
-      coordinates.innerHTML =
-        'Longitud: ' + lngLat.lng + '<br />Latitud: ' + lngLat.lat;
-    }
-    marcador.on('dragend', onDragEnd);*/
   }
 
   async getDpaProvincias(buscar) {
@@ -126,17 +75,30 @@ export class RegistroTiendaComponent implements OnInit {
     }
   }
 
+  public contSucursal = 0;
+  public banderaSucursal: boolean = true;
+  public banderaCasa: boolean = true;
+
+  public async mapas() {
+    this.banderaSucursal = false;
+    this.banderaCasa = true;
+    this.contSucursal++;
+  }
+
   public async agregarOpciones() {
     this.vectorOpciones.push(1);
-    this.mapas();
   }
 
   public borrarOpciones(pocicion: number) {
-    this.vectorOpciones.splice(pocicion, 1)
   }
 
-  public desdeCasa(){
+  public desdeCasa() {
     this.banderaSucursal = true;
-    this.contSucursal = 0;
+    this.banderaCasa = false;
+  }
+
+  public desdeNegocio() {
+      this.vectorOpciones.push(1);
+      this.vectorOpciones.push(1);
   }
 }
