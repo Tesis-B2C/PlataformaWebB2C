@@ -1,3 +1,4 @@
+
 import {Component, DoCheck, OnChanges, OnInit} from '@angular/core';
 import {CategoriaServicio} from "../../../servicios/categoria.servicio";
 import {UnidadMedidaServicio} from "../../../servicios/unidad_medida.servicio";
@@ -24,6 +25,8 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
   public data: any = [];
   public banderaAnimacionVideo: boolean = false;
 
+  // banderas de envios a domicilio
+  // banderas de envios a domicilio
   // banderas de envios a domicilio
   public banderaEntregaDomicilioLocalidad: boolean = false;
   public banderaEntregaDomicilioFueraLocalidad: boolean = false;
@@ -64,6 +67,8 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
     'fa fa-gem', 'fa fa-palette', 'fa fa-laptop',
     'fa fa-car', 'fa fa-dumbbell', 'fa fa-book',
     'fa fa-dog', 'fa fa-gamepad', 'fa fa-grin-stars', 'fa fa-heartbeat', 'fa fa-building', 'fa fa-tractor'];
+
+
 
   // vector categorias
   public c1 = [];
@@ -118,7 +123,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
           var reader = new FileReader();
           reader.onload = (event: any) => {
             if( this.imagenes[indice]!=null)
-            this.imagenes[indice].push(event.target.result);
+              this.imagenes[indice].push(event.target.result);
             document.forms["form"].reset();
           }
           await reader.readAsDataURL(eventEntrante.target.files[i]);
@@ -228,11 +233,10 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
     this.Oferta.Garantia = garantia;
   }
 
+
   public opcionVariaciones() {
     this.banderaVariaciones = !this.banderaVariaciones;
     this.vectorOpciones = [];
-
-
   }
 
 
@@ -382,15 +386,20 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
   public eliminarCategoria(cc) {
 
     if (cc.TIPO == "C3") {
+
       let elemento3 = document.getElementById('labelcheckCategoria3' + cc.i) as HTMLElement;
+
       elemento3.classList.remove('chip2-alternativo')
+
       elemento3.classList.add('chip2', 'col', 'btn', 'btn-light');
+
     } else if (cc.TIPO == "C2") {
+
       let elemento2 = document.getElementById('labelcheckCategoria2' + cc.i) as HTMLElement;
       elemento2.classList.remove('chip-alternativo')
       elemento2.classList.add('chip', 'col', 'btn', 'btn-light');
-    }
 
+    }
     this.categoriasSeleccionadas.delete(cc);
   }
 }
