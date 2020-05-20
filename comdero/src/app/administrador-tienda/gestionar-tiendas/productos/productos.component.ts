@@ -386,5 +386,6 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
       elemento2.classList.add('chip', 'col', 'btn', 'btn-light');
     }
     this.categoriasSeleccionadas.delete(cc);
+
   }
 }

@@ -579,7 +579,7 @@
         <h6>Categorias seleccionadas</h6>
         <hr>
         <div class="form-row ">
-          <div class="form-group">
+          <div class="form-group" *ngIf="this.categoriasSeleccionadas.size==0">
             <div class="alert alert-primary col-12" role="alert">
               <a><span class="fa fa-exclamation fa-1x"></span></a>
               No existe categorias seleccionadas
