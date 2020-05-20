@@ -9,7 +9,9 @@ import {Component, DoCheck, OnChanges, OnInit} from '@angular/core';
 export class MetodosPagoComponent implements OnInit {
 
 
-
+public banderaPagoEfectivo:boolean=false;
+public banderaPagoTransferencia:boolean=false;
+public banderaPagoElectronico:boolean=false;
 
 
   constructor(){;
@@ -19,10 +21,18 @@ export class MetodosPagoComponent implements OnInit {
 
 
   }
+  public opcionPagoEfectivo(){
+    this.banderaPagoEfectivo=!this.banderaPagoEfectivo;
+  }
+
+  public opcionPagoTransferencia(){
+    this.banderaPagoTransferencia=!this.banderaPagoTransferencia;
+  }
 
 
-
-
+  public opcionPagoElectronico(){
+    this.banderaPagoElectronico=!this.banderaPagoElectronico;
+  }
 
 
 

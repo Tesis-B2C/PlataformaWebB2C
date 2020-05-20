@@ -24,18 +24,18 @@
               <label>¿Desea recivir pagos en efectivo?</label>
               <div class="form-group">
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionRetiroPersona(0)" class="custom-control-input" name="entregaPersonal"
+                <input (change)="opcionPagoEfectivo()" class="custom-control-input" name="pagoEfectivo"
                        type="radio" value="Si">
                 <span class="custom-control-label"> Si  </span>
               </label>
 
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionRetiroPersona(1)" checked="true" class="custom-control-input"
-                       name="entregaPersonal" type="radio" value="No">
+                <input (change)="opcionPagoEfectivo()" checked="true" class="custom-control-input"
+                       name="pagoEfectivo" type="radio" value="No">
                 <span class="custom-control-label"> No </span>
               </label>
               </div>
-              <div class="form-row">
+              <div class="form-row" *ngIf="this.banderaPagoEfectivo">
                 <div class="form-group col-md-6">
                   <p>Porcentaje descuento</p>
                   <div class="input-group">
@@ -63,19 +63,19 @@
               <label>¿Desea recivir transferencias bancarias?</label>
               <div class="form-group">
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionRetiroPersona(0)" class="custom-control-input" name="entregaPersonal"
+                <input (change)="opcionPagoTransferencia()" class="custom-control-input" name="pagoTransferencia"
                        type="radio" value="Si">
                 <span class="custom-control-label"> Si  </span>
               </label>
 
 
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionRetiroPersona(1)" checked="true" class="custom-control-input"
-                       name="entregaPersonal" type="radio" value="No">
+                <input (change)="opcionPagoTransferencia()" checked="true" class="custom-control-input"
+                       name="pagoTransferencia" type="radio" value="No">
                 <span class="custom-control-label"> No </span>
               </label>
               </div>
-              <div class="form-row">
+              <div class="form-row" *ngIf="this.banderaPagoTransferencia">
                 <div class="form-group  col-md-12">
                   <p>Número de cuenta </p>
                   <input class="form-control" name="api"  type="text">
@@ -92,7 +92,7 @@
                   <input class="form-control" name="api"  type="text">
                 </div>
                 <div class="form-group col-md-6">
-                  <p>Porcentaje de recargo</p>
+                  <p>Porcentaje descuento</p>
                   <div class="input-group">
                     <input class="form-control" name="iva"
                            type="number">
@@ -126,18 +126,18 @@
             <div class="form-group col-md-8">
               <label>¿Desea recivir pagos electronicos con tarjetas de débito o crédito a traves de la plataforma PayPal?</label>
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionRetiroPersona(0)" class="custom-control-input" name="entregaPersonal"
+                <input (change)="opcionPagoElectronico()" class="custom-control-input" name="pagoElectronico"
                        type="radio" value="Si">
                 <span class="custom-control-label"> Si  </span>
               </label>
 
 
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionRetiroPersona(1)" checked="true" class="custom-control-input"
-                       name="entregaPersonal" type="radio" value="No">
+                <input (change)="opcionPagoElectronico()" checked="true" class="custom-control-input"
+                       name="pagoElectronico" type="radio" value="No">
                 <span class="custom-control-label"> No </span>
               </label>
-              <div class="form-row">
+              <div class="form-row" *ngIf="this.banderaPagoElectronico">
                 <div class="form-group  col-12">
                   <p>Api Key PayPal </p>
                   <input class="form-control" name="api"  type="text">
@@ -171,14 +171,16 @@
       </form>
 
     </div>
-    <div class="card card-body col-md-3   mt-sm-4 ml-md-2  mt-md-0 container-categoria " id="panelDos">
-      <div class="container">
+    <div class=" col-md-3   mt-3 ml-md-2    mt-md-0" id="panelDos">
+      <div class=" card card-body container jackInTheBox  animated alert alert-warning  fade show "
+           role="alert" >
 
 
-        <h6>Categorias</h6>
+
+        <h4 class="alert-heading">Recuerda!</h4>
         <hr class="mb-0">
-        <label class="">Seleccione las categorias a las cuales pertenece el producto</label>
-
+        <label class="">Configurar un método de pago electrónico como paypal siempre brindará más seguridad a tus clientes y por supuesto un método de págo más ágil y efectivo </label>
+        <img class="mx-auto  pt-md-4  mensaje-mascota" src="../../../assets/images/mascota-condero.png" width="80%">
 
       </div>
 

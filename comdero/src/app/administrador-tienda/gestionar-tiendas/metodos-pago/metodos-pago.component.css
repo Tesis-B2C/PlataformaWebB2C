@@ -28,8 +28,8 @@ select{
 }
 
 .iconos-pagos {
-  width: 10rem;
-  height: 10rem;
+  width: 8rem;
+  height: 8rem;
   border-radius: 50%;
   background: #f1f3f4;
   display: flex;
@@ -38,4 +38,12 @@ select{
   text-align: center;
   margin:0px auto;
   padding:3%
+}
+@media (max-width: 764px) {
+  .mensaje-mascota {
+
+    width: 40%;
+
+  }
+
 }
