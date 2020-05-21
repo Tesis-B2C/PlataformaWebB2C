@@ -47,3 +47,24 @@ select{
   }
 
 }
+
+.alert-link{
+font-size: smaller; font-weight: normal; color: black
+}
+
+.alert-link:hover{
+   color: #007bff;
+    cursor: pointer;
+}
+
+.alert-link:active{
+  color: #102350;
+}
+.alert-link:after{
+  color: #102350;
+}
+
+.btn{
+  font-size: small;
+
+}

@@ -1,3 +1,52 @@
+<ng-template #content let-modal>
+
+
+  <div class="modal-header">
+    <h4 class="modal-title">Como recibir pagos a través de Paypal</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+      <iframe width="100%" height="315" [src]="getVideoIframe('https://www.youtube.com/watch?v=MoBrIn0eQbU')" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" ></iframe>
+    </p>
+    <h4>Pasos a seguir</h4>
+    <br>
+    <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+    <br>
+    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+    <br>
+    <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+
+
+  </div>
+
+
+</ng-template>
+
+<ng-template #content2 let-modal>
+
+
+  <div class="modal-header">
+    <h4 class="modal-title">Servicios y Beneficios de Implementar el pago electrónico</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+      <iframe width="100%" height="515" [src]="getVideoIframe('https://www.youtube.com/watch?v=MoBrIn0eQbU')" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" ></iframe>
+    </p>
+
+  </div>
+
+
+</ng-template>
+
+
+
+
 <div class="container mt-5">
   <div class="row  justify-content-center">
     <h4 class=" col-11  ">Métodos de pago</h4>
@@ -13,7 +62,7 @@
         <div class="form-group">
           <div class="alert alert-primary col-12" role="alert">
             <a><span class="fa fa-exclamation fa-1x"></span></a>
-            Establezca los metodos de pago que desea implemetar en su tienda estas opciones se proporcionaran a todos
+            Establezca los métodos de pago que desea implementar en su tienda, estas opciones se asignaran a todos
             los productos que agregue en la tienda
           </div>
         </div>
@@ -21,7 +70,7 @@
         <div class="container">
           <div class="form-row ">
             <div class="form-group col-md-8">
-              <label>¿Desea recivir pagos en efectivo?</label>
+              <label>¿Desea recibir pagos en efectivo ?</label>
               <div class="form-group">
               <label class="custom-control custom-radio custom-control-inline">
                 <input (change)="opcionPagoEfectivo()" class="custom-control-input" name="pagoEfectivo"
@@ -37,7 +86,7 @@
               </div>
               <div class="form-row" *ngIf="this.banderaPagoEfectivo">
                 <div class="form-group col-md-6">
-                  <p>Porcentaje descuento</p>
+                  <p>Porcentaje descuento <span class="text-muted" style="font-size: smaller">(Opcional)</span></p>
                   <div class="input-group">
                     <input class="form-control" name="iva"
                            type="number">
@@ -60,7 +109,7 @@
         <div class="container">
           <div class="form-row justify-content-center">
             <div class="form-group col-md-8">
-              <label>¿Desea recivir transferencias bancarias?</label>
+              <label>¿Desea recibir transferencias bancarias?</label>
               <div class="form-group">
               <label class="custom-control custom-radio custom-control-inline">
                 <input (change)="opcionPagoTransferencia()" class="custom-control-input" name="pagoTransferencia"
@@ -92,7 +141,7 @@
                   <input class="form-control" name="api"  type="text">
                 </div>
                 <div class="form-group col-md-6">
-                  <p>Porcentaje descuento</p>
+                  <p>Porcentaje descuento<span class="text-muted" style="font-size: smaller">(Opcional)</span></p>
                   <div class="input-group">
                     <input class="form-control" name="iva"
                            type="number">
@@ -124,7 +173,8 @@
         <div class="container">
           <div class="form-row ">
             <div class="form-group col-md-8">
-              <label>¿Desea recivir pagos electronicos con tarjetas de débito o crédito a traves de la plataforma PayPal?</label>
+              <label>¿Desea recibir pagos electrónicos con tarjetas de débito o crédito a traves de la plataforma PayPal?</label>
+             <div class="form-group">
               <label class="custom-control custom-radio custom-control-inline">
                 <input (change)="opcionPagoElectronico()" class="custom-control-input" name="pagoElectronico"
                        type="radio" value="Si">
@@ -137,13 +187,16 @@
                        name="pagoElectronico" type="radio" value="No">
                 <span class="custom-control-label"> No </span>
               </label>
+             </div>
               <div class="form-row" *ngIf="this.banderaPagoElectronico">
                 <div class="form-group  col-12">
                   <p>Api Key PayPal </p>
                   <input class="form-control" name="api"  type="text">
+                  <a (click)="openBackDropCustomClass(content)" class="alert-link" >* Como obtener la Api Key de PayPal ?</a>
+
                 </div>
                 <div class="form-group col-md-6">
-                  <p>Porcentaje de recargo <span class="text-muted">Opcional</span> </p>
+                  <p>Porcentaje de recargo <span class="text-muted" style="font-size: smaller">(Opcional)</span> </p>
                   <div class="input-group">
                     <input class="form-control" name="iva"
                            type="number">
@@ -152,6 +205,7 @@
                     </div>
                   </div>
                 </div>
+
 
               </div>
 
@@ -171,20 +225,21 @@
       </form>
 
     </div>
-    <div class=" col-md-3   mt-3 ml-md-2    mt-md-0" id="panelDos">
-      <div class=" card card-body container jackInTheBox  animated alert alert-warning  fade show "
+    <div class=" col-md-3  mt-3    mt-md-0" id="panelDos">
+      <div class=" card card-body">
+      <div class=" card jackInTheBox  animated alert alert-warning  fade show "
            role="alert" >
 
 
 
         <h4 class="alert-heading">Recuerda!</h4>
         <hr class="mb-0">
-        <label class="">Configurar un método de pago electrónico como paypal siempre brindará más seguridad a tus clientes y por supuesto un método de págo más ágil y efectivo </label>
+        <label>Configurar un método de pago electrónico como Paypal siempre brindará más seguridad a tus clientes y por supuesto un método de pago más ágil y efectivo </label>
         <img class="mx-auto  pt-md-4  mensaje-mascota" src="../../../assets/images/mascota-condero.png" width="80%">
 
       </div>
-
-
+        <button type="button" class="alert alert-warning" (click)="openBackDropCustomClass(content2)"> <span class="fa fa-info fa-1x d-block"></span>Click aqui para más información a cerca de los métodos de pago electrónicos</button>
+      </div>
     </div>
   </div>
 

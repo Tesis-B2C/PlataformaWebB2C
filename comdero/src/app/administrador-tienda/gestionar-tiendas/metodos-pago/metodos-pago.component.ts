@@ -1,4 +1,6 @@
 import {Component, DoCheck, OnChanges, OnInit} from '@angular/core';
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 
 @Component({
@@ -14,7 +16,7 @@ public banderaPagoTransferencia:boolean=false;
 public banderaPagoElectronico:boolean=false;
 
 
-  constructor(){;
+  constructor(private modalService: NgbModal,private _sanitizer: DomSanitizer){;
   }
 
   ngOnInit() {
@@ -35,8 +37,21 @@ public banderaPagoElectronico:boolean=false;
   }
 
 
+  openBackDropCustomClass(content) {
+    this.modalService.open(content, { centered: true ,size:'lg'});
+  }
 
+  getVideoIframe(url) {
+    var video, results;
 
+    if (url === null) {
+      return '';
+    }
+    results = url.match('[\\?&]v=([^&#]*)');
+    video   = (results === null) ? url : results[1];
+
+    return this._sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + video);
+  }
 
 
 
