@@ -1,4 +1,3 @@
-
 import {Component, DoCheck, OnChanges, OnInit} from '@angular/core';
 import {CategoriaServicio} from "../../../servicios/categoria.servicio";
 import {UnidadMedidaServicio} from "../../../servicios/unidad_medida.servicio";
@@ -7,6 +6,9 @@ import {Oferta} from "../../../modelos/oferta";
 import {Producto} from "../../../modelos/producto"
 import {Variante} from "../../../modelos/variante"
 import {Imagen_Producto} from "../../../modelos/imagen_producto"
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {DomSanitizer} from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-productos',
@@ -69,7 +71,6 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
     'fa fa-dog', 'fa fa-gamepad', 'fa fa-grin-stars', 'fa fa-heartbeat', 'fa fa-building', 'fa fa-tractor'];
 
 
-
   // vector categorias
   public c1 = [];
   public c2 = [];
@@ -84,7 +85,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
   public Oferta: Oferta;
   public Producto: Producto
 
-  constructor(private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
+  constructor(private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
     this.Oferta = new Oferta(null, null, null, null, null, null);
     this.Producto = new Producto(null, null, null, null, null, null, null, null);
     this.Variantes.push(new Variante(null, null, null, null, null, "unidades"));
@@ -109,8 +110,8 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
   }
 
   public async subirImagenes(eventEntrante, indice) {
-    if(this.imagenes[indice]==null){
-      this.imagenes[indice]=[];
+    if (this.imagenes[indice] == null) {
+      this.imagenes[indice] = [];
     }
     if (eventEntrante.target.files && eventEntrante.target.files[0]) {
       var filesAmount = eventEntrante.target.files.length;
@@ -122,15 +123,15 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
           this.Imagenes_Producto[indice].push(new Imagen_Producto(eventEntrante.target.files[i].name, eventEntrante.target.files[i].type, null, eventEntrante.target.files[i].size));
           var reader = new FileReader();
           reader.onload = (event: any) => {
-            if( this.imagenes[indice]!=null)
+            if (this.imagenes[indice] != null)
               this.imagenes[indice].push(event.target.result);
             document.forms["form"].reset();
           }
           await reader.readAsDataURL(eventEntrante.target.files[i]);
         }
         if (this.Imagenes_Producto[indice].length > 6) {
-          this.imagenes[indice]=null;
-          this.Imagenes_Producto[indice].splice(0,  this.Imagenes_Producto[indice].length);
+          this.imagenes[indice] = null;
+          this.Imagenes_Producto[indice].splice(0, this.Imagenes_Producto[indice].length);
           document.forms["form"].reset();
           this.vectorBanderaAgregarImagen[indice] = false;
           this.banderaMensajeMaximoImagenes = true;
@@ -146,12 +147,13 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
 
 
   public subirVideo(event) {
-    this.banderaAnimacionVideo = true;
+
     let fileList: FileList = event.target.files;
     this.data = {};
     if (fileList.length > 0) {
+      this.banderaAnimacionVideo = true;
       let file: File = fileList[0];
-      this.videoPorGuardar=new Imagen_Producto(file.name, file.type, null, file.size);
+      this.videoPorGuardar = new Imagen_Producto(file.name, file.type, null, file.size);
 
       /*  console.log('video seleccionado', file);*/
       if (file.size < 150000000) {
@@ -215,13 +217,13 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
 
   public opcionEntregaLocalidad(entregaLocalidad, bandera) {
 
-    this.banderaEntregaDomicilioLocalidad =bandera;
+    this.banderaEntregaDomicilioLocalidad = bandera;
     console.log("Entrega localidad", entregaLocalidad);
     this.Oferta.Ofrece_Envio_Local = entregaLocalidad;
 
   }
 
-  public opcionEntregaFueraLocalidad(entregaFueraLocalidad,bandera) {
+  public opcionEntregaFueraLocalidad(entregaFueraLocalidad, bandera) {
     this.banderaEntregaDomicilioFueraLocalidad = bandera;
     this.vectorOpcionesEntregaFueraLocalidad = [1];
     console.log("Entrega fuera localidad", entregaFueraLocalidad);
@@ -387,5 +389,27 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
     }
     this.categoriasSeleccionadas.delete(cc);
 
+  }
+
+  abrirModalVideoYoutube(content) {
+    this.modalService.open(content, {centered: true, size: 'md'});
+  }
+
+  public videoYoutube: any;
+  public direccionVideoYoutube: any;
+
+  getVideoIframe() {
+    let url = this.direccionVideoYoutube;
+    var video, results;
+
+    if (url === null) {
+      return '';
+    }
+    results = url.match('[\\?&]v=([^&#]*)');
+    video = (results === null) ? url : results[1];
+    this.videoYoutube = this._sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + video);
+  }
+  resetearVideoYoutube(){
+    this.videoYoutube=null;
   }
 }

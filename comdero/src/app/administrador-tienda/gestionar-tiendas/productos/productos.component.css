@@ -148,6 +148,18 @@ input {
   cursor: pointer;
   border-bottom: #1a56e9 solid 1.5px;
 }
+.agregarVideoYoutube{
+  font-size: small;
+  color: #1a56e9;
+  cursor: pointer;
+
+}
+
+.agregarVideoYoutube:hover{
+  color: #007bff;
+  cursor: pointer;
+
+}
 
 #agregarProducto:hover {
   opacity: 0.8;
@@ -314,3 +326,6 @@ app-ngx-editor {
 }
 
 
+button{
+  font-size: small;
+}

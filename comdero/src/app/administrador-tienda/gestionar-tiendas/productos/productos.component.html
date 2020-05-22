@@ -1,3 +1,32 @@
+<ng-template #modalVideoYoutube let-modal>
+
+
+  <div class="modal-header">
+    <h4 class="modal-title">Subir video de Youtube</h4>
+    <button type="button" class="close" style="font-size: medium" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+    <label>Pegar URL de Youtube</label>
+    <input type="text"  #DireccionVideoYoutube="ngModel" [(ngModel)]="this.direccionVideoYoutube" class="form-control" placeholder="https://">
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancelar</button>
+      <button type="button" class="btn btn-danger" (click)="modal.close('Ok click');getVideoIframe()" >Subir Video de youtube <span class="fab fa-youtube"></span> </button>
+    </div>
+
+  </div>
+
+
+</ng-template>
+
+
+
+
+
 <div class="container mt-5">
   <div class="row  justify-content-center">
     <h4 class=" col-11  ">Agregar Producto</h4>
@@ -14,12 +43,14 @@
           <div class="form-row ">
             <div class="col-md-6">
               <label>Nombre</label>
-              <input #NombreProducto="ngModel" [(ngModel)]="this.Producto.Nombre_Producto" class=" form-control py-3 " name="nombreProducto"
+              <input #NombreProducto="ngModel" [(ngModel)]="this.Producto.Nombre_Producto" class=" form-control py-3 "
+                     name="nombreProducto"
                      type="text">
             </div>
             <div class="col-lg-6">
               <label>Codigo</label>
-              <input #CodigoProducto="ngModel" [(ngModel)]="this.Producto.Cod_Producto" class=" form-control py-3 " name="codigoProducto"
+              <input #CodigoProducto="ngModel" [(ngModel)]="this.Producto.Cod_Producto" class=" form-control py-3 "
+                     name="codigoProducto"
                      type="text">
             </div>
           </div>
@@ -34,7 +65,8 @@
 
               <div class="form-group">
                 <label for="selectCondicion">Estado del producto</label>
-                <select class="form-control" id="selectCondicion" (change)="opcionCondicionProducto($event.target.value)">
+                <select (change)="opcionCondicionProducto($event.target.value)" class="form-control"
+                        id="selectCondicion">
                   <option value="Nuevo">Nuevo</option>
                   <option value="Como nuevo">Como nuevo</option>
                   <option value="Usado como nuevo">Usado como nuevo</option>
@@ -47,14 +79,16 @@
 
           <div class="form-group mt-2">
             <label>Descripción del producto </label>
-            <textarea #DescripcionProducto="ngModel" [(ngModel)]="this.Producto.Descripcion_Producto" class="form-control" name="descripcionProducto" required
+            <textarea #DescripcionProducto="ngModel" [(ngModel)]="this.Producto.Descripcion_Producto"
+                      class="form-control" name="descripcionProducto" required
                       rows="2" type="text"></textarea>
           </div>
 
 
           <div class="form-group">
             <label>Detalles del producto </label>
-            <app-ngx-editor #DetalleProducto="ngModel" [(ngModel)]="this.Producto.Detalle_Producto" [config]="editorConfig" name="detalleProducto"></app-ngx-editor>
+            <app-ngx-editor #DetalleProducto="ngModel" [(ngModel)]="this.Producto.Detalle_Producto"
+                            [config]="editorConfig" name="detalleProducto"></app-ngx-editor>
 
             <!--<div [innerHTML]=this.htmlcomponent>
             </div>  para cuando quieras mostrar con stilos-->
@@ -115,9 +149,20 @@
         </div> <!-- form-group end.// -->
 
         <br>
+
+
+        <div class="form-row">
+          <a class="ml-2 col-md-5"><label>Video promocional del producto </label> </a>
+          <span *ngIf="banderaMensajeMaximoVideo" class=" col-md-5" style="color: red;font-size: small">* Recuerda Maximo 150MB</span>
+          <a (click)="abrirModalVideoYoutube(modalVideoYoutube)" class="agregarVideoYoutube ml-2 col-md-5 ">
+            Agregar video de youtube &nbsp; <span class="fab fa-youtube "></span>
+          </a>
+        </div>
+
+
         <div class="form-group ">
-          <a class="ml-2"><label>Video promocional del producto </label>
-            <span *ngIf="banderaMensajeMaximoVideo" class="ml-2" style="color: red">* Recuerda Maximo 150MB</span></a>
+
+
           <div [ngClass]="{'borde-imagenes':!data.video,'borde-imagenes1':data.video }" class="row mt-3 mx-1 ">
             <div class="  mx-auto">
               <div *ngIf="this.banderaAnimacionVideo==true">
@@ -135,7 +180,12 @@
               </div>
             </div>
             <div class=" col-12 mx-auto">
+              <div *ngIf="this.videoYoutube">
+              <iframe width="100%" height="315" [src]="this.videoYoutube" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+
               <div *ngIf="data.video">
+
                 <div class="mx-auto fondo-animacion-carga-video">
                   <video class="video-carga" controls height="auto" width="auto">
                     <source [src]="data.video" type="{{ data.type }}">
@@ -143,19 +193,22 @@
                 </div>
               </div>
             </div>
-            <div class=" col-auto  mx-auto">
+            <div *ngIf="!this.videoYoutube" class=" col-auto  mx-auto">
               <div class=" pt-4 ml-2  ">
                 <label class="imagen-agregar ">
                   <i class="fa fa-film fa-4x  "></i>
                   <i class="fa fa-plus-circle fa-2x ml-1 "></i>
-                  <input (change)="subirVideo($event)"  accept="video/*" class="file" type="file">
+                  <input (change)="subirVideo($event)" accept="video/*" class="file" type="file">
                 </label>
               </div>
             </div>
-            <div class=" col-12 mx-auto ">
-              <p class="link-agregar-imagenes pb-5">Click para Agregar un video promocional del producto</p>
+            <div *ngIf="!this.videoYoutube" class=" col-12 mx-auto ">
+              <p class="link-agregar-imagenes pb-5">Subir un video promocional del producto desde el ordenador</p>
             </div>
           </div>
+          <a  *ngIf="this.videoYoutube"  (click)="resetearVideoYoutube()"  class="agregarVideoYoutube ml-2 col-md-5 ">
+            Agregar video desde el ordenador &nbsp; <span class="fa fa-laptop "></span>
+          </a>
         </div>
 
 
@@ -170,7 +223,9 @@
               <label> Precio unitario sin iva </label>
 
               <div class="input-group mb-3">
-                <input class="form-control" placeholder="0.00" type="number" #PrecioUnitario0="ngModel" [(ngModel)]="this.Variantes[0].Precio_Unitario" name="precioUnitario0">
+                <input #PrecioUnitario0="ngModel" [(ngModel)]="this.Variantes[0].Precio_Unitario" class="form-control"
+                       name="precioUnitario0"
+                       placeholder="0.00" type="number">
                 <div class="input-group-append">
                   <span class="input-group-text unidades">$</span>
                 </div>
@@ -208,7 +263,7 @@
                 <span class="custom-control-label"> Si  </span>
               </label>
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionRetiroPersona(1)"  class="custom-control-input"
+                <input (change)="opcionRetiroPersona(1)" class="custom-control-input"
                        name="entregaPersonal" type="radio" value="No">
                 <span class="custom-control-label"> No </span>
               </label>
@@ -224,7 +279,7 @@
                 <span class="custom-control-label"> Si  </span>
               </label>
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionEntregaLocalidad(1, false)"  class="custom-control-input"
+                <input (change)="opcionEntregaLocalidad(1, false)" class="custom-control-input"
                        name="entregaLocalidad" type="radio" value="No">
                 <span class="custom-control-label"> No </span>
               </label>
@@ -283,7 +338,7 @@
                 <span class="custom-control-label"> Si  </span>
               </label>
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionEntregaFueraLocalidad(1, false)"  class="custom-control-input"
+                <input (change)="opcionEntregaFueraLocalidad(1, false)" class="custom-control-input"
                        name="entregaFueraLocalidad" type="radio" value="No">
                 <span class="custom-control-label"> No </span>
               </label>
@@ -345,9 +400,12 @@
           <div class="form-group col-lg-8">
             <div class="input-group">
 
-              <input class="form-control" placeholder="20" type="number"  #Stock0="ngModel" [(ngModel)]="this.Variantes[0].Stock" name="stock0">
+              <input #Stock0="ngModel" [(ngModel)]="this.Variantes[0].Stock" class="form-control" name="stock0"
+                     placeholder="20" type="number">
 
-              <select   class="browser-default form-control col " id="selectUnidad" #Unidad0="ngModel" [(ngModel)]="this.Variantes[0].Cod_Unidad" name="unidad0" >
+              <select #Unidad0="ngModel" [(ngModel)]="this.Variantes[0].Cod_Unidad"
+                      class="browser-default form-control col "
+                      id="selectUnidad" name="unidad0">
 
                 <option *ngFor="let unidad of this.unidades">{{unidad.COD_UNIDAD_MEDIDA}}</option>
 
@@ -395,7 +453,7 @@
           <br><br>
           <div class="form-group">
             <label class="custom-control custom-radio custom-control-inline">
-              <input (click)="opcionGarantia($event.target.value)"  class="custom-control-input" name="garantia"
+              <input (click)="opcionGarantia($event.target.value)" class="custom-control-input" name="garantia"
                      type="radio" value="Garantia del vendedor">
               <span class="custom-control-label"> Garantia del vendedor </span>
             </label>
@@ -433,7 +491,7 @@
               <span class="custom-control-label"> Si  </span>
             </label>
             <label class="custom-control custom-radio custom-control-inline">
-              <input (change)="opcionVariaciones(false)"  class="custom-control-input" name="variaciones" type="radio"
+              <input (change)="opcionVariaciones(false)" class="custom-control-input" name="variaciones" type="radio"
                      value="No">
               <span class="custom-control-label"> No </span>
             </label>
@@ -459,11 +517,13 @@
           </div>
           <div class="form-group  col-md-4">
             <label> Talla </label>
-            <input class="form-control " placeholder="Ej. xl/34/etc" type="text"  #Talla0="ngModel" [(ngModel)]="this.Variantes[0].Talla" name="talla0">
+            <input #Talla0="ngModel" [(ngModel)]="this.Variantes[0].Talla" class="form-control " name="talla0"
+                   placeholder="Ej. xl/34/etc" type="text">
           </div>
           <div class="form-group  col-md-4">
             <label>Material</label>
-            <input class="form-control  " placeholder="Ej. Gamusa/algodon" type="text" #Material0="ngModel" [(ngModel)]="this.Variantes[0].Material" name="material0">
+            <input #Material0="ngModel" [(ngModel)]="this.Variantes[0].Material" class="form-control  " name="material0"
+                   placeholder="Ej. Gamusa/algodon" type="text">
           </div>
 
         </div>
@@ -479,16 +539,20 @@
           <hr class="col-12 mt-0">
           <div class="form-group col-md-2 offset-lg-1 justify-content-center">
             <label>Color</label>
-            <input (colorPickerChange)="cambiarColor($event,i+1)" [(colorPicker)]=color[i+1] [style.background]=color[i+1]
+            <input (colorPickerChange)="cambiarColor($event,i+1)" [(colorPicker)]=color[i+1]
+                   [style.background]=color[i+1]
                    class="form-control input-colores"/>
           </div>
           <div class="form-group  col-md-4">
             <label> Talla </label>
-            <input class="form-control " placeholder="Ej. xl/34/etc" type="text" #Talla="ngModel" [(ngModel)]="this.Variantes[i+1].Talla" name="talla{{i+1}}">
+            <input #Talla="ngModel" [(ngModel)]="this.Variantes[i+1].Talla" class="form-control " name="talla{{i+1}}"
+                   placeholder="Ej. xl/34/etc" type="text">
           </div>
           <div class="form-group  col-md-4">
             <label>Material</label>
-            <input class="form-control  " placeholder="Ej. Gamusa/algodon" type="text"  #Material="ngModel" [(ngModel)]="this.Variantes[i+1].Material" name="material{{i+0}}">
+            <input #Material="ngModel" [(ngModel)]="this.Variantes[i+1].Material" class="form-control  "
+                   name="material{{i+0}}"
+                   placeholder="Ej. Gamusa/algodon" type="text">
           </div>
 
 
@@ -544,12 +608,14 @@
             <label> Stock y unidad de medida del producto 2</label>
             <div class="input-group">
 
-              <input class="form-control" placeholder="200" type="text"  #Stock="ngModel" [(ngModel)]="this.Variantes[i+1].Stock" name="stock{{i+1}}">
+              <input #Stock="ngModel" [(ngModel)]="this.Variantes[i+1].Stock" class="form-control" name="stock{{i+1}}"
+                     placeholder="200" type="text">
 
-              <select class=" form-control col-lg-5 " id="selectUnidades" #Unidad="ngModel" [(ngModel)]="this.Variantes[i+1].Cod_Unidad" name="unidad{{i+1}}">
+              <select #Unidad="ngModel" [(ngModel)]="this.Variantes[i+1].Cod_Unidad" class=" form-control col-lg-5 "
+                      id="selectUnidades" name="unidad{{i+1}}">
 
-                <option   *ngFor="let unidad of this.unidades"
-                          [selected]="unidad.COD_UNIDAD_MEDIDA=='unidades'">{{unidad.COD_UNIDAD_MEDIDA}}</option>
+                <option *ngFor="let unidad of this.unidades"
+                        [selected]="unidad.COD_UNIDAD_MEDIDA=='unidades'">{{unidad.COD_UNIDAD_MEDIDA}}</option>
               </select>
 
             </div>
@@ -558,7 +624,10 @@
           <div class="form-group  col-md-4">
             <label>Precio</label>
             <div class="input-group mb-3">
-              <input aria-label="Amount (to the nearest dollar)" class="form-control" placeholder="20" type="text" #PrecioUnitario="ngModel" [(ngModel)]="this.Variantes[i+1].Precio_Unitario" name="precioUnitario{{i+1}}">
+              <input #PrecioUnitario="ngModel" [(ngModel)]="this.Variantes[i+1].Precio_Unitario"
+                     aria-label="Amount (to the nearest dollar)" class="form-control"
+                     name="precioUnitario{{i+1}}" placeholder="20"
+                     type="text">
               <div class="input-group-append">
                 <span class="input-group-text unidades">$</span>
               </div>
@@ -579,7 +648,7 @@
         <h6>Categorias seleccionadas</h6>
         <hr>
         <div class="form-row ">
-          <div class="form-group" *ngIf="this.categoriasSeleccionadas.size==0">
+          <div *ngIf="this.categoriasSeleccionadas.size==0" class="form-group">
             <div class="alert alert-primary col-12" role="alert">
               <a><span class="fa fa-exclamation fa-1x"></span></a>
               No existe categorias seleccionadas
