@@ -19,4 +19,6 @@ export class AppComponent implements OnInit{
     console.log("las vaibles del Storage");
     console.log(this.identity + this.token);
   }
+
+
 }

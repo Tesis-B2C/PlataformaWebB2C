@@ -148,7 +148,7 @@
                 <label class="imagen-agregar ">
                   <i class="fa fa-film fa-4x  "></i>
                   <i class="fa fa-plus-circle fa-2x ml-1 "></i>
-                  <input (change)="subirVideo($event)" accept="video/*" class="file" type="file">
+                  <input (change)="subirVideo($event)"  accept="video/*" class="file" type="file">
                 </label>
               </div>
             </div>
@@ -208,7 +208,7 @@
                 <span class="custom-control-label"> Si  </span>
               </label>
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionRetiroPersona(1)" checked="true" class="custom-control-input"
+                <input (change)="opcionRetiroPersona(1)" [checked]="this.Oferta.Ofrece_Retiro_Personal==1" class="custom-control-input"
                        name="entregaPersonal" type="radio" value="No">
                 <span class="custom-control-label"> No </span>
               </label>
@@ -224,7 +224,7 @@
                 <span class="custom-control-label"> Si  </span>
               </label>
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionEntregaLocalidad(1)" checked="" class="custom-control-input"
+                <input (change)="opcionEntregaLocalidad(1)" [checked]="!this.banderaEntregaDomicilioLocalidad" class="custom-control-input"
                        name="entregaLocalidad" type="radio" value="No">
                 <span class="custom-control-label"> No </span>
               </label>

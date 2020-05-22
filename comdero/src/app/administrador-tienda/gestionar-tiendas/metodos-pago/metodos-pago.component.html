@@ -1,3 +1,4 @@
+<body  >
 <ng-template #content let-modal>
 
 
@@ -28,7 +29,7 @@
 <ng-template #content2 let-modal>
 
 
-  <div class="modal-header">
+  <div class="modal-header"  >
     <h4 class="modal-title">Servicios y Beneficios de Implementar el pago electrónico</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
@@ -47,7 +48,7 @@
 
 
 
-<div class="container mt-5">
+<div class="container mt-5" >
   <div class="row  justify-content-center">
     <h4 class=" col-11  ">Métodos de pago</h4>
     <hr class="col-11  ">
@@ -56,7 +57,7 @@
   <div class="row justify-content-center">
     <div class="col-md-8" id="panelUno">
 
-      <form class="card card-body ">
+      <form #formMetodoPago class="card card-body ">
         <h6>Tipos de pagos aceptados</h6>
         <hr>
         <div class="form-group">
@@ -73,14 +74,14 @@
               <label>¿Desea recibir pagos en efectivo ?</label>
               <div class="form-group">
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionPagoEfectivo()" class="custom-control-input" name="pagoEfectivo"
+                <input (change)="opcionPagoEfectivo()"  class="custom-control-input" name="pagoEfectivo"   id="pagoEfectivoSi"
                        type="radio" value="Si">
                 <span class="custom-control-label"> Si  </span>
               </label>
 
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionPagoEfectivo()" checked="true" class="custom-control-input"
-                       name="pagoEfectivo" type="radio" value="No">
+                <input (change)="opcionPagoEfectivo()"   class="custom-control-input"   id="pagoEfectivoNo"
+                       name="pagoEfectivo" type="radio" [checked]="!this.banderaPagoEfectivo" value="No">
                 <span class="custom-control-label"> No </span>
               </label>
               </div>
@@ -119,7 +120,7 @@
 
 
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionPagoTransferencia()" checked="true" class="custom-control-input"
+                <input (change)="opcionPagoTransferencia()"  [checked]="!this.banderaPagoTransferencia"  class="custom-control-input"
                        name="pagoTransferencia" type="radio" value="No">
                 <span class="custom-control-label"> No </span>
               </label>
@@ -183,7 +184,7 @@
 
 
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionPagoElectronico()" checked="true" class="custom-control-input"
+                <input (change)="opcionPagoElectronico()" [checked]="!this.banderaPagoElectronico" class="custom-control-input"
                        name="pagoElectronico" type="radio" value="No">
                 <span class="custom-control-label"> No </span>
               </label>
@@ -246,4 +247,5 @@
 
 
 </div>
+</body>
 

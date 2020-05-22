@@ -85,7 +85,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
   public Producto: Producto
 
   constructor(private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
-    this.Oferta = new Oferta(null, null, null, null, null, null);
+    this.Oferta = new Oferta(null, null, null, 1, null, null);
     this.Producto = new Producto(null, null, null, null, null, null, null, null);
     this.Variantes.push(new Variante(null, null, null, null, null, "unidades"));
   }
