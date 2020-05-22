@@ -14,7 +14,6 @@ const places = require("../../../../node_modules/places.js/dist/cdn/places.js");
 })
 
 export class RegistroComponent implements OnInit, OnDestroy {
-
   private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
   public soloLetrasPattern: any = "[ a-zA-ZÑñáéíóúÁÉÍÓÚ ][ a-zA-ZÑñáéíóúÁÉÍÓÚ ]*$[0-9]{0}";
   private LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
@@ -40,7 +39,6 @@ export class RegistroComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getDpaProvincias("P");
-
   }
 
   ngOnDestroy() {
