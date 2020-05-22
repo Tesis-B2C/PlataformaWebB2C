@@ -1,7 +1,7 @@
-import {AfterContentInit, Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit} from '@angular/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DomSanitizer} from '@angular/platform-browser';
-import {NavigationStart, Router} from "@angular/router";
+
 
 
 @Component({
@@ -17,20 +17,12 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
   public banderaPagoElectronico: boolean=false;
 
 
-  constructor(private modalService: NgbModal, private _sanitizer: DomSanitizer,router: Router) {
-    router.events
-      .subscribe((event: NavigationStart) => {
-        if (event.navigationTrigger === 'popstate') {
-          console.log('Back button pressed2');
-        }
-      });
+  constructor(private modalService: NgbModal, private _sanitizer: DomSanitizer) {
+
   }
 
 
-  @HostListener('window:popstate', ['$event'])
-  onPopState(event) {
-    console.log('Back button pressed');
-  }
+
   ngOnInit() {
 
 
@@ -41,30 +33,23 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     console.log("destruyendo")
 
-    this.elegir();
   }
 
 
-  elegir() {
-    if (confirm('se borran los datos')) {
-      alert('borrar');
-    } else {
-      alert('no se borra nada');
-    }
+
+
+
+  public opcionPagoEfectivo(bandera) {
+    this.banderaPagoEfectivo = bandera
+  }
+
+  public opcionPagoTransferencia(bandera) {
+    this.banderaPagoTransferencia = bandera;
   }
 
 
-  public opcionPagoEfectivo() {
-    this.banderaPagoEfectivo = !this.banderaPagoEfectivo;
-  }
-
-  public opcionPagoTransferencia() {
-    this.banderaPagoTransferencia = !this.banderaPagoTransferencia;
-  }
-
-
-  public opcionPagoElectronico() {
-    this.banderaPagoElectronico = !this.banderaPagoElectronico;
+  public opcionPagoElectronico(bandera) {
+    this.banderaPagoElectronico = bandera;
   }
 
 

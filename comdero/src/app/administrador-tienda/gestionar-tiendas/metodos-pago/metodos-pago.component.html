@@ -74,14 +74,14 @@
               <label>¿Desea recibir pagos en efectivo ?</label>
               <div class="form-group">
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionPagoEfectivo()"  class="custom-control-input" name="pagoEfectivo"   id="pagoEfectivoSi"
+                <input (change)="opcionPagoEfectivo(true) " class="custom-control-input" name="pagoEfectivo"   id="pagoEfectivoSi"
                        type="radio" value="Si">
                 <span class="custom-control-label"> Si  </span>
               </label>
 
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionPagoEfectivo()"   class="custom-control-input"   id="pagoEfectivoNo"
-                       name="pagoEfectivo" type="radio" [checked]="!this.banderaPagoEfectivo" value="No">
+                <input (change)="opcionPagoEfectivo(false)"   class="custom-control-input"   id="pagoEfectivoNo"
+                       name="pagoEfectivo" type="radio" value="No">
                 <span class="custom-control-label"> No </span>
               </label>
               </div>
@@ -113,14 +113,14 @@
               <label>¿Desea recibir transferencias bancarias?</label>
               <div class="form-group">
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionPagoTransferencia()" class="custom-control-input" name="pagoTransferencia"
+                <input (change)="opcionPagoTransferencia(true)" class="custom-control-input" name="pagoTransferencia"
                        type="radio" value="Si">
                 <span class="custom-control-label"> Si  </span>
               </label>
 
 
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionPagoTransferencia()"  [checked]="!this.banderaPagoTransferencia"  class="custom-control-input"
+                <input (change)="opcionPagoTransferencia(false)"   class="custom-control-input"
                        name="pagoTransferencia" type="radio" value="No">
                 <span class="custom-control-label"> No </span>
               </label>
@@ -177,14 +177,14 @@
               <label>¿Desea recibir pagos electrónicos con tarjetas de débito o crédito a traves de la plataforma PayPal?</label>
              <div class="form-group">
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionPagoElectronico()" class="custom-control-input" name="pagoElectronico"
+                <input (change)="opcionPagoElectronico(true)" class="custom-control-input" name="pagoElectronico"
                        type="radio" value="Si">
                 <span class="custom-control-label"> Si  </span>
               </label>
 
 
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionPagoElectronico()" [checked]="!this.banderaPagoElectronico" class="custom-control-input"
+                <input (change)="opcionPagoElectronico(false)"  class="custom-control-input"
                        name="pagoElectronico" type="radio" value="No">
                 <span class="custom-control-label"> No </span>
               </label>

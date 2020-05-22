@@ -208,7 +208,7 @@
                 <span class="custom-control-label"> Si  </span>
               </label>
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionRetiroPersona(1)" [checked]="this.Oferta.Ofrece_Retiro_Personal==1" class="custom-control-input"
+                <input (change)="opcionRetiroPersona(1)"  class="custom-control-input"
                        name="entregaPersonal" type="radio" value="No">
                 <span class="custom-control-label"> No </span>
               </label>
@@ -219,12 +219,12 @@
             <label>¿Desea ofrecer el servicio de entrega a domicilio dentro de la localidad?</label>
             <div class="form-group">
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionEntregaLocalidad(0)" class="custom-control-input" name="entregaLocalidad"
+                <input (change)="opcionEntregaLocalidad(0, true)" class="custom-control-input" name="entregaLocalidad"
                        type="radio" value="Si">
                 <span class="custom-control-label"> Si  </span>
               </label>
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionEntregaLocalidad(1)" [checked]="!this.banderaEntregaDomicilioLocalidad" class="custom-control-input"
+                <input (change)="opcionEntregaLocalidad(1, false)"  class="custom-control-input"
                        name="entregaLocalidad" type="radio" value="No">
                 <span class="custom-control-label"> No </span>
               </label>
@@ -278,12 +278,12 @@
 
             <div class="form-group">
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionEntregaFueraLocalidad(0)" class="custom-control-input"
+                <input (change)="opcionEntregaFueraLocalidad(0, true)" class="custom-control-input"
                        name="entregaFueraLocalidad" type="radio" value="Si">
                 <span class="custom-control-label"> Si  </span>
               </label>
               <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionEntregaFueraLocalidad(1)" checked class="custom-control-input"
+                <input (change)="opcionEntregaFueraLocalidad(1, false)"  class="custom-control-input"
                        name="entregaFueraLocalidad" type="radio" value="No">
                 <span class="custom-control-label"> No </span>
               </label>
@@ -395,7 +395,7 @@
           <br><br>
           <div class="form-group">
             <label class="custom-control custom-radio custom-control-inline">
-              <input (click)="opcionGarantia($event.target.value)" checked class="custom-control-input" name="garantia"
+              <input (click)="opcionGarantia($event.target.value)"  class="custom-control-input" name="garantia"
                      type="radio" value="Garantia del vendedor">
               <span class="custom-control-label"> Garantia del vendedor </span>
             </label>
@@ -428,12 +428,12 @@
 
           <div class="form-group">
             <label class="custom-control custom-radio custom-control-inline">
-              <input (change)="opcionVariaciones()" class="custom-control-input" name="variaciones" type="radio"
+              <input (change)="opcionVariaciones(true)" class="custom-control-input" name="variaciones" type="radio"
                      value="Si">
               <span class="custom-control-label"> Si  </span>
             </label>
             <label class="custom-control custom-radio custom-control-inline">
-              <input (change)="opcionVariaciones()" checked class="custom-control-input" name="variaciones" type="radio"
+              <input (change)="opcionVariaciones(false)"  class="custom-control-input" name="variaciones" type="radio"
                      value="No">
               <span class="custom-control-label"> No </span>
             </label>

@@ -85,7 +85,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
   public Producto: Producto
 
   constructor(private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
-    this.Oferta = new Oferta(null, null, null, 1, null, null);
+    this.Oferta = new Oferta(null, null, null, null, null, null);
     this.Producto = new Producto(null, null, null, null, null, null, null, null);
     this.Variantes.push(new Variante(null, null, null, null, null, "unidades"));
   }
@@ -213,16 +213,16 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
     this.Oferta.Ofrece_Retiro_Personal = retiroPersona;
   }
 
-  public opcionEntregaLocalidad(entregaLocalidad) {
+  public opcionEntregaLocalidad(entregaLocalidad, bandera) {
 
-    this.banderaEntregaDomicilioLocalidad = !this.banderaEntregaDomicilioLocalidad;
+    this.banderaEntregaDomicilioLocalidad =bandera;
     console.log("Entrega localidad", entregaLocalidad);
     this.Oferta.Ofrece_Envio_Local = entregaLocalidad;
 
   }
 
-  public opcionEntregaFueraLocalidad(entregaFueraLocalidad) {
-    this.banderaEntregaDomicilioFueraLocalidad = !this.banderaEntregaDomicilioFueraLocalidad;
+  public opcionEntregaFueraLocalidad(entregaFueraLocalidad,bandera) {
+    this.banderaEntregaDomicilioFueraLocalidad = bandera;
     this.vectorOpcionesEntregaFueraLocalidad = [1];
     console.log("Entrega fuera localidad", entregaFueraLocalidad);
     this.Oferta.Ofrece_Envio_Externo = entregaFueraLocalidad;
@@ -234,8 +234,8 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
   }
 
 
-  public opcionVariaciones() {
-    this.banderaVariaciones = !this.banderaVariaciones;
+  public opcionVariaciones(bandera) {
+    this.banderaVariaciones = bandera;
     this.vectorOpciones = [];
   }
 
