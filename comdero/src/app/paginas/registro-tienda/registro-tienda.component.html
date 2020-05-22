@@ -23,7 +23,6 @@
         <aw-wizard-step [stepTitle]="'Paso 1'">
           <ng-template awWizardStepSymbol><i class="fas fa-edit"></i></ng-template>
           <div class="datosregistro">
-
             <div class="form-group">
               <label>* Razon Social</label>
               <input #Razon_Social="ngModel" style="text-transform: uppercase;" [(ngModel)]="this.Tienda.Razon_Social"
@@ -65,7 +64,7 @@
 
             <div class="form-row">
               <div class="form-group col-lg-6">
-                <label>Página Web</label>
+                <label>Link Página Web</label>
                 <input #Link_Pagina="ngModel" style="text-transform: lowercase;" [(ngModel)]="this.Tienda.Link_Pagina"
                        [ngClass]="{
           'is-invalid': Link_Pagina.invalid && (Link_Pagina.dirty || Link_Pagina.touched),
@@ -82,13 +81,12 @@
               </div> <!-- form-group end.// -->
 
               <div class="col-lg-6 form-group">
-                <label>Facebook</label>
+                <label>Link Facebook</label>
                 <input #Link_Facebook="ngModel" style="text-transform: lowercase;"
                        [(ngModel)]="this.Tienda.Link_Facebook" [ngClass]="{
           'is-invalid': Link_Facebook.invalid && (Link_Facebook.dirty || Link_Facebook.touched),
-          'is-valid': Link_Facebook.valid && (Link_Facebook.touched || Link_Facebook.dirty )}"
-                       [pattern]='this.urlPattern'
-                       class="tamanioInputs form-control"
+          'is-valid': Link_Facebook.valid && (Link_Facebook.touched || Link_Facebook.dirty)}"
+                       [pattern]='this.urlPattern' class="tamanioInputs form-control"
                        name="link_Facebook" placeholder="www.facebook.com/comdero" type="url">
 
                 <div *ngIf="Link_Facebook.invalid && (Link_Facebook.touched||Link_Facebook.dirty)">
@@ -140,15 +138,15 @@
           <div class="datosregistro">
             <label class="font-weight-bold">¿Su negocio cuenta con un espacio fisico?</label>
 
-            <div class="form-row espacio-fisico py-4">
+            <div class="form-row py-4">
               <div class="col-md-6 form-group ">
-                <button [disabled]="btnEspacioFisico" class="btnActivo btn btn-outline-secondary px-4 py-3" type="submit" (click)="desdeNegocio()">
-                  Mi negocio cuenta con un local comercial
+                <button [disabled]="btnEspacioFisico" class="btnActivo btn btn-outline-secondary px-4 py-3 text-justify" type="submit" (click)="desdeNegocio()">
+                  <i class="fas fa-store fa-lg"></i> &nbsp;Mi negocio cuenta con un local comercial
                 </button>
               </div>
               <div class="col-md-6 form-group">
-                <button [disabled]="btnCasa" class="btnActivo btn btn-outline-secondary px-4 py-3" type="submit" (click)="desdeCasa()">
-                  Manejo mi negocio desde casa
+                <button [disabled]="btnCasa" class="btnActivo btn btn-outline-secondary px-4 py-3 text-justify" type="submit" (click)="desdeCasa()">
+                  <i class="fas fa-home fa-lg"></i> &nbsp;Manejo mi negocio desde casa
                 </button>
               </div>
             </div>

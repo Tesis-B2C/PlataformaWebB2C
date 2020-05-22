@@ -52,11 +52,6 @@ label {
   text-align: center;
 }
 
-.espacio-fisico{
-  text-align: center;
-  font-size: small;
-}
-
 .alert {
   font-size: smaller;
   padding: 0;
@@ -116,4 +111,8 @@ label {
 .btnActivo:disabled {
   color:white;
   background: #6c757d;
+}
+
+.botones{
+  margin-left: 40px !important;
 }
