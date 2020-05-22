@@ -49,7 +49,6 @@ export class RegistroComponent implements OnInit, OnDestroy {
 
   selectTipoAgente(event) {
     this.banderaTipo = !this.banderaTipo;
-
     this.Agente.Tipo = event.target.value;
   }
 
@@ -144,9 +143,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
     }
   }
 
-
   activarDireccion() {
-
     this.bandera = true;
     this.banderaDirecciones = !this.banderaDirecciones;
     if (!this.banderaDirecciones) {
@@ -159,11 +156,8 @@ export class RegistroComponent implements OnInit, OnDestroy {
     }
   }
 
-
   buscadorDirecciones() {
-
     if (this.bandera == true) {
-
       var placesAutocomplete = places({
         container: document.querySelector('#CallePrincipal'),
         templates: {
@@ -174,8 +168,6 @@ export class RegistroComponent implements OnInit, OnDestroy {
       }).configure({
         type: 'address',
         countries: ['ec'],
-
-
       });
       placesAutocomplete.on('change', (e) => {
         console.log(e.suggestion)

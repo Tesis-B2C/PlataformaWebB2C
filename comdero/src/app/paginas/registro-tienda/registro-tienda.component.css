@@ -3,59 +3,10 @@ html,body{
   height:100%;
 }
 
-.datosregistro {
-  padding-left: 11%;
-  padding-right: 11%;
-  padding-top: 2%;
-}
-
-.centered-content {
-  margin: auto;
-  text-align: center;
-}
-
-.container-login100 {
-  width: 100%;
-  min-height: 100vh;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  padding: 0px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  /*background-color: #0c5460;*/
-}
-
-.titulo {
-  text-align: center;
-}
-
 .wrap-register100 {
   background: #fff;
   border-radius: 10px;
   overflow: hidden;
-}
-
-.login100-form-title-registro {
-  display: block;
-  font-weight: bold;
-  font-size: 20px;
-  color: #333333;
-  line-height: 1.2;
-}
-
-.editor_terminos {
-  font-size: small;
-}
-
-.btn_continue {
-  max-width: 150px
 }
 
 .container-registro {
@@ -77,9 +28,64 @@ html,body{
   }
 }
 
-/*Empezamos con revision*/
+.datosregistro {
+  padding-left: 11%;
+  padding-right: 11%;
+  padding-top: 2%;
+}
+
+.tamanioInputs {
+  font-size: small;
+}
+
+label {
+  font-size: small;
+  font-weight: normal;
+}
+
+.btn_continue {
+  max-width: 150px
+}
+
+.centered-content {
+  margin: auto;
+  text-align: center;
+}
+
 .espacio-fisico{
   text-align: center;
+  font-size: small;
+}
+
+.alert {
+  font-size: smaller;
+  padding: 0;
+  background-color: white;
+  border: none;
+  color: #bd2130;
+  margin-left: 4px;
+}
+
+.alert2 {
+  font-size: smaller;
+  padding: 0;
+  background-color: white;
+  border: none;
+  color: #1da1f2;
+  margin-left: 4px;
+
+}
+
+.alert3 {
+  font-size: smaller;
+  padding: 0;
+  background-color: white;
+  border: none;
+  color: #1a56e9;
+  font-weight: bolder;
+}
+
+.editor_terminos {
   font-size: small;
 }
 
@@ -103,21 +109,11 @@ html,body{
   opacity: 0.8;
 }
 
-.lineaSeparacion1 {
-  margin-top: 20px;
-  margin-bottom: 10px;
-}
-
-.tamanioCampos {
-  font-size: small;
-  font-weight: bolder;
-  font-size: 0.8em;
-}
-
-.tamanioInputs {
-  font-size: small;
-}
-
 .agregar-sucursal span{
   font-size: 12px;
+}
+
+.btnActivo:disabled {
+  color:white;
+  background: #6c757d;
 }

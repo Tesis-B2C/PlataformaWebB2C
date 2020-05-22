@@ -1,4 +1,4 @@
-import {Component, OnInit, Renderer2, DoCheck } from '@angular/core';
+import {Component, OnInit } from '@angular/core';
 import {Sucursal} from "../../modelos/sucursal";
 import {Tienda} from "../../modelos/tienda";
 import {DpaServicio} from "../../servicios/dpa.servicio";
@@ -39,11 +39,18 @@ export class RegistroTiendaComponent implements OnInit{
   private LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
   private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
   private soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
+  private urlPattern: any = "(https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9]+\\.[^\\s]{2,}|www\\.[a-zA-Z0-9]+\\.[^\\s]{2,})";
   public provincias;
   public ciudades;
 
   public vectorOpciones: Array<number> = [1]; // las dos formas swon validas pero la activa es ams facil
   /*public vectorOpciones=new Array(0);*/
+
+  /*Banderas de Negocio o Casa*/
+  public bandAgregarSuc: boolean = false;
+  public banderaCasa: boolean = false;
+  public btnEspacioFisico: boolean = false;
+  public btnCasa: boolean = false;
 
   constructor(private _dpaServicio: DpaServicio) {
     this.Tienda = new Tienda(null, null, null, null,
@@ -75,18 +82,21 @@ export class RegistroTiendaComponent implements OnInit{
     }
   }
 
-  public bandAgregarSuc: boolean = false;
-  public banderaCasa: boolean = false;
-
   public desdeNegocio() {
     this.banderaCasa = false;
     this.bandAgregarSuc=true;
+
+    this.btnEspacioFisico = true;
+    this.btnCasa = false;
   }
 
   public desdeCasa() {
     this.vectorOpciones=[1];
-    console.log(this.vectorOpciones);
     this.banderaCasa = true;
+
+    this.btnEspacioFisico = false;
+    this.btnCasa = true;
+
   }
 
   public agregarSucursal() {
