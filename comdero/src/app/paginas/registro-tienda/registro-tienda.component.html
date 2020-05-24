@@ -152,7 +152,7 @@
             </div>
 
             <!--INICIO el modulo de Casa -->
-            <div class="NegocioNoFisico" *ngIf="this.banderaCasa">
+            <div class="NegocioNoFisico card card-body" *ngIf="this.banderaCasa">
               <label class="font-weight-bold">Ingrese los datos desde donde opera su negocio</label>
 
               <div class="form-row">
@@ -245,7 +245,7 @@
 
             <!--Empieza el modulo de Tengo Negocio Fisico -->
             <div class="NegocioFisico" *ngIf="!this.banderaCasa && this.bandAgregarSuc">
-              <div *ngFor="let item of this.vectorOpciones; index as i">
+              <div class="card card-body mb-2" *ngFor="let item of this.vectorOpciones; index as i">
                 <label *ngIf="i==0" class="font-weight-bold">Ingrese los datos de su negocio (Sucursales en caso de
                   existir)</label>
 
@@ -385,6 +385,7 @@
               </div>
             </div><!--Termina el modulo de Tengo Negocio Fisico -->
 
+            <br>
             <div class="btn-group">
               <button type="button" class="btn btn-secondary" awPreviousStep>Back</button>
               <button type="button" class="btn btn-secondary" awNextStep>Continue</button>
@@ -392,17 +393,140 @@
           </div> <!--Fin Datos Registro END-->
         </aw-wizard-step>
 
-        <aw-wizard-step [stepTitle]="'Steptitle 3'">
+        <aw-wizard-step [stepTitle]="'Paso 3'">
           <ng-template awWizardStepSymbol><i class="fa fa-images"></i></ng-template>
-          <div class="centered-content">
-            <div>
-              Content: Step 3
+
+          <div class="datosregistro personalizacion mb-2">
+
+            <div class="form-row justify-content-center m-0 py-3">
+              <h6 class="font-weight-bold">Comienza con la personalización de la tienda</h6>
             </div>
 
-            <div class="btn-group">
-              <button type="button" class="btn btn-secondary" awPreviousStep>Back</button>
-              <button type="button" class="btn btn-secondary" awResetWizard>Reset</button>
+            <div class="form-row m-0 pb-3">
+              <div class="col-sm-6 form-group px-1 m-0">
+
+
+                <form class="card card-body p-3" name="form"> <!--Multimedia -->
+                  <div class="form-group centered-content m-0">
+                    <a class="ml-0 mt-5 text-center">
+                      <label class="mb-0">Ingrese el logo de su tienda <br> 180 x 180 px</label>
+                      <hr class="m-0">
+                    </a>
+
+                    <div
+                      [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[0]==false,'borde-imagenes1':vectorBanderaAgregarImagen[0]==true }"
+                      class="row mt-3 mx-0 ">
+                      <div *ngFor='let url of imagenes[0]; let i = index ' class="ml-1">
+                        <div class="col-auto card mt-2 px-0 pb-2">
+                          <label style="border: none;">
+                            <img [src]="url" class="px-0" height="140px" width="140px">
+                            <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple name="files"
+                                   type="file">
+                          </label>
+                          <button (click)="quitarImagenes(0,i)" class="boton-cerrar btn-outline-danger px-0 py-0 ">Eliminar
+                          </button>
+                        </div>
+                      </div>
+                      <div *ngIf="vectorBanderaAgregarImagen[0]==false" class="mx-auto ">
+                        <div class="col-auto pt-4">
+                          <label class="imagen-agregar ">
+                            <i class="fa fa-picture-o fa-4x"></i>
+                            <i class="fa fa-plus-circle fa-2x ml-1"></i>
+                            <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple type="file">
+                          </label>
+                        </div>
+                      </div>
+                      <div *ngIf="vectorBanderaAgregarImagen[0]==false" class=" col-12 pb-5 mx-auto ">
+                        <p class="link-agregar-imagenes ">Click para Agregar imagenes</p>
+                      </div>
+
+                      <div *ngIf="vectorBanderaAgregarImagen[0]==true && imagenes[0].length<6" class="py-2">
+                        <div class=" py-4  card  ml-1 px-2">
+                          <label class="imagen-agregar">
+                            <i class="fa fa-picture-o fa-4x ml-4"></i>
+                            <i class="fa fa-plus-circle fa-2x ml-1"></i>
+                            <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple type="file">
+                            <br>
+                            <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imagenes</p>
+                            <p class=" link-agregar-imagenes2">maximo 6</p>
+                          </label>
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div> <!-- form-group end.// -->
+                </form>
+
+
+
+
+              </div>
+              <div class="col-sm-6 form-group px-1 m-0">
+
+
+
+<!--                <form class="card card-body" name="form"> &lt;!&ndash;Multimedia &ndash;&gt;
+                  <h4>Multimedia</h4>
+                  <hr>
+                  <div class="form-group ">
+                    <a class="ml-2 mt-5">
+                      <label>Imagenes del producto </label>
+                      <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
+                    <div
+                      [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[0]==false,'borde-imagenes1':vectorBanderaAgregarImagen[0]==true }"
+                      class="row  mt-3 mx-0 ">
+                      <div *ngFor='let url of imagenes[0]; let i = index ' class="ml-1">
+                        <div class="col-auto card mt-2 px-0 pb-2">
+                          <label style="border: none;  ">
+                            <img [src]="url" class="px-0" height="140px" width="140px">
+                            <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple name="files"
+                                   type="file">
+                          </label>
+                          <button (click)="quitarImagenes(0,i)" class="boton-cerrar btn-outline-danger px-0 py-0 ">Eliminar
+                          </button>
+                        </div>
+                      </div>
+                      <div *ngIf="vectorBanderaAgregarImagen[0]==false" class="mx-auto ">
+                        <div class="col-auto pt-4">
+                          <label class="imagen-agregar ">
+                            <i class="fa fa-picture-o fa-4x"></i>
+                            <i class="fa fa-plus-circle fa-2x ml-1"></i>
+                            <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple type="file">
+                          </label>
+                        </div>
+                      </div>
+                      <div *ngIf="vectorBanderaAgregarImagen[0]==false" class=" col-12 pb-5 mx-auto ">
+                        <p class="link-agregar-imagenes ">Click para Agregar imagenes</p>
+                      </div>
+
+                      <div *ngIf="vectorBanderaAgregarImagen[0]==true && imagenes[0].length<6" class="py-2">
+                        <div class=" py-4  card  ml-1 px-2">
+                          <label class="imagen-agregar">
+                            <i class="fa fa-picture-o fa-4x ml-4"></i>
+                            <i class="fa fa-plus-circle fa-2x ml-1"></i>
+                            <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple type="file">
+                            <br>
+                            <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imagenes</p>
+                            <p class=" link-agregar-imagenes2">maximo 6</p>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div> &lt;!&ndash; form-group end.// &ndash;&gt;
+                </form>-->
+
+
+
+
+              </div>
             </div>
+
+          </div>
+
+          <div class="btn-group">
+            <button type="button" class="btn btn-secondary" awPreviousStep>Back</button>
+            <button type="button" class="btn btn-secondary" awResetWizard>Reset</button>
           </div>
         </aw-wizard-step>
 

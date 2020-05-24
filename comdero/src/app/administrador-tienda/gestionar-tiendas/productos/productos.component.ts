@@ -68,8 +68,6 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
     'fa fa-car', 'fa fa-dumbbell', 'fa fa-book',
     'fa fa-dog', 'fa fa-gamepad', 'fa fa-grin-stars', 'fa fa-heartbeat', 'fa fa-building', 'fa fa-tractor'];
 
-
-
   // vector categorias
   public c1 = [];
   public c2 = [];
@@ -139,9 +137,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
           this.banderaMaximoImagenes = false;
         }
       }
-
     }
-
   }
 
 

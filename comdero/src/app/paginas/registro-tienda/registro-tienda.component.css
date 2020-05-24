@@ -29,9 +29,9 @@ html,body{
 }
 
 .datosregistro {
-  padding-left: 11%;
-  padding-right: 11%;
-  padding-top: 2%;
+  margin-left: 11%;
+  margin-right: 11%;
+  margin-top: 2%;
 }
 
 .tamanioInputs {
@@ -113,6 +113,11 @@ label {
   background: #6c757d;
 }
 
-.botones{
-  margin-left: 40px !important;
+.personalizacion{
+  background-image: url("src/assets/estilos-registroTienda/fondo-paso3.png");
+  border-radius: 5%;
 }
+
+
+
+
