@@ -6,7 +6,7 @@ const db = {}
 
 
 const sequelize = new Sequelize("basetesis", "root", "", {
-    host: '192.168.175.130',
+    host: '192.168.65.128',
     dialect: "mysql",
     operatorsAliase: false,
     define:

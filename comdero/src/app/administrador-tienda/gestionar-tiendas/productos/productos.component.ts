@@ -1,4 +1,4 @@
-import {Component, DoCheck, OnChanges, OnInit} from '@angular/core';
+import {Component, DoCheck, OnChanges, OnDestroy, OnInit} from '@angular/core';
 import {CategoriaServicio} from "../../../servicios/categoria.servicio";
 import {UnidadMedidaServicio} from "../../../servicios/unidad_medida.servicio";
 import {Cmyk, ColorPickerService} from "ngx-color-picker";
@@ -15,7 +15,7 @@ import {DomSanitizer} from '@angular/platform-browser';
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css']
 })
-export class ProductosComponent implements OnInit, DoCheck, OnChanges {
+export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
   public videoPorGuardar;
   public Imagenes_Producto = [[]];
   public imagenes = [[]];
@@ -85,6 +85,10 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
   public Oferta: Oferta;
   public Producto: Producto
 
+  // videos
+  public videoYoutube: any;
+  public direccionVideoYoutube: any;
+
   constructor(private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
     this.Oferta = new Oferta(null, null, null, null, null, null);
     this.Producto = new Producto(null, null, null, null, null, null, null, null);
@@ -107,6 +111,12 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
   ngOnChanges(): void {
     this.panelDos.style.maxHeight = this.panelUno.offsetHeight + 'px';
     console.log("height |", this.panelUno.offsetHeight + 'px')
+  }
+
+  ngOnDestroy() {
+      delete this.Producto;
+      delete this.Oferta;
+      delete this.Variantes;
   }
 
   public async subirImagenes(eventEntrante, indice) {
@@ -391,14 +401,12 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
 
   }
 
-  abrirModalVideoYoutube(content) {
+  public abrirModalVideoYoutube(content) {
     this.modalService.open(content, {centered: true, size: 'md'});
   }
 
-  public videoYoutube: any;
-  public direccionVideoYoutube: any;
 
-  getVideoIframe() {
+  public getVideoIframe() {
     let url = this.direccionVideoYoutube;
     var video, results;
 
@@ -409,7 +417,8 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
     video = (results === null) ? url : results[1];
     this.videoYoutube = this._sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + video);
   }
-  resetearVideoYoutube(){
-    this.videoYoutube=null;
+
+  public resetearVideoYoutube() {
+    this.videoYoutube = null;
   }
 }
