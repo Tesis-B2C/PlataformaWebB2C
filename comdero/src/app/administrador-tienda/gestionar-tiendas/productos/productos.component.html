@@ -3,19 +3,22 @@
 
   <div class="modal-header">
     <h4 class="modal-title">Subir video de Youtube</h4>
-    <button type="button" class="close" style="font-size: medium" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <button type="button" class="close" style="font-size: medium" aria-label="Close"
+            (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <div class="form-group">
-    <label>Pegar URL de Youtube</label>
-    <input type="text"  #DireccionVideoYoutube="ngModel" [(ngModel)]="this.direccionVideoYoutube" class="form-control" placeholder="https://">
+      <label>Pegar URL de Youtube</label>
+      <input type="text" #DireccionVideoYoutube="ngModel" [(ngModel)]="this.direccionVideoYoutube" class="form-control"
+             placeholder="https://">
     </div>
 
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancelar</button>
-      <button type="button" class="btn btn-danger" (click)="modal.close('Ok click');getVideoIframe()" >Subir Video de youtube <span class="fab fa-youtube"></span> </button>
+      <button type="button" class="btn btn-danger" (click)="modal.close('Ok click');getVideoIframe()">Subir Video de
+        youtube <span class="fab fa-youtube"></span></button>
     </div>
 
   </div>
@@ -23,9 +26,20 @@
 
 </ng-template>
 
+<div class="bounceInRight  animated alert alert-primary shadow p-2  mt-2   toastValidacion mx-auto">
+  <strong>*</strong>Asegurate de que tu tienda tenga configurados los métodos de pago a utilizar antes de empezar a vender<strong></strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="font-size: large">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 
 
-
+<div class="bounceInRight  animated alert alert-primary shadow p-2  mt-2   toastValidacion mx-auto">
+  <strong>*</strong>Asegurate de que tu tienda tenga configurados los métodos de envío a utilizar<strong></strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="font-size: large">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 
 <div class="container mt-5">
   <div class="row  justify-content-center">
@@ -181,7 +195,9 @@
             </div>
             <div class=" col-12 mx-auto">
               <div *ngIf="this.videoYoutube">
-              <iframe width="100%" height="315" [src]="this.videoYoutube" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe width="100%" height="315" [src]="this.videoYoutube" frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
               </div>
 
               <div *ngIf="data.video">
@@ -206,7 +222,7 @@
               <p class="link-agregar-imagenes pb-5">Subir un video promocional del producto desde el ordenador</p>
             </div>
           </div>
-          <a  *ngIf="this.videoYoutube"  (click)="resetearVideoYoutube()"  class="agregarVideoYoutube ml-2 col-md-5 ">
+          <a *ngIf="this.videoYoutube" (click)="resetearVideoYoutube()" class="agregarVideoYoutube ml-2 col-md-5 ">
             Agregar video desde el ordenador &nbsp; <span class="fa fa-laptop "></span>
           </a>
         </div>
@@ -223,24 +239,28 @@
               <label> Precio unitario sin iva </label>
 
               <div class="input-group mb-3">
-                <input #PrecioUnitario0="ngModel" [(ngModel)]="this.Variantes[0].Precio_Unitario" class="form-control"
+                <input   #PrecioUnitario0="ngModel" [(ngModel)]="this.Variantes[0].Precio_Unitario" class="form-control"
                        name="precioUnitario0"
-                       placeholder="0.00" type="number">
+                       placeholder="0.00" type="number" >
+
                 <div class="input-group-append">
                   <span class="input-group-text unidades">$</span>
                 </div>
+
               </div>
 
             </div>
             <div class="col-lg-6">
               <label>Porcentaje de Iva </label>
               <div class="input-group mb-3">
-                <input #Iva="ngModel" [(ngModel)]="this.Oferta.Iva" class="form-control" name="iva" placeholder="12"
+                <input   #Iva="ngModel" [(ngModel)]="this.Oferta.Iva" class="form-control" name="iva" placeholder="12"
                        type="number">
                 <div class="input-group-append">
                   <span class="input-group-text unidades">%</span>
                 </div>
+
               </div>
+
             </div>
           </div>
 
@@ -297,11 +317,12 @@
               <div class="form-group  col-lg-3">
                 <label> Precio </label>
                 <div class="input-group mb-3">
-                  <input class="form-control" placeholder="0.00" type="number">
+                  <input class="form-control" placeholder="0.00" type="number"  name="precioEntregaLocalidad">
                   <div class="input-group-append">
                     <span class="input-group-text unidades">$</span>
                   </div>
                 </div>
+
               </div>
               <div class="form-group  col-lg-3">
                 <label>Tiempo de entrega </label>
@@ -354,11 +375,12 @@
               <div class="form-group  col-lg-3">
                 <label> Precio </label>
                 <div class="input-group mb-3">
-                  <input class="form-control" placeholder="0.00" type="number">
+                  <input class="form-control" placeholder="0.00" type="number"    #PrecioEntregaFueraLocalidad="ngModel" [(ngModel)]="falta">
                   <div class="input-group-append">
                     <span class="input-group-text unidades">$</span>
                   </div>
                 </div>
+
               </div>
               <div class="form-group  col-lg-3">
                 <label>Tiempo de entrega </label>
@@ -518,7 +540,7 @@
           <div class="form-group  col-md-4">
             <label> Talla </label>
             <input #Talla0="ngModel" [(ngModel)]="this.Variantes[0].Talla" class="form-control " name="talla0"
-                   placeholder="Ej. xl/34/etc" type="text">
+                   placeholder="Ej. xl o 34 o etc" type="text">
           </div>
           <div class="form-group  col-md-4">
             <label>Material</label>
@@ -546,7 +568,7 @@
           <div class="form-group  col-md-4">
             <label> Talla </label>
             <input #Talla="ngModel" [(ngModel)]="this.Variantes[i+1].Talla" class="form-control " name="talla{{i+1}}"
-                   placeholder="Ej. xl/34/etc" type="text">
+                   placeholder="Ej. xl o 34 o etc" type="text">
           </div>
           <div class="form-group  col-md-4">
             <label>Material</label>
@@ -605,7 +627,7 @@
           </div> <!-- form-group end.// -->
 
           <div class="form-group col-lg-7">
-            <label> Stock y unidad de medida del producto 2</label>
+            <label> Stock y unidad de medida del producto</label>
             <div class="input-group">
 
               <input #Stock="ngModel" [(ngModel)]="this.Variantes[i+1].Stock" class="form-control" name="stock{{i+1}}"
@@ -675,7 +697,7 @@
           <hr>
 
           <button class="btn btn-outline-primary text-nowrap  col-md-5  mb-4 " type="button">
-            <span class="spinner-border spinner-border-sm mr-2"></span>
+            <span class="spinner-border spinner-border-sm mr-2" ></span>
             Publicar producto
           </button>
 

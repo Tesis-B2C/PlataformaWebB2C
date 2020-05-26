@@ -329,3 +329,11 @@ app-ngx-editor {
 button{
   font-size: small;
 }
+
+
+.toastValidacion {
+  width: 80%;
+
+  text-align: center;
+
+}

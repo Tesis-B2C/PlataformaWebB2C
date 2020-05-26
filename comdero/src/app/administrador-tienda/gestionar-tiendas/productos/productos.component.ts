@@ -3,13 +3,19 @@ import {CategoriaServicio} from "../../../servicios/categoria.servicio";
 import {UnidadMedidaServicio} from "../../../servicios/unidad_medida.servicio";
 import {Cmyk, ColorPickerService} from "ngx-color-picker";
 import {Oferta} from "../../../modelos/oferta";
-import {Producto} from "../../../modelos/producto"
-import {Variante} from "../../../modelos/variante"
-import {Imagen_Producto} from "../../../modelos/imagen_producto"
+import {Producto} from "../../../modelos/producto";
+import {Variante} from "../../../modelos/variante";
+import {Imagen_Producto} from "../../../modelos/imagen_producto";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DomSanitizer} from '@angular/platform-browser';
-
-
+import {ProductoServicio} from '../../../servicios/producto.servicio';
+import Swal from 'sweetalert2'
+interface Producto_Enviar {
+  Oferta: Oferta;
+  Producto:Producto;
+  Variantes: any;
+  Imagenes: any;
+}
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
@@ -87,9 +93,12 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
 
   // videos
   public videoYoutube: any;
+  public videoYoutubeGuardar:any;
   public direccionVideoYoutube: any;
+// enviar
 
-  constructor(private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
+  public Producto_Enviar:Producto_Enviar;
+  constructor(private _productoServicio:ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
     this.Oferta = new Oferta(null, null, null, null, null, null);
     this.Producto = new Producto(null, null, null, null, null, null, null, null);
     this.Variantes.push(new Variante(null, null, null, null, null, "unidades"));
@@ -415,10 +424,71 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     }
     results = url.match('[\\?&]v=([^&#]*)');
     video = (results === null) ? url : results[1];
+    delete this.videoPorGuardar;
     this.videoYoutube = this._sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + video);
   }
 
   public resetearVideoYoutube() {
     this.videoYoutube = null;
   }
+
+
+  public  async saveProducto(){
+    try {
+    if(this.videoYoutube){
+     this.videoYoutubeGuardar = new Imagen_Producto('Video', 'youtube', this.videoYoutube, 0);
+      this.Imagenes_Producto.push(this.videoYoutubeGuardar);
+    }else{
+      this.Imagenes_Producto.push(this.videoPorGuardar);
+    }
+    this.Producto_Enviar.Oferta=this.Oferta;
+    this.Producto_Enviar.Producto=this.Producto;
+    this.Producto_Enviar.Variantes=this.Variantes;
+    this.Producto_Enviar.Imagenes=this.Imagenes_Producto;
+
+      let response = await this._productoServicio.saveProducto(this.Producto_Enviar).toPromise();
+         this.mensageCorrecto(response.data);
+    } catch (e) {
+      console.log("error:" + JSON.stringify((e).error.message));
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
+
+  }
+
+
+  mensageError(mensaje) {
+    Swal.fire({
+      icon: 'error',
+      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Error..</h5></header>',
+      text: mensaje,
+      position: 'center',
+      width: 600,
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        //icon:'sm'
+      }
+    });
+  }
+
+
+  mensageCorrecto(mensaje) {
+    Swal.fire({
+      icon: 'success',
+      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Correcto..</h5></header>',
+      text: mensaje,
+      position: 'center',
+      width: 600,
+      buttonsStyling: false,
+      //footer: '<a href="http://localhost:4200/loguin"><b><u>Autentificate Ahora</u></b></a>',
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        //icon:'sm'
+      }
+    });
+  }
 }
+
+
