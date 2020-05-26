@@ -10,12 +10,14 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DomSanitizer} from '@angular/platform-browser';
 import {ProductoServicio} from '../../../servicios/producto.servicio';
 import Swal from 'sweetalert2'
+
 interface Producto_Enviar {
   Oferta: Oferta;
-  Producto:Producto;
+  Producto: Producto;
   Variantes: any;
   Imagenes: any;
 }
+
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
@@ -93,12 +95,13 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
 
   // videos
   public videoYoutube: any;
-  public videoYoutubeGuardar:any;
+  public videoYoutubeGuardar: any;
   public direccionVideoYoutube: any;
 // enviar
 
-  public Producto_Enviar:Producto_Enviar;
-  constructor(private _productoServicio:ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
+  public Producto_Enviar: Producto_Enviar;
+
+  constructor(private _productoServicio: ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
     this.Oferta = new Oferta(null, null, null, null, null, null);
     this.Producto = new Producto(null, null, null, null, null, null, null, null);
     this.Variantes.push(new Variante(null, null, null, null, null, "unidades"));
@@ -123,9 +126,9 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   }
 
   ngOnDestroy() {
-      delete this.Producto;
-      delete this.Oferta;
-      delete this.Variantes;
+    delete this.Producto;
+    delete this.Oferta;
+    delete this.Variantes;
   }
 
   public async subirImagenes(eventEntrante, indice) {
@@ -433,21 +436,21 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   }
 
 
-  public  async saveProducto(){
+  public async saveProducto() {
     try {
-    if(this.videoYoutube){
-     this.videoYoutubeGuardar = new Imagen_Producto('Video', 'youtube', this.videoYoutube, 0);
-      this.Imagenes_Producto.push(this.videoYoutubeGuardar);
-    }else{
-      this.Imagenes_Producto.push(this.videoPorGuardar);
-    }
-    this.Producto_Enviar.Oferta=this.Oferta;
-    this.Producto_Enviar.Producto=this.Producto;
-    this.Producto_Enviar.Variantes=this.Variantes;
-    this.Producto_Enviar.Imagenes=this.Imagenes_Producto;
+      if (this.videoYoutube) {
+        this.videoYoutubeGuardar = new Imagen_Producto('Video', 'youtube', this.videoYoutube, 0);
+        this.Imagenes_Producto.push(this.videoYoutubeGuardar);
+      } else {
+        this.Imagenes_Producto.push(this.videoPorGuardar);
+      }
+      this.Producto_Enviar.Oferta = this.Oferta;
+      this.Producto_Enviar.Producto = this.Producto;
+      this.Producto_Enviar.Variantes = this.Variantes;
+      this.Producto_Enviar.Imagenes = this.Imagenes_Producto;
 
       let response = await this._productoServicio.saveProducto(this.Producto_Enviar).toPromise();
-         this.mensageCorrecto(response.data);
+      this.mensageCorrecto(response.data);
     } catch (e) {
       console.log("error:" + JSON.stringify((e).error.message));
       if (JSON.stringify((e).error.message))
