@@ -1,4 +1,4 @@
-import {Component, DoCheck, OnChanges, OnDestroy, OnInit} from '@angular/core';
+import {Component, DoCheck, OnChanges, OnDestroy, OnInit, Renderer2} from '@angular/core';
 import {CategoriaServicio} from "../../../servicios/categoria.servicio";
 import {UnidadMedidaServicio} from "../../../servicios/unidad_medida.servicio";
 import {Cmyk, ColorPickerService} from "ngx-color-picker";
@@ -10,6 +10,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DomSanitizer} from '@angular/platform-browser';
 import {ProductoServicio} from '../../../servicios/producto.servicio';
 import Swal from 'sweetalert2'
+import {GlobalConfig, ToastrService} from 'ngx-toastr';
 
 interface Producto_Enviar {
   Oferta: Oferta;
@@ -98,10 +99,10 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   public videoYoutubeGuardar: any;
   public direccionVideoYoutube: any;
 // enviar
-
   public Producto_Enviar: Producto_Enviar;
 
-  constructor(private _productoServicio: ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
+
+  constructor(private renderer: Renderer2, private toastr: ToastrService, private _productoServicio: ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
     this.Oferta = new Oferta(null, null, null, null, null, null);
     this.Producto = new Producto(null, null, null, null, null, null, null, null);
     this.Variantes.push(new Variante(null, null, null, null, null, "unidades"));
@@ -112,8 +113,17 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     this.getUnidadesMedida();
     this.panelUno = document.getElementById('panelUno') as HTMLElement;
     this.panelDos = document.getElementById('panelDos') as HTMLElement;
+    this.mostrarToast("Asegurate de tener configurado tus metodos de envio antes de empezar a vender", "fa fa-truck fa-2x");
+    this.mostrarToast("Asegurate de tener configurado tus metodos de pago antes de empezar a vender", "fas fa-credit-card fa-2x");
 
   }
+
+
+  public mostrarToast(mensaje, icono) {
+    this.toastr.info('<div class="row no-gutters"><p class="col-10 LetrasToastInfo"><strong>!Importante</strong><br>' + mensaje + '</p> <a class="d-flex align-items-center col-2"><span class="' + icono + '"></span></a></div>', "",
+      {positionClass: 'toast-bottom-right', enableHtml: true, closeButton: true, disableTimeOut: true});
+  }
+
 
   ngDoCheck(): void {
     this.panelDos.style.maxHeight = this.panelUno.offsetHeight + 'px';

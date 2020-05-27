@@ -11,7 +11,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~8.2.8",
+    "@angular/animations": "^8.2.14",
     "@angular/common": "~8.2.8",
     "@angular/compiler": "~8.2.8",
     "@angular/core": "~8.2.8",
@@ -26,6 +26,7 @@
     "ngx-bootstrap": "^5.5.0",
     "ngx-color-picker": "^9.1.0",
     "ngx-editor": "^4.1.0",
+    "ngx-toastr": "^10.0.4",
     "npm-upgrade": "^2.0.2",
     "places.js": "^1.16.1",
     "rxjs": "^6.5.4",

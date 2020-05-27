@@ -1,3 +1,4 @@
+<body>
 <ng-template #modalVideoYoutube let-modal>
 
 
@@ -26,22 +27,8 @@
 
 </ng-template>
 
-<div class="bounceInRight  animated alert alert-primary shadow p-2  mt-2   toastValidacion mx-auto">
-  <strong>*</strong>Asegurate de que tu tienda tenga configurados los métodos de pago a utilizar antes de empezar a vender<strong></strong>
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="font-size: large">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
 
-
-<div class="bounceInRight  animated alert alert-primary shadow p-2  mt-2   toastValidacion mx-auto">
-  <strong>*</strong>Asegurate de que tu tienda tenga configurados los métodos de envío a utilizar<strong></strong>
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="font-size: large">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-
-<div class="container mt-5">
+<div class="container mt-5 ">
   <div class="row  justify-content-center">
     <h4 class=" col-11  ">Agregar Producto</h4>
     <hr class="col-11  ">
@@ -236,12 +223,12 @@
         <div class="container">
           <div class="form-row">
             <div class="col-lg-6">
-              <label> Precio unitario sin iva </label>
+              <label> Precio unitario sin ivas </label>
 
               <div class="input-group mb-3">
-                <input   #PrecioUnitario0="ngModel" [(ngModel)]="this.Variantes[0].Precio_Unitario" class="form-control"
-                       name="precioUnitario0"
-                       placeholder="0.00" type="number" >
+                <input #PrecioUnitario0="ngModel" [(ngModel)]="this.Variantes[0].Precio_Unitario" class="form-control"
+                       name="precioUnitario0" id="precioUnitarioVariante0"
+                       placeholder="0.00" type="number">
 
                 <div class="input-group-append">
                   <span class="input-group-text unidades">$</span>
@@ -253,7 +240,7 @@
             <div class="col-lg-6">
               <label>Porcentaje de Iva </label>
               <div class="input-group mb-3">
-                <input   #Iva="ngModel" [(ngModel)]="this.Oferta.Iva" class="form-control" name="iva" placeholder="12"
+                <input #Iva="ngModel" [(ngModel)]="this.Oferta.Iva" class="form-control" name="iva" placeholder="12"
                        type="number">
                 <div class="input-group-append">
                   <span class="input-group-text unidades">%</span>
@@ -317,7 +304,7 @@
               <div class="form-group  col-lg-3">
                 <label> Precio </label>
                 <div class="input-group mb-3">
-                  <input class="form-control" placeholder="0.00" type="number"  name="precioEntregaLocalidad">
+                  <input class="form-control" placeholder="0.00" type="number" name="precioEntregaLocalidad">
                   <div class="input-group-append">
                     <span class="input-group-text unidades">$</span>
                   </div>
@@ -375,7 +362,8 @@
               <div class="form-group  col-lg-3">
                 <label> Precio </label>
                 <div class="input-group mb-3">
-                  <input class="form-control" placeholder="0.00" type="number"    #PrecioEntregaFueraLocalidad="ngModel" [(ngModel)]="falta">
+                  <input class="form-control" placeholder="0.00" type="number" #PrecioEntregaFueraLocalidad="ngModel"
+                         [(ngModel)]="falta">
                   <div class="input-group-append">
                     <span class="input-group-text unidades">$</span>
                   </div>
@@ -690,6 +678,8 @@
         </div>
 
       </form>
+
+
       <br>
       <form class="card card-body  ">
         <div class=" container ">
@@ -697,12 +687,13 @@
           <hr>
 
           <button class="btn btn-outline-primary text-nowrap  col-md-5  mb-4 " type="button">
-            <span class="spinner-border spinner-border-sm mr-2" ></span>
+            <span class="spinner-border spinner-border-sm mr-2"></span>
             Publicar producto
           </button>
 
 
-          <button class="btn btn-outline-primary text-nowrap offset-md-2 col-md-5 mb-4" type="button">
+          <button (click)="this.showSuccess()" class="btn btn-outline-primary text-nowrap offset-md-2 col-md-5 mb-4"
+                  type="button">
             <span class="spinner-border spinner-border-sm mr-2"></span>
             Guardar Producto
           </button>
@@ -762,3 +753,4 @@
   <br>
 </div>
 
+</body>

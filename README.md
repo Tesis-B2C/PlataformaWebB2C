@@ -40,6 +40,16 @@ https://www.zkreations.com/2018/02/personalizar-scrollbar-facil-custom-scrollbar
 https://www.youtube.com/watch?v=gdKWeboPxgY
 npm install mapbox-gl --save
 
+
+
 ----------- para la paleta de colores
             npm i ngx-color-picker
 https://www.npmjs.com/package/ngx-color-picker
+
+
+
+------------ para los toast
+npm i ngx-toastr --save
+npm install @angular/animations --save
+@import '~ngx-toastr/toastr';
+https://www.npmjs.com/package/ngx-toastr

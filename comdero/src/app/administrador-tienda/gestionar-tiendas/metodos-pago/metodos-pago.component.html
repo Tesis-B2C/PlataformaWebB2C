@@ -1,4 +1,4 @@
-<body  >
+<body>
 <ng-template #contentComoRecivirPagos let-modal>
 
 
@@ -10,15 +10,19 @@
   </div>
   <div class="modal-body">
     <p>
-      <iframe width="100%" height="315" [src]="getVideoIframe('https://www.youtube.com/watch?v=MoBrIn0eQbU')" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" ></iframe>
+      <iframe width="100%" height="315" [src]="getVideoIframe('https://www.youtube.com/watch?v=MoBrIn0eQbU')"
+              frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
     </p>
     <h4>Pasos a seguir</h4>
     <br>
-    <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+    <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.
+      Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
     <br>
-    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet
+      rutrum faucibus dolor auctor.</p>
     <br>
-    <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+    <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur
+      et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
 
 
   </div>
@@ -29,7 +33,7 @@
 <ng-template #contentBeneficiosRecivirPagos let-modal>
 
 
-  <div class="modal-header"  >
+  <div class="modal-header">
     <h4 class="modal-title">Servicios y Beneficios de Implementar el pago electrónico</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
@@ -37,7 +41,8 @@
   </div>
   <div class="modal-body">
     <p>
-      <iframe width="100%" height="515" [src]="getVideoIframe('https://www.youtube.com/watch?v=MoBrIn0eQbU')" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" ></iframe>
+      <iframe width="100%" height="515" [src]="getVideoIframe('https://www.youtube.com/watch?v=MoBrIn0eQbU')"
+              frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
     </p>
 
   </div>
@@ -46,9 +51,7 @@
 </ng-template>
 
 
-
-
-<div class="container mt-5" >
+<div class="container mt-5">
   <div class="row  justify-content-center">
     <h4 class=" col-11  ">Métodos de pago</h4>
     <hr class="col-11  ">
@@ -73,24 +76,26 @@
             <div class="form-group col-md-8">
               <label>¿Desea recibir pagos en efectivo ?</label>
               <div class="form-group">
-              <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionPagoEfectivo(true) " class="custom-control-input" name="pagoEfectivo"   id="pagoEfectivoSi"
-                       type="radio" value="Si">
-                <span class="custom-control-label"> Si  </span>
-              </label>
+                <label class="custom-control custom-radio custom-control-inline">
+                  <input (change)="opcionPagoEfectivo(true) " class="custom-control-input" name="pagoEfectivo"
+                         id="pagoEfectivoSi"
+                         type="radio" value="Si">
+                  <span class="custom-control-label"> Si  </span>
+                </label>
 
-              <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionPagoEfectivo(false)"   class="custom-control-input"   id="pagoEfectivoNo"
-                       name="pagoEfectivo" type="radio" value="No">
-                <span class="custom-control-label"> No </span>
-              </label>
+                <label class="custom-control custom-radio custom-control-inline">
+                  <input (change)="opcionPagoEfectivo(false)" class="custom-control-input" id="pagoEfectivoNo"
+                         name="pagoEfectivo" type="radio" value="No">
+                  <span class="custom-control-label"> No </span>
+                </label>
               </div>
               <div class="form-row" *ngIf="this.banderaPagoEfectivo">
                 <div class="form-group col-md-6">
                   <p>Porcentaje descuento <span class="text-muted" style="font-size: smaller">(Opcional)</span></p>
                   <div class="input-group">
-                    <input class="form-control" name="descuento" #DescuentoPagoEfectivo="ngModel" [(ngModel)]="this.Metodo_Pago_Efectivo.Porcentaje_Descuento"
-                           type="number" >
+                    <input class="form-control" name="descuento" #DescuentoPagoEfectivo="ngModel"
+                           [(ngModel)]="this.Metodo_Pago_Efectivo.Porcentaje_Descuento"
+                           type="number">
                     <div class="input-group-append">
                       <span class="input-group-text unidades">%</span>
                     </div>
@@ -99,9 +104,9 @@
               </div>
             </div> <!-- form-group end.// -->
 
-            <div class=" mx-auto d-flex align-items-center col-md-2" >
+            <div class=" mx-auto d-flex align-items-center col-md-2">
               <div class="mx-auto">
-                <p  class=" iconos-pagos " ><span class="  fa fa-money-bill-wave fa-4x" style="color: #2a4c75" ></span></p>
+                <p class=" iconos-pagos "><span class="  fa fa-money-bill-wave fa-4x" style="color: #2a4c75"></span></p>
               </div>
             </div>
           </div>
@@ -112,39 +117,43 @@
             <div class="form-group col-md-8">
               <label>¿Desea recibir transferencias bancarias?</label>
               <div class="form-group">
-              <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionPagoTransferencia(true)" class="custom-control-input" name="pagoTransferencia"
-                       type="radio" value="Si">
-                <span class="custom-control-label"> Si  </span>
-              </label>
+                <label class="custom-control custom-radio custom-control-inline">
+                  <input (change)="opcionPagoTransferencia(true)" class="custom-control-input" name="pagoTransferencia"
+                         type="radio" value="Si">
+                  <span class="custom-control-label"> Si  </span>
+                </label>
 
 
-              <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionPagoTransferencia(false)"   class="custom-control-input"
-                       name="pagoTransferencia" type="radio" value="No">
-                <span class="custom-control-label"> No </span>
-              </label>
+                <label class="custom-control custom-radio custom-control-inline">
+                  <input (change)="opcionPagoTransferencia(false)" class="custom-control-input"
+                         name="pagoTransferencia" type="radio" value="No">
+                  <span class="custom-control-label"> No </span>
+                </label>
               </div>
               <div class="form-row" *ngIf="this.banderaPagoTransferencia">
                 <div class="form-group  col-md-12">
                   <p>Número de cuenta </p>
-                  <input class="form-control" name="numeroCuenta"  type="number"  #NumeroCuenta="ngModel" [(ngModel)]="this.Metodo_Pago_Transferencia.Numero_Cuenta" >
+                  <input class="form-control" name="numeroCuenta" type="number" #NumeroCuenta="ngModel"
+                         [(ngModel)]="this.Metodo_Pago_Transferencia.Numero_Cuenta">
                 </div>
                 <div class="form-group  col-md-6">
                   <p>Tipo de cuenta</p>
-                  <select  (change)="opcionTipoCuenta($event.target.value)"   class="browser-default form-control " id="tipoCuenta" name="tipoCuenta" >
+                  <select (change)="opcionTipoCuenta($event.target.value)" class="browser-default form-control "
+                          id="tipoCuenta" name="tipoCuenta">
                     <option value="Ahorros">Ahorros</option>
                     <option value="Corriente">Corriente</option>
                   </select>
                 </div>
                 <div class="form-group  col-md-6">
                   <p>Banco al que pertenece</p>
-                  <input class="form-control" name="bancoPertenece"  type="text"  #BancoPertenece="ngModel" [(ngModel)]="this.Metodo_Pago_Transferencia.Banco_Pertenece">
+                  <input class="form-control" name="bancoPertenece" type="text" #BancoPertenece="ngModel"
+                         [(ngModel)]="this.Metodo_Pago_Transferencia.Banco_Pertenece">
                 </div>
                 <div class="form-group col-md-6">
                   <p>Porcentaje descuento<span class="text-muted" style="font-size: smaller">(Opcional)</span></p>
                   <div class="input-group">
-                    <input class="form-control" name="descuentoTransferencia"  #DescuentoTransferencia="ngModel" [(ngModel)]="this.Metodo_Pago_Transferencia.Porcentaje_Descuento"
+                    <input class="form-control" name="descuentoTransferencia" #DescuentoTransferencia="ngModel"
+                           [(ngModel)]="this.Metodo_Pago_Transferencia.Porcentaje_Descuento"
                            type="number">
                     <div class="input-group-append">
                       <span class="input-group-text unidades">%</span>
@@ -157,13 +166,11 @@
             </div> <!-- form-group end.// -->
 
 
-            <div class=" mx-auto d-flex align-items-center col-md-2" >
+            <div class=" mx-auto d-flex align-items-center col-md-2">
               <div class="mx-auto">
-                <p  class=" iconos-pagos " ><span class="  fa fa-university fa-4x" style="color: #2a4c75" ></span></p>
+                <p class=" iconos-pagos "><span class="  fa fa-university fa-4x" style="color: #2a4c75"></span></p>
               </div>
             </div>
-
-
 
 
           </div>
@@ -174,32 +181,36 @@
         <div class="container">
           <div class="form-row ">
             <div class="form-group col-md-8">
-              <label>¿Desea recibir pagos electrónicos con tarjetas de débito o crédito a traves de la plataforma PayPal?</label>
-             <div class="form-group">
-              <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionPagoElectronico(true)" class="custom-control-input" name="pagoElectronico"
-                       type="radio" value="Si">
-                <span class="custom-control-label"> Si  </span>
-              </label>
+              <label>¿Desea recibir pagos electrónicos con tarjetas de débito o crédito a traves de la plataforma
+                PayPal?</label>
+              <div class="form-group">
+                <label class="custom-control custom-radio custom-control-inline">
+                  <input (change)="opcionPagoElectronico(true)" class="custom-control-input" name="pagoElectronico"
+                         type="radio" value="Si">
+                  <span class="custom-control-label"> Si  </span>
+                </label>
 
 
-              <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionPagoElectronico(false)"  class="custom-control-input"
-                       name="pagoElectronico" type="radio" value="No">
-                <span class="custom-control-label"> No </span>
-              </label>
-             </div>
+                <label class="custom-control custom-radio custom-control-inline">
+                  <input (change)="opcionPagoElectronico(false)" class="custom-control-input"
+                         name="pagoElectronico" type="radio" value="No">
+                  <span class="custom-control-label"> No </span>
+                </label>
+              </div>
               <div class="form-row" *ngIf="this.banderaPagoElectronico">
                 <div class="form-group  col-12">
                   <p>Api Key PayPal </p>
-                  <input class="form-control" name="apiPayPal"  type="text"  #ApiPayPal="ngModel" [(ngModel)]="this.Metodo_Pago_Electronico.Api_Key_Paypal">
-                  <a (click)="abrirContentVideosAyuda(contentComoRecivirPagos)" class="alert-link" >* Como obtener la Api Key de PayPal ?</a>
+                  <input class="form-control" name="apiPayPal" type="text" #ApiPayPal="ngModel"
+                         [(ngModel)]="this.Metodo_Pago_Electronico.Api_Key_Paypal">
+                  <a (click)="abrirContentVideosAyuda(contentComoRecivirPagos)" class="alert-link">* Como obtener la Api
+                    Key de PayPal ?</a>
 
                 </div>
                 <div class="form-group col-md-6">
-                  <p>Porcentaje de recargo <span class="text-muted" style="font-size: smaller">(Opcional)</span> </p>
+                  <p>Porcentaje de recargo <span class="text-muted" style="font-size: smaller">(Opcional)</span></p>
                   <div class="input-group">
-                    <input class="form-control" name="recargoElectronico"   #RecargoElectronico="ngModel" [(ngModel)]="this.Metodo_Pago_Electronico.Porcentaje_Recargo"
+                    <input class="form-control" name="recargoElectronico" #RecargoElectronico="ngModel"
+                           [(ngModel)]="this.Metodo_Pago_Electronico.Porcentaje_Recargo"
                            type="number">
                     <div class="input-group-append">
                       <span class="input-group-text unidades">%</span>
@@ -213,9 +224,9 @@
             </div> <!-- form-group end.// -->
 
 
-            <div class=" mx-auto d-flex align-items-center col-md-2" >
+            <div class=" mx-auto d-flex align-items-center col-md-2">
               <div class="mx-auto">
-                <p  class=" iconos-pagos " ><span class="  fab fa-cc-paypal fa-4x" style="color: #2a4c75" ></span></p>
+                <p class=" iconos-pagos "><span class="  fab fa-cc-paypal fa-4x" style="color: #2a4c75"></span></p>
               </div>
             </div>
 
@@ -228,22 +239,25 @@
     </div>
     <div class=" col-md-3  mt-3    mt-md-0" id="panelDos">
       <div class=" card card-body">
-      <div class=" card jackInTheBox  animated alert alert-warning  fade show "
-           role="alert" >
+        <div class=" card jackInTheBox  animated alert alert-warning  fade show "
+             role="alert">
 
 
+          <h4 class="alert-heading">Recuerda!</h4>
+          <hr class="mb-0">
+          <label>Configurar un método de pago electrónico como Paypal siempre brindará más seguridad a tus clientes y
+            por supuesto un método de pago más ágil y efectivo </label>
+          <img class="mx-auto  pt-md-4  mensaje-mascota" src="../../../assets/images/mascota-condero.png" width="80%">
 
-        <h4 class="alert-heading">Recuerda!</h4>
-        <hr class="mb-0">
-        <label>Configurar un método de pago electrónico como Paypal siempre brindará más seguridad a tus clientes y por supuesto un método de pago más ágil y efectivo </label>
-        <img class="mx-auto  pt-md-4  mensaje-mascota" src="../../../assets/images/mascota-condero.png" width="80%">
-
-      </div>
-        <button type="button" class="alert alert-warning" (click)="abrirContentVideosAyuda(contentBeneficiosRecivirPagos)"> <span class="fa fa-info fa-1x d-block"></span>Click aqui para más información a cerca de los métodos de pago electrónicos</button>
+        </div>
+        <button type="button" class="alert alert-warning"
+                (click)="abrirContentVideosAyuda(contentBeneficiosRecivirPagos)"><span
+          class="fa fa-info fa-1x d-block"></span>Click aqui para más información a cerca de los métodos de pago
+          electrónicos
+        </button>
       </div>
     </div>
   </div>
-
 
 
 </div>

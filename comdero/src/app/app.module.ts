@@ -17,6 +17,10 @@ import {FormsModule} from "@angular/forms";
 
 import { ArchwizardModule } from 'angular-archwizard';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { ToastrModule } from 'ngx-toastr';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -32,6 +36,8 @@ import { ArchwizardModule } from 'angular-archwizard';
     NgbModule,
     HttpClientModule,
     FormsModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot({preventDuplicates:true})
   ],
   providers: [DpaServicio,AgenteServicio,CategoriaServicio,UnidadMedidaServicio,ProductoServicio],
   bootstrap: [AppComponent]
