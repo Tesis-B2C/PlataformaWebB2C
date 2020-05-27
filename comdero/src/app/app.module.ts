@@ -11,6 +11,7 @@ import {UnidadMedidaServicio} from "./servicios/unidad_medida.servicio";
 import {AgenteServicio} from "./servicios/agente.servicio";
 import {CategoriaServicio} from "./servicios/categoria.servicio";
 import {ProductoServicio} from "./servicios/producto.servicio";
+import {MetodoPagoServicio} from "./servicios/metodo_pago.servicio";
 import {AdministradorTiendaModule} from "./administrador-tienda/administrador-tienda.module";
 import {GestionarTiendasModule} from "./administrador-tienda/gestionar-tiendas/gestionar-tiendas.module";
 import {FormsModule} from "@angular/forms";
@@ -39,7 +40,7 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot({preventDuplicates:true})
   ],
-  providers: [DpaServicio,AgenteServicio,CategoriaServicio,UnidadMedidaServicio,ProductoServicio],
+  providers: [DpaServicio,AgenteServicio,CategoriaServicio,UnidadMedidaServicio,ProductoServicio,MetodoPagoServicio],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

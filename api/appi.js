@@ -14,6 +14,7 @@ var agente_rustas = require('./routes/agente');
 var categoria_rutas = require('./routes/categoria');
 var unidad_medida_rutas = require('./routes/unidad_medida');
 var producto_rutas=require('./routes/producto');
+var metodo_pago_rutas=require('./routes/metodo_pago');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json()); //convertir a json als peticiones
 
@@ -34,8 +35,8 @@ app.use('/api',agente_rustas);
 app.use('/api',categoria_rutas);
 app.use('/api',unidad_medida_rutas);
 app.use('/api',producto_rutas);
-/*app.use('/api', nuevaOferta_routes);
-app.use('/api', administrador_rutes);
+app.use('/api', metodo_pago_rutas);
+/*app.use('/api', administrador_rutes);
 app.use('/api',email);*/
 
 

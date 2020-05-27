@@ -2,7 +2,9 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Agente} from "../../modelos/agente";
 import {DpaServicio} from "../../servicios/dpa.servicio";
 import {AgenteServicio} from "../../servicios/agente.servicio";
+import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2'
+import {query} from "@angular/animations";
 
 declare const require: any;
 const places = require("../../../../node_modules/places.js/dist/cdn/places.js");
@@ -32,7 +34,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
   public loading: boolean = false;
   public banderaTipo: boolean = true;
 
-  constructor(private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio) {
+  constructor(private toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio) {
     this.Agente = new Agente(null, null, null,
       null, null, null, 1, null, null,
       null, null, null, null);
@@ -45,6 +47,11 @@ export class RegistroComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     delete this.Agente;
+  }
+
+  public mostrarToast(mensaje, icono) {
+    this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo"><strong>!Error</strong><br>' + mensaje + '</p> </div>', "",
+      {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: true});
   }
 
   selectTipoAgente(event) {
@@ -96,7 +103,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
           window.scroll(0, 0);
           this.loading = false;
         }
-      }else {
+      } else {
         this.registrarAgente1();
       }
 
@@ -108,6 +115,14 @@ export class RegistroComponent implements OnInit, OnDestroy {
       this.loading = false;
 
     }
+    if (this.banderaToast&& !document.forms["formRegistro"].checkValidity()) {
+      this.mostrarToast("Asegurate de llenar todos los campos obligatorios marcados con *", "");
+    }
+
+    if(this.banderaToastCedula){
+      this.mostrarToast("Al parecer no ingreso una cédula válida", "");
+    }
+
   }
 
   async registrarAgente1() {

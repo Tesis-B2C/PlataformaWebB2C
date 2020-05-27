@@ -10,33 +10,8 @@
 
 <body [ngClass]="{'body-con-animacion': loading}">
 
-<div *ngIf="banderaToast && !FormRegistro.checkValidity()" class="bounceInRight  animated alert alert-danger
-shadow-lg p-2  mt-4 mr-lg-2 bg-white rounded toastValidacion">
-  <div class="form-row">
-    <div class="col-2">
-      <img class="mx-auto p-0  m-0 mensaje-mascota " src="../../../assets/images/mascota-condero-pensativo.png"
-           width="70%">
-    </div>
-    <div class="col-10">
-      * <strong>!Opps</strong> Asegurate de llenar todos los campos obligatorios marcados con <strong>*</strong>
-    </div>
-  </div>
-</div>
 
-<div *ngIf="banderaToastCedula" class="bounceInRight animated alert alert-danger
-shadow-lg p-2 mb-5 mt-4 bg-white rounded toastValidacion ">
 
-  <div class="form-row">
-    <div class="col-2">
-      <img class="mx-auto p-0  m-0 mensaje-mascota " src="../../../assets/images/mascota-condero-pensativo.png"
-           width="70%">
-    </div>
-    <div class="col-10">
-      * <strong>!Opps</strong> Al parecer no introduciste una cédula válida
-    </div>
-  </div>
-
-</div>
 
 
 <div class="mx-auto mt-md-5 container-registro  p-3 bg-white rounded my-0">

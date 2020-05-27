@@ -10,7 +10,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DomSanitizer} from '@angular/platform-browser';
 import {ProductoServicio} from '../../../servicios/producto.servicio';
 import Swal from 'sweetalert2'
-import {GlobalConfig, ToastrService} from 'ngx-toastr';
+import {ToastrService} from 'ngx-toastr';
 
 interface Producto_Enviar {
   Oferta: Oferta;
@@ -102,7 +102,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   public Producto_Enviar: Producto_Enviar;
 
 
-  constructor(private renderer: Renderer2, private toastr: ToastrService, private _productoServicio: ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
+  constructor(private toastr: ToastrService, private _productoServicio: ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
     this.Oferta = new Oferta(null, null, null, null, null, null);
     this.Producto = new Producto(null, null, null, null, null, null, null, null);
     this.Variantes.push(new Variante(null, null, null, null, null, "unidades"));

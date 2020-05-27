@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 var Sucursal = require("./sucursal");
 var Oferta = require("./oferta");
+var Metodo_Pago = require("./metodo_pago");
 var Opcion_Envio_Tienda = require("./opcion_envio_tienda");
 const Tienda= db.sequelize.define('Tienda', {
         NUM_TIENDA: {
@@ -83,5 +84,10 @@ Oferta.belongsTo(Tienda, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
 // TIENDA-OPCION_ENVIO_TIENDA
 Tienda.hasMany(Opcion_Envio_Tienda, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
 Opcion_Envio_Tienda.belongsTo(Tienda, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
+
+// TIENDA-METODO DE PAGO
+Tienda.hasMany(Metodo_Pago, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
+Metodo_Pago.belongsTo(Tienda, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
+
 
 module.exports = Tienda;
