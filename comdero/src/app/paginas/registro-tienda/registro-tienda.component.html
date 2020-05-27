@@ -140,12 +140,14 @@
 
             <div class="form-row py-4">
               <div class="col-md-6 form-group ">
-                <button [disabled]="btnEspacioFisico" class="btnActivo btn btn-outline-secondary px-4 py-3 text-justify" type="submit" (click)="desdeNegocio()">
+                <button [disabled]="btnEspacioFisico" class="btnActivo btn btn-outline-secondary px-4 py-3 text-justify"
+                        type="submit" (click)="desdeNegocio()">
                   <i class="fas fa-store fa-lg"></i> &nbsp;Mi negocio cuenta con un local comercial
                 </button>
               </div>
               <div class="col-md-6 form-group">
-                <button [disabled]="btnCasa" class="btnActivo btn btn-outline-secondary px-4 py-3 text-justify" type="submit" (click)="desdeCasa()">
+                <button [disabled]="btnCasa" class="btnActivo btn btn-outline-secondary px-4 py-3 text-justify"
+                        type="submit" (click)="desdeCasa()">
                   <i class="fas fa-home fa-lg"></i> &nbsp;Manejo mi negocio desde casa
                 </button>
               </div>
@@ -250,14 +252,14 @@
                   existir)</label>
 
                 <div *ngIf="i!=0" class="form-row">
-                <div class="form-group col-11 mb-0">
-                  <label style="font-weight: bolder; font-size: small">SUCURSAL&nbsp; {{i}}</label>
-                </div>
-                <div *ngIf="this.bandAgregarSuc" class="form-group col-1 my-0">
-                  <button (click)="borrarOpciones(i)" class="py-0 form-control " style=" border: none; color: red">
-                    <span class="fa fa-trash "></span>
-                  </button>
-                </div>
+                  <div class="form-group col-11 mb-0">
+                    <label style="font-weight: bolder; font-size: small">SUCURSAL&nbsp; {{i}}</label>
+                  </div>
+                  <div *ngIf="this.bandAgregarSuc" class="form-group col-1 my-0">
+                    <button (click)="borrarOpciones(i)" class="py-0 form-control " style=" border: none; color: red">
+                      <span class="fa fa-trash "></span>
+                    </button>
+                  </div>
                 </div> <!--Fin form-row -->
                 <hr *ngIf="i!=0" class="pt-0 mt-0 mb-3">
 
@@ -350,7 +352,7 @@
 
                 <div class="form-group">
                   <label>* Dirección</label>
-                  <input  #CallePrincipal="ngModel" [(ngModel)]="this.Sucursal.Calle_Principal"
+                  <input #CallePrincipal="ngModel" [(ngModel)]="this.Sucursal.Calle_Principal"
                          [ngClass]="{'errorSelect': CallePrincipal.invalid && (CallePrincipal.dirty || CallePrincipal.touched),
                           'satisfactorioSelect': CallePrincipal.valid && (CallePrincipal.dirty || CallePrincipal.touched)}"
                          class="tamanioInputs form-control"
@@ -405,118 +407,129 @@
             <div class="form-row m-0 pb-3">
               <div class="col-sm-6 form-group px-1 m-0">
 
-
                 <form class="card card-body p-3" name="form"> <!--Multimedia -->
+
                   <div class="form-group centered-content m-0">
                     <a class="ml-0 mt-5 text-center">
                       <label class="mb-0">Ingrese el logo de su tienda <br> 180 x 180 px</label>
                       <hr class="m-0">
                     </a>
 
-                    <div
-                      [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[0]==false,'borde-imagenes1':vectorBanderaAgregarImagen[0]==true }"
-                      class="row mt-3 mx-0 ">
-                      <div *ngFor='let url of imagenes[0]; let i = index ' class="ml-1">
-                        <div class="col-auto card mt-2 px-0 pb-2">
-                          <label style="border: none;">
-                            <img [src]="url" class="px-0" height="140px" width="140px">
-                            <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple name="files"
-                                   type="file">
-                          </label>
-                          <button (click)="quitarImagenes(0,i)" class="boton-cerrar btn-outline-danger px-0 py-0 ">Eliminar
-                          </button>
-                        </div>
-                      </div>
-                      <div *ngIf="vectorBanderaAgregarImagen[0]==false" class="mx-auto ">
-                        <div class="col-auto pt-4">
-                          <label class="imagen-agregar ">
-                            <i class="fa fa-picture-o fa-4x"></i>
-                            <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                            <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple type="file">
-                          </label>
-                        </div>
-                      </div>
-                      <div *ngIf="vectorBanderaAgregarImagen[0]==false" class=" col-12 pb-5 mx-auto ">
-                        <p class="link-agregar-imagenes ">Click para Agregar imagenes</p>
-                      </div>
+<!--                    <div class="col-lg-12">
+                      <img [src]="url2" style="display: block; margin-left: 40%; width: 18%;  border-radius:50%">
+                      <label class=" form-control fileContainer"
+                             style="width: 7%; height: 10%; border: none;margin-left: 50%; margin-top: -7%;">
+                        <i class="fa fa-camera fa-2x" style="color:white; "></i>
+                        <input type='file' id="nuestroinput" class="btn btn-primary" (change)="readUrl($event)"/>
+                      </label>
+                    </div>-->
 
-                      <div *ngIf="vectorBanderaAgregarImagen[0]==true && imagenes[0].length<6" class="py-2">
-                        <div class=" py-4  card  ml-1 px-2">
-                          <label class="imagen-agregar">
-                            <i class="fa fa-picture-o fa-4x ml-4"></i>
-                            <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                            <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple type="file">
-                            <br>
-                            <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imagenes</p>
-                            <p class=" link-agregar-imagenes2">maximo 6</p>
-                          </label>
+
+
+                    <div class="">
+                      <div class="form-group ">
+                        <div
+                          [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[0]==false,'borde-imagenes1':vectorBanderaAgregarImagen[0]==true }"
+                          class="row  mt-3 mx-0 mx-auto">
+                          <div *ngFor='let url of imagenes[0]; let i = index ' class="ml-1">
+                            <div class="col-auto card mt-2 px-0 pb-2">
+                              <label style="border: none;" >
+                                <img [src]="url" class="px-0 " height="140px" width="140px">
+                                <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple name="files"
+                                       type="file">
+                              </label>
+                              <button (click)="quitarImagenes(0,i)" class="boton-cerrar btn-outline-danger px-0 py-0 ">Eliminar
+                              </button>
+                            </div>
+                          </div>
+                          <div *ngIf="vectorBanderaAgregarImagen[0]==false" class="mx-auto ">
+                            <div class="col-auto pt-4">
+                              <label class="imagen-agregar ">
+                                <i class="fa fa-picture-o fa-4x"></i>
+                                <i class="fa fa-plus-circle fa-2x ml-1"></i>
+                                <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple type="file">
+                              </label>
+                            </div>
+                          </div>
+                          <div *ngIf="vectorBanderaAgregarImagen[0]==false" class=" col-12 pb-5 mx-auto ">
+                            <p class="link-agregar-imagenes ">Click para Agregar imagenes</p>
+                          </div>
+
+                          <div *ngIf="vectorBanderaAgregarImagen[0]==true && imagenes[0].length==0" class="py-2">
+                            <div class=" py-4 ml-1 px-2">
+                              <label class="imagen-agregar">
+                                <i class="fa fa-picture-o fa-4x ml-4"></i>
+                                <i class="fa fa-plus-circle fa-2x ml-1"></i>
+                                <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple type="file">
+                                <br>
+                                <p class="link-agregar-imagenes ">Click para Agregar imagenes</p>
+                              </label>
+                            </div>
+                          </div>
                         </div>
                       </div>
-
                     </div>
+
+
+
 
                   </div> <!-- form-group end.// -->
                 </form>
-
-
 
 
               </div>
               <div class="col-sm-6 form-group px-1 m-0">
 
 
+                <!--                <form class="card card-body" name="form"> &lt;!&ndash;Multimedia &ndash;&gt;
+                                  <h4>Multimedia</h4>
+                                  <hr>
+                                  <div class="form-group ">
+                                    <a class="ml-2 mt-5">
+                                      <label>Imagenes del producto </label>
+                                      <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
+                                    <div
+                                      [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[0]==false,'borde-imagenes1':vectorBanderaAgregarImagen[0]==true }"
+                                      class="row  mt-3 mx-0 ">
+                                      <div *ngFor='let url of imagenes[0]; let i = index ' class="ml-1">
+                                        <div class="col-auto card mt-2 px-0 pb-2">
+                                          <label style="border: none;  ">
+                                            <img [src]="url" class="px-0" height="140px" width="140px">
+                                            <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple name="files"
+                                                   type="file">
+                                          </label>
+                                          <button (click)="quitarImagenes(0,i)" class="boton-cerrar btn-outline-danger px-0 py-0 ">Eliminar
+                                          </button>
+                                        </div>
+                                      </div>
+                                      <div *ngIf="vectorBanderaAgregarImagen[0]==false" class="mx-auto ">
+                                        <div class="col-auto pt-4">
+                                          <label class="imagen-agregar ">
+                                            <i class="fa fa-picture-o fa-4x"></i>
+                                            <i class="fa fa-plus-circle fa-2x ml-1"></i>
+                                            <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple type="file">
+                                          </label>
+                                        </div>
+                                      </div>
+                                      <div *ngIf="vectorBanderaAgregarImagen[0]==false" class=" col-12 pb-5 mx-auto ">
+                                        <p class="link-agregar-imagenes ">Click para Agregar imagenes</p>
+                                      </div>
 
-<!--                <form class="card card-body" name="form"> &lt;!&ndash;Multimedia &ndash;&gt;
-                  <h4>Multimedia</h4>
-                  <hr>
-                  <div class="form-group ">
-                    <a class="ml-2 mt-5">
-                      <label>Imagenes del producto </label>
-                      <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
-                    <div
-                      [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[0]==false,'borde-imagenes1':vectorBanderaAgregarImagen[0]==true }"
-                      class="row  mt-3 mx-0 ">
-                      <div *ngFor='let url of imagenes[0]; let i = index ' class="ml-1">
-                        <div class="col-auto card mt-2 px-0 pb-2">
-                          <label style="border: none;  ">
-                            <img [src]="url" class="px-0" height="140px" width="140px">
-                            <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple name="files"
-                                   type="file">
-                          </label>
-                          <button (click)="quitarImagenes(0,i)" class="boton-cerrar btn-outline-danger px-0 py-0 ">Eliminar
-                          </button>
-                        </div>
-                      </div>
-                      <div *ngIf="vectorBanderaAgregarImagen[0]==false" class="mx-auto ">
-                        <div class="col-auto pt-4">
-                          <label class="imagen-agregar ">
-                            <i class="fa fa-picture-o fa-4x"></i>
-                            <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                            <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple type="file">
-                          </label>
-                        </div>
-                      </div>
-                      <div *ngIf="vectorBanderaAgregarImagen[0]==false" class=" col-12 pb-5 mx-auto ">
-                        <p class="link-agregar-imagenes ">Click para Agregar imagenes</p>
-                      </div>
-
-                      <div *ngIf="vectorBanderaAgregarImagen[0]==true && imagenes[0].length<6" class="py-2">
-                        <div class=" py-4  card  ml-1 px-2">
-                          <label class="imagen-agregar">
-                            <i class="fa fa-picture-o fa-4x ml-4"></i>
-                            <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                            <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple type="file">
-                            <br>
-                            <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imagenes</p>
-                            <p class=" link-agregar-imagenes2">maximo 6</p>
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div> &lt;!&ndash; form-group end.// &ndash;&gt;
-                </form>-->
-
-
+                                      <div *ngIf="vectorBanderaAgregarImagen[0]==true && imagenes[0].length<6" class="py-2">
+                                        <div class=" py-4  card  ml-1 px-2">
+                                          <label class="imagen-agregar">
+                                            <i class="fa fa-picture-o fa-4x ml-4"></i>
+                                            <i class="fa fa-plus-circle fa-2x ml-1"></i>
+                                            <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple type="file">
+                                            <br>
+                                            <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imagenes</p>
+                                            <p class=" link-agregar-imagenes2">maximo 6</p>
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div> &lt;!&ndash; form-group end.// &ndash;&gt;
+                                </form>-->
 
 
               </div>

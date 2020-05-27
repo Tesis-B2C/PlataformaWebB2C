@@ -120,4 +120,71 @@ label {
 
 
 
+.fileContainer [type=file] {
+  display: block;
+  filter: alpha(opacity=0);
+  height: 5%;
+  width: 10%;
+  opacity: 0;
+  text-align: right;
+}
+
+#nuestroinput {
+  display: none
+}
+
+/*IMAGENES LOGO Y BANNER*/
+.file {
+  display: none
+}
+
+.borde-imagenes {
+  border: rgba(0, 0, 0, 0.3) 2px dashed;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  margin-left: 5px;
+  border-radius: 50%;
+}
+
+.borde-imagenes:hover {
+  border: #2a4c75 2px dashed;
+  background-color: rgba(18, 52, 95, 0.2);
+}
+
+.borde-imagenes1 {
+  border: rgba(0, 0, 0, 0.3) 2px dashed;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  margin-left: 5px;
+}
+
+.borde-imagenes1:hover {
+  border: #2a4c75 2px dashed;
+  background-color: white
+}
+
+.boton-cerrar {
+  display: block;
+  font-size: 0.9rem;
+  width: 80%;
+  margin-left: 10%;
+  border-radius: 15px;
+}
+
+.link-agregar-imagenes {
+  text-align: center;
+}
+
+.imagen-agregar {
+  opacity: 0.7;
+}
+
+.imagen-agregar:hover {
+  opacity: 1;
+  transition: opacity 0.5s;
+  cursor: pointer;
+  color: #2a4c75;
+}
+
+
 
