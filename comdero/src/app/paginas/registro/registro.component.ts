@@ -34,7 +34,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
   public loading: boolean = false;
   public banderaTipo: boolean = true;
 
-  constructor(private toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio) {
+  constructor(public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio) {
     this.Agente = new Agente(null, null, null,
       null, null, null, 1, null, null,
       null, null, null, null);
@@ -47,6 +47,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     delete this.Agente;
+    this.toastr.clear();
   }
 
   public mostrarToast(mensaje, icono) {

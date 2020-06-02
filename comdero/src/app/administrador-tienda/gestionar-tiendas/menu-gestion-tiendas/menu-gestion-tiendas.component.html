@@ -110,21 +110,27 @@
           <i class="fa fa-fw fa-map  "></i>
           <span class="nav-link-text ml-2">Puntos de venta</span>
         </a>
-        <ul class="sidenav-second-level collapse" id="puntos-venta">
-          <li (click)="apareceIngreseUsuario()" class="ml-4 subOpcion" style="cursor:pointer "> &nbsp; &nbsp; Nuevo</li>
-        </ul>
+
       </li>
     </ul>
 
     <ul class="navbar-nav navbar-sidenav mt-2 ml-2">
       <li class="nav-item" data-placement="right " data-toggle="tooltip">
-        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#puntos-venta">
+        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" [routerLink]="['metodos-pago']"
+           routerLinkActive="active">
           <i class="fa fa-fw fa-credit-card  "></i>
           <span class="nav-link-text ml-2">Métodos de Pago</span>
         </a>
-        <ul class="sidenav-second-level collapse" id="puntos-venta">
-          <li (click)="apareceIngreseUsuario()" class="ml-4 subOpcion" style="cursor:pointer "> &nbsp; &nbsp; Nuevo</li>
-        </ul>
+
+      </li>
+    </ul>
+    <ul class="navbar-nav navbar-sidenav mt-2 ml-2">
+      <li class="nav-item" data-placement="right " data-toggle="tooltip">
+        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#puntos-venta">
+          <i class="fa fa-fw fa-truck-moving  "></i>
+          <span class="nav-link-text ml-2">Métodos de Envio</span>
+        </a>
+
       </li>
     </ul>
 

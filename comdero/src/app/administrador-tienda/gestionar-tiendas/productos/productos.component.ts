@@ -102,7 +102,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   public Producto_Enviar: Producto_Enviar;
 
 
-  constructor(private toastr: ToastrService, private _productoServicio: ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
+  constructor(public toastr: ToastrService, private _productoServicio: ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
     this.Oferta = new Oferta(null, null, null, null, null, null);
     this.Producto = new Producto(null, null, null, null, null, null, null, null);
     this.Variantes.push(new Variante(null, null, null, null, null, "unidades"));
@@ -139,6 +139,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     delete this.Producto;
     delete this.Oferta;
     delete this.Variantes;
+    this.toastr.clear();
   }
 
   public async subirImagenes(eventEntrante, indice) {
@@ -469,6 +470,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     }
 
   }
+
 
 
   mensageError(mensaje) {

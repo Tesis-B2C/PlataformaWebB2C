@@ -11,9 +11,10 @@ import {FormsModule} from "@angular/forms";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { MetodosPagoComponent } from './metodos-pago/metodos-pago.component';
+import { MetodosEnvioComponent } from './metodos-envio/metodos-envio.component';
 
 @NgModule({
-  declarations: [ MenuGestionTiendasComponent, ProductosComponent, MetodosPagoComponent],
+  declarations: [ MenuGestionTiendasComponent, ProductosComponent, MetodosPagoComponent, MetodosEnvioComponent],
   imports: [
     CommonModule,
     SidebarModule,
