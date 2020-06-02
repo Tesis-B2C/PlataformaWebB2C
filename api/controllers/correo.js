@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-exports.EnviarCorreo = (correo, asunto, nombre, token) => {
+exports.EnviarCorreo =  async (correo, asunto, nombre, token) => {
     var transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
@@ -36,16 +36,32 @@ exports.EnviarCorreo = (correo, asunto, nombre, token) => {
     }
 // Function to send e-mail to the user
 
-    transporter.sendMail(mailOptions, function (error) {
+/* await transporter.sendMail(mailOptions, function (error, response) {
 
-        if (error) {
+           if(error){
+               console.log(error);
+               res.end("error");
+           }else{
+               console.log("Message sent: " + response.message);
+               res.end("sent");
+           }
+       });*/
 
-            return "error"
-        } else {
+  return new Promise( await function (resolve,reject){
+        let resp=false;
 
-            return "success"
-        }
-    });
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+                console.log("error is "+error);
+                resolve(false); // or use rejcet(false) but then you will have to handle errors
+            }
+            else {
+                console.log('Email sent: ' + JSON.stringify(info));
+                resolve(true);
+            }
+        });
+    })
+
 
 }
 

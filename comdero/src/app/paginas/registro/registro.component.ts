@@ -36,7 +36,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
 
   constructor(public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio) {
     this.Agente = new Agente(null, null, null,
-      null, null, null, 1, null, null,
+      null, null, "Persona", 1, null, null,
       null, null, null, null);
   }
 
@@ -98,6 +98,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
         if (this.validarCedula() == true || this.Agente.Tipo == "Empresa") {
           this.banderaToastCedula = false;
           this.registrarAgente1();
+
         } else {
           this.banderaToast = false;
           this.banderaToastCedula = true;
@@ -106,6 +107,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
         }
       } else {
         this.registrarAgente1();
+
       }
 
 
@@ -127,12 +129,18 @@ export class RegistroComponent implements OnInit, OnDestroy {
   }
 
   async registrarAgente1() {
+
     try {
       let response = await this._agenteServicio.registrarAgente(this.Agente).toPromise();
-      document.forms["formRegistro"].reset();
+
       window.scroll(0, 0);
       this.mensageCorrecto(response['message']);
       this.loading = false;
+      delete this.Agente;
+      this.Agente = new Agente(null, null, null,
+        null, null, "Persona", 1, null, null,
+        null, null, null, null);
+      document.forms["formRegistro"].reset();
     } catch (e) {
       console.log("error:" + JSON.stringify((e).error.message));
       if (JSON.stringify((e).error.message))
@@ -246,9 +254,13 @@ export class RegistroComponent implements OnInit, OnDestroy {
       buttonsStyling: false,
       //footer: '<a href="http://localhost:4200/loguin"><b><u>Autentificate Ahora</u></b></a>',
       customClass: {
-        confirmButton: 'btn btn-primary px-5',
+        confirmButton: 'btn btn-primary px-5'
         //icon:'sm'
       }
+
+
+    }).then(function(Ok){
+      this.router.navigate(['principales/menu/principal']);
     });
   }
 }

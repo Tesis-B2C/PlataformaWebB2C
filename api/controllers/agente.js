@@ -10,7 +10,7 @@ const correo = require('./correo');
 async function registrarAgente(req, res) {
     try {
 
-       let agenteEncontrado = await AGENTE.findOne({where: {CORREO: req.body.Correo}});
+        let agenteEncontrado = await AGENTE.findOne({where: {CORREO: req.body.Correo}});
 
         if (agenteEncontrado) {
             res.status(404).send({
@@ -18,6 +18,7 @@ async function registrarAgente(req, res) {
             });
         } else {
 
+            console.log("params", req.body);
             let agente = AGENTE.build();
             agente.ID_AGENTE = req.body.Id_Agente;
             agente.NOMBRE = req.body.Nombre;
@@ -37,18 +38,20 @@ async function registrarAgente(req, res) {
             if (agenteGuardado) {
                 let TOKENTEMPORAL = jwt.createToken24h(agente);
                 let respuestaCorreo = await correo.EnviarCorreo(agente.CORREO, 'Activación de cuenta', agente.NOMBRE, TOKENTEMPORAL);
-                if (respuestaCorreo == 'error') {
+
+                if (respuestaCorreo == false) {
+                    agente.destroy({where: {CORREO: agente.CORREO}});
                     res.status(500).send({
-                        message: 'Parece que hay un error en tu correo electrónico'
+                        message: 'Parece que hay un error en el correo electrónico intentalo más tarde'
                     });
                 } else if (req.body.Num_Cod_Postal) {
                     res.status(200).send({
-                        message: 'Por favor revisa tu correo electrónico para activar tu cuenta '
+                        message: 'Por favor revisa tu correo electrónico para activar tu cuenta'
                     });
                 } else {
                     res.status(200).send({
                         message: 'No se ha registrado una dirección aun, esperamos lo puedas hacer pronto,' +
-                            'Porfavor revisa tu correo electrónico para activar tu cuenta'
+                            'Porfavor revisa tu correo electrónico: '+agente.CORREO+'  para activar tu cuenta'
                     });
                 }
             } else {
@@ -157,11 +160,11 @@ async function resetearContrasenia(req, res) {
             let respuestaCorreo = await correo.EnviarCorreo(agente.dataValues.CORREO, 'Cambio de contraseña', agente.dataValues.NOMBRE, TOKENTEMPORAL);
 
             // Function to send e-mail to the user
-            if(respuestaCorreo=='error'){
+            if (respuestaCorreo == 'error') {
                 res.status(500).send({
                     message: 'Al parecer existe un problema intentalo más tarde'
                 });
-            }else {
+            } else {
                 res.status(200).send({
                     message: 'Por favor revisa tu correo electrónico para resetear tu contraseña'
                 });
@@ -186,7 +189,7 @@ async function resetearContrasenia2(req, res) {
         } else {
 
             await bcrypt.hash(req.body.Contrasenia2, null, null, function (err, hash) {
-               let nuevaContrasenia = hash;//aqui e cambio
+                let nuevaContrasenia = hash;//aqui e cambio
                 let agenteActualizado = agente.update({CONTRASENIA: nuevaContrasenia});
                 if (!agenteActualizado) {
                     res.status(500).send({
