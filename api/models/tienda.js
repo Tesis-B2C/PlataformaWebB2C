@@ -5,7 +5,6 @@ var Oferta = require("./oferta");
 var Opcion_Envio_Tienda = require("./opcion_envio_tienda");
 const Tienda= db.sequelize.define('Tienda', {
         NUM_TIENDA: {
-
             type: Sequelize.INTEGER,
             primaryKey:true,
             allowNull: false

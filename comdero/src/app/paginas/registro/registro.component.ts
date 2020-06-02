@@ -209,7 +209,6 @@ export class RegistroComponent implements OnInit, OnDestroy {
     });
   }
 
-
   mensageCorrecto(mensaje) {
     Swal.fire({
       icon: 'success',

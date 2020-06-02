@@ -10,7 +10,7 @@ html,body{
 }
 
 .container-registro {
-  max-width: 850px;
+  max-width: 950px;
   margin-top: 15px;
   position: relative;
   clear: top;
@@ -20,7 +20,7 @@ html,body{
 
 @media (max-width: 1366px) {
   .container-registro {
-    max-width: 750px;
+    max-width: 850px;
     margin-top: 15px;
     position: relative;
     height: auto;
@@ -29,8 +29,8 @@ html,body{
 }
 
 .datosregistro {
-  margin-left: 11%;
-  margin-right: 11%;
+  margin-left: 6%;
+  margin-right: 6%;
   margin-top: 2%;
 }
 
@@ -113,56 +113,6 @@ label {
   background: #6c757d;
 }
 
-.personalizacion{
-  background-image: url("src/assets/estilos-registroTienda/fondo-paso3.png");
-  border-radius: 5%;
-}
-
-
-
-.fileContainer [type=file] {
-  display: block;
-  filter: alpha(opacity=0);
-  height: 5%;
-  width: 10%;
-  opacity: 0;
-  text-align: right;
-}
-
-#nuestroinput {
-  display: none
-}
-
-/*IMAGENES LOGO Y BANNER*/
-.file {
-  display: none
-}
-
-.borde-imagenes {
-  border: rgba(0, 0, 0, 0.3) 2px dashed;
-  padding-bottom: 10px;
-  padding-top: 10px;
-  margin-left: 5px;
-  border-radius: 50%;
-}
-
-.borde-imagenes:hover {
-  border: #2a4c75 2px dashed;
-  background-color: rgba(18, 52, 95, 0.2);
-}
-
-.borde-imagenes1 {
-  border: rgba(0, 0, 0, 0.3) 2px dashed;
-  padding-bottom: 10px;
-  padding-top: 10px;
-  margin-left: 5px;
-}
-
-.borde-imagenes1:hover {
-  border: #2a4c75 2px dashed;
-  background-color: white
-}
-
 .boton-cerrar {
   display: block;
   font-size: 0.9rem;
@@ -171,8 +121,42 @@ label {
   border-radius: 15px;
 }
 
-.link-agregar-imagenes {
-  text-align: center;
+.btn-paso2{
+  width: 100%;
+  height: 75px;
+}
+
+/*IMAGENES LOGO*/
+.file {
+  display: none;
+}
+
+.borde-imagenesL {
+  border: rgba(0, 0, 0, 0.3) 2px dashed;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  margin-left: 5px;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+}
+
+.borde-imagenesL:hover {
+  border: #2a4c75 2px dashed;
+  background-color: rgba(18, 52, 95, 0.2);
+}
+
+.borde-imagenes1L {
+  border: rgba(0, 0, 0, 0.3) 2px dashed;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  justify-content: center;
+}
+
+.borde-imagenes1L:hover {
+  border: #2a4c75 2px dashed;
+  background-color: rgba(18, 52, 95, 0.2);
 }
 
 .imagen-agregar {
@@ -185,6 +169,62 @@ label {
   cursor: pointer;
   color: #2a4c75;
 }
+
+/*IMAGENES BANNER*/
+.borde-imagenesB {
+  border: rgba(0, 0, 0, 0.3) 2px dashed;
+  padding-bottom: 10px;
+  margin-left: 5px;
+  width: 100%;
+  height: 135px;
+}
+
+.borde-imagenesB:hover {
+  border: #2a4c75 2px dashed;
+  background-color: rgba(18, 52, 95, 0.2);
+}
+
+.borde-imagenes1B {
+  border: rgba(0, 0, 0, 0.3) 2px dashed;
+  padding-top: 1px;
+  width: 100%;
+  height: 135px;
+}
+
+.borde-imagenes1B:hover {
+  border: #2a4c75 2px dashed;
+  background-color: rgba(18, 52, 95, 0.2);
+}
+
+.imagen-agregar {
+  opacity: 0.7;
+}
+
+.imagen-agregar:hover {
+  opacity: 1;
+  transition: opacity 0.5s;
+  cursor: pointer;
+  color: #2a4c75;
+}
+
+.color-fa{
+  color: #2a4c75;
+}
+
+/*IMG TIENDA COLUMNA 2*/
+.columnas{
+  width: auto;
+  height: 430px;
+}
+
+.ejemplo-tienda{
+  width: 100%;
+  height: 100%;
+}
+
+
+
+
 
 
 

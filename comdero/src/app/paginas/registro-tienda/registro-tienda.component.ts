@@ -1,8 +1,17 @@
-import {Component, OnInit } from '@angular/core';
+import {Component,OnDestroy, OnInit } from '@angular/core';
 import {Sucursal} from "../../modelos/sucursal";
 import {Tienda} from "../../modelos/tienda";
 import {DpaServicio} from "../../servicios/dpa.servicio";
 import {Imagen_Producto} from "../../modelos/imagen_producto";
+import {Horario_Atencion} from "../../modelos/horario_atencion";
+import {TiendaServicio} from "../../servicios/tienda.servicio";
+import Swal from "sweetalert2";
+
+interface Tienda_Enviar {
+  Tienda: Tienda;
+  Sucursal: Sucursal;
+  Horario_Atencion: Horario_Atencion;
+}
 
 declare const require: any;
 
@@ -12,10 +21,14 @@ declare const require: any;
   styleUrls: ['./registro-tienda.component.css']
 })
 
-export class RegistroTiendaComponent implements OnInit{
+export class RegistroTiendaComponent implements OnInit, OnDestroy{
   public Tienda;
   public Sucursal;
   public htmlcomponent;
+  public Tienda_Enviar: Tienda_Enviar;
+
+  //banderas
+  public loading: boolean = false;
 
   public editorConfig = {
     "editable": true,
@@ -52,19 +65,21 @@ export class RegistroTiendaComponent implements OnInit{
   public btnEspacioFisico: boolean = false;
   public btnCasa: boolean = false;
 
-  public filesToUpload: Array<File>;
-  public url2;
-
-  constructor(private _dpaServicio: DpaServicio) {
-    this.Tienda = new Tienda(null, null, null, null,
+  constructor(private _dpaServicio: DpaServicio, private _tiendaServicio: TiendaServicio) {
+    this.Tienda = new Tienda(null,null, null, null, null,
       null, null, null, null, null, null);
 
-    this.Sucursal = new Sucursal(null, null, null, null,
-      null, null, null, null);
+    this.Sucursal = new Sucursal(null,null,null,null, null, null, null,
+      null);
   }
 
   async ngOnInit() {
-    await this.getDpaProvincias("P");
+    this.getDpaProvincias("P");
+  }
+
+  ngOnDestroy() {
+    delete this.Tienda;
+    delete this.Sucursal;
   }
 
   async getDpaProvincias(buscar) {
@@ -84,6 +99,55 @@ export class RegistroTiendaComponent implements OnInit{
       console.log("error:" + JSON.stringify((e).error.message));
     }
   }
+
+
+  public async registrarTienda(){
+    try {
+      let response = await this._tiendaServicio.registrarTienda(this.Tienda_Enviar).toPromise();
+      //document.forms["formRegistro"].reset();
+      window.scroll(0, 0);
+      this.mensageCorrecto(response['message']);
+      this.loading = false;
+    } catch (e) {
+      console.log("error:" + JSON.stringify((e).error.message));
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+      this.loading = false;
+    }
+  }
+
+  mensageError(mensaje) {
+    Swal.fire({
+      icon: 'error',
+      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Error..</h5></header>',
+      text: mensaje,
+      position: 'center',
+      width: 600,
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        //icon:'sm'
+      }
+    });
+  }
+
+  mensageCorrecto(mensaje) {
+    Swal.fire({
+      icon: 'success',
+      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Correcto..</h5></header>',
+      text: mensaje,
+      position: 'center',
+      width: 600,
+      buttonsStyling: false,
+      //footer: '<a href="http://localhost:4200/loguin"><b><u>Autentificate Ahora</u></b></a>',
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        //icon:'sm'
+      }
+    });
+  }
+
 
   public desdeNegocio() {
     this.banderaCasa = false;
@@ -111,62 +175,108 @@ export class RegistroTiendaComponent implements OnInit{
     this.vectorOpciones.splice(pocicion,1);
   }
 
-  readUrl(event: any) {
-    this.filesToUpload = <Array<File>>event.target.files;
-    if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
-      reader.onload = (event: any) => {
-        this.url2 = event.target.result;
-      }
-      reader.readAsDataURL(event.target.files[0]);
-    }
-  }
-
-  //Imagenes
-  public vectorBanderaAgregarImagen = [false];
-  public imagenes = [[]];
-  public Imagenes_Producto = [[]];
+  //Logo
+  public vectorBanderaAgregarLogo = false;
+  public quitarBanderaLogo = false;
+  public logoI = [[]];
+  public Imagenes_Logo = [[]];
 
   public async subirImagenes(eventEntrante, indice) {
-    if(this.imagenes[indice]==null){
-      this.imagenes[indice]=[];
+    if(this.logoI[indice]==null){
+      this.logoI[indice]=[];
     }
     if (eventEntrante.target.files && eventEntrante.target.files[0]) {
       var filesAmount = eventEntrante.target.files.length;
-      this.vectorBanderaAgregarImagen[indice] = true;
+      this.vectorBanderaAgregarLogo = true;
       if (filesAmount > 6) {
         //this.banderaMensajeMaximoImagenes = true;
       } else {
+
         for (let i = 0; i < filesAmount; i++) {
-          this.Imagenes_Producto[indice].push(new Imagen_Producto(eventEntrante.target.files[i].name, eventEntrante.target.files[i].type, null, eventEntrante.target.files[i].size));
+          this.Imagenes_Logo[indice].push(new Imagen_Producto(eventEntrante.target.files[i].name, eventEntrante.target.files[i].type, null, eventEntrante.target.files[i].size));
           var reader = new FileReader();
           reader.onload = (event: any) => {
-            if( this.imagenes[indice]!=null)
-              this.imagenes[indice].push(event.target.result);
+            if( this.logoI[indice]!=null)
+              this.logoI[indice].push(event.target.result);
             document.forms["form"].reset();
           }
           await reader.readAsDataURL(eventEntrante.target.files[i]);
+          this.quitarBanderaLogo=true;
         }
-        if (this.Imagenes_Producto[indice].length > 6) {
-          this.imagenes[indice]=null;
-          this.Imagenes_Producto[indice].splice(0,  this.Imagenes_Producto[indice].length);
+
+        if (this.Imagenes_Logo[indice].length > 6) {
+          this.logoI[indice]=null;
+          this.Imagenes_Logo[indice].splice(0,  this.Imagenes_Logo[indice].length);
           document.forms["form"].reset();
-          this.vectorBanderaAgregarImagen[indice] = false;
+          this.vectorBanderaAgregarLogo = false;
           //this.banderaMensajeMaximoImagenes = true;
-        } else if (this.Imagenes_Producto[indice].length == 6) {
+        } else
+          if (this.Imagenes_Logo[indice].length == 6) {
           //this.banderaMensajeMaximoImagenes = false
           //this.banderaMaximoImagenes = false;
-        }
+          }
+
       }
     }
   }
 
-
   public quitarImagenes(indice: any, imagen) {
-    this.imagenes[indice].splice(imagen, 1);
+    this.logoI[indice].splice(imagen, 1);
     document.forms["form"].reset();
-    this.Imagenes_Producto[indice].splice(imagen, 1);
+    this.Imagenes_Logo[indice].splice(imagen, 1);
+    this.quitarBanderaLogo=false;
   }
 
+  //Banner
+  public vectorBanderaAgregarBanner = false;
+  public quitarBanderaBanner = false;
+  public banner = [[]];
+  public Banner_Producto = [[]];
 
+  public async subirBanner(eventEntrante, indice) {
+    if(this.banner[indice]==null){
+      this.banner[indice]=[];
+    }
+    if (eventEntrante.target.files && eventEntrante.target.files[0]) {
+      var filesAmount = eventEntrante.target.files.length;
+      this.vectorBanderaAgregarBanner = true;
+      if (filesAmount > 6) {
+        //this.banderaMensajeMaximoImagenes = true;
+      } else {
+
+        for (let i = 0; i < filesAmount; i++) {
+          this.Banner_Producto[indice].push(new Imagen_Producto(eventEntrante.target.files[i].name, eventEntrante.target.files[i].type, null, eventEntrante.target.files[i].size));
+
+          var reader = new FileReader();
+          reader.onload = (event: any) => {
+            if( this.banner[indice]!=null)
+              this.banner[indice].push(event.target.result);
+            document.forms["form"].reset();
+          }
+          await reader.readAsDataURL(eventEntrante.target.files[i]);
+          this.quitarBanderaBanner=true;
+        }
+
+        if (this.Banner_Producto[indice].length > 6) {
+          this.banner[indice]=null;
+          this.Banner_Producto[indice].splice(0,  this.Banner_Producto[indice].length);
+          document.forms["form"].reset();
+          this.vectorBanderaAgregarBanner = false;
+          //this.banderaMensajeMaximoImagenes = true;
+        } else
+        if (this.Banner_Producto[indice].length == 6) {
+          //this.banderaMensajeMaximoImagenes = false
+          //this.banderaMaximoImagenes = false;
+        }
+
+      }
+    }
+  }
+
+  public quitarBanner(indice: any, banner) {
+    this.banner[indice].splice(banner, 1);
+    document.forms["form"].reset();
+    this.Banner_Producto[indice].splice(banner, 1);
+    this.quitarBanderaBanner=false;
+  }
 }
