@@ -37,3 +37,8 @@
   font-weight: bold;
   color: white;
 }
+
+.menu-categorias{
+  position: absolute;
+width: 90vh;
+}
