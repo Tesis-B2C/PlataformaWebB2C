@@ -16,7 +16,7 @@ async function registrarTienda(req, res) {
            } else {*/
             let tienda = TIENDA.build();
             tienda.razon_Social = req.body.Tienda_Enviar.Tienda.Razon_Social;
-            console.log(tienda.razon_Social);
+            console.log(req.body.Tienda_Enviar.Tienda.Razon_Social);
 
 
 

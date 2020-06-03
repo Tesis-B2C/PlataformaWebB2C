@@ -24,6 +24,7 @@ declare const require: any;
 export class RegistroTiendaComponent implements OnInit, OnDestroy{
   public Tienda;
   public Sucursal;
+  public Negocios = [];
   public htmlcomponent;
   public Tienda_Enviar: Tienda_Enviar;
 
@@ -52,6 +53,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy{
 
   private LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
   private soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
+  private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
   private urlPattern: any = "(https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9]+\\.[^\\s]{2,}|www\\.[a-zA-Z0-9]+\\.[^\\s]{2,})";
   public provincias;
   public ciudades;
@@ -68,9 +70,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy{
   constructor(private _dpaServicio: DpaServicio, private _tiendaServicio: TiendaServicio) {
     this.Tienda = new Tienda(null,null, null, null, null,
       null, null, null, null, null, null);
-
-    this.Sucursal = new Sucursal(null,null,null,null, null, null, null,
-      null);
+      this.Negocios.push(new Sucursal(null, null, null, null, null,null,null,null,null));
   }
 
   async ngOnInit() {
@@ -103,6 +103,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy{
 
   public async registrarTienda(){
     try {
+      console.log("Objeto a enviar al backend:"+JSON.stringify(this.Tienda));
       let response = await this._tiendaServicio.registrarTienda(this.Tienda_Enviar).toPromise();
       //document.forms["formRegistro"].reset();
       window.scroll(0, 0);
@@ -152,27 +153,37 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy{
   public desdeNegocio() {
     this.banderaCasa = false;
     this.bandAgregarSuc=true;
-
     this.btnEspacioFisico = true;
     this.btnCasa = false;
+    this.Negocios[0].Tipo_Sucursal ="Negocio";
+    console.log("NEGOCIO"+JSON.stringify(this.Negocios));
   }
 
   public desdeCasa() {
     this.vectorOpciones=[1];
+    this.Negocios=[];
     this.banderaCasa = true;
 
     this.btnEspacioFisico = false;
     this.btnCasa = true;
 
+    this.Negocios.push(new Sucursal(null, null, null, null, null,null,null,null,"Casa"));
+
+    console.log("CASA"+JSON.stringify(this.Negocios));
   }
+
+
 
   public agregarSucursal() {
     this.vectorOpciones.push(1);
-    console.log("negocio"+this.vectorOpciones);
+    this.Negocios.push(new Sucursal(null, null, null, null, null,null,null,null,"Negocio"));
+    console.log("negocio"+JSON.stringify(this.Negocios));
   }
 
   public borrarOpciones(pocicion: number) {
     this.vectorOpciones.splice(pocicion,1);
+    this.Negocios.splice(pocicion, 1);
+    console.log("NEGOCIO"+JSON.stringify(this.Negocios));
   }
 
   //Logo

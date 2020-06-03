@@ -247,7 +247,6 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges {
   }
 
   public borrarOpcionesProducto(pocicion: number) {
-
     this.vectorOpciones.splice(pocicion, 1);
     this.Variantes.splice(pocicion + 1, 1);
     this.Imagenes_Producto[pocicion + 1] = [];

@@ -62,6 +62,27 @@
               </div>
             </div> <!-- form-group end.// -->
 
+
+            <div class="form-group">
+              <label>* Correo</label>
+              <input #Correo_Tienda="ngModel" style="text-transform: lowercase;"
+                     [(ngModel)]="this.Tienda.Correo_Tienda" [ngClass]="{'is-invalid': Correo_Tienda.invalid && (Correo_Tienda.dirty || Correo_Tienda.touched),
+                 'is-valid': Correo_Tienda.valid && (Correo_Tienda.dirty || Correo_Tienda.touched)}"
+                     [pattern]='this.emailPattern'
+                     class="tamanioInputs form-control" name="correo_tienda" placeholder=""
+                     required type="text">
+              <div *ngIf="Correo_Tienda.invalid && (Correo_Tienda.dirty || Correo_Tienda.touched)">
+                <div *ngIf="Correo_Tienda.errors.required">
+                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+                </div>
+                <div *ngIf="Correo_Tienda.errors.pattern">
+                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
+                    numeros.</p>
+                </div>
+              </div>
+            </div> <!-- form-group end.// -->
+
+
             <div class="form-row">
               <div class="form-group col-lg-6">
                 <label>Link Página Web</label>
@@ -125,7 +146,7 @@
           <div class="container-login100-form-btn btn_continue centered-content">
             <div class="wrap-login100-form-btn">
               <div class="login100-form-bgbtn"></div>
-              <button type="button" class="login100-form-btn" awNextStep>
+              <button type="button" (click)="registrarTienda()" class="login100-form-btn"awNextStep>
                 Continuar
               </button>
             </div>
@@ -160,7 +181,7 @@
               <div class="form-row">
                 <div class="form-group col-lg-6">
                   <label>* RUC</label>
-                  <input #RucC="ngModel" [(ngModel)]="this.Sucursal.RucC" [ngClass]="{'is-invalid': RucC.invalid && (RucC.dirty || RucC.touched),
+                  <input #RucC="ngModel" [(ngModel)]="this.Negocios[0].Ruc" [ngClass]="{'is-invalid': RucC.invalid && (RucC.dirty || RucC.touched),
                  'is-valid': RucC.valid && (RucC.dirty || RucC.touched)}" [pattern]='this.soloNumerosPattern'
                          class="tamanioInputs form-control" maxlength="13"
                          minlength="13" name="rucCasa" placeholder="" required type="text">
@@ -186,7 +207,7 @@
 
                 <div class="col-lg-6 form-group">
                   <label>* Celular / Convencional</label>
-                  <input #TelefonoC="ngModel" [(ngModel)]="this.Sucursal.TelefonoC" [ngClass]="{'is-invalid': TelefonoC.invalid && (TelefonoC.dirty || TelefonoC.touched),
+                  <input #TelefonoC="ngModel" [(ngModel)]="this.Negocios[0].Telefono_Sucursal" [ngClass]="{'is-invalid': TelefonoC.invalid && (TelefonoC.dirty || TelefonoC.touched),
                  'is-valid': TelefonoC.valid && (TelefonoC.dirty || TelefonoC.touched)}"
                          [pattern]='this.soloNumerosPattern' class="tamanioInputs form-control" name="telefonoCasa"
                          required type="tel">
@@ -207,7 +228,7 @@
                 <div class="form-group col-md-6">
                   <label>* Provincia</label>
                   <select #ProvinciaC="ngModel" (change)="getDpaCiudades($event.target.value)"
-                          [(ngModel)]="this.Sucursal.ProvinciaC"
+                          [(ngModel)]="this.Negocios[0].Provincia"
                           [ngClass]="{'errorSelect': ProvinciaC.invalid && (ProvinciaC.dirty || ProvinciaC.touched),
           'satisfactorioSelect': ProvinciaC.valid && (ProvinciaC.dirty || ProvinciaC.touched)}"
                           class=" tamanioInputs form-control" data-size="4" name="provinciaCasa"
@@ -226,7 +247,7 @@
 
                 <div class="form-group col-md-6">
                   <label>* Ciudad</label>
-                  <select #CiudadC="ngModel" [(ngModel)]="this.Sucursal.CiudadC" [ngClass]="{
+                  <select #CiudadC="ngModel" [(ngModel)]="this.Negocios[0].Ciudad" [ngClass]="{
           'errorSelect': CiudadC.invalid && (CiudadC.dirty || CiudadC.touched),
           'satisfactorioSelect': CiudadC.valid && (CiudadC.dirty || CiudadC.touched)}"
                           class="tamanioInputs form-control" name="ciudadCasa" placeholder=""
@@ -266,10 +287,10 @@
                 <div class="form-row">
                   <div class="form-group col-lg-6">
                     <label>* RUC</label>
-                    <input #RucN="ngModel" [(ngModel)]="this.Sucursal.RucN" [ngClass]="{'is-invalid': RucN.invalid && (RucN.dirty || RucN.touched),
+                    <input #RucN="ngModel" [(ngModel)]="this.Negocios[i].Ruc" [ngClass]="{'is-invalid': RucN.invalid && (RucN.dirty || RucN.touched),
                  'is-valid': RucN.valid && (RucN.dirty || RucN.touched)}" [pattern]='this.soloNumerosPattern'
                            class="tamanioInputs form-control" maxlength="13"
-                           minlength="13" name="rucNegocio" placeholder="" required type="text">
+                           minlength="13" name="ruc{{i}}" placeholder="" required type="text">
                     <div *ngIf="RucN.invalid && (RucN.dirty || RucN.touched)">
                       <div *ngIf="RucN.errors.required">
                         <p class="alert alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
@@ -292,9 +313,9 @@
 
                   <div class="col-lg-6 form-group">
                     <label>* Celular / Convencional</label>
-                    <input #TelefonoN="ngModel" [(ngModel)]="this.Sucursal.TelefonoN" [ngClass]="{'is-invalid': TelefonoN.invalid && (TelefonoN.dirty || TelefonoN.touched),
+                    <input #TelefonoN="ngModel" [(ngModel)]="this.Negocios[i].Telefono_Sucursal" [ngClass]="{'is-invalid': TelefonoN.invalid && (TelefonoN.dirty || TelefonoN.touched),
                  'is-valid': TelefonoN.valid && (TelefonoN.dirty || TelefonoN.touched)}"
-                           [pattern]='this.soloNumerosPattern' class="tamanioInputs form-control" name="telefonoNegocio"
+                           [pattern]='this.soloNumerosPattern' class="tamanioInputs form-control" name="telefono{{i}}"
                            required type="tel">
                     <div *ngIf="TelefonoN.invalid && (TelefonoN.dirty|| TelefonoN.touched) ">
                       <div *ngIf="TelefonoN.errors.required">
@@ -313,10 +334,10 @@
                   <div class="form-group col-md-6">
                     <label>* Provincia</label>
                     <select #ProvinciaN="ngModel" (change)="getDpaCiudades($event.target.value)"
-                            [(ngModel)]="this.Sucursal.ProvinciaN"
+                            [(ngModel)]="this.Negocios[i].Provincia"
                             [ngClass]="{'errorSelect': ProvinciaN.invalid && (ProvinciaN.dirty || ProvinciaN.touched),
                             'satisfactorioSelect': ProvinciaN.valid && (ProvinciaN.dirty || ProvinciaN.touched)}"
-                            class=" tamanioInputs form-control" data-size="4" name="provinciaNegocio"
+                            class=" tamanioInputs form-control" data-size="4" name="provincia{{i}}"
                             required>
                       <option selecteddisabled="true">Selecciona una..</option>
                       <option *ngFor="let provincia of this.provincias"
@@ -332,10 +353,10 @@
 
                   <div class="form-group col-md-6">
                     <label>* Ciudad</label>
-                    <select #CiudadN="ngModel" [(ngModel)]="this.Sucursal.CiudadN" [ngClass]="{
+                    <select #CiudadN="ngModel" [(ngModel)]="this.Negocios[i].Ciudad" [ngClass]="{
                     'errorSelect': CiudadN.invalid && (CiudadN.dirty || CiudadN.touched),
                     'satisfactorioSelect': CiudadN.valid && (CiudadN.dirty || CiudadN.touched)}"
-                            class="tamanioInputs form-control" name="ciudadNegocio" placeholder=""
+                            class="tamanioInputs form-control" name="ciudad{{i}}" placeholder=""
                             required>
                       <option selected="true" disabled="true">Selecciona una..</option>
                       <option *ngFor="let ciudad of this.ciudades"
@@ -352,11 +373,11 @@
 
                 <div class="form-group">
                   <label>* Dirección</label>
-                  <input #CallePrincipal="ngModel" [(ngModel)]="this.Sucursal.Calle_Principal"
+                  <input #CallePrincipal="ngModel" [(ngModel)]="this.Negocios[i].Direccion_Sucursal"
                          [ngClass]="{'errorSelect': CallePrincipal.invalid && (CallePrincipal.dirty || CallePrincipal.touched),
                           'satisfactorioSelect': CallePrincipal.valid && (CallePrincipal.dirty || CallePrincipal.touched)}"
                          class="tamanioInputs form-control"
-                         name="callePrincipal" placeholder="" required type="search" id="CallePrincipal">
+                         name="direccion{{i}}" placeholder="" required type="search" id="CallePrincipal">
                   <div *ngIf="CallePrincipal.invalid && (CallePrincipal.touched||CallePrincipal.dirty)">
                     <div *ngIf="CallePrincipal.errors.required">
                       <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
@@ -368,14 +389,14 @@
                 <div class="form-row">
                   <div class="col-lg-6 form-group">
                     <label>Número de referencia</label>
-                    <input #NumCasaN="ngModel" [(ngModel)]="this.Sucursal.Num_Casa_SucursalN"
-                           class="tamanioInputs form-control" name="numCasaNegocio" placeholder="" type="text">
+                    <input #NumCasa="ngModel" [(ngModel)]="this.Negocios[i].Num_Casa_Sucursal"
+                           class="tamanioInputs form-control" name="numCasaSucursal{{i}}" placeholder="" type="text">
                   </div>
 
                   <div class=" col-lg-6 form-group">
                     <label>Código Postal</label>
-                    <input #CodigoPostalN="ngModel" [(ngModel)]="this.Sucursal.Num_Cod_PostalN"
-                           class="tamanioInputs form-control" name="codigoPostal" type="text">
+                    <input #CodigoPostal="ngModel" [(ngModel)]="this.Negocios[i].Num_Cod_Postal"
+                           class="tamanioInputs form-control" name="codigoPostal{{i}}" type="text">
                   </div> <!--form-group end.-->
                 </div> <!--form-row end.-->
               </div><!--Fin ngFor-->
@@ -500,7 +521,6 @@
                     <img class="ejemplo-tienda" src="assets/estilos-registroTienda/ejemplo-tienda.png">
                     <img  style="position: absolute;  width: 100%; height: 100%; left: 0; top: 0;" [src]="banner" >
                   </div>
-
                 </form>
               </div> <!--FIN COLUMNA 2 -->
 
@@ -508,7 +528,7 @@
 
             <div class="btn-group">
               <button type="button" class="btn btn-secondary" awPreviousStep>Atras</button>
-              <button type="button" class="btn btn-secondary" awCompletedStep>Finalizar</button>
+              <button type="button" class="btn btn-secondary" >Finalizar</button>
             </div>
 
           </div>
