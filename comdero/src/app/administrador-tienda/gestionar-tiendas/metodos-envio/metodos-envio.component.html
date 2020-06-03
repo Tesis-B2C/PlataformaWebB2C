@@ -20,73 +20,112 @@
         </div>
         <hr>
         <div class="container">
-          <div class="form-row justify-content-center">
+          <div class="form-row ">
             <div class="form-group col-md-9">
-              <label>Métodos de envio dentro de la localidad</label>
+              <label>Métodos de envío dentro de la localidad</label>
 
 
-              <div *ngFor="let opcion of vectorEnvioDentroLocalidad">
-                <div class="form-row">
-                <div class="form-group  col-9">
-                  <p style="font-size: smaller">Servicios de envío</p>
-                  <select class="browser-default form-control "
-                          name="masOpcionesDentroLocalidad">
-                    <option value="Ahorros">Ahorros</option>
-                    <option value="Corriente">Corriente</option>
-                  </select>
+              <div *ngFor="let opcion of vectorEnvioDentroLocalidad; let i=index">
+                <div class="form-row no-gutter">
+                  <div class="form-group  col-9">
+                    <p style="font-size: smaller">Servicios de envío</p>
+                    <select class="browser-default form-control "
+                            name="masOpcionesDentroLocalidad">
+                      <option value="Ahorros">Ahorros</option>
+                      <option value="Corriente">Corriente</option>
+                    </select>
 
+                  </div>
+                  <div *ngIf="vectorEnvioDentroLocalidad.length-1==i" class="form-group   col-3 col-md-1">
+                    <p style="opacity: 0">b</p>
+                    <button (click)="agregarOpcionesEnvioLocalidad()" class="form-control btn btn-outline-primary "
+                            style="font-size: smaller;border: none">
+                      <span class="fa fa-plus "></span>
+                    </button>
+                  </div>
+                  <div *ngIf="vectorEnvioDentroLocalidad.length-1!=i" class="form-group col-3 col-md-1">
+                    <p style="opacity: 0">b</p>
+                    <button (click)="agregarOpcionesEntregaLocal()" class="form-control btn btn-outline-danger "
+                            style="font-size: smaller;border: none">
+                      <span class="fa fa-trash "></span>
+                    </button>
+                  </div>
                 </div>
-                <div class="form-group  col-2">
-                  <p style="opacity: 0">b</p>
-                  <button (click)="borrarOpcionesEntregaLocal(i)" class="form-control btn btn-outline-primary p-0"
-                          style="font-size: smaller;border: none">
-                    <span class="fa fa-plus "></span>
-                  </button>
-                </div>
-                </div>
-                <br>
-                <div class="form-group col-md-9">
+              </div>
+
+              <div class="form-row  no-gutter">
+                <div class="form-group col-9">
                   <div class="form-check">
                     <input type="checkbox" (change)="opcionVerMasOpcionesDentroLocalidad($event.target.value)"
                            class="form-check-input" id="checkVerMasOpcionesDentroLocalidad">
                     <label class="form-check-label " for="checkVerMasOpcionesDentroLocalidad">Ver más opciones</label>
                   </div>
                 </div>
-
-                <div *ngIf="banderaVerMasOpcionesDentroLocalidad" class="form-group col-md-9">
-                  <p style="font-size: smaller">Servicio de envío</p>
-                  <select (change)="opcionTipoCuenta($event.target.value)" class="browser-default form-control "
-                          id="tipoCuenta" name="tipoCuenta">
-                    <option value="Ahorros">Ahorros</option>
-                    <option value="Corriente">Corriente</option>
-                  </select>
-                </div>
-                <div *ngIf="banderaVerMasOpcionesDentroLocalidad" class="form-group  col-md-1">
-                  <p style="opacity: 0">b</p>
-                  <button (click)="borrarOpcionesEntregaLocal(i)" class="form-control btn btn-outline-primary p-0"
-                          style="font-size: smaller;border: none">
-                    <span class="fa fa-plus "></span>
-                  </button>
-                </div>
-
-                <div class="form-group  col-md-9">
-                  <div class="form-check">
-                    <input (change)="opcionAgregarOpcionesDentroLocalidad($event.target.value)" type="checkbox"
-                           class="form-check-input" id="opcionAgregarOpcionesDentroLocalidad">
-                    <label class="form-check-label " for="opcionAgregarOpcionesDentroLocalidad">Deseo agregar un método
-                      de envio</label>
+              </div>
+              <div *ngIf="banderaVerMasOpcionesDentroLocalidad">
+                <div *ngFor="let opcion of vectorVerMasEnvioDentroLocalidad; let i =index">
+                  <div class="form-row">
+                    <div class="form-group col-9">
+                      <p style="font-size: smaller">Servicio de envío</p>
+                      <select (change)="opcionTipoCuenta($event.target.value)" class="browser-default form-control "
+                              id="tipoCuenta" name="tipoCuenta">
+                        <option value="Ahorros">Ahorros</option>
+                        <option value="Corriente">Corriente</option>
+                      </select>
+                    </div>
+                    <div *ngIf="vectorVerMasEnvioDentroLocalidad.length-1==i" class="form-group   col-3 col-md-1">
+                      <p style="opacity: 0">b</p>
+                      <button (click)="agregarVerMasOpcionesEnvioLocalidad()"
+                              class="form-control btn btn-outline-primary "
+                              style="font-size: smaller;border: none">
+                        <span class="fa fa-plus "></span>
+                      </button>
+                    </div>
+                    <div *ngIf="vectorVerMasEnvioDentroLocalidad.length-1!=i" class="form-group   col-3 col-md-1">
+                      <p style="opacity: 0">b</p>
+                      <button class="form-control btn btn-outline-danger p-0"
+                              style="font-size: smaller;border: none">
+                        <span class="fa fa-trash "></span>
+                      </button>
+                    </div>
                   </div>
                 </div>
-                <div *ngIf="banderaAgregarOpcionesDentroLocalidad" class="form-group  col-md-9">
-                  <p style="font-size: smaller">Ingrese otros métodos de envío</p>
-                  <input type="text" class="form-control" placeholder="Coop. de transporte teresita ">
+              </div>
+              <div>
+                <div class="form-row no-gutter">
+                  <div class="form-group  col-9">
+                    <div class="form-check">
+                      <input (change)="opcionAgregarOpcionesDentroLocalidad($event.target.value)" type="checkbox"
+                             class="form-check-input" id="opcionAgregarOpcionesDentroLocalidad">
+                      <label class="form-check-label " for="opcionAgregarOpcionesDentroLocalidad">Deseo agregar un
+                        método
+                        de envio</label>
+                    </div>
+                  </div>
                 </div>
-                <div *ngIf="banderaAgregarOpcionesDentroLocalidad" class="form-group  col-md-1">
-                  <p style="opacity: 0">b</p>
-                  <button (click)="borrarOpcionesEntregaLocal(i)" class="form-control btn btn-outline-primary p-0"
-                          style="font-size: smaller;border: none">
-                    <span class="fa fa-plus "></span>
-                  </button>
+                <div *ngIf="banderaAgregarOpcionesDentroLocalidad">
+                  <div *ngFor="let opcion of vectorOtraEnvioDentroLocalidad; let i= index">
+                    <div class="form-row no-gutter">
+                      <div class="form-group  col-9">
+                        <p style="font-size: smaller">Ingrese método de envío</p>
+                        <input type="text" class="form-control" placeholder="Coop. de transporte teresita ">
+                      </div>
+                      <div *ngIf="vectorOtraEnvioDentroLocalidad.length-1==i" class="form-group   col-3 col-md-1">
+                        <p style="opacity: 0">b</p>
+                        <button (click)="agregarOtrasOpcionesEnvioDentroLocalidad()" class="form-control btn btn-outline-primary p-0"
+                                style="font-size: smaller;border: none">
+                          <span class="fa fa-plus "></span>
+                        </button>
+                      </div>
+                      <div *ngIf="vectorOtraEnvioDentroLocalidad.length-1!=i"  class="form-group   col-3 col-md-1">
+                        <p style="opacity: 0">b</p>
+                        <button  class="form-control btn btn-outline-danger p-0"
+                                style="font-size: smaller;border: none">
+                          <span class="fa fa-trash "></span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div> <!-- form-group end.// -->
@@ -98,86 +137,129 @@
           </div>
         </div>
         <hr>
-        <div class="container">
-          <div class="form-row justify-content-center">
-            <div class="form-group col-md-8">
-              <label>Métodos de envio fuera de la localidad</label>
-              <div class="form-row">
-                <div class="form-group  col-md-9">
-                  <p style="font-size: smaller">Servicio de envío</p>
-                  <select (change)="opcionTipoCuenta($event.target.value)" class="browser-default form-control "
-                          id="tipoCuenta" name="tipoCuenta">
-                    <option value="Ahorros">Ahorros</option>
-                    <option value="Corriente">Corriente</option>
-                  </select>
 
+
+
+        <div class="container">
+          <div class="form-row ">
+            <div class="form-group col-md-9">
+              <label>Métodos de envío fuera de la localidad</label>
+
+
+              <div *ngFor="let opcion of vectorEnvioFueraLocalidad; let i=index">
+                <div class="form-row no-gutter">
+                  <div class="form-group  col-9">
+                    <p style="font-size: smaller">Servicios de envío</p>
+                    <select class="browser-default form-control "
+                            name="masOpcionesDentroLocalidad">
+                      <option value="Ahorros">Ahorros</option>
+                      <option value="Corriente">Corriente</option>
+                    </select>
+
+                  </div>
+                  <div *ngIf="vectorEnvioFueraLocalidad.length-1==i" class="form-group   col-3 col-md-1">
+                    <p style="opacity: 0">b</p>
+                    <button (click)="agregarOpcionesEnvioFueraLocalidad()" class="form-control btn btn-outline-primary "
+                            style="font-size: smaller;border: none">
+                      <span class="fa fa-plus "></span>
+                    </button>
+                  </div>
+                  <div *ngIf="vectorEnvioFueraLocalidad.length-1!=i" class="form-group col-3 col-md-1">
+                    <p style="opacity: 0">b</p>
+                    <button (click)="agregarOpcionesEntregaLocal()" class="form-control btn btn-outline-danger "
+                            style="font-size: smaller;border: none">
+                      <span class="fa fa-trash "></span>
+                    </button>
+                  </div>
                 </div>
-                <div class="form-group  col-md-1">
-                  <p style="opacity: 0">b</p>
-                  <button (click)="borrarOpcionesEntregaLocal(i)" class="form-control btn btn-outline-primary p-0"
-                          style="font-size: smaller;border: none">
-                    <span class="fa fa-plus "></span>
-                  </button>
-                </div>
-                <br>
-                <div class="form-group  col-md-9">
+              </div>
+
+              <div class="form-row  no-gutter">
+                <div class="form-group col-9">
                   <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="checkVerMasOpcionesFueraLocalidad"
-                           (change)="opcionVerMasOpcionesFueraLocalidad($event.target.value)">
+                    <input type="checkbox" (change)="opcionVerMasOpcionesFueraLocalidad($event.target.value)"
+                           class="form-check-input" id="checkVerMasOpcionesFueraLocalidad">
                     <label class="form-check-label " for="checkVerMasOpcionesFueraLocalidad">Ver más opciones</label>
                   </div>
                 </div>
-                <div *ngIf="banderaVerMasOpcionesFueraLocalidad" class="form-group  col-md-9">
-                  <p style="font-size: smaller">Servicio de envío</p>
-                  <select (change)="opcionTipoCuenta($event.target.value)" class="browser-default form-control "
-                          id="tipoCuenta" name="tipoCuenta">
-                    <option value="Ahorros">Ahorros</option>
-                    <option value="Corriente">Corriente</option>
-                  </select>
-                </div>
-                <div *ngIf="banderaVerMasOpcionesFueraLocalidad" class="form-group  col-md-1">
-                  <p style="opacity: 0">b</p>
-                  <button (click)="borrarOpcionesEntregaLocal(i)" class="form-control btn btn-outline-primary p-0"
-                          style="font-size: smaller;border: none">
-                    <span class="fa fa-plus "></span>
-                  </button>
-                </div>
-                <div class="form-group  col-md-9">
-                  <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="checkAgregarOpcionesFueraLocalidad"  (change)="opcionAgregarOpcionesFueraLocalidad($event.target.value)">
-                    <label class="form-check-label " for="checkAgregarOpcionesFueraLocalidad">Deseo agregar un método de envio</label>
+              </div>
+              <div *ngIf="banderaVerMasOpcionesFueraLocalidad">
+                <div *ngFor="let opcion of vectorVerMasEnvioFueraLocalidad; let i =index">
+                  <div class="form-row">
+                    <div class="form-group col-9">
+                      <p style="font-size: smaller">Servicio de envío</p>
+                      <select (change)="opcionTipoCuenta($event.target.value)" class="browser-default form-control "
+                              id="tipoCuenta" name="tipoCuenta">
+                        <option value="Ahorros">Ahorros</option>
+                        <option value="Corriente">Corriente</option>
+                      </select>
+                    </div>
+                    <div *ngIf="vectorVerMasEnvioFueraLocalidad.length-1==i" class="form-group   col-3 col-md-1">
+                      <p style="opacity: 0">b</p>
+                      <button (click)="agregarVerMasOpcionesEnvioFueraLocalidad()"
+                              class="form-control btn btn-outline-primary "
+                              style="font-size: smaller;border: none">
+                        <span class="fa fa-plus "></span>
+                      </button>
+                    </div>
+                    <div *ngIf="vectorVerMasEnvioFueraLocalidad.length-1!=i" class="form-group   col-3 col-md-1">
+                      <p style="opacity: 0">b</p>
+                      <button class="form-control btn btn-outline-danger p-0"
+                              style="font-size: smaller;border: none">
+                        <span class="fa fa-trash "></span>
+                      </button>
+                    </div>
                   </div>
                 </div>
-                <div *ngIf="banderaAgregarOpcionesFueraLocalidad" class="form-group  col-md-9">
-                  <p style="font-size: smaller">Ingrese otros métodos de envío</p>
-                  <input type="text" class="form-control" placeholder="Coop. de transporte teresita ">
-                </div>
-                <div *ngIf="banderaAgregarOpcionesFueraLocalidad" class="form-group  col-md-1">
-                  <p style="opacity: 0">b</p>
-                  <button (click)="borrarOpcionesEntregaLocal(i)" class="form-control btn btn-outline-primary p-0"
-                          style="font-size: smaller;border: none">
-                    <span class="fa fa-plus "></span>
-                  </button>
-                </div>
-
               </div>
-
-
+              <div>
+                <div class="form-row no-gutter">
+                  <div class="form-group  col-9">
+                    <div class="form-check">
+                      <input (change)="opcionAgregarOpcionesFueraLocalidad($event.target.value)" type="checkbox"
+                             class="form-check-input" id="opcionAgregarOpcionesFueraLocalidad">
+                      <label class="form-check-label " for="opcionAgregarOpcionesFueraLocalidad">Deseo agregar un
+                        método
+                        de envio</label>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="banderaAgregarOpcionesFueraLocalidad">
+                  <div *ngFor="let opcion of vectorOtraEnvioFueraLocalidad; let i= index">
+                    <div class="form-row no-gutter">
+                      <div class="form-group  col-9">
+                        <p style="font-size: smaller">Ingrese método de envío</p>
+                        <input type="text" class="form-control" placeholder="Coop. de transporte teresita ">
+                      </div>
+                      <div *ngIf="vectorOtraEnvioFueraLocalidad.length-1==i" class="form-group   col-3 col-md-1">
+                        <p style="opacity: 0">b</p>
+                        <button (click)="agregarOtrasOpcionesEnvioFueraLocalidad()" class="form-control btn btn-outline-primary p-0"
+                                style="font-size: smaller;border: none">
+                          <span class="fa fa-plus "></span>
+                        </button>
+                      </div>
+                      <div *ngIf="vectorOtraEnvioFueraLocalidad.length-1!=i"  class="form-group   col-3 col-md-1">
+                        <p style="opacity: 0">b</p>
+                        <button  class="form-control btn btn-outline-danger p-0"
+                                 style="font-size: smaller;border: none">
+                          <span class="fa fa-trash "></span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div> <!-- form-group end.// -->
-
-
             <div class=" mx-auto d-flex align-items-center col-md-2">
               <div class="mx-auto">
-                <p class=" iconos-pagos "><span class="  fa fa-truck fa-4x" style="color: #2a4c75"></span></p>
+                <p class=" iconos-pagos "><span class="  fas fa-truck fa-4x" style="color: #2a4c75"></span></p>
               </div>
             </div>
-
-
           </div>
-
-
         </div>
         <hr>
+
+
         <div class="container">
           <div class="form-row justify-content-end">
             <button class="btn btn-outline-primary   text-nowrap col-md-3  mb-4 " type="button">
