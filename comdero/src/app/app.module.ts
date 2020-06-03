@@ -9,6 +9,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {DpaServicio} from "./servicios/dpa.servicio";
 import {UnidadMedidaServicio} from "./servicios/unidad_medida.servicio";
 import {AgenteServicio} from "./servicios/agente.servicio";
+import {TiendaServicio} from "./servicios/tienda.servicio";
 import {CategoriaServicio} from "./servicios/categoria.servicio";
 import {ProductoServicio} from "./servicios/producto.servicio";
 import {MetodoPagoServicio} from "./servicios/metodo_pago.servicio";
@@ -42,7 +43,7 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot({preventDuplicates:true})
   ],
-  providers: [DpaServicio,AgenteServicio,CategoriaServicio,UnidadMedidaServicio,ProductoServicio,MetodoPagoServicio],
+  providers: [DpaServicio,AgenteServicio,CategoriaServicio,UnidadMedidaServicio,ProductoServicio,MetodoPagoServicio,TiendaServicio],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

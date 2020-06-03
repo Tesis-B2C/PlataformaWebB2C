@@ -1,8 +1,9 @@
 export class Tienda {
   constructor(
-    public Num_Tienda: String,
+    public Correo_Agente: String,
     public Nombre_Comercial: String,
     public Razon_Social: String,
+    public Correo_Tienda: String,
     public Link_Pagina: String,
     public Link_Facebook: String,
     public Descripcion_Tienda: String,

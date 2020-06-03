@@ -16,7 +16,6 @@ const places = require("../../../../node_modules/places.js/dist/cdn/places.js");
 })
 
 export class RegistroComponent implements OnInit, OnDestroy {
-
   private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
   public soloLetrasPattern: any = "[ a-zA-ZÑñáéíóúÁÉÍÓÚ ][ a-zA-ZÑñáéíóúÁÉÍÓÚ ]*$[0-9]{0}";
   private LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
@@ -42,7 +41,6 @@ export class RegistroComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getDpaProvincias("P");
-
   }
 
   ngOnDestroy() {
@@ -57,7 +55,6 @@ export class RegistroComponent implements OnInit, OnDestroy {
 
   selectTipoAgente(event) {
     this.banderaTipo = !this.banderaTipo;
-
     this.Agente.Tipo = event.target.value;
   }
 
@@ -168,9 +165,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
     }
   }
 
-
   activarDireccion() {
-
     this.bandera = true;
     this.banderaDirecciones = !this.banderaDirecciones;
     if (!this.banderaDirecciones) {
@@ -183,11 +178,8 @@ export class RegistroComponent implements OnInit, OnDestroy {
     }
   }
 
-
   buscadorDirecciones() {
-
     if (this.bandera == true) {
-
       var placesAutocomplete = places({
         container: document.querySelector('#CallePrincipal'),
         templates: {
@@ -198,8 +190,6 @@ export class RegistroComponent implements OnInit, OnDestroy {
       }).configure({
         type: 'address',
         countries: ['ec'],
-
-
       });
       placesAutocomplete.on('change', (e) => {
         console.log(e.suggestion)
@@ -242,7 +232,6 @@ export class RegistroComponent implements OnInit, OnDestroy {
       }
     });
   }
-
 
   mensageCorrecto(mensaje) {
     Swal.fire({
