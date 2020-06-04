@@ -46,6 +46,66 @@
       </div> <!-- row.// -->
     </div> <!-- container.// -->
   </section> <!-- header-main .// -->
+
+  <section>
+    <nav class="navbar navbar-main navbar-expand-lg  border-bottom colorNavbar mx-0"  >
+      <div class="mx-lg-auto">
+        <button class="navbar-toggler "  type="button" data-toggle="collapse" data-target="#main_nav" aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="fa fa-bars " style="color: white"></span>
+        </button>
+
+        <div class="collapse navbar-collapse "   id="main_nav">
+          <ul class="navbar-nav ">
+            <div class="btn-group c">
+              <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Categorias
+              </button>
+              <div class="dropdown-menu ">
+
+
+                <a class="dropdown-item" *ngFor="let c11 of c1" href="#">{{c11.NOMBRE}}</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item col-2" href="#">Ver todas</a>
+                </div>
+
+            </div>
+
+
+            <li class="nav-item">
+              <a class="nav-link" href="#">Fashion</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Supermarket</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Electronics</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Baby &amp Toys</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Fitness sport</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Clothing</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Furnitures</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Furnitures</a>
+            </li>   <li class="nav-item">
+            <a class="nav-link" href="#">Furnitures</a>
+          </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Furnitures</a>
+            </li>
+
+          </ul>
+        </div> <!-- collapse .// -->
+      </div> <!-- container .// -->
+    </nav>
+  </section>
 </header> <!-- section-header.// -->
 <body>
 <router-outlet></router-outlet>

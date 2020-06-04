@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import {CategoriaServicio} from "../../servicios/categoria.servicio";
+
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css']
+  selector: 'app-categorias',
+  templateUrl: './categorias.component.html',
+  styleUrls: ['./categorias.component.css']
 })
-export class MenuComponent implements OnInit {
+export class CategoriasComponent implements OnInit {
   public categorias;
   public c1=[];
-  public c2;
-  public c3;
-
+  public c2=[];
+  public c3=[];
   constructor(private _categoriaServicio: CategoriaServicio) { }
 
   ngOnInit() {
@@ -25,11 +25,11 @@ export class MenuComponent implements OnInit {
       this.categorias.forEach(elemnt => {
         if (elemnt.TIPO == 'C1') {
           this.c1.push(elemnt)
-        } /*else if (elemnt.TIPO == 'C2') {
+        } else if (elemnt.TIPO == 'C2') {
           this.c2.push(elemnt)
         } else if (elemnt.TIPO == 'C3') {
           this.c3.push(elemnt)
-        }*/
+        }
       })
 
 
