@@ -1,12 +1,13 @@
 .iconos-pagos {
-  width: 8rem;
-  height: 8rem;
+  width: 10rem;
+  height: 10rem;
   border-radius: 50%;
   background: #f1f3f4;
+  /*background-color: rgba(255,128,0,0.6);*/
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   margin:0px auto;
-  padding:3%
+
 }

@@ -1,7 +1,7 @@
 <body>
 <div class="container-fluid mt-5">
   <div class="row  justify-content-center">
-    <h4 class=" col-md-6 ">Categorias para comprar y vender</h4>
+    <h4 class=" col-md-6  text-center">Categorias para comprar y vender</h4>
     <hr class="col-md-6 ">
   </div>
 
@@ -11,26 +11,26 @@
       <form #formMetodoPago class="card card-body ">
 
         <div *ngFor="let c11 of c1; let i = index">
-          <div class="px-3">
-            <div class="form-row">
+          <div class="px-md-4">
+            <div class="form-row no-gutter">
               <div class="col-8">
-              <h4 >{{c11.NOMBRE}}</h4>
+              <h5 class="mb-3  " style="font-weight: bold">{{c11.NOMBRE}}</h5>
                 <div *ngFor="let c22 of c2"  >
-              <div class="form-row" *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA">
-                  <h6 class=" col-12 ml-2 mt-1"  style="color: #1a56e9; display: block" >{{c22.NOMBRE}}</h6>
+              <div class="" *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA">
+                  <p class="col-auto"  style="color: #1a56e9; font-size: medium " >{{c22.NOMBRE}}</p>
 
-                <div  *ngFor="let c33 of c3" class="my-2">
-                  <div class="form-row " *ngIf=" (c22.ID_CATEGORIA==c33.CAT_ID_CATEGORIA)">
-                  <a class=" col-auto ml-4"   style="color: #00b517" >{{c33.NOMBRE}}</a>
+                <div  *ngFor="let c33 of c3" >
+                  <div class="" *ngIf=" (c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA) && (c22.ID_CATEGORIA==c33.CAT_ID_CATEGORIA)">
+                  <p class="offset-md-6 offset-1"   style="color: #1da1f2;font-size: small; display: block" >{{c33.NOMBRE}}</p>
                   </div>
                 </div>
 
               </div>
               </div>
               </div>
-              <div class=" mx-auto d-flex align-items-center col-md-2">
+              <div class=" mx-auto d-flex align-items-center col-3 ">
                 <div class="mx-auto">
-                  <p class=" iconos-pagos "><span class="{{this.vectorIconos[i]}} fa-3x" style="color: #2a4c75"></span></p>
+                  <p class=" iconos-pagos "><span class="{{this.vectorIconos[i]}} fa-4x" style="color: #2a4c75"></span></p>
                 </div>
               </div>
             </div>
