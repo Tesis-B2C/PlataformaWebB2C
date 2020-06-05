@@ -10,14 +10,14 @@
         </div>
         <div class="col-lg-6 col-sm-12 mx-auto">
 
-            <div class="input-group search  ">
-              <input type="text" class="form-control " placeholder="Buscar">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="submit">
-                  <i class="fa fa-search"></i>
-                </button>
-              </div>
+          <div class="input-group search  ">
+            <input type="text" class="form-control " placeholder="Buscar">
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="submit">
+                <i class="fa fa-search"></i>
+              </button>
             </div>
+          </div>
 
         </div> <!-- col.// -->
         <div class="col-lg-4 col-sm-6 col-12">
@@ -35,7 +35,7 @@
               <div class="text">
                 <span class="text-muted">Bienvenido!</span>
                 <div>
-                  <a [routerLink]="['/loguin']" >Loguin</a> |
+                  <a [routerLink]="['/loguin']">Loguin</a> |
                   <a [routerLink]="['/registro']"> Registro</a>
                 </div>
               </div>
@@ -48,27 +48,26 @@
   </section> <!-- header-main .// -->
 
   <section>
-    <nav class="navbar navbar-main navbar-expand-lg  border-bottom colorNavbar mx-0"  >
+    <nav class="navbar navbar-main navbar-expand-lg  border-bottom colorNavbar mx-0">
       <div class="mx-lg-auto">
-        <button class="navbar-toggler "  type="button" data-toggle="collapse" data-target="#main_nav" aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#main_nav"
+                aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="fa fa-bars " style="color: white"></span>
         </button>
 
-        <div class="collapse navbar-collapse "   id="main_nav">
+        <div class="collapse navbar-collapse " id="main_nav">
           <ul class="navbar-nav ">
-            <div class="btn-group c">
-              <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Categorias
-              </button>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link pl-0" data-toggle="dropdown" href="#" aria-expanded="false">Catgorias</a>
               <div class="dropdown-menu ">
-
-
-                <a class="dropdown-item" *ngFor="let c11 of c1; let i =index" href="#"><span class="{{this.vectorIconos[i]}} "></span> &nbsp;{{c11.NOMBRE}}</a>
+                <a class="dropdown-item" *ngFor="let c11 of c1; let i =index" href="#"><span
+                  class="{{this.vectorIconos[i]}} "></span> &nbsp;{{c11.NOMBRE}}</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item col-2" href="#">Ver todas</a>
-                </div>
 
-            </div>
+              </div>
+            </li>
 
 
             <li class="nav-item">
@@ -94,9 +93,10 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Furnitures</a>
-            </li>   <li class="nav-item">
-            <a class="nav-link" href="#">Furnitures</a>
-          </li>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Furnitures</a>
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Furnitures</a>
             </li>
