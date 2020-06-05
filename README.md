@@ -2,7 +2,7 @@
 
 lo primero que se instala 
 npm install rxjs@latest --save
-npm install --save @ng-bootstrap/ng-bootstrap
+npm install @ng-bootstrap/ng-bootstrap --save 
 
 
 // mejorar el select 

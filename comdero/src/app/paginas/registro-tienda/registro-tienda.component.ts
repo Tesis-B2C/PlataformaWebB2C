@@ -30,7 +30,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy{
 
   //banderas
   public loading: boolean = false;
-
+  time = {hour: 13, minute: 30};
   public editorConfig = {
     "editable": true,
     "spellcheck": true,

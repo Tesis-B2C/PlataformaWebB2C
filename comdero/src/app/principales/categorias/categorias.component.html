@@ -10,18 +10,18 @@
 
       <form #formMetodoPago class="card card-body ">
 
-        <div *ngFor="let c11 of c1">
+        <div *ngFor="let c11 of c1; let i = index">
           <div class="px-3">
             <div class="form-row">
               <div class="col-8">
               <h4 >{{c11.NOMBRE}}</h4>
                 <div *ngFor="let c22 of c2"  >
               <div class="form-row" *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA">
-                  <a class=" col-12"  style="color: #1a56e9; display: block" >{{c22.NOMBRE}}</a>
+                  <h6 class=" col-12 ml-2 mt-1"  style="color: #1a56e9; display: block" >{{c22.NOMBRE}}</h6>
 
-                <div  *ngFor="let c33 of c3" class="">
-                  <div class="form-row" *ngIf=" (c22.ID_CATEGORIA==c33.CAT_ID_CATEGORIA)">
-                  <a class=" col-auto ml-3"   style="color: #00b517" >{{c33.NOMBRE}}</a>
+                <div  *ngFor="let c33 of c3" class="my-2">
+                  <div class="form-row " *ngIf=" (c22.ID_CATEGORIA==c33.CAT_ID_CATEGORIA)">
+                  <a class=" col-auto ml-4"   style="color: #00b517" >{{c33.NOMBRE}}</a>
                   </div>
                 </div>
 
@@ -30,7 +30,7 @@
               </div>
               <div class=" mx-auto d-flex align-items-center col-md-2">
                 <div class="mx-auto">
-                  <p class=" iconos-pagos "><span class="  fas fa-truck fa-4x" style="color: #2a4c75"></span></p>
+                  <p class=" iconos-pagos "><span class="{{this.vectorIconos[i]}} fa-3x" style="color: #2a4c75"></span></p>
                 </div>
               </div>
             </div>
@@ -38,7 +38,7 @@
           </div>
           <hr>
         </div>
-        <hr>
+
 
 
       </form>
