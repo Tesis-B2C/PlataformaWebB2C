@@ -7,6 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MiCuentaComponent implements OnInit {
 
+  public banderaVisionGeneral:boolean;
+  public banderaDatosPersoanles:boolean;
+  public banderaListaDeseos:boolean;
+  public banderaOrdenesRealizadas:boolean;
+  public banderaAlaEsperaDeLaEntrega:boolean;
+  public banderaArticulosEntregados:boolean;
   constructor() { }
 
   ngOnInit() {
