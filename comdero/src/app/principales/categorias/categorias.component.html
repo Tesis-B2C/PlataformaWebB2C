@@ -1,40 +1,43 @@
 <body>
 <section class="section-pagetop bg">
   <div class="container">
-    <h2 class="title-page">Categorias para comprar y vender</h2>
+    <h2 class="title-page text-center text-md-left">Categorias para comprar y vender</h2>
   </div> <!-- container //  -->
 </section>
 <div class="container-fluid mt-5">
 
 
-  <div class="row justify-content-center">
-    <div class="col-md-6" id="panelUno">
+  <div class="row justify-content-center mt-5">
 
-      <form #formMetodoPago class="card card-body ">
+    <div class="col-md-7" id="panelUno">
+
+      <form #formMetodoPago class="card card-body pt-4">
 
         <div *ngFor="let c11 of c1; let i = index">
-          <div class="px-md-4">
-            <div class="form-row no-gutter">
-              <div class="col-8">
-              <h5 class="mb-3  " style="font-weight: bold">{{c11.NOMBRE}}</h5>
+          <div class="px-md-2">
+            <div class="form-row ">
+              <div class=" mx-auto d-flex align-items-center col-md-4 ">
+                <div class="mx-auto">
+                  <p class=" iconos-pagos "><span class="{{this.vectorIconos[i]}} fa-4x" style="color: #2a4c75"></span></p>
+                  <h5 class="mb-3  text-center my-3" style="font-weight: bold">{{c11.NOMBRE}}</h5>
+                </div>
+              </div>
+              <div class="col-6">
+
                 <div *ngFor="let c22 of c2"  >
               <div class="" *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA">
-                  <p class="col-auto"  style="color: #1a56e9; font-size: medium " >{{c22.NOMBRE}}</p>
+                  <p class="col-auto pl-0"  style="color: black; " >{{c22.NOMBRE}}</p>
 
                 <div  *ngFor="let c33 of c3" >
                   <div class="" *ngIf=" (c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA) && (c22.ID_CATEGORIA==c33.CAT_ID_CATEGORIA)">
-                  <p class="offset-md-6 offset-1"   style="color: #1da1f2;font-size: small; display: block" >{{c33.NOMBRE}}</p>
+                  <p class="offset-2 offset-md-4 "   style="font-size: smaller; display: block" >{{c33.NOMBRE}}</p>
                   </div>
                 </div>
 
               </div>
               </div>
               </div>
-              <div class=" mx-auto d-flex align-items-center col-3 ">
-                <div class="mx-auto">
-                  <p class=" iconos-pagos "><span class="{{this.vectorIconos[i]}} fa-4x" style="color: #2a4c75"></span></p>
-                </div>
-              </div>
+
             </div>
 
           </div>
