@@ -9,6 +9,23 @@
 
 
 
+.colorNavbar{
+  background-color: #2a4c75;
+
+}
+
+.nav-link{
+  color: white;
+  font-weight: normal;
+
+}
+
+.nav-link:hover {
+
+  color: #fca147;
+  font-weight: bold;
+}
+
 
 
 
