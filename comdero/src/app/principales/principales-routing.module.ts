@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {MenuComponent} from "./menu/menu.component";
 import {PrincipalComponent} from "./principal/principal.component";
 import {CategoriasComponent} from "./categorias/categorias.component";
-import {MiCuentaComponent} from "./mi-cuenta/mi-cuenta.component";
+
 
 const routes: Routes = [
 
@@ -11,7 +11,8 @@ const routes: Routes = [
   children: [
   { path: 'principal', component: PrincipalComponent },
     { path: 'categorias', component: CategoriasComponent },
-    { path: 'mi-cuenta', component: MiCuentaComponent }]},
+    {path: 'mi-cuenta', loadChildren:'./mi-cuenta/mi-cuenta.module#MiCuentaModule'}
+    ]},
 
   ];
 

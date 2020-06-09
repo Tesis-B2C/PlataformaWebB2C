@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MiCuentaComponent } from './mi-cuenta.component';
+import { MenuMiCuentaComponent } from './menu-mi-cuenta.component';
 
-describe('MiCuentaComponent', () => {
-  let component: MiCuentaComponent;
-  let fixture: ComponentFixture<MiCuentaComponent>;
+describe('MenuMiCuentaComponent', () => {
+  let component: MenuMiCuentaComponent;
+  let fixture: ComponentFixture<MenuMiCuentaComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MiCuentaComponent ]
+      declarations: [ MenuMiCuentaComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MiCuentaComponent);
+    fixture = TestBed.createComponent(MenuMiCuentaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

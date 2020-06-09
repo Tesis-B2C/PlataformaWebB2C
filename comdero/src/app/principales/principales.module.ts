@@ -5,9 +5,9 @@ import { PrincipalesRoutingModule } from './principales-routing.module';
 import {PrincipalComponent} from "./principal/principal.component";
 import {MenuComponent} from "./menu/menu.component";
 import { CategoriasComponent } from './categorias/categorias.component';
-import { MiCuentaComponent } from './mi-cuenta/mi-cuenta.component';
+
 @NgModule({
-  declarations: [PrincipalComponent,MenuComponent, CategoriasComponent, MiCuentaComponent],
+  declarations: [PrincipalComponent,MenuComponent, CategoriasComponent],
   imports: [
     CommonModule,
     PrincipalesRoutingModule,
