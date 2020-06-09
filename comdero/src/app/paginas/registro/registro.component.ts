@@ -162,7 +162,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
       this.ciudades = response.data;
     } catch (e) {
       console.log("error:" + JSON.stringify((e).error.message));
-    }
+  }
   }
 
   activarDireccion() {

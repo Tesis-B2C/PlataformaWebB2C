@@ -1,0 +1,158 @@
+<article class="card mb-3">
+  <div class="card-body">
+
+    <figure class="icontext">
+      <div class="icon">
+        <a href="#" class="icon icon-lg rounded-circle border"><i class="fa fa-user"></i></a>
+      </div>
+      <div class="text">
+        <h5> Datos personales </h5>
+
+      </div>
+
+    </figure>
+    <hr>
+
+<form>
+
+  <div class="form-group">
+    <label class="custom-control custom-radio custom-control-inline">
+      <input (change)="selectTipoAgente($event)" checked="" class="custom-control-input" name="gender" type="radio"
+             value="Persona">
+      <span class="custom-control-label"> Persona Natural  </span>
+    </label>
+    <label class="custom-control custom-radio custom-control-inline">
+      <input (change)="selectTipoAgente($event)" class="custom-control-input" name="gender" type="radio"
+             value="Empresa">
+      <span class="custom-control-label"> Empresa </span>
+    </label>
+
+  </div> <!-- form-group end.// -->
+
+
+  <div *ngIf="banderaTipo" class="form-row">
+
+    <div class="col form-group">
+      <label>* Nombres y Apellidos</label>
+      <input #NombreA="ngModel" style="text-transform: uppercase;" [(ngModel)]="this.Agente.Nombre" [ngClass]="{'is-invalid': NombreA.invalid && (NombreA.dirty || NombreA.touched),
+                 'is-valid': NombreA.valid && (NombreA.dirty || (NombreA.touched || NombreA.untouched))}"
+             [pattern]='this.soloLetrasPattern'
+             class="tamanioInputs form-control " name="nombreA" placeholder="" required
+             type="text"> <!--form-control-sm-->
+      <div *ngIf="NombreA.invalid && (NombreA.dirty || NombreA.touched)">
+        <div *ngIf="NombreA.errors.required">
+          <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+        </div>
+        <div *ngIf="NombreA.errors.pattern">
+          <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+            Utilice solo letras.</p>
+        </div>
+      </div>
+    </div> <!-- form-group end.// -->
+  </div> <!-- form-row end.// -->
+
+  <div *ngIf="!banderaTipo" class="form-group">
+    <label>* Razon Social</label>
+    <input #Razon_Social="ngModel" style="text-transform: uppercase;" [(ngModel)]="this.Agente.Nombre" [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched),
+                 'is-valid': Razon_Social.valid && (Razon_Social.dirty || Razon_Social.touched)}"
+           [pattern]='this.LetrasNumerosPattern'
+           class="tamanioInputs form-control" name="razon_Social" placeholder=""
+           required type="text">
+    <div *ngIf="Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched)">
+      <div *ngIf="Razon_Social.errors.required">
+        <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+      </div>
+      <div *ngIf="Razon_Social.errors.pattern">
+        <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
+          numeros.</p>
+      </div>
+    </div>
+
+  </div> <!-- form-group end.// -->
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label>* Provincia</label>
+      <select #Provincia="ngModel" (change)="getDpaCiudades($event.target.value)"
+              [(ngModel)]="this.Agente.Provincia"
+              [ngClass]="{
+          'errorSelect': Provincia.invalid && (Provincia.dirty || Provincia.touched),
+          'satisfactorioSelect': Provincia.valid && (Provincia.dirty || Provincia.touched)}"
+              class=" tamanioInputs form-control  "  data-size="4"   name="provincia"
+              required>
+        <option selecteddisabled="true">Selecciona una..</option>
+        <option *ngFor="let provincia of this.provincias"
+                value="{{provincia.COD_DPA}}"> {{provincia.NOMBRE }}</option>
+      </select>
+      <div *ngIf="Provincia.invalid && (Provincia.touched||Provincia.dirty)">
+        <div *ngIf="Provincia.errors.required">
+          <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+            Campo equerido</p>
+        </div>
+
+      </div>
+    </div> <!--form-group end.-->
+
+    <div class="form-group col-md-6">
+      <label>* Ciudad</label>
+      <select #Ciudad="ngModel" [(ngModel)]="this.Agente.Ciudad " [ngClass]="{
+          'errorSelect': Ciudad.invalid && (Ciudad.dirty || Ciudad.touched),
+          'satisfactorioSelect': Ciudad.valid && (Ciudad.dirty || Ciudad.touched)}"
+              class="tamanioInputs form-control" name="ciudad" placeholder=""
+              required>
+        <option selected="true" disabled="true">Selecciona una..</option>
+        <option *ngFor="let ciudad of this.ciudades" value="{{ciudad.COD_DPA}}"> {{ciudad.NOMBRE }}</option>
+      </select>
+      <div *ngIf="Ciudad.invalid && (Ciudad.touched||Ciudad.dirty)">
+        <div *ngIf="Ciudad.errors.required">
+          <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+            Campo requerido.</p>
+        </div>
+      </div>
+    </div> <!--form-group end.-->
+
+  </div>  <!--form-row.-->
+
+  <div class="form-group">
+    <label>* Email</label>
+    <input #Email="ngModel" [(ngModel)]="this.Agente.Correo"  style="text-transform: lowercase" [ngClass]="{
+          'is-invalid': Email.invalid && (Email.dirty || Email.touched),
+          'is-valid': Email.valid && (Email.touched || Email.dirty )}" [pattern]='this.emailPattern'
+           class="form-control tamanioInputs"
+           name="email" placeholder="" required type="email"
+           type="email">
+
+    <div *ngIf="Email.invalid && (Email.touched||Email.dirty)">
+      <div *ngIf="Email.errors.required">
+        <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+          Campo requerido.</p>
+      </div>
+      <div *ngIf="Email.errors.pattern">
+        <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+          Debe cumplir con el formato</p>
+      </div>
+    </div>
+  </div> <!-- form-group end.// -->
+  <hr class="lineaSeparacion">
+  <div class=" form-group">
+
+
+
+  </div> <!-- form-group end.// -->
+
+
+</form>
+
+
+  </div> <!-- card-body .// -->
+</article> <!-- card.// -->
+
+<article class="card  mb-3">
+  <div class="card-body">
+    <h5 class="card-title mb-4">Recent orders </h5>
+
+
+
+    <a href="#" class="btn btn-outline-primary"> See all orders </a>
+  </div> <!-- card-body .// -->
+</article> <!-- card.// -->
