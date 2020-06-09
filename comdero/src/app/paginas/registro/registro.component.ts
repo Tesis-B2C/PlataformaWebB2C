@@ -4,7 +4,7 @@ import {DpaServicio} from "../../servicios/dpa.servicio";
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2'
-import {query} from "@angular/animations";
+
 
 declare const require: any;
 const places = require("../../../../node_modules/places.js/dist/cdn/places.js");

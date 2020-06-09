@@ -1,13 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {MenuGestionTiendasComponent} from "../../administrador-tienda/gestionar-tiendas/menu-gestion-tiendas/menu-gestion-tiendas.component";
-import {ProductosComponent} from "../../administrador-tienda/gestionar-tiendas/productos/productos.component";
-import {MetodosPagoComponent} from "../../administrador-tienda/gestionar-tiendas/metodos-pago/metodos-pago.component";
-import {MetodosEnvioComponent} from "../../administrador-tienda/gestionar-tiendas/metodos-envio/metodos-envio.component";
+
 import {MenuMiCuentaComponent} from "./menu-mi-cuenta/menu-mi-cuenta.component";
 import {VisionGeneralComponent} from "./vision-general/vision-general.component";
 import {DatosPersonalesComponent} from "./datos-personales/datos-personales.component";
-import {DatosFacturacionComponent} from "./datos-facturacion/datos-facturacion.component";
+
 import {CambiarContraseniaComponent} from "./cambiar-contrasenia/cambiar-contrasenia.component";
 
 
@@ -16,7 +13,6 @@ const routes: Routes = [
     children: [
      { path: 'vision-general', component: VisionGeneralComponent },
       { path: 'datos-personales', component: DatosPersonalesComponent },
-      { path: 'datos-facturacion', component: DatosFacturacionComponent },
       { path: 'cambiar-contrasenia', component: CambiarContraseniaComponent }]}];
 
 @NgModule({

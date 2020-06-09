@@ -10,6 +10,8 @@ export class MenuMiCuentaComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
+
   }
 
 }

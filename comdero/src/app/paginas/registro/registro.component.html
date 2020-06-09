@@ -80,48 +80,6 @@
 
       </div> <!-- form-group end.// -->
 
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label>* Provincia</label>
-          <select #Provincia="ngModel" (change)="getDpaCiudades($event.target.value)"
-                  [(ngModel)]="this.Agente.Provincia"
-                  [ngClass]="{
-          'errorSelect': Provincia.invalid && (Provincia.dirty || Provincia.touched),
-          'satisfactorioSelect': Provincia.valid && (Provincia.dirty || Provincia.touched)}"
-                  class=" tamanioInputs form-control  "  data-size="4"   name="provincia"
-                  required>
-            <option selecteddisabled="true">Selecciona una..</option>
-            <option *ngFor="let provincia of this.provincias"
-                    value="{{provincia.COD_DPA}}"> {{provincia.NOMBRE }}</option>
-          </select>
-          <div *ngIf="Provincia.invalid && (Provincia.touched||Provincia.dirty)">
-            <div *ngIf="Provincia.errors.required">
-              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                Campo equerido</p>
-            </div>
-
-          </div>
-        </div> <!--form-group end.-->
-
-        <div class="form-group col-md-6">
-          <label>* Ciudad</label>
-          <select #Ciudad="ngModel" [(ngModel)]="this.Agente.Ciudad " [ngClass]="{
-          'errorSelect': Ciudad.invalid && (Ciudad.dirty || Ciudad.touched),
-          'satisfactorioSelect': Ciudad.valid && (Ciudad.dirty || Ciudad.touched)}"
-                  class="tamanioInputs form-control" name="ciudad" placeholder=""
-                  required>
-            <option selected="true" disabled="true">Selecciona una..</option>
-            <option *ngFor="let ciudad of this.ciudades" value="{{ciudad.COD_DPA}}"> {{ciudad.NOMBRE }}</option>
-          </select>
-          <div *ngIf="Ciudad.invalid && (Ciudad.touched||Ciudad.dirty)">
-            <div *ngIf="Ciudad.errors.required">
-              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                Campo requerido.</p>
-            </div>
-          </div>
-        </div> <!--form-group end.-->
-
-      </div>  <!--form-row.-->
 
 
 
@@ -159,7 +117,7 @@
         </div>
       </div> <!-- form-group end.// -->
       <div class="form-group" *ngIf="this.banderaDirecciones">
-        <p class="alert3 justify-content-center pb-2"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+        <p class="alert3   text-primary  justify-content-center pb-2"><i class='fa fa-exclamation-circle'> </i> &nbsp;
           Los campos marcados con <strong>*</strong> son obligatorios.</p>
         <div class="form-row">
           <div *ngIf="banderaTipo" class="form-group col-lg-6">
@@ -238,6 +196,49 @@
 
         </div>
 
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>* Provincia</label>
+            <select #Provincia="ngModel" (change)="getDpaCiudades($event.target.value)"
+                    [(ngModel)]="this.Agente.Provincia"
+                    [ngClass]="{
+          'errorSelect': Provincia.invalid && (Provincia.dirty || Provincia.touched),
+          'satisfactorioSelect': Provincia.valid && (Provincia.dirty || Provincia.touched)}"
+                    class=" tamanioInputs form-control  "  data-size="4"   name="provincia"
+                    required>
+              <option selecteddisabled="true">Selecciona una..</option>
+              <option *ngFor="let provincia of this.provincias"
+                      value="{{provincia.COD_DPA}}"> {{provincia.NOMBRE }}</option>
+            </select>
+            <div *ngIf="Provincia.invalid && (Provincia.touched||Provincia.dirty)">
+              <div *ngIf="Provincia.errors.required">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                  Campo equerido</p>
+              </div>
+
+            </div>
+          </div> <!--form-group end.-->
+
+          <div class="form-group col-md-6">
+            <label>* Ciudad</label>
+            <select #Ciudad="ngModel" [(ngModel)]="this.Agente.Ciudad " [ngClass]="{
+          'errorSelect': Ciudad.invalid && (Ciudad.dirty || Ciudad.touched),
+          'satisfactorioSelect': Ciudad.valid && (Ciudad.dirty || Ciudad.touched)}"
+                    class="tamanioInputs form-control" name="ciudad" placeholder=""
+                    required>
+              <option selected="true" disabled="true">Selecciona una..</option>
+              <option *ngFor="let ciudad of this.ciudades" value="{{ciudad.COD_DPA}}"> {{ciudad.NOMBRE }}</option>
+            </select>
+            <div *ngIf="Ciudad.invalid && (Ciudad.touched||Ciudad.dirty)">
+              <div *ngIf="Ciudad.errors.required">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                  Campo requerido.</p>
+              </div>
+            </div>
+          </div> <!--form-group end.-->
+
+        </div>  <!--form-row.-->
+
 
         <label>* Calle Principal</label>
         <input (keyup)="buscadorDirecciones()" #CallePrincipal="ngModel"
@@ -246,7 +247,7 @@
           'errorSelect': CallePrincipal.invalid && (CallePrincipal.dirty || CallePrincipal.touched),
           'satisfactorioSelect': CallePrincipal.valid && (CallePrincipal.dirty || CallePrincipal.touched)}"
                class="tamanioInputs form-control"
-               name="callePrincipal" placeholder="" required type="search" id="CallePrincipal">
+               name="callePrincipal" placeholder="" required  id="CallePrincipal">
         <div *ngIf="CallePrincipal.invalid && (CallePrincipal.touched||CallePrincipal.dirty)">
           <div *ngIf="CallePrincipal.errors.required">
             <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
@@ -262,7 +263,7 @@
           'errorSelect': CalleSecundaria.invalid && (CalleSecundaria.dirty || CalleSecundaria.touched),
           'satisfactorioSelect': CalleSecundaria.valid && (CalleSecundaria.dirty || CalleSecundaria.touched)}"
                class="tamanioInputs form-control"
-               name="calleSecundaria" placeholder="" required type="text" id="calleSecundaria">
+               name="calleSecundaria" placeholder="" required  id="calleSecundaria">
         <div *ngIf="CalleSecundaria.invalid && (CalleSecundaria.touched||CalleSecundaria.dirty)">
           <div *ngIf="CalleSecundaria.errors.required">
             <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;

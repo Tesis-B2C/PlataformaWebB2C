@@ -70,23 +70,13 @@ label {
   margin-left: 4px;
 }
 
-.alert2 {
-  font-size: smaller;
-  padding: 0;
-  background-color: white;
-  border: none;
-  color: #1da1f2;
-  margin-left: 4px;
 
-}
 
 .alert3 {
   font-size: smaller;
-  padding: 0;
-  background-color: white;
-  border: none;
-  color: #1a56e9;
-  font-weight: bolder;
+
+
+
 }
 
 .errorSelect {

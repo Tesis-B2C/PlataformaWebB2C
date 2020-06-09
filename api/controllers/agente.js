@@ -79,7 +79,7 @@ async function autenticarAgente(req, res) {
         let contrasenia = params.Contrasenia;
         let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: correo}});
         if (!agente) {
-            res.status(404).send({message: 'El Usuario no existe'});
+            res.status(404).send({message: 'El Usuario no existe o no esta activado'});
         } else {
             let result = bcrypt.compareSync(contrasenia, agente.dataValues.CONTRASENIA);
             if (result) {

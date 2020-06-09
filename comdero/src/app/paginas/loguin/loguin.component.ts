@@ -33,8 +33,9 @@ export class LoguinComponent {
       } else {
         this.response = await this._agenteServicio.autenticarActivarAgente(this.obj, "", this.tokenTemporal).toPromise();
       }
+      debugger
       this.identity = this.response.data;
-      if (!this.identity.ID_AGENTE) {
+      if (!this.identity.CORREO) {
         this.mensageError("el usuario no se ha logueado correctamente");
 
       } else {
@@ -55,6 +56,7 @@ export class LoguinComponent {
         this.mensageError(JSON.stringify((e).error.message));
       else this.mensageError("Error de conexión intentelo mas tarde");
     }
+    this.loading = false;
   }
 
 
