@@ -96,4 +96,11 @@ registrarAgente(agente){
     this.token = null;
     location.reload(true);
   }
+
+  actualizarAgente(agente_actualizar){
+    debugger
+    let params = JSON.stringify(agente_actualizar);
+    let headers = new HttpHeaders({ "Content-type": "application/json" });
+    return this._http.put<objeto>(this.url + "actualizarAgente/"+agente_actualizar.Correo , params,{ headers: headers });
+  }
 }

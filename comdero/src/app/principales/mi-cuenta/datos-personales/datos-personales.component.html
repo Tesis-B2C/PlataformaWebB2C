@@ -1,3 +1,51 @@
+
+<ng-template #modalEditarCorreo let-modal  >
+
+<div *ngIf="banderaPasoUnoCambiarCorreo" >
+  <div class="modal-header ">
+    <h4 class="modal-title">Ingrese el nuevo correo</h4>
+    <button type="button" class="close" style="font-size: medium" aria-label="Close"
+            (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label>Correo electrónico</label>
+      <input type="text" #DireccionVideoYoutube="ngModel" [(ngModel)]="this.direccionVideoYoutube" class="form-control">
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancelar</button>
+      <button type="button" class="btn btn-primary" (click)="pasoDosCambiarCorreo()">Comprobar </button>
+    </div>
+
+  </div>
+</div>
+  <div *ngIf="banderaPasoDosCambiarCorreo">
+    <div class="modal-header ">
+      <h4 class="modal-title">Ingrese el codigo que enviamos a su correo</h4>
+      <button type="button" class="close" style="font-size: medium" aria-label="Close"
+              (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Correo electrónico</label>
+        <input type="text" #DireccionVideoYoutube="ngModel" [(ngModel)]="this.direccionVideoYoutube" class="form-control">
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="modal.close('Ok click');getVideoIframe()">Comprobar </button>
+      </div>
+
+    </div>
+  </div>
+
+</ng-template>
+
 <article class="card mb-3">
   <div class="card-body">
 
@@ -59,13 +107,19 @@
         </div>
       </div>
       <div class="form-group">
-        <label>* Email</label>
-        <input [disabled]="banderaEdicionDeshabilitada" #Email="ngModel" [(ngModel)]="this.EditarAgente.Correo" style="text-transform: lowercase" [ngClass]="{
+        <label>* Correo electrónico</label>
+        <div class="input-group mb-3">
+          <input disabled #Email="ngModel" [(ngModel)]="this.EditarAgente.Correo" style="text-transform: lowercase" [ngClass]="{
           'is-invalid': Email.invalid && (Email.dirty || Email.touched),
           'is-valid': Email.valid && (Email.touched || Email.dirty )}" [pattern]='this.emailPattern'
-               class="form-control tamanioInputs"
-               name="email" placeholder="" required type="email"
-               type="email">
+                 class="form-control tamanioInputs"
+                 name="email" placeholder="" required type="email"
+                 type="email">
+          <div class="input-group-append ">
+            <button class="btn  btn-light"  type="button" (click)="editarCorreo(modalEditarCorreo)"><span class="fa fa-edit"></span></button>
+          </div>
+        </div>
+
 
         <div *ngIf="Email.invalid && (Email.touched||Email.dirty)">
           <div *ngIf="Email.errors.required">
@@ -181,7 +235,7 @@
           <div class="form-group col-md-6">
             <label>* Ciudad</label>
 
-            <select [disabled]="banderaEdicionDeshabilitada" #Ciudad="ngModel" [(ngModel)]="this.ciudad" [ngClass]="{
+            <select (change)="seleccionarCiudad($event.target.value)"  [disabled]="banderaEdicionDeshabilitada" #Ciudad="ngModel" [(ngModel)]="this.ciudad" [ngClass]="{
           'errorSelect': Ciudad.invalid && (Ciudad.dirty || Ciudad.touched),
           'satisfactorioSelect': Ciudad.valid && (Ciudad.dirty || Ciudad.touched)}"
                     class="tamanioInputs form-control" name="ciudad" placeholder=""
@@ -252,8 +306,9 @@
   <div class="card-body">
     <h5 class="card-title mb-2">Acciones</h5>
     <div class="form-row justify-content-end">
-      <button (click)="habilitarEdicion()"  href="#" class="btn btn-warning text-white "><span class="fa fa-edit"></span> Modificar </button> &nbsp;
-      <button href="#" (click)="iniciarEdicion()" class="btn btn-primary text-white "><span class="fa fa-close"></span> Cancelar </button>
+      <button *ngIf="banderaEdicionDeshabilitada" (click)="habilitarEdicion()"  href="#" class="btn btn-warning text-white "><span class="fa fa-edit"></span> Modificar </button> &nbsp;
+      <button *ngIf="!banderaEdicionDeshabilitada" (click)="actualizarAgente()"  href="#" class="btn btn-primary text-white "><span class="fa fa-save"></span> Guardar </button> &nbsp;
+      <button *ngIf="!banderaEdicionDeshabilitada" href="#" (click)="iniciarEdicion()" class="btn btn-light  "><span class="fa fa-close"></span> Cancelar </button>
     </div>
   </div>
 </article>

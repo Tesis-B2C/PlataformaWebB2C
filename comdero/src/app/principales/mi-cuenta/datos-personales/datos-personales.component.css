@@ -24,3 +24,8 @@ label {
 .satisfactorioSelect {
   border: 1px solid limegreen;
 }
+
+button{
+  font-size: small;
+
+}

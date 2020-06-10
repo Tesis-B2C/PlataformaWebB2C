@@ -51,7 +51,7 @@ async function registrarAgente(req, res) {
                 } else {
                     res.status(200).send({
                         message: 'No se ha registrado una dirección aun, esperamos lo puedas hacer pronto,' +
-                            'Porfavor revisa tu correo electrónico: '+agente.CORREO+'  para activar tu cuenta'
+                            'Porfavor revisa tu correo electrónico: ' + agente.CORREO + '  para activar tu cuenta'
                     });
                 }
             } else {
@@ -77,7 +77,10 @@ async function autenticarAgente(req, res) {
         let params = req.body;
         let correo = params.Correo;
         let contrasenia = params.Contrasenia;
-        let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: correo},include:{model:DPA,include:{model:DPA,as:'DPAP',equired: true}}});
+        let agente = await AGENTE.findOne({
+            where: {ESTADO: '0', CORREO: correo},
+            include: {model: DPA, include: {model: DPA, as: 'DPAP', equired: true}}
+        });
         if (!agente) {
             res.status(404).send({message: 'El Usuario no existe o no esta activado'});
         } else {
@@ -209,11 +212,43 @@ async function resetearContrasenia2(req, res) {
     }
 }
 
+async function actualizarAgente(req, res) {
+
+    try {
+        let agenteId=req.params.id
+        agente = {
+            ID_AGENTE: req.body.Id_Agente,
+            NOMBRE: req.body.Nombre,
+            TELEFONO: req.body.Telefono,
+            CORREO: req.body.Correo,
+            NUM_COD_POSTAL: req.body.Num_Cod_Postal,
+            TIPO: req.body.Tipo,
+            ESTADO: req.body.Estado,
+            CALLE_PRINCIPAL_AGENTE: req.body.Calle_Principal_Agente,
+            CALLE_SECUNDARIA_AGENTE: req.body.Calle_Secundaria_Agente,
+            NUM_CASA_AGENTE: req.body.Num_Casa_Agente,
+            COD_DPA: req.body.Ciudad
+
+        }
+        let agenteActualizado = await AGENTE.update(agente, {where: {CORREO: agenteId}});
+        if (agenteActualizado.length) {
+            res.status(404).send({message: 'El Usuario no ha sido actualizado'});
+        } else {
+            res.status(200).send({message: 'El Usuario ha sido actualizado'});
+        }
+    } catch (e) {
+        res.status(500).send({
+            message: err.name
+        });
+    }
+}
+
 module.exports = {          // para exportar todas las funciones de este modulo
 
     registrarAgente,
     autenticarAgente,
     autenticarActivarAgente,
     resetearContrasenia,
-    resetearContrasenia2
+    resetearContrasenia2,
+    actualizarAgente
 };
