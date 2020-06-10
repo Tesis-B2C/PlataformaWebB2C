@@ -1,7 +1,7 @@
 export class Agente {
   constructor(
     public Id_Agente: String,
-    public Cod_Postal: String,
+    public Num_Cod_Postal: String,
     public Nombre: String,
     public Telefono: String,
     public Correo: String,

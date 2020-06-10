@@ -5,7 +5,7 @@ const moment = require('moment');
 const AGENTE = require('../models/agente'); //importar el modelo del usuario  o lo que son las clases comunesvar DPA = require('../models/dpa'); //importar el modelo del usuario  o lo que son las clases comunes
 const jwt = require('../services/jwt');
 const correo = require('./correo');
-
+const DPA = require('../models/dpa');
 
 async function registrarAgente(req, res) {
     try {
@@ -77,7 +77,7 @@ async function autenticarAgente(req, res) {
         let params = req.body;
         let correo = params.Correo;
         let contrasenia = params.Contrasenia;
-        let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: correo}});
+        let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: correo},include:{model:DPA,include:{model:DPA,as:'DPAP',equired: true}}});
         if (!agente) {
             res.status(404).send({message: 'El Usuario no existe o no esta activado'});
         } else {

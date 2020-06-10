@@ -10,20 +10,14 @@
 
 <body [ngClass]="{'body-con-animacion': loading}">
 
-
-
-
-
 <div class="mx-auto mt-md-5 container-registro  p-3 bg-white rounded my-0">
   <article class="  wrap-register100 card-body">
     <div id="divImagenLogo">
       <img id="imagenLogo" src="./../assets/images/logoValid2.png">
     </div>
-    <header><h5 class="login100-form-title p-b-49 text-left" >Regístrate
+    <header><h5 class="login100-form-title p-b-49 text-left">Regístrate
     </h5>
-
     </header>
-
     <form #FormRegistro id="formRegistro" class="login100-form  validate-form">
       <div class="form-group">
         <label class="custom-control custom-radio custom-control-inline">
@@ -36,10 +30,7 @@
                  value="Empresa">
           <span class="custom-control-label"> Empresa </span>
         </label>
-
       </div> <!-- form-group end.// -->
-
-
       <div *ngIf="banderaTipo" class="form-row">
 
         <div class="col form-group">
@@ -59,8 +50,7 @@
             </div>
           </div>
         </div> <!-- form-group end.// -->
-      </div> <!-- form-row end.// -->
-
+      </div>
       <div *ngIf="!banderaTipo" class="form-group">
         <label>* Razon Social</label>
         <input #Razon_Social="ngModel" style="text-transform: uppercase;" [(ngModel)]="this.Agente.Nombre" [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched),
@@ -78,16 +68,10 @@
           </div>
         </div>
 
-      </div> <!-- form-group end.// -->
-
-
-
-
-
-
+      </div>
       <div class="form-group">
         <label>* Email</label>
-        <input #Email="ngModel" [(ngModel)]="this.Agente.Correo"  style="text-transform: lowercase" [ngClass]="{
+        <input #Email="ngModel" [(ngModel)]="this.Agente.Correo" style="text-transform: lowercase" [ngClass]="{
           'is-invalid': Email.invalid && (Email.dirty || Email.touched),
           'is-valid': Email.valid && (Email.touched || Email.dirty )}" [pattern]='this.emailPattern'
                class="form-control tamanioInputs"
@@ -104,7 +88,7 @@
               Debe cumplir con el formato</p>
           </div>
         </div>
-      </div> <!-- form-group end.//  facturacion-->
+      </div>
       <hr class="lineaSeparacion">
       <div class=" form-group">
 
@@ -115,7 +99,7 @@
           <label class="custom-control-label" for="customCheck" style="font-size: small">Agregar sus datos de
             facturacion para futuras compras</label>
         </div>
-      </div> <!-- form-group end.// -->
+      </div>
       <div class="form-group" *ngIf="this.banderaDirecciones">
         <p class="alert3   text-primary  justify-content-center pb-2"><i class='fa fa-exclamation-circle'> </i> &nbsp;
           Los campos marcados con <strong>*</strong> son obligatorios.</p>
@@ -204,7 +188,7 @@
                     [ngClass]="{
           'errorSelect': Provincia.invalid && (Provincia.dirty || Provincia.touched),
           'satisfactorioSelect': Provincia.valid && (Provincia.dirty || Provincia.touched)}"
-                    class=" tamanioInputs form-control  "  data-size="4"   name="provincia"
+                    class=" tamanioInputs form-control  " data-size="4" name="provincia"
                     required>
               <option selecteddisabled="true">Selecciona una..</option>
               <option *ngFor="let provincia of this.provincias"
@@ -247,15 +231,14 @@
           'errorSelect': CallePrincipal.invalid && (CallePrincipal.dirty || CallePrincipal.touched),
           'satisfactorioSelect': CallePrincipal.valid && (CallePrincipal.dirty || CallePrincipal.touched)}"
                class="tamanioInputs form-control"
-               name="callePrincipal" placeholder="" required  id="CallePrincipal">
+               name="callePrincipal" placeholder="" required id="CallePrincipal">
         <div *ngIf="CallePrincipal.invalid && (CallePrincipal.touched||CallePrincipal.dirty)">
           <div *ngIf="CallePrincipal.errors.required">
             <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
               Campo requerido.</p>
           </div>
         </div>
-      </div><!-- form-group end.// -->
-
+      </div>
       <div class="form-group" *ngIf="this.banderaDirecciones">
         <label>* Calle Secundaria</label>
         <input #CalleSecundaria="ngModel" [(ngModel)]="this.Agente.Calle_Secundaria_Agente"
@@ -263,7 +246,7 @@
           'errorSelect': CalleSecundaria.invalid && (CalleSecundaria.dirty || CalleSecundaria.touched),
           'satisfactorioSelect': CalleSecundaria.valid && (CalleSecundaria.dirty || CalleSecundaria.touched)}"
                class="tamanioInputs form-control"
-               name="calleSecundaria" placeholder="" required  id="calleSecundaria">
+               name="calleSecundaria" placeholder="" required id="calleSecundaria">
         <div *ngIf="CalleSecundaria.invalid && (CalleSecundaria.touched||CalleSecundaria.dirty)">
           <div *ngIf="CalleSecundaria.errors.required">
             <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
@@ -272,7 +255,6 @@
 
         </div>
       </div>
-
       <div class="form-row" *ngIf="this.banderaDirecciones">
         <div class="col-lg-6 form-group">
           <label>Número de referencia</label>
@@ -288,7 +270,6 @@
 
         </div> <!--form-group end.-->
       </div>
-
       <hr class="lineaSeparacion2">
       <div class="form-row">
         <div class="form-group col-md-6">
@@ -334,7 +315,7 @@
                                                                                                           style="font-size: small">terminos
             y condiciones</a></div>
         </label>
-      </div> <!-- form-group end.// -->
+      </div>
       <div class="container-login100-form-btn">
         <div class="wrap-login100-form-btn">
           <div class="login100-form-bgbtn"></div>
@@ -352,10 +333,6 @@
     sesión</a></p>
 </div> <!-- card .// -->
 
-
-<!-- ============================ COMPONENT REGISTER  END.// ================================= -->
-
-<!-- ========================= SECTION CONTENT END// ========================= -->
 
 </body>
 

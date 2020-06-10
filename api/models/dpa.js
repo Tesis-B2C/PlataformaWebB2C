@@ -41,6 +41,7 @@ Sucursal.belongsTo(Dpa, {foreignKey: 'COD_DPA', sourceKey: 'COD_DPA'});
 
 //DPA - DPA
 Dpa.hasMany(Dpa, {foreignKey: 'DPA_COD_DPA', sourceKey: 'COD_DPA'});
-Dpa.belongsTo(Dpa, {foreignKey: 'DPA_COD_DPA', sourceKey: 'COD_DPA'});
+Dpa.belongsTo(Dpa, {as:'DPAP',foreignKey: 'DPA_COD_DPA', sourceKey: 'COD_DPA'});
+
 
 module.exports = Dpa;
