@@ -175,6 +175,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
       this.Agente.Calle_Secundaria_Agente = null;
       this.Agente.Id_Agente = null;
       this.Agente.Telefono = null;
+      this.Agente.Ciudad=null;
     }
   }
 

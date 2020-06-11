@@ -1,27 +1,27 @@
+<ng-template #modalEditarCorreo let-modal>
 
-<ng-template #modalEditarCorreo let-modal  >
-
-<div *ngIf="banderaPasoUnoCambiarCorreo" >
-  <div class="modal-header ">
-    <h4 class="modal-title">Ingrese el nuevo correo</h4>
-    <button type="button" class="close" style="font-size: medium" aria-label="Close"
-            (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <div class="form-group">
-      <label>Correo electrónico</label>
-      <input type="text" #DireccionVideoYoutube="ngModel" [(ngModel)]="this.direccionVideoYoutube" class="form-control">
+  <div *ngIf="banderaPasoUnoCambiarCorreo">
+    <div class="modal-header ">
+      <h4 class="modal-title">Ingrese el nuevo correo</h4>
+      <button type="button" class="close" style="font-size: medium" aria-label="Close"
+              (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Correo electrónico</label>
+        <input type="text" #CorreoCambiar="ngModel" [(ngModel)]="this.Correo" class="form-control">
+      </div>
 
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancelar</button>
-      <button type="button" class="btn btn-primary" (click)="pasoDosCambiarCorreo()">Comprobar </button>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancelar
+        </button>
+        <button type="button" class="btn btn-primary" (click)="pasoDosCambiarCorreo()">Comprobar</button>
+      </div>
+
     </div>
-
   </div>
-</div>
   <div *ngIf="banderaPasoDosCambiarCorreo">
     <div class="modal-header ">
       <h4 class="modal-title">Ingrese el codigo que enviamos a su correo</h4>
@@ -33,12 +33,15 @@
     <div class="modal-body">
       <div class="form-group">
         <label>Correo electrónico</label>
-        <input type="text" #DireccionVideoYoutube="ngModel" [(ngModel)]="this.direccionVideoYoutube" class="form-control">
+        <input type="text" #DireccionVideoYoutube="ngModel" [(ngModel)]="this.direccionVideoYoutube"
+               class="form-control">
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancelar</button>
-        <button type="button" class="btn btn-primary" (click)="modal.close('Ok click');getVideoIframe()">Comprobar </button>
+        <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancelar
+        </button>
+        <button type="button" class="btn btn-primary" (click)="modal.close('Ok click');getVideoIframe()">Comprobar
+        </button>
       </div>
 
     </div>
@@ -64,14 +67,16 @@
       <div class="form-row ">
         <div class=" col form-group">
           <label>Tipo de persona</label>
-          <select (change)="cambiarTipo($event.target.value)"  type="text" class="form-control tamanioInputs " [disabled]="banderaEdicionDeshabilitada">
-            <option [selected]="banderaTipo"  value="Persona">Persona Natural</option>
-            <option  [selected]="!banderaTipo" value="Empresa">Empresa</option>
+          <select (change)="cambiarTipo($event.target.value)" type="text" class="form-control tamanioInputs "
+                  [disabled]="banderaEdicionDeshabilitada">
+            <option [selected]="banderaTipo" value="Persona">Persona Natural</option>
+            <option [selected]="!banderaTipo" value="Empresa">Empresa</option>
           </select>
         </div>
         <div *ngIf="banderaTipo" class="col form-group">
           <label>* Nombres y Apellidos</label>
-          <input [disabled]="banderaEdicionDeshabilitada" #NombreA="ngModel" style="text-transform: uppercase;" [(ngModel)]="this.EditarAgente.Nombre" [ngClass]="{'is-invalid': NombreA.invalid && (NombreA.dirty || NombreA.touched),
+          <input [disabled]="banderaEdicionDeshabilitada" #NombreA="ngModel" style="text-transform: uppercase;"
+                 [(ngModel)]="this.EditarAgente.Nombre" [ngClass]="{'is-invalid': NombreA.invalid && (NombreA.dirty || NombreA.touched),
                  'is-valid': NombreA.valid &&  (NombreA.touched || NombreA.dirty)}"
                  [pattern]='this.soloLetrasPattern'
                  class="tamanioInputs form-control " name="nombreA" placeholder="" required
@@ -89,7 +94,8 @@
 
         <div *ngIf="!banderaTipo" class=" col form-group">
           <label>* Razon Social</label>
-          <input  [disabled]="banderaEdicionDeshabilitada" #Razon_Social="ngModel" style="text-transform: uppercase;" [(ngModel)]="this.EditarAgente.Nombre" [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched),
+          <input [disabled]="banderaEdicionDeshabilitada" #Razon_Social="ngModel" style="text-transform: uppercase;"
+                 [(ngModel)]="this.EditarAgente.Nombre" [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched),
                  'is-valid': Razon_Social.valid && (Razon_Social.dirty || Razon_Social.touched)}"
                  [pattern]='this.LetrasNumerosPattern'
                  class="tamanioInputs form-control" name="razon_Social" placeholder=""
@@ -109,14 +115,16 @@
       <div class="form-group">
         <label>* Correo electrónico</label>
         <div class="input-group mb-3">
-          <input disabled #Email="ngModel" [(ngModel)]="this.EditarAgente.Correo" style="text-transform: lowercase" [ngClass]="{
+          <input disabled #Email="ngModel" [(ngModel)]="this.EditarAgente.Correo" style="text-transform: lowercase"
+                 [ngClass]="{
           'is-invalid': Email.invalid && (Email.dirty || Email.touched),
           'is-valid': Email.valid && (Email.touched || Email.dirty )}" [pattern]='this.emailPattern'
                  class="form-control tamanioInputs"
                  name="email" placeholder="" required type="email"
                  type="email">
           <div class="input-group-append ">
-            <button class="btn  btn-light"  type="button" (click)="editarCorreo(modalEditarCorreo)"><span class="fa fa-edit"></span></button>
+            <button class="btn  btn-light" type="button" (click)="editarCorreo(modalEditarCorreo)"><span
+              class="fa fa-edit"></span></button>
           </div>
         </div>
 
@@ -132,12 +140,13 @@
           </div>
         </div>
       </div>
-      <div class="form-group" >
+      <div class="form-group">
 
         <div class="form-row">
-          <div  *ngIf="banderaTipo"  class="form-group col-lg-6">
+          <div *ngIf="banderaTipo" class="form-group col-lg-6">
             <label>* Cédula</label>
-            <input [disabled]="banderaEdicionDeshabilitada" #Cedula="ngModel" [(ngModel)]="this.EditarAgente.Id_Agente" [ngClass]="{'is-invalid': Cedula.invalid && (Cedula.dirty || Cedula.touched),
+            <input [disabled]="banderaEdicionDeshabilitada" #Cedula="ngModel" [(ngModel)]="this.EditarAgente.Id_Agente"
+                   [ngClass]="{'is-invalid': Cedula.invalid && (Cedula.dirty || Cedula.touched),
                  'is-valid': Cedula.valid && (Cedula.dirty || Cedula.touched)}" [pattern]='this.soloNumerosPattern'
                    class="tamanioInputs form-control" maxlength="10"
                    minlength="10" name="cedula" placeholder="" required
@@ -165,7 +174,8 @@
 
           <div *ngIf="!banderaTipo" class="form-group col-lg-6">
             <label>* RUC</label>
-            <input [disabled]="banderaEdicionDeshabilitada" #Ruc="ngModel" [(ngModel)]="this.EditarAgente.Id_Agente" [ngClass]="{'is-invalid': Ruc.invalid && (Ruc.dirty || Ruc.touched),
+            <input [disabled]="banderaEdicionDeshabilitada" #Ruc="ngModel" [(ngModel)]="this.EditarAgente.Id_Agente"
+                   [ngClass]="{'is-invalid': Ruc.invalid && (Ruc.dirty || Ruc.touched),
                  'is-valid': Ruc.valid && (Ruc.dirty || Ruc.touched)}" [pattern]='this.soloNumerosPattern'
                    class="tamanioInputs form-control" maxlength="13"
                    minlength="13" name="ruc" placeholder="" required type="text">
@@ -191,7 +201,8 @@
           </div>
           <div class="col-lg-6 form-group col-lg-6">
             <label>* Celular / Convencional</label>
-            <input [disabled]="banderaEdicionDeshabilitada" #Telefono="ngModel" [(ngModel)]="this.EditarAgente.Telefono" [ngClass]="{'is-invalid': Telefono.invalid && (Telefono.dirty || Telefono.touched),
+            <input [disabled]="banderaEdicionDeshabilitada" #Telefono="ngModel" [(ngModel)]="this.EditarAgente.Telefono"
+                   [ngClass]="{'is-invalid': Telefono.invalid && (Telefono.dirty || Telefono.touched),
                  'is-valid': Telefono.valid && (Telefono.dirty || Telefono.touched)}"
                    [pattern]='this.soloNumerosPattern' class="tamanioInputs form-control" name="telefono" required
                    type="tel">
@@ -212,12 +223,13 @@
         <div class="form-row">
           <div class="form-group col-md-6">
             <label>* Provincia</label>
-            <select [disabled]="banderaEdicionDeshabilitada" #Provincia="ngModel" (change)="getDpaCiudades($event.target.value)"
+            <select [disabled]="banderaEdicionDeshabilitada" #Provincia="ngModel"
+                    (change)="getDpaCiudades($event.target.value)"
                     [(ngModel)]="this.provincia"
                     [ngClass]="{
           'errorSelect': Provincia.invalid && (Provincia.dirty || Provincia.touched),
           'satisfactorioSelect': Provincia.valid && (Provincia.dirty || Provincia.touched)}"
-                    class=" tamanioInputs form-control  "  data-size="4"   name="provincia"
+                    class=" tamanioInputs form-control  " data-size="4" name="provincia"
                     required>
               <option selected disabled="true">{{this.provincia}}</option>
               <option *ngFor="let provincia of this.provincias"
@@ -235,12 +247,13 @@
           <div class="form-group col-md-6">
             <label>* Ciudad</label>
 
-            <select (change)="seleccionarCiudad($event.target.value)"  [disabled]="banderaEdicionDeshabilitada" #Ciudad="ngModel" [(ngModel)]="this.ciudad" [ngClass]="{
+            <select (change)="seleccionarCiudad($event.target.value)" [disabled]="banderaEdicionDeshabilitada"
+                    #Ciudad="ngModel" [(ngModel)]="this.ciudad" [ngClass]="{
           'errorSelect': Ciudad.invalid && (Ciudad.dirty || Ciudad.touched),
           'satisfactorioSelect': Ciudad.valid && (Ciudad.dirty || Ciudad.touched)}"
                     class="tamanioInputs form-control" name="ciudad" placeholder=""
                     required>
-              <option selected disabled >{{this.ciudad}}</option>
+              <option selected disabled>{{this.ciudad}}</option>
               <option *ngFor="let ciudad of this.ciudades" value="{{ciudad.COD_DPA}} "> {{ciudad.NOMBRE }}</option>
             </select>
             <div *ngIf="Ciudad.invalid && (Ciudad.touched||Ciudad.dirty)">
@@ -254,13 +267,13 @@
         </div>
 
         <label>* Calle Principal</label>
-        <input  [disabled]="banderaEdicionDeshabilitada" (keyup)="buscadorDirecciones()" #CallePrincipal="ngModel"
+        <input [disabled]="banderaEdicionDeshabilitada" (keyup)="buscadorDirecciones()" #CallePrincipal="ngModel"
                [(ngModel)]="this.EditarAgente.Calle_Principal_Agente"
                [ngClass]="{
           'errorSelect': CallePrincipal.invalid && (CallePrincipal.dirty || CallePrincipal.touched),
           'satisfactorioSelect': CallePrincipal.valid && (CallePrincipal.dirty || CallePrincipal.touched)}"
                class="tamanioInputs form-control"
-               name="callePrincipal" placeholder="" required  id="CallePrincipal">
+               name="callePrincipal" placeholder="" required id="CallePrincipal">
         <div *ngIf="CallePrincipal.invalid && (CallePrincipal.touched||CallePrincipal.dirty)">
           <div *ngIf="CallePrincipal.errors.required">
             <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
@@ -268,14 +281,15 @@
           </div>
         </div>
       </div>
-      <div class="form-group" >
+      <div class="form-group">
         <label>* Calle Secundaria</label>
-        <input [disabled]="banderaEdicionDeshabilitada" #CalleSecundaria="ngModel" [(ngModel)]="this.EditarAgente.Calle_Secundaria_Agente"
+        <input [disabled]="banderaEdicionDeshabilitada" #CalleSecundaria="ngModel"
+               [(ngModel)]="this.EditarAgente.Calle_Secundaria_Agente"
                [ngClass]="{
           'errorSelect': CalleSecundaria.invalid && (CalleSecundaria.dirty || CalleSecundaria.touched),
           'satisfactorioSelect': CalleSecundaria.valid && (CalleSecundaria.dirty || CalleSecundaria.touched)}"
                class="tamanioInputs form-control"
-               name="calleSecundaria" placeholder="" required  id="calleSecundaria">
+               name="calleSecundaria" placeholder="" required id="calleSecundaria">
         <div *ngIf="CalleSecundaria.invalid && (CalleSecundaria.touched||CalleSecundaria.dirty)">
           <div *ngIf="CalleSecundaria.errors.required">
             <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
@@ -284,17 +298,19 @@
 
         </div>
       </div>
-      <div class="form-row" >
+      <div class="form-row">
         <div class="col-lg-6 form-group">
           <label>Número de referencia</label>
-          <input [disabled]="banderaEdicionDeshabilitada" #NumCasaAgente="ngModel" [(ngModel)]="this.EditarAgente.Num_Casa_Agente" class="tamanioInputs form-control"
+          <input [disabled]="banderaEdicionDeshabilitada" #NumCasaAgente="ngModel"
+                 [(ngModel)]="this.EditarAgente.Num_Casa_Agente" class="tamanioInputs form-control"
                  name="numCasaAgente" placeholder="" type="text">
           <div>
           </div>
         </div>
         <div class=" col-lg-6 form-group">
           <label>Codigo Postal</label>
-          <input [disabled]="banderaEdicionDeshabilitada"  #CodigoPostal="ngModel" [(ngModel)]="this.EditarAgente.Num_Cod_Postal" class="tamanioInputs form-control"
+          <input [disabled]="banderaEdicionDeshabilitada" #CodigoPostal="ngModel"
+                 [(ngModel)]="this.EditarAgente.Num_Cod_Postal" class="tamanioInputs form-control"
                  name="codigoPostal" type="text">
 
         </div>
@@ -306,9 +322,15 @@
   <div class="card-body">
     <h5 class="card-title mb-2">Acciones</h5>
     <div class="form-row justify-content-end">
-      <button *ngIf="banderaEdicionDeshabilitada" (click)="habilitarEdicion()"  href="#" class="btn btn-warning text-white "><span class="fa fa-edit"></span> Modificar </button> &nbsp;
-      <button *ngIf="!banderaEdicionDeshabilitada" (click)="actualizarAgente()"  href="#" class="btn btn-primary text-white "><span class="fa fa-save"></span> Guardar </button> &nbsp;
-      <button *ngIf="!banderaEdicionDeshabilitada" href="#" (click)="iniciarEdicion()" class="btn btn-light  "><span class="fa fa-close"></span> Cancelar </button>
+      <button *ngIf="banderaEdicionDeshabilitada" (click)="habilitarEdicion()" href="#"
+              class="btn btn-warning text-white "><span class="fa fa-edit"></span> Modificar
+      </button> &nbsp;
+      <button *ngIf="!banderaEdicionDeshabilitada" (click)="actualizarAgente()" href="#"
+              class="btn btn-primary text-white "><span class="fa fa-save"></span> Guardar
+      </button> &nbsp;
+      <button *ngIf="!banderaEdicionDeshabilitada" href="#" (click)="iniciarEdicion()" class="btn btn-light  "><span
+        class="fa fa-close"></span> Cancelar
+      </button>
     </div>
   </div>
 </article>

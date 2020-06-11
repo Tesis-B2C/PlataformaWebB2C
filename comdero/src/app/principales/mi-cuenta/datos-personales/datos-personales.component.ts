@@ -28,11 +28,12 @@ export class DatosPersonalesComponent implements OnInit {
   public ciudad;
   public provincia;
   public EditarAgente;
-  public banderaEdicionDeshabilitada:boolean=true;
-  public banderaPasoUnoCambiarCorreo:boolean=true;
-  public banderaPasoDosCambiarCorreo:boolean=false;
+  public banderaEdicionDeshabilitada: boolean = true;
+  public banderaPasoUnoCambiarCorreo: boolean = true;
+  public banderaPasoDosCambiarCorreo: boolean = false;
+  public Correo;
 
-  constructor(private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio,private modalService: NgbModal) {
+  constructor(private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal) {
     this.EditarAgente = new Agente(null, null, null,
       null, null, null, 0, null, null,
       null, null, null, null);
@@ -63,15 +64,16 @@ export class DatosPersonalesComponent implements OnInit {
   async getDpaCiudades(buscar) {
     try {
       this.ciudad = null;
-      this.provincia=null;
+      this.provincia = null;
       let response = await this._dpaServicio.getDpaCiudades(buscar).toPromise();
       this.ciudades = response.data;
     } catch (e) {
       console.log("error:" + JSON.stringify((e).error.message));
     }
   }
-  async seleccionarCiudad(event){
-    this.EditarAgente.Ciudad=event;
+
+  async seleccionarCiudad(event) {
+    this.EditarAgente.Ciudad = event;
   }
 
   public buscadorDirecciones() {
@@ -114,7 +116,7 @@ export class DatosPersonalesComponent implements OnInit {
   }
 
   public iniciarEdicion() {
-    this.banderaEdicionDeshabilitada=true;
+    this.banderaEdicionDeshabilitada = true;
     this.ciudad = this.identidad.DPA.NOMBRE + ' (Actual)';
     this.provincia = this.identidad.DPA.DPAP.NOMBRE + ' (Actual)';
     this.EditarAgente.Id_Agente = this.identidad.ID_AGENTE;
@@ -124,7 +126,7 @@ export class DatosPersonalesComponent implements OnInit {
     this.EditarAgente.Correo = this.identidad.CORREO;
     this.EditarAgente.Tipo = this.identidad.TIPO;
     this.EditarAgente.Estado = this.identidad.ESTADO;
-    this.EditarAgente.Ciudad=this.identidad.DPA.COD_DPA;
+    this.EditarAgente.Ciudad = this.identidad.DPA.COD_DPA;
     this.EditarAgente.Calle_Principal_Agente = this.identidad.CALLE_PRINCIPAL_AGENTE;
     this.EditarAgente.Num_Casa_Agente = this.identidad.NUM_CASA_AGENTE;
   }
@@ -139,31 +141,35 @@ export class DatosPersonalesComponent implements OnInit {
 
   public cambiarTipo(value) {
     debugger
-    this.EditarAgente.Tipo=value;
-    if(value=='Persona'){
-      this.banderaTipo=true;
-    }else if(value=='Empresa'){
-      this.banderaTipo=false;
+    this.EditarAgente.Tipo = value;
+    if (value == 'Persona') {
+      this.banderaTipo = true;
+    } else if (value == 'Empresa') {
+      this.banderaTipo = false;
     }
   }
-  public habilitarEdicion(){
-    this.banderaEdicionDeshabilitada=false;
+
+  public habilitarEdicion() {
+    this.banderaEdicionDeshabilitada = false;
   }
-  public editarCorreo(content){
+
+  public editarCorreo(content) {
     this.modalService.open(content, {centered: true, size: 'md'});
-    this.banderaPasoUnoCambiarCorreo=true;
-    this.banderaPasoDosCambiarCorreo=false;
+    this.banderaPasoUnoCambiarCorreo = true;
+    this.banderaPasoDosCambiarCorreo = false;
   }
-  public pasoDosCambiarCorreo(){
-    this.banderaPasoDosCambiarCorreo=true;
-    this.banderaPasoUnoCambiarCorreo=false;
+
+  public pasoDosCambiarCorreo() {
+    this.banderaPasoDosCambiarCorreo = true;
+    this.banderaPasoUnoCambiarCorreo = false;
   }
-  public actualizarAgente(){
+
+  public actualizarAgente() {
     try {
       let response = this._agenteServicio.actualizarAgente(this.EditarAgente).toPromise();
 
       this.mensageCorrecto(response['message']);
-    }catch (e) {
+    } catch (e) {
       console.log("error:" + JSON.stringify((e).error.message));
       if (JSON.stringify((e).error.message))
         this.mensageError(JSON.stringify((e).error.message));

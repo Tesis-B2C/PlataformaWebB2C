@@ -67,7 +67,7 @@ const  Agente = db.sequelize.define('AGENTE', {
         COD_DPA:
             {
                 type:Sequelize.STRING,
-                allowNull:false
+                allowNull:true
             },
 
     },

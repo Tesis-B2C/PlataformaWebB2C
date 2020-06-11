@@ -30,7 +30,7 @@ async function registrarAgente(req, res) {
             agente.CALLE_PRINCIPAL_AGENTE = req.body.Calle_Principal_Agente;
             agente.CALLE_SECUNDARIA_AGENTE = req.body.Calle_Secundaria_Agente;
             agente.NUM_CASA_AGENTE = req.body.Num_Casa_Agente;
-            agente.COD_DPA = req.body.Ciudad;
+            agente.COD_DPA = "0202";
             await bcrypt.hash(req.body.Contrasenia, null, null, function (err, hash) {
                 agente.CONTRASENIA = hash;
             });
