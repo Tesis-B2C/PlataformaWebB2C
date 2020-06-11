@@ -215,7 +215,7 @@ async function resetearContrasenia2(req, res) {
 async function actualizarAgente(req, res) {
 
     try {
-        let agenteId=req.params.id
+        let agenteId = req.params.id
         agente = {
             ID_AGENTE: req.body.Id_Agente,
             NOMBRE: req.body.Nombre,
@@ -231,12 +231,41 @@ async function actualizarAgente(req, res) {
 
         }
         let agenteActualizado = await AGENTE.update(agente, {where: {CORREO: agenteId}});
-        if (agenteActualizado.length) {
+        if (!agenteActualizado.length) {
             res.status(404).send({message: 'El Usuario no ha sido actualizado'});
         } else {
             res.status(200).send({message: 'El Usuario ha sido actualizado'});
         }
     } catch (e) {
+        res.status(500).send({
+            message: err.name
+        });
+    }
+}
+
+
+async function verificarExistenciaCorreo(req, res ) {
+    try {
+        let agenteEncontrado = await AGENTE.findOne({where: {CORREO: req.body.correo}});
+
+        if (agenteEncontrado) {
+            res.status(404).send({
+                message: 'Este correo electronico ya esta vinculado a una cuenta'
+            });
+        } else {
+            let respuestaCorreo = await correo.EnviarCorreo(req.body.correo, req.body.asunto, req.body.codigo, null);
+            if (respuestaCorreo == false) {
+                agente.destroy({where: {CORREO: req.body.correo}});
+                res.status(500).send({
+                    message: 'Parece que hay un error en el correo electrónico intentalo más tarde'
+                });
+            } else {
+                res.status(200).send({
+                    message: 'Por favor revisa tu correo electrónico'
+                });
+            }
+        }
+    } catch (err) {
         res.status(500).send({
             message: err.name
         });
@@ -250,5 +279,6 @@ module.exports = {          // para exportar todas las funciones de este modulo
     autenticarActivarAgente,
     resetearContrasenia,
     resetearContrasenia2,
-    actualizarAgente
+    actualizarAgente,
+    verificarExistenciaCorreo
 };

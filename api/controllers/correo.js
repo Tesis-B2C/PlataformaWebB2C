@@ -33,36 +33,47 @@ exports.EnviarCorreo =  async (correo, asunto, nombre, token) => {
 
         };
 
+    } else if (asunto == 'Cambiar Correo') {
+
+
+        var mailOptions = {
+            from: 'doginotificaciones@gmail.com',
+            to: correo,
+            subject: asunto,
+            text: 'Tu codigo de verificacion es ' + nombre,
+
+        };
+
     }
 // Function to send e-mail to the user
 
-/* await transporter.sendMail(mailOptions, function (error, response) {
+    /* await transporter.sendMail(mailOptions, function (error, response) {
 
-           if(error){
-               console.log(error);
-               res.end("error");
-           }else{
-               console.log("Message sent: " + response.message);
-               res.end("sent");
-           }
-       });*/
+               if(error){
+                   console.log(error);
+                   res.end("error");
+               }else{
+                   console.log("Message sent: " + response.message);
+                   res.end("sent");
+               }
+           });*/
 
-  return new Promise( await function (resolve,reject){
-        let resp=false;
+    return new Promise(await function(resolve, reject) {
+        let resp = false;
 
-        transporter.sendMail(mailOptions, function(error, info){
+        transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
-                console.log("error is "+error);
+                console.log("error is " + error);
                 resolve(false); // or use rejcet(false) but then you will have to handle errors
-            }
-            else {
+            } else {
                 console.log('Email sent: ' + JSON.stringify(info));
                 resolve(true);
             }
         });
-    })
-
-
+    });
 }
+
+
+
 
 

@@ -32,8 +32,14 @@ export class DatosPersonalesComponent implements OnInit {
   public banderaPasoUnoCambiarCorreo: boolean = true;
   public banderaPasoDosCambiarCorreo: boolean = false;
   public Correo;
+  public codigo;
+  public objetoEmail = {
+    asunto: null,
+    correo: null,
+    codigo: null
+  };
 
-  constructor(private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal) {
+  constructor( private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal) {
     this.EditarAgente = new Agente(null, null, null,
       null, null, null, 0, null, null,
       null, null, null, null);
@@ -159,14 +165,33 @@ export class DatosPersonalesComponent implements OnInit {
     this.banderaPasoDosCambiarCorreo = false;
   }
 
-  public pasoDosCambiarCorreo() {
+  public async pasoDosCambiarCorreo() {
+    try{
     this.banderaPasoDosCambiarCorreo = true;
     this.banderaPasoUnoCambiarCorreo = false;
+    this.objetoEmail.correo = this.Correo;
+    this.objetoEmail.asunto = 'Cambiar Correo';
+    let codigo = Math.floor((Math.random() * 100) + 54);
+    localStorage.setItem("codigoCambioCorreo", JSON.stringify(codigo));
+
+    this.objetoEmail.codigo = codigo;
+
+
+      let response= await this._agenteServicio.verificarExistenciaCorreo(this.objetoEmail).toPromise();
+   // let response = await this._emailServicio.envioEmail(this.objetoEmail).toPromise();
+    console.log("response", response);
+      this.mensageCorrecto(response['message']);
+    }catch (e) {
+      console.log("error:" + JSON.stringify((e).error.message));
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
   }
 
-  public actualizarAgente() {
+  public async  actualizarAgente() {
     try {
-      let response = this._agenteServicio.actualizarAgente(this.EditarAgente).toPromise();
+      let response = await this._agenteServicio.actualizarAgente(this.EditarAgente).toPromise();
 
       this.mensageCorrecto(response['message']);
     } catch (e) {

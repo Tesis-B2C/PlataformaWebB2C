@@ -103,4 +103,11 @@ registrarAgente(agente){
     let headers = new HttpHeaders({ "Content-type": "application/json" });
     return this._http.put<objeto>(this.url + "actualizarAgente/"+agente_actualizar.Correo , params,{ headers: headers });
   }
+  verificarExistenciaCorreo(objeto_cambio_correo){
+
+    let params = JSON.stringify(objeto_cambio_correo);
+    let headers = new HttpHeaders({ "Content-type": "application/json" });
+    return this._http.post<objeto>(this.url + "verificarExistenciaCorreo" , params,{ headers: headers });
+
+  }
 }
