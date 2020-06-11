@@ -63,7 +63,7 @@
     <hr>
     <p class="alert3 justify-content-center pb-2 text-primary small"><i class='fa fa-exclamation-circle'> </i> &nbsp;
       Los campos marcados con <strong>*</strong> son obligatorios.</p>
-    <form>
+    <form   #FormActualizarDatos  id="formActualizarDatos" class="validate-form" >
       <div class="form-row ">
         <div class=" col form-group">
           <label>Tipo de persona</label>
@@ -149,7 +149,7 @@
                    [ngClass]="{'is-invalid': Cedula.invalid && (Cedula.dirty || Cedula.touched),
                  'is-valid': Cedula.valid && (Cedula.dirty || Cedula.touched)}" [pattern]='this.soloNumerosPattern'
                    class="tamanioInputs form-control" maxlength="10"
-                   minlength="10" name="cedula" placeholder="" required
+                   minlength="10" name="cedula" placeholder=""
                    type="text">
             <div *ngIf="Cedula.invalid && (Cedula.dirty || Cedula.touched)">
               <div *ngIf="Cedula.errors.required">
@@ -178,7 +178,7 @@
                    [ngClass]="{'is-invalid': Ruc.invalid && (Ruc.dirty || Ruc.touched),
                  'is-valid': Ruc.valid && (Ruc.dirty || Ruc.touched)}" [pattern]='this.soloNumerosPattern'
                    class="tamanioInputs form-control" maxlength="13"
-                   minlength="13" name="ruc" placeholder="" required type="text">
+                   minlength="13" name="ruc" placeholder=""  type="text">
             <div *ngIf="Ruc.invalid && (Ruc.dirty || Ruc.touched)">
               <div *ngIf="Ruc.errors.required">
                 <p class="alert alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
@@ -204,7 +204,7 @@
             <input [disabled]="banderaEdicionDeshabilitada" #Telefono="ngModel" [(ngModel)]="this.EditarAgente.Telefono"
                    [ngClass]="{'is-invalid': Telefono.invalid && (Telefono.dirty || Telefono.touched),
                  'is-valid': Telefono.valid && (Telefono.dirty || Telefono.touched)}"
-                   [pattern]='this.soloNumerosPattern' class="tamanioInputs form-control" name="telefono" required
+                   [pattern]='this.soloNumerosPattern' class="tamanioInputs form-control" name="telefono"
                    type="tel">
             <div *ngIf="Telefono.invalid && (Telefono.dirty|| Telefono.touched) ">
               <div *ngIf="Telefono.errors.required">
@@ -230,7 +230,7 @@
           'errorSelect': Provincia.invalid && (Provincia.dirty || Provincia.touched),
           'satisfactorioSelect': Provincia.valid && (Provincia.dirty || Provincia.touched)}"
                     class=" tamanioInputs form-control  " data-size="4" name="provincia"
-                    required>
+                    >
               <option disabled *ngIf="!this.ciudades || banderaEdicionDeshabilitada" >{{this.provincia}}</option>
               <option *ngFor="let provincia of this.provincias"
                       value="{{provincia.COD_DPA}}"> {{provincia.NOMBRE }}</option>
@@ -252,7 +252,7 @@
           'errorSelect': Ciudad.invalid && (Ciudad.dirty || Ciudad.touched),
           'satisfactorioSelect': Ciudad.valid && (Ciudad.dirty || Ciudad.touched)}"
                     class="tamanioInputs form-control" name="ciudad" placeholder=""
-                    required>
+                    >
               <option disabled *ngIf="!this.ciudades || banderaEdicionDeshabilitada">{{this.ciudad}}</option>
               <option *ngFor="let ciudad of this.ciudades" value="{{ciudad.COD_DPA}} "> {{ciudad.NOMBRE }}</option>
             </select>
@@ -273,7 +273,7 @@
           'errorSelect': CallePrincipal.invalid && (CallePrincipal.dirty || CallePrincipal.touched),
           'satisfactorioSelect': CallePrincipal.valid && (CallePrincipal.dirty || CallePrincipal.touched)}"
                class="tamanioInputs form-control"
-               name="callePrincipal" placeholder="" required id="CallePrincipal">
+               name="callePrincipal" placeholder=""  id="CallePrincipal">
         <div *ngIf="CallePrincipal.invalid && (CallePrincipal.touched||CallePrincipal.dirty)">
           <div *ngIf="CallePrincipal.errors.required">
             <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
@@ -289,7 +289,7 @@
           'errorSelect': CalleSecundaria.invalid && (CalleSecundaria.dirty || CalleSecundaria.touched),
           'satisfactorioSelect': CalleSecundaria.valid && (CalleSecundaria.dirty || CalleSecundaria.touched)}"
                class="tamanioInputs form-control"
-               name="calleSecundaria" placeholder="" required id="calleSecundaria">
+               name="calleSecundaria" placeholder=""  id="calleSecundaria">
         <div *ngIf="CalleSecundaria.invalid && (CalleSecundaria.touched||CalleSecundaria.dirty)">
           <div *ngIf="CalleSecundaria.errors.required">
             <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
@@ -325,7 +325,7 @@
       <button *ngIf="banderaEdicionDeshabilitada" (click)="habilitarEdicion()" href="#"
               class="btn btn-warning text-white "><span class="fa fa-edit"></span> Modificar
       </button> &nbsp;
-      <button *ngIf="!banderaEdicionDeshabilitada" (click)="actualizarAgente()" href="#"
+      <button [disabled]="!FormActualizarDatos.checkValidity()"  *ngIf="!banderaEdicionDeshabilitada" (click)="actualizarAgente()" href="#"
               class="btn btn-primary text-white "><span class="fa fa-save"></span> Guardar
       </button> &nbsp;
       <button *ngIf="!banderaEdicionDeshabilitada" href="#" (click)="iniciarEdicion()" class="btn btn-light  "><span

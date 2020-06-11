@@ -122,6 +122,7 @@ export class DatosPersonalesComponent implements OnInit {
   }
 
   public iniciarEdicion() {
+
     this.banderaEdicionDeshabilitada = true;
     this.ciudad = this.identidad.DPA.NOMBRE + ' (Actual)';
     this.provincia = this.identidad.DPA.DPAP.NOMBRE + ' (Actual)';
@@ -135,6 +136,7 @@ export class DatosPersonalesComponent implements OnInit {
     this.EditarAgente.Ciudad = this.identidad.DPA.COD_DPA;
     this.EditarAgente.Calle_Principal_Agente = this.identidad.CALLE_PRINCIPAL_AGENTE;
     this.EditarAgente.Num_Casa_Agente = this.identidad.NUM_CASA_AGENTE;
+
   }
 
   public comprobarTipoPersona() {
