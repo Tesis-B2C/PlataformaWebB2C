@@ -117,7 +117,7 @@ async function autenticarActivarAgente(req, res) {
                 message: "token no valido"
             });
         } else {
-            let agente = await AGENTE.findOne({where: {CORREO: req.user.email}});
+            let agente = await AGENTE.findOne({where: {ESTADO: '1',CORREO: req.user.email}});
             if (!agente) {
                 res.status(500).send({
                     message: "Al parecer el usuario no ha sido registrado"
@@ -184,7 +184,7 @@ async function resetearContrasenia(req, res) {
 async function resetearContrasenia2(req, res) {
 
     try {
-        let agente = await AGENTE.findOne({where: {CORREO: req.user.email}});
+        let agente = await AGENTE.findOne({where: {ESTADO: '0',CORREO: req.user.email}});
         if (!agente) {
             res.status(500).send({
                 message: "token no valido"
@@ -230,7 +230,7 @@ async function actualizarAgente(req, res) {
             COD_DPA: req.body.Ciudad
 
         }
-        let agenteActualizado = await AGENTE.update(agente, {where: {CORREO: agenteId}});
+        let agenteActualizado = await AGENTE.update(agente, {where: { ESTADO: '0',CORREO: agenteId}});
         if (!agenteActualizado.length) {
             res.status(404).send({message: 'El Usuario no ha sido actualizado'});
         } else {
@@ -275,7 +275,7 @@ async function verificarExistenciaCorreo(req, res) {
 async function cambioCorreoAgente(req, res) {
     try {
         let agenteId = req.params.id;
-        let agente = await AGENTE.findOne({where: {CORREO: agenteId}});
+        let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: agenteId}});
         let agenteActualizado = await agente.update({CORREO: req.body.correo});
         if (!agenteActualizado) {
             res.status(404).send({message: 'El Usuario no ha sido actualizado'});
