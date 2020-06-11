@@ -17,7 +17,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancelar
         </button>
-        <button type="button" class="btn btn-primary" (click)="pasoDosCambiarCorreo()">Comprobar</button>
+        <button type="button" class="btn btn-primary" (click)="pasoDosCambiarCorreo()">Enviar Código</button>
       </div>
 
     </div>
@@ -38,7 +38,7 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancelar
+        <button type="button" class="btn btn-outline-secondary" (click)="retroceder()">Cancelar
         </button>
         <button type="button" class="btn btn-primary" (click)="modal.close('Ok click');cambioCorreoAgente()">Comprobar
         </button>
@@ -48,7 +48,17 @@
   </div>
 
 </ng-template>
+<div *ngIf="loading" class="fondoAnimacionCarga">
+  <div class="pulse animated infinite" style="position: absolute;z-index: 150;">
+    <img id="imagenCarga" src="./../assets/images/cargando.png">
+    <br><br>
+    <div>
+      <label style="color: white; text-align: center">Espere por favor..</label>
+    </div>
+  </div>
+</div>
 
+<body [ngClass]="{'body-con-animacion': loading}">
 <article class="card mb-3">
   <div class="card-body">
 
@@ -61,8 +71,8 @@
       </div>
     </figure>
     <hr>
-    <p class="alert3 justify-content-center pb-2 text-primary small"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-      Los campos marcados con <strong>*</strong> son obligatorios.</p>
+    <!--<p class="alert3 justify-content-center pb-2 text-primary small"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+      Los campos marcados con <strong>*</strong> son obligatorios.</p>-->
     <form   #FormActualizarDatos  id="formActualizarDatos" class="validate-form" >
       <div class="form-row ">
         <div class=" col form-group">
@@ -334,3 +344,4 @@
     </div>
   </div>
 </article>
+</body>

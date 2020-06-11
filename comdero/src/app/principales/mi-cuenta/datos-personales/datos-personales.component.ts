@@ -33,6 +33,7 @@ export class DatosPersonalesComponent implements OnInit {
   public banderaPasoDosCambiarCorreo: boolean = false;
   public Correo;
   public codigo;
+  public loading:boolean=false;
   public objetoEmail = {
     asunto: null,
     correo: null,
@@ -190,6 +191,7 @@ export class DatosPersonalesComponent implements OnInit {
 
   public async actualizarAgente() {
     try {
+      this.loading=true;
       let response = await this._agenteServicio.actualizarAgente(this.EditarAgente).toPromise();
       let data = await this._agenteServicio.actualizarAgenteIdentity(this.identidad.CORREO).toPromise();
 
@@ -198,15 +200,20 @@ export class DatosPersonalesComponent implements OnInit {
       this.iniciarEdicion();
       this.mensageCorrecto(response['message']);
     } catch (e) {
+      this.loading=false;
       console.log("error:" + JSON.stringify((e).error.message));
       if (JSON.stringify((e).error.message))
         this.mensageError(JSON.stringify((e).error.message));
       else this.mensageError("Error de conexión intentelo mas tarde");
 
     }
+    this.loading=false;
   }
 
-
+  retroceder(){
+    this.banderaPasoDosCambiarCorreo=false;
+    this.banderaPasoUnoCambiarCorreo=true;
+  }
  async cambioCorreoAgente() {
    try {
      if (this.codigo == localStorage.getItem('codigoCambioCorreo')) {
