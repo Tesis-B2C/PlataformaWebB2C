@@ -39,7 +39,7 @@ export class DatosPersonalesComponent implements OnInit {
     codigo: null
   };
 
-  constructor( private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal) {
+  constructor(private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal) {
     this.EditarAgente = new Agente(null, null, null,
       null, null, null, 0, null, null,
       null, null, null, null);
@@ -70,7 +70,7 @@ export class DatosPersonalesComponent implements OnInit {
   async getDpaCiudades(buscar) {
     try {
       this.ciudad = null;
-      this.provincia = null;
+      //this.provincia = null;
       let response = await this._dpaServicio.getDpaCiudades(buscar).toPromise();
       this.ciudades = response.data;
     } catch (e) {
@@ -166,22 +166,19 @@ export class DatosPersonalesComponent implements OnInit {
   }
 
   public async pasoDosCambiarCorreo() {
-    try{
-    this.banderaPasoDosCambiarCorreo = true;
-    this.banderaPasoUnoCambiarCorreo = false;
-    this.objetoEmail.correo = this.Correo;
-    this.objetoEmail.asunto = 'Cambiar Correo';
-    let codigo = Math.floor((Math.random() * 100) + 54);
-    localStorage.setItem("codigoCambioCorreo", JSON.stringify(codigo));
-
-    this.objetoEmail.codigo = codigo;
-
-
-      let response= await this._agenteServicio.verificarExistenciaCorreo(this.objetoEmail).toPromise();
-   // let response = await this._emailServicio.envioEmail(this.objetoEmail).toPromise();
-    console.log("response", response);
+    try {
+      this.objetoEmail.correo = this.Correo;
+      this.objetoEmail.asunto = 'Cambiar Correo';
+      let codigo = Math.floor((Math.random() * 100) + 54);
+      this.objetoEmail.codigo = codigo;
+      let response = await this._agenteServicio.verificarExistenciaCorreo(this.objetoEmail).toPromise();
+      // let response = await this._emailServicio.envioEmail(this.objetoEmail).toPromise();
+      localStorage.setItem("codigoCambioCorreo", JSON.stringify(codigo));
+      console.log("response", response);
       this.mensageCorrecto(response['message']);
-    }catch (e) {
+      this.banderaPasoDosCambiarCorreo = true;
+      this.banderaPasoUnoCambiarCorreo = false;
+    } catch (e) {
       console.log("error:" + JSON.stringify((e).error.message));
       if (JSON.stringify((e).error.message))
         this.mensageError(JSON.stringify((e).error.message));
@@ -189,10 +186,14 @@ export class DatosPersonalesComponent implements OnInit {
     }
   }
 
-  public async  actualizarAgente() {
+  public async actualizarAgente() {
     try {
       let response = await this._agenteServicio.actualizarAgente(this.EditarAgente).toPromise();
+      let data = await this._agenteServicio.actualizarAgenteIdentity(this.identidad.CORREO).toPromise();
 
+      localStorage.setItem("identity", JSON.stringify(data['data']));
+      this.identidad=this._agenteServicio.getIdentity();
+      this.iniciarEdicion();
       this.mensageCorrecto(response['message']);
     } catch (e) {
       console.log("error:" + JSON.stringify((e).error.message));
@@ -202,6 +203,32 @@ export class DatosPersonalesComponent implements OnInit {
 
     }
   }
+
+
+ async cambioCorreoAgente() {
+   try {
+     if (this.codigo == localStorage.getItem('codigoCambioCorreo')) {
+
+       console.log(this.identidad.CORREO,  this.objetoEmail.correo);
+       let response = await this._agenteServicio.cambioCorreoAgente(this.identidad.CORREO,  this.objetoEmail.correo).toPromise();
+       let data = await this._agenteServicio.actualizarAgenteIdentity(this.objetoEmail.correo).toPromise();
+       localStorage.setItem("identity", JSON.stringify(data['data']));
+       this.identidad=this._agenteServicio.getIdentity();
+
+       this.iniciarEdicion();
+       this.mensageCorrecto(response['message']);
+     } else {
+       this.mensageError('Codigo incorrecto');
+     }
+   }catch (e) {
+     console.log("error:" + JSON.stringify((e).error.message));
+     if (JSON.stringify((e).error.message))
+       this.mensageError(JSON.stringify((e).error.message));
+     else this.mensageError("Error de conexión intentelo mas tarde");
+   }
+  }
+
+
 
   mensageError(mensaje) {
     Swal.fire({

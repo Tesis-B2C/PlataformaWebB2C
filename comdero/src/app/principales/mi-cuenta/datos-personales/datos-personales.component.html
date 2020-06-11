@@ -24,7 +24,7 @@
   </div>
   <div *ngIf="banderaPasoDosCambiarCorreo">
     <div class="modal-header ">
-      <h4 class="modal-title">Ingrese el codigo que enviamos a su correo</h4>
+      <h4 class="modal-title">Ingrese el código que enviamos a su correo</h4>
       <button type="button" class="close" style="font-size: medium" aria-label="Close"
               (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
@@ -40,7 +40,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancelar
         </button>
-        <button type="button" class="btn btn-primary" (click)="modal.close('Ok click');getVideoIframe()">Comprobar
+        <button type="button" class="btn btn-primary" (click)="modal.close('Ok click');cambioCorreoAgente()">Comprobar
         </button>
       </div>
 
@@ -231,7 +231,7 @@
           'satisfactorioSelect': Provincia.valid && (Provincia.dirty || Provincia.touched)}"
                     class=" tamanioInputs form-control  " data-size="4" name="provincia"
                     required>
-              <option selected disabled="true">{{this.provincia}}</option>
+              <option disabled *ngIf="!this.ciudades || banderaEdicionDeshabilitada" >{{this.provincia}}</option>
               <option *ngFor="let provincia of this.provincias"
                       value="{{provincia.COD_DPA}}"> {{provincia.NOMBRE }}</option>
             </select>
@@ -253,7 +253,7 @@
           'satisfactorioSelect': Ciudad.valid && (Ciudad.dirty || Ciudad.touched)}"
                     class="tamanioInputs form-control" name="ciudad" placeholder=""
                     required>
-              <option selected disabled>{{this.ciudad}}</option>
+              <option disabled *ngIf="!this.ciudades || banderaEdicionDeshabilitada">{{this.ciudad}}</option>
               <option *ngFor="let ciudad of this.ciudades" value="{{ciudad.COD_DPA}} "> {{ciudad.NOMBRE }}</option>
             </select>
             <div *ngIf="Ciudad.invalid && (Ciudad.touched||Ciudad.dirty)">

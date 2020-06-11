@@ -30,7 +30,7 @@ async function registrarAgente(req, res) {
             agente.CALLE_PRINCIPAL_AGENTE = req.body.Calle_Principal_Agente;
             agente.CALLE_SECUNDARIA_AGENTE = req.body.Calle_Secundaria_Agente;
             agente.NUM_CASA_AGENTE = req.body.Num_Casa_Agente;
-            agente.COD_DPA = "0202";
+            agente.COD_DPA = req.body.Ciudad;
             await bcrypt.hash(req.body.Contrasenia, null, null, function (err, hash) {
                 agente.CONTRASENIA = hash;
             });
@@ -244,7 +244,7 @@ async function actualizarAgente(req, res) {
 }
 
 
-async function verificarExistenciaCorreo(req, res ) {
+async function verificarExistenciaCorreo(req, res) {
     try {
         let agenteEncontrado = await AGENTE.findOne({where: {CORREO: req.body.correo}});
 
@@ -272,6 +272,50 @@ async function verificarExistenciaCorreo(req, res ) {
     }
 }
 
+async function cambioCorreoAgente(req, res) {
+    try {
+        let agenteId = req.params.id;
+        let agente = await AGENTE.findOne({where: {CORREO: agenteId}});
+        let agenteActualizado = await agente.update({CORREO: req.body.correo});
+        if (!agenteActualizado) {
+            res.status(404).send({message: 'El Usuario no ha sido actualizado'});
+        } else {
+            res.status(200).send({message: 'El Usuario ha sido actualizado'});
+        }
+    } catch (e) {
+        res.status(500).send({
+            message: err.name
+        });
+    }
+}
+
+async function actualizarAgenteIdentity(req, res) {
+    let busqueda = req.params.id;
+
+    try {
+        let agente = await AGENTE.findOne({
+            where: {ESTADO: '0', CORREO: busqueda},
+            include: {model: DPA, include: {model: DPA, as: 'DPAP', equired: true}}
+        });
+
+        if (agente) {
+            res.status(200).send({
+                data: agente,
+            });
+        } else {
+            res.status(404).send({
+                message: 'No se pudieron recargar sus datos puede probar auntenticandose nuevamente'
+            });
+
+
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+
 module.exports = {          // para exportar todas las funciones de este modulo
 
     registrarAgente,
@@ -280,5 +324,7 @@ module.exports = {          // para exportar todas las funciones de este modulo
     resetearContrasenia,
     resetearContrasenia2,
     actualizarAgente,
-    verificarExistenciaCorreo
+    verificarExistenciaCorreo,
+    cambioCorreoAgente,
+    actualizarAgenteIdentity
 };

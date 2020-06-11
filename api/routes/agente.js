@@ -12,6 +12,9 @@ api.post('/resetearContrasenia', AgenteController.resetearContrasenia);
 api.put('/resetearContrasenia2',md_auth.ensureAuth, AgenteController.resetearContrasenia2);
 api.put('/actualizarAgente/:id', AgenteController.actualizarAgente);
 api.post('/verificarExistenciaCorreo', AgenteController.verificarExistenciaCorreo);
+api.put('/cambioCorreoAgente/:id', AgenteController.cambioCorreoAgente);
+api.get('/actualizarAgenteIdentity/:id', AgenteController.actualizarAgenteIdentity);
+
 /*api.get('/buscarDocentes/:busqueda', md_auth.ensureAuth, DocenteController.busquedaDocentes);
 api.put('/actualizarAgentee/:id', md_auth.ensureAuth, DocenteController.updateDocente);
 api.get('/getListadoDocentes',md_auth.ensureAuth, DocenteController.getDocentes);*/
