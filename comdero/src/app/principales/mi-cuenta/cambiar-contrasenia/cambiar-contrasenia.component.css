@@ -1,0 +1,8 @@
+.alert {
+  font-size: smaller;
+  padding: 0;
+  background-color: white;
+  border: none;
+  color: #bd2130;
+  margin-left: 4px;
+}

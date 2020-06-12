@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cambiar-contrasenia.component.css']
 })
 export class CambiarContraseniaComponent implements OnInit {
-
+  public comprarContrasenia;
+public objCambiarContrasenia={
+  contraseniaActual:null,
+  contraseniaNueva:null
+}
   constructor() { }
 
   ngOnInit() {
   }
+
 
 }
