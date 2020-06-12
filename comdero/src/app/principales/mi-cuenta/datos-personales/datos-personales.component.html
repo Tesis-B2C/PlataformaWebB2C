@@ -76,7 +76,7 @@
       Los campos marcados con <strong>*</strong> son obligatorios.</p>-->
     <form #FormActualizarDatos id="formActualizarDatos" class="validate-form">
       <div class="form-row ">
-        <div class=" col form-group">
+        <div class=" col-md-6 form-group">
           <label>Tipo de persona</label>
           <select (change)="cambiarTipo($event.target.value)" type="text" class="form-control tamanioInputs "
                   [disabled]="banderaEdicionDeshabilitada">
@@ -84,7 +84,7 @@
             <option [selected]="!banderaTipo" value="Empresa">Empresa</option>
           </select>
         </div>
-        <div *ngIf="banderaTipo" class="col form-group">
+        <div *ngIf="banderaTipo" class="col-md-6 form-group">
           <label>* Nombres y Apellidos</label>
           <input [disabled]="banderaEdicionDeshabilitada" #NombreA="ngModel" style="text-transform: uppercase;"
                  [(ngModel)]="this.EditarAgente.Nombre" [ngClass]="{'is-invalid': NombreA.invalid && (NombreA.dirty || NombreA.touched),

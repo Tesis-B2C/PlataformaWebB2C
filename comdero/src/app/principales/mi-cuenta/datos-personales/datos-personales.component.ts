@@ -4,7 +4,7 @@ import {AgenteServicio} from "../../../servicios/agente.servicio";
 import {Agente} from "../../../modelos/agente";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import Swal from "sweetalert2";
-
+import {ToastrService} from 'ngx-toastr';
 declare const require: any;
 const places = require("../../../../../node_modules/places.js/dist/cdn/places.js");
 
@@ -33,23 +33,24 @@ export class DatosPersonalesComponent implements OnInit {
   public banderaPasoDosCambiarCorreo: boolean = false;
   public Correo;
   public codigo;
-  public loading:boolean=false;
+  public loading: boolean = false;
   public objetoEmail = {
     asunto: null,
     correo: null,
     codigo: null
   };
 
-  constructor(private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal) {
+  constructor(public toastr: ToastrService,private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal) {
     this.EditarAgente = new Agente(null, null, null,
       null, null, null, 0, null, null,
       null, null, null, null);
   }
 
+
+
   ngOnInit() {
     this.getDpaProvincias("P");
     this.identidad = this._agenteServicio.getIdentity();
-    console.log("identidad", this.identidad)
 
     this.iniciarEdicion();
 
@@ -57,6 +58,11 @@ export class DatosPersonalesComponent implements OnInit {
 
 
   }
+  public mostrarToast(mensaje, icono) {
+    this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo"><strong>!Error</strong><br>' + mensaje + '</p> </div>', "",
+      {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: true});
+  }
+
 
   async getDpaProvincias(buscar) {
     try {
@@ -123,10 +129,14 @@ export class DatosPersonalesComponent implements OnInit {
   }
 
   public iniciarEdicion() {
-
+    if (this.identidad.DPA)
+      this.ciudad = this.identidad.DPA.NOMBRE + ' (Actual)';
+    else this.ciudad = "";
+    if (this.identidad.DPA)
+      this.provincia = this.identidad.DPA.DPAP.NOMBRE + ' (Actual)';
+    else
+      this.provincia = "";
     this.banderaEdicionDeshabilitada = true;
-    this.ciudad = this.identidad.DPA.NOMBRE + ' (Actual)';
-    this.provincia = this.identidad.DPA.DPAP.NOMBRE + ' (Actual)';
     this.EditarAgente.Id_Agente = this.identidad.ID_AGENTE;
     this.EditarAgente.Num_Cod_Postal = this.identidad.NUM_COD_POSTAL;
     this.EditarAgente.Nombre = this.identidad.NOMBRE;
@@ -191,53 +201,81 @@ export class DatosPersonalesComponent implements OnInit {
 
   public async actualizarAgente() {
     try {
-      this.loading=true;
+      if(this.validarCedula()==true){
+      this.loading = true;
       let response = await this._agenteServicio.actualizarAgente(this.EditarAgente).toPromise();
       let data = await this._agenteServicio.actualizarAgenteIdentity(this.identidad.CORREO).toPromise();
 
       localStorage.setItem("identity", JSON.stringify(data['data']));
-      this.identidad=this._agenteServicio.getIdentity();
+      this.identidad = this._agenteServicio.getIdentity();
       this.iniciarEdicion();
       this.mensageCorrecto(response['message']);
+      }else {
+        this.mostrarToast("La cédula ingresada no es válida","");
+      }
     } catch (e) {
-      this.loading=false;
+      this.loading = false;
       console.log("error:" + JSON.stringify((e).error.message));
       if (JSON.stringify((e).error.message))
         this.mensageError(JSON.stringify((e).error.message));
       else this.mensageError("Error de conexión intentelo mas tarde");
 
     }
-    this.loading=false;
+    this.loading = false;
   }
 
-  retroceder(){
-    this.banderaPasoDosCambiarCorreo=false;
-    this.banderaPasoUnoCambiarCorreo=true;
-  }
- async cambioCorreoAgente() {
-   try {
-     if (this.codigo == localStorage.getItem('codigoCambioCorreo')) {
-
-       console.log(this.identidad.CORREO,  this.objetoEmail.correo);
-       let response = await this._agenteServicio.cambioCorreoAgente(this.identidad.CORREO,  this.objetoEmail.correo).toPromise();
-       let data = await this._agenteServicio.actualizarAgenteIdentity(this.objetoEmail.correo).toPromise();
-       localStorage.setItem("identity", JSON.stringify(data['data']));
-       this.identidad=this._agenteServicio.getIdentity();
-
-       this.iniciarEdicion();
-       this.mensageCorrecto(response['message']);
-     } else {
-       this.mensageError('Codigo incorrecto');
-     }
-   }catch (e) {
-     console.log("error:" + JSON.stringify((e).error.message));
-     if (JSON.stringify((e).error.message))
-       this.mensageError(JSON.stringify((e).error.message));
-     else this.mensageError("Error de conexión intentelo mas tarde");
-   }
+  public retroceder() {
+    this.banderaPasoDosCambiarCorreo = false;
+    this.banderaPasoUnoCambiarCorreo = true;
   }
 
+  async cambioCorreoAgente() {
+    try {
+      if (this.codigo == localStorage.getItem('codigoCambioCorreo')) {
 
+        let response = await this._agenteServicio.cambioCorreoAgente(this.identidad.CORREO, this.objetoEmail.correo).toPromise();
+        let data = await this._agenteServicio.actualizarAgenteIdentity(this.objetoEmail.correo).toPromise();
+        localStorage.setItem("identity", JSON.stringify(data['data']));
+        this.identidad = this._agenteServicio.getIdentity();
+
+        this.iniciarEdicion();
+        this.mensageCorrecto(response['message']);
+      } else {
+        this.mensageError('Codigo incorrecto');
+      }
+    } catch (e) {
+      console.log("error:" + JSON.stringify((e).error.message));
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
+  }
+  validarCedula() {
+    var cad: any = this.EditarAgente.Id_Agente;
+    var i;
+    var total = 0;
+    var longitud = cad.length;
+    var longcheck = longitud - 1;
+    if (cad !== "" && longitud === 10) {
+      for (i = 0; i < longcheck; i++) {
+        if (i % 2 === 0) {
+          var aux = cad.charAt(i) * 2;
+          if (aux > 9) aux -= 9;
+          total += aux;
+        } else {
+          total += parseInt(cad.charAt(i)); // parseInt o concatenará en lugar de sumar
+        }
+      }
+      total = total % 10 ? 10 - total % 10 : 0;
+
+      if (cad.charAt(longitud - 1) == total) {
+        return true;
+      } else {
+        this.EditarAgente.Id_Agente = "";
+        return false;
+      }
+    }
+  }
 
   mensageError(mensaje) {
     Swal.fire({

@@ -6,3 +6,15 @@
   color: #bd2130;
   margin-left: 4px;
 }
+label {
+  font-size: small;
+  font-weight: normal;
+}
+
+.tamanioInputs {
+  font-size: small;
+}
+button{
+  font-size: small;
+
+}

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AgenteServicio} from "../../../servicios/agente.servicio";
 import Swal from "sweetalert2";
 
+
 @Component({
   selector: 'app-cambiar-contrasenia',
   templateUrl: './cambiar-contrasenia.component.html',
@@ -22,10 +23,16 @@ export class CambiarContraseniaComponent implements OnInit {
 
   public async actualizarContrasenia() {
     try {
-      let identidad = this._agenteServicio.getIdentity();
-      let response = await this._agenteServicio.actualizarContrasenia(identidad.CORREO, this.objCambiarContrasenia).toPromise();
-      console.log("responsabilidad", response['message'])
-    } catch (e) {
+      if (this.objCambiarContrasenia.contraseniaActual == this.objCambiarContrasenia.contraseniaNueva) {
+        this.mensageError("La contraseña debe ser diferente a la actual");
+
+      } else {
+        let identidad = this._agenteServicio.getIdentity();
+        let response = await this._agenteServicio.actualizarContrasenia(identidad.CORREO, this.objCambiarContrasenia).toPromise();
+        this.mensageCorrecto(response['message']);
+      }
+    } catch
+      (e) {
       console.log("error:" + JSON.stringify((e).error.message));
       if (JSON.stringify((e).error.message))
         this.mensageError(JSON.stringify((e).error.message));
