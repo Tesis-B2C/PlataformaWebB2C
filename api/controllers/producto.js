@@ -1,4 +1,4 @@
-'use strcit'
+'use strict'
 
 //importar el modelo del usuario  o lo que son las clases comunes
 

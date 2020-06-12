@@ -10,7 +10,8 @@ export class Tienda {
     public Logo: String,
     public Banner: String,
     public Estado_Tienda: Number,
-    public Terminos_Condiciones: String
+    public Terminos_Condiciones: String,
+    public Tipo_Horario:String
   ) {
   }
 }

@@ -4,15 +4,18 @@ var Sucursal = require("./sucursal");
 var Oferta = require("./oferta");
 var Metodo_Pago = require("./metodo_pago");
 var Opcion_Envio_Tienda = require("./opcion_envio_tienda");
-const Tienda= db.sequelize.define('Tienda', {
-        NUM_TIENDA: {
-            type: Sequelize.INTEGER,
-            primaryKey:true,
-            allowNull: false
-        },
-        ID_AGENTE: {
+var Horario_Atencion = require("./horario_atencion");
 
-            type: Sequelize.INTEGER,
+const Tienda= db.sequelize.define('Tienda', {
+        NUM_TIENDA:
+            {
+                type: Sequelize.BIGINT,
+                primaryKey: true,
+                allowNull: false,
+                autoIncrement: true
+            },
+        CORREO: {
+            type: Sequelize.STRING,
             allowNull: false
         },
        RAZON_SOCIAL:
@@ -55,12 +58,17 @@ const Tienda= db.sequelize.define('Tienda', {
                 type: Sequelize.INTEGER,
                 allowNull: false
             },
-        HORARIO_ATENCION:
+        TERMINOS_CONDICIONES:
             {
                 type: Sequelize.STRING,
                 allowNull: false
             },
-        TERMINOS_CONDICIONES:
+        CORREO_TIENDA:
+            {
+                type: Sequelize.STRING,
+                allowNull: false
+            },
+        HORARIO_ATENCION:
             {
                 type: Sequelize.STRING,
                 allowNull: false
@@ -79,7 +87,6 @@ Sucursal.belongsTo(Tienda, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
 Tienda.hasMany(Oferta, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
 Oferta.belongsTo(Tienda, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
 
-
 // TIENDA-OPCION_ENVIO_TIENDA
 Tienda.hasMany(Opcion_Envio_Tienda, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
 Opcion_Envio_Tienda.belongsTo(Tienda, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
@@ -88,5 +95,8 @@ Opcion_Envio_Tienda.belongsTo(Tienda, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM
 Tienda.hasMany(Metodo_Pago, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
 Metodo_Pago.belongsTo(Tienda, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
 
+// TIENDA-HORARIO_ATENCION
+Tienda.hasMany(Horario_Atencion, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
+Horario_Atencion.belongsTo(Tienda, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
 
 module.exports = Tienda;

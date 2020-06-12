@@ -1,17 +1,13 @@
-import {Component,OnDestroy, OnInit } from '@angular/core';
+import {Component, DoCheck, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Sucursal} from "../../modelos/sucursal";
 import {Tienda} from "../../modelos/tienda";
-import {DpaServicio} from "../../servicios/dpa.servicio";
-import {Imagen_Producto} from "../../modelos/imagen_producto";
 import {Horario_Atencion} from "../../modelos/horario_atencion";
+import {DpaServicio} from "../../servicios/dpa.servicio";
 import {TiendaServicio} from "../../servicios/tienda.servicio";
+import {ToastrService} from 'ngx-toastr';
 import Swal from "sweetalert2";
+import {WizardComponent} from "angular-archwizard";
 
-interface Tienda_Enviar {
-  Tienda: Tienda;
-  Sucursal: Sucursal;
-  Horario_Atencion: Horario_Atencion;
-}
 
 declare const require: any;
 
@@ -21,16 +17,16 @@ declare const require: any;
   styleUrls: ['./registro-tienda.component.css']
 })
 
-export class RegistroTiendaComponent implements OnInit, OnDestroy{
-  public Tienda;
-  public Sucursal;
-  public Negocios = [];
-  public htmlcomponent;
-  public Tienda_Enviar: Tienda_Enviar;
+export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
 
-  //banderas
-  public loading: boolean = false;
-  time = {hour: 13, minute: 30};
+  public Tienda;
+  public Sucursales = [];
+  public htmlcomponent;
+  public Tienda_Enviar = {
+    Tienda: Tienda,
+    Sucursal: []
+  }
+
   public editorConfig = {
     "editable": true,
     "spellcheck": true,
@@ -56,65 +52,177 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy{
   private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
   private urlPattern: any = "(https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9]+\\.[^\\s]{2,}|www\\.[a-zA-Z0-9]+\\.[^\\s]{2,})";
   public provincias;
-  public ciudades;
+  public ciudades = [];
 
   public vectorOpciones: Array<number> = [1]; // las dos formas swon validas pero la activa es ams facil
   /*public vectorOpciones=new Array(0);*/
 
-  /*Banderas de Negocio o Casa*/
-  public bandAgregarSuc: boolean = false;
-  public banderaCasa: boolean = false;
-  public btnEspacioFisico: boolean = false;
-  public btnCasa: boolean = false;
+  //banderas
+  public loading: boolean = false;
+  public banderaToast: boolean = false;
+  public banderaToastRuc: boolean = false;
+  public panelUno;
+  public panelDos;
+  public imagenFondoTienda;
+  @ViewChild(WizardComponent, null) wizard: WizardComponent
 
-  constructor(private _dpaServicio: DpaServicio, private _tiendaServicio: TiendaServicio) {
-    this.Tienda = new Tienda(null,null, null, null, null,
-      null, null, null, null, null, null);
-      this.Negocios.push(new Sucursal(null, null, null, null, null,null,null,null,null));
+  constructor(public toastr: ToastrService, private _dpaServicio: DpaServicio, private _tiendaServicio: TiendaServicio) {
+    this.Tienda = new Tienda(null, null, null, null, null,
+      null, null, null, null, null, null, null);
+    this.Sucursales.push(new Sucursal(null, null, null, null, null, null, null, null, 'Negocio'));
   }
 
   async ngOnInit() {
     this.getDpaProvincias("P");
+
+    this.panelUno = document.getElementById('panelUno') as HTMLElement;
+    this.panelDos = document.getElementById('panelDos') as HTMLElement;
+    this.imagenFondoTienda = document.getElementById('imagenFondoTienda') as HTMLElement;
   }
 
   ngOnDestroy() {
     delete this.Tienda;
-    delete this.Sucursal;
+    delete this.Sucursales;
+    delete this.Tienda_Enviar;
+  }
+
+  ngDoCheck(): void {
+    this.imagenFondoTienda.style.Height = this.panelUno.offsetHeight + 'px';
+  }
+
+  atras(){
+    this.wizard.goToPreviousStep();
   }
 
   async getDpaProvincias(buscar) {
     try {
       let response = await this._dpaServicio.getDpaProvincias(buscar).toPromise();
+      console.log("RESPONSE provincia" + response.data);
       this.provincias = response.data;
     } catch (e) {
       console.log("error:" + JSON.stringify((e).error.message));
     }
   }
 
-  async getDpaCiudades(buscar) {
+  async getDpaCiudades(buscar, indiceCiudad) {
     try {
       let response = await this._dpaServicio.getDpaCiudades(buscar).toPromise();
-      this.ciudades = response.data;
+      console.log("RESPONSE" + response.data);
+      this.ciudades[indiceCiudad] = response.data;
     } catch (e) {
       console.log("error:" + JSON.stringify((e).error.message));
     }
   }
 
+  validarCedula() {
+    var resultado: any = [];
+    for (var j = 0; j < this.Sucursales.length; j++) {
+      var cad: any = this.Sucursales[j].Ruc;
+      var i;
+      var total = 0;
+      var longitud = cad.length - 3;
+      console.log("longitus" + longitud);
+      var longcheck = longitud - 1;
+      if (cad !== "" && longitud === 10) {
+        for (i = 0; i < longcheck; i++) {
+          if (i % 2 === 0) {
+            var aux = cad.charAt(i) * 2;
+            if (aux > 9) aux -= 9;
+            total += aux;
+          } else {
+            total += parseInt(cad.charAt(i)); // parseInt o concatenará en lugar de sumar
+          }
+        }
+        total = total % 10 ? 10 - total % 10 : 0;
+        console.log(this.Sucursales.length + "TOTAL" + this.Sucursales[j].Ruc);
 
-  public async registrarTienda(){
+        if (cad.charAt(longitud - 1) == total) {
+          resultado[j] = true;
+          console.log("TRUE" + resultado[j]);
+        } else {
+          resultado[j] = false;
+          console.log("FALSE" + resultado[j]);
+        }
+      }
+    }
+    for (var j = 0; j < resultado.length; j++) {
+      console.log("RUC" + resultado[j]);
+      if (resultado[j] == false)
+        return false;
+    }
+    return true;
+  }
+
+  public async ValidarPaso1(validador) {
+    if (validador == "1") {
+      this.banderaToast = false;
+      console.log("PASO1" + JSON.stringify(this.Tienda));
+    } else {
+      this.banderaToast = true;
+    }
+    this.mensajeToast(1);
+  }
+
+  public async ValidarPaso2(validador) {
+    if (validador == "2") {
+      this.banderaToast = false;
+      console.log("PASO2" + JSON.stringify(this.Tienda));
+      if (this.validarCedula() == true) {
+        this.banderaToastRuc = false;
+        this.wizard.goToNextStep();
+      } else
+        this.banderaToastRuc = true;
+    } else {
+      this.banderaToast = true;
+    }
+    console.log("NEGOCIO" + JSON.stringify(this.Sucursales));
+    this.mensajeToast(2);
+  }
+
+  public async FinalPaso3(estado) {
+    if(estado == 'Omitir'){
+      this.Tienda.Logo = null;
+      this.Tienda.Banner = null;
+      this.loading = true;
+      this.registrarTienda();
+    }else{
+      this.loading = true;
+      this.registrarTienda();
+    }
+
+  }
+
+  public mensajeToast(paso) {
+    if (this.banderaToast && !document.forms["formPaso" + paso].checkValidity()) {
+      this.mostrarToast("Asegurate de llenar todos los campos obligatorios marcados con *", "");
+    }
+
+    if (this.banderaToastRuc) {
+      this.mostrarToast("Al parecer no ingreso un RUC válido", "");
+    }
+  }
+
+  public mostrarToast(mensaje, icono) {
+    this.toastr.error('<div class="row no-gutters"><p align="justify" class="col-12 LetrasToastInfo"><strong>!Error</strong><br>' + mensaje + '</p> </div>', "",
+      {positionClass: 'toast-top-right', enableHtml: true, closeButton: true});
+  }
+
+  public async registrarTienda() {
     try {
-      console.log("Objeto a enviar al backend:"+JSON.stringify(this.Tienda));
+      this.Tienda_Enviar.Tienda = this.Tienda;
+      this.Tienda_Enviar.Sucursal = this.Sucursales;
+      console.log("Objeto a enviar al backend:" + this.Tienda_Enviar);
       let response = await this._tiendaServicio.registrarTienda(this.Tienda_Enviar).toPromise();
       //document.forms["formRegistro"].reset();
       window.scroll(0, 0);
       this.mensageCorrecto(response['message']);
       this.loading = false;
     } catch (e) {
+      this.loading = false;
       console.log("error:" + JSON.stringify((e).error.message));
       if (JSON.stringify((e).error.message))
         this.mensageError(JSON.stringify((e).error.message));
       else this.mensageError("Error de conexión intentelo mas tarde");
-      this.loading = false;
     }
   }
 
@@ -149,145 +257,93 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy{
     });
   }
 
+  /*Banderas de Negocio o Casa*/
+  public bandAgregarSuc: boolean = true;
+  public banderaCasa: boolean = false;
+  public banderaEspacioFisico: boolean = true;
+  public btnEspacioFisico: boolean = true;
+  public btnCasa: boolean = false;
 
   public desdeNegocio() {
+    this.ciudades = [];
+    this.vectorOpciones = [1];
+    this.Sucursales = [];
+    this.banderaEspacioFisico = true;
     this.banderaCasa = false;
-    this.bandAgregarSuc=true;
+
+    this.bandAgregarSuc = true;
     this.btnEspacioFisico = true;
     this.btnCasa = false;
-    this.Negocios[0].Tipo_Sucursal ="Negocio";
-    console.log("NEGOCIO"+JSON.stringify(this.Negocios));
+
+    this.Sucursales.push(new Sucursal(null, null, null, null, null, null, null, null, "Negocio"));
+    console.log("NEGOCIO" + JSON.stringify(this.Sucursales));
   }
 
   public desdeCasa() {
-    this.vectorOpciones=[1];
-    this.Negocios=[];
+    this.ciudades = [];
+    this.vectorOpciones = [1];
+    this.Sucursales = [];
     this.banderaCasa = true;
+    this.banderaEspacioFisico = false;
 
+    this.bandAgregarSuc = false;
     this.btnEspacioFisico = false;
     this.btnCasa = true;
 
-    this.Negocios.push(new Sucursal(null, null, null, null, null,null,null,null,"Casa"));
-
-    console.log("CASA"+JSON.stringify(this.Negocios));
+    this.Sucursales.push(new Sucursal(null, null, null, null, null, null, null, null, "Casa"));
+    console.log("CASA" + JSON.stringify(this.Sucursales));
   }
-
 
 
   public agregarSucursal() {
     this.vectorOpciones.push(1);
-    this.Negocios.push(new Sucursal(null, null, null, null, null,null,null,null,"Negocio"));
-    console.log("negocio"+JSON.stringify(this.Negocios));
+    this.Sucursales.push(new Sucursal(null, null, null, null, null, null, null, null, "Negocio"));
+    console.log("negocio" + JSON.stringify(this.Sucursales));
   }
 
   public borrarOpciones(pocicion: number) {
-    this.vectorOpciones.splice(pocicion,1);
-    this.Negocios.splice(pocicion, 1);
-    console.log("NEGOCIO"+JSON.stringify(this.Negocios));
+    this.vectorOpciones.splice(pocicion, 1);
+    this.Sucursales.splice(pocicion, 1);
+    console.log("NEGOCIO" + JSON.stringify(this.Sucursales));
   }
 
   //Logo
-  public vectorBanderaAgregarLogo = false;
-  public quitarBanderaLogo = false;
-  public logoI = [[]];
-  public Imagenes_Logo = [[]];
+  public filesToUpload;
+  public urlLogo;
 
-  public async subirImagenes(eventEntrante, indice) {
-    if(this.logoI[indice]==null){
-      this.logoI[indice]=[];
-    }
-    if (eventEntrante.target.files && eventEntrante.target.files[0]) {
-      var filesAmount = eventEntrante.target.files.length;
-      this.vectorBanderaAgregarLogo = true;
-      if (filesAmount > 6) {
-        //this.banderaMensajeMaximoImagenes = true;
-      } else {
-
-        for (let i = 0; i < filesAmount; i++) {
-          this.Imagenes_Logo[indice].push(new Imagen_Producto(eventEntrante.target.files[i].name, eventEntrante.target.files[i].type, null, eventEntrante.target.files[i].size));
-          var reader = new FileReader();
-          reader.onload = (event: any) => {
-            if( this.logoI[indice]!=null)
-              this.logoI[indice].push(event.target.result);
-            document.forms["form"].reset();
-          }
-          await reader.readAsDataURL(eventEntrante.target.files[i]);
-          this.quitarBanderaLogo=true;
-        }
-
-        if (this.Imagenes_Logo[indice].length > 6) {
-          this.logoI[indice]=null;
-          this.Imagenes_Logo[indice].splice(0,  this.Imagenes_Logo[indice].length);
-          document.forms["form"].reset();
-          this.vectorBanderaAgregarLogo = false;
-          //this.banderaMensajeMaximoImagenes = true;
-        } else
-          if (this.Imagenes_Logo[indice].length == 6) {
-          //this.banderaMensajeMaximoImagenes = false
-          //this.banderaMaximoImagenes = false;
-          }
-
+  public async subirLogo(event: any) {
+    this.filesToUpload = <Array<File>>event.target.files;
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      reader.onload = (event: any) => {
+        this.urlLogo = event.target.result;
       }
+      reader.readAsDataURL(event.target.files[0]);
     }
   }
 
-  public quitarImagenes(indice: any, imagen) {
-    this.logoI[indice].splice(imagen, 1);
-    document.forms["form"].reset();
-    this.Imagenes_Logo[indice].splice(imagen, 1);
-    this.quitarBanderaLogo=false;
+  public quitarLogo() {
+    this.urlLogo = "";
   }
+
 
   //Banner
-  public vectorBanderaAgregarBanner = false;
-  public quitarBanderaBanner = false;
-  public banner = [[]];
-  public Banner_Producto = [[]];
+  public filesToUpload2;
+  public urlBanner;
 
-  public async subirBanner(eventEntrante, indice) {
-    if(this.banner[indice]==null){
-      this.banner[indice]=[];
-    }
-    if (eventEntrante.target.files && eventEntrante.target.files[0]) {
-      var filesAmount = eventEntrante.target.files.length;
-      this.vectorBanderaAgregarBanner = true;
-      if (filesAmount > 6) {
-        //this.banderaMensajeMaximoImagenes = true;
-      } else {
-
-        for (let i = 0; i < filesAmount; i++) {
-          this.Banner_Producto[indice].push(new Imagen_Producto(eventEntrante.target.files[i].name, eventEntrante.target.files[i].type, null, eventEntrante.target.files[i].size));
-
-          var reader = new FileReader();
-          reader.onload = (event: any) => {
-            if( this.banner[indice]!=null)
-              this.banner[indice].push(event.target.result);
-            document.forms["form"].reset();
-          }
-          await reader.readAsDataURL(eventEntrante.target.files[i]);
-          this.quitarBanderaBanner=true;
-        }
-
-        if (this.Banner_Producto[indice].length > 6) {
-          this.banner[indice]=null;
-          this.Banner_Producto[indice].splice(0,  this.Banner_Producto[indice].length);
-          document.forms["form"].reset();
-          this.vectorBanderaAgregarBanner = false;
-          //this.banderaMensajeMaximoImagenes = true;
-        } else
-        if (this.Banner_Producto[indice].length == 6) {
-          //this.banderaMensajeMaximoImagenes = false
-          //this.banderaMaximoImagenes = false;
-        }
-
+  public async subirBanner(event: any) {
+    this.filesToUpload2 = <Array<File>>event.target.files;
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      reader.onload = (event: any) => {
+        this.urlBanner = event.target.result;
       }
+      reader.readAsDataURL(event.target.files[0]);
     }
   }
 
-  public quitarBanner(indice: any, banner) {
-    this.banner[indice].splice(banner, 1);
-    document.forms["form"].reset();
-    this.Banner_Producto[indice].splice(banner, 1);
-    this.quitarBanderaBanner=false;
+  public quitarBanner() {
+    this.urlBanner = "";
   }
+
 }

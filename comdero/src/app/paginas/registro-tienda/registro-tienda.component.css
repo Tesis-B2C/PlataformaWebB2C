@@ -1,6 +1,6 @@
-html, body{
-  margin:0;
-  height:100%;
+html, body {
+  margin: 0;
+  height: 100%;
 }
 
 .wrap-register100 {
@@ -68,7 +68,6 @@ label {
   border: none;
   color: #1da1f2;
   margin-left: 4px;
-
 }
 
 .alert3 {
@@ -80,48 +79,55 @@ label {
   font-weight: bolder;
 }
 
+.errorSelect {
+  border: 1px solid red;
+}
+
+.satisfactorioSelect {
+  border: 1px solid limegreen;
+}
+
 .editor_terminos {
   font-size: small;
 }
 
-.agregar-sucursal{
+.agregar-sucursal {
   color: #1a56e9;
   cursor: pointer;
   border-bottom: #1a56e9 solid 1.5px;
 }
 
-.agregar-sucursal:hover{
+.agregar-sucursal:hover {
   opacity: 0.8;
 }
 
-.eliminar-sucursal{
+.eliminar-sucursal {
   color: #f90f0f;
   cursor: pointer;
   border-bottom: #f90f0f solid 1.5px;
 }
 
-.eliminar-sucursal:hover{
+.eliminar-sucursal:hover {
   opacity: 0.8;
 }
 
-.agregar-sucursal span{
+.agregar-sucursal span {
   font-size: 12px;
 }
 
 .btnActivo:disabled {
-  color:white;
+  color: white;
   background: #6c757d;
 }
 
 .boton-cerrar {
-  display: block;
   font-size: 0.9rem;
   width: 80%;
   margin-left: 10%;
   border-radius: 15px;
 }
 
-.btn-paso2{
+.btn-paso2 {
   width: 100%;
   height: 75px;
 }
@@ -207,24 +213,90 @@ label {
   color: #2a4c75;
 }
 
-.color-fa{
+.color-fa {
   color: #2a4c75;
 }
 
 /*IMG TIENDA COLUMNA 2*/
-.columnas{
+.columnas {
   width: auto;
-  height: 430px;
+}
+
+/*VALIDADIONES*/
+.toastValidacion {
+  padding: 1%;
+  margin: 0;
+  border: red 2px solid;
+  margin-left: 75%;
+  position: absolute;
+  z-index: 2;
+  text-align: center;
+  background-color: snow;
+}
+
+.fondoAnimacionCarga {
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#imagenCarga {
+  width: 60%;
+  margin-left: 18px;
+}
+
+@media all and (max-width: 500px) {
+  .toastValidacion {
+    border: red 1px solid;
+    position: absolute;
+    z-index: 5;
+    text-align: center;
+    width: 100%;
+    margin: 0;
+  }
+}
+
+.body-con-animacion {
+  overflow: hidden;
+}
+
+.btn-Wizard{
+  background: #1a56e9;
+}
+
+.btn-Wizard:hover{
+  background: #007bff;
+}
+
+/* PASO 3 */
+#contenedorPaso3{
+  position: relative;
 }
 
 .ejemplo-tienda{
-  width: 100%;
-  height: 100%;
+  position: absolute;
 }
 
+.omitirLogoBanner, .btnatras {
+  color: #1a56e9;
+  cursor: pointer;
+}
 
+.btnatras {
+  font-size: medium;
+  color: #1a56e9;
+  cursor: pointer;
+}
 
+.omitirLogoBanner:hover {
+  opacity: 0.8;
+}
 
-
-
-
+.btnatras:hover {
+  opacity: 0.8;
+}

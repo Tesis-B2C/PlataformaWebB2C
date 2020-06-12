@@ -14,44 +14,55 @@ async function registrarTienda(req, res) {
                    message: 'Este correo electronico ya esta vinculado a una cuenta'
                });
            } else {*/
-            let tienda = TIENDA.build();
-            tienda.razon_Social = req.body.Tienda_Enviar.Tienda.Razon_Social;
-            console.log(req.body.Tienda_Enviar.Tienda.Razon_Social);
+
+    let tienda = TIENDA.build();
+    let sucursal = SUCURSAL.build();
+
+    tienda.RAZON_SOCIAL = req.body.Tienda.Razon_Social;
+    tienda.NOMBRE_COMERCIAL = req.body.Tienda.Nombre_Comercial;
+    tienda.CORREO_TIENDA = req.body.Tienda_Enviar.Tienda.Correo_Tienda;
+    tienda.LINK_PAGINA = req.body.Tienda_Enviar.Tienda.Link_Pagina;
+    tienda.LINK_FACEBOOK = req.body.Tienda_Enviar.Tienda.Link_Facebook;
+    tienda.DESCRIPCION_TIENDA = req.body.Tienda_Enviar.Tienda.Descripcion_Tienda;
+    tienda.TERMINOS_CONDICIONES = req.body.Tienda_Enviar.Tienda.Terminos_Condiciones;
+    tienda.LOGO = req.body.Tienda_Enviar.Tienda.Logo;
+    tienda.BANNER = req.body.Tienda_Enviar.Tienda.Banner;
 
 
+    console.log("ESTO ESTA EN EL BACKEN "+ tienda);
 
 
-/*            let agenteGuardado = await agente.save();
-            if (agenteGuardado) {
-                let TOKENTEMPORAL = jwt.createToken24h(agente);
-                let respuestaCorreo = await correo.EnviarCorreo(agente.CORREO, 'Activación de cuenta', agente.NOMBRE, TOKENTEMPORAL);
-                if (respuestaCorreo == 'error') {
-                    res.status(500).send({
-                        message: 'Parece que hay un error en tu correo electrónico'
-                    });
-                } else if (req.body.Num_Cod_Postal) {
-                    res.status(200).send({
-                        message: 'Por favor revisa tu correo electrónico para activar tu cuenta '
-                    });
+    /*            let agenteGuardado = await agente.save();
+                if (agenteGuardado) {
+                    let TOKENTEMPORAL = jwt.createToken24h(agente);
+                    let respuestaCorreo = await correo.EnviarCorreo(agente.CORREO, 'Activación de cuenta', agente.NOMBRE, TOKENTEMPORAL);
+                    if (respuestaCorreo == 'error') {
+                        res.status(500).send({
+                            message: 'Parece que hay un error en tu correo electrónico'
+                        });
+                    } else if (req.body.Num_Cod_Postal) {
+                        res.status(200).send({
+                            message: 'Por favor revisa tu correo electrónico para activar tu cuenta '
+                        });
+                    } else {
+                        res.status(200).send({
+                            message: 'No se ha registrado una dirección aun, esperamos lo puedas hacer pronto,' +
+                                'Porfavor revisa tu correo electrónico para activar tu cuenta'
+                        });
+                    }
                 } else {
-                    res.status(200).send({
-                        message: 'No se ha registrado una dirección aun, esperamos lo puedas hacer pronto,' +
-                            'Porfavor revisa tu correo electrónico para activar tu cuenta'
+                    res.status(500).send({
+                        message: 'No se han podido registrar tus datos intenta nuevamente'
                     });
-                }
-            } else {
-                res.status(500).send({
-                    message: 'No se han podido registrar tus datos intenta nuevamente'
-                });
-            }*/
+                }*/
 
 
-     /*   }
-    } catch (err) {
-        res.status(500).send({
-            message: err.name
-        });
-    }*/
+    /*   }
+   } catch (err) {
+       res.status(500).send({
+           message: err.name
+       });
+   }*/
 }
 
 module.exports = {          // para exportar todas las funciones de este modulo
