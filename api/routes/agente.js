@@ -14,6 +14,7 @@ api.put('/actualizarAgente/:id', AgenteController.actualizarAgente);
 api.post('/verificarExistenciaCorreo', AgenteController.verificarExistenciaCorreo);
 api.put('/cambioCorreoAgente/:id', AgenteController.cambioCorreoAgente);
 api.get('/actualizarAgenteIdentity/:id', AgenteController.actualizarAgenteIdentity);
+api.put('/actualizarContrasenia/:id', AgenteController.actualizarContrasenia);
 
 /*api.get('/buscarDocentes/:busqueda', md_auth.ensureAuth, DocenteController.busquedaDocentes);
 api.put('/actualizarAgentee/:id', md_auth.ensureAuth, DocenteController.updateDocente);

@@ -117,7 +117,7 @@ async function autenticarActivarAgente(req, res) {
                 message: "token no valido"
             });
         } else {
-            let agente = await AGENTE.findOne({where: {ESTADO: '1',CORREO: req.user.email}});
+            let agente = await AGENTE.findOne({where: {ESTADO: '1', CORREO: req.user.email}});
             if (!agente) {
                 res.status(500).send({
                     message: "Al parecer el usuario no ha sido registrado"
@@ -184,7 +184,7 @@ async function resetearContrasenia(req, res) {
 async function resetearContrasenia2(req, res) {
 
     try {
-        let agente = await AGENTE.findOne({where: {ESTADO: '0',CORREO: req.user.email}});
+        let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: req.user.email}});
         if (!agente) {
             res.status(500).send({
                 message: "token no valido"
@@ -230,7 +230,7 @@ async function actualizarAgente(req, res) {
             COD_DPA: req.body.Ciudad
 
         }
-        let agenteActualizado = await AGENTE.update(agente, {where: { ESTADO: '0',CORREO: agenteId}});
+        let agenteActualizado = await AGENTE.update(agente, {where: {ESTADO: '0', CORREO: agenteId}});
         if (!agenteActualizado.length) {
             res.status(404).send({message: 'El Usuario no ha sido actualizado'});
         } else {
@@ -316,6 +316,39 @@ async function actualizarAgenteIdentity(req, res) {
     }
 }
 
+async function actualizarContrasenia(req, res) {
+
+    try {
+        let agenteId = req.params.id;
+
+        console.log(req.body);
+        let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: agenteId}});
+        let result = await bcrypt.compareSync(req.body.contraseniaActual, agente.dataValues.CONTRASENIA);
+        if (result) {
+
+            await bcrypt.hash(req.body.contraseniaNueva, null, null, async function (err, hash) {
+                let agenteActualizado = await agente.update({CONTRASENIA: hash});
+                if (!agenteActualizado) {
+                    res.status(404).send({message: 'No se ha podido actualizar la contraseña'});
+                } else {
+                    res.status(200).send({message: 'La contraseña ha sido actualizada'});
+                }
+            });
+        } else {
+            res.status(404).send({
+                message: 'La contraseña actual no coincide'
+            });
+        }
+
+
+    } catch (e) {
+        res.status(500).send({
+            message: err.name
+        });
+    }
+}
+
+
 module.exports = {          // para exportar todas las funciones de este modulo
 
     registrarAgente,
@@ -326,5 +359,6 @@ module.exports = {          // para exportar todas las funciones de este modulo
     actualizarAgente,
     verificarExistenciaCorreo,
     cambioCorreoAgente,
-    actualizarAgenteIdentity
+    actualizarAgenteIdentity,
+    actualizarContrasenia
 };

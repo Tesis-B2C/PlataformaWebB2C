@@ -63,10 +63,10 @@
         </div>  <!--form-group end.-->
         <div class="form-group col-md-6">
           <label>* Repetir contraseña</label>
-          <input #PasswordR="ngModel" [(ngModel)]="this.ComprarContrasenia" [ngClass]="{
+          <input #PasswordR="ngModel" [(ngModel)]="this.compararContrasenia" [ngClass]="{
           'is-invalid': PasswordR.invalid && (PasswordR.dirty || PasswordR.touched),
           'is-valid': PasswordR.valid && (PasswordR.dirty || PasswordR.touched)}"
-                 [pattern]='this.comprarContrasenia'
+                 [pattern]='this.objCambiarContrasenia.contraseniaNueva'
                  class="tamanioInputs form-control" name="passwordR" placeholder="" required type="password">
           <div *ngIf="PasswordR.invalid && (PasswordR.touched||PasswordR.dirty)">
             <div *ngIf="PasswordR.errors.required">
@@ -88,7 +88,7 @@
     <h5 class="card-title mb-2">Acciones</h5>
     <div class="form-row justify-content-end">
 
-      <button [disabled]="!FormCambiarContrasenia.checkValidity()"   (click)="actualizarAgente()" href="#"
+      <button [disabled]="!FormCambiarContrasenia.checkValidity()"   (click)="actualizarContrasenia()" href="#"
               class="btn btn-primary text-white "><span class="fas fa-retweet "></span> &nbsp; Cambiar contraseña
       </button> &nbsp;
 

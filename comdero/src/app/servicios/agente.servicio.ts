@@ -128,4 +128,13 @@ export class AgenteServicio {
     let headers = new HttpHeaders({"Content-type": "application/json"});
     return this._http.get<objeto>(this.url + "actualizarAgenteIdentity/" + correo, {headers: headers});
   }
+
+  actualizarContrasenia(correo,objetoContrasenia) {
+
+    let params = JSON.stringify(objetoContrasenia);
+    let headers = new HttpHeaders({"Content-type": "application/json"});
+    return this._http.put<objeto>(this.url + "actualizarContrasenia/" + correo, params, {headers: headers});
+
+  }
+
 }
