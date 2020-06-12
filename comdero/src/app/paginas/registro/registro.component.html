@@ -11,9 +11,6 @@
 <body [ngClass]="{'body-con-animacion': loading}">
 
 
-
-
-
 <div class="mx-auto mt-md-5 container-registro  p-3 bg-white rounded my-0">
   <article class="  wrap-register100 card-body">
     <div id="divImagenLogo">
@@ -164,6 +161,7 @@
       <div class="form-group" *ngIf="this.banderaDirecciones">
         <p class="alert3 justify-content-center pb-2"><i class='fa fa-exclamation-circle'> </i> &nbsp;
           Los campos marcados con <strong>*</strong> son obligatorios.</p>
+
         <div class="form-row">
           <div *ngIf="banderaTipo" class="form-group col-lg-6">
             <label>* Cédula</label>
@@ -188,7 +186,6 @@
               <div *ngIf="Cedula.errors.pattern">
                 <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                   Utilice solo numeros. </p>
-
               </div>
             </div>
           </div><!--form-group end.;-->
