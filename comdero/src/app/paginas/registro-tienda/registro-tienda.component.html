@@ -35,7 +35,8 @@
           <form #FormPaso1 id="formPaso1" class="datosregistro" validate-form>
 
             <ng-template awWizardStepSymbol><i class="fas fa-edit"></i></ng-template>
-
+            <h6 class="font-weight-bold">Datos generales</h6>
+            <br>
             <div class="form-group">
               <label>* Razón Social</label>
               <input #Razon_Social="ngModel" style="text-transform: uppercase;" [(ngModel)]="this.Tienda.Razon_Social"
@@ -171,21 +172,21 @@
         <aw-wizard-step [stepTitle]="'Paso 2'">
           <form #FormPaso2 id="formPaso2" class="datosregistro" validate-form>
             <ng-template awWizardStepSymbol><i class="fas fa-store"></i></ng-template>
-            <label class="font-weight-bold">¿Su negocio cuenta con un espacio fisico?</label>
+            <h6 class="font-weight-bold">¿Su negocio cuenta con un espacio fisico?</h6>
 
             <div class="form-row py-4">
               <div class="col-md-6 form-group ">
                 <button [disabled]="btnEspacioFisico"
-                        class="btnActivo btn btn-outline-secondary px-4 py-3 text-center btn-paso2"
+                        class="btnActivo btn btn-outline-primary px-4 py-3 text-center btn-paso2"
                         type="submit" (click)="desdeNegocio()">
-                  <i class="fas fa-store fa-lg"></i> &nbsp;Mi negocio cuenta con un local comercial
+                  <i class="fas fa-store fa-lg fa-2x"></i> &nbsp; &nbsp;Mi negocio cuenta con un local comercial
                 </button>
               </div>
 
               <div class="col-md-6 form-group">
-                <button [disabled]="btnCasa" class="btnActivo btn btn-outline-secondary px-4 py-3 text-center btn-paso2"
+                <button [disabled]="btnCasa" class="btnActivo btn btn-outline-primary px-4 py-3 text-center btn-paso2"
                         type="submit" (click)="desdeCasa()">
-                  <i class="fas fa-home fa-lg"></i> &nbsp;Manejo mi negocio desde casa
+                  <i class="fas fa-home fa-lg fa-2x"></i> &nbsp;  &nbsp;  Manejo mi negocio desde casa
                 </button>
               </div>
             </div>
@@ -454,9 +455,9 @@
 
             <div class="mb-2">
 
-              <div class="form-row justify-content-center m-0 py-3">
-                <h6 class="font-weight-bold">Comienza con la personalización de la tienda</h6>
-              </div>
+
+                <h6 class="font-weight-bold text-left">Comienza con la personalización de la tienda</h6>
+                <br>
 
               <div class="form-row m-0 pb-3">  <!-- TABLA DE DOS COLUMNAS -->
                 <div class="col-sm-6 form-group px-1 m-0" id="panelUno">    <!-- COLUMNA 1 -->

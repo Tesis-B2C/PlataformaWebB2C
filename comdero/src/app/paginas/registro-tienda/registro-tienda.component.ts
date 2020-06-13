@@ -30,7 +30,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
   public editorConfig = {
     "editable": true,
     "spellcheck": true,
-    "height": "150px",
+    "height": "100px",
     "minHeight": "100px",
     "width": "auto",
     "minWidth": "0",
