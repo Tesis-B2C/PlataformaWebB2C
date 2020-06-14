@@ -87,7 +87,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   ngDoCheck(): void {
-    this.imagenFondoTienda.style.Height = this.panelUno.offsetHeight + 'px';
+    //this.panelDos.style.maxHeight = this.panelUno.offsetHeight + 'px';
   }
 
   atras(){

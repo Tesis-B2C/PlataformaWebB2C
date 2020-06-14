@@ -310,3 +310,33 @@ label {
 btn{
   font-size: small;
 }
+
+#panelDos{
+  background-image: url("src/assets/estilos-registroTienda/ejemplo-tienda.png");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  min-height: 400px !important;
+  width: 100% ;
+  text-align: center;
+}
+
+@media (max-width: 400px) {
+  #panelDos{
+    background-image: url("src/assets/estilos-registroTienda/ejemplo-tienda.png");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    min-height: 300px !important;
+    width: 100% ;
+    text-align: center;
+  }
+}
+
+.posicion-logo{
+  z-index: 100;
+  position: absolute;
+  margin-top: -10px;
+}
