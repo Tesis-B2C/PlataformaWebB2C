@@ -538,14 +538,26 @@
 
                     <div style="position: relative;">
                       <div class="form-group posicion-logo mt-1" >  <!-- F2 BANNER-->
-                        <div *ngIf="urlBanner">
-                          <label style="border: none;">
-                            <img [src]="urlBanner" class="px-0" style="width:95%; height: 90px">
-                          </label>
+
+                        <div *ngIf="urlBanner" class="mx-auto">
+                          <div class="col-auto p-0">
+                            <label>
+                              <img style="width:100%; height: 130px" class="p-0"
+                                   [src]="urlBanner">
+                            </label>
+                          </div>
+                        </div>
+                        <div *ngIf="!urlBanner" class="mx-auto">
+                          <div class="col-auto p-0">
+                            <label class="imagen-agregar">
+                              <img style="width:100%; height: 130px" class="p-0"
+                                   src="assets/estilos-registroTienda/montanas.png">
+                            </label>
+                          </div>
                         </div>
                       </div>  <!-- F2 BANNER-->
 
-                      <div class="centered-content  posicion-logo">
+                      <div class="centered-content  posicion-logo mt-5">
                         <div class="row  mx-auto">
                           <div *ngIf="urlLogo">
                             <label style="border: none;">
