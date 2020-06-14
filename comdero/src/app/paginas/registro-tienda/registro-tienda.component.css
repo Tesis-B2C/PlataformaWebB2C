@@ -157,9 +157,16 @@ label {
 }
 
 .borde-imagenes1L {
-  border: rgba(0, 0, 0, 0.3) 2px dashed;
-  width: 8rem;
-  height: 8rem;
+    border: rgba(0, 0, 0, 0.3) 2px dashed;
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+    justify-content: center;
+  }
+.borde-imagenes1L2 {
+  border: rgba(0, 0, 0, 0.3) 2px solid;
+  width: 6rem;
+  height: 6rem;
   border-radius: 50%;
   justify-content: center;
 }
@@ -336,7 +343,7 @@ btn{
 }
 
 .posicion-logo{
-  z-index: 100;
+ 
   position: absolute;
 
 
