@@ -312,11 +312,11 @@ btn{
 }
 
 #panelDos{
-  background-image: url("src/assets/estilos-registroTienda/ejemplo-tienda.png");
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  background-image: url("src/assets/estilos-registroTienda/plantillaTienda.png");
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  -o-background-size: 100% 100%;
+  background-size: 100% 100%;
   min-height: 400px !important;
   width: 100% ;
   text-align: center;
@@ -324,7 +324,7 @@ btn{
 
 @media (max-width: 400px) {
   #panelDos{
-    background-image: url("src/assets/estilos-registroTienda/ejemplo-tienda.png");
+    background-image: url("src/assets/estilos-registroTienda/plantillaTienda.png");
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
