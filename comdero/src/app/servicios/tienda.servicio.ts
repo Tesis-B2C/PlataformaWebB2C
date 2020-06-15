@@ -19,6 +19,7 @@ export class TiendaServicio {
   }
 
   registrarTienda(tienda){
+    debugger;
     let params = JSON.stringify(tienda);
     let headers = new HttpHeaders({ "Content-type": "application/json" });
     return this._http.post<objeto>(this.url + "registrarTienda" , params,{ headers: headers });
