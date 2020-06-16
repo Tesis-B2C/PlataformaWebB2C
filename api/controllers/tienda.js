@@ -4,16 +4,25 @@ const moment = require('moment');
 const TIENDA = require('../models/tienda'); //importar el modelo del usuario  o lo que son las clases comunesvar DPA = require('../models/dpa'); //importar el modelo del usuario  o lo que son las clases comunes
 const SUCURSAL = require('../models/sucursal');
 const jwt = require('../services/jwt');
-const db =require('../database/db');
+const db = require('../database/db');
 
-const { QueryTypes } = require('sequelize');
+const {QueryTypes} = require('sequelize');
 
 async function registrarTienda(req, res) {
     try {
-        let json =JSON.stringify(req.body.Tienda);
+        let json = JSON.stringify(req.body.Tienda);
         console.log("json", json);
-    const tienda = await db.sequelize.query("call guardarTienda(:tienda)", {replacements:{tienda:json, type: QueryTypes.SELECT }});
-    console.log(tienda);
+        let tienda = await db.sequelize.query("call guardarTienda(:tienda)", {
+            replacements: {
+                tienda: json,
+                type: QueryTypes.SELECT
+            }
+        });
+
+        res.status(200).send({
+            message: "Su tienda ha sido creada"
+        });
+
     } catch (err) {
         res.status(500).send({
             message: err.name
