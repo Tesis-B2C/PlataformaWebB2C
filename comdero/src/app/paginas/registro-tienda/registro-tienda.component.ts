@@ -68,7 +68,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
 
   constructor(public toastr: ToastrService, private _dpaServicio: DpaServicio, private _tiendaServicio: TiendaServicio) {
     this.Tienda = new Tienda(null, null, null, null, null,
-      null, null, null, null, null, null, null);
+      null, null, null, null, 1, null, 'No disponible');
     this.Sucursales.push(new Sucursal(null, null, null, null, null, null, null, null, 'Negocio'));
   }
 
@@ -324,6 +324,8 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
 
   public quitarLogo() {
     this.urlLogo = "";
+    this.Tienda.Logo="";
+
   }
 
 
@@ -344,6 +346,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
 
   public quitarBanner() {
     this.urlBanner = "";
+    this.Tienda.Banner="";
   }
 
 }
