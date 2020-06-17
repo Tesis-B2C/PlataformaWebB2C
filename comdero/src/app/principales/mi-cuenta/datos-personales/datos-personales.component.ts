@@ -5,6 +5,7 @@ import {Agente} from "../../../modelos/agente";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import Swal from "sweetalert2";
 import {ToastrService} from 'ngx-toastr';
+
 declare const require: any;
 const places = require("../../../../../node_modules/places.js/dist/cdn/places.js");
 
@@ -16,7 +17,7 @@ const places = require("../../../../../node_modules/places.js/dist/cdn/places.js
 
 
 export class DatosPersonalesComponent implements OnInit {
-  public banderaTipo: boolean = false;
+  public banderaTipo: boolean;
   private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
   public soloLetrasPattern: any = "[ a-zA-ZÑñáéíóúÁÉÍÓÚ ][ a-zA-ZÑñáéíóúÁÉÍÓÚ ]*$[0-9]{0}";
   private LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
@@ -40,12 +41,11 @@ export class DatosPersonalesComponent implements OnInit {
     codigo: null
   };
 
-  constructor(public toastr: ToastrService,private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal) {
+  constructor(public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal) {
     this.EditarAgente = new Agente(null, null, null,
       null, null, null, 0, null, null,
       null, null, null, null);
   }
-
 
 
   ngOnInit() {
@@ -58,9 +58,10 @@ export class DatosPersonalesComponent implements OnInit {
 
 
   }
+
   public mostrarToast(mensaje, icono) {
     this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo"><strong>!Error</strong><br>' + mensaje + '</p> </div>', "",
-      {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: true});
+      {positionClass: 'toast-top-right', enableHtml: true, closeButton: true});
   }
 
 
@@ -143,6 +144,10 @@ export class DatosPersonalesComponent implements OnInit {
     this.EditarAgente.Telefono = this.identidad.TELEFONO;
     this.EditarAgente.Correo = this.identidad.CORREO;
     this.EditarAgente.Tipo = this.identidad.TIPO;
+    if (this.identidad.TIPO == 'Persona')
+      this.banderaTipo = true;
+    if (this.identidad.TIPO == 'Empresa')
+      this.banderaTipo = false;
     this.EditarAgente.Estado = this.identidad.ESTADO;
     this.EditarAgente.Ciudad = this.identidad.DPA.COD_DPA;
     this.EditarAgente.Calle_Principal_Agente = this.identidad.CALLE_PRINCIPAL_AGENTE;
@@ -201,17 +206,21 @@ export class DatosPersonalesComponent implements OnInit {
 
   public async actualizarAgente() {
     try {
-      if(this.validarCedula()==true){
-      this.loading = true;
-      let response = await this._agenteServicio.actualizarAgente(this.EditarAgente).toPromise();
-      let data = await this._agenteServicio.actualizarAgenteIdentity(this.identidad.CORREO).toPromise();
+      if (this.validarCedula() == true) {
+        this.loading = true;
+        let response = await this._agenteServicio.actualizarAgente(this.EditarAgente).toPromise();
+        let data = await this._agenteServicio.actualizarAgenteIdentity(this.identidad.CORREO).toPromise();
 
-      localStorage.setItem("identity", JSON.stringify(data['data']));
-      this.identidad = this._agenteServicio.getIdentity();
-      this.iniciarEdicion();
-      this.mensageCorrecto(response['message']);
-      }else {
-        this.mostrarToast("La cédula ingresada no es válida","");
+        localStorage.setItem("identity", JSON.stringify(data['data']));
+        this.identidad = this._agenteServicio.getIdentity();
+        this.iniciarEdicion();
+        this.mensageCorrecto(response['message']);
+      } else {
+        if (this.banderaTipo) {
+          this.mostrarToast("La cédula ingresada no es válida", "");
+        } else if (!this.banderaTipo) {
+          this.mostrarToast("El ruc ingresado no es válido", "");
+        }
       }
     } catch (e) {
       this.loading = false;
@@ -250,11 +259,12 @@ export class DatosPersonalesComponent implements OnInit {
       else this.mensageError("Error de conexión intentelo mas tarde");
     }
   }
+
   validarCedula() {
     var cad: any = this.EditarAgente.Id_Agente;
     var i;
     var total = 0;
-    var longitud = cad.length;
+    var longitud = cad.length - 3;
     var longcheck = longitud - 1;
     if (cad !== "" && longitud === 10) {
       for (i = 0; i < longcheck; i++) {

@@ -1,6 +1,6 @@
 export class Tienda {
   constructor(
-    public Correo_Agente: String,
+    public Cod_Agente: String,
     public Nombre_Comercial: String,
     public Razon_Social: String,
     public Correo_Tienda: String,
@@ -11,7 +11,7 @@ export class Tienda {
     public Banner: String,
     public Estado_Tienda: Number,
     public Terminos_Condiciones: String,
-    public Tipo_Horario:String
+    public Horario_Atencion:String
   ) {
   }
 }

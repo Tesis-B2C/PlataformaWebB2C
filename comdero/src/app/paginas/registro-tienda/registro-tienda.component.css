@@ -44,7 +44,8 @@ label {
 }
 
 .btn_continue {
-  max-width: 150px
+  max-width: 150px;
+  font-size: small;
 }
 
 .centered-content {
@@ -116,8 +117,10 @@ label {
 }
 
 .btnActivo:disabled {
+  background-color: #007bff;
+  opacity: 1;
   color: white;
-  background: #6c757d;
+
 }
 
 .boton-cerrar {
@@ -130,6 +133,7 @@ label {
 .btn-paso2 {
   width: 100%;
   height: 75px;
+  font-size: small;
 }
 
 /*IMAGENES LOGO*/
@@ -153,9 +157,16 @@ label {
 }
 
 .borde-imagenes1L {
-  border: rgba(0, 0, 0, 0.3) 2px dashed;
-  width: 8rem;
-  height: 8rem;
+    border: rgba(0, 0, 0, 0.3) 2px dashed;
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+    justify-content: center;
+  }
+.borde-imagenes1L2 {
+  border: rgba(0, 0, 0, 0.3) 2px solid;
+  width: 6rem;
+  height: 6rem;
   border-radius: 50%;
   justify-content: center;
 }
@@ -267,10 +278,12 @@ label {
 
 .btn-Wizard{
   background: #1a56e9;
+  font-size: small;
 }
 
 .btn-Wizard:hover{
   background: #007bff;
+  font-size: small;
 }
 
 /* PASO 3 */
@@ -299,4 +312,39 @@ label {
 
 .btnatras:hover {
   opacity: 0.8;
+}
+
+btn{
+  font-size: small;
+}
+
+#panelDos{
+  background-image: url("src/assets/estilos-registroTienda/plantillaTienda.png");
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  -o-background-size: 100% 100%;
+  background-size: 100% 100%;
+  min-height: 400px !important;
+  width: 100% ;
+  text-align: center;
+}
+
+@media (max-width: 400px) {
+  #panelDos{
+    background-image: url("src/assets/estilos-registroTienda/plantillaTienda.png");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    min-height: 300px !important;
+    width: 100% ;
+    text-align: center;
+  }
+}
+
+.posicion-logo{
+
+  position: absolute;
+
+
 }

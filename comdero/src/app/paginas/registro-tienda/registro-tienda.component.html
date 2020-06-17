@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="pragma" content="no-cache"/>
@@ -35,7 +35,8 @@
           <form #FormPaso1 id="formPaso1" class="datosregistro" validate-form>
 
             <ng-template awWizardStepSymbol><i class="fas fa-edit"></i></ng-template>
-
+            <h6 class="font-weight-bold">Datos generales</h6>
+            <br>
             <div class="form-group">
               <label>* Razón Social</label>
               <input #Razon_Social="ngModel" style="text-transform: uppercase;" [(ngModel)]="this.Tienda.Razon_Social"
@@ -171,21 +172,21 @@
         <aw-wizard-step [stepTitle]="'Paso 2'">
           <form #FormPaso2 id="formPaso2" class="datosregistro" validate-form>
             <ng-template awWizardStepSymbol><i class="fas fa-store"></i></ng-template>
-            <label class="font-weight-bold">¿Su negocio cuenta con un espacio fisico?</label>
+            <h6 class="font-weight-bold">¿Su negocio cuenta con un espacio fisico?</h6>
 
             <div class="form-row py-4">
               <div class="col-md-6 form-group ">
                 <button [disabled]="btnEspacioFisico"
-                        class="btnActivo btn btn-outline-secondary px-4 py-3 text-center btn-paso2"
+                        class="btnActivo btn btn-outline-primary px-4 py-3 text-center btn-paso2"
                         type="submit" (click)="desdeNegocio()">
-                  <i class="fas fa-store fa-lg"></i> &nbsp;Mi negocio cuenta con un local comercial
+                  <i class="fas fa-store fa-lg fa-2x"></i> &nbsp; &nbsp;Mi negocio cuenta con un local comercial
                 </button>
               </div>
 
               <div class="col-md-6 form-group">
-                <button [disabled]="btnCasa" class="btnActivo btn btn-outline-secondary px-4 py-3 text-center btn-paso2"
+                <button [disabled]="btnCasa" class="btnActivo btn btn-outline-primary px-4 py-3 text-center btn-paso2"
                         type="submit" (click)="desdeCasa()">
-                  <i class="fas fa-home fa-lg"></i> &nbsp;Manejo mi negocio desde casa
+                  <i class="fas fa-home fa-lg fa-2x"></i> &nbsp; &nbsp; Manejo mi negocio desde casa
                 </button>
               </div>
             </div>
@@ -454,17 +455,17 @@
 
             <div class="mb-2">
 
-              <div class="form-row justify-content-center m-0 py-3">
-                <h6 class="font-weight-bold">Comienza con la personalización de la tienda</h6>
-              </div>
+
+              <h6 class="font-weight-bold text-left">Comienza con la personalización de la tienda</h6>
+              <br>
 
               <div class="form-row m-0 pb-3">  <!-- TABLA DE DOS COLUMNAS -->
-                <div class="col-sm-6 form-group px-1 m-0" id="panelUno">    <!-- COLUMNA 1 -->
+                <div class="col-md-6 form-group px-1 m-0" id="panelUno">    <!-- COLUMNA 1 -->
                   <form class="card card-body p-0 columnas" name="form">
 
                     <div class="form-group centered-content m-0">  <!-- F1 LOGO-->
                       <a class="ml-0 mt-5 text-center">
-                        <label class="mb-0 pt-3 pb-2">Logo de su tienda</label>
+                        <label class="mb-0 pt-3 pb-2">Agregue el logo de su tienda</label>
                       </a>
 
                       <div class="form-group">
@@ -486,8 +487,7 @@
                                 <i class="fa fa-plus-circle fa-2x ml-1 color-fa"></i>
 
 
-                                <input (change)="subirLogo($event)" accept="image/*" class="file" type="file"
-                                       #Logo="ngModel" [(ngModel)]="this.Tienda.Logo" name="logoImagen">
+                                <input (change)="subirLogo($event)" accept="image/*" class="file" type="file"  name="logoImagen">
                               </label>
                             </div>
                           </div>
@@ -497,7 +497,7 @@
 
                     <div class="form-group centered-content m-0">  <!-- F2 BANNER-->
                       <a class="ml-0 mt-5 text-center">
-                        <label class="mb-0 pt-3 pb-3">Imagen de portada para su tienda</label>
+                        <label class="mb-0 pt-3 pb-3">Agregue una imagen de portada para su tienda</label>
                       </a>
 
                       <div class="form-group px-2">
@@ -533,28 +533,55 @@
                   </form>
                 </div>
 
-                <div class="col-sm-6 form-group p-0 m-0 card card-body" id="panelDos">   <!-- COLUMNA 2 -->
-                  <form class=" p-0 columnas" name="form">
-                    <div id="contenedorPaso3">
+                <div class="col-md-6 form-group px-1 m-0 mt-md-0 mt-4" id="panelDos">    <!-- COLUMNA 1 -->
+                  <form class="p-0" name="form">
+                    <div style="position: relative;">
+                      <div class="form-group posicion-logo mt-1" >  <!-- F2 BANNER-->
 
-                      <img class="ejemplo-tienda" src="assets/estilos-registroTienda/ejemplo-tienda.png" width="100%"
-                           id="imagenFondoTienda">
+                        <div *ngIf="urlBanner" class="mx-auto">
+                          <div class="col-auto p-0">
+                            <label>
+                              <img style="width:100%; height: 100px" class="p-0"
+                                   [src]="urlBanner">
+                            </label>
+                          </div>
+                        </div>
+                        <div *ngIf="!urlBanner" class="mx-auto">
+                          <div class="col-auto p-0">
+                            <label >
+                              <img style="width:100%; height: 100px" class="p-0"
+                                   src="assets/estilos-registroTienda/montanas.png">
+                            </label>
+                          </div>
+                        </div>
+                      </div>  <!-- F2 BANNER-->
 
-                      <div *ngIf="urlLogo" class="ejemplo-tienda">
-                        <label style="border: none;">
-                          <img [src]="urlLogo" class="px-0 rounded-circle" height="50px" width="50px">
-                        </label>
-                      </div>
-
-                      <div *ngIf="urlBanner" class="ejemplo-tienda">
-                        <label style="border: none;">
-                          <img [src]="urlBanner" class="px-0" style="width:100%; height: 130px">
-                        </label>
-                      </div>
-
+                      <div class="centered-content  posicion-logo mt-md-5 mt-2">
+                        <div class="row  mx-auto">
+                          <div *ngIf="urlLogo">
+                            <div >
+                            <label style="border: none;">
+                              <img [src]="urlLogo" class="px-0 rounded-circle"  style=" border: rgba(0, 0, 0, 0.3) 2px solid;" height="90px" width="90px">
+                            </label>
+                            </div>
+                          </div>
+                          <div *ngIf="!urlLogo" class="mx-auto">
+                            <div class="borde-imagenes1L2 bg-white">
+                            <div class="col-auto pt-4">
+                              <label>
+                                <i class="fa fa-store fa-3x color-fa"></i>
+                              </label>
+                            </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div> <!--logo muestra-->
+                    <div class="dis-flex justify-content-end">
+                     <p  style="z-index: 200; font-size:1.2rem; color: white; font-weight: bold"><span class="fa fa-eye fa-1x"></span></p>
+                    </div>
                     </div>
                   </form>
-                </div> <!--FIN COLUMNA 2 -->
+                </div>
               </div>
             </div>
 
@@ -563,21 +590,21 @@
 
             <div class="form-row">
 
-              <div class="col-6 form-group text-left mb-0">
+              <div class="col-4 form-group text-left mb-0">
                 <p class="btnatras" (click)="atras()"><i class="fas fa-angle-left"></i> Atras
                 </p>
               </div>
-              <div class="form-group col-6 text-right mb-0">
-                <button (click)="FinalPaso3('Omitir')" style="font-size: x-small" type="button"
+              <div class="form-group col-8 text-right mb-0">
+                <button (click)="FinalPaso3('Omitir')" style="font-size: small" type="button"
                         class="btn btn-outline-primary mr-1">Omitir
                 </button>
                 <button (click)="FinalPaso3('Final')" type="button" class="btn btn-primary px-3 btn-Wizard">Enviar
-              </button>
+                </button>
               </div>
-<!--              <div class="form-group col-12 pr-2 pt-1">
-                <p (click)="FinalPaso3('Omitir')" class="omitirLogoBanner text-right">Omitir
-                </p>
-              </div>-->
+              <!--              <div class="form-group col-12 pr-2 pt-1">
+                              <p (click)="FinalPaso3('Omitir')" class="omitirLogoBanner text-right">Omitir
+                              </p>
+                            </div>-->
 
             </div>
 
@@ -600,5 +627,5 @@
   </article><!-- card-body.// -->
 </div>
 </body>
-</html>
+
 

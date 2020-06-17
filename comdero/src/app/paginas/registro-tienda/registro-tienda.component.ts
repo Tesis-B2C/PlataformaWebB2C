@@ -7,6 +7,7 @@ import {TiendaServicio} from "../../servicios/tienda.servicio";
 import {ToastrService} from 'ngx-toastr';
 import Swal from "sweetalert2";
 import {WizardComponent} from "angular-archwizard";
+import {AgenteServicio} from "../../servicios/agente.servicio";
 
 
 declare const require: any;
@@ -30,7 +31,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
   public editorConfig = {
     "editable": true,
     "spellcheck": true,
-    "height": "150px",
+    "height": "100px",
     "minHeight": "100px",
     "width": "auto",
     "minWidth": "0",
@@ -66,9 +67,10 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
   public imagenFondoTienda;
   @ViewChild(WizardComponent, null) wizard: WizardComponent
 
-  constructor(public toastr: ToastrService, private _dpaServicio: DpaServicio, private _tiendaServicio: TiendaServicio) {
-    this.Tienda = new Tienda(null, null, null, null, null,
-      null, null, null, null, null, null, null);
+  constructor(public toastr: ToastrService,private _agenteServicio: AgenteServicio, private _dpaServicio: DpaServicio, private _tiendaServicio: TiendaServicio) {
+    let identidad= this._agenteServicio.getIdentity();
+    this.Tienda = new Tienda(identidad.COD_AGENTE, null, null, null, null,
+      null, null, null, null, 1, null, 'No disponible');
     this.Sucursales.push(new Sucursal(null, null, null, null, null, null, null, null, 'Negocio'));
   }
 
@@ -87,7 +89,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   ngDoCheck(): void {
-    this.imagenFondoTienda.style.Height = this.panelUno.offsetHeight + 'px';
+    //this.panelDos.style.maxHeight = this.panelUno.offsetHeight + 'px';
   }
 
   atras(){
@@ -209,11 +211,14 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
 
   public async registrarTienda() {
     try {
+      this.Tienda.Logo=this.filesToUpload[0].name;
+      this.Tienda.Banner=this.filesToUpload2[0].name;
       this.Tienda_Enviar.Tienda = this.Tienda;
       this.Tienda_Enviar.Sucursal = this.Sucursales;
       console.log("Objeto a enviar al backend:" + this.Tienda_Enviar);
       let response = await this._tiendaServicio.registrarTienda(this.Tienda_Enviar).toPromise();
-      //document.forms["formRegistro"].reset();
+       this.subirImagenesServidor(this.filesToUpload);
+       this.subirImagenesServidor(this.filesToUpload2);
       window.scroll(0, 0);
       this.mensageCorrecto(response['message']);
       this.loading = false;
@@ -226,36 +231,8 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
     }
   }
 
-  mensageError(mensaje) {
-    Swal.fire({
-      icon: 'error',
-      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Error..</h5></header>',
-      text: mensaje,
-      position: 'center',
-      width: 600,
-      buttonsStyling: false,
-      customClass: {
-        confirmButton: 'btn btn-primary px-5',
-        //icon:'sm'
-      }
-    });
-  }
 
-  mensageCorrecto(mensaje) {
-    Swal.fire({
-      icon: 'success',
-      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Correcto..</h5></header>',
-      text: mensaje,
-      position: 'center',
-      width: 600,
-      buttonsStyling: false,
-      //footer: '<a href="http://localhost:4200/loguin"><b><u>Autentificate Ahora</u></b></a>',
-      customClass: {
-        confirmButton: 'btn btn-primary px-5',
-        //icon:'sm'
-      }
-    });
-  }
+
 
   /*Banderas de Negocio o Casa*/
   public bandAgregarSuc: boolean = true;
@@ -324,6 +301,8 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
 
   public quitarLogo() {
     this.urlLogo = "";
+    this.Tienda.Logo="";
+
   }
 
 
@@ -344,6 +323,56 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
 
   public quitarBanner() {
     this.urlBanner = "";
+    this.Tienda.Banner="";
+  }
+
+  async subirImagenesServidor(imagenPorSubir){
+    try {
+
+      let formData = new FormData();
+      for (let i = 0; i < imagenPorSubir.length; i++) {
+        formData.append("uploads[]", imagenPorSubir[i], imagenPorSubir[i].name)
+      }
+      let response = await this._tiendaServicio.subirImagenesServidor(formData).toPromise();
+      this.mensageCorrecto(response['message']);
+    } catch (e) {
+      this.loading = false;
+      console.log("error:" + JSON.stringify((e).error.message));
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
+  }
+
+  mensageError(mensaje) {
+    Swal.fire({
+      icon: 'error',
+      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Error..</h5></header>',
+      text: mensaje,
+      position: 'center',
+      width: 600,
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        //icon:'sm'
+      }
+    });
+  }
+
+  mensageCorrecto(mensaje) {
+    Swal.fire({
+      icon: 'success',
+      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Correcto..</h5></header>',
+      text: mensaje,
+      position: 'center',
+      width: 600,
+      buttonsStyling: false,
+      //footer: '<a href="http://localhost:4200/loguin"><b><u>Autentificate Ahora</u></b></a>',
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        //icon:'sm'
+      }
+    });
   }
 
 }
