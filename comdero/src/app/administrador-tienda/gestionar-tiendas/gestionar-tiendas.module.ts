@@ -12,9 +12,11 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { MetodosPagoComponent } from './metodos-pago/metodos-pago.component';
 import { MetodosEnvioComponent } from './metodos-envio/metodos-envio.component';
+import { GeneralTiendaComponent } from './general-tienda/general-tienda.component';
+import { SucursalesTiendaComponent } from './sucursales-tienda/sucursales-tienda.component';
 
 @NgModule({
-  declarations: [ MenuGestionTiendasComponent, ProductosComponent, MetodosPagoComponent, MetodosEnvioComponent],
+  declarations: [ MenuGestionTiendasComponent, ProductosComponent, MetodosPagoComponent, MetodosEnvioComponent, GeneralTiendaComponent, SucursalesTiendaComponent],
   imports: [
     CommonModule,
     SidebarModule,

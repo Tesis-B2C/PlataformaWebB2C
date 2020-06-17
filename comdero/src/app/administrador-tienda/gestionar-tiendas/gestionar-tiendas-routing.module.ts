@@ -4,12 +4,18 @@ import {MenuGestionTiendasComponent} from "./menu-gestion-tiendas/menu-gestion-t
 import {ProductosComponent} from "./productos/productos.component";
 import {MetodosPagoComponent} from "./metodos-pago/metodos-pago.component";
 import { MetodosEnvioComponent } from './metodos-envio/metodos-envio.component';
+import {GeneralTiendaComponent} from "./general-tienda/general-tienda.component";
+import {SucursalesTiendaComponent} from "./sucursales-tienda/sucursales-tienda.component";
+
 const routes: Routes = [
   { path: 'menu-gestion-tienda', component: MenuGestionTiendasComponent ,
     children: [
   { path: 'productos', component: ProductosComponent },
       { path: 'metodos-pago', component: MetodosPagoComponent },
-      { path: 'metodos-envio', component: MetodosEnvioComponent }]}];
+      { path: 'metodos-envio', component: MetodosEnvioComponent },
+      { path: 'general-tienda', component: GeneralTiendaComponent },
+      { path: 'sucursales-tienda', component: SucursalesTiendaComponent }
+      ]}];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
