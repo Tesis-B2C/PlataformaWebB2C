@@ -10,6 +10,7 @@ const {QueryTypes} = require('sequelize');
 
 async function registrarTienda(req, res) {
     try {
+
         let json = JSON.stringify(req.body.Tienda);
         console.log("json", json);
         let tienda = await db.sequelize.query("call guardarTienda(:tienda)", {
@@ -57,6 +58,13 @@ async function registrarTienda(req, res) {
      }*/
 }
 
+async  function subirImagenesTienda(req, res){
+
+    res.status(200).send({
+        message: "Sus imagenes se subieron correctamente"
+    });
+}
 module.exports = {          // para exportar todas las funciones de este modulo
-    registrarTienda
+    registrarTienda,
+    subirImagenesTienda
 };

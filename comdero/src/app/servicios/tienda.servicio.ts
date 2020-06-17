@@ -25,5 +25,8 @@ export class TiendaServicio {
     return this._http.post<objeto>(this.url + "registrarTienda" , params,{ headers: headers });
   }
 
+  subirImagenesServidor(formData){
+    return this._http.post<objeto>(this.url + "subirImagenesTienda" , formData);
+  }
 
 }
