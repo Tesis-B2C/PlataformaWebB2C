@@ -1,0 +1,57 @@
+.alert {
+  font-size: smaller;
+  padding: 0;
+  background-color: white;
+  border: none;
+  color: #bd2130;
+  margin-left: 4px;
+}
+
+.errorSelect {
+  border: 1px solid red;
+}
+
+.satisfactorioSelect {
+  border: 1px solid limegreen;
+}
+
+.btnActivo:disabled {
+  background-color: #007bff;
+  opacity: 1;
+  color: white;
+}
+
+.btn-paso2 {
+  width: 100%;
+  height: 75px;
+  font-size: small;
+}
+
+.NegocioNoFisico, .NegocioFisico, .tamanioInputs, p{
+  font-size: small;
+}
+
+.agregar-sucursal {
+  color: #1a56e9;
+  cursor: pointer;
+  border-bottom: #1a56e9 solid 1.5px;
+}
+
+.agregar-sucursal:hover {
+  opacity: 0.8;
+}
+
+.eliminar-sucursal {
+  color: #f90f0f;
+  cursor: pointer;
+  border-bottom: #f90f0f solid 1.5px;
+}
+
+.eliminar-sucursal:hover {
+  opacity: 0.8;
+}
+
+.agregar-sucursal span {
+  font-size: 12px;
+}
+

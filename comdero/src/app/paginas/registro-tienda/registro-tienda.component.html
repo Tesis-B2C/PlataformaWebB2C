@@ -172,7 +172,7 @@
         <aw-wizard-step [stepTitle]="'Paso 2'">
           <form #FormPaso2 id="formPaso2" class="datosregistro" validate-form>
             <ng-template awWizardStepSymbol><i class="fas fa-store"></i></ng-template>
-            <h6 class="font-weight-bold">¿Su negocio cuenta con un espacio fisico?</h6>
+              <h6 class="font-weight-bold">¿Su negocio cuenta con un espacio fisico?</h6>
 
             <div class="form-row py-4">
               <div class="col-md-6 form-group ">
@@ -285,6 +285,7 @@
             <!--Empieza el modulo de Tengo Negocio Fisico -->
             <div class="NegocioFisico" *ngIf="banderaEspacioFisico && this.bandAgregarSuc">
               <div class="card card-body mb-2" *ngFor="let item of this.vectorOpciones; index as i">
+                <h6 *ngIf="i==0" class="font-weight-bold">MATRIZ</h6>
                 <label *ngIf="i==0" class="font-weight-bold">Ingrese los datos de su negocio (Sucursales en caso de
                   existir)</label>
 

@@ -9,7 +9,6 @@ import Swal from "sweetalert2";
 import {WizardComponent} from "angular-archwizard";
 import {AgenteServicio} from "../../servicios/agente.servicio";
 
-
 declare const require: any;
 
 @Component({
@@ -19,7 +18,6 @@ declare const require: any;
 })
 
 export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
-
   public Tienda;
   public Sucursales = [];
   public htmlcomponent;
@@ -69,7 +67,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
 
   constructor(public toastr: ToastrService,private _agenteServicio: AgenteServicio, private _dpaServicio: DpaServicio, private _tiendaServicio: TiendaServicio) {
     let identidad= this._agenteServicio.getIdentity();
-    this.Tienda = new Tienda(identidad.COD_AGENTE, null, null, null, null,
+    this.Tienda = new Tienda(null, null, null, null, null,
       null, null, null, null, 1, null, 'No disponible');
     this.Sucursales.push(new Sucursal(null, null, null, null, null, null, null, null, 'Negocio'));
   }
@@ -230,8 +228,6 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
       else this.mensageError("Error de conexión intentelo mas tarde");
     }
   }
-
-
 
 
   /*Banderas de Negocio o Casa*/

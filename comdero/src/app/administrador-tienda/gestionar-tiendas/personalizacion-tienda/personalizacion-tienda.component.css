@@ -1,0 +1,178 @@
+.container-personalizacion {
+  max-width: 950px;
+  margin-top: 15px;
+  position: relative;
+  clear: top;
+  height: auto;
+  overflow: hidden;
+}
+
+@media (max-width: 1366px) {
+  .container-personalizacion {
+    max-width: 850px;
+    margin-top: 15px;
+    position: relative;
+    height: auto;
+    overflow: hidden;
+  }
+}
+
+.datosregistro {
+  margin-left: 6%;
+  margin-right: 6%;
+  margin-top: 2%;
+}
+
+.p {
+  font-size: x-small;
+  font-weight: normal;
+  padding-top: 3px;
+  text-align: justify;
+}
+
+body {
+  font-size: small;
+  font-weight: normal;
+}
+
+/*IMAGENES LOGO*/
+.file {
+  display: none;
+}
+
+.borde-imagenesL {
+  border: rgba(0, 0, 0, 0.3) 2px dashed;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  margin-left: 5px;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+}
+
+.borde-imagenesL:hover {
+  border: #2a4c75 2px dashed;
+  background-color: rgba(18, 52, 95, 0.2);
+}
+
+.borde-imagenes1L {
+  border: rgba(0, 0, 0, 0.3) 2px dashed;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  justify-content: center;
+}
+.borde-imagenes1L2 {
+  border: rgba(0, 0, 0, 0.3) 2px solid;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  justify-content: center;
+}
+
+.borde-imagenes1L:hover {
+  border: #2a4c75 2px dashed;
+  background-color: rgba(18, 52, 95, 0.2);
+}
+
+.imagen-agregar {
+  opacity: 0.7;
+}
+
+.imagen-agregar:hover {
+  opacity: 1;
+  transition: opacity 0.5s;
+  cursor: pointer;
+  color: #2a4c75;
+}
+
+/*IMAGENES BANNER*/
+.borde-imagenesB {
+  border: rgba(0, 0, 0, 0.3) 2px dashed;
+  padding-bottom: 10px;
+  margin-left: 5px;
+  width: 100%;
+  height: 135px;
+}
+
+.borde-imagenesB:hover {
+  border: #2a4c75 2px dashed;
+  background-color: rgba(18, 52, 95, 0.2);
+}
+
+.borde-imagenes1B {
+  border: rgba(0, 0, 0, 0.3) 2px dashed;
+  padding-top: 1px;
+  width: 100%;
+  height: 135px;
+}
+
+.borde-imagenes1B:hover {
+  border: #2a4c75 2px dashed;
+  background-color: rgba(18, 52, 95, 0.2);
+}
+
+.imagen-agregar {
+  opacity: 0.7;
+}
+
+.imagen-agregar:hover {
+  opacity: 1;
+  transition: opacity 0.5s;
+  cursor: pointer;
+  color: #2a4c75;
+}
+
+.color-fa {
+  color: #2a4c75;
+}
+
+/*IMG TIENDA COLUMNA 2*/
+.columnas {
+  width: auto;
+}
+
+.boton-cerrar {
+  font-size: 0.9rem;
+  width: 80%;
+  margin-left: 10%;
+  border-radius: 15px;
+}
+
+#panelDos{
+  background-image: url("src/assets/estilos-registroTienda/plantillaTienda.png");
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  -o-background-size: 100% 100%;
+  background-size: 100% 100%;
+  min-height: 400px !important;
+  width: 100% ;
+  text-align: center;
+}
+
+@media (max-width: 400px) {
+  #panelDos{
+    background-image: url("src/assets/estilos-registroTienda/plantillaTienda.png");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    min-height: 300px !important;
+    width: 100% ;
+    text-align: center;
+  }
+}
+
+.posicion-logo{
+  position: absolute;
+}
+
+label {
+  font-size: small;
+  font-weight: normal;
+}
+
+.centered-content {
+  margin: auto;
+  text-align: center;
+}

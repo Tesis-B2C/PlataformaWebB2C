@@ -6,6 +6,7 @@ import {MetodosPagoComponent} from "./metodos-pago/metodos-pago.component";
 import { MetodosEnvioComponent } from './metodos-envio/metodos-envio.component';
 import {GeneralTiendaComponent} from "./general-tienda/general-tienda.component";
 import {SucursalesTiendaComponent} from "./sucursales-tienda/sucursales-tienda.component";
+import {PersonalizacionTiendaComponent} from "./personalizacion-tienda/personalizacion-tienda.component";
 
 const routes: Routes = [
   { path: 'menu-gestion-tienda', component: MenuGestionTiendasComponent ,
@@ -14,7 +15,8 @@ const routes: Routes = [
       { path: 'metodos-pago', component: MetodosPagoComponent },
       { path: 'metodos-envio', component: MetodosEnvioComponent },
       { path: 'general-tienda', component: GeneralTiendaComponent },
-      { path: 'sucursales-tienda', component: SucursalesTiendaComponent }
+      { path: 'sucursales-tienda', component: SucursalesTiendaComponent },
+      { path: 'personalizacion-tienda', component: PersonalizacionTiendaComponent }
       ]}];
 
 @NgModule({
