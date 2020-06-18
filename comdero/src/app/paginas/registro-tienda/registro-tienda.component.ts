@@ -221,7 +221,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
       debugger;
       let tienda = response['data'][0];
       await this.subirImagenesServidor(this.filesToUpload, tienda.NUM_TIENDA,"Logo");
-      await this.subirImagenesServidor(this.filesToUpload2, tienda.NUM_TIENDA, "Logo");
+      await this.subirImagenesServidor(this.filesToUpload2, tienda.NUM_TIENDA, "Banner");
       window.scroll(0, 0);
       this.mensageCorrecto(response['message']);
       //localStorage.setItem("identity", JSON.stringify(this.identity));

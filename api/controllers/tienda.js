@@ -82,22 +82,25 @@ async function subirImagenesTienda(req, res) {
     if (files) {
         let file_path = files['path'];
         let file_split = file_path.split('\\');
-        let file_name = file_split[2];
+        let file_name = file_split[3];
         let ext_split = file_name.split('\.');
         let file_ext = ext_split[1];
         if (file_ext == 'png' || file_ext == 'jpg' || file_ext == 'png' || file_ext == 'JPG') {
-            let tienda = await TIENDA.findOne({where: {ESTADO: '0', NUM_TIENDA: Id_Tienda}});
+            let tiendaEncontrada = await TIENDA.findOne({where: {ESTADO_TIENDA: '1', NUM_TIENDA: Id_Tienda}});
+            if(tiendaEncontrada){
             if (tipo == "Logo") {
-                var tiendaActualizada = await tienda.update({LOGO: file_name});
+                var tiendaActualizada = await tiendaEncontrada.update({LOGO: file_name});
             } else if (tipo == "Banner") {
-                var tiendaActualizada = await tienda.update({BANNER: file_name});
+                var tiendaActualizada = await tiendaEncontrada.update({BANNER: file_name});
             }
             if (!tiendaActualizada) {
                 res.status(404).send({message: 'No se ha podido guardar el ' + tipo});
             } else {
                 res.status(200).send({message: tipo + 'guardado correctamente'});
             }
-
+            }else {
+                res.status(404).send({message: 'Al parecer existe un problema con tu tienda, pudes comunicarte con nostros'});
+            }
 
         } else {
             res.status(500).send({
