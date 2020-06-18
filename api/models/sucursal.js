@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 
-const Sucursal = db.sequelize.define('Sucursal', {
+const Sucursal = db.sequelize.define('SUCURSAL', {
         NUM_SUCURSAL: {
             type: Sequelize.BIGINT,
             autoIncrement: true,
@@ -16,52 +16,44 @@ const Sucursal = db.sequelize.define('Sucursal', {
         COD_POSTAL:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+
             },
-        ID_AGENTE:
-            {
-                type: Sequelize.INTEGER,
-                allowNull: false
-            },
-        CALLE_PRINCIPAL_SUCURSAL:
+
+        DIRECCION_SUCURSAL:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+
             },
-        CALLE_SECUNDARIA:
-            {
-                type: Sequelize.STRING,
-                allowNull: false
-            },
+
         TELEFONO_SUCURSAL:
             {
                 type: Sequelize.INTEGER,
-                allowNull: false
+
             },
         RUC:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+
             },
         COD_DPA:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+
             },
         HORARIO_ATENCION:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+
             },
         LATITUD:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+
             },
         LONGITUD:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+
             },
     },
     {

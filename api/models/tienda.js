@@ -31,12 +31,12 @@ const Tienda= db.sequelize.define('TIENDA', {
         LINK_PAGINA:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull: true
             },
         LINK_FACEBOOK:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull: true
             },
         DESCRIPCION_TIENDA:
             {
@@ -46,12 +46,12 @@ const Tienda= db.sequelize.define('TIENDA', {
         LOGO:
             {
                 type: Sequelize.BLOB('long'),
-                allowNull: false
+                allowNull: true
             },
         BANNER:
             {
                 type: Sequelize.BLOB('long'),
-                allowNull: false
+                allowNull: true
             },
         ESTADO_TIENDA:
             {
