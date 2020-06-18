@@ -67,8 +67,8 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
   public imagenFondoTienda;
   @ViewChild(WizardComponent, null) wizard: WizardComponent
 
-  constructor(public toastr: ToastrService,private _agenteServicio: AgenteServicio, private _dpaServicio: DpaServicio, private _tiendaServicio: TiendaServicio) {
-    let identidad= this._agenteServicio.getIdentity();
+  constructor(public toastr: ToastrService, private _agenteServicio: AgenteServicio, private _dpaServicio: DpaServicio, private _tiendaServicio: TiendaServicio) {
+    let identidad = this._agenteServicio.getIdentity();
     this.Tienda = new Tienda(identidad.COD_AGENTE, null, null, null, null,
       null, null, null, null, 1, null, 'No disponible');
     this.Sucursales.push(new Sucursal(null, null, null, null, null, null, null, null, 'Negocio'));
@@ -92,7 +92,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
     //this.panelDos.style.maxHeight = this.panelUno.offsetHeight + 'px';
   }
 
-  atras(){
+  atras() {
     this.wizard.goToPreviousStep();
   }
 
@@ -182,12 +182,12 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   public async FinalPaso3(estado) {
-    if(estado == 'Omitir'){
+    if (estado == 'Omitir') {
       this.Tienda.Logo = null;
       this.Tienda.Banner = null;
       this.loading = true;
       this.registrarTienda();
-    }else{
+    } else {
       this.loading = true;
       this.registrarTienda();
     }
@@ -209,18 +209,22 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
       {positionClass: 'toast-top-right', enableHtml: true, closeButton: true});
   }
 
+  public identidadTienda;
+
   public async registrarTienda() {
     try {
-      this.Tienda.Logo=this.filesToUpload[0].name;
-      this.Tienda.Banner=this.filesToUpload2[0].name;
+
       this.Tienda_Enviar.Tienda = this.Tienda;
       this.Tienda_Enviar.Sucursal = this.Sucursales;
       console.log("Objeto a enviar al backend:" + this.Tienda_Enviar);
       let response = await this._tiendaServicio.registrarTienda(this.Tienda_Enviar).toPromise();
-       this.subirImagenesServidor(this.filesToUpload);
-       this.subirImagenesServidor(this.filesToUpload2);
+      debugger;
+      let tienda = response['data'][0];
+      await this.subirImagenesServidor(this.filesToUpload, tienda.NUM_TIENDA,"Logo");
+      await this.subirImagenesServidor(this.filesToUpload2, tienda.NUM_TIENDA, "Logo");
       window.scroll(0, 0);
       this.mensageCorrecto(response['message']);
+      //localStorage.setItem("identity", JSON.stringify(this.identity));
       this.loading = false;
     } catch (e) {
       this.loading = false;
@@ -230,8 +234,6 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
       else this.mensageError("Error de conexión intentelo mas tarde");
     }
   }
-
-
 
 
   /*Banderas de Negocio o Casa*/
@@ -301,7 +303,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
 
   public quitarLogo() {
     this.urlLogo = "";
-    this.Tienda.Logo="";
+    this.Tienda.Logo = "";
 
   }
 
@@ -323,18 +325,18 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
 
   public quitarBanner() {
     this.urlBanner = "";
-    this.Tienda.Banner="";
+    this.Tienda.Banner = "";
   }
 
-  async subirImagenesServidor(imagenPorSubir){
+  async subirImagenesServidor(imagenPorSubir, Id_Tienda, tipo) {
     try {
 
       let formData = new FormData();
       for (let i = 0; i < imagenPorSubir.length; i++) {
         formData.append("uploads[]", imagenPorSubir[i], imagenPorSubir[i].name)
       }
-      let response = await this._tiendaServicio.subirImagenesServidor(formData).toPromise();
-      this.mensageCorrecto(response['message']);
+      let response = await this._tiendaServicio.subirImagenesServidor(formData, Id_Tienda, tipo).toPromise();
+      console.log(response['message']);
     } catch (e) {
       this.loading = false;
       console.log("error:" + JSON.stringify((e).error.message));

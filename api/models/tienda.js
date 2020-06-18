@@ -6,7 +6,7 @@ var Metodo_Pago = require("./metodo_pago");
 var Opcion_Envio_Tienda = require("./opcion_envio_tienda");
 var Horario_Atencion = require("./horario_atencion");
 
-const Tienda= db.sequelize.define('Tienda', {
+const Tienda= db.sequelize.define('TIENDA', {
         NUM_TIENDA:
             {
                 type: Sequelize.BIGINT,
@@ -14,7 +14,7 @@ const Tienda= db.sequelize.define('Tienda', {
                 allowNull: false,
                 autoIncrement: true
             },
-        CORREO: {
+        CORREO_TIENDA: {
             type: Sequelize.STRING,
             allowNull: false
         },
