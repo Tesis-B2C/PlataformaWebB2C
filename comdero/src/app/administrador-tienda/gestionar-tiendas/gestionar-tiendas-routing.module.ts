@@ -3,15 +3,15 @@ import { Routes, RouterModule } from '@angular/router';
 import {MenuGestionTiendasComponent} from "./menu-gestion-tiendas/menu-gestion-tiendas.component";
 import {ProductosComponent} from "./productos/productos.component";
 import {MetodosPagoComponent} from "./metodos-pago/metodos-pago.component";
-import { MetodosEnvioComponent } from './metodos-envio/metodos-envio.component';
 import {GeneralTiendaComponent} from "./general-tienda/general-tienda.component";
 import {SucursalesTiendaComponent} from "./sucursales-tienda/sucursales-tienda.component";
 import {PersonalizacionTiendaComponent} from "./personalizacion-tienda/personalizacion-tienda.component";
+import {MetodosEnvioComponent} from "./metodos-envio/metodos-envio.component";
 
 const routes: Routes = [
   { path: 'menu-gestion-tienda', component: MenuGestionTiendasComponent ,
     children: [
-  { path: 'productos', component: ProductosComponent },
+      { path: 'productos', component: ProductosComponent },
       { path: 'metodos-pago', component: MetodosPagoComponent },
       { path: 'metodos-envio', component: MetodosEnvioComponent },
       { path: 'general-tienda', component: GeneralTiendaComponent },
