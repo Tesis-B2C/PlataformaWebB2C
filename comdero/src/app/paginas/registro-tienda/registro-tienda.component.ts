@@ -59,7 +59,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
   /*public vectorOpciones=new Array(0);*/
 
   //banderas
-  public loading: boolean = false;
+  public loading: boolean = true;
   public banderaToast: boolean = false;
   public banderaToastRuc: boolean = false;
   public panelUno;
@@ -219,9 +219,9 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
       console.log("Objeto a enviar al backend:" + this.Tienda_Enviar);
       let response = await this._tiendaServicio.registrarTienda(this.Tienda_Enviar).toPromise();
       debugger;
-      let tienda = response['data'][0];
-      await this.subirImagenesServidor(this.filesToUpload, tienda.NUM_TIENDA,"Logo");
-      await this.subirImagenesServidor(this.filesToUpload2, tienda.NUM_TIENDA, "Banner");
+      let tienda = response.data;
+      await this.subirImagenesServidor(this.filesToUpload, tienda['NUM_TIENDA'],"Logo");
+      await this.subirImagenesServidor(this.filesToUpload2, tienda['NUM_TIENDA'], "Banner");
       window.scroll(0, 0);
       this.mensageCorrecto(response['message']);
       //localStorage.setItem("identity", JSON.stringify(this.identity));

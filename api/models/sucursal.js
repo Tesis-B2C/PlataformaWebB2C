@@ -13,7 +13,12 @@ const Sucursal = db.sequelize.define('SUCURSAL', {
             primaryKey: true,
             allowNull: false
         },
-        COD_POSTAL:
+        NUM_COD_POSTAL_SUCURSAL:
+            {
+                type: Sequelize.STRING,
+
+            },
+        NUM_REFERENCIA:
             {
                 type: Sequelize.STRING,
 
@@ -27,7 +32,7 @@ const Sucursal = db.sequelize.define('SUCURSAL', {
 
         TELEFONO_SUCURSAL:
             {
-                type: Sequelize.INTEGER,
+                type: Sequelize.STRING,
 
             },
         RUC:
@@ -55,6 +60,10 @@ const Sucursal = db.sequelize.define('SUCURSAL', {
                 type: Sequelize.STRING,
 
             },
+        TIPO_SUCURSAL:{
+            type:Sequelize.STRING,
+            allowNull:false
+        }
     },
     {
         timestamps: false,

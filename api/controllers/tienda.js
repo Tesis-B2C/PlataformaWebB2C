@@ -21,20 +21,6 @@ async function registrarTienda(req, res) {
             });
         } else {
 
-            /*let tienda = TIENDA.build();
-            tienda.COD_AGENTE = req.body.Tienda.Cod_Agente;
-            tienda.RAZON_SOCIAL = req.body.Tienda.Razon_Social;
-            tienda.NOMBRE_COMERCIAL = req.body.Tienda.Nombre_Comercial;
-            tienda.LINK_PAGINA = req.body.Tienda.Link_Pagina;
-            tienda.LINK_FACEBOOK = req.body.Tienda.Link_Facebook;
-            tienda.DESCRIPCION_TIENDA = req.body.Tienda.Descripcion_Tienda;
-            tienda.LOGO = req.body.Tienda.Logo;
-            tienda.BANNER = req.body.Tienda.Banner;
-            tienda.ESTADO_TIENDA = req.body.Tienda.Estado_Tienda;
-            tienda.TERMINOS_CONDICIONES = req.body.Tienda.Terminos_Condiciones;
-            tienda.CORREO_TIENDA = req.body.Tienda.Correo_Tienda;
-            tienda.HORARIO_ATENCION = req.body.Tienda.Horario_Atencion;*/
-
             let tiendaGuardado = await TIENDA.create({
                     COD_AGENTE: req.body.Tienda.Cod_Agente,
                     RAZON_SOCIAL: req.body.Tienda.Razon_Social,
@@ -54,10 +40,9 @@ async function registrarTienda(req, res) {
                 });
 
             for (const s of req.body.Sucursal) {
-                
                 await SUCURSAL.create(
                     {
-                        NUM_TIENDA: 123,
+                        NUM_TIENDA: tiendaGuardado.dataValues.NUM_TIENDA,
                         COD_DPA: s.Ciudad,
                         DIRECCION_SUCURSAL: s.Direccion_Sucursal,
                         TELEFONO_SUCURSAL: s.Telefono_Sucursal,
@@ -65,12 +50,12 @@ async function registrarTienda(req, res) {
                         LATITUD: s.Latitud,
                         LONGITUD: s.Longitud,
                         NUM_REFERENCIA: s.Num_Referencia,
-                        NUM_COD_POSTAL_SUCURSAL: s.Num_Cod_Postal_Sucursal
+                        NUM_COD_POSTAL_SUCURSAL: s.Num_Cod_Postal_Sucursal,
+                        TIPO_SUCURSAL:s.Tipo_Sucursal
                     },
                     {transaction: t});
 
             }
-            //let comit = await t.commit();
 
             if (tiendaGuardado) {
                 res.status(200).send({

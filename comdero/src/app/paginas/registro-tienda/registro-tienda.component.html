@@ -9,11 +9,13 @@
 </head>
 
 <div *ngIf="loading" class="fondoAnimacionCarga">
-  <div class="pulse animated infinite" style="position: absolute;z-index: 150;">
-    <img id="imagenCarga" src="./../assets/images/cargando.png">
+  <div class="form-row ">
+  <div class="pulse animated infinite col-md-5">
+    <img id="imagenCarga" src="./../assets/images/mascota-condero.png">
     <br><br>
-    <div>
-      <label style="color: white; text-align: center">Espere por favor..</label>
+  </div>
+    <div class="col-md-5 d-flex align-items-center offset-md-2 " >
+      <label style="text-align: center">Espere por favor..</label>
     </div>
   </div>
 </div>
@@ -405,13 +407,13 @@
                 <div class="form-row">
                   <div class="col-sm-6 form-group">
                     <label>Número de referencia</label>
-                    <input #NumCasa="ngModel" [(ngModel)]="this.Sucursales[i].Num_Casa_Sucursal"
+                    <input #NumCasa="ngModel" [(ngModel)]="this.Sucursales[i].Num_Referencia"
                            class="tamanioInputs form-control" name="numCasaSucursal{{i}}" placeholder="" type="text">
                   </div>
 
                   <div class=" col-sm-6 form-group">
                     <label>Código Postal</label>
-                    <input #CodigoPostal="ngModel" [(ngModel)]="this.Sucursales[i].Num_Cod_Postal"
+                    <input #CodigoPostal="ngModel" [(ngModel)]="this.Sucursales[i].Num_Cod_Postal_Sucursal"
                            class="tamanioInputs form-control" name="codigoPostal{{i}}" type="text">
                   </div> <!--form-group end.-->
                 </div> <!--form-row end.-->
