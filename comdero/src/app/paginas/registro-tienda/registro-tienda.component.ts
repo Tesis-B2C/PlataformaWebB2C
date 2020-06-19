@@ -59,12 +59,15 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
   /*public vectorOpciones=new Array(0);*/
 
   //banderas
-  public loading: boolean = true;
+  public loading: boolean = false;
   public banderaToast: boolean = false;
   public banderaToastRuc: boolean = false;
-  public panelUno;
-  public panelDos;
-  public imagenFondoTienda;
+
+
+  // mensajes
+  public mensaje;
+  public titulo;
+
   @ViewChild(WizardComponent, null) wizard: WizardComponent
 
   constructor(public toastr: ToastrService, private _agenteServicio: AgenteServicio, private _dpaServicio: DpaServicio, private _tiendaServicio: TiendaServicio) {
@@ -76,10 +79,8 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
 
   async ngOnInit() {
     this.getDpaProvincias("P");
-
-    this.panelUno = document.getElementById('panelUno') as HTMLElement;
-    this.panelDos = document.getElementById('panelDos') as HTMLElement;
-    this.imagenFondoTienda = document.getElementById('imagenFondoTienda') as HTMLElement;
+    this.mensaje = "Espere por favor estamos preparando todo para brindar la mejor experiencia en ventas";
+    this.titulo = "INICIANDO PROCESO.";
   }
 
   ngOnDestroy() {
@@ -212,6 +213,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
   public identidadTienda;
 
   public async registrarTienda() {
+    this.loading = true
     try {
 
       this.Tienda_Enviar.Tienda = this.Tienda;
@@ -220,10 +222,18 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
       let response = await this._tiendaServicio.registrarTienda(this.Tienda_Enviar).toPromise();
       debugger;
       let tienda = response.data;
-      await this.subirImagenesServidor(this.filesToUpload, tienda['NUM_TIENDA'],"Logo");
-      await this.subirImagenesServidor(this.filesToUpload2, tienda['NUM_TIENDA'], "Banner");
+      this.titulo = "REGISTRANDO TIENDA";
+      this.mensaje = response['message'];
+      let responseLogo = await this.subirImagenesServidor(this.filesToUpload, tienda['NUM_TIENDA'], "Logo");
+      let responseBanner = await this.subirImagenesServidor(this.filesToUpload2, tienda['NUM_TIENDA'], "Banner");
+      debugger
       window.scroll(0, 0);
+
+      if(responseLogo && responseBanner && response)
       this.mensageCorrecto(response['message']);
+      else {
+        this.mensageCorrecto(response['message']+"     &nbsp;<strong>ADVERTENCIA</strong>: Es posible que haya existido algun error con la personalizacion de tu tienda intenta hacerlo mas tarde");
+      }
       //localStorage.setItem("identity", JSON.stringify(this.identity));
       this.loading = false;
     } catch (e) {
@@ -330,14 +340,21 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
 
   async subirImagenesServidor(imagenPorSubir, Id_Tienda, tipo) {
     try {
+      debugger;
 
       let formData = new FormData();
       for (let i = 0; i < imagenPorSubir.length; i++) {
         formData.append("uploads[]", imagenPorSubir[i], imagenPorSubir[i].name)
       }
       let response = await this._tiendaServicio.subirImagenesServidor(formData, Id_Tienda, tipo).toPromise();
+      this.titulo = "PERSONALIZACION DE TIENDA    ("+tipo+")";
+      this.mensaje = response['message'];
       console.log(response['message']);
+      return true
     } catch (e) {
+      this.titulo = "PERSONALIZACION DE TIENDA    ("+tipo+")";
+      this.mensaje = "Al parecer existe un error";
+      return false
       this.loading = false;
       console.log("error:" + JSON.stringify((e).error.message));
       if (JSON.stringify((e).error.message))
@@ -366,6 +383,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
       icon: 'success',
       title: '<header class="login100-form-title-registro"><h5 class="card-title">!Correcto..</h5></header>',
       text: mensaje,
+      html:mensaje,
       position: 'center',
       width: 600,
       buttonsStyling: false,

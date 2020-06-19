@@ -61,7 +61,7 @@ const Tienda= db.sequelize.define('TIENDA', {
         TERMINOS_CONDICIONES:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull: true
             },
         CORREO_TIENDA:
             {

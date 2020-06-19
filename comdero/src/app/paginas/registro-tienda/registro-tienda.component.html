@@ -9,13 +9,21 @@
 </head>
 
 <div *ngIf="loading" class="fondoAnimacionCarga">
-  <div class="form-row ">
-  <div class="pulse animated infinite col-md-5">
-    <img id="imagenCarga" src="./../assets/images/mascota-condero.png">
-    <br><br>
-  </div>
-    <div class="col-md-5 d-flex align-items-center offset-md-2 " >
-      <label style="text-align: center">Espere por favor..</label>
+  <div class="form-row justify-content-center">
+    <div class="pulse animated infinite col-md-3 offset-md-2 col-6">
+      <img id="imagenCarga" src="./../assets/images/mascota-condero.png">
+      <br><br>
+    </div>
+    <div class=" bounceInRight animated col-md-6 d-md-flex align-items-center text-center   mx-auto  ">
+      <div class="row">
+      <div class="col-12  ">
+        <h4 style="text-align: left; font-weight: bold">{{titulo}}</h4>
+      </div>
+        <br><br>
+      <div class="col-12">
+        <h5 style="text-align: left; font-weight: bold">{{mensaje}}</h5>
+      </div>
+    </div>
     </div>
   </div>
 </div>
@@ -489,7 +497,8 @@
                                 <i class="fa fa-plus-circle fa-2x ml-1 color-fa"></i>
 
 
-                                <input (change)="subirLogo($event)" accept="image/*" class="file" type="file"  name="logoImagen">
+                                <input (change)="subirLogo($event)" accept="image/*" class="file" type="file"
+                                       name="logoImagen">
                               </label>
                             </div>
                           </div>
@@ -538,7 +547,7 @@
                 <div class="col-md-6 form-group px-1 m-0 mt-md-0 mt-4" id="panelDos">    <!-- COLUMNA 1 -->
                   <form class="p-0" name="form">
                     <div style="position: relative;">
-                      <div class="form-group posicion-logo mt-1" >  <!-- F2 BANNER-->
+                      <div class="form-group posicion-logo mt-1">  <!-- F2 BANNER-->
 
                         <div *ngIf="urlBanner" class="mx-auto">
                           <div class="col-auto p-0">
@@ -550,7 +559,7 @@
                         </div>
                         <div *ngIf="!urlBanner" class="mx-auto">
                           <div class="col-auto p-0">
-                            <label >
+                            <label>
                               <img style="width:100%; height: 100px" class="p-0"
                                    src="assets/estilos-registroTienda/montanas.png">
                             </label>
@@ -561,26 +570,28 @@
                       <div class="centered-content  posicion-logo mt-md-5 mt-2">
                         <div class="row  mx-auto">
                           <div *ngIf="urlLogo">
-                            <div >
-                            <label style="border: none;">
-                              <img [src]="urlLogo" class="px-0 rounded-circle"  style=" border: rgba(0, 0, 0, 0.3) 2px solid;" height="90px" width="90px">
-                            </label>
+                            <div>
+                              <label style="border: none;">
+                                <img [src]="urlLogo" class="px-0 rounded-circle"
+                                     style=" border: rgba(0, 0, 0, 0.3) 2px solid;" height="90px" width="90px">
+                              </label>
                             </div>
                           </div>
                           <div *ngIf="!urlLogo" class="mx-auto">
                             <div class="borde-imagenes1L2 bg-white">
-                            <div class="col-auto pt-4">
-                              <label>
-                                <i class="fa fa-store fa-3x color-fa"></i>
-                              </label>
-                            </div>
+                              <div class="col-auto pt-4">
+                                <label>
+                                  <i class="fa fa-store fa-3x color-fa"></i>
+                                </label>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div> <!--logo muestra-->
-                    <div class="dis-flex justify-content-end">
-                     <p  style="z-index: 200; font-size:1.2rem; color: white; font-weight: bold"><span class="fa fa-eye fa-1x"></span></p>
-                    </div>
+                      <div class="dis-flex justify-content-end">
+                        <p style="z-index: 200; font-size:1.2rem; color: white; font-weight: bold"><span
+                          class="fa fa-eye fa-1x"></span></p>
+                      </div>
                     </div>
                   </form>
                 </div>

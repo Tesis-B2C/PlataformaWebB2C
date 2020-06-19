@@ -246,7 +246,7 @@ label {
 }
 
 .fondoAnimacionCarga {
-  background-color: rgba(244, 244, 244, 0.9);
+  background-color: rgba(244, 244, 244, 0.95);
   width: 100%;
   height: 100vh;
  position: absolute;

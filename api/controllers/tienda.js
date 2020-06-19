@@ -116,7 +116,7 @@ async function subirImagenesTienda(req, res) {
         if (files) {
             let file_path = files['path'];
             let file_split = file_path.split('\\');
-            let file_name = file_split[3];
+            let file_name = file_split[2];
             let ext_split = file_name.split('\.');
             let file_ext = ext_split[1];
             if (file_ext == 'png' || file_ext == 'jpg' || file_ext == 'png' || file_ext == 'JPG') {
