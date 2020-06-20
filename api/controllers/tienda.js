@@ -43,13 +43,13 @@ async function registrarTienda(req, res) {
                 await SUCURSAL.create(
                     {
                         NUM_TIENDA: tiendaGuardado.dataValues.NUM_TIENDA,
-                        COD_DPA: s.Ciudad,
-                        DIRECCION_SUCURSAL: s.Direccion_Sucursal,
-                        TELEFONO_SUCURSAL: s.Telefono_Sucursal,
-                        RUC: s.Ruc,
-                        LATITUD: s.Latitud,
-                        LONGITUD: s.Longitud,
-                        NUM_REFERENCIA: s.Num_Referencia,
+                        COD_DPA:s.Ciudad,
+                        DIRECCION_SUCURSAL:s.Direccion_Sucursal,
+                        TELEFONO_SUCURSAL:s.Telefono_Sucursal,
+                        RUC:s.Ruc,
+                        LATITUD:s.Latitud,
+                        LONGITUD:s.Longitud,
+                        NUM_REFERENCIA:s.Num_Referencia,
                         NUM_COD_POSTAL_SUCURSAL: s.Num_Cod_Postal_Sucursal,
                         TIPO_SUCURSAL:s.Tipo_Sucursal
                     },
@@ -155,8 +155,28 @@ async function subirImagenesTienda(req, res) {
     }
 }
 
-async function getDatosTienda() {
+async function getDatosTienda(req, res) {
 
+    try {
+        let tiendaObtenida = await TIENDA.findOne({where: {NUM_TIENDA: req.params.id} ,include: {model: SUCURSAL}});
+
+        if (tiendaObtenida) {
+            res.status(200).send({
+                data: tiendaObtenida,
+                message: "Tienda cargada correctamente"
+            });
+        } else {
+            res.status(404).send({
+                message: 'Al parecer la tienda no se encuentra registrada en la base de datos'
+            });
+
+
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
 }
 
 module.exports = {          // para exportar todas las funciones de este modulo

@@ -45,11 +45,7 @@ const Sucursal = db.sequelize.define('SUCURSAL', {
                 type: Sequelize.STRING,
 
             },
-        HORARIO_ATENCION:
-            {
-                type: Sequelize.STRING,
-
-            },
+       
         LATITUD:
             {
                 type: Sequelize.STRING,

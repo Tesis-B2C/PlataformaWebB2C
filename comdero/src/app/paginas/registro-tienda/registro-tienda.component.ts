@@ -210,7 +210,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
       {positionClass: 'toast-top-right', enableHtml: true, closeButton: true});
   }
 
-  public identidadTienda;
+
 
   public async registrarTienda() {
     this.loading = true
@@ -234,7 +234,10 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
       else {
         this.mensageCorrecto(response['message']+"     &nbsp;<strong>ADVERTENCIA</strong>: Es posible que haya existido algun error con la personalizacion de tu tienda intenta hacerlo mas tarde");
       }
-      //localStorage.setItem("identity", JSON.stringify(this.identity));
+
+      let identidadTienda = await this._tiendaServicio.getDatosTienda(tienda['NUM_TIENDA']).toPromise();
+
+      localStorage.setItem("identityTienda", JSON.stringify(identidadTienda));
       this.loading = false;
     } catch (e) {
       this.loading = false;

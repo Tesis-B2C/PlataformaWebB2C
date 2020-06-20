@@ -79,7 +79,7 @@ async function autenticarAgente(req, res) {
         let contrasenia = params.Contrasenia;
         let agente = await AGENTE.findOne({
             where: {ESTADO: '0', CORREO: correo},
-            include: {model: DPA, include: {model: DPA, as: 'DPAP', equired: true}}
+            include: {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}
         });
         if (!agente) {
             res.status(404).send({message: 'El Usuario no existe o no esta activado'});
