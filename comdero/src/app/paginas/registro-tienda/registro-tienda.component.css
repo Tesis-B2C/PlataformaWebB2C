@@ -254,6 +254,7 @@ label {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 #imagenCarga {
@@ -274,6 +275,7 @@ label {
 
 .body-con-animacion {
   overflow: hidden;
+
 }
 
 .btn-Wizard{

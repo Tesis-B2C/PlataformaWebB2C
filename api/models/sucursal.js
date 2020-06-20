@@ -16,45 +16,50 @@ const Sucursal = db.sequelize.define('SUCURSAL', {
         NUM_COD_POSTAL_SUCURSAL:
             {
                 type: Sequelize.STRING,
+                allowNull:true
 
             },
         NUM_REFERENCIA:
             {
                 type: Sequelize.STRING,
+                allowNull:true
 
             },
 
         DIRECCION_SUCURSAL:
             {
                 type: Sequelize.STRING,
+                allowNull:true
 
             },
 
         TELEFONO_SUCURSAL:
             {
                 type: Sequelize.STRING,
+                allowNull:true
 
             },
         RUC:
             {
                 type: Sequelize.STRING,
-
+                allowNull:false
             },
         COD_DPA:
             {
                 type: Sequelize.STRING,
+                allowNull:true
 
             },
-       
+
         LATITUD:
             {
                 type: Sequelize.STRING,
-
+                allowNull:true
             },
         LONGITUD:
             {
                 type: Sequelize.STRING,
-
+                allowNull:true
             },
         TIPO_SUCURSAL:{
             type:Sequelize.STRING,

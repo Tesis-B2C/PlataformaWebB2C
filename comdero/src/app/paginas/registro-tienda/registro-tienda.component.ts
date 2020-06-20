@@ -1,7 +1,6 @@
 import {Component, DoCheck, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Sucursal} from "../../modelos/sucursal";
 import {Tienda} from "../../modelos/tienda";
-import {Horario_Atencion} from "../../modelos/horario_atencion";
 import {DpaServicio} from "../../servicios/dpa.servicio";
 import {TiendaServicio} from "../../servicios/tienda.servicio";
 import {ToastrService} from 'ngx-toastr';
@@ -9,8 +8,6 @@ import Swal from "sweetalert2";
 import {WizardComponent} from "angular-archwizard";
 import {AgenteServicio} from "../../servicios/agente.servicio";
 
-
-declare const require: any;
 
 @Component({
   selector: 'app-registro-tienda',
@@ -59,7 +56,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
   /*public vectorOpciones=new Array(0);*/
 
   //banderas
-  public loading: boolean = false;
+  public loading: boolean = true;
   public banderaToast: boolean = false;
   public banderaToastRuc: boolean = false;
 
@@ -72,7 +69,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
 
   constructor(public toastr: ToastrService, private _agenteServicio: AgenteServicio, private _dpaServicio: DpaServicio, private _tiendaServicio: TiendaServicio) {
     let identidad = this._agenteServicio.getIdentity();
-    this.Tienda = new Tienda(identidad.COD_AGENTE, null, null, null, null,
+    this.Tienda = new Tienda("asd",null,null, null, null,
       null, null, null, null, 1, null, 'No disponible');
     this.Sucursales.push(new Sucursal(null, null, null, null, null, null, null, null, 'Negocio'));
   }
@@ -80,7 +77,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
   async ngOnInit() {
     this.getDpaProvincias("P");
     this.mensaje = "Espere por favor estamos preparando todo para brindar la mejor experiencia en ventas";
-    this.titulo = "INICIANDO PROCESO.";
+    this.titulo = "INICIANDO PROCESO";
   }
 
   ngOnDestroy() {
@@ -211,7 +208,6 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
   }
 
 
-
   public async registrarTienda() {
     this.loading = true
     try {
@@ -229,16 +225,21 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
       debugger
       window.scroll(0, 0);
 
-      if(responseLogo && responseBanner && response)
-      this.mensageCorrecto(response['message']);
+      if (responseLogo && responseBanner && response) {
+        this.titulo = "LISTO!";
+        this.mensaje = response['message'];
+      }
+      // this.mensageCorrecto(response['message']);
       else {
-        this.mensageCorrecto(response['message']+"     &nbsp;<strong>ADVERTENCIA</strong>: Es posible que haya existido algun error con la personalizacion de tu tienda intenta hacerlo mas tarde");
+        this.titulo = "LISTO!";
+        this.mensaje = response['message']+"     &nbsp;<strong>ADVERTENCIA</strong>: Es posible que haya existido algun error con la personalizacion de tu tienda intenta hacerlo mas tarde";
+        this.mensageCorrecto(response['message'] + "     &nbsp;<strong>ADVERTENCIA</strong>: Es posible que haya existido algun error con la personalizacion de tu tienda intenta hacerlo mas tarde");
       }
 
       let identidadTienda = await this._tiendaServicio.getDatosTienda(tienda['NUM_TIENDA']).toPromise();
 
       localStorage.setItem("identityTienda", JSON.stringify(identidadTienda));
-      this.loading = false;
+      //this.loading = false;
     } catch (e) {
       this.loading = false;
       console.log("error:" + JSON.stringify((e).error.message));
@@ -343,26 +344,24 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
 
   async subirImagenesServidor(imagenPorSubir, Id_Tienda, tipo) {
     try {
-      debugger;
-
       let formData = new FormData();
       for (let i = 0; i < imagenPorSubir.length; i++) {
         formData.append("uploads[]", imagenPorSubir[i], imagenPorSubir[i].name)
       }
       let response = await this._tiendaServicio.subirImagenesServidor(formData, Id_Tienda, tipo).toPromise();
-      this.titulo = "PERSONALIZACION DE TIENDA    ("+tipo+")";
+      this.titulo = "PERSONALIZACION DE TIENDA    (" + tipo + ")";
       this.mensaje = response['message'];
       console.log(response['message']);
       return true
     } catch (e) {
-      this.titulo = "PERSONALIZACION DE TIENDA    ("+tipo+")";
+      this.titulo = "PERSONALIZACION DE TIENDA    (" + tipo + ")";
       this.mensaje = "Al parecer existe un error";
       return false
-      this.loading = false;
+      /*this.loading = false;
       console.log("error:" + JSON.stringify((e).error.message));
       if (JSON.stringify((e).error.message))
         this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
+      else this.mensageError("Error de conexión intentelo mas tarde");*/
     }
   }
 
@@ -386,7 +385,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
       icon: 'success',
       title: '<header class="login100-form-title-registro"><h5 class="card-title">!Correcto..</h5></header>',
       text: mensaje,
-      html:mensaje,
+      html: mensaje,
       position: 'center',
       width: 600,
       buttonsStyling: false,
