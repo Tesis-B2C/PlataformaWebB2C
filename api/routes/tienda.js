@@ -7,7 +7,7 @@ var api = express.Router(); // esto sirve para crear las rutas
 var multipart = require('connect-multiparty');
 var md_upload = multipart({
 
-    uploadDir: './uploads/tienda'
+    uploadDir: './api/uploads/tienda'
 });
 
 

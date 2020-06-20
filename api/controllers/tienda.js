@@ -60,7 +60,7 @@ async function registrarTienda(req, res) {
             if (tiendaGuardado) {
                 res.status(200).send({
                     data: tiendaGuardado.dataValues,
-                    message: "Su tienda ha sido creada"
+                    message: "Su tienda ha sido creada exitosamente ya puedes comenzar a vender en COMDERO y disfrutar de todos sus beneficios"
                 });
 
                 await t.commit();
@@ -130,7 +130,7 @@ async function subirImagenesTienda(req, res) {
                     if (!tiendaActualizada) {
                         res.status(404).send({message: 'No se ha podido guardar el ' + tipo});
                     } else {
-                        res.status(200).send({message: tipo + 'guardado correctamente'});
+                        res.status(200).send({message: tipo + ' ha sido guardado correctamente, porfavor espere unos momentos más, estamos a punto de terminar'});
                     }
                 } else {
                     res.status(404).send({message: 'Al parecer existe un problema con tu tienda, pudes comunicarte con nostros'});

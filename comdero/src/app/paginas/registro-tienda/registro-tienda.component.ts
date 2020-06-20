@@ -7,6 +7,7 @@ import {ToastrService} from 'ngx-toastr';
 import Swal from "sweetalert2";
 import {WizardComponent} from "angular-archwizard";
 import {AgenteServicio} from "../../servicios/agente.servicio";
+import {ActivatedRoute, Router} from "@angular/router";
 
 
 @Component({
@@ -56,7 +57,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
   /*public vectorOpciones=new Array(0);*/
 
   //banderas
-  public loading: boolean = true;
+  public loading: boolean = false;
   public banderaToast: boolean = false;
   public banderaToastRuc: boolean = false;
 
@@ -67,16 +68,16 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
 
   @ViewChild(WizardComponent, null) wizard: WizardComponent
 
-  constructor(public toastr: ToastrService, private _agenteServicio: AgenteServicio, private _dpaServicio: DpaServicio, private _tiendaServicio: TiendaServicio) {
+  constructor(private route: ActivatedRoute, private router: Router, public toastr: ToastrService, private _agenteServicio: AgenteServicio, private _dpaServicio: DpaServicio, private _tiendaServicio: TiendaServicio) {
     let identidad = this._agenteServicio.getIdentity();
-    this.Tienda = new Tienda("asd",null,null, null, null,
+    this.Tienda = new Tienda(identidad.COD_AGENTE, null, null, null, null,
       null, null, null, null, 1, null, 'No disponible');
     this.Sucursales.push(new Sucursal(null, null, null, null, null, null, null, null, 'Negocio'));
   }
 
   async ngOnInit() {
     this.getDpaProvincias("P");
-    this.mensaje = "Espere por favor estamos preparando todo para brindar la mejor experiencia en ventas";
+    this.mensaje = "Espere por favor, estamos preparando todo para brindarte la mejor experiencia en ventas, en un momento terminamos";
     this.titulo = "INICIANDO PROCESO";
   }
 
@@ -207,42 +208,32 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
       {positionClass: 'toast-top-right', enableHtml: true, closeButton: true});
   }
 
-
   public async registrarTienda() {
     this.loading = true
     try {
-
       this.Tienda_Enviar.Tienda = this.Tienda;
       this.Tienda_Enviar.Sucursal = this.Sucursales;
       console.log("Objeto a enviar al backend:" + this.Tienda_Enviar);
       let response = await this._tiendaServicio.registrarTienda(this.Tienda_Enviar).toPromise();
       debugger;
       let tienda = response.data;
-      this.titulo = "REGISTRANDO TIENDA";
-      this.mensaje = response['message'];
       let responseLogo = await this.subirImagenesServidor(this.filesToUpload, tienda['NUM_TIENDA'], "Logo");
       let responseBanner = await this.subirImagenesServidor(this.filesToUpload2, tienda['NUM_TIENDA'], "Banner");
       debugger
       window.scroll(0, 0);
 
       if (responseLogo && responseBanner && response) {
+        debugger;
         this.titulo = "LISTO!";
         this.mensaje = response['message'];
-      }
-      // this.mensageCorrecto(response['message']);
-      else {
+      } else {
         this.titulo = "LISTO!";
-        this.mensaje = response['message']+"     &nbsp;<strong>ADVERTENCIA</strong>: Es posible que haya existido algun error con la personalizacion de tu tienda intenta hacerlo mas tarde";
-        this.mensageCorrecto(response['message'] + "     &nbsp;<strong>ADVERTENCIA</strong>: Es posible que haya existido algun error con la personalizacion de tu tienda intenta hacerlo mas tarde");
+        this.mensaje = response['message'] + "  ADVERTENCIA: Es posible que haya existido algun error con la personalizacion de tu tienda intenta hacerlo mas tarde";
       }
-
       let identidadTienda = await this._tiendaServicio.getDatosTienda(tienda['NUM_TIENDA']).toPromise();
-
       localStorage.setItem("identityTienda", JSON.stringify(identidadTienda));
-      //this.loading = false;
     } catch (e) {
       this.loading = false;
-      console.log("error:" + JSON.stringify((e).error.message));
       if (JSON.stringify((e).error.message))
         this.mensageError(JSON.stringify((e).error.message));
       else this.mensageError("Error de conexión intentelo mas tarde");
@@ -343,25 +334,22 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   async subirImagenesServidor(imagenPorSubir, Id_Tienda, tipo) {
+    debugger;
     try {
       let formData = new FormData();
       for (let i = 0; i < imagenPorSubir.length; i++) {
         formData.append("uploads[]", imagenPorSubir[i], imagenPorSubir[i].name)
       }
       let response = await this._tiendaServicio.subirImagenesServidor(formData, Id_Tienda, tipo).toPromise();
-      this.titulo = "PERSONALIZACION DE TIENDA    (" + tipo + ")";
+      this.titulo = "PERSONALIZACIÓN    (" + tipo + ")";
       this.mensaje = response['message'];
       console.log(response['message']);
       return true
     } catch (e) {
-      this.titulo = "PERSONALIZACION DE TIENDA    (" + tipo + ")";
-      this.mensaje = "Al parecer existe un error";
+      this.titulo = "PERSONALIZACIÓN    (" + tipo + ")";
+      this.mensaje = "Al parecer existe un error con la personalización de tu tienda (Logo y Banner) intenta hacerlo mas tarde";
       return false
-      /*this.loading = false;
-      console.log("error:" + JSON.stringify((e).error.message));
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");*/
+
     }
   }
 
