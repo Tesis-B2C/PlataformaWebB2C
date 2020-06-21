@@ -14,5 +14,6 @@ var md_upload = multipart({
 api.post('/registrarTienda',TiendaController.registrarTienda);
 api.post('/subirImagenesTienda/:id/:tipo',[md_upload],TiendaController.subirImagenesTienda);
 api.get('/getDatosTienda/:id',TiendaController.getDatosTienda);
-
+api.get('/getMisTiendas/:id',TiendaController.getMisTiendas);
+api.get('/obtenerImagenTienda/:imageFile', TiendaController.obtenerImagenTienda);
 module.exports = api;// exportamos el router de express para que las routas funcionen por todo el back end

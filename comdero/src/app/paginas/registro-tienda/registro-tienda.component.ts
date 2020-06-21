@@ -230,8 +230,10 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
         this.titulo = "LISTO!";
         this.mensaje = response['message'] + "  ADVERTENCIA: Es posible que haya existido algun error con la personalizacion de tu tienda intenta hacerlo mas tarde";
       }
-      let identidadTienda = await this._tiendaServicio.getDatosTienda(tienda['NUM_TIENDA']).toPromise();
-      localStorage.setItem("identityTienda", JSON.stringify(identidadTienda));
+
+    // poner al iniciar tienda
+     /* let identidadTienda = await this._tiendaServicio.getDatosTienda(tienda['NUM_TIENDA']).toPromise();
+      localStorage.setItem("identityTienda", JSON.stringify(identidadTienda));*/
     } catch (e) {
       this.loading = false;
       if (JSON.stringify((e).error.message))

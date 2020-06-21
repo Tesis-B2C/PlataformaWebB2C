@@ -34,4 +34,8 @@ export class TiendaServicio {
       return this._http.get<objeto>(this.url + "getDatosTienda/"+Id_Tienda , { headers: headers });
   }
 
+  getMisTiendas(Id_Tienda){
+    let headers = new HttpHeaders({ "Content-type": "application/json" });
+    return this._http.get<objeto>(this.url + "getMisTiendas/"+Id_Tienda , { headers: headers });
+  }
 }

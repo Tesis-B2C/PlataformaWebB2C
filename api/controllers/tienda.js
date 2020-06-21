@@ -5,7 +5,8 @@ const TIENDA = require('../models/tienda'); //importar el modelo del usuario  o 
 const SUCURSAL = require('../models/sucursal');
 const jwt = require('../services/jwt');
 const db = require('../database/db');
-
+const fs = require('fs');
+const path = require('path');
 const {QueryTypes} = require('sequelize');
 
 async function registrarTienda(req, res) {
@@ -43,15 +44,15 @@ async function registrarTienda(req, res) {
                 await SUCURSAL.create(
                     {
                         NUM_TIENDA: tiendaGuardado.dataValues.NUM_TIENDA,
-                        COD_DPA:s.Ciudad,
-                        DIRECCION_SUCURSAL:s.Direccion_Sucursal,
-                        TELEFONO_SUCURSAL:s.Telefono_Sucursal,
-                        RUC:s.Ruc,
-                        LATITUD:s.Latitud,
-                        LONGITUD:s.Longitud,
-                        NUM_REFERENCIA:s.Num_Referencia,
+                        COD_DPA: s.Ciudad,
+                        DIRECCION_SUCURSAL: s.Direccion_Sucursal,
+                        TELEFONO_SUCURSAL: s.Telefono_Sucursal,
+                        RUC: s.Ruc,
+                        LATITUD: s.Latitud,
+                        LONGITUD: s.Longitud,
+                        NUM_REFERENCIA: s.Num_Referencia,
                         NUM_COD_POSTAL_SUCURSAL: s.Num_Cod_Postal_Sucursal,
-                        TIPO_SUCURSAL:s.Tipo_Sucursal
+                        TIPO_SUCURSAL: s.Tipo_Sucursal
                     },
                     {transaction: t});
 
@@ -158,7 +159,7 @@ async function subirImagenesTienda(req, res) {
 async function getDatosTienda(req, res) {
 
     try {
-        let tiendaObtenida = await TIENDA.findOne({where: {NUM_TIENDA: req.params.id} ,include: {model: SUCURSAL}});
+        let tiendaObtenida = await TIENDA.findOne({where: {NUM_TIENDA: req.params.id}, include: {model: SUCURSAL}});
 
         if (tiendaObtenida) {
             res.status(200).send({
@@ -179,9 +180,49 @@ async function getDatosTienda(req, res) {
     }
 }
 
+async function getMisTiendas(req, res) {
+
+    try {
+        let tiendasObtenidas = await TIENDA.findAll({where: {COD_AGENTE: req.params.id}});
+
+        if (tiendasObtenidas.length) {
+            res.status(200).send({
+                data: tiendasObtenidas,
+                message: "Tiendas cargadas correctamente"
+            });
+        } else {
+            res.status(404).send({
+                message: 'Al parecer  no se encuentra tiendas registradas en la base de datos'
+            });
+
+
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+async function obtenerImagenTienda(req, res) {
+    var imageFile = req.params.imageFile;
+    var path_file = './uploads/tienda/'+ imageFile;
+    console.log("este es el path" + path_file);
+        if (fs.existsSync(path_file)) {
+            res.sendFile(path.resolve(path_file));
+        } else {
+            res.status(200).send({
+                message: 'No existe la imagen'
+            });
+        }
+}
+
 module.exports = {          // para exportar todas las funciones de este modulo
     registrarTienda,
     subirImagenesTienda,
-    getDatosTienda
+    getDatosTienda,
+    getMisTiendas,
+    obtenerImagenTienda
 
 };
+
+
