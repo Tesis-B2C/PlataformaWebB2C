@@ -203,17 +203,24 @@ async function getMisTiendas(req, res) {
         });
     }
 }
+
 async function obtenerImagenTienda(req, res) {
-    var imageFile = req.params.imageFile;
-    var path_file = './uploads/tienda/'+ imageFile;
-    console.log("este es el path" + path_file);
+    try {
+        var imageFile = req.params.imageFile;
+        var path_file = './uploads/tienda/' + imageFile;
+        console.log("este es el path" + path_file);
         if (fs.existsSync(path_file)) {
             res.sendFile(path.resolve(path_file));
         } else {
-            res.status(200).send({
-                message: 'No existe la imagen'
-            });
+            var path_file = './uploads/tienda/sinLogo.png';
+            res.sendFile(path.resolve(path_file));
         }
+
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
 }
 
 module.exports = {          // para exportar todas las funciones de este modulo

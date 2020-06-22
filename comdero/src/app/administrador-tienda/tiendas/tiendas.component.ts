@@ -19,10 +19,20 @@ export class TiendasComponent implements OnInit, AfterContentInit {
   }
 
   async ngOnInit() {
+
+    try{
     let identidad = this._agenteServicio.getIdentity();
     let response = await this._tiendaServicio.getMisTiendas(identidad.COD_AGENTE).toPromise();
     this.misTiendas = response.data;
-    console.log("tiendas", this.misTiendas);
+      console.log("tiendas", this.misTiendas);
+    }catch (e) {
+      this.router.navigate(['/registro-tienda']);
+      console.log("error:" + JSON.stringify((e).error.message));
+    }
+
+
+
+
 
   }
 
