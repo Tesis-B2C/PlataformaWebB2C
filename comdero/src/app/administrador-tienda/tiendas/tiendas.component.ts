@@ -33,8 +33,8 @@ export class TiendasComponent implements OnInit, AfterContentInit {
   public async  irAdministracionTienda(Id_Tienda) {
 
     let identidadTienda = await this._tiendaServicio.getDatosTienda(Id_Tienda).toPromise();
-    localStorage.setItem("identityTienda", JSON.stringify(identidadTienda));
-    this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda']);
+    localStorage.setItem("identityTienda", JSON.stringify(identidadTienda.data));
+    this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/inicio-administracion']);
   }
 
 }

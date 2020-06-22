@@ -14,9 +14,10 @@ import { MetodosPagoComponent } from './metodos-pago/metodos-pago.component';
 import { MetodosEnvioComponent } from './metodos-envio/metodos-envio.component';
 import { GeneralTiendaComponent } from './general-tienda/general-tienda.component';
 import { SucursalesTiendaComponent } from './sucursales-tienda/sucursales-tienda.component';
+import { InicioAdministracionComponent } from './inicio-administracion/inicio-administracion.component';
 
 @NgModule({
-  declarations: [ MenuGestionTiendasComponent, ProductosComponent, MetodosPagoComponent, MetodosEnvioComponent, GeneralTiendaComponent, SucursalesTiendaComponent],
+  declarations: [ MenuGestionTiendasComponent, ProductosComponent, MetodosPagoComponent, MetodosEnvioComponent, GeneralTiendaComponent, SucursalesTiendaComponent, InicioAdministracionComponent],
   imports: [
     CommonModule,
     SidebarModule,
