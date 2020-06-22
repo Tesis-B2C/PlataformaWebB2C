@@ -1,0 +1,52 @@
+.alert {
+  font-size: smaller;
+}
+
+label {
+  font-size: small;
+  font-weight: normal;
+}
+
+p{
+  font-size: small;
+  font-weight: normal;
+}
+
+input {
+  font-size: small;
+}
+
+.unidades{
+  font-size: small;
+}
+
+label{
+  font-size: small;
+}
+
+select{
+  font-size: small;
+}
+
+.iconos-pagos {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  background: #f1f3f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin:0px auto;
+  padding:3%
+}
+
+@media (max-width: 764px) {
+  .mensaje-mascota {
+    width: 40%;
+  }
+}
+
+.btn{
+  font-size: small;
+}

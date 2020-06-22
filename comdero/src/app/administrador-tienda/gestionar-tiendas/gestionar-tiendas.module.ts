@@ -11,13 +11,14 @@ import {FormsModule} from "@angular/forms";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { MetodosPagoComponent } from './metodos-pago/metodos-pago.component';
-import { MetodosEnvioComponent } from './metodos-envio/metodos-envio.component';
+import { MetodosEnvioTComponent } from './metodos-envioT/metodos-envioT.component';
 import { GeneralTiendaComponent } from './general-tienda/general-tienda.component';
 import { SucursalesTiendaComponent } from './sucursales-tienda/sucursales-tienda.component';
 import { PersonalizacionTiendaComponent } from './personalizacion-tienda/personalizacion-tienda.component';
+import { MetodosEnvioComponent } from './metodos-envio/metodos-envio.component';
 
 @NgModule({
-  declarations: [ MenuGestionTiendasComponent, ProductosComponent, MetodosPagoComponent, MetodosEnvioComponent, GeneralTiendaComponent, SucursalesTiendaComponent, PersonalizacionTiendaComponent],
+  declarations: [ MenuGestionTiendasComponent, ProductosComponent, MetodosPagoComponent, MetodosEnvioTComponent, GeneralTiendaComponent, SucursalesTiendaComponent, PersonalizacionTiendaComponent, MetodosEnvioComponent],
   imports: [
     CommonModule,
     SidebarModule,

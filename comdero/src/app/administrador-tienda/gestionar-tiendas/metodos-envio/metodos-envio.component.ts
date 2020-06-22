@@ -6,55 +6,21 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./metodos-envio.component.css']
 })
 export class MetodosEnvioComponent implements OnInit {
-  public banderaVerMasOpcionesDentroLocalidad: boolean = false;
-  public banderaVerMasOpcionesFueraLocalidad: boolean = false;
-  public banderaAgregarOpcionesDentroLocalidad: boolean = false;
-  public banderaAgregarOpcionesFueraLocalidad: boolean = false;
-  public vectorEnvioDentroLocalidad= new Array(1);
-  public vectorVerMasEnvioDentroLocalidad= new Array(1);
-  public vectorOtraEnvioDentroLocalidad= new Array(1);
+  public disabledRetiroLocal=true;
 
-  public vectorEnvioFueraLocalidad= new Array(1);
-  public vectorVerMasEnvioFueraLocalidad= new Array(1);
-  public vectorOtraEnvioFueraLocalidad= new Array(1);
   constructor() {
   }
 
   ngOnInit() {
   }
 
+  public clickRetiroLocal(event) {
 
-  opcionVerMasOpcionesDentroLocalidad(event) {
-    this.banderaVerMasOpcionesDentroLocalidad = !this.banderaVerMasOpcionesDentroLocalidad;
-  }
-
-  opcionVerMasOpcionesFueraLocalidad(event) {
-    this.banderaVerMasOpcionesFueraLocalidad = !this.banderaVerMasOpcionesFueraLocalidad;
-  }
-  opcionAgregarOpcionesDentroLocalidad(event){
-    this.banderaAgregarOpcionesDentroLocalidad = !this.banderaAgregarOpcionesDentroLocalidad;
-  }
-  opcionAgregarOpcionesFueraLocalidad(event){
-    this.banderaAgregarOpcionesFueraLocalidad = !this.banderaAgregarOpcionesFueraLocalidad;
-  }
-  agregarOpcionesEnvioLocalidad(){
-    this.vectorEnvioDentroLocalidad.push(1);
-  }
-  agregarVerMasOpcionesEnvioLocalidad(){
-    this.vectorVerMasEnvioDentroLocalidad.push(1);
-  }
-  agregarOtrasOpcionesEnvioDentroLocalidad(){
-    this.vectorOtraEnvioDentroLocalidad.push(1);
+    if (event.target.checked) {
+      console.log('hola');
+      this.disabledRetiroLocal=false;
+    }
   }
 
 
-  agregarOpcionesEnvioFueraLocalidad(){
-    this.vectorEnvioFueraLocalidad.push(1);
-  }
-  agregarVerMasOpcionesEnvioFueraLocalidad(){
-    this.vectorVerMasEnvioFueraLocalidad.push(1);
-  }
-  agregarOtrasOpcionesEnvioFueraLocalidad(){
-    this.vectorOtraEnvioFueraLocalidad.push(1);
-  }
 }

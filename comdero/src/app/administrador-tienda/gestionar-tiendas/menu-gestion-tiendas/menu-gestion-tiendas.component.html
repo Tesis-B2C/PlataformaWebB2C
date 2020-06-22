@@ -40,16 +40,13 @@
         </a>
         <ul class="sidenav-second-level collapse" id="producto">
           <li>
-            <a  class="ml-4  nav-item nav-link opcion-interna "  [routerLink]="['productos']"
+            <a class="ml-4  nav-item nav-link opcion-interna " [routerLink]="['productos']"
                routerLinkActive="active"> &nbsp; &nbsp; - Nuevo</a>
           </li>
-
           <br>
-          <li>  <a  class="ml-4  nav-item nav-link opcion-interna "> &nbsp; &nbsp; - Listado</a>
+          <li><a class="ml-4  nav-item nav-link opcion-interna "> &nbsp; &nbsp; - Listado</a>
           </li>
         </ul>
-
-
       </li>
     </ul>
 
@@ -61,7 +58,9 @@
           <span class="nav-link-text ml-2">Pedidos</span>
         </a>
         <ul class="sidenav-second-level collapse" id="pedidos">
-          <li (click)="apareceIngreseUsuario()" class="ml-4 opcion-interna" style="cursor:pointer "> &nbsp; &nbsp; Nuevo</li>
+          <li (click)="apareceIngreseUsuario()" class="ml-4 opcion-interna" style="cursor:pointer "> &nbsp; &nbsp;
+            Nuevo
+          </li>
         </ul>
       </li>
     </ul>
@@ -73,7 +72,9 @@
           <span class="nav-link-text ml-2">Clientes</span>
         </a>
         <ul class="sidenav-second-level collapse" id="clientes">
-          <li (click)="apareceIngreseUsuario()" class="ml-4 opcion-interna" style="cursor:pointer "> &nbsp; &nbsp; Nuevo</li>
+          <li (click)="apareceIngreseUsuario()" class="ml-4 opcion-interna" style="cursor:pointer "> &nbsp; &nbsp;
+            Nuevo
+          </li>
         </ul>
       </li>
     </ul>
@@ -85,7 +86,9 @@
           <span class="nav-link-text ml-2">Estadisticas</span>
         </a>
         <ul class="sidenav-second-level collapse" id="estadisticas">
-          <li (click)="apareceIngreseUsuario()" class="ml-4 opcion-interna" style="cursor:pointer "> &nbsp; &nbsp; Nuevo</li>
+          <li (click)="apareceIngreseUsuario()" class="ml-4 opcion-interna" style="cursor:pointer "> &nbsp; &nbsp;
+            Nuevo
+          </li>
         </ul>
       </li>
     </ul>
@@ -96,7 +99,7 @@
           <i class="fa fa-fw fa-shopping-bag "></i>
           <span class="nav-link-text ml-2">Tienda</span>
         </a>
-        <ul class="sidenav-second-level collapse" id="tienda">
+        <ul class="sidenav-second-level collapse" id="tienda1">
           <li (click)="apareceIngreseUsuario()" class="ml-4 subOpcion" style="cursor:pointer "> &nbsp; &nbsp; Nuevo</li>
         </ul>
       </li>
@@ -104,13 +107,27 @@
 
     <hr>
     <p>Configuraciones</p>
+
     <ul class="navbar-nav navbar-sidenav mt-2 ml-2">
       <li class="nav-item" data-placement="right " data-toggle="tooltip">
-        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#puntos-venta">
-          <i class="fa fa-fw fa-map  "></i>
-          <span class="nav-link-text ml-2">Puntos de venta</span>
+        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#tienda">
+          <i class="fa fa-fw fa-store "></i>
+          <span class="nav-link-text ml-2">Tienda</span>
         </a>
-
+        <ul class="sidenav-second-level collapse" id="tienda">
+          <li>
+            <a class="ml-4 nav-item nav-link opcion-interna" [routerLink]="['general-tienda']"
+               routerLinkActive="active"> &nbsp; &nbsp; - General</a>
+          </li>
+          <li>
+            <a class="ml-4 nav-item nav-link opcion-interna" [routerLink]="['sucursales-tienda']"
+               routerLinkActive="active"> &nbsp; &nbsp; - Sucursales</a>
+          </li>
+          <li>
+            <a class="ml-4 nav-item nav-link opcion-interna" [routerLink]="['personalizacion-tienda']"
+               routerLinkActive="active"> &nbsp; &nbsp; - Personalización</a>
+          </li>
+        </ul>
       </li>
     </ul>
 
@@ -121,20 +138,40 @@
           <i class="fa fa-fw fa-credit-card  "></i>
           <span class="nav-link-text ml-2">Métodos de Pago</span>
         </a>
-
       </li>
     </ul>
+
     <ul class="navbar-nav navbar-sidenav mt-2 ml-2">
       <li class="nav-item" data-placement="right " data-toggle="tooltip">
-        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#puntos-venta">
+        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" [routerLink]="['metodos-envio']"
+           routerLinkActive="active">
           <i class="fa fa-fw fa-truck-moving  "></i>
           <span class="nav-link-text ml-2">Métodos de Envio</span>
         </a>
-
       </li>
     </ul>
 
-  </ng-sidebar>
+    <ul class="navbar-nav navbar-sidenav mt-2 ml-2">
+      <li class="nav-item" data-placement="right " data-toggle="tooltip">
+        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" [routerLink]="['metodos-envioT']"
+           routerLinkActive="active">
+          <i class="fa fa-fw fa-truck-moving  "></i>
+          <span class="nav-link-text ml-2">Métodos de Envio T</span>
+        </a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav navbar-sidenav mt-2 ml-2">
+      <li class="nav-item" data-placement="right " data-toggle="tooltip">
+        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#puntos-venta">
+          <i class="fa fa-fw fa-map  "></i>
+          <span class="nav-link-text ml-2">Puntos de venta</span>
+        </a>
+      </li>
+    </ul>
+
+  </ng-sidebar
+>
 
   <div class=" demo-contents scrollbar" ng-sidebar-content>
 
@@ -142,7 +179,7 @@
     <!--<div>
       <img class="imagenFondo" src="../../../../assets/images/fondo-administrador.png">
     </div>-->
-    <router-outlet  ></router-outlet>
+    <router-outlet></router-outlet>
 
   </div>
 

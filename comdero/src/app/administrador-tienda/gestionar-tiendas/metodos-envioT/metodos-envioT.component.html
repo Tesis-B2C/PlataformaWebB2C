@@ -1,0 +1,289 @@
+<body>
+<div class="container mt-5">
+  <div class="row  justify-content-center">
+    <h4 class=" col-11  ">Métodos de envío</h4>
+    <hr class="col-11  ">
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-8" id="panelUno">
+      <form #formMetodoPago class="card card-body ">
+        <h6>Tipos de envío configurados para la tienda</h6>
+        <hr>
+        <div class="form-group">
+          <div class="alert alert-primary col-12" role="alert">
+            <a><span class="fa fa-exclamation fa-1x"></span></a>
+            Establezca los métodos de envío que desea implementar en su tienda, estas opciones apareceran al momento de
+            ingresar un nuevo producto.
+          </div>
+        </div>
+        <hr>
+        <div class="container">
+          <div class="form-row ">
+            <div class="form-group col-md-9">
+              <label>Métodos de envío dentro de la localidad</label>
+
+
+              <div *ngFor="let opcion of vectorEnvioDentroLocalidad; let i=index">
+                <div class="form-row no-gutter">
+                  <div class="form-group  col-9">
+                    <p style="font-size: smaller">Servicios de envío</p>
+                    <select class="browser-default form-control "
+                            name="masOpcionesDentroLocalidad">
+                      <option value="Ahorros">Ahorros</option>
+                      <option value="Corriente">Corriente</option>
+                    </select>
+
+                  </div>
+                  <div *ngIf="vectorEnvioDentroLocalidad.length-1==i" class="form-group   col-3 col-md-1">
+                    <p style="opacity: 0">b</p>
+                    <button (click)="agregarOpcionesEnvioLocalidad()" class="form-control btn btn-outline-primary "
+                            style="font-size: smaller;border: none">
+                      <span class="fa fa-plus "></span>
+                    </button>
+                  </div>
+                  <div *ngIf="vectorEnvioDentroLocalidad.length-1!=i" class="form-group col-3 col-md-1">
+                    <p style="opacity: 0">b</p>
+                    <button (click)="agregarOpcionesEntregaLocal()" class="form-control btn btn-outline-danger "
+                            style="font-size: smaller;border: none">
+                      <span class="fa fa-trash "></span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row  no-gutter">
+                <div class="form-group col-9">
+                  <div class="form-check">
+                    <input type="checkbox" (change)="opcionVerMasOpcionesDentroLocalidad($event.target.value)"
+                           class="form-check-input" id="checkVerMasOpcionesDentroLocalidad">
+                    <label class="form-check-label " for="checkVerMasOpcionesDentroLocalidad">Ver más opciones</label>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="banderaVerMasOpcionesDentroLocalidad">
+                <div *ngFor="let opcion of vectorVerMasEnvioDentroLocalidad; let i =index">
+                  <div class="form-row">
+                    <div class="form-group col-9">
+                      <p style="font-size: smaller">Servicio de envío</p>
+                      <select (change)="opcionTipoCuenta($event.target.value)" class="browser-default form-control "
+                              id="tipoCuenta" name="tipoCuenta">
+                        <option value="Ahorros">Ahorros</option>
+                        <option value="Corriente">Corriente</option>
+                      </select>
+                    </div>
+                    <div *ngIf="vectorVerMasEnvioDentroLocalidad.length-1==i" class="form-group   col-3 col-md-1">
+                      <p style="opacity: 0">b</p>
+                      <button (click)="agregarVerMasOpcionesEnvioLocalidad()"
+                              class="form-control btn btn-outline-primary "
+                              style="font-size: smaller;border: none">
+                        <span class="fa fa-plus "></span>
+                      </button>
+                    </div>
+                    <div *ngIf="vectorVerMasEnvioDentroLocalidad.length-1!=i" class="form-group   col-3 col-md-1">
+                      <p style="opacity: 0">b</p>
+                      <button class="form-control btn btn-outline-danger p-0"
+                              style="font-size: smaller;border: none">
+                        <span class="fa fa-trash "></span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="form-row no-gutter">
+                  <div class="form-group  col-9">
+                    <div class="form-check">
+                      <input (change)="opcionAgregarOpcionesDentroLocalidad($event.target.value)" type="checkbox"
+                             class="form-check-input" id="opcionAgregarOpcionesDentroLocalidad">
+                      <label class="form-check-label " for="opcionAgregarOpcionesDentroLocalidad">Deseo agregar un
+                        método
+                        de envio</label>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="banderaAgregarOpcionesDentroLocalidad">
+                  <div *ngFor="let opcion of vectorOtraEnvioDentroLocalidad; let i= index">
+                    <div class="form-row no-gutter">
+                      <div class="form-group  col-9">
+                        <p style="font-size: smaller">Ingrese método de envío</p>
+                        <input type="text" class="form-control" placeholder="Coop. de transporte teresita ">
+                      </div>
+                      <div *ngIf="vectorOtraEnvioDentroLocalidad.length-1==i" class="form-group   col-3 col-md-1">
+                        <p style="opacity: 0">b</p>
+                        <button (click)="agregarOtrasOpcionesEnvioDentroLocalidad()" class="form-control btn btn-outline-primary p-0"
+                                style="font-size: smaller;border: none">
+                          <span class="fa fa-plus "></span>
+                        </button>
+                      </div>
+                      <div *ngIf="vectorOtraEnvioDentroLocalidad.length-1!=i"  class="form-group   col-3 col-md-1">
+                        <p style="opacity: 0">b</p>
+                        <button  class="form-control btn btn-outline-danger p-0"
+                                style="font-size: smaller;border: none">
+                          <span class="fa fa-trash "></span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- form-group end.// -->
+            <div class=" mx-auto d-flex align-items-center col-md-2">
+              <div class="mx-auto">
+                <p class=" iconos-pagos "><span class="  fas fa-motorcycle fa-4x" style="color: #2a4c75"></span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+
+
+
+        <div class="container">
+          <div class="form-row ">
+            <div class="form-group col-md-9">
+              <label>Métodos de envío fuera de la localidad</label>
+
+
+              <div *ngFor="let opcion of vectorEnvioFueraLocalidad; let i=index">
+                <div class="form-row no-gutter">
+                  <div class="form-group  col-9">
+                    <p style="font-size: smaller">Servicios de envío</p>
+                    <select class="browser-default form-control "
+                            name="masOpcionesDentroLocalidad">
+                      <option value="Ahorros">Ahorros</option>
+                      <option value="Corriente">Corriente</option>
+                    </select>
+
+                  </div>
+                  <div *ngIf="vectorEnvioFueraLocalidad.length-1==i" class="form-group   col-3 col-md-1">
+                    <p style="opacity: 0">b</p>
+                    <button (click)="agregarOpcionesEnvioFueraLocalidad()" class="form-control btn btn-outline-primary "
+                            style="font-size: smaller;border: none">
+                      <span class="fa fa-plus "></span>
+                    </button>
+                  </div>
+                  <div *ngIf="vectorEnvioFueraLocalidad.length-1!=i" class="form-group col-3 col-md-1">
+                    <p style="opacity: 0">b</p>
+                    <button (click)="agregarOpcionesEntregaLocal()" class="form-control btn btn-outline-danger "
+                            style="font-size: smaller;border: none">
+                      <span class="fa fa-trash "></span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row  no-gutter">
+                <div class="form-group col-9">
+                  <div class="form-check">
+                    <input type="checkbox" (change)="opcionVerMasOpcionesFueraLocalidad($event.target.value)"
+                           class="form-check-input" id="checkVerMasOpcionesFueraLocalidad">
+                    <label class="form-check-label " for="checkVerMasOpcionesFueraLocalidad">Ver más opciones</label>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="banderaVerMasOpcionesFueraLocalidad">
+                <div *ngFor="let opcion of vectorVerMasEnvioFueraLocalidad; let i =index">
+                  <div class="form-row">
+                    <div class="form-group col-9">
+                      <p style="font-size: smaller">Servicio de envío</p>
+                      <select (change)="opcionTipoCuenta($event.target.value)" class="browser-default form-control "
+                              id="tipoCuenta" name="tipoCuenta">
+                        <option value="Ahorros">Ahorros</option>
+                        <option value="Corriente">Corriente</option>
+                      </select>
+                    </div>
+                    <div *ngIf="vectorVerMasEnvioFueraLocalidad.length-1==i" class="form-group   col-3 col-md-1">
+                      <p style="opacity: 0">b</p>
+                      <button (click)="agregarVerMasOpcionesEnvioFueraLocalidad()"
+                              class="form-control btn btn-outline-primary "
+                              style="font-size: smaller;border: none">
+                        <span class="fa fa-plus "></span>
+                      </button>
+                    </div>
+                    <div *ngIf="vectorVerMasEnvioFueraLocalidad.length-1!=i" class="form-group   col-3 col-md-1">
+                      <p style="opacity: 0">b</p>
+                      <button class="form-control btn btn-outline-danger p-0"
+                              style="font-size: smaller;border: none">
+                        <span class="fa fa-trash "></span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="form-row no-gutter">
+                  <div class="form-group  col-9">
+                    <div class="form-check">
+                      <input (change)="opcionAgregarOpcionesFueraLocalidad($event.target.value)" type="checkbox"
+                             class="form-check-input" id="opcionAgregarOpcionesFueraLocalidad">
+                      <label class="form-check-label " for="opcionAgregarOpcionesFueraLocalidad">Deseo agregar un
+                        método
+                        de envio</label>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="banderaAgregarOpcionesFueraLocalidad">
+                  <div *ngFor="let opcion of vectorOtraEnvioFueraLocalidad; let i= index">
+                    <div class="form-row no-gutter">
+                      <div class="form-group  col-9">
+                        <p style="font-size: smaller">Ingrese método de envío</p>
+                        <input type="text" class="form-control" placeholder="Coop. de transporte teresita ">
+                      </div>
+                      <div *ngIf="vectorOtraEnvioFueraLocalidad.length-1==i" class="form-group   col-3 col-md-1">
+                        <p style="opacity: 0">b</p>
+                        <button (click)="agregarOtrasOpcionesEnvioFueraLocalidad()" class="form-control btn btn-outline-primary p-0"
+                                style="font-size: smaller;border: none">
+                          <span class="fa fa-plus "></span>
+                        </button>
+                      </div>
+                      <div *ngIf="vectorOtraEnvioFueraLocalidad.length-1!=i"  class="form-group   col-3 col-md-1">
+                        <p style="opacity: 0">b</p>
+                        <button  class="form-control btn btn-outline-danger p-0"
+                                 style="font-size: smaller;border: none">
+                          <span class="fa fa-trash "></span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- form-group end.// -->
+            <div class=" mx-auto d-flex align-items-center col-md-2">
+              <div class="mx-auto">
+                <p class=" iconos-pagos "><span class="  fas fa-truck fa-4x" style="color: #2a4c75"></span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+
+
+        <div class="container">
+          <div class="form-row justify-content-end">
+            <button class="btn btn-outline-primary   text-nowrap col-md-3  mb-4 " type="button">
+              <span class="spinner-border spinner-border-sm mr-2"></span>
+              Guardar
+            </button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+
+    <div class="col-md-3  mt-3 mt-md-0" id="panelDos">
+      <div class="card card-body">
+        <div class="card jackInTheBox  animated alert alert-warning fade show" role="alert">
+          <h4 class="alert-heading">Recuerda!</h4>
+          <hr class="mb-0">
+          <label>Configurar los métodos de envío de tu tienda, agilizará el registro de tus productos, además ofrecer
+            este tipo de servicio aumenta la popularidad de tu tienda</label>
+          <img class="mx-auto  pt-md-4  mensaje-mascota" src="../../../assets/images/mascota-condero.png" width="80%">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
