@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AgenteServicio} from "../../../servicios/agente.servicio";
 
 @Component({
   selector: 'app-vision-general',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./vision-general.component.css']
 })
 export class VisionGeneralComponent implements OnInit {
-
-  constructor() { }
+ public identidad;
+  constructor(private _agenteServicio:AgenteServicio) { }
 
   ngOnInit() {
+    this.identidad = this._agenteServicio.getIdentity();
   }
 
 }

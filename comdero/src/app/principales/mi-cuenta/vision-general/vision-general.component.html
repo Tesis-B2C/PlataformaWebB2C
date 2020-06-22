@@ -5,10 +5,10 @@
       <div class="icon">
         <a href="#" class="icon icon-lg rounded-circle border"><i class="fa fa-user"></i></a>
       </div>
-      <div class="text">
-        <strong> Mr. Jackson Someone </strong> <br>
-        myloginname@gmail.com <br>
-        <a href="#">Edit</a>
+      <div class="">
+        <strong>{{identidad.NOMBRE}} </strong> <br>
+       {{identidad.CORREO}} <br>
+        <a [routerLink]="['/principales/menu/mi-cuenta/menu-mi-cuenta/datos-personales']">Editar</a>
       </div>
 
     </figure>
@@ -49,7 +49,7 @@
 
 <article class="card  mb-3">
   <div class="card-body">
-    <h5 class="card-title mb-4">Recent orders </h5>
+    <h5 class="card-title mb-4">Ordenes recientes</h5>
 
     <!--         <div class="row">
                <div class="col-md-6">
@@ -84,6 +84,6 @@
                </div>
              </div>  row.// -->
 
-    <a href="#" class="btn btn-outline-primary"> See all orders </a>
+    <a href="#" class="btn btn-outline-primary">Ver todas </a>
   </div> <!-- card-body .// -->
 </article> <!-- card.// -->

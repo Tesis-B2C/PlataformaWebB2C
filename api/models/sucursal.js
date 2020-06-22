@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 
-const Sucursal = db.sequelize.define('Sucursal', {
+const Sucursal = db.sequelize.define('SUCURSAL', {
         NUM_SUCURSAL: {
             type: Sequelize.BIGINT,
             autoIncrement: true,
@@ -13,56 +13,58 @@ const Sucursal = db.sequelize.define('Sucursal', {
             primaryKey: true,
             allowNull: false
         },
-        COD_POSTAL:
+        NUM_COD_POSTAL_SUCURSAL:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull:true
+
             },
-        ID_AGENTE:
-            {
-                type: Sequelize.INTEGER,
-                allowNull: false
-            },
-        CALLE_PRINCIPAL_SUCURSAL:
+        NUM_REFERENCIA:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull:true
+
             },
-        CALLE_SECUNDARIA:
+
+        DIRECCION_SUCURSAL:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull:true
+
             },
+
         TELEFONO_SUCURSAL:
             {
-                type: Sequelize.INTEGER,
-                allowNull: false
+                type: Sequelize.STRING,
+                allowNull:true
+
             },
         RUC:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull:false
             },
         COD_DPA:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull:true
+
             },
-        HORARIO_ATENCION:
-            {
-                type: Sequelize.STRING,
-                allowNull: false
-            },
+
         LATITUD:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull:true
             },
         LONGITUD:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull:true
             },
+        TIPO_SUCURSAL:{
+            type:Sequelize.STRING,
+            allowNull:false
+        }
     },
     {
         timestamps: false,

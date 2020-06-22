@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
 import {CategoriaServicio} from "../../servicios/categoria.servicio";
+import {TiendaServicio} from "../../servicios/tienda.servicio";
+import {AgenteServicio} from "../../servicios/agente.servicio";
+import {ActivatedRoute, Router} from "@angular/router";
 
 
 @Component({
@@ -27,7 +30,7 @@ export class PrincipalComponent implements OnInit {
     'fa fa-car', 'fa fa-dumbbell', 'fa fa-book',
     'fa fa-dog', 'fa fa-gamepad', 'fa fa-grin-stars', 'fa fa-heartbeat', 'fa fa-building', 'fa fa-tractor'];
 
-  constructor(private _categoriaServicio: CategoriaServicio, config: NgbCarouselConfig) {
+  constructor(private route: ActivatedRoute, private router: Router,private _agenteServicio: AgenteServicio,private _tiendaServicio:TiendaServicio, private _categoriaServicio: CategoriaServicio, config: NgbCarouselConfig) {
     // customize default values of carousels used by this component tree
     config.showNavigationArrows = true;
     config.showNavigationIndicators = true;
@@ -56,7 +59,19 @@ export class PrincipalComponent implements OnInit {
     } catch (e) {
       console.log("error:" + JSON.stringify((e).error.message));
     }
-
   }
+   public async vender(){
+    try{
+     let identidad = this._agenteServicio.getIdentity();
+     let response = await this._tiendaServicio.getMisTiendas(identidad.COD_AGENTE).toPromise();
+       if(response.data){
+         this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/inicio-administracion']);
+       }
+    }catch (e) {
+      this.router.navigate(['/registro-tienda']);
+      console.log("error:" + JSON.stringify((e).error.message));
+    }
+    // [routerLink]="['/registro-tienda']"
+   }
 
 }

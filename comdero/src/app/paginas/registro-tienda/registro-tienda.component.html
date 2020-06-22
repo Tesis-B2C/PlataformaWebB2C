@@ -9,14 +9,31 @@
 </head>
 
 <div *ngIf="loading" class="fondoAnimacionCarga">
-  <div class="pulse animated infinite" style="position: absolute;z-index: 150;">
-    <img id="imagenCarga" src="./../assets/images/cargando.png">
-    <br><br>
-    <div>
-      <label style="color: white; text-align: center">Espere por favor..</label>
+  <div class="form-row justify-content-center">
+    <div class="pulse animated infinite col-md-3 offset-md-2 col-6 ">
+      <img id="imagenCarga" src="./../assets/images/mascota-condero.png">
+      <br><br>
+    </div>
+    <div class=" bounceInRight animated col-md-6 col-12 d-md-flex align-items-center text-center  mx-auto p-3 ">
+      <div class="form-row justify-content-center">
+      <div class="col-12  ">
+        <h5 style="text-align: center; font-weight: bold; font-size: medium">{{titulo}}</h5>
+      </div>
+        <br><br>
+      <div class="col-12">
+        <p style="text-align: center; font-weight: bold; font-size: medium">{{mensaje}}</p>
+      </div>
+    </div>
+
+    </div>
+    <div class="col-12">
+      <div class="dis-flex mx-auto align-content-center justify-content-center" >
+        <button class="btn btn-outline-primary" style="text-align: right; font-weight: bold; font-size: medium"  [routerLink]="['/administrador/administrador-tienda/mis-tiendas']">Terminar</button>
+      </div>
     </div>
   </div>
 </div>
+
 
 <body [ngClass]="{'body-con-animacion': loading}">
 
@@ -406,13 +423,13 @@
                 <div class="form-row">
                   <div class="col-sm-6 form-group">
                     <label>Número de referencia</label>
-                    <input #NumCasa="ngModel" [(ngModel)]="this.Sucursales[i].Num_Casa_Sucursal"
+                    <input #NumCasa="ngModel" [(ngModel)]="this.Sucursales[i].Num_Referencia"
                            class="tamanioInputs form-control" name="numCasaSucursal{{i}}" placeholder="" type="text">
                   </div>
 
                   <div class=" col-sm-6 form-group">
                     <label>Código Postal</label>
-                    <input #CodigoPostal="ngModel" [(ngModel)]="this.Sucursales[i].Num_Cod_Postal"
+                    <input #CodigoPostal="ngModel" [(ngModel)]="this.Sucursales[i].Num_Cod_Postal_Sucursal"
                            class="tamanioInputs form-control" name="codigoPostal{{i}}" type="text">
                   </div> <!--form-group end.-->
                 </div> <!--form-row end.-->
@@ -488,7 +505,8 @@
                                 <i class="fa fa-plus-circle fa-2x ml-1 color-fa"></i>
 
 
-                                <input (change)="subirLogo($event)" accept="image/*" class="file" type="file"  name="logoImagen">
+                                <input (change)="subirLogo($event)" accept="image/*" class="file" type="file"
+                                       name="logoImagen">
                               </label>
                             </div>
                           </div>
@@ -537,7 +555,7 @@
                 <div class="col-md-6 form-group px-1 m-0 mt-md-0 mt-4" id="panelDos">    <!-- COLUMNA 1 -->
                   <form class="p-0" name="form">
                     <div style="position: relative;">
-                      <div class="form-group posicion-logo mt-1" >  <!-- F2 BANNER-->
+                      <div class="form-group posicion-logo mt-1">  <!-- F2 BANNER-->
 
                         <div *ngIf="urlBanner" class="mx-auto">
                           <div class="col-auto p-0">
@@ -549,7 +567,7 @@
                         </div>
                         <div *ngIf="!urlBanner" class="mx-auto">
                           <div class="col-auto p-0">
-                            <label >
+                            <label>
                               <img style="width:100%; height: 100px" class="p-0"
                                    src="assets/estilos-registroTienda/montanas.png">
                             </label>
@@ -560,26 +578,28 @@
                       <div class="centered-content  posicion-logo mt-md-5 mt-2">
                         <div class="row  mx-auto">
                           <div *ngIf="urlLogo">
-                            <div >
-                            <label style="border: none;">
-                              <img [src]="urlLogo" class="px-0 rounded-circle"  style=" border: rgba(0, 0, 0, 0.3) 2px solid;" height="90px" width="90px">
-                            </label>
+                            <div>
+                              <label style="border: none;">
+                                <img [src]="urlLogo" class="px-0 rounded-circle"
+                                     style=" border: rgba(0, 0, 0, 0.3) 2px solid;" height="90px" width="90px">
+                              </label>
                             </div>
                           </div>
                           <div *ngIf="!urlLogo" class="mx-auto">
                             <div class="borde-imagenes1L2 bg-white">
-                            <div class="col-auto pt-4">
-                              <label>
-                                <i class="fa fa-store fa-3x color-fa"></i>
-                              </label>
-                            </div>
+                              <div class="col-auto pt-4">
+                                <label>
+                                  <i class="fa fa-store fa-3x color-fa"></i>
+                                </label>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div> <!--logo muestra-->
-                    <div class="dis-flex justify-content-end">
-                     <p  style="z-index: 200; font-size:1.2rem; color: white; font-weight: bold"><span class="fa fa-eye fa-1x"></span></p>
-                    </div>
+                      <div class="dis-flex justify-content-end">
+                        <p style="z-index: 200; font-size:1.2rem; color: white; font-weight: bold"><span
+                          class="fa fa-eye fa-1x"></span></p>
+                      </div>
                     </div>
                   </form>
                 </div>

@@ -18,14 +18,20 @@
 
 }
 
+
+
+
+
+
 .catalogo-tiendas img {
   transition: all 0.5s ease;
+    cursor: pointer;
 }
 
 .catalogo-tiendas img:hover {
   transform: scale(1.5);
-}
 
+}
 
 .contairner-tiendas {
 
@@ -49,4 +55,28 @@
 .titulo-submensaje{
   font-size: 1rem;
   color: black;
+}
+
+.link:hover{
+  color: #1a56e9;
+  cursor: pointer;
+
+}
+
+.link{
+  font-size: medium;
+  font-weight: normal;
+  color: black;
+}
+
+.catalogo-tiendas{
+  background-image: url("src/assets/images/fondoTiendas.png");
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  -o-background-size: 100% 100%;
+  background-size: 100% 100%;
+  min-height: 400px !important;
+  width: 100% ;
+  text-align: center;
+
 }

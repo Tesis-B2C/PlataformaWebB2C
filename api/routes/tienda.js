@@ -7,11 +7,13 @@ var api = express.Router(); // esto sirve para crear las rutas
 var multipart = require('connect-multiparty');
 var md_upload = multipart({
 
-    uploadDir: './api/uploads/tienda'
+    uploadDir: './uploads/tienda'
 });
 
 
 api.post('/registrarTienda',TiendaController.registrarTienda);
-api.post('/subirImagenesTienda',[md_upload],TiendaController.subirImagenesTienda);
-
+api.post('/subirImagenesTienda/:id/:tipo',[md_upload],TiendaController.subirImagenesTienda);
+api.get('/getDatosTienda/:id',TiendaController.getDatosTienda);
+api.get('/getMisTiendas/:id',TiendaController.getMisTiendas);
+api.get('/obtenerImagenTienda/:imageFile', TiendaController.obtenerImagenTienda);
 module.exports = api;// exportamos el router de express para que las routas funcionen por todo el back end

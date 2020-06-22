@@ -6,7 +6,7 @@ var Metodo_Pago = require("./metodo_pago");
 var Opcion_Envio_Tienda = require("./opcion_envio_tienda");
 var Horario_Atencion = require("./horario_atencion");
 
-const Tienda= db.sequelize.define('Tienda', {
+const Tienda= db.sequelize.define('TIENDA', {
         NUM_TIENDA:
             {
                 type: Sequelize.BIGINT,
@@ -14,7 +14,7 @@ const Tienda= db.sequelize.define('Tienda', {
                 allowNull: false,
                 autoIncrement: true
             },
-        CORREO: {
+        CORREO_TIENDA: {
             type: Sequelize.STRING,
             allowNull: false
         },
@@ -31,12 +31,12 @@ const Tienda= db.sequelize.define('Tienda', {
         LINK_PAGINA:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull: true
             },
         LINK_FACEBOOK:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull: true
             },
         DESCRIPCION_TIENDA:
             {
@@ -46,12 +46,12 @@ const Tienda= db.sequelize.define('Tienda', {
         LOGO:
             {
                 type: Sequelize.BLOB('long'),
-                allowNull: false
+                allowNull: true
             },
         BANNER:
             {
                 type: Sequelize.BLOB('long'),
-                allowNull: false
+                allowNull: true
             },
         ESTADO_TIENDA:
             {
@@ -61,7 +61,7 @@ const Tienda= db.sequelize.define('Tienda', {
         TERMINOS_CONDICIONES:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull: true
             },
         CORREO_TIENDA:
             {
