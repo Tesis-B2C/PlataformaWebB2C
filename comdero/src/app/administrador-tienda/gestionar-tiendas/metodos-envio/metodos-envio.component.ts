@@ -6,7 +6,8 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./metodos-envio.component.css']
 })
 export class MetodosEnvioComponent implements OnInit {
-  public disabledRetiroLocal=true;
+  public disabledRetiroLocal = true;
+  public disabledEnvioDomicilio = true;
 
   constructor() {
   }
@@ -15,11 +16,20 @@ export class MetodosEnvioComponent implements OnInit {
   }
 
   public clickRetiroLocal(event) {
-
     if (event.target.checked) {
-      console.log('hola');
-      this.disabledRetiroLocal=false;
+      this.disabledRetiroLocal = false;
+    } else {
+      this.disabledRetiroLocal = true;
     }
+  }
+
+  public clickEnvioDomicilio(event) {
+    if (event.target.checked) {
+      this.disabledEnvioDomicilio = false;
+    } else {
+      this.disabledEnvioDomicilio = true;
+    }
+
   }
 
 

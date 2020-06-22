@@ -47,9 +47,9 @@ select{
   font-size: small;
 }
 
-/* Rounded sliders */
+/* Aqui empieza Rounded sliders */
 .slider.round {
-  border-radius: 31px;
+  border-radius: 26px;
 }
 
 .slider.round:before {
@@ -59,8 +59,8 @@ select{
 .switch {
   position: relative;
   display: inline-block;
-  width: 57px;
-  height: 31px;
+  width: 52px;
+  height: 22px;
 }
 
 .switch input {
@@ -84,9 +84,9 @@ select{
 .slider:before {
   position: absolute;
   content: "";
-  height: 23px;
-  width: 23px;
-  left: 4px;
+  height: 14px;
+  width: 14px;
+  left: 8px;
   bottom: 4px;
   background-color: white;
   -webkit-transition: .4s;
@@ -102,7 +102,7 @@ input:focus + .slider {
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(23px);
-  -ms-transform: translateX(23px);
-  transform: translateX(23px);
+  -webkit-transform: translateX(18px);
+  -ms-transform: translateX(18px);
+  transform: translateX(18px);
 }

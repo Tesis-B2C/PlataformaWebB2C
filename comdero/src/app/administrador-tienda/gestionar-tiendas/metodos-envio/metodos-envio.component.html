@@ -21,25 +21,23 @@
 
       <div id="retiro-local">
         <div class="form-row">
-
           <div class="col-10">
             <h6 class="font-weight-bold">Retiro local</h6>
             <p class="p">Ofrece a los clientes la opción de retirar su pedido en tu negocio.</p>
           </div>
 
           <div class="col-2 text-right">
-            <label class="switch">
+            <label class="switch mt-2">
               <input type="checkbox" (click)="clickRetiroLocal($event)">
               <span class="slider round"></span>
             </label>
           </div>
-
         </div>
-        <div class="card card-body mt-3">
 
+        <div class="card card-body mt-3">
           <div class="form-group">
             <label>Hora estimada de retiro</label>
-            <select class="browser-default form-control" name="masOpcionesHoraRetiro" disabled="disabledRetiroLocal">
+            <select class="browser-default form-control" name="masOpcionesHoraRetiro" [disabled]="disabledRetiroLocal">
               <option selected>Selecciona una opción...</option>
               <option value="1hora">Normalmente está listo en 1 hora</option>
               <option value="4horas">Normalmente está listo en 4 horas</option>
@@ -53,25 +51,46 @@
             <label>Instruciones de retiro</label>
             <textarea rows="3" style="font-size: small; resize: none;"
                       class="tamanioInputs form-control" name="instruccion_retiro" placeholder=""
-                      required type="text" aria-label="With textarea" maxlength="255" disabled="disabledRetiroLocal"></textarea>
+                      required type="text" aria-label="With textarea" maxlength="255"
+                      [disabled]="disabledRetiroLocal"></textarea>
             <p class="p">Si estás ofreciendo retiro en la tienda, puedes indicar a los clientes qué
               hacer cuando lleguen a tu tienda. (Máximo 255 caractéres)</p>
           </div> <!-- form-group end.// -->
-
 
         </div>
       </div>
       <hr>
 
       <div id="envio-domicilio">
-        <h6 class="font-weight-bold">Envío a domicilio</h6>
-        <p class="p">Ofrece a tus cliente la opción de retirar su pedido en tu negocio.</p>
-        <div class="card card-body mt-3">
+        <div class="form-row">
+          <div class="col-10">
+            <h6 class="font-weight-bold">Envío a domicilio</h6>
+            <p class="p">Ofrece a tus cliente la opción de retirar su pedido en tu negocio.</p>
+          </div>
+
+          <div class="col-2 text-right">
+            <label class="switch mt-2">
+              <input type="checkbox" (click)="clickEnvioDomicilio($event)">
+              <span class="slider round"></span>
+            </label>
+          </div>
         </div>
+
+        <div class="card card-body p-0 mt-3">
+
+          <div class="p-3">
+            fdhgsf
+          </div>
+
+          <hr class="m-0">
+
+          <div class="p-3">
+            fdhgsf
+          </div>
+
+        </div>
+
       </div>
-      <hr>
-
-
     </div>
 
     <div class="col-md-3 mt-3 mt-md-0" id="panelDos">
