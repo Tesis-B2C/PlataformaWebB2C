@@ -7,7 +7,7 @@ import {ToastrService} from 'ngx-toastr';
 import Swal from "sweetalert2";
 import {WizardComponent} from "angular-archwizard";
 import {AgenteServicio} from "../../servicios/agente.servicio";
-import {ActivatedRoute, Router} from "@angular/router";
+
 
 
 @Component({
@@ -68,7 +68,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
 
   @ViewChild(WizardComponent, null) wizard: WizardComponent
 
-  constructor(private route: ActivatedRoute, private router: Router, public toastr: ToastrService, private _agenteServicio: AgenteServicio, private _dpaServicio: DpaServicio, private _tiendaServicio: TiendaServicio) {
+  constructor( public toastr: ToastrService, private _agenteServicio: AgenteServicio, private _dpaServicio: DpaServicio, private _tiendaServicio: TiendaServicio) {
     let identidad = this._agenteServicio.getIdentity();
     this.Tienda = new Tienda(identidad.COD_AGENTE, null, null, null, null,
       null, null, null, null, 1, null, 'No disponible');
