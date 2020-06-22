@@ -6,9 +6,9 @@
         <a href="#" class="icon icon-lg rounded-circle border"><i class="fa fa-user"></i></a>
       </div>
       <div class="text">
-        <strong> Mr. Jackson Someone </strong> <br>
-        myloginname@gmail.com <br>
-        <a href="#">Edit</a>
+        <strong>{{identidad.NOMBRE}} </strong> <br>
+       {{identidad.CORREO}} <br>
+        <a [routerLink]="['/principales/menu/mi-cuenta/menu-mi-cuenta/datos-personales']">Editar</a>
       </div>
 
     </figure>
