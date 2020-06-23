@@ -458,34 +458,31 @@
       </form>
       <br>
 
-      <form class=" card card-body ">
+      <form class="card card-body ">
         <h6>Garantia</h6>
         <hr>
         <div class="container">
           <label>Seleccione el tipo de garantia ofrecida por este producto</label>
-          <br><br>
+          <br>
           <div class="form-group">
-            <label class="custom-control custom-radio custom-control-inline">
-              <input (click)="opcionGarantia($event.target.value)" class="custom-control-input" name="garantia"
-                     type="radio" value="Garantia del vendedor">
-              <span class="custom-control-label"> Garantia del vendedor </span>
-            </label>
+            <div class="radio-item">
+              <input (click)="opcionGarantia($event.target.value)" name="garantia"
+                     type="radio" value="Garantia del vendedor" id="GarantiaVendedor">
+              <label for="GarantiaVendedor">&nbsp;&nbsp;Garantia del vendedor</label>
+            </div>
+            <br>
+            <div class="radio-item">
+              <input (click)="opcionGarantia($event.target.value)" name="garantia"
+                     type="radio" value=" Garantia de fabrica" id="GarantiaFabrica">
+              <label for="GarantiaFabrica">&nbsp;&nbsp;Garantia de fabrica </label>
+            </div>
+            <br>
+            <div class="radio-item">
+              <input (click)="opcionGarantia($event.target.value)" name="garantia"
+                     type="radio" value=" Sin garantia" id="SinGarantia">
+              <label for="SinGarantia">&nbsp;&nbsp; Sin garantia </label>
+            </div>
           </div>
-          <div class="form-group">
-            <label class="custom-control custom-radio custom-control-inline">
-              <input (click)="opcionGarantia($event.target.value)" class="custom-control-input" name="garantia"
-                     type="radio" value=" Garantia de fabrica">
-              <span class="custom-control-label"> Garantia de fabrica </span>
-            </label>
-          </div>
-          <div class="form-group">
-            <label class="custom-control custom-radio custom-control-inline">
-              <input (click)="opcionGarantia($event.target.value)" class="custom-control-input" name="garantia"
-                     type="radio" value=" Sin garantia">
-              <span class="custom-control-label"> Sin garantia </span>
-            </label>
-          </div>
-
           <br>
         </div>
       </form>
@@ -498,19 +495,19 @@
           <label>Este producto tiene multiples opciones, asi como clores, marca y materiales?</label>
 
           <div class="form-group">
-            <label class="custom-control custom-radio custom-control-inline">
-              <input (change)="opcionVariaciones(true)" class="custom-control-input" name="variaciones" type="radio"
-                     value="Si">
-              <span class="custom-control-label"> Si  </span>
-            </label>
-            <label class="custom-control custom-radio custom-control-inline">
-              <input (change)="opcionVariaciones(false)" class="custom-control-input" name="variaciones" type="radio"
-                     value="No">
-              <span class="custom-control-label"> No </span>
-            </label>
+            <div class="radio-item">
+              <input (change)="opcionVariaciones(true)" name="variaciones" type="radio"
+                     value="Si" id="VariacionSi">
+              <label for="VariacionSi">&nbsp;&nbsp; Si </label>
+            </div>
+
+            <div class="radio-item">
+              <input (change)="opcionVariaciones(false)" name="variaciones" type="radio"
+                     value="No" id="VariacionNo">
+              <label for="VariacionNo">&nbsp;&nbsp; No </label>
+            </div>
           </div>
         </div>
-
 
         <div *ngIf="banderaVariaciones" class="form-row container px-0">
           <div class="form-group">
@@ -567,7 +564,6 @@
                    name="material{{i+0}}"
                    placeholder="Ej. Gamusa/algodon" type="text">
           </div>
-
 
           <div class="form-group col-12 ">
             <a class=" mt-5">
@@ -675,8 +671,6 @@
                 </button>
               </button>
             </div>
-
-
           </div>
         </div>
 
@@ -694,21 +688,17 @@
             Publicar producto
           </button>
 
-
           <button (click)="this.showSuccess()" class="btn btn-outline-primary text-nowrap offset-md-2 col-md-5 mb-4"
                   type="button">
             <span class="spinner-border spinner-border-sm mr-2"></span>
             Guardar Producto
           </button>
-
-
         </div>
       </form>
     </div>
     <div class="card card-body col-md-4   mt-sm-4 ml-md-2  mt-md-0 container-categoria " id="panelDos">
       <div class="container">
-
-
+        
         <h6>Categorias</h6>
         <hr class="mb-0">
         <label class="">Seleccione las categorias a las cuales pertenece el producto</label>
