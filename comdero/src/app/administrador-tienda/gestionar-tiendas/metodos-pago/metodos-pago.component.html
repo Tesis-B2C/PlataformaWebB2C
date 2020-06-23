@@ -23,16 +23,10 @@
     <br>
     <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur
       et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-
-
   </div>
-
-
 </ng-template>
 
 <ng-template #contentBeneficiosRecivirPagos let-modal>
-
-
   <div class="modal-header">
     <h4 class="modal-title">Servicios y Beneficios de Implementar el pago electrónico</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -44,9 +38,7 @@
       <iframe width="100%" height="515" [src]="getVideoIframe('https://www.youtube.com/watch?v=MoBrIn0eQbU')"
               frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
     </p>
-
   </div>
-
 
 </ng-template>
 
@@ -76,19 +68,19 @@
             <div class="form-group col-md-8">
               <label>¿Desea recibir pagos en efectivo ?</label>
               <div class="form-group">
-                <label class="custom-control custom-radio custom-control-inline">
-                  <input (change)="opcionPagoEfectivo(true) " class="custom-control-input" name="pagoEfectivo"
-                         id="pagoEfectivoSi"
-                         type="radio" value="Si">
-                  <span class="custom-control-label"> Si  </span>
-                </label>
+                <div class="radio-item">
+                  <input (change)="opcionPagoEfectivo(true)" name="pagoEfectivo"
+                         id="pagoEfectivoSi" type="radio" value="Si">
+                  <label for="pagoEfectivoSi">&nbsp;&nbsp; Si </label>
+                </div>
 
-                <label class="custom-control custom-radio custom-control-inline">
-                  <input (change)="opcionPagoEfectivo(false)" class="custom-control-input" id="pagoEfectivoNo"
+                <div class="radio-item">
+                  <input (change)="opcionPagoEfectivo(false)" id="pagoEfectivoNo"
                          name="pagoEfectivo" type="radio" value="No">
-                  <span class="custom-control-label"> No </span>
-                </label>
+                  <label for="pagoEfectivoNo">&nbsp;&nbsp; No </label>
+                </div>
               </div>
+
               <div class="form-row" *ngIf="this.banderaPagoEfectivo">
                 <div class="form-group col-md-6">
                   <p>Porcentaje descuento <span class="text-muted" style="font-size: smaller">(Opcional)</span></p>
@@ -117,19 +109,19 @@
             <div class="form-group col-md-8">
               <label>¿Desea recibir transferencias bancarias?</label>
               <div class="form-group">
-                <label class="custom-control custom-radio custom-control-inline">
-                  <input (change)="opcionPagoTransferencia(true)" class="custom-control-input" name="pagoTransferencia"
-                         type="radio" value="Si">
-                  <span class="custom-control-label"> Si  </span>
-                </label>
+                <div class="radio-item">
+                  <input (change)="opcionPagoTransferencia(true)" name="pagoTransferencia"
+                         type="radio" value="Si" id="pagoTransferenciaSi">
+                  <label for="pagoTransferenciaSi">&nbsp;&nbsp; Si </label>
+                </div>
 
-
-                <label class="custom-control custom-radio custom-control-inline">
-                  <input (change)="opcionPagoTransferencia(false)" class="custom-control-input"
-                         name="pagoTransferencia" type="radio" value="No">
-                  <span class="custom-control-label"> No </span>
-                </label>
+                <div class="radio-item">
+                  <input (change)="opcionPagoTransferencia(false)" name="pagoTransferencia"
+                         type="radio" value="No" id="pagoTransferenciaNo">
+                  <label for="pagoTransferenciaNo">&nbsp;&nbsp; No </label>
+                </div>
               </div>
+
               <div class="form-row" *ngIf="this.banderaPagoTransferencia">
                 <div class="form-group  col-md-12">
                   <p>Número de cuenta </p>
@@ -184,19 +176,19 @@
               <label>¿Desea recibir pagos electrónicos con tarjetas de débito o crédito a traves de la plataforma
                 PayPal?</label>
               <div class="form-group">
-                <label class="custom-control custom-radio custom-control-inline">
-                  <input (change)="opcionPagoElectronico(true)" class="custom-control-input" name="pagoElectronico"
-                         type="radio" value="Si">
-                  <span class="custom-control-label"> Si  </span>
-                </label>
+                <div class="radio-item">
+                  <input (change)="opcionPagoElectronico(true)" name="pagoElectronico"
+                         type="radio" value="Si" id="pagoElectronicoSi">
+                  <label for="pagoElectronicoSi">&nbsp;&nbsp; Si </label>
+                </div>
 
-
-                <label class="custom-control custom-radio custom-control-inline">
-                  <input (change)="opcionPagoElectronico(false)" class="custom-control-input"
-                         name="pagoElectronico" type="radio" value="No">
-                  <span class="custom-control-label"> No </span>
-                </label>
+                <div class="radio-item">
+                  <input (change)="opcionPagoElectronico(false)" name="pagoElectronico"
+                         type="radio" value="No" id="pagoElectronicoNo">
+                  <label for="pagoElectronicoNo">&nbsp;&nbsp; No </label>
+                </div>
               </div>
+              
               <div class="form-row" *ngIf="this.banderaPagoElectronico">
                 <div class="form-group  col-12">
                   <p>Api Key PayPal </p>
