@@ -1,4 +1,3 @@
-
 textarea {
   font-size: smaller;
   resize: none;
@@ -121,8 +120,6 @@ textarea {
   height: 380px;
   display: block;
   position: center;
-
-
 }
 
 label {
@@ -142,7 +139,6 @@ input {
   font-size: smaller;
 }
 
-
 .agregar {
   color: #1a56e9;
   cursor: pointer;
@@ -152,23 +148,19 @@ input {
   font-size: small;
   color: #1a56e9;
   cursor: pointer;
-
 }
 
 .agregarVideoYoutube:hover{
   color: #007bff;
   cursor: pointer;
-
 }
 
 #agregarProducto:hover {
   opacity: 0.8;
-
 }
 
 #agregarProducto span {
   font-size: 12px;
-
 }
 
 select {
@@ -178,7 +170,6 @@ select {
 select::-ms-expand{
   overflow: auto;
   max-height: 3px;
-
 }
 
 
@@ -210,11 +201,9 @@ select:hover{
   padding-bottom: 2px;
   padding-top: 2px;
   background-color: #2a4c75;
-
 }
 
 .chip:hover {
-
   background-color: #2a4c75;
   color: white;
 }
@@ -226,7 +215,6 @@ select:hover{
   font-weight: normal;
   padding-bottom: 2px;
   padding-top: 2px;
-
 }
 
 .chip2-alternativo {
@@ -237,7 +225,6 @@ select:hover{
   padding-bottom: 2px;
   padding-top: 2px;
   background-color: #2a4c75;
-
 }
 
 .chip2:hover {
@@ -256,22 +243,16 @@ select:hover{
   color: #2a4c75;
   font-size: small;
   font-weight: normal;
-
 }
 
 .categoria:focus {
-
   font-size: 16px;
   font-weight: bold;
-
 }
 
 .container-categoria {
-
-
   overflow: auto;
   background-color: #f9fafb;
-
 }
 
 .container-categoria::-webkit-scrollbar {
@@ -280,13 +261,11 @@ select:hover{
 
 .container-categoria::-webkit-scrollbar-track {
   background-color: rgba(35, 35, 35, 0.1);
-
 }
 
 .container-categoria::-webkit-scrollbar-thumb {
   background-color: rgba(35, 35, 35, 0.15);
   border-radius: 40px;
-
 }
 
 
@@ -325,9 +304,49 @@ app-ngx-editor {
   color: #ccc;
 }
 
-
 button{
   font-size: small;
 }
+
+
+
+/*Radio button*/
+.radio-item {
+  display: inline-block;
+  position: relative;
+  padding: 0 6px;
+}
+
+.radio-item input[type='radio'] {
+  display: none;
+}
+
+.radio-item label:before {
+  content: " ";
+  display: inline-block;
+  position: relative;
+  top: 2px;
+  margin: 0 5px 0 0;
+  width: 15px;
+  height: 15px;
+  border-radius: 11px;
+  border: 2px solid #1a56e9;
+  background-color: transparent;
+}
+
+.radio-item input[type=radio]:checked + label:after {
+  border-radius: 11px;
+  width: 7px;
+  height: 7px;
+  position: absolute;
+  top: 7px;
+  left: 10px;
+  content: " ";
+  display: block;
+  background: #1a56e9;
+}
+
+
+
 
 
