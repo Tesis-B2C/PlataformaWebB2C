@@ -4,15 +4,17 @@ const express = require('express');
 var TiendaController = require('../controllers/tienda');
 var md_auth = require('../middleware/authenticated');
 var api = express.Router(); // esto sirve para crear las rutas
-var multipart = require('connect-multiparty');
-var md_upload = multipart({
+//var multipart = require('connect-multiparty');
+
+const  multer = require('../librerias/multer')
+/*var md_upload = multipart({
 
     uploadDir: './uploads/tienda'
-});
+});*/
 
 
-api.post('/registrarTienda',TiendaController.registrarTienda);
-api.post('/subirImagenesTienda/:id/:tipo',[md_upload],TiendaController.subirImagenesTienda);
+api.post('/registrarTienda',multer.fields([{name:'logo'},{name: 'banner'}]), TiendaController.registrarTienda);
+//api.post('/subirImagenesTienda/:id/:tipo',[md_upload],TiendaController.subirImagenesTienda);
 api.get('/getDatosTienda/:id',TiendaController.getDatosTienda);
 api.get('/getMisTiendas/:id',TiendaController.getMisTiendas);
 api.get('/obtenerImagenTienda/:imageFile', TiendaController.obtenerImagenTienda);

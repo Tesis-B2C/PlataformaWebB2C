@@ -5,7 +5,7 @@ const TIENDA = require('../models/tienda'); //importar el modelo del usuario  o 
 const SUCURSAL = require('../models/sucursal');
 const jwt = require('../services/jwt');
 const db = require('../database/db');
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
 const {QueryTypes} = require('sequelize');
 
@@ -13,8 +13,9 @@ async function registrarTienda(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
 
     try {
-
-        let tiendaEncontrado = await TIENDA.findOne({where: {CORREO_TIENDA: req.body.Tienda.Correo_Tienda}});
+        let params=JSON.parse(req.body.tienda);
+        console.log("body asd", params.Sucursal);
+        let tiendaEncontrado = await TIENDA.findOne({where: {CORREO_TIENDA: params.Tienda.Correo_Tienda}});
 
         if (tiendaEncontrado) {
             res.status(404).send({
@@ -23,24 +24,24 @@ async function registrarTienda(req, res) {
         } else {
 
             let tiendaGuardado = await TIENDA.create({
-                    COD_AGENTE: req.body.Tienda.Cod_Agente,
-                    RAZON_SOCIAL: req.body.Tienda.Razon_Social,
-                    NOMBRE_COMERCIAL: req.body.Tienda.Nombre_Comercial,
-                    LINK_PAGINA: req.body.Tienda.Link_Pagina,
-                    LINK_FACEBOOK: req.body.Tienda.Link_Facebook,
-                    DESCRIPCION_TIENDA: req.body.Tienda.Descripcion_Tienda,
-                    LOGO: req.body.Tienda.Logo,
-                    BANNER: req.body.Tienda.Banner,
-                    ESTADO_TIENDA: req.body.Tienda.Estado_Tienda,
-                    TERMINOS_CONDICIONES: req.body.Tienda.Terminos_Condiciones,
-                    CORREO_TIENDA: req.body.Tienda.Correo_Tienda,
-                    HORARIO_ATENCION: req.body.Tienda.Horario_Atencion
+                    COD_AGENTE: params.Tienda.Cod_Agente,
+                    RAZON_SOCIAL: params.Tienda.Razon_Social,
+                    NOMBRE_COMERCIAL: params.Tienda.Nombre_Comercial,
+                    LINK_PAGINA: params.Tienda.Link_Pagina,
+                    LINK_FACEBOOK: params.Tienda.Link_Facebook,
+                    DESCRIPCION_TIENDA: params.Tienda.Descripcion_Tienda,
+                    ESTADO_TIENDA: params.Tienda.Estado_Tienda,
+                    TERMINOS_CONDICIONES:params.Tienda.Terminos_Condiciones,
+                    CORREO_TIENDA: params.Tienda.Correo_Tienda,
+                    HORARIO_ATENCION:params.Tienda.Horario_Atencion,
+                    LOGO: req.files.logo[0].path,
+                    BANNER:req.files.banner[0].path
                 },
                 {
                     transaction: t
                 });
 
-            for (const s of req.body.Sucursal) {
+            for (const s of params.Sucursal) {
                 await SUCURSAL.create(
                     {
                         NUM_TIENDA: tiendaGuardado.dataValues.NUM_TIENDA,
@@ -72,6 +73,14 @@ async function registrarTienda(req, res) {
             }
         }
     } catch (err) {
+        if (fs.exists(path.resolve(req.files.logo[0].path))) {
+            console.log('existe');
+           await fs.unlink(path.resolve(req.files.logo[0].path));
+        }
+        if (fs.exists(path.resolve(req.files.banner[0].path))) {
+            console.log('existe');
+            await fs.unlink(path.resolve(req.files.banner[0].path));
+        }
         await t.rollback();
         res.status(500).send({
             message: err.name

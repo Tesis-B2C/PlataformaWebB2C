@@ -66,7 +66,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
 
   @ViewChild(WizardComponent, null) wizard: WizardComponent
 
-  constructor( public toastr: ToastrService, private _agenteServicio: AgenteServicio, private _dpaServicio: DpaServicio, private _tiendaServicio: TiendaServicio) {
+  constructor(public toastr: ToastrService, private _agenteServicio: AgenteServicio, private _dpaServicio: DpaServicio, private _tiendaServicio: TiendaServicio) {
     let identidad = this._agenteServicio.getIdentity();
     this.Tienda = new Tienda(identidad.COD_AGENTE, null, null, null, null,
       null, null, null, null, 1, null, 'No disponible');
@@ -212,21 +212,18 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
       this.Tienda_Enviar.Tienda = this.Tienda;
       this.Tienda_Enviar.Sucursal = this.Sucursales;
       console.log("Objeto a enviar al backend:" + this.Tienda_Enviar);
-      let response = await this._tiendaServicio.registrarTienda(this.Tienda_Enviar).toPromise();
+      let response = await this._tiendaServicio.registrarTienda(this.Tienda_Enviar, this.filesToUpload, this.filesToUpload2).toPromise();
       debugger;
       let tienda = response.data;
-      let responseLogo = await this.subirImagenesServidor(this.filesToUpload, tienda['NUM_TIENDA'], "Logo");
-      let responseBanner = await this.subirImagenesServidor(this.filesToUpload2, tienda['NUM_TIENDA'], "Banner");
+      // let responseLogo = await this.subirImagenesServidor(this.filesToUpload, tienda['NUM_TIENDA'], "Logo");
+      // let responseBanner = await this.subirImagenesServidor(this.filesToUpload2, tienda['NUM_TIENDA'], "Banner");
       debugger
       window.scroll(0, 0);
 
-      if (responseLogo && responseBanner && response) {
+      if (response) {
         debugger;
         this.titulo = "LISTO!";
         this.mensaje = response['message'];
-      } else {
-        this.titulo = "LISTO!";
-        this.mensaje = response['message'] + "  ADVERTENCIA: Es posible que haya existido algun error con la personalizacion de tu tienda intenta hacerlo mas tarde";
       }
 
 
@@ -290,17 +287,18 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   //Logo
-  public filesToUpload;
+  public filesToUpload: File;
   public urlLogo;
 
   public async subirLogo(event: any) {
-    this.filesToUpload = <Array<File>>event.target.files;
+
     if (event.target.files && event.target.files[0]) {
+      this.filesToUpload = <File>event.target.files[0];
       var reader = new FileReader();
       reader.onload = (event: any) => {
         this.urlLogo = event.target.result;
       }
-      reader.readAsDataURL(event.target.files[0]);
+      reader.readAsDataURL(this.filesToUpload);
     }
   }
 
@@ -312,17 +310,18 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
 
 
   //Banner
-  public filesToUpload2;
+  public filesToUpload2: File;
   public urlBanner;
 
   public async subirBanner(event: any) {
-    this.filesToUpload2 = <Array<File>>event.target.files;
+
     if (event.target.files && event.target.files[0]) {
+      this.filesToUpload2 = <File>event.target.files[0];
       var reader = new FileReader();
       reader.onload = (event: any) => {
         this.urlBanner = event.target.result;
       }
-      reader.readAsDataURL(event.target.files[0]);
+      reader.readAsDataURL(this.filesToUpload2);
     }
   }
 
