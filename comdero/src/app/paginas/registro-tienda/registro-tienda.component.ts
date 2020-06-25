@@ -306,7 +306,6 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
 
   }
 
-
   //Banner
   public filesToUpload2: File;
   public urlBanner;
@@ -328,7 +327,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
     this.Tienda.Banner = "";
   }
 
-  async subirImagenesServidor(imagenPorSubir, Id_Tienda, tipo) {
+  /*async subirImagenesServidor(imagenPorSubir, Id_Tienda, tipo) {
     debugger;
     try {
       let formData = new FormData();
@@ -346,7 +345,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
       return false
 
     }
-  }
+  }*/
 
   mensageError(mensaje) {
     Swal.fire({
