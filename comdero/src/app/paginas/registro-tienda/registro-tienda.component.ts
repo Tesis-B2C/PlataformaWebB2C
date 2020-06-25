@@ -206,26 +206,24 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
       {positionClass: 'toast-top-right', enableHtml: true, closeButton: true});
   }
 
+  public tiendaRegistrada;
+
   public async registrarTienda() {
     this.loading = true
     try {
       this.Tienda_Enviar.Tienda = this.Tienda;
       this.Tienda_Enviar.Sucursal = this.Sucursales;
       console.log("Objeto a enviar al backend:" + this.Tienda_Enviar);
-      let response = await this._tiendaServicio.registrarTienda(this.Tienda_Enviar, this.filesToUpload, this.filesToUpload2).toPromise();
-      debugger;
-      let tienda = response.data;
+      this.tiendaRegistrada = await this._tiendaServicio.registrarTienda(this.Tienda_Enviar, this.filesToUpload, this.filesToUpload2).toPromise();
       // let responseLogo = await this.subirImagenesServidor(this.filesToUpload, tienda['NUM_TIENDA'], "Logo");
       // let responseBanner = await this.subirImagenesServidor(this.filesToUpload2, tienda['NUM_TIENDA'], "Banner");
       debugger
       window.scroll(0, 0);
-
-      if (response) {
+      if (this.tiendaRegistrada) {
         debugger;
         this.titulo = "LISTO!";
-        this.mensaje = response['message'];
+        this.mensaje = this.tiendaRegistrada['message'];
       }
-
 
     } catch (e) {
       this.loading = false;
