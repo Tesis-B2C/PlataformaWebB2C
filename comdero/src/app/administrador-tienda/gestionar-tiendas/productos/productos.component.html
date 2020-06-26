@@ -110,13 +110,13 @@
             [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[0]==false,'borde-imagenes1':vectorBanderaAgregarImagen[0]==true }"
             class="row  mt-3 mx-0 ">
             <div *ngFor='let url of imagenes[0]; let i = index ' class="ml-1">
-              <div class="col-auto card mt-2 px-0 pb-2">
+              <div class="col-auto card mt-2 px-0 pb-0">
                 <label style="border: none;  ">
                   <img [src]="url" class="px-0" height="140px" width="140px">
                   <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple name="files"
                          type="file">
                 </label>
-                <button (click)="quitarImagenes(0,i)" class="boton-cerrar btn-outline-danger px-0 py-0 ">Eliminar
+                <button (click)="quitarImagenes(0,i)" class="boton-cerrar btn-outline-danger px-0 py-0 "> <span class="fa  fa-trash"></span>
                 </button>
               </div>
             </div>
@@ -285,7 +285,7 @@
           </div>
 
 
-          <div class="col-lg-8">
+          <div class="col-lg-7">
             <label>Peso </label>
             <div class="input-group mb-3">
               <input #Peso="ngModel" [(ngModel)]="this.Producto.Peso_Producto" class="form-control" name="peso"
@@ -295,10 +295,10 @@
                 <span class="input-group-text unidades">Kg</span>
               </div>
 
-
+              <p style="font-size: x-small" class="ml-2">El peso de los productos ayudará a calcular el precio de
+                envío</p>
             </div>
-            <p style="font-size: x-small" class="ml-2">El peso de los productos ayudará a calcular el precio de
-              envío</p>
+
           </div>
           <br>
           <div class="form-group ml-3">
@@ -443,14 +443,15 @@
               [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[i+1]==false,'borde-imagenes1':vectorBanderaAgregarImagen[i+1]==true }"
               class="row  mt-3 ">
               <div *ngFor='let url of imagenes[i+1]; index as j ' class="ml-1">
-                <div class="col-auto card mt-2 px-0 pb-2">
+                <div class="col-auto card mt-2 px-0 pb-0">
                   <label style="border: none;  ">
                     <img [src]="url" class="px-0" height="140px" width="140px">
                     <input (change)="subirImagenes($event,(i+1))" accept="image/*" class="file" multiple name="files"
                            type="file">
                   </label>
-                  <button (click)="quitarImagenes((i+1),j)" class="boton-cerrar btn-outline-danger px-0 py-0 ">
-                    Eliminar
+                  <button (click)="quitarImagenes((i+1),j)" class="boton-cerrar  btn-outline-danger px-0 py-0 ">
+
+                    <span class="fa fa-trash"></span>
                   </button>
                 </div>
               </div>
@@ -472,7 +473,7 @@
                   <label class="imagen-agregar">
                     <i class="fa fa-picture-o fa-4x ml-4"></i>
                     <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                    <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file" )>
+                    <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file" >
                     <br>
                     <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imagenes </p>
                     <p class=" link-agregar-imagenes2">maximo 6</p>
