@@ -12,12 +12,6 @@ import {ProductoServicio} from '../../../servicios/producto.servicio';
 import Swal from 'sweetalert2'
 import {ToastrService} from 'ngx-toastr';
 
-interface Producto_Enviar {
-  Oferta: Oferta;
-  Producto: Producto;
-  Variantes: any;
-  Imagenes: any;
-}
 
 @Component({
   selector: 'app-productos',
@@ -65,8 +59,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   /*public vectorOpciones=new Array(0);
     public vectorOpciones=[];
   * */
-  public vectorOpcionesEntregaLocal: Array<number> = [1];
-  public vectorOpcionesEntregaFueraLocalidad: Array<number> = [1];
+
   public visible = true;
   public color = ['#2889e9'];
   public categoriasSeleccionadas = new Set();
@@ -96,12 +89,18 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   public videoYoutubeGuardar: any;
   public direccionVideoYoutube: any;
 // enviar
-  public Producto_Enviar: Producto_Enviar;
 
+
+  public Producto_Enviar = {
+    Oferta: null,
+    Producto: null,
+    Variantes: null,
+    Imagenes: null
+  }
 
   constructor(public toastr: ToastrService, private _productoServicio: ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
-    this.Oferta = new Oferta(null, null);
-    this.Producto = new Producto(null, null, null, null, null, null, null, null,0);
+    this.Oferta = new Oferta(null, "Garantia del vendedor");
+    this.Producto = new Producto(null, null, null, null, null, null, null, null, null);
     this.Variantes.push(new Variante(null, null, null, null, null, "unidades"));
   }
 
@@ -207,8 +206,8 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     document.forms["form"].reset();
     this.Imagenes_Producto[indice].splice(imagen, 1);
     console.log("vector imagenes", this.imagenes[indice]);
-    if(this.imagenes[indice].length==0)
-    this.vectorBanderaAgregarImagen[indice] = false;
+    if (this.imagenes[indice].length == 0)
+      this.vectorBanderaAgregarImagen[indice] = false;
   }
 
   public opcionCondicionProducto(condicion) {
@@ -233,7 +232,6 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   }
 
 
-
   public opcionGarantia(garantia) {
     console.log("Garantia", garantia)
     this.Oferta.Garantia = garantia;
@@ -250,7 +248,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     this.vectorOpciones.push(1);
     this.color.push("#2889e9");
     this.vectorBanderaAgregarImagen.push(false);
-    this.Variantes.push(new Variante(null, null, null, null, null, "unidades"));
+    this.Variantes.push(new Variante("#2889e9", null, null, null, null, "unidades"));
     this.Imagenes_Producto.push([]);
     this.imagenes.push([]);
     console.log("asdasd");
@@ -265,7 +263,6 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
 
 
   }
-
 
 
   public async getCategorias() {
@@ -355,7 +352,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     const rgba = this.cpService.hsvaToRgba(hsva);
     console.log(color);
     console.log(rgba);
-    this.Variantes[indice].Color = rgba;
+    this.Variantes[indice].Color = color;
     console.log("Variante despuez de color", this.Variantes[indice]);
     return this.cpService.rgbaToCmyk(rgba);
   }
@@ -397,7 +394,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   }
 
 
-  public async saveProducto() {
+  public async guardarProducto() {
     try {
       if (this.videoYoutube) {
         this.videoYoutubeGuardar = new Imagen_Producto('Video', 'youtube', this.videoYoutube, 0);
@@ -410,8 +407,10 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
       this.Producto_Enviar.Variantes = this.Variantes;
       this.Producto_Enviar.Imagenes = this.Imagenes_Producto;
 
-      let response = await this._productoServicio.saveProducto(this.Producto_Enviar).toPromise();
-      this.mensageCorrecto(response.data);
+
+      console.log("Producto a enviar ", this.Producto_Enviar)
+      /*    let response = await this._productoServicio.saveProducto(this.Producto_Enviar).toPromise();
+          this.mensageCorrecto(response.data);*/
     } catch (e) {
       console.log("error:" + JSON.stringify((e).error.message));
       if (JSON.stringify((e).error.message))

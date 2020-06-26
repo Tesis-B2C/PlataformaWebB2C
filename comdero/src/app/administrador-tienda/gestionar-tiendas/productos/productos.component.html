@@ -227,8 +227,8 @@
 
               <div class="input-group mb-3">
                 <input #PrecioUnitario0="ngModel" [(ngModel)]="this.Variantes[0].Precio_Unitario" class="form-control"
-                       min="0" step="0" oninput="validity.valid||(value='');"
-                       name="precioUnitario0" id="precioUnitarioVariante0" type="number" placeholder="0.00">
+                       min="0" step="0.01" oninput="validity.valid||(value='');"
+                       name="precioUnitario0" id="precioUnitarioVariante0" type="number" placeholder="0,00">
 
 
                 <div class="input-group-append">
@@ -242,7 +242,7 @@
               <label>Porcentaje de Iva </label>
               <div class="input-group mb-3">
                 <input #Iva="ngModel" [(ngModel)]="this.Oferta.Iva" class="form-control" name="iva" placeholder="12"
-                       min="0" step="0" oninput="validity.valid||(value='');"
+                       min="0" step="0.01" oninput="validity.valid||(value='');"
                        type="number">
                 <div class="input-group-append">
                   <span class="input-group-text unidades">%</span>
@@ -271,7 +271,7 @@
             <div class="input-group">
 
               <input #Stock0="ngModel" [(ngModel)]="this.Variantes[0].Stock" class="form-control" name="stock0"
-                     placeholder="20" type="number" min="0" step="0" oninput="validity.valid||(value='');">
+                     placeholder="20" type="number" min="0" step="0.01" oninput="validity.valid||(value='');">
 
               <select #Unidad0="ngModel" [(ngModel)]="this.Variantes[0].Cod_Unidad"
                       class="browser-default form-control col "
@@ -289,7 +289,7 @@
             <label>Peso </label>
             <div class="input-group mb-3">
               <input #Peso="ngModel" [(ngModel)]="this.Producto.Peso_Producto" class="form-control" name="peso"
-                     placeholder="120" min="0" step="0" oninput="validity.valid||(value='');"
+                     placeholder="120" min="0" step="0.01" oninput="validity.valid||(value='');"
                      type="number">
               <div class="input-group-append">
                 <span class="input-group-text unidades">Kg</span>
@@ -333,7 +333,7 @@
           <div class="form-group">
             <label class="custom-control custom-radio custom-control-inline">
               <input (click)="opcionGarantia($event.target.value)" class="custom-control-input" name="garantia"
-                     type="radio" value="Garantia del vendedor">
+                     type="radio" value="Garantia del vendedor" checked>
               <span class="custom-control-label"> Garantia del vendedor </span>
             </label>
           </div>
@@ -489,7 +489,7 @@
             <div class="input-group">
 
               <input #Stock="ngModel" [(ngModel)]="this.Variantes[i+1].Stock" class="form-control" name="stock{{i+1}}"
-                     placeholder="200" type="number" min="0" step="0" oninput="validity.valid||(value='');">
+                     placeholder="200" type="number" min="0"step="0.01" oninput="validity.valid||(value='');">
 
               <select #Unidad="ngModel" [(ngModel)]="this.Variantes[i+1].Cod_Unidad" class=" form-control col-lg-5 "
                       id="selectUnidades" name="unidad{{i+1}}">
@@ -507,7 +507,7 @@
               <input #PrecioUnitario="ngModel" [(ngModel)]="this.Variantes[i+1].Precio_Unitario"
                      aria-label="Amount (to the nearest dollar)" class="form-control"
                      name="precioUnitario{{i+1}}" placeholder="20"
-                     type="number" min="0" step="0" oninput="validity.valid||(value='');">
+                     type="number" min="0" step="0.01" oninput="validity.valid||(value='');">
               <div class="input-group-append">
                 <span class="input-group-text unidades">$</span>
               </div>
@@ -611,7 +611,7 @@
       </button>
 
 
-      <button (click)="this.showSuccess()" class="btn btn-outline-primary text-nowrap offset-md-2 col-md-5 mb-4"
+      <button (click)="this.guardarProducto()" class="btn btn-outline-primary text-nowrap offset-md-2 col-md-5 mb-4"
               type="button">
         <span class="spinner-border spinner-border-sm mr-2"></span>
         Guardar Producto
