@@ -12,12 +12,6 @@ import {ProductoServicio} from '../../../servicios/producto.servicio';
 import Swal from 'sweetalert2'
 import {ToastrService} from 'ngx-toastr';
 
-interface Producto_Enviar {
-  Oferta: Oferta;
-  Producto: Producto;
-  Variantes: any;
-  Imagenes: any;
-}
 
 @Component({
   selector: 'app-productos',
@@ -37,10 +31,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   public banderaAnimacionVideo: boolean = false;
 
   // banderas de envios a domicilio
-  // banderas de envios a domicilio
-  // banderas de envios a domicilio
-  public banderaEntregaDomicilioLocalidad: boolean = false;
-  public banderaEntregaDomicilioFueraLocalidad: boolean = false;
+
   public banderaVariaciones: boolean = false;
   public Variantes = [];
   //
@@ -68,8 +59,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   /*public vectorOpciones=new Array(0);
     public vectorOpciones=[];
   * */
-  public vectorOpcionesEntregaLocal: Array<number> = [1];
-  public vectorOpcionesEntregaFueraLocalidad: Array<number> = [1];
+
   public visible = true;
   public color = ['#2889e9'];
   public categoriasSeleccionadas = new Set();
@@ -99,12 +89,18 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   public videoYoutubeGuardar: any;
   public direccionVideoYoutube: any;
 // enviar
-  public Producto_Enviar: Producto_Enviar;
 
+
+  public Producto_Enviar = {
+    Oferta: null,
+    Producto: null,
+    Variantes: null,
+    Imagenes: null
+  }
 
   constructor(public toastr: ToastrService, private _productoServicio: ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
-    this.Oferta = new Oferta(null, null, null, null, null, null);
-    this.Producto = new Producto(null, null, null, null, null, null, null, null);
+    this.Oferta = new Oferta(null, "Garantia del vendedor");
+    this.Producto = new Producto(null, null, null, null, null, null, null, null, null);
     this.Variantes.push(new Variante(null, null, null, null, null, "unidades"));
   }
 
@@ -142,18 +138,21 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     this.toastr.clear();
   }
 
+
   public async subirImagenes(eventEntrante, indice) {
     if (this.imagenes[indice] == null) {
       this.imagenes[indice] = [];
     }
     if (eventEntrante.target.files && eventEntrante.target.files[0]) {
       var filesAmount = eventEntrante.target.files.length;
+
+
       this.vectorBanderaAgregarImagen[indice] = true;
       if (filesAmount > 6) {
         this.banderaMensajeMaximoImagenes = true;
       } else {
         for (let i = 0; i < filesAmount; i++) {
-          this.Imagenes_Producto[indice].push(new Imagen_Producto(eventEntrante.target.files[i].name, eventEntrante.target.files[i].type, null, eventEntrante.target.files[i].size));
+          this.Imagenes_Producto[indice].push(new Imagen_Producto(eventEntrante.target.files[i].name, eventEntrante.target.files[i].type, eventEntrante.target.files[i], eventEntrante.target.files[i].size));
           var reader = new FileReader();
           reader.onload = (event: any) => {
             if (this.imagenes[indice] != null)
@@ -209,6 +208,9 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     this.imagenes[indice].splice(imagen, 1);
     document.forms["form"].reset();
     this.Imagenes_Producto[indice].splice(imagen, 1);
+    console.log("vector imagenes", this.imagenes[indice]);
+    if (this.imagenes[indice].length == 0)
+      this.vectorBanderaAgregarImagen[indice] = false;
   }
 
   public opcionCondicionProducto(condicion) {
@@ -232,34 +234,6 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     }
   }
 
-  public opcionReservarProducto(event) {
-    if (event.target.checked) {
-      this.Oferta.Reserva = 0;
-    } else {
-      this.Oferta.Reserva = 1;
-    }
-
-  }
-
-  public opcionRetiroPersona(retiroPersona) {
-    console.log("Envio persona", retiroPersona);
-    this.Oferta.Ofrece_Retiro_Personal = retiroPersona;
-  }
-
-  public opcionEntregaLocalidad(entregaLocalidad, bandera) {
-
-    this.banderaEntregaDomicilioLocalidad = bandera;
-    console.log("Entrega localidad", entregaLocalidad);
-    this.Oferta.Ofrece_Envio_Local = entregaLocalidad;
-
-  }
-
-  public opcionEntregaFueraLocalidad(entregaFueraLocalidad, bandera) {
-    this.banderaEntregaDomicilioFueraLocalidad = bandera;
-    this.vectorOpcionesEntregaFueraLocalidad = [1];
-    console.log("Entrega fuera localidad", entregaFueraLocalidad);
-    this.Oferta.Ofrece_Envio_Externo = entregaFueraLocalidad;
-  }
 
   public opcionGarantia(garantia) {
     console.log("Garantia", garantia)
@@ -277,7 +251,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     this.vectorOpciones.push(1);
     this.color.push("#2889e9");
     this.vectorBanderaAgregarImagen.push(false);
-    this.Variantes.push(new Variante(null, null, null, null, null, "unidades"));
+    this.Variantes.push(new Variante("#2889e9", null, null, null, null, "unidades"));
     this.Imagenes_Producto.push([]);
     this.imagenes.push([]);
     console.log("asdasd");
@@ -291,27 +265,6 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     this.vectorBanderaAgregarImagen[pocicion + 1] = false;
 
 
-  }
-
-
-  public agregarOpcionesEntregaFueraLocalidad() {
-    this.vectorOpcionesEntregaFueraLocalidad.push(1);
-
-  }
-
-  public agregarOpcionesEntregaLocal() {
-    this.vectorOpcionesEntregaLocal.push(1);
-
-  }
-
-  public borrarOpcionesEntregaFueraLocalidad(pocicion: number) {
-
-    this.vectorOpcionesEntregaFueraLocalidad.splice(pocicion, 1)
-  }
-
-  public borrarOpcionesEntregaLocal(pocicion: number) {
-
-    this.vectorOpcionesEntregaLocal.splice(pocicion, 1)
   }
 
 
@@ -402,7 +355,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     const rgba = this.cpService.hsvaToRgba(hsva);
     console.log(color);
     console.log(rgba);
-    this.Variantes[indice].Color = rgba;
+    this.Variantes[indice].Color = color;
     console.log("Variante despuez de color", this.Variantes[indice]);
     return this.cpService.rgbaToCmyk(rgba);
   }
@@ -444,7 +397,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   }
 
 
-  public async saveProducto() {
+  public async guardarProducto() {
     try {
       if (this.videoYoutube) {
         this.videoYoutubeGuardar = new Imagen_Producto('Video', 'youtube', this.videoYoutube, 0);
@@ -457,8 +410,10 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
       this.Producto_Enviar.Variantes = this.Variantes;
       this.Producto_Enviar.Imagenes = this.Imagenes_Producto;
 
-      let response = await this._productoServicio.saveProducto(this.Producto_Enviar).toPromise();
-      this.mensageCorrecto(response.data);
+
+      console.log("Producto a enviar ", this.Imagenes_Producto[0])
+        let response = await this._productoServicio.saveProducto(this.Oferta,this.Producto,this.Variantes,this.Imagenes_Producto).toPromise();
+          this.mensageCorrecto(response.data);
     } catch (e) {
       console.log("error:" + JSON.stringify((e).error.message));
       if (JSON.stringify((e).error.message))
@@ -467,7 +422,6 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     }
 
   }
-
 
 
   mensageError(mensaje) {

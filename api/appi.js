@@ -3,7 +3,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
-
+const path = require('path');
 
 //Notificaciones
 
@@ -17,7 +17,7 @@ var producto_rutas=require('./routes/producto');
 var metodo_pago_rutas=require('./routes/metodo_pago');
 var tienda_rutas = require('./routes/tienda');
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); //convertir a json als peticiones
 
 //configurar cabeceras http
@@ -39,7 +39,8 @@ app.use('/api',unidad_medida_rutas);
 app.use('/api',producto_rutas);
 app.use('/api', metodo_pago_rutas);
 app.use('/api',tienda_rutas);
-
+app.use('/uploads/tiendas',express.static(path.resolve('uploads/tiendas')));
+app.use('/uploads/productos',express.static(path.resolve('uploads/productos')))
 //app.use('/api', administrador_rutes);
 /*app.use('/api', user_routes);
 app.use('/api', nuevaOferta_routes);

@@ -5,16 +5,25 @@ const TIENDA = require('../models/tienda'); //importar el modelo del usuario  o 
 const SUCURSAL = require('../models/sucursal');
 const jwt = require('../services/jwt');
 const db = require('../database/db');
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
-const {QueryTypes} = require('sequelize');
+
+/*const {QueryTypes} = require('sequelize');*/
 
 async function registrarTienda(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
 
     try {
+        let params = JSON.parse(req.body.tienda);
+        console.log("body asd", params.Sucursal);
+        if (req.files.logo) {
+            var logo = req.files.logo[0].path;
+        }
+        if (req.files.banner) {
+            var banner = req.files.banner[0].path;
+        }
 
-        let tiendaEncontrado = await TIENDA.findOne({where: {CORREO_TIENDA: req.body.Tienda.Correo_Tienda}});
+        let tiendaEncontrado = await TIENDA.findOne({where: {CORREO_TIENDA: params.Tienda.Correo_Tienda}});
 
         if (tiendaEncontrado) {
             res.status(404).send({
@@ -23,24 +32,24 @@ async function registrarTienda(req, res) {
         } else {
 
             let tiendaGuardado = await TIENDA.create({
-                    COD_AGENTE: req.body.Tienda.Cod_Agente,
-                    RAZON_SOCIAL: req.body.Tienda.Razon_Social,
-                    NOMBRE_COMERCIAL: req.body.Tienda.Nombre_Comercial,
-                    LINK_PAGINA: req.body.Tienda.Link_Pagina,
-                    LINK_FACEBOOK: req.body.Tienda.Link_Facebook,
-                    DESCRIPCION_TIENDA: req.body.Tienda.Descripcion_Tienda,
-                    LOGO: req.body.Tienda.Logo,
-                    BANNER: req.body.Tienda.Banner,
-                    ESTADO_TIENDA: req.body.Tienda.Estado_Tienda,
-                    TERMINOS_CONDICIONES: req.body.Tienda.Terminos_Condiciones,
-                    CORREO_TIENDA: req.body.Tienda.Correo_Tienda,
-                    HORARIO_ATENCION: req.body.Tienda.Horario_Atencion
+                    COD_AGENTE: params.Tienda.Cod_Agente,
+                    RAZON_SOCIAL: params.Tienda.Razon_Social,
+                    NOMBRE_COMERCIAL: params.Tienda.Nombre_Comercial,
+                    LINK_PAGINA: params.Tienda.Link_Pagina,
+                    LINK_FACEBOOK: params.Tienda.Link_Facebook,
+                    DESCRIPCION_TIENDA: params.Tienda.Descripcion_Tienda,
+                    ESTADO_TIENDA: params.Tienda.Estado_Tienda,
+                    TERMINOS_CONDICIONES: params.Tienda.Terminos_Condiciones,
+                    CORREO_TIENDA: params.Tienda.Correo_Tienda,
+                    HORARIO_ATENCION: params.Tienda.Horario_Atencion,
+                    LOGO: logo,
+                    BANNER: banner
                 },
                 {
                     transaction: t
                 });
 
-            for (const s of req.body.Sucursal) {
+            for (const s of params.Sucursal) {
                 await SUCURSAL.create(
                     {
                         NUM_TIENDA: tiendaGuardado.dataValues.NUM_TIENDA,
@@ -72,12 +81,22 @@ async function registrarTienda(req, res) {
             }
         }
     } catch (err) {
+        if (fs.exists(path.resolve(req.files.logo[0].path))) {
+            console.log('existe');
+            await fs.unlink(path.resolve(req.files.logo[0].path));
+        }
+        if (fs.exists(path.resolve(req.files.banner[0].path))) {
+            console.log('existe');
+            await fs.unlink(path.resolve(req.files.banner[0].path));
+        }
         await t.rollback();
         res.status(500).send({
             message: err.name
         });
 
     }
+
+
     /* try {
 
          console.log("ESTO ESTA EN EL BACKEN " + req.body.Tienda);
@@ -107,54 +126,6 @@ async function registrarTienda(req, res) {
      }*/
 }
 
-async function subirImagenesTienda(req, res) {
-
-    try {
-        let Id_Tienda = req.params.id;
-        let tipo = req.params.tipo;
-        let file_name = 'No se ha subido ninguna Imagen';
-        let files = req.files.uploads[0];
-        if (files) {
-            let file_path = files['path'];
-            let file_split = file_path.split('\\');
-            let file_name = file_split[2];
-            let ext_split = file_name.split('\.');
-            let file_ext = ext_split[1];
-            if (file_ext == 'png' || file_ext == 'jpg' || file_ext == 'png' || file_ext == 'JPG') {
-                let tiendaEncontrada = await TIENDA.findOne({where: {ESTADO_TIENDA: '1', NUM_TIENDA: Id_Tienda}});
-                if (tiendaEncontrada) {
-                    if (tipo == "Logo") {
-                        var tiendaActualizada = await tiendaEncontrada.update({LOGO: file_name});
-                    } else if (tipo == "Banner") {
-                        var tiendaActualizada = await tiendaEncontrada.update({BANNER: file_name});
-                    }
-                    if (!tiendaActualizada) {
-                        res.status(404).send({message: 'No se ha podido guardar el ' + tipo});
-                    } else {
-                        res.status(200).send({message: tipo + ' ha sido guardado correctamente, por favor espere unos momentos más, estamos a punto de terminar'});
-                    }
-                } else {
-                    res.status(404).send({message: 'Al parecer existe un problema con tu tienda, pudes comunicarte con nostros'});
-                }
-
-            } else {
-                res.status(500).send({
-                    message: 'El formato de archivo no es valido '
-                });
-            }
-
-        } else {
-            res.status(200).send({
-                message: 'No ha subido niguna imagen'
-            });
-
-        }
-    } catch (err) {
-        res.status(500).send({
-            message: 'error:' + err
-        });
-    }
-}
 
 async function getDatosTienda(req, res) {
 
@@ -204,13 +175,66 @@ async function getMisTiendas(req, res) {
     }
 }
 
+
+/*async function subirImagenesTienda(req, res) {
+
+    try {
+        let Id_Tienda = req.params.id;
+        let tipo = req.params.tipo;
+        let file_name = 'No se ha subido ninguna Imagen';
+        let files = req.files.uploads[0];
+        if (files) {
+            let file_path = files['path'];
+            let file_split = file_path.split('\\');
+            let file_name = file_split[2];
+            let ext_split = file_name.split('\.');
+            let file_ext = ext_split[1];
+            if (file_ext == 'png' || file_ext == 'jpg' || file_ext == 'png' || file_ext == 'JPG') {
+                let tiendaEncontrada = await TIENDA.findOne({where: {ESTADO_TIENDA: '1', NUM_TIENDA: Id_Tienda}});
+                if (tiendaEncontrada) {
+                    if (tipo == "Logo") {
+                        var tiendaActualizada = await tiendaEncontrada.update({LOGO: file_name});
+                    } else if (tipo == "Banner") {
+                        var tiendaActualizada = await tiendaEncontrada.update({BANNER: file_name});
+                    }
+                    if (!tiendaActualizada) {
+                        res.status(404).send({message: 'No se ha podido guardar el ' + tipo});
+                    } else {
+                        res.status(200).send({message: tipo + ' ha sido guardado correctamente, por favor espere unos momentos más, estamos a punto de terminar'});
+                    }
+                } else {
+                    res.status(404).send({message: 'Al parecer existe un problema con tu tienda, pudes comunicarte con nostros'});
+                }
+
+            } else {
+                res.status(500).send({
+                    message: 'El formato de archivo no es valido '
+                });
+            }
+
+        } else {
+            res.status(200).send({
+                message: 'No ha subido niguna imagen'
+            });
+
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}*/
+
+
+/*
 async function obtenerImagenTienda(req, res) {
     try {
         var imageFile = req.params.imageFile;
-        var path_file = './uploads/tienda/' + imageFile;
+
+       var path_file = './uploads/tienda/' + imageFile;
         console.log("este es el path" + path_file);
-        if (fs.existsSync(path_file)) {
-            res.sendFile(path.resolve(path_file));
+        if (fs.existsSync(imageFile)) {
+            res.sendFile(path.resolve(imageFile));
         } else {
             var path_file = './uploads/tienda/sinLogo.png';
             res.sendFile(path.resolve(path_file));
@@ -222,13 +246,14 @@ async function obtenerImagenTienda(req, res) {
         });
     }
 }
+*/
 
 module.exports = {          // para exportar todas las funciones de este modulo
     registrarTienda,
-    subirImagenesTienda,
     getDatosTienda,
     getMisTiendas,
-    obtenerImagenTienda
+    /* subirImagenesTienda,*/
+    /*   obtenerImagenTienda*/
 
 };
 

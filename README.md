@@ -12,7 +12,7 @@ npm install @ng-bootstrap/ng-bootstrap --save
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
 
 
---------Servicio "api"----------
+--------Servicio "api" correo----------
 npm install nodemailer // correo electronico
 
 
@@ -54,3 +54,12 @@ npm i ngx-toastr --save
 npm install @angular/animations --save
 @import '~ngx-toastr/toastr';
 https://www.npmjs.com/package/ngx-toastr
+
+
+
+---------------- SUbir archivos "api"----------------
+npm install multer --save
+npm install uuid --save // encriptar nombres
+npm install fs-extra --save // permite utilizar file system de forma asyncrona
+https://www.npmjs.com/package/multer
+https://www.npmjs.com/package/uuid

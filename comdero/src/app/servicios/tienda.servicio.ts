@@ -18,16 +18,22 @@ export class TiendaServicio {
     this.url = GLOBAL.url;
   }
 
-  registrarTienda(tienda){
-    debugger;
+  registrarTienda(tienda, logo:File, banner:File){
+
     let params = JSON.stringify(tienda);
-    let headers = new HttpHeaders({ "Content-type": "application/json" });
-    return this._http.post<objeto>(this.url + "registrarTienda" , params,{ headers: headers });
+    const  fd = new  FormData();
+    debugger;
+   fd.append('tienda',params);
+    fd.append("logo",logo);
+    fd.append("banner",banner);
+    //let params = JSON.stringify(tienda);
+   // let headers = new HttpHeaders({ "Content-type": "application/json" });
+    return this._http.post<objeto>(this.url + "registrarTienda" ,fd,);
   }
 
-  subirImagenesServidor(formData,Id_Tienda, tipo){
+/*  subirImagenesServidor(formData,Id_Tienda, tipo){
     return this._http.post<objeto>(this.url + "subirImagenesTienda/"+Id_Tienda+"/"+tipo, formData);
-  }
+  }*/
 
   getDatosTienda(Id_Tienda){
       let headers = new HttpHeaders({ "Content-type": "application/json" });

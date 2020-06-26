@@ -9,6 +9,7 @@ export class Producto {
     public Rastrear_Stock: Number,
     public Vender_Sin_Stock: Number,
     public Condicion: String,
+    public Peso_Producto:Number
   ) {
   }
 }

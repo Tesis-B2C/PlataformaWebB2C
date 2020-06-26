@@ -4,10 +4,17 @@
 
 
 async function saveProducto(req, res) {
-    console.log("objetos de productos", req.body.params);
+
     try {
-        let productoGuardado = await sequelize.query('CALL calculateFees();');
-        if (productoGuardado) {
+        let producto =JSON.parse(req.body.producto);
+        let oferta =JSON.parse(req.body.oferta);
+
+        console.log("objetos de productos", req.files);
+        console.log("objetos" ,producto,oferta, JSON.parse(req.body.variantes));
+        res.status(200).send({
+            message: "Producto guardado correctamente"
+        });
+        /*if (productoGuardado) {
             res.status(200).send({
                 message: "Producto guardado correctamente"
             });
@@ -17,7 +24,7 @@ async function saveProducto(req, res) {
             });
 
 
-        }
+        }*/
     } catch (err) {
         res.status(500).send({
             message: 'error:' + err

@@ -157,12 +157,13 @@ label {
 }
 
 .borde-imagenes1L {
-    border: rgba(0, 0, 0, 0.3) 2px dashed;
-    width: 8rem;
-    height: 8rem;
-    border-radius: 50%;
-    justify-content: center;
-  }
+  border: rgba(0, 0, 0, 0.3) 2px dashed;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  justify-content: center;
+}
+
 .borde-imagenes1L2 {
   border: rgba(0, 0, 0, 0.3) 2px solid;
   width: 6rem;
@@ -249,7 +250,7 @@ label {
   background-color: rgba(244, 244, 244, 0.95);
   width: 100%;
   height: 100vh;
- position: absolute;
+  position: absolute;
   z-index: 100;
   display: flex;
   justify-content: center;
@@ -258,7 +259,7 @@ label {
 }
 
 #imagenCarga {
-  width: 100%;
+  width:100%;
 
 
 }
@@ -279,22 +280,22 @@ label {
 
 }
 
-.btn-Wizard{
+.btn-Wizard {
   background: #1a56e9;
   font-size: small;
 }
 
-.btn-Wizard:hover{
+.btn-Wizard:hover {
   background: #007bff;
   font-size: small;
 }
 
 /* PASO 3 */
-#contenedorPaso3{
+#contenedorPaso3 {
   position: relative;
 }
 
-.ejemplo-tienda{
+.ejemplo-tienda {
   position: absolute;
 }
 
@@ -317,34 +318,56 @@ label {
   opacity: 0.8;
 }
 
-btn{
+btn {
   font-size: small;
 }
 
-#panelDos{
+#panelDos {
   background-image: url("src/assets/estilos-registroTienda/plantillaTienda.png");
   -webkit-background-size: 100% 100%;
   -moz-background-size: 100% 100%;
   -o-background-size: 100% 100%;
   background-size: 100% 100%;
   min-height: 400px !important;
-  width: 100% ;
+  width: 100%;
   text-align: center;
 }
 
 @media (max-width: 400px) {
-  #panelDos{
+  #panelDos {
     background-image: url("src/assets/estilos-registroTienda/plantillaTienda.png");
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
     min-height: 300px !important;
-    width: 100% ;
+    width: 100%;
     text-align: center;
   }
 }
 
-.posicion-logo{
+.posicion-logo {
   position: absolute;
+}
+
+.titulo {
+  font-weight: bold;
+  font-size: x-large;
+}
+
+.subtitulo {
+  font-weight: bold;
+  font-size: medium;
+}
+
+@media (max-width: 540px) {
+  .titulo {
+    font-weight: bold;
+    font-size: medium;
+  }
+
+  .subtitulo {
+    font-weight: normal;
+    font-size: small;
+  }
 }

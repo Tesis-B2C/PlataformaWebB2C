@@ -80,3 +80,14 @@
   text-align: center;
 
 }
+
+
+img:before {
+  content: ' ';
+  display: block;
+  position: absolute;
+  height: 300px;
+  width: 300px;
+  background-image: url('src/assets/images/no-image.png');
+  background-repeat: no-repeat;
+}
