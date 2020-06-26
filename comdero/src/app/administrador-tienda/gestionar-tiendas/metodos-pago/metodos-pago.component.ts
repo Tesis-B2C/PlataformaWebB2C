@@ -36,7 +36,6 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
     delete this.Metodo_Pago_Electronico;
     delete this.Metodo_Pago_Transferencia;
     delete this.Metodo_Pago_Efectivo;
-
   }
 
 

@@ -65,7 +65,8 @@
         <div class="form-row">
           <div class="col-10">
             <h6 class="font-weight-bold">Envío a domicilio</h6>
-            <p class="p">Ofrece a tus cliente la opción de retirar su pedido en tu negocio.</p>
+            <p class="p">Ofrece a tus cliente la opción de enviar sus pedidos a domicilio dentro y fuera de la
+              ciudad. Las tarifas que configures se agregarán al final de los pedidos. </p>
           </div>
 
           <div class="col-2 text-right">
@@ -79,17 +80,160 @@
         <div class="card card-body p-0 mt-3">
 
           <div class="p-3">
-            fdhgsf
-          </div>
+            <div class="form-group">
+              <label class="tituloDomicilio mb-0">Local</label>
+              <p class="p">Él envió a domicilio local es para los clientes que se encuentran dentro de la zona de tu
+                negocio.</p>
+            </div>
 
+            <div class="form-group">
+              <div>
+                <table class="table table-hover">
+                  <thead>
+                  <tr>
+                    <th scope="col" class="tituloTarifas">Nº</th>
+                    <th scope="col" class="tituloTarifas">Condición</th>
+                    <th scope="col" class="tituloTarifas">Precio</th>
+                    <th scope="col"></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr class="columnaTarifa" *ngFor="let item of this.vectorTarifasLocal; index as i">
+                    <th scope="row">{{i + 1}}</th>
+                    <td>-</td>
+                    <td>Precio</td>
+                    <td>
+                      <div ngbDropdown class="d-inline-block">
+                        <button id="btnTarifas0" ngbDropdownToggle><i class="fa fa-ellipsis-h"></i>
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="btnTarifas0">
+                          <button ngbDropdownItem class="btnOpcTarifa">Editar tarifa</button>
+                          <button ngbDropdownItem style="color:red" class="btnOpcTarifa"
+                                  (click)="eliminarTarifaLocal(i)">Eliminar
+                          </button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Boton Modal -->
+              <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal"
+                      data-target="#exampleModalCenter">Agregar tarifa
+              </button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h6>Agregar tarifa</h6>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body px-0">
+
+                      <div class="radio-item mx-3">
+                        <input type="radio" name="opcTarifa" id="opcPeso" (change)="opcTarifa('peso', $event)">
+                        <label for="opcPeso">&nbsp;&nbsp;Según el peso del pedido</label>
+                      </div>
+                      <br>
+                      <div class="radio-item mx-3">
+                        <input type="radio" name="opcTarifa" id="opcPrecio" (change)="opcTarifa('precio', $event)">
+                        <label for="opcPrecio">&nbsp;&nbsp;Según el precio del pedido</label>
+                      </div>
+
+                      <hr mt-0 *ngIf="activarTarifaLocalPeso || activarTarifaLocalPrecio ">
+
+                      <div class="form-group col-12" *ngIf="activarTarifaLocalPeso || activarTarifaLocalPrecio ">
+                        <label>Precio</label>
+                        <input class="tamanioInputs form-control" name="" placeholder=""
+                               required type="text">
+                      </div> <!-- form-group end.// -->
+
+                      <div class="form-group mx-3" *ngIf="activarTarifaLocalPeso">
+
+                        <div class="form-row">
+
+                          <div class="form-group col-md-6">
+                            <label>Peso Minimo</label>
+                            <div class="input-group">
+                              <input class="tamanioInputs form-control" name="" placeholder="" required type="text">
+                              <div class="input-group-append">
+                                <span class="input-group-text tamanioInputs">kg</span>
+                              </div>
+                            </div> <!-- input-group end.// -->
+                          </div> <!-- form-group end.// -->
+
+                          <div class="form-group col-md-6">
+                            <label>Peso Máximo</label>
+                            <div class="input-group">
+                              <input class="tamanioInputs form-control" name="" placeholder="" required type="text">
+                              <div class="input-group-append">
+                                <span class="input-group-text tamanioInputs">kg</span>
+                              </div>
+                            </div> <!-- input-group end.// -->
+                          </div> <!-- form-group end.// -->
+
+                        </div>
+
+                      </div>
+
+                      <div class="form-group mx-3" *ngIf="activarTarifaLocalPrecio">
+                        <div class="form-row">
+
+                          <div class="form-group col-md-6">
+                            <label>Precio Minimo</label>
+                            <div class="input-group">
+                              <input class="tamanioInputs form-control" name="" placeholder="" required type="text">
+                              <div class="input-group-append">
+                                <span class="input-group-text tamanioInputs">US$</span>
+                              </div>
+                            </div> <!-- input-group end.// -->
+                          </div> <!-- form-group end.// -->
+
+                          <div class="form-group col-md-6">
+                            <label>Precio Máximo</label>
+                            <div class="input-group">
+                              <input class="tamanioInputs form-control" name="" placeholder="" required type="text">
+                              <div class="input-group-append">
+                                <span class="input-group-text tamanioInputs">US$</span>
+                              </div>
+                            </div> <!-- input-group end.// -->
+                          </div> <!-- form-group end.// -->
+
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"
+                              (click)="cancelarTarifaLocal()">Cancelar
+                      </button>
+                      <button type="button" class="btn btn-primary btn-sm" (click)="agregarTarifaLocal()">Agregar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
           <hr class="m-0">
 
           <div class="p-3">
-            fdhgsf
+            <div class="form-group">
+              <label class="tituloDomicilio">Resto del país</label>
+            </div>
+
           </div>
 
         </div>
-
       </div>
     </div>
 

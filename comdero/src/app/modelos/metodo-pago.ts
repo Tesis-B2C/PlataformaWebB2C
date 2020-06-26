@@ -1,6 +1,5 @@
 export class Metodo_Pago {
   constructor(
-
     public Porcentaje_Descuento: Number,
     public Numero_Cuenta: Number,
     public Tipo_Cuenta: String,

@@ -1,4 +1,4 @@
-.alert {
+.alert, .table, .btnOpcTarifa {
   font-size: smaller;
 }
 
@@ -18,13 +18,17 @@
   text-align: justify;
 }
 
+.tamanioInputs {
+  font-size: small;
+}
+
 label {
   font-size: small;
   font-weight: normal;
   text-align: justify;
 }
 
-p{
+p {
   font-size: small;
   font-weight: normal;
 }
@@ -33,7 +37,7 @@ input {
   font-size: small;
 }
 
-select{
+select {
   font-size: small;
 }
 
@@ -105,4 +109,58 @@ input:checked + .slider:before {
   -webkit-transform: translateX(18px);
   -ms-transform: translateX(18px);
   transform: translateX(18px);
+}
+
+/*Tabla tarifas*/
+.dropdown-toggle::after {
+  display: none;
+}
+
+.tituloTarifas {
+  font-weight: normal;
+}
+
+.tituloDomicilio {
+  font-weight: bold;
+}
+
+tbody tr:hover {
+  background-color: rgba(128, 163, 248, 0.1);
+}
+
+
+/*Radio button*/
+.radio-item {
+  display: inline-block;
+  position: relative;
+  padding: 0 6px;
+}
+
+.radio-item input[type='radio'] {
+  display: none;
+}
+
+.radio-item label:before {
+  content: " ";
+  display: inline-block;
+  position: relative;
+  top: 2px;
+  margin: 0 5px 0 0;
+  width: 15px;
+  height: 15px;
+  border-radius: 11px;
+  border: 2px solid #1a56e9;
+  background-color: transparent;
+}
+
+.radio-item input[type=radio]:checked + label:after {
+  border-radius: 11px;
+  width: 7px;
+  height: 7px;
+  position: absolute;
+  top: 7px;
+  left: 10px;
+  content: " ";
+  display: block;
+  background: #1a56e9;
 }
