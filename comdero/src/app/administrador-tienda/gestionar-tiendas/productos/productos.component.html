@@ -123,14 +123,14 @@
             <div *ngIf="vectorBanderaAgregarImagen[0]==false" class="mx-auto ">
               <div class="col-auto pt-4">
                 <label class="imagen-agregar ">
-                  <i class="fa fa-picture-o fa-4x"></i>
-                  <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                  <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple type="file">
+                  <i class="fas fa-cloud-upload-alt fa-4x"></i>
+                 <!-- <i class="fas fa-cloud-upload-alt fa-2x ml-1"></i>-->
+                  <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple type="file" (drop)="subirImagenes($event,0)">
                 </label>
               </div>
             </div>
             <div *ngIf="vectorBanderaAgregarImagen[0]==false" class=" col-12 pb-5 mx-auto ">
-              <p class="link-agregar-imagenes ">Click para Agregar imagenes</p>
+              <p class="link-agregar-imagenes ">Click para Agregar imagenes </p>
             </div>
 
             <div *ngIf="vectorBanderaAgregarImagen[0]==true && imagenes[0].length<6" class="py-2">
@@ -199,13 +199,13 @@
               <div class=" pt-4 ml-2  ">
                 <label class="imagen-agregar ">
                   <i class="fa fa-film fa-4x  "></i>
-                  <i class="fa fa-plus-circle fa-2x ml-1 "></i>
+                  <i class="fa fa-upload fa-2x ml-1 "></i>
                   <input (change)="subirVideo($event)" accept="video/*" class="file" type="file">
                 </label>
               </div>
             </div>
             <div *ngIf="!this.videoYoutube" class=" col-12 mx-auto ">
-              <p class="link-agregar-imagenes pb-5">Subir un video promocional del producto desde el ordenador</p>
+              <p class="link-agregar-imagenes pb-5">Click para subir un video promocional del producto </p>
             </div>
           </div>
           <a *ngIf="this.videoYoutube" (click)="resetearVideoYoutube()" class="agregarVideoYoutube ml-2 col-md-5 ">
@@ -257,157 +257,15 @@
         </div>
       </form>
       <br>
-      <form class=" card card-body ">
-        <h6>Retiros y Envios</h6>
-        <hr>
-        <div class="container">
-          <div class="form-group">
-            <label>¿Desea ofrecer retiro en persona?</label>
-            <div class="form-group">
-              <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionRetiroPersona(0)" class="custom-control-input" name="entregaPersonal"
-                       type="radio" value="Si">
-                <span class="custom-control-label"> Si  </span>
-              </label>
-              <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionRetiroPersona(1)" class="custom-control-input"
-                       name="entregaPersonal" type="radio" value="No">
-                <span class="custom-control-label"> No </span>
-              </label>
-            </div> <!-- form-group end.// -->
-          </div>
 
-          <div class="form-group">
-            <label>¿Desea ofrecer el servicio de entrega a domicilio dentro de la localidad?</label>
-            <div class="form-group">
-              <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionEntregaLocalidad(0, true)" class="custom-control-input" name="entregaLocalidad"
-                       type="radio" value="Si">
-                <span class="custom-control-label"> Si  </span>
-              </label>
-              <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionEntregaLocalidad(1, false)" class="custom-control-input"
-                       name="entregaLocalidad" type="radio" value="No">
-                <span class="custom-control-label"> No </span>
-              </label>
-            </div> <!-- form-group end.// -->
-          </div>
-
-          <div *ngIf="this.banderaEntregaDomicilioLocalidad" class="col-12 mt-3 form-group">
-            <div *ngFor=" let opcion of vectorOpcionesEntregaLocal; let i=index" class="form-row">
-              <div class="form-group col-lg-5">
-                <label>Opcion {{i + 1}}</label>
-                <select class="form-control ">
-
-                </select>
-              </div>
-              <div class="form-group  col-lg-3">
-                <label> Precio </label>
-                <div class="input-group mb-3">
-                  <input class="form-control" placeholder="0.00" type="number" name="precioEntregaLocalidad" min="0" step="0"  oninput="validity.valid||(value='');">
-                  <div class="input-group-append">
-                    <span class="input-group-text unidades">$</span>
-                  </div>
-                </div>
-
-              </div>
-              <div class="form-group  col-lg-3">
-                <label>Tiempo de entrega </label>
-                <div class="input-group mb-3">
-                  <input class="form-control" placeholder="2" type="number" min="0" step="0"  oninput="validity.valid||(value='');">
-                  <div class="input-group-append">
-                    <span class="input-group-text unidades">Dia/s</span>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group  col-lg-1 ">
-                <label style="opacity: 0">boorar</label>
-                <button (click)="borrarOpcionesEntregaLocal(i)" class="form-control btn btn-outline-danger"
-                        style="font-size: smaller;border: none">
-                  <span class="fa fa-trash "></span>
-                </button>
-              </div>
-            </div>
-
-            <p (click)="agregarOpcionesEntregaLocal()" class="agregar" id="agregarOpcionesEntregaLocal">
-              <span class="fa fa-plus "></span> &nbsp;Agregar opcion
-            </p>
-          </div>
-
-          <div class="form-group">
-
-            <label>¿Desea ofrecer el servicio de entrega a domicilio fuera de la localidad?</label>
-
-
-            <div class="form-group">
-              <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionEntregaFueraLocalidad(0, true)" class="custom-control-input"
-                       name="entregaFueraLocalidad" type="radio" value="Si">
-                <span class="custom-control-label"> Si  </span>
-              </label>
-              <label class="custom-control custom-radio custom-control-inline">
-                <input (change)="opcionEntregaFueraLocalidad(1, false)" class="custom-control-input"
-                       name="entregaFueraLocalidad" type="radio" value="No">
-                <span class="custom-control-label"> No </span>
-              </label>
-            </div> <!-- form-group end.// -->
-          </div>
-
-          <div *ngIf="banderaEntregaDomicilioFueraLocalidad" class="col-12 mt-3 ">
-            <div *ngFor=" let opcion of vectorOpcionesEntregaFueraLocalidad; let i =index" class="form-row">
-              <div class="form-group col-lg-5">
-                <label>Opcion {{i + 1}}</label>
-                <select class="form-control "></select>
-              </div>
-              <div class="form-group  col-lg-3">
-                <label> Precio </label>
-                <div class="input-group mb-3">
-                  <input class="form-control" placeholder="0.00" type="number" #PrecioEntregaFueraLocalidad="ngModel" min="0" step="0"  oninput="validity.valid||(value='');"
-                         [(ngModel)]="falta">
-                  <div class="input-group-append">
-                    <span class="input-group-text unidades">$</span>
-                  </div>
-                </div>
-
-              </div>
-              <div class="form-group  col-lg-3">
-                <label>Tiempo de entrega </label>
-                <div class="input-group mb-3">
-                  <input class="form-control" placeholder="2" type="number" min="0" step="0"  oninput="validity.valid||(value='');">
-                  <div class="input-group-append">
-                    <span class="input-group-text unidades">Dia/s</span>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group  col-lg-1 ">
-                <label style="opacity: 0">boorar</label>
-                <button (click)="borrarOpcionesEntregaFueraLocalidad(i)" class="form-control btn btn-outline-danger"
-                        style="font-size: smaller;border: none">
-                  <span class="fa fa-trash "></span>
-                </button>
-              </div>
-            </div>
-
-            <p (click)="agregarOpcionesEntregaFueraLocalidad()" class="agregar"
-               id="agregarOpcionesEntregaFueraLocalidad">
-              <span class="fa fa-plus "></span> &nbsp;Agregar opcion
-            </p>
-          </div>
-
-          <br>
-        </div>
-      </form>
-
-      <br>
       <form class=" card card-body ">
 
         <h6>Inventario</h6>
         <hr>
         <div class="container">
-          <div class="form-group">
-            <label>Ingresse la cantidad y la unidad de medida en la cual se ofertara el producto 1</label>
-          </div>
-          <div class="form-group col-lg-8">
+
+          <div class="form-group col-lg-12">
+            <label>Ingresse la cantidad y la unidad de medida en la cual se ofertara el producto </label>
             <div class="input-group">
 
               <input #Stock0="ngModel" [(ngModel)]="this.Variantes[0].Stock" class="form-control" name="stock0"
@@ -422,6 +280,20 @@
               </select>
 
             </div>
+          </div>
+
+
+          <div class="col-lg-6">
+            <label>Peso </label>
+            <div class="input-group mb-3">
+              <input #Peso="ngModel" [(ngModel)]="this.Producto.Peso_Producto" class="form-control" name="peso" placeholder="120" min="0" step="0"  oninput="validity.valid||(value='');"
+                     type="number">
+              <div class="input-group-append">
+                <span class="input-group-text unidades">Kg</span>
+              </div>
+
+            </div>
+
           </div>
 
           <div class="form-group ml-2">
@@ -443,13 +315,7 @@
           </div>
 
 
-          <div class="form-group ml-2">
-            <div class="custom-control custom-checkbox">
-              <input (click)="opcionReservarProducto($event)" class="custom-control-input" id="permitirReservaProducto"
-                     type="checkbox">
-              <label class="custom-control-label" for="permitirReservaProducto">Permitir la reserva del producto</label>
-            </div>
-          </div>
+
 
           <br>
         </div>
@@ -588,8 +454,8 @@
               <div *ngIf="vectorBanderaAgregarImagen[i+1]==false" class="mx-auto ">
                 <div class="col-auto pt-4">
                   <label class="imagen-agregar ">
-                    <i class="fa fa-picture-o fa-4x"></i>
-                    <i class="fa fa-plus-circle fa-2x ml-1"></i>
+                    <i class="fa fa-cloud-upload-alt fa-4x"></i>
+                 <!--   <i class="fa fa-plus-circle fa-2x ml-1"></i>-->
                     <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file">
                   </label>
                 </div>
@@ -603,7 +469,7 @@
                   <label class="imagen-agregar">
                     <i class="fa fa-picture-o fa-4x ml-4"></i>
                     <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                    <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file">
+                    <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file"  )>
                     <br>
                     <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imagenes </p>
                     <p class=" link-agregar-imagenes2">maximo 6</p>

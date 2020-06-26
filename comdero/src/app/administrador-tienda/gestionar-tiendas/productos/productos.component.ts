@@ -37,10 +37,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   public banderaAnimacionVideo: boolean = false;
 
   // banderas de envios a domicilio
-  // banderas de envios a domicilio
-  // banderas de envios a domicilio
-  public banderaEntregaDomicilioLocalidad: boolean = false;
-  public banderaEntregaDomicilioFueraLocalidad: boolean = false;
+
   public banderaVariaciones: boolean = false;
   public Variantes = [];
   //
@@ -103,8 +100,8 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
 
 
   constructor(public toastr: ToastrService, private _productoServicio: ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
-    this.Oferta = new Oferta(null, null, null, null, null, null);
-    this.Producto = new Producto(null, null, null, null, null, null, null, null);
+    this.Oferta = new Oferta(null, null);
+    this.Producto = new Producto(null, null, null, null, null, null, null, null,0);
     this.Variantes.push(new Variante(null, null, null, null, null, "unidades"));
   }
 
@@ -235,34 +232,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     }
   }
 
-  public opcionReservarProducto(event) {
-    if (event.target.checked) {
-      this.Oferta.Reserva = 0;
-    } else {
-      this.Oferta.Reserva = 1;
-    }
 
-  }
-
-  public opcionRetiroPersona(retiroPersona) {
-    console.log("Envio persona", retiroPersona);
-    this.Oferta.Ofrece_Retiro_Personal = retiroPersona;
-  }
-
-  public opcionEntregaLocalidad(entregaLocalidad, bandera) {
-
-    this.banderaEntregaDomicilioLocalidad = bandera;
-    console.log("Entrega localidad", entregaLocalidad);
-    this.Oferta.Ofrece_Envio_Local = entregaLocalidad;
-
-  }
-
-  public opcionEntregaFueraLocalidad(entregaFueraLocalidad, bandera) {
-    this.banderaEntregaDomicilioFueraLocalidad = bandera;
-    this.vectorOpcionesEntregaFueraLocalidad = [1];
-    console.log("Entrega fuera localidad", entregaFueraLocalidad);
-    this.Oferta.Ofrece_Envio_Externo = entregaFueraLocalidad;
-  }
 
   public opcionGarantia(garantia) {
     console.log("Garantia", garantia)
@@ -296,26 +266,6 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
 
   }
 
-
-  public agregarOpcionesEntregaFueraLocalidad() {
-    this.vectorOpcionesEntregaFueraLocalidad.push(1);
-
-  }
-
-  public agregarOpcionesEntregaLocal() {
-    this.vectorOpcionesEntregaLocal.push(1);
-
-  }
-
-  public borrarOpcionesEntregaFueraLocalidad(pocicion: number) {
-
-    this.vectorOpcionesEntregaFueraLocalidad.splice(pocicion, 1)
-  }
-
-  public borrarOpcionesEntregaLocal(pocicion: number) {
-
-    this.vectorOpcionesEntregaLocal.splice(pocicion, 1)
-  }
 
 
   public async getCategorias() {
