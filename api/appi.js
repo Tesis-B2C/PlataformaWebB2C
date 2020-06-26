@@ -39,7 +39,8 @@ app.use('/api',unidad_medida_rutas);
 app.use('/api',producto_rutas);
 app.use('/api', metodo_pago_rutas);
 app.use('/api',tienda_rutas);
-app.use('/uploads/tiendas',express.static(path.resolve('uploads/tiendas')))
+app.use('/uploads/tiendas',express.static(path.resolve('uploads/tiendas')));
+app.use('/uploads/productos',express.static(path.resolve('uploads/productos')))
 //app.use('/api', administrador_rutes);
 /*app.use('/api', user_routes);
 app.use('/api', nuevaOferta_routes);

@@ -138,18 +138,21 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     this.toastr.clear();
   }
 
+
   public async subirImagenes(eventEntrante, indice) {
     if (this.imagenes[indice] == null) {
       this.imagenes[indice] = [];
     }
     if (eventEntrante.target.files && eventEntrante.target.files[0]) {
       var filesAmount = eventEntrante.target.files.length;
+
+
       this.vectorBanderaAgregarImagen[indice] = true;
       if (filesAmount > 6) {
         this.banderaMensajeMaximoImagenes = true;
       } else {
         for (let i = 0; i < filesAmount; i++) {
-          this.Imagenes_Producto[indice].push(new Imagen_Producto(eventEntrante.target.files[i].name, eventEntrante.target.files[i].type, null, eventEntrante.target.files[i].size));
+          this.Imagenes_Producto[indice].push(new Imagen_Producto(eventEntrante.target.files[i].name, eventEntrante.target.files[i].type, eventEntrante.target.files[i], eventEntrante.target.files[i].size));
           var reader = new FileReader();
           reader.onload = (event: any) => {
             if (this.imagenes[indice] != null)
@@ -408,9 +411,9 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
       this.Producto_Enviar.Imagenes = this.Imagenes_Producto;
 
 
-      console.log("Producto a enviar ", this.Producto_Enviar)
-      /*    let response = await this._productoServicio.saveProducto(this.Producto_Enviar).toPromise();
-          this.mensageCorrecto(response.data);*/
+      console.log("Producto a enviar ", this.Imagenes_Producto[0])
+        let response = await this._productoServicio.saveProducto(this.Oferta,this.Producto,this.Variantes,this.Imagenes_Producto).toPromise();
+          this.mensageCorrecto(response.data);
     } catch (e) {
       console.log("error:" + JSON.stringify((e).error.message));
       if (JSON.stringify((e).error.message))

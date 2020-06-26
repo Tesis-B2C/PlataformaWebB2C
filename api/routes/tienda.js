@@ -6,7 +6,7 @@ var md_auth = require('../middleware/authenticated');
 var api = express.Router(); // esto sirve para crear las rutas
 //var multipart = require('connect-multiparty');
 
-const  multer = require('../librerias/multer')
+const  multer = require('../librerias/multer');
 /*var md_upload = multipart({
 
     uploadDir: './uploads/tienda'
