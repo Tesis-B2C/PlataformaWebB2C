@@ -6,7 +6,11 @@
 async function saveProducto(req, res) {
 
     try {
+        let producto =JSON.parse(req.body.producto);
+        let oferta =JSON.parse(req.body.oferta);
+
         console.log("objetos de productos", req.files);
+        console.log("objetos" ,producto,oferta, JSON.parse(req.body.variantes));
         res.status(200).send({
             message: "Producto guardado correctamente"
         });
