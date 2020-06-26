@@ -31,9 +31,9 @@ export class TiendaServicio {
     return this._http.post<objeto>(this.url + "registrarTienda" ,fd,);
   }
 
-  subirImagenesServidor(formData,Id_Tienda, tipo){
+/*  subirImagenesServidor(formData,Id_Tienda, tipo){
     return this._http.post<objeto>(this.url + "subirImagenesTienda/"+Id_Tienda+"/"+tipo, formData);
-  }
+  }*/
 
   getDatosTienda(Id_Tienda){
       let headers = new HttpHeaders({ "Content-type": "application/json" });

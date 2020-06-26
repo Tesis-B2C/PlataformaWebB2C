@@ -209,6 +209,9 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     this.imagenes[indice].splice(imagen, 1);
     document.forms["form"].reset();
     this.Imagenes_Producto[indice].splice(imagen, 1);
+    console.log("vector imagenes", this.imagenes[indice]);
+    if(this.imagenes[indice].length==0)
+    this.vectorBanderaAgregarImagen[indice] = false;
   }
 
   public opcionCondicionProducto(condicion) {
@@ -467,7 +470,6 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     }
 
   }
-
 
 
   mensageError(mensaje) {
