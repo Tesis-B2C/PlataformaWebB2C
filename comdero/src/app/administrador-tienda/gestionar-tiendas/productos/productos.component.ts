@@ -11,12 +11,13 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {ProductoServicio} from '../../../servicios/producto.servicio';
 import Swal from 'sweetalert2'
 import {ToastrService} from 'ngx-toastr';
-
-
+import {CurrencyPipe} from '@angular/common'
+import { formatCurrency,getCurrencySymbol } from '@angular/common';
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
-  styleUrls: ['./productos.component.css']
+  styleUrls: ['./productos.component.css'],
+  providers:   [ CurrencyPipe ]
 })
 export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
   public videoPorGuardar;
@@ -98,7 +99,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     Imagenes: null
   }
 
-  constructor(public toastr: ToastrService, private _productoServicio: ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
+  constructor(private cp: CurrencyPipe,public toastr: ToastrService, private _productoServicio: ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
     this.Oferta = new Oferta(null, "Garantia del vendedor");
     this.Producto = new Producto(null, null, null, null, null, null, null, null, null);
     this.Variantes.push(new Variante(null, null, null, null, null, "unidades"));
@@ -454,6 +455,14 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
         //icon:'sm'
       }
     });
+  }
+
+  formatear( element: any ) {
+   debugger;
+    let valor = this.cp.transform(element.target.value,'$',);
+    //let alter=formatCurrency(element.target.value,'USD',getCurrencySymbol('USD', 'wide'));
+    let valor2 =valor.split("$")
+    element.target.value =valor2[1].replace(',',"");
   }
 }
 

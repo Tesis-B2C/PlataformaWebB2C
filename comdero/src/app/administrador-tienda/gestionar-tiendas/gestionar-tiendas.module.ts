@@ -17,6 +17,7 @@ import { SucursalesTiendaComponent } from './sucursales-tienda/sucursales-tienda
 import { PersonalizacionTiendaComponent } from './personalizacion-tienda/personalizacion-tienda.component';
 import { MetodosEnvioComponent } from './metodos-envio/metodos-envio.component';
 import { InicioAdministracionComponent } from './inicio-administracion/inicio-administracion.component';
+
 @NgModule({
   declarations: [MenuGestionTiendasComponent, ProductosComponent, MetodosPagoComponent, MetodosEnvioTComponent, GeneralTiendaComponent, SucursalesTiendaComponent, PersonalizacionTiendaComponent, MetodosEnvioComponent, InicioAdministracionComponent],
 

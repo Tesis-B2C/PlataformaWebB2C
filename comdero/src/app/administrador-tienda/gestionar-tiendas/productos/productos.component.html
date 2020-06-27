@@ -226,9 +226,9 @@
               <label> Precio unitario sin iva </label>
 
               <div class="input-group mb-3">
-                <input #PrecioUnitario0="ngModel" [(ngModel)]="this.Variantes[0].Precio_Unitario" class="form-control"
-                       min="0" step="0.01" oninput="validity.valid||(value='');"
-                       name="precioUnitario0" id="precioUnitarioVariante0" type="number" placeholder="0,00">
+                <input #PrecioUnitario0="ngModel" [(ngModel)]="this.Variantes[0].Precio_Unitario"   class="form-control"
+                       min="0" step="0.01"  oninput="validity.valid||(value='');"
+                       name="precioUnitario0" id="precioUnitarioVariante0" type="number" placeholder="0,00" (focusout)="formatear($event)">
 
 
                 <div class="input-group-append">
@@ -548,7 +548,7 @@
     </div>
     <div class="card card-body col-md-4   mt-4 ml-md-2  mt-md-0 container-categoria " id="panelDos">
       <div class="container">
-        
+
         <h6>Categorias</h6>
         <hr class="mb-0">
         <label class="">Seleccione las categorias a las cuales pertenece el producto</label>
