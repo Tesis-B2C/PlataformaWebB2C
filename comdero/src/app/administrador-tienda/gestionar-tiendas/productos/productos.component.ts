@@ -12,7 +12,6 @@ import {ProductoServicio} from '../../../servicios/producto.servicio';
 import Swal from 'sweetalert2'
 import {ToastrService} from 'ngx-toastr';
 import {CurrencyPipe} from '@angular/common'
-import { formatCurrency,getCurrencySymbol } from '@angular/common';
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
