@@ -101,7 +101,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
 
   constructor(private cp: CurrencyPipe,public toastr: ToastrService, private _productoServicio: ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
     this.Oferta = new Oferta(null, "Garantia del vendedor");
-    this.Producto = new Producto(null, null, null, null, null, null, null, null, null);
+    this.Producto = new Producto(null, null, null, null, null, 0, 0, "Nuevo", null);
     this.Variantes.push(new Variante(null, null, null, null, null, "unidades"));
   }
 

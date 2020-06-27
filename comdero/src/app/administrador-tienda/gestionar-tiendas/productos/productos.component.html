@@ -332,7 +332,7 @@
           <div class="form-group">
             <div class="radio-item">
               <input (click)="opcionGarantia($event.target.value)" name="garantia"
-                     type="radio" value="Garantia del vendedor" id="GarantiaVendedor">
+                     type="radio" value="Garantia del vendedor" id="GarantiaVendedor" checked >
               <label for="GarantiaVendedor">&nbsp;&nbsp;Garantia del vendedor</label>
             </div>
             <br>
@@ -368,7 +368,7 @@
 
             <div class="radio-item">
               <input (change)="opcionVariaciones(false)" name="variaciones" type="radio"
-                     value="No" id="VariacionNo">
+                     value="No" id="VariacionNo" checked>
               <label for="VariacionNo">&nbsp;&nbsp; No </label>
             </div>
           </div>
@@ -501,7 +501,7 @@
             <div class="input-group mb-3">
               <input #PrecioUnitario="ngModel" [(ngModel)]="this.Variantes[i+1].Precio_Unitario"
                      aria-label="Amount (to the nearest dollar)" class="form-control"
-                     name="precioUnitario{{i+1}}" placeholder="20"
+                     name="precioUnitario{{i+1}}" placeholder="20" (focusout)="formatear($event)"
                      type="number" min="0" step="0.01" oninput="validity.valid||(value='');">
               <div class="input-group-append">
                 <span class="input-group-text unidades">$</span>
