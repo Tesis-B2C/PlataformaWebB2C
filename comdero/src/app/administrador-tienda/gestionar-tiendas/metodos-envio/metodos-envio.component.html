@@ -162,7 +162,10 @@
                           <div class="form-group col-md-6">
                             <label>Peso Minimo</label>
                             <div class="input-group">
-                              <input class="tamanioInputs form-control" name="" placeholder="" required type="text">
+                              <input #minPesoLocal="ngModel" [(ngModel)]="this.Opcion_EnvioLocal.Minimo"
+                                     class="tamanioInputs form-control" name="minPesoLocal"
+                                     placeholder="0" min="0" step="0.01" oninput="validity.valid || (value='');"
+                                     type="number">
                               <div class="input-group-append">
                                 <span class="input-group-text tamanioInputs">kg</span>
                               </div>
@@ -172,7 +175,11 @@
                           <div class="form-group col-md-6">
                             <label>Peso Máximo</label>
                             <div class="input-group">
-                              <input class="tamanioInputs form-control" name="" placeholder="" required type="text">
+                              <input #maxPesoLocal="ngModel" [(ngModel)]="this.Opcion_EnvioLocal.Minimo"
+                                     class="tamanioInputs form-control" name="maxPesoLocal"
+                                     placeholder="Sin límite" min="0" step="0.01"
+                                     oninput="validity.valid || (value='');"
+                                     type="number">
                               <div class="input-group-append">
                                 <span class="input-group-text tamanioInputs">kg</span>
                               </div>
@@ -189,6 +196,12 @@
                           <div class="form-group col-md-6">
                             <label>Precio Minimo</label>
                             <div class="input-group">
+                              <input #minPrecioLocal="ngModel" [(ngModel)]="this.Opcion_EnvioLocal.Minimo"
+                                     class="tamanioInputs form-control"
+                                     min="0" step="0.01" oninput="validity.valid||(value='');"
+                                     name="minPrecioLocal" id="minPrecioLocal" type="number"
+                                     placeholder="0,00" (focusout)="transformar($event)">
+
                               <input class="tamanioInputs form-control" name="" placeholder="" required type="text">
                               <div class="input-group-append">
                                 <span class="input-group-text tamanioInputs">US$</span>
