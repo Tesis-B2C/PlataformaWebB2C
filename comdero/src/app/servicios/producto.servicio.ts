@@ -25,19 +25,20 @@ export class ProductoServicio {
     return this._http.post<objeto>(this.url + "saveProducto" , params, { headers: headers });
   }*/
 
-  saveProducto(ofertas, productos, variantes,imagenes){
+  saveProducto(ofertas, productos, variantes,imagenes, categorias){
 
     let oferta = JSON.stringify(ofertas);
     let producto = JSON.stringify(productos);
     let variante = JSON.stringify(variantes);
     let imagen = JSON.stringify(imagenes);
-
+    let categoria=JSON.stringify(categorias);
     const  fd = new  FormData();
     debugger;
     fd.append('oferta',oferta);
     fd.append('producto',producto);
     fd.append("variantes", variante);
     fd.append("vimagenes", imagen);
+    fd.append("categorias", categoria);
     for (let i = 0; i < variantes.length; i++) {
       for (let j = 0; j < imagenes[i].length; j++) {
         console.log("antes de enviar imagenes", imagenes[j].Imagen)

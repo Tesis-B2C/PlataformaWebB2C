@@ -12,11 +12,12 @@ import {ProductoServicio} from '../../../servicios/producto.servicio';
 import Swal from 'sweetalert2'
 import {ToastrService} from 'ngx-toastr';
 import {CurrencyPipe} from '@angular/common'
+
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css'],
-  providers:   [ CurrencyPipe ]
+  providers: [CurrencyPipe]
 })
 export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
   public videoPorGuardar;
@@ -91,15 +92,11 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
 // enviar
 
 
-  public Producto_Enviar = {
-    Oferta: null,
-    Producto: null,
-    Variantes: null,
-    Imagenes: null
-  }
+  public identidadTienda;
 
-  constructor(private cp: CurrencyPipe,public toastr: ToastrService, private _productoServicio: ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
-    this.Oferta = new Oferta(null, "Garantia del vendedor");
+  constructor(private cp: CurrencyPipe, public toastr: ToastrService, private _productoServicio: ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
+    this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
+    this.Oferta = new Oferta(this.identidadTienda.NUM_TIENDA, null, "Garantia del vendedor");
     this.Producto = new Producto(null, null, null, null, null, 0, 0, "Nuevo", null);
     this.Variantes.push(new Variante(null, null, null, null, null, "unidades"));
   }
@@ -405,15 +402,10 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
       } else {
         this.Imagenes_Producto.push(this.videoPorGuardar);
       }
-      this.Producto_Enviar.Oferta = this.Oferta;
-      this.Producto_Enviar.Producto = this.Producto;
-      this.Producto_Enviar.Variantes = this.Variantes;
-      this.Producto_Enviar.Imagenes = this.Imagenes_Producto;
-
 
       console.log("Producto a enviar ", this.Imagenes_Producto[0])
-        let response = await this._productoServicio.saveProducto(this.Oferta,this.Producto,this.Variantes,this.Imagenes_Producto).toPromise();
-          this.mensageCorrecto(response.data);
+      let response = await this._productoServicio.saveProducto(this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasSeleccionadas).toPromise();
+      this.mensageCorrecto(response.data);
     } catch (e) {
       console.log("error:" + JSON.stringify((e).error.message));
       if (JSON.stringify((e).error.message))
@@ -456,12 +448,12 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     });
   }
 
-  formatear( element: any ) {
-   debugger;
-    let valor = this.cp.transform(element.target.value,'$',);
+  formatear(element: any) {
+    debugger;
+    let valor = this.cp.transform(element.target.value, '$',);
     //let alter=formatCurrency(element.target.value,'USD',getCurrencySymbol('USD', 'wide'));
-    let valor2 =valor.split("$")
-    element.target.value =valor2[1].replace(',',"");
+    let valor2 = valor.split("$")
+    element.target.value = valor2[1].replace(',', "");
   }
 }
 
