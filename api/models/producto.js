@@ -59,7 +59,12 @@ const Producto = db.sequelize.define('PRODUCTO', {
         CONDICION: {
             type: Sequelize.STRING,
             allowNull: false
-        }
+        },
+        PESO_PRODUCTO:
+            {
+                type: Sequelize.STRING,
+                allowNull: false
+            },
 
 
     },

@@ -9,6 +9,7 @@ const moment = require('moment');
 const db = require('../database/db');
 async function saveProducto(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
+    const vvariantesGuardas=[];
     try {
         let producto = JSON.parse(req.body.producto);
         let oferta = JSON.parse(req.body.oferta);
@@ -58,7 +59,8 @@ async function saveProducto(req, res) {
 
 
         for (let v of variantes) {
-            await Variante.create({
+
+         let variantesGuardadas=  await Variante.create({
                 ID_PRODUCTO: productoGuardado.dataValues.ID_PRODUCTO,
                 COD_PRODUCTO: productoGuardado.dataValues.ID_PRODUCTO,
                 COLOR: v.Color,
@@ -66,13 +68,15 @@ async function saveProducto(req, res) {
                 MATERIAL: v.Material,
                 PRECIO_UNITARIO: v.Precio_Unitario,
                 STOCK: v.Stock,
-                // UNIDAD: v.Unidad
+                MEDIDA: v.Unidad
             }, {
                 transaction: t
             });
+            vvariantesGuardas.push(variantesGuardadas);
+
         }
 
-        for (let i = 0; i < variantes.length; i++) {
+        for (let i = 0; i < vvariantesGuardas.length; i++) {
             for (let j = 0; j < vimagenes[i].length; j++) {
                 for (let h = 0; h < req.files.length; h++) {
                     if (vimagenes[i][j].Nombre_Imagen == req.files[h].originalname) {
@@ -81,10 +85,11 @@ async function saveProducto(req, res) {
                 }
             }
         }
-        for (let i = 0; i < variantes.length; i++) {
+        for (let i = 0; i < vvariantesGuardas.length; i++) {
             for (let j = 0; j < vimagenes[i].length; j++) {
                 console.log(vimagenes[i][j].Tamanio_Imagen);
                 await Imagen_Producto.create({
+                    NUM_VARIANTE:vvariantesGuardas[i].dataValues.NUM_VARIANTE,
                     NOMBRE_IMAGEN: vimagenes[i][j].Nombre_Imagen,
                     TIPO_IMAGEN: vimagenes[i][j].Tipo_Imagen,
                     IMAGEN: vimagenes[i][j].Imagen,

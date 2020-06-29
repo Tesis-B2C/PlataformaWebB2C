@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
-var Producto_Imagenes_Producto = require("./producto_imagen_producto");
+
 
 
 const Imagen_Producto = db.sequelize.define('IMAGEN_PRODUCTO', {
@@ -11,6 +11,11 @@ const Imagen_Producto = db.sequelize.define('IMAGEN_PRODUCTO', {
                 primaryKey: true,
                 allowNull: false,
                 autoIncrement: true
+            },
+        NUM_VARIANTE:
+            {
+                type: Sequelize.STRING,
+                allowNull: false
             },
 
         NOMBRE_IMAGEN:
@@ -42,6 +47,5 @@ const Imagen_Producto = db.sequelize.define('IMAGEN_PRODUCTO', {
 
 
 module.exports = Imagen_Producto;
-Imagen_Producto.hasMany(Producto_Imagenes_Producto, {foreignKey: 'ID_IMAGEN', sourceKey: 'ID_IMAGEN'});
-Producto_Imagenes_Producto.belongsTo(Imagen_Producto, {foreignKey: 'ID_IMAGEN', sourceKey: 'ID_IMAGEN'});
+
 
