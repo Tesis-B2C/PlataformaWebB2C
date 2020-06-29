@@ -1,7 +1,6 @@
 <body>
 <ng-template #modalVideoYoutube let-modal>
 
-
   <div class="modal-header">
     <h4 class="modal-title">Subir video de Youtube</h4>
     <button type="button" class="close" style="font-size: medium" aria-label="Close"
@@ -116,7 +115,8 @@
                   <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple name="files"
                          type="file">
                 </label>
-                <button (click)="quitarImagenes(0,i)" class="boton-cerrar btn-outline-danger px-0 py-0 "> <span class="fa  fa-trash"></span>
+                <button (click)="quitarImagenes(0,i)" class="boton-cerrar btn-outline-danger px-0 py-0 "><span
+                  class="fa  fa-trash"></span>
                 </button>
               </div>
             </div>
@@ -225,19 +225,25 @@
             <div class="col-lg-6">
               <label> Precio unitario sin iva </label>
 
-              <div class="input-group mb-3">
-                <input #PrecioUnitario0="ngModel" [(ngModel)]="this.Variantes[0].Precio_Unitario"   class="form-control"
-                       min="0" step="0.01"  oninput="validity.valid||(value='');"
-                       name="precioUnitario0" id="precioUnitarioVariante0" type="number" placeholder="0,00" (focusout)="formatear($event)">
-
-
+              <div class="input-group ">
+                <input #PrecioUnitario0="ngModel" [(ngModel)]="this.Variantes[0].Precio_Unitario" class="form-control"
+                       min="0" step="0.01" oninput="validity.valid||(value='');"
+                       name="precioUnitario0" id="precioUnitarioVariante0" type="number" placeholder="0,00" required
+                       (focusout)="formatear($event)"
+                       [ngClass]="{'is-invalid': PrecioUnitario0.invalid && banderaValidaciones}">
                 <div class="input-group-append">
                   <span class="input-group-text unidades">$</span>
                 </div>
 
-              </div>
 
+
+              </div>
+              <div *ngIf="PrecioUnitario0.errors.required && banderaValidaciones">
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+              </div>
             </div>
+
+
             <div class="col-lg-6">
               <label>Porcentaje de Iva </label>
               <div class="input-group mb-3">
@@ -332,7 +338,7 @@
           <div class="form-group">
             <div class="radio-item">
               <input (click)="opcionGarantia($event.target.value)" name="garantia"
-                     type="radio" value="Garantia del vendedor" id="GarantiaVendedor" checked >
+                     type="radio" value="Garantia del vendedor" id="GarantiaVendedor" checked>
               <label for="GarantiaVendedor">&nbsp;&nbsp;Garantia del vendedor</label>
             </div>
             <br>
@@ -468,7 +474,7 @@
                   <label class="imagen-agregar">
                     <i class="fa fa-picture-o fa-4x ml-4"></i>
                     <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                    <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file" >
+                    <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file">
                     <br>
                     <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imagenes </p>
                     <p class=" link-agregar-imagenes2">maximo 6</p>
@@ -484,7 +490,7 @@
             <div class="input-group">
 
               <input #Stock="ngModel" [(ngModel)]="this.Variantes[i+1].Stock" class="form-control" name="stock{{i+1}}"
-                     placeholder="200" type="number" min="0"step="0.01" oninput="validity.valid||(value='');">
+                     placeholder="200" type="number" min="0" step="0.01" oninput="validity.valid||(value='');">
 
               <select #Unidad="ngModel" [(ngModel)]="this.Variantes[i+1].Cod_Unidad" class=" form-control col-lg-5 "
                       id="selectUnidades" name="unidad{{i+1}}">
@@ -543,8 +549,6 @@
       </form>
 
 
-
-
     </div>
     <div class="card card-body col-md-4   mt-4 ml-md-2  mt-md-0 container-categoria " id="panelDos">
       <div class="container">
@@ -592,26 +596,26 @@
   </div>
 
   <div class="row justify-content-center">
-  <form class="card card-body  col-md-11 ml-md-4 mt-4 w-50">
-    <div class=" container">
-      <h6>Acciones</h6>
-      <hr>
+    <form class="card card-body  col-md-11 ml-md-4 mt-4 w-50">
+      <div class=" container">
+        <h6>Acciones</h6>
+        <hr>
 
-      <button class="btn btn-outline-primary text-nowrap  col-md-5  mb-4 " type="button">
-        <span class="spinner-border spinner-border-sm mr-2"></span>
-        Publicar producto
-      </button>
-
-
-      <button (click)="this.guardarProducto()" class="btn btn-outline-primary text-nowrap offset-md-2 col-md-5 mb-4"
-              type="button">
-        <span class="spinner-border spinner-border-sm mr-2"></span>
-        Guardar Producto
-      </button>
+        <button class="btn btn-outline-primary text-nowrap  col-md-5  mb-4 " type="button" (click)="validar()" >
+          <span class="spinner-border spinner-border-sm mr-2"></span>
+          Publicar producto
+        </button>
 
 
-    </div>
-  </form>
+        <button (click)="this.guardarProducto()" class="btn btn-outline-primary text-nowrap offset-md-2 col-md-5 mb-4"
+                type="button">
+          <span class="spinner-border spinner-border-sm mr-2"></span>
+          Guardar Producto
+        </button>
+
+
+      </div>
+    </form>
   </div>
   <br>
   <br>

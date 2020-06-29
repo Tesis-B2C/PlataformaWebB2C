@@ -144,13 +144,14 @@ input {
   cursor: pointer;
   border-bottom: #1a56e9 solid 1.5px;
 }
-.agregarVideoYoutube{
+
+.agregarVideoYoutube {
   font-size: small;
   color: #1a56e9;
   cursor: pointer;
 }
 
-.agregarVideoYoutube:hover{
+.agregarVideoYoutube:hover {
   color: #007bff;
   cursor: pointer;
 }
@@ -167,7 +168,7 @@ select {
   font-size: small;
 }
 
-select::-ms-expand{
+select::-ms-expand {
   overflow: auto;
   max-height: 3px;
 }
@@ -232,13 +233,14 @@ select:hover{
   color: white;
 }
 
-.chip-resumen-categorias{
+.chip-resumen-categorias {
   font-size: small;
 }
 
-.chip-resumen-categorias:hover{
+.chip-resumen-categorias:hover {
   color: white;
 }
+
 .categoria {
   color: #2a4c75;
   font-size: small;
@@ -292,22 +294,21 @@ app-ngx-editor {
 
 :-moz-placeholder {
   color: #ccc;
-  opacity: 1 ;
+  opacity: 1;
 }
 
 ::-moz-placeholder {
   color: #ccc;
-  opacity:  1;
+  opacity: 1;
 }
 
 :-ms-input-placeholder {
   color: #ccc;
 }
 
-button{
+button {
   font-size: small;
 }
-
 
 
 /*Radio button*/
@@ -378,4 +379,25 @@ button{
   content: " ";
   display: block;
   background: #1a56e9;
+}
+
+
+.alert1 {
+  font-size: smaller;
+  padding: 0;
+  background-color: white;
+  border: none;
+  color: #bd2130;
+  margin-left: 4px;
+}
+
+::ng-deep.swal2-container {
+  z-index: 1000000;
+}
+
+.my-swal {
+  display: -webkit-box;
+  display: flex;
+  position: fixed;
+  z-index: 300000;
 }

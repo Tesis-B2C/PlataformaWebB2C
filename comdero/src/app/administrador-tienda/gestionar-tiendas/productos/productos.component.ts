@@ -62,7 +62,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   * */
 
   public visible = true;
-  public color = ['#2889e9'];
+  public color = [''];
   public categoriasSeleccionadas = new Set();
   public vectorIconos = ['fa fa-charging-station', 'fa fa-tshirt',
     'fa fa-ring', 'fa fa-baby-carriage', 'fa fa-home',
@@ -91,17 +91,19 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   public direccionVideoYoutube: any;
 // enviar
 
-
   public identidadTienda;
+
+  public banderaValidaciones: boolean = false;
 
   constructor(private cp: CurrencyPipe, public toastr: ToastrService, private _productoServicio: ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
     this.Oferta = new Oferta(this.identidadTienda.NUM_TIENDA, null, "Garantia del vendedor");
     this.Producto = new Producto("000000", null, null, null, null, 0, 0, "Nuevo", null);
-    this.Variantes.push(new Variante('#2889e9', null, null, null, null, "unidades"));
+    this.Variantes.push(new Variante(null, null, null, null, null, "unidades"));
   }
 
   ngOnInit() {
+    Swal.fire('Registro exitoso...', 'asdasd', 'success');
     this.getCategorias();
     this.getUnidadesMedida();
     this.panelUno = document.getElementById('panelUno') as HTMLElement;
@@ -246,9 +248,9 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
 
   public agregarOpcionesProducto() {
     this.vectorOpciones.push(1);
-    this.color.push("#2889e9");
+    this.color.push("");
     this.vectorBanderaAgregarImagen.push(false);
-    this.Variantes.push(new Variante("#2889e9", null, null, null, null, "unidades"));
+    this.Variantes.push(new Variante(null, null, null, null, null, "unidades"));
     this.Imagenes_Producto.push([]);
     this.imagenes.push([]);
     console.log("asdasd");
@@ -388,7 +390,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     delete this.videoPorGuardar;
     this.videoYoutube = this._sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + video);
     delete this.videoPorGuardar;
-    this.data.video="";
+    this.data.video = "";
   }
 
   public resetearVideoYoutube() {
@@ -403,7 +405,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
         this.videoYoutubeGuardar = new Imagen_Producto('Video', 'youtube', this.videoYoutube, 0);
         debugger;
         this.Imagenes_Producto[0].push(this.videoYoutubeGuardar);
-        this.videoPorGuardar="";
+        this.videoPorGuardar = "";
       } else if (this.videoPorGuardar) {
         this.Imagenes_Producto[0].push(this.videoPorGuardar);
       }
@@ -435,6 +437,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
       buttonsStyling: false,
       customClass: {
         confirmButton: 'btn btn-primary px-5',
+        container:'my-swal'
         //icon:'sm'
       }
     });
@@ -457,15 +460,16 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     });
   }
 
-  formatear(element
-              :
-              any
-  ) {
+  formatear(element) {
     debugger;
     let valor = this.cp.transform(element.target.value, '$',);
     //let alter=formatCurrency(element.target.value,'USD',getCurrencySymbol('USD', 'wide'));
     let valor2 = valor.split("$")
     element.target.value = valor2[1].replace(',', "");
+  }
+  validar(){
+    this.banderaValidaciones=true;
+    window.scroll(0, 0);
   }
 }
 
