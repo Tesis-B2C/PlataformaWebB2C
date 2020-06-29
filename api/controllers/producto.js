@@ -1,11 +1,14 @@
 'use strict'
-import {Oferta} from "../models/oferta";
-import {Producto} from "../models/producto";
-import{Producto_Categoria} from "../models/producto_categoria"
+const Imagen_Producto = require("../models/imagen_producto");
+
+const Oferta = require("../models/oferta");
+const Producto = require("../models/producto");
+const Producto_Categoria = require("../models/producto_categoria");
+const Variante = require("../models/variante");
 const moment = require('moment');
-
+const db = require('../database/db');
 async function saveProducto(req, res) {
-
+    const t = await db.sequelize.transaction({autocommit: false});
     try {
         let producto = JSON.parse(req.body.producto);
         let oferta = JSON.parse(req.body.oferta);
@@ -13,7 +16,7 @@ async function saveProducto(req, res) {
         let vimagenes = JSON.parse(req.body.vimagenes);
         let categorias = JSON.parse(req.body.categorias);
         console.log("imagenes", req.files);
-        console.log("objetos",oferta,producto, variantes, vimagenes,categorias);
+        console.log("objetos", oferta, producto, variantes, vimagenes, categorias);
 
         let ofertaGuardada = await Oferta.create({
                 NUM_TIENDA: oferta.Num_Tienda,
@@ -33,7 +36,7 @@ async function saveProducto(req, res) {
                 DETALLE_PRODUCTO: producto.Detalle_Producto,
                 MARCA: producto.Marca,
                 LLEVAR_STOCK: producto.Rastrear_Stock,
-                VENDER_SIN_STOCK: Vender_Sin_Stock,
+                VENDER_SIN_STOCK: producto.Vender_Sin_Stock,
                 CONDICION: producto.Condicion,
                 PESO_PRODUCTO: producto.Peso_Producto
             },
@@ -41,20 +44,61 @@ async function saveProducto(req, res) {
                 transaction: t
             });
 
-        let productoCategoriaGuardada = await Producto_Categoria.create({
+        for (const c of categorias) {
+            await Producto_Categoria.create({
+                    ID_PRODUCTO: productoGuardado.dataValues.ID_PRODUCTO,
+                    COD_PRODUCTO: productoGuardado.dataValues.COD_PRODUCTO,
+                    ID_CATEGORIA: c,
+                },
+                {
+                    transaction: t
+                });
+
+        }
+
+
+        for (let v of variantes) {
+            await Variante.create({
                 ID_PRODUCTO: productoGuardado.dataValues.ID_PRODUCTO,
-                COD_PRODUCTO: productoGuardado.dataValues.COD_PRODUCTO,
-                ID_CATEGORIA: categorias.ID_CATEGORIA,
-            },
-            {
+                COD_PRODUCTO: productoGuardado.dataValues.ID_PRODUCTO,
+                COLOR: v.Color,
+                TALLA: v.Talla,
+                MATERIAL: v.Material,
+                PRECIO_UNITARIO: v.Precio_Unitario,
+                STOCK: v.Stock,
+                // UNIDAD: v.Unidad
+            }, {
                 transaction: t
             });
+        }
+
+        for (let i = 0; i < variantes.length; i++) {
+            for (let j = 0; j < vimagenes[i].length; j++) {
+                for (let h = 0; h < req.files.length; h++) {
+                    if (vimagenes[i][j].Nombre_Imagen == req.files[h].originalname) {
+                        vimagenes[i][j].Imagen = req.files[[h]].path;
+                    }
+                }
+            }
+        }
+        for (let i = 0; i < variantes.length; i++) {
+            for (let j = 0; j < vimagenes[i].length; j++) {
+                console.log(vimagenes[i][j].Tamanio_Imagen);
+                await Imagen_Producto.create({
+                    NOMBRE_IMAGEN: vimagenes[i][j].Nombre_Imagen,
+                    TIPO_IMAGEN: vimagenes[i][j].Tipo_Imagen,
+                    IMAGEN: vimagenes[i][j].Imagen,
+                    TAMANIO_IMAGEN: vimagenes[i][j].Tamanio_Imagen,
+
+                }, {
+                    transaction: t
+                });
+            }
+        }
 
 
-
-        if (ofertaGuardada && productoGuardado && productoCategoriaGuardada) {
+        if (ofertaGuardada && productoGuardado) {
             res.status(200).send({
-                data: tiendaGuardado.dataValues,
                 message: "Su producto ha sido registrado  exitosamente"
             });
 
@@ -66,6 +110,7 @@ async function saveProducto(req, res) {
         }
 
     } catch (err) {
+        await t.rollback();
         res.status(500).send({
             message: 'error:' + err
         });

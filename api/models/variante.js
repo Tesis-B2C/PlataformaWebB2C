@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 var Producto_Imagen_Producto = require("./producto_imagen_producto");
-const Variante = db.sequelize.define('Variante', {
+const Variante = db.sequelize.define('VARIANTE', {
         NUM_VARIANTE:
             {
                 type: Sequelize.BIGINT,
@@ -22,17 +22,17 @@ const Variante = db.sequelize.define('Variante', {
         COLOR:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull: true
             },
         TALLA:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull: true
             },
         MATERIAL:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull: true
             },
         PRECIO_UNITARIO:
             {

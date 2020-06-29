@@ -97,8 +97,8 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   constructor(private cp: CurrencyPipe, public toastr: ToastrService, private _productoServicio: ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
     this.Oferta = new Oferta(this.identidadTienda.NUM_TIENDA, null, "Garantia del vendedor");
-    this.Producto = new Producto(null, null, null, null, null, 0, 0, "Nuevo", null);
-    this.Variantes.push(new Variante(null, null, null, null, null, "unidades"));
+    this.Producto = new Producto("000000", null, null, null, null, 0, 0, "Nuevo", null);
+    this.Variantes.push(new Variante('#2889e9', null, null, null, null, "unidades"));
   }
 
   ngOnInit() {
@@ -393,18 +393,22 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     this.videoYoutube = null;
   }
 
+  public categoriasEnviar=[];
 
   public async guardarProducto() {
     try {
       if (this.videoYoutube) {
         this.videoYoutubeGuardar = new Imagen_Producto('Video', 'youtube', this.videoYoutube, 0);
         this.Imagenes_Producto.push(this.videoYoutubeGuardar);
-      } else {
+      } else if(this.videoPorGuardar) {
         this.Imagenes_Producto.push(this.videoPorGuardar);
       }
+      this.categoriasEnviar=[];
+      for (let categorias of this.categoriasSeleccionadas) {
+        this.categoriasEnviar.push(categorias.ID_CATEGORIA);
+      }
 
-      console.log("Producto a enviar ", this.Imagenes_Producto[0])
-      let response = await this._productoServicio.saveProducto(this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasSeleccionadas).toPromise();
+      let response = await this._productoServicio.saveProducto(this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
       this.mensageCorrecto(response.data);
     } catch (e) {
       console.log("error:" + JSON.stringify((e).error.message));

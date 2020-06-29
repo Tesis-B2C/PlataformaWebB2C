@@ -3,7 +3,7 @@ var db = require("../database/db.js");
 var Producto_Imagenes_Producto = require("./producto_imagen_producto");
 
 
-const Imagen_Producto = db.sequelize.define('Imagen_Producto', {
+const Imagen_Producto = db.sequelize.define('IMAGEN_PRODUCTO', {
 
         ID_IMAGEN:
             {
@@ -12,16 +12,7 @@ const Imagen_Producto = db.sequelize.define('Imagen_Producto', {
                 allowNull: false,
                 autoIncrement: true
             },
-        ID_PRODUCTO:
-            {
-                type: Sequelize.INTEGER,
-                allowNull: false
-            },
-        COD_PRODUCTO:
-            {
-                type: Sequelize.STRING,
-                allowNull: false
-            },
+
         NOMBRE_IMAGEN:
             {
                 type: Sequelize.STRING,
@@ -34,7 +25,7 @@ const Imagen_Producto = db.sequelize.define('Imagen_Producto', {
             },
         IMAGEN:
             {
-                type: Sequelize.BLOB('long'),
+                type: Sequelize.STRING,
                 allowNull: false
             },
         TAMANIO_IMAGEN:
