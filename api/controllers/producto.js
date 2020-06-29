@@ -62,13 +62,13 @@ async function saveProducto(req, res) {
 
          let variantesGuardadas=  await Variante.create({
                 ID_PRODUCTO: productoGuardado.dataValues.ID_PRODUCTO,
-                COD_PRODUCTO: productoGuardado.dataValues.ID_PRODUCTO,
+                COD_PRODUCTO: productoGuardado.dataValues.COD_PRODUCTO,
                 COLOR: v.Color,
                 TALLA: v.Talla,
                 MATERIAL: v.Material,
                 PRECIO_UNITARIO: v.Precio_Unitario,
                 STOCK: v.Stock,
-                MEDIDA: v.Unidad
+                MEDIDA: v.Cod_Unidad
             }, {
                 transaction: t
             });

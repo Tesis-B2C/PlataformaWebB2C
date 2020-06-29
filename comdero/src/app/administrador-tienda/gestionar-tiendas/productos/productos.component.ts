@@ -405,7 +405,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
       }
       this.categoriasEnviar=[];
       for (let categorias of this.categoriasSeleccionadas) {
-        this.categoriasEnviar.push(categorias.ID_CATEGORIA);
+        this.categoriasEnviar.push(categorias['ID_CATEGORIA']);
       }
 
       let response = await this._productoServicio.saveProducto(this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
