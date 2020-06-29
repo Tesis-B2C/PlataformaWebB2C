@@ -180,7 +180,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     if (fileList.length > 0) {
       this.banderaAnimacionVideo = true;
       let file: File = fileList[0];
-      this.videoPorGuardar = new Imagen_Producto(file.name, file.type, null, file.size);
+      this.videoPorGuardar = new Imagen_Producto(file.name, file.type, event.target.files[0], file.size);
 
       /*  console.log('video seleccionado', file);*/
       if (file.size < 150000000) {
@@ -387,31 +387,36 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     video = (results === null) ? url : results[1];
     delete this.videoPorGuardar;
     this.videoYoutube = this._sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + video);
+    delete this.videoPorGuardar;
+    this.data.video="";
   }
 
   public resetearVideoYoutube() {
     this.videoYoutube = null;
   }
 
-  public categoriasEnviar=[];
+  public categoriasEnviar = [];
 
   public async guardarProducto() {
     try {
       if (this.videoYoutube) {
         this.videoYoutubeGuardar = new Imagen_Producto('Video', 'youtube', this.videoYoutube, 0);
-        this.Imagenes_Producto.push(this.videoYoutubeGuardar);
-      } else if(this.videoPorGuardar) {
-        this.Imagenes_Producto.push(this.videoPorGuardar);
+        debugger;
+        this.Imagenes_Producto[0].push(this.videoYoutubeGuardar);
+        this.videoPorGuardar="";
+      } else if (this.videoPorGuardar) {
+        this.Imagenes_Producto[0].push(this.videoPorGuardar);
       }
-      this.categoriasEnviar=[];
+      this.categoriasEnviar = [];
       for (let categorias of this.categoriasSeleccionadas) {
         this.categoriasEnviar.push(categorias['ID_CATEGORIA']);
       }
 
       let response = await this._productoServicio.saveProducto(this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
       this.mensageCorrecto(response.data);
-    } catch (e) {
-      console.log("error:" + JSON.stringify((e).error.message));
+    } catch
+      (e) {
+      console.log("error:" + e);
       if (JSON.stringify((e).error.message))
         this.mensageError(JSON.stringify((e).error.message));
       else this.mensageError("Error de conexión intentelo mas tarde");
@@ -452,7 +457,10 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     });
   }
 
-  formatear(element: any) {
+  formatear(element
+              :
+              any
+  ) {
     debugger;
     let valor = this.cp.transform(element.target.value, '$',);
     //let alter=formatCurrency(element.target.value,'USD',getCurrencySymbol('USD', 'wide'));
