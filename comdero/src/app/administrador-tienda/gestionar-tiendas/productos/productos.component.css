@@ -410,3 +410,7 @@ button {
   position: fixed;
   z-index: 300000;
 }
+
+.errorSelect {
+  border: 1px solid red;
+}

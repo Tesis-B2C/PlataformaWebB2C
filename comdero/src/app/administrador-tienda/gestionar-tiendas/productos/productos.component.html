@@ -279,14 +279,14 @@
         <hr>
         <div class="">
 
-          <div class="form-group col-lg-12">
-            <label>Ingresse la cantidad y la unidad de medida en la cual se ofertara el producto </label>
+          <div class="form-group col-lg-7">
+            <label>Stock y unidad de medida en la cual se ofertara el producto </label>
             <div class="input-group">
 
               <input #Stock0="ngModel" [(ngModel)]="this.Variantes[0].Stock" class="form-control" name="stock0"
                      placeholder="20" type="number" min="0" step="0.01" oninput="validity.valid||(value='');" required
                      [ngClass]="{'is-invalid': Stock0.invalid && banderaValidaciones}">
-              <select #Unidad0="ngModel" [(ngModel)]="this.Variantes[0].Cod_Unidad"
+              <select #Unidad0="ngModel" [(ngModel)]="this.Variantes[0].Cod_Unidad"   [ngClass]="{'errorSelect': Stock0.invalid && banderaValidaciones}"
                       class="browser-default form-control col "
                       id="selectUnidad" name="unidad0">
                 <option *ngFor="let unidad of this.unidades">{{unidad.COD_UNIDAD_MEDIDA}}</option>
@@ -303,7 +303,7 @@
             <div class="input-group mb-3">
               <input #Peso="ngModel" [(ngModel)]="this.Producto.Peso_Producto" class="form-control" name="peso"
                      placeholder="120" min="0" step="0.01" oninput="validity.valid||(value='');"
-                     type="number"  required [ngClass]="{'is-invalid': Peso.invalid && banderaValidaciones}">
+                     type="number" required [ngClass]="{'is-invalid': Peso.invalid && banderaValidaciones}">
               <div class="input-group-append">
                 <span class="input-group-text unidades">Kg</span>
               </div>
@@ -312,14 +312,14 @@
                 envío</p>
 
 
-              <div *ngIf="Peso.errors.required && banderaValidaciones">
+              <div *ngIf="Peso.errors?.required && banderaValidaciones">
                 <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
               </div>
             </div>
 
           </div>
           <br>
-          <div class="form-group">
+          <div class="form-group ml-2">
             <div class="checkbox-item">
               <input (click)="opcionRastrearStock($event)" id="rastrearCantidad" type="checkbox">
               <label for="rastrearCantidad">&nbsp;&nbsp;Rastrear la cantidad</label>
@@ -327,7 +327,7 @@
           </div>
 
 
-          <div class="form-group">
+          <div class="form-group ml-2">
             <div class="checkbox-item">
               <input (click)="opcionVenderSinStock($event)" id="venderDespuesAgotado"
                      type="checkbox">
@@ -503,15 +503,19 @@
             <div class="input-group">
 
               <input #Stock="ngModel" [(ngModel)]="this.Variantes[i+1].Stock" class="form-control" name="stock{{i+1}}"
-                     placeholder="200" type="number" min="0" step="0.01" oninput="validity.valid||(value='');">
+                     placeholder="200" type="number" min="0" step="0.01" oninput="validity.valid||(value='');"
+                     required [ngClass]="{'is-invalid': Stock.invalid && banderaValidaciones}">
 
               <select #Unidad="ngModel" [(ngModel)]="this.Variantes[i+1].Cod_Unidad" class=" form-control col-lg-5 "
-                      id="selectUnidades" name="unidad{{i+1}}">
+                      id="selectUnidades" name="unidad{{i+1}}" [ngClass]="{'errorSelect': Stock.invalid && banderaValidaciones}">
 
                 <option *ngFor="let unidad of this.unidades"
                         [selected]="unidad.COD_UNIDAD_MEDIDA=='unidades'">{{unidad.COD_UNIDAD_MEDIDA}}</option>
               </select>
 
+            </div>
+            <div *ngIf="Stock.errors?.required && banderaValidaciones">
+              <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
             </div>
           </div>
 
@@ -521,10 +525,15 @@
               <input #PrecioUnitario="ngModel" [(ngModel)]="this.Variantes[i+1].Precio_Unitario"
                      aria-label="Amount (to the nearest dollar)" class="form-control"
                      name="precioUnitario{{i+1}}" placeholder="20" (focusout)="formatear($event)"
-                     type="number" min="0" step="0.01" oninput="validity.valid||(value='');">
+                     type="number" min="0" step="0.01" oninput="validity.valid||(value='');" required
+                     [ngClass]="{'is-invalid': PrecioUnitario.invalid && banderaValidaciones}">
               <div class="input-group-append">
                 <span class="input-group-text unidades">$</span>
               </div>
+              <div *ngIf="PrecioUnitario.errors?.required && banderaValidaciones">
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+              </div>
+
             </div>
           </div>
 

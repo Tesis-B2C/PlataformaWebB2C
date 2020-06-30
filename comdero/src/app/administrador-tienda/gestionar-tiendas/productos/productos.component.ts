@@ -470,7 +470,8 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     this.banderaValidaciones=true;
     let body = document.getElementById('top') as HTMLElement;
     body.scrollIntoView();
-
+    this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
+      {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
   }
 }
 
