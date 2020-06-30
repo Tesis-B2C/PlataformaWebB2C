@@ -19,7 +19,8 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
   public Metodo_Pago_Efectivo: Metodo_Pago;
   public Metodo_Pago_Transferencia: Metodo_Pago;
   public Metodo_Pago_Electronico: Metodo_Pago;
-  public Metodo_Pago_Enviar=[];
+  public Metodo_Pago_Enviar = [];
+
   constructor(private _metodoPagoServicio: MetodoPagoServicio, private modalService: NgbModal, private _sanitizer: DomSanitizer) {
 
   }
@@ -93,9 +94,9 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
 
   public async saveMetodoPago() {
     try {
-   if(this.Metodo_Pago_Efectivo) this.Metodo_Pago_Enviar.push(this.Metodo_Pago_Efectivo);
-    if(this.Metodo_Pago_Transferencia) this.Metodo_Pago_Enviar.push(this.Metodo_Pago_Transferencia);
-   if(this.Metodo_Pago_Electronico) this.Metodo_Pago_Enviar.push(this.Metodo_Pago_Electronico);
+      if (this.Metodo_Pago_Efectivo) this.Metodo_Pago_Enviar.push(this.Metodo_Pago_Efectivo);
+      if (this.Metodo_Pago_Transferencia) this.Metodo_Pago_Enviar.push(this.Metodo_Pago_Transferencia);
+      if (this.Metodo_Pago_Electronico) this.Metodo_Pago_Enviar.push(this.Metodo_Pago_Electronico);
 
       let response = await this._metodoPagoServicio.saveMetodoPago(this.Metodo_Pago_Enviar).toPromise();
       this.mensageCorrecto(response.data);
@@ -121,7 +122,6 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
       }
     });
   }
-
 
   mensageCorrecto(mensaje) {
     Swal.fire({
