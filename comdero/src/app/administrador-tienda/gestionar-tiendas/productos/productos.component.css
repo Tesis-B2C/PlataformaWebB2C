@@ -31,6 +31,15 @@ textarea {
   background-color: white
 }
 
+.borde-error{
+  border: #c80000 2px dashed;
+}
+
+.borde-error:hover{
+  border: #c80000 2px dashed;
+
+}
+
 .boton-cerrar {
   display: block;
   font-size: 0.9rem;

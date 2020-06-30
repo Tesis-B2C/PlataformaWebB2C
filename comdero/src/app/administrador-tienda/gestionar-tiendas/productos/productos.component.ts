@@ -99,11 +99,10 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
     this.Oferta = new Oferta(this.identidadTienda.NUM_TIENDA, null, "Garantia del vendedor");
     this.Producto = new Producto("000000", null, null, null, null, 0, 0, "Nuevo", null);
-    this.Variantes.push(new Variante(null, null, null, null, null, "unidades"));
+    this.Variantes.push(new Variante(null, null, null, null, 1, "unidades"));
   }
 
   ngOnInit() {
-    Swal.fire('Registro exitoso...', 'asdasd', 'success');
     this.getCategorias();
     this.getUnidadesMedida();
     this.panelUno = document.getElementById('panelUno') as HTMLElement;
@@ -250,7 +249,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     this.vectorOpciones.push(1);
     this.color.push("");
     this.vectorBanderaAgregarImagen.push(false);
-    this.Variantes.push(new Variante(null, null, null, null, null, "unidades"));
+    this.Variantes.push(new Variante(null, null, null, null, 1, "unidades"));
     this.Imagenes_Producto.push([]);
     this.imagenes.push([]);
     console.log("asdasd");
@@ -469,7 +468,9 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   }
   validar(){
     this.banderaValidaciones=true;
-    window.scroll(0, 0);
+    let body = document.getElementById('top') as HTMLElement;
+    body.scrollIntoView();
+
   }
 }
 

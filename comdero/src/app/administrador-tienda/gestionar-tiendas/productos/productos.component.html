@@ -1,4 +1,3 @@
-<body>
 <ng-template #modalVideoYoutube let-modal>
 
   <div class="modal-header">
@@ -25,7 +24,8 @@
 
 
 </ng-template>
-
+<body>
+<div id="top"></div>
 
 <div class="container mt-5 ">
   <div class="row  justify-content-center">
@@ -35,8 +35,7 @@
 
   <div class="row justify-content-center">
     <div class="col-md-7" id="panelUno">
-
-      <form class="card card-body ">
+      <form #FormInformacion id="formInformacion" class="card card-body validate-form">
         <h6>Información</h6>
         <hr>
         <div class="container">
@@ -44,8 +43,11 @@
             <div class="col-md-6">
               <label>Nombre</label>
               <input #NombreProducto="ngModel" [(ngModel)]="this.Producto.Nombre_Producto" class=" form-control py-3 "
-                     name="nombreProducto"
-                     type="text">
+                     name="nombreProducto" required
+                     type="text" [ngClass]="{'is-invalid': NombreProducto.invalid && banderaValidaciones}">
+              <div *ngIf="NombreProducto.errors?.required && banderaValidaciones">
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+              </div>
             </div>
             <div class="col-lg-6">
               <label>Codigo</label>
@@ -106,7 +108,7 @@
             <label>Imagenes del producto </label>
             <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
           <div
-            [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[0]==false,'borde-imagenes1':vectorBanderaAgregarImagen[0]==true }"
+            [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[0]==false,'borde-imagenes1':vectorBanderaAgregarImagen[0]==true,'borde-error': (imagenes[0].length==0 && banderaValidaciones) }"
             class="row  mt-3 mx-0 ">
             <div *ngFor='let url of imagenes[0]; let i = index ' class="ml-1">
               <div class="col-auto card mt-2 px-0 pb-0">
@@ -147,6 +149,13 @@
               </div>
             </div>
           </div>
+
+          <div *ngIf="(imagenes[0].length==0 && banderaValidaciones)">
+            <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Debes ingresar al menos una
+              imagen.</p>
+          </div>
+
+
         </div> <!-- form-group end.// -->
 
         <br>
@@ -236,9 +245,8 @@
                 </div>
 
 
-
               </div>
-              <div *ngIf="PrecioUnitario0.errors.required && banderaValidaciones">
+              <div *ngIf="PrecioUnitario0.errors?.required && banderaValidaciones">
                 <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
               </div>
             </div>
@@ -276,32 +284,37 @@
             <div class="input-group">
 
               <input #Stock0="ngModel" [(ngModel)]="this.Variantes[0].Stock" class="form-control" name="stock0"
-                     placeholder="20" type="number" min="0" step="0.01" oninput="validity.valid||(value='');">
-
+                     placeholder="20" type="number" min="0" step="0.01" oninput="validity.valid||(value='');" required
+                     [ngClass]="{'is-invalid': Stock0.invalid && banderaValidaciones}">
               <select #Unidad0="ngModel" [(ngModel)]="this.Variantes[0].Cod_Unidad"
                       class="browser-default form-control col "
                       id="selectUnidad" name="unidad0">
-
                 <option *ngFor="let unidad of this.unidades">{{unidad.COD_UNIDAD_MEDIDA}}</option>
-
               </select>
-
+            </div>
+            <div *ngIf="Stock0.errors?.required && banderaValidaciones">
+              <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
             </div>
           </div>
 
 
           <div class="col-lg-7">
-            <label>Peso </label>
+            <label>Peso aproximado</label>
             <div class="input-group mb-3">
               <input #Peso="ngModel" [(ngModel)]="this.Producto.Peso_Producto" class="form-control" name="peso"
                      placeholder="120" min="0" step="0.01" oninput="validity.valid||(value='');"
-                     type="number">
+                     type="number"  required [ngClass]="{'is-invalid': Peso.invalid && banderaValidaciones}">
               <div class="input-group-append">
                 <span class="input-group-text unidades">Kg</span>
               </div>
 
               <p style="font-size: x-small" class="ml-2">El peso de los productos ayudará a calcular el precio de
                 envío</p>
+
+
+              <div *ngIf="Peso.errors.required && banderaValidaciones">
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+              </div>
             </div>
 
           </div>
@@ -529,12 +542,19 @@
         <h6>Categorias seleccionadas</h6>
         <hr>
         <div class="form-row ">
-          <div *ngIf="this.categoriasSeleccionadas.size==0" class="form-group">
+          <div *ngIf="this.categoriasSeleccionadas.size==0 &&!banderaValidaciones" class="form-group">
             <div class="alert alert-primary col-12" role="alert">
               <a><span class="fa fa-exclamation fa-1x"></span></a>
               No existe categorias seleccionadas
             </div>
           </div>
+          <div *ngIf="this.categoriasSeleccionadas.size==0 && banderaValidaciones" class="form-group">
+            <div class="alert alert-danger col-12" role="alert">
+              <a><span class="fa fa-exclamation fa-1x"></span></a>
+              Debe seleccionar almenos una categoria
+            </div>
+          </div>
+
           <div *ngFor="let cs of categoriasSeleccionadas">
 
             <div class="mr-2 btn-group">
@@ -601,7 +621,7 @@
         <h6>Acciones</h6>
         <hr>
 
-        <button class="btn btn-outline-primary text-nowrap  col-md-5  mb-4 " type="button" (click)="validar()" >
+        <button class="btn btn-outline-primary text-nowrap  col-md-5  mb-4 " type="button" (click)="validar()">
           <span class="spinner-border spinner-border-sm mr-2"></span>
           Publicar producto
         </button>
