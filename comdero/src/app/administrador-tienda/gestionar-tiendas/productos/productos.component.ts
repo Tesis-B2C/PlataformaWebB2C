@@ -436,7 +436,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
       buttonsStyling: false,
       customClass: {
         confirmButton: 'btn btn-primary px-5',
-        container:'my-swal'
+        container: 'my-swal'
         //icon:'sm'
       }
     });
@@ -466,10 +466,12 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     let valor2 = valor.split("$")
     element.target.value = valor2[1].replace(',', "");
   }
-  validar(){
-    this.banderaValidaciones=true;
-    let body = document.getElementById('top') as HTMLElement;
-    body.scrollIntoView();
+
+  validar() {
+    this.banderaValidaciones = true;
+    let body = document.getElementById('body') as HTMLElement;
+    body.scrollTo(0, 0);
+    window.scroll(0, 0)
     this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
       {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
   }

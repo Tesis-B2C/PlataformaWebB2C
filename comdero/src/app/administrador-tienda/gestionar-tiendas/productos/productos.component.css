@@ -414,3 +414,8 @@ button {
 .errorSelect {
   border: 1px solid red;
 }
+
+body {
+  height: 90vh !important;
+  overflow: auto;
+}

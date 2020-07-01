@@ -164,3 +164,7 @@ tbody tr:hover {
   display: block;
   background: #1a56e9;
 }
+body {
+  height: 90vh !important;
+  overflow: auto;
+}

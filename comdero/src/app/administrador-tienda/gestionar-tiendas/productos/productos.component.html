@@ -24,11 +24,12 @@
 
 
 </ng-template>
-<body>
-<div id="top"></div>
+
+<body id="body"  >
 
 <div class="container mt-5 ">
-  <div class="row  justify-content-center">
+
+  <div class="row  justify-content-center" id="top">
     <h4 class=" col-11  ">Agregar Producto</h4>
     <hr class="col-11  ">
   </div>
@@ -630,7 +631,7 @@
         <h6>Acciones</h6>
         <hr>
 
-        <button class="btn btn-outline-primary text-nowrap  col-md-5  mb-4 " type="button" (click)="validar()">
+        <button class="btn btn-outline-primary text-nowrap  col-md-5  mb-4 " type="button" (click)="validar()" >
           <span class="spinner-border spinner-border-sm mr-2"></span>
           Publicar producto
         </button>
