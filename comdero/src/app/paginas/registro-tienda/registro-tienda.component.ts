@@ -67,7 +67,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
 
   constructor(public toastr: ToastrService, private _agenteServicio: AgenteServicio, private _dpaServicio: DpaServicio, private _tiendaServicio: TiendaServicio) {
     let identidad = this._agenteServicio.getIdentity();
-    this.Tienda = new Tienda(null, null, null, null, null,
+    this.Tienda = new Tienda(identidad.COD_AGENTE, null, null, null, null,
       null, null, null, null, 1, null, 'No disponible');
     this.Sucursales.push(new Sucursal(null, null, null, null, null, null, null, null, 'Negocio'));
   }
