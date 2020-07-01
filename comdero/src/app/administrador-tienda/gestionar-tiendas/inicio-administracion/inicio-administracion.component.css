@@ -9,3 +9,8 @@
 a,p,button{
   font-size: small;
 }
+
+body {
+  height: 100vh !important;
+  overflow: auto;
+}

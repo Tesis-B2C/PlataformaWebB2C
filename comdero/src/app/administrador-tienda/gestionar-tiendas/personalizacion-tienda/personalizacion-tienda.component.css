@@ -176,3 +176,7 @@ label {
   margin: auto;
   text-align: center;
 }
+body {
+  height: 100vh !important;
+  overflow: auto;
+}
