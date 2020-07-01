@@ -127,8 +127,9 @@ a, a:hover, a:focus {
   background-color: #d3d3d4;
 }
 ul ul a {
-  font-size: 0.9em !important;
+  font-size: 1em !important;
   padding-left: 30px !important;
+  font-weight: normal;
 
 }
 
