@@ -152,11 +152,4 @@ i {
   color:#fca147 ;
 }
 
-#navBarOverFlow{
- height: 100vh;
-  overflow: auto;
-}
-body {
-  max-height: 100vh;
-  overflow: hidden;
-}
+

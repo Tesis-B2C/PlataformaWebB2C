@@ -416,6 +416,6 @@ button {
 }
 
 body {
-  height: 90vh !important;
+  height: 100vh !important;
   overflow: auto;
 }
