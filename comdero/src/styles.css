@@ -36,10 +36,22 @@ body::-webkit-scrollbar-thumb {
 }
 
 body{
-  max-height: 90vh;
+  max-height: 100vh;
   overflow: hidden;
   overflow-x: hidden;
 }
+
+
+@media (max-width: 768px) {
+  body{
+    max-height: 100vh;
+    overflow: auto;
+    overflow-x: hidden;
+  }
+
+}
+
+
 
 .LetrasToastInfo{
   color: white;
