@@ -108,29 +108,37 @@ a, a:hover, a:focus {
 
 #sidebar ul p {
   color: grey;
-  padding: 5px;
+  padding: 0;
   font-size: 1rem !important;
 }
 
 #sidebar ul li a {
-  padding: 10px;
+  padding: 5px;
   font-size: 1.1em;
   display: block;
+  cursor: pointer;
 }
 #sidebar ul li a:hover { /*pilas*/
   color: #ca6900;
   background-color: #d3d3d4;
 }
 
+
+
 #sidebar ul li.active > a, a[aria-expanded="true"] {/*pilas*/
   color: #ca6900;
   background-color: #d3d3d4;
+
+
 }
 ul ul a {
   font-size: 1em !important;
   padding-left: 30px !important;
   font-weight: normal;
+}
 
+a,li:focus{
+  outline: none;
 }
 
 .content{
@@ -149,6 +157,6 @@ i {
   overflow: auto;
 }
 body {
-  max-height: 100%;
+  max-height: 100vh;
   overflow: hidden;
 }
