@@ -11,32 +11,22 @@
   <nav id="sidebar" [ngClass]="{'active':banderaSideBar}">
     <br><br>
     <ul class="list-unstyled  mx-2">
-      <li class="mb-3 active">
-        <a href="#inicio" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle py-2">
+      <li class="mb-2" routerLink="inicio-administracion" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}">
+        <a>
           <i class="fas fa-home mr-2"></i>
           Inicio
         </a>
-        <ul class="collapse list-unstyled" id="inicio">
-          <li>
-            <a href="#">Home 1</a>
-          </li>
-          <li>
-            <a href="#">Home 2</a>
-          </li>
-          <li>
-            <a href="#">Home 3</a>
-          </li>
-        </ul>
       </li>
 
-      <li class="mb-3 ">
-        <a href="#producto" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle py-2">
+      <li class="mb-3">
+        <a href="#producto" data-toggle="collapse" aria-expanded="false" class=" dropdown-toggle py-2">
           <i class="fa fa-tags mr-2"></i>
           Productos
         </a>
         <ul class="collapse list-unstyled" id="producto">
-          <li>
-            <a href="#">Nuevo</a>
+          <li routerLink="productos" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a>Nuevo</a>
           </li>
           <li>
             <a href="#">Listado</a>
@@ -90,7 +80,7 @@
     </ul>
     <ul class="mx-2">
       <hr>
-      <p>Configuraciones  &nbsp;<span class="fa fa-cog mb-4"></span></p>
+      <p>Configuraciones &nbsp;<span class="fa fa-cog mb-4"></span></p>
 
       <li class="mb-2 ">
         <a href="#tienda" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle py-1">
@@ -98,40 +88,40 @@
           Tienda
         </a>
         <ul class="collapse list-unstyled" id="tienda">
-          <li>
-            <a href="#">General</a>
+          <li routerLink="general-tienda" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a>General</a>
           </li>
-          <li>
-            <a href="#">Sucursales</a>
+          <li routerLink="sucursales-tienda" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a>Sucursales</a>
           </li>
-          <li>
-            <a href="#">Personalización</a>
+          <li routerLink="personalizacion-tienda" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" >
+            <a>Personalización</a>
           </li>
         </ul>
       </li>
 
-      <li class="mb-2">
-        <a href="#">
+      <li class="mb-2" routerLink="metodos-pago" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a>
           <i class="fas fa-credit-card mr-2"></i>
           Métodos de Pago
         </a>
       </li>
-      <li class="mb-2">
-        <a href="#">
+      <li class="mb-2" routerLink="metodos-envio" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a>
           <i class="fa fa-truck-moving mr-2"></i>
           Métodos de envio
         </a>
       </li>
 
-      <li class="mb-2">
-        <a href="#">
+      <li class="mb-2" routerLink="metodos-envioT" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a>
           <i class="fas fa-briefcase mr-2"></i>
           Métodos de envioT
         </a>
       </li>
 
       <li class="mb-2">
-        <a href="#">
+        <a>
           <i class="fas fa-briefcase mr-2"></i>
           Puntos de venta
         </a>
@@ -153,7 +143,7 @@
 
   <!-- Page Content  -->
 
-<div id="content" class="w-100">
+  <div id="content" class="w-100">
     <router-outlet></router-outlet>
   </div>
 </div>

@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-
+import {Router} from '@angular/router';
 @Component({
   selector: 'app-menu-gestion-tiendas',
   templateUrl: './menu-gestion-tiendas.component.html',
@@ -7,10 +7,11 @@ import {Component} from '@angular/core';
 })
 export class MenuGestionTiendasComponent {
 public banderaSideBar:boolean=false;
-  constructor() {
+  constructor(private router: Router) {
   }
   abrirSideBar(){
     this.banderaSideBar=!this.banderaSideBar;
   }
+
 
 }
