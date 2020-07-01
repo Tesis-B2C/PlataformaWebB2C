@@ -75,8 +75,8 @@
           'is-invalid': Email.invalid && (Email.dirty || Email.touched),
           'is-valid': Email.valid && (Email.touched || Email.dirty )}" [pattern]='this.emailPattern'
                class="form-control tamanioInputs"
-               name="email" placeholder="" required type="email"
-               type="email">
+               name="email" placeholder="" required
+               type="text">
 
         <div *ngIf="Email.invalid && (Email.touched||Email.dirty)">
           <div *ngIf="Email.errors.required">
