@@ -25,7 +25,7 @@
 
 </ng-template>
 
-<body id="body"  >
+<body id="body">
 
 <div class="container mt-5 ">
 
@@ -287,7 +287,8 @@
               <input #Stock0="ngModel" [(ngModel)]="this.Variantes[0].Stock" class="form-control" name="stock0"
                      placeholder="20" type="number" min="0" step="0.01" oninput="validity.valid||(value='');" required
                      [ngClass]="{'is-invalid': Stock0.invalid && banderaValidaciones}">
-              <select #Unidad0="ngModel" [(ngModel)]="this.Variantes[0].Cod_Unidad"   [ngClass]="{'errorSelect': Stock0.invalid && banderaValidaciones}"
+              <select #Unidad0="ngModel" [(ngModel)]="this.Variantes[0].Cod_Unidad"
+                      [ngClass]="{'errorSelect': Stock0.invalid && banderaValidaciones}"
                       class="browser-default form-control col "
                       id="selectUnidad" name="unidad0">
                 <option *ngFor="let unidad of this.unidades">{{unidad.COD_UNIDAD_MEDIDA}}</option>
@@ -508,7 +509,8 @@
                      required [ngClass]="{'is-invalid': Stock.invalid && banderaValidaciones}">
 
               <select #Unidad="ngModel" [(ngModel)]="this.Variantes[i+1].Cod_Unidad" class=" form-control col-lg-5 "
-                      id="selectUnidades" name="unidad{{i+1}}" [ngClass]="{'errorSelect': Stock.invalid && banderaValidaciones}">
+                      id="selectUnidades" name="unidad{{i+1}}"
+                      [ngClass]="{'errorSelect': Stock.invalid && banderaValidaciones}">
 
                 <option *ngFor="let unidad of this.unidades"
                         [selected]="unidad.COD_UNIDAD_MEDIDA=='unidades'">{{unidad.COD_UNIDAD_MEDIDA}}</option>
@@ -631,7 +633,7 @@
         <h6>Acciones</h6>
         <hr>
 
-        <button class="btn btn-outline-primary text-nowrap  col-md-5  mb-4 " type="button" (click)="validar()" >
+        <button class="btn btn-outline-primary text-nowrap  col-md-5  mb-4 " type="button" (click)="validar()">
           <span class="spinner-border spinner-border-sm mr-2"></span>
           Publicar producto
         </button>
@@ -646,11 +648,12 @@
 
       </div>
     </form>
+
   </div>
   <br>
   <br>
   <br>
   <br>
 </div>
-
+<br><br><br><br><br><br>
 </body>
