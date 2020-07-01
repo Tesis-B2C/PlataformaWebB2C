@@ -42,8 +42,11 @@ export class ProductoServicio {
     fd.append("categorias", categoria);
     for (let i = 0; i < variantes.length; i++) {
       for (let j = 0; j < imagenes[i].length; j++) {
+        debugger;
+        if(imagenes[i][j].Tipo_Imagen!='youtube'){
         console.log("antes de enviar imagenes", imagenes[i][j].Imagen)
         fd.append("imagenes", imagenes[i][j].Imagen);
+        }
       }
     }
 

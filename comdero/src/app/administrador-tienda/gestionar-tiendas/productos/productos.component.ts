@@ -401,7 +401,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   public async guardarProducto() {
     try {
       if (this.videoYoutube) {
-        this.videoYoutubeGuardar = new Imagen_Producto('Video', 'youtube', this.videoYoutube, 0);
+        this.videoYoutubeGuardar = new Imagen_Producto('Video', 'youtube', this.direccionVideoYoutube, 0);
         debugger;
         this.Imagenes_Producto[0].push(this.videoYoutubeGuardar);
         this.videoPorGuardar = "";
