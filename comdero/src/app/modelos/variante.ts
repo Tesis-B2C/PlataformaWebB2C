@@ -3,8 +3,8 @@ export class Variante {
     public Color: String,
     public Talla: String,
     public Material: String,
-    public Precio_Unitario: String,
-    public Stock: String,
+    public Precio_Unitario: Number,
+    public Stock: Number,
     public Cod_Unidad:String
 
   ) {

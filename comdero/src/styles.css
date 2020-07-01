@@ -36,6 +36,8 @@ body::-webkit-scrollbar-thumb {
 }
 
 body{
+  max-height: 90vh;
+  overflow: hidden;
   overflow-x: hidden;
 }
 

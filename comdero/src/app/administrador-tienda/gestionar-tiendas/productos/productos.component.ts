@@ -12,12 +12,12 @@ import {ProductoServicio} from '../../../servicios/producto.servicio';
 import Swal from 'sweetalert2'
 import {ToastrService} from 'ngx-toastr';
 import {CurrencyPipe} from '@angular/common'
-import { formatCurrency,getCurrencySymbol } from '@angular/common';
+
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css'],
-  providers:   [ CurrencyPipe ]
+  providers: [CurrencyPipe]
 })
 export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
   public videoPorGuardar;
@@ -62,7 +62,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   * */
 
   public visible = true;
-  public color = ['#2889e9'];
+  public color = [''];
   public categoriasSeleccionadas = new Set();
   public vectorIconos = ['fa fa-charging-station', 'fa fa-tshirt',
     'fa fa-ring', 'fa fa-baby-carriage', 'fa fa-home',
@@ -91,18 +91,15 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   public direccionVideoYoutube: any;
 // enviar
 
+  public identidadTienda;
 
-  public Producto_Enviar = {
-    Oferta: null,
-    Producto: null,
-    Variantes: null,
-    Imagenes: null
-  }
+  public banderaValidaciones: boolean = false;
 
-  constructor(private cp: CurrencyPipe,public toastr: ToastrService, private _productoServicio: ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
-    this.Oferta = new Oferta(null, "Garantia del vendedor");
-    this.Producto = new Producto(null, null, null, null, null, null, null, null, null);
-    this.Variantes.push(new Variante(null, null, null, null, null, "unidades"));
+  constructor(private cp: CurrencyPipe, public toastr: ToastrService, private _productoServicio: ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
+    this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
+    this.Oferta = new Oferta(this.identidadTienda.NUM_TIENDA, null, "Garantia del vendedor");
+    this.Producto = new Producto("000000", null, null, null, null, 0, 0, "Nuevo", null);
+    this.Variantes.push(new Variante(null, null, null, null, 1, "unidades"));
   }
 
   ngOnInit() {
@@ -184,7 +181,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     if (fileList.length > 0) {
       this.banderaAnimacionVideo = true;
       let file: File = fileList[0];
-      this.videoPorGuardar = new Imagen_Producto(file.name, file.type, null, file.size);
+      this.videoPorGuardar = new Imagen_Producto(file.name, file.type, event.target.files[0], file.size);
 
       /*  console.log('video seleccionado', file);*/
       if (file.size < 150000000) {
@@ -250,9 +247,9 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
 
   public agregarOpcionesProducto() {
     this.vectorOpciones.push(1);
-    this.color.push("#2889e9");
+    this.color.push("");
     this.vectorBanderaAgregarImagen.push(false);
-    this.Variantes.push(new Variante("#2889e9", null, null, null, null, "unidades"));
+    this.Variantes.push(new Variante(null, null, null, null, 1, "unidades"));
     this.Imagenes_Producto.push([]);
     this.imagenes.push([]);
     console.log("asdasd");
@@ -391,32 +388,36 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     video = (results === null) ? url : results[1];
     delete this.videoPorGuardar;
     this.videoYoutube = this._sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + video);
+    delete this.videoPorGuardar;
+    this.data.video = "";
   }
 
   public resetearVideoYoutube() {
     this.videoYoutube = null;
   }
 
+  public categoriasEnviar = [];
 
   public async guardarProducto() {
     try {
       if (this.videoYoutube) {
         this.videoYoutubeGuardar = new Imagen_Producto('Video', 'youtube', this.videoYoutube, 0);
-        this.Imagenes_Producto.push(this.videoYoutubeGuardar);
-      } else {
-        this.Imagenes_Producto.push(this.videoPorGuardar);
+        debugger;
+        this.Imagenes_Producto[0].push(this.videoYoutubeGuardar);
+        this.videoPorGuardar = "";
+      } else if (this.videoPorGuardar) {
+        this.Imagenes_Producto[0].push(this.videoPorGuardar);
       }
-      this.Producto_Enviar.Oferta = this.Oferta;
-      this.Producto_Enviar.Producto = this.Producto;
-      this.Producto_Enviar.Variantes = this.Variantes;
-      this.Producto_Enviar.Imagenes = this.Imagenes_Producto;
+      this.categoriasEnviar = [];
+      for (let categorias of this.categoriasSeleccionadas) {
+        this.categoriasEnviar.push(categorias['ID_CATEGORIA']);
+      }
 
-
-      console.log("Producto a enviar ", this.Imagenes_Producto[0])
-        let response = await this._productoServicio.saveProducto(this.Oferta,this.Producto,this.Variantes,this.Imagenes_Producto).toPromise();
-          this.mensageCorrecto(response.data);
-    } catch (e) {
-      console.log("error:" + JSON.stringify((e).error.message));
+      let response = await this._productoServicio.saveProducto(this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
+      this.mensageCorrecto(response.data);
+    } catch
+      (e) {
+      console.log("error:" + e);
       if (JSON.stringify((e).error.message))
         this.mensageError(JSON.stringify((e).error.message));
       else this.mensageError("Error de conexión intentelo mas tarde");
@@ -435,6 +436,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
       buttonsStyling: false,
       customClass: {
         confirmButton: 'btn btn-primary px-5',
+        container: 'my-swal'
         //icon:'sm'
       }
     });
@@ -457,12 +459,21 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     });
   }
 
-  formatear( element: any ) {
-   debugger;
-    let valor = this.cp.transform(element.target.value,'$',);
+  formatear(element) {
+    debugger;
+    let valor = this.cp.transform(element.target.value, '$',);
     //let alter=formatCurrency(element.target.value,'USD',getCurrencySymbol('USD', 'wide'));
-    let valor2 =valor.split("$")
-    element.target.value =valor2[1].replace(',',"");
+    let valor2 = valor.split("$")
+    element.target.value = valor2[1].replace(',', "");
+  }
+
+  validar() {
+    this.banderaValidaciones = true;
+    let body = document.getElementById('body') as HTMLElement;
+    body.scrollTo(0, 0);
+    window.scroll(0, 0)
+    this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
+      {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
   }
 }
 

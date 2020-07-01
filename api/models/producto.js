@@ -7,7 +7,7 @@ var Calificacion = require("./calificacion");
 var Variante = require("./variante");
 var Producto_Categoria = require("./producto_categoria");
 var Carrito_Producto = require("./carrito_producto");
-const Producto = db.sequelize.define('Producto', {
+const Producto = db.sequelize.define('PRODUCTO', {
         ID_PRODUCTO: {
             type: Sequelize.BIGINT,
             autoIncrement: true,
@@ -43,11 +43,6 @@ const Producto = db.sequelize.define('Producto', {
                 allowNull: false
             },
 
-        STOCK:
-            {
-                type: Sequelize.INTEGER,
-                allowNull: false
-            },
         MARCA:
             {
                 type: Sequelize.STRING,
@@ -64,7 +59,12 @@ const Producto = db.sequelize.define('Producto', {
         CONDICION: {
             type: Sequelize.STRING,
             allowNull: false
-        }
+        },
+        PESO_PRODUCTO:
+            {
+                type: Sequelize.STRING,
+                allowNull: false
+            },
 
 
     },

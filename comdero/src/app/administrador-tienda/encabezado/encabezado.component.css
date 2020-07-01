@@ -1,5 +1,5 @@
 
-.logo{
+.logo {
 
   max-height: 55px;
   align-items: center;
@@ -29,10 +29,3 @@
   }
 }
 
-
-body{
-
-
-  max-height: 90vh;
-  overflow: hidden;
-}

@@ -1,6 +1,4 @@
-<body>
 <ng-template #modalVideoYoutube let-modal>
-
 
   <div class="modal-header">
     <h4 class="modal-title">Subir video de Youtube</h4>
@@ -27,17 +25,18 @@
 
 </ng-template>
 
+<body id="body"  >
 
 <div class="container mt-5 ">
-  <div class="row  justify-content-center">
+
+  <div class="row  justify-content-center" id="top">
     <h4 class=" col-11  ">Agregar Producto</h4>
     <hr class="col-11  ">
   </div>
 
   <div class="row justify-content-center">
     <div class="col-md-7" id="panelUno">
-
-      <form class="card card-body ">
+      <form #FormInformacion id="formInformacion" class="card card-body validate-form">
         <h6>Información</h6>
         <hr>
         <div class="container">
@@ -45,8 +44,11 @@
             <div class="col-md-6">
               <label>Nombre</label>
               <input #NombreProducto="ngModel" [(ngModel)]="this.Producto.Nombre_Producto" class=" form-control py-3 "
-                     name="nombreProducto"
-                     type="text">
+                     name="nombreProducto" required
+                     type="text" [ngClass]="{'is-invalid': NombreProducto.invalid && banderaValidaciones}">
+              <div *ngIf="NombreProducto.errors?.required && banderaValidaciones">
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+              </div>
             </div>
             <div class="col-lg-6">
               <label>Codigo</label>
@@ -107,7 +109,7 @@
             <label>Imagenes del producto </label>
             <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
           <div
-            [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[0]==false,'borde-imagenes1':vectorBanderaAgregarImagen[0]==true }"
+            [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[0]==false,'borde-imagenes1':vectorBanderaAgregarImagen[0]==true,'borde-error': (imagenes[0].length==0 && banderaValidaciones) }"
             class="row  mt-3 mx-0 ">
             <div *ngFor='let url of imagenes[0]; let i = index ' class="ml-1">
               <div class="col-auto card mt-2 px-0 pb-0">
@@ -116,7 +118,8 @@
                   <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple name="files"
                          type="file">
                 </label>
-                <button (click)="quitarImagenes(0,i)" class="boton-cerrar btn-outline-danger px-0 py-0 "> <span class="fa  fa-trash"></span>
+                <button (click)="quitarImagenes(0,i)" class="boton-cerrar btn-outline-danger px-0 py-0 "><span
+                  class="fa  fa-trash"></span>
                 </button>
               </div>
             </div>
@@ -147,6 +150,13 @@
               </div>
             </div>
           </div>
+
+          <div *ngIf="(imagenes[0].length==0 && banderaValidaciones)">
+            <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Debes ingresar al menos una
+              imagen.</p>
+          </div>
+
+
         </div> <!-- form-group end.// -->
 
         <br>
@@ -169,7 +179,7 @@
               <div *ngIf="this.banderaAnimacionVideo==true">
                 <div class="fondoAnimacionCarga py-5">
                   <div class="pulse animated infinite py-5  ">
-                    <img class="imagenCarga" src="./../assets/images/cargando.png">
+                    <img class="imagenCarga" src="assets/images/cargando.png">
                     <br><br>
                     <div>
                     </div>
@@ -225,19 +235,24 @@
             <div class="col-lg-6">
               <label> Precio unitario sin iva </label>
 
-              <div class="input-group mb-3">
-                <input #PrecioUnitario0="ngModel" [(ngModel)]="this.Variantes[0].Precio_Unitario"   class="form-control"
-                       min="0" step="0.01"  oninput="validity.valid||(value='');"
-                       name="precioUnitario0" id="precioUnitarioVariante0" type="number" placeholder="0,00" (focusout)="formatear($event)">
-
-
+              <div class="input-group ">
+                <input #PrecioUnitario0="ngModel" [(ngModel)]="this.Variantes[0].Precio_Unitario" class="form-control"
+                       min="0" step="0.01" oninput="validity.valid||(value='');"
+                       name="precioUnitario0" id="precioUnitarioVariante0" type="number" placeholder="0,00" required
+                       (focusout)="formatear($event)"
+                       [ngClass]="{'is-invalid': PrecioUnitario0.invalid && banderaValidaciones}">
                 <div class="input-group-append">
                   <span class="input-group-text unidades">$</span>
                 </div>
 
-              </div>
 
+              </div>
+              <div *ngIf="PrecioUnitario0.errors?.required && banderaValidaciones">
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+              </div>
             </div>
+
+
             <div class="col-lg-6">
               <label>Porcentaje de Iva </label>
               <div class="input-group mb-3">
@@ -265,42 +280,47 @@
         <hr>
         <div class="">
 
-          <div class="form-group col-lg-12">
-            <label>Ingresse la cantidad y la unidad de medida en la cual se ofertara el producto </label>
+          <div class="form-group col-lg-7">
+            <label>Stock y unidad de medida en la cual se ofertara el producto </label>
             <div class="input-group">
 
               <input #Stock0="ngModel" [(ngModel)]="this.Variantes[0].Stock" class="form-control" name="stock0"
-                     placeholder="20" type="number" min="0" step="0.01" oninput="validity.valid||(value='');">
-
-              <select #Unidad0="ngModel" [(ngModel)]="this.Variantes[0].Cod_Unidad"
+                     placeholder="20" type="number" min="0" step="0.01" oninput="validity.valid||(value='');" required
+                     [ngClass]="{'is-invalid': Stock0.invalid && banderaValidaciones}">
+              <select #Unidad0="ngModel" [(ngModel)]="this.Variantes[0].Cod_Unidad"   [ngClass]="{'errorSelect': Stock0.invalid && banderaValidaciones}"
                       class="browser-default form-control col "
                       id="selectUnidad" name="unidad0">
-
                 <option *ngFor="let unidad of this.unidades">{{unidad.COD_UNIDAD_MEDIDA}}</option>
-
               </select>
-
+            </div>
+            <div *ngIf="Stock0.errors?.required && banderaValidaciones">
+              <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
             </div>
           </div>
 
 
           <div class="col-lg-7">
-            <label>Peso </label>
+            <label>Peso aproximado</label>
             <div class="input-group mb-3">
               <input #Peso="ngModel" [(ngModel)]="this.Producto.Peso_Producto" class="form-control" name="peso"
                      placeholder="120" min="0" step="0.01" oninput="validity.valid||(value='');"
-                     type="number">
+                     type="number" required [ngClass]="{'is-invalid': Peso.invalid && banderaValidaciones}">
               <div class="input-group-append">
                 <span class="input-group-text unidades">Kg</span>
               </div>
 
               <p style="font-size: x-small" class="ml-2">El peso de los productos ayudará a calcular el precio de
                 envío</p>
+
+
+              <div *ngIf="Peso.errors?.required && banderaValidaciones">
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+              </div>
             </div>
 
           </div>
           <br>
-          <div class="form-group">
+          <div class="form-group ml-2">
             <div class="checkbox-item">
               <input (click)="opcionRastrearStock($event)" id="rastrearCantidad" type="checkbox">
               <label for="rastrearCantidad">&nbsp;&nbsp;Rastrear la cantidad</label>
@@ -308,7 +328,7 @@
           </div>
 
 
-          <div class="form-group">
+          <div class="form-group ml-2">
             <div class="checkbox-item">
               <input (click)="opcionVenderSinStock($event)" id="venderDespuesAgotado"
                      type="checkbox">
@@ -332,7 +352,7 @@
           <div class="form-group">
             <div class="radio-item">
               <input (click)="opcionGarantia($event.target.value)" name="garantia"
-                     type="radio" value="Garantia del vendedor" id="GarantiaVendedor">
+                     type="radio" value="Garantia del vendedor" id="GarantiaVendedor" checked>
               <label for="GarantiaVendedor">&nbsp;&nbsp;Garantia del vendedor</label>
             </div>
             <br>
@@ -368,7 +388,7 @@
 
             <div class="radio-item">
               <input (change)="opcionVariaciones(false)" name="variaciones" type="radio"
-                     value="No" id="VariacionNo">
+                     value="No" id="VariacionNo" checked>
               <label for="VariacionNo">&nbsp;&nbsp; No </label>
             </div>
           </div>
@@ -468,7 +488,7 @@
                   <label class="imagen-agregar">
                     <i class="fa fa-picture-o fa-4x ml-4"></i>
                     <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                    <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file" >
+                    <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file">
                     <br>
                     <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imagenes </p>
                     <p class=" link-agregar-imagenes2">maximo 6</p>
@@ -484,15 +504,19 @@
             <div class="input-group">
 
               <input #Stock="ngModel" [(ngModel)]="this.Variantes[i+1].Stock" class="form-control" name="stock{{i+1}}"
-                     placeholder="200" type="number" min="0"step="0.01" oninput="validity.valid||(value='');">
+                     placeholder="200" type="number" min="0" step="0.01" oninput="validity.valid||(value='');"
+                     required [ngClass]="{'is-invalid': Stock.invalid && banderaValidaciones}">
 
               <select #Unidad="ngModel" [(ngModel)]="this.Variantes[i+1].Cod_Unidad" class=" form-control col-lg-5 "
-                      id="selectUnidades" name="unidad{{i+1}}">
+                      id="selectUnidades" name="unidad{{i+1}}" [ngClass]="{'errorSelect': Stock.invalid && banderaValidaciones}">
 
                 <option *ngFor="let unidad of this.unidades"
                         [selected]="unidad.COD_UNIDAD_MEDIDA=='unidades'">{{unidad.COD_UNIDAD_MEDIDA}}</option>
               </select>
 
+            </div>
+            <div *ngIf="Stock.errors?.required && banderaValidaciones">
+              <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
             </div>
           </div>
 
@@ -501,11 +525,16 @@
             <div class="input-group mb-3">
               <input #PrecioUnitario="ngModel" [(ngModel)]="this.Variantes[i+1].Precio_Unitario"
                      aria-label="Amount (to the nearest dollar)" class="form-control"
-                     name="precioUnitario{{i+1}}" placeholder="20"
-                     type="number" min="0" step="0.01" oninput="validity.valid||(value='');">
+                     name="precioUnitario{{i+1}}" placeholder="20" (focusout)="formatear($event)"
+                     type="number" min="0" step="0.01" oninput="validity.valid||(value='');" required
+                     [ngClass]="{'is-invalid': PrecioUnitario.invalid && banderaValidaciones}">
               <div class="input-group-append">
                 <span class="input-group-text unidades">$</span>
               </div>
+              <div *ngIf="PrecioUnitario.errors?.required && banderaValidaciones">
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+              </div>
+
             </div>
           </div>
 
@@ -523,12 +552,19 @@
         <h6>Categorias seleccionadas</h6>
         <hr>
         <div class="form-row ">
-          <div *ngIf="this.categoriasSeleccionadas.size==0" class="form-group">
+          <div *ngIf="this.categoriasSeleccionadas.size==0 &&!banderaValidaciones" class="form-group">
             <div class="alert alert-primary col-12" role="alert">
               <a><span class="fa fa-exclamation fa-1x"></span></a>
               No existe categorias seleccionadas
             </div>
           </div>
+          <div *ngIf="this.categoriasSeleccionadas.size==0 && banderaValidaciones" class="form-group">
+            <div class="alert alert-danger col-12" role="alert">
+              <a><span class="fa fa-exclamation fa-1x"></span></a>
+              Debe seleccionar almenos una categoria
+            </div>
+          </div>
+
           <div *ngFor="let cs of categoriasSeleccionadas">
 
             <div class="mr-2 btn-group">
@@ -541,8 +577,6 @@
         </div>
 
       </form>
-
-
 
 
     </div>
@@ -592,26 +626,26 @@
   </div>
 
   <div class="row justify-content-center">
-  <form class="card card-body  col-md-11 ml-md-4 mt-4 w-50">
-    <div class=" container">
-      <h6>Acciones</h6>
-      <hr>
+    <form class="card card-body  col-md-11 ml-md-4 mt-4 w-50">
+      <div class=" container">
+        <h6>Acciones</h6>
+        <hr>
 
-      <button class="btn btn-outline-primary text-nowrap  col-md-5  mb-4 " type="button">
-        <span class="spinner-border spinner-border-sm mr-2"></span>
-        Publicar producto
-      </button>
-
-
-      <button (click)="this.guardarProducto()" class="btn btn-outline-primary text-nowrap offset-md-2 col-md-5 mb-4"
-              type="button">
-        <span class="spinner-border spinner-border-sm mr-2"></span>
-        Guardar Producto
-      </button>
+        <button class="btn btn-outline-primary text-nowrap  col-md-5  mb-4 " type="button" (click)="validar()" >
+          <span class="spinner-border spinner-border-sm mr-2"></span>
+          Publicar producto
+        </button>
 
 
-    </div>
-  </form>
+        <button (click)="this.guardarProducto()" class="btn btn-outline-primary text-nowrap offset-md-2 col-md-5 mb-4"
+                type="button">
+          <span class="spinner-border spinner-border-sm mr-2"></span>
+          Guardar Producto
+        </button>
+
+
+      </div>
+    </form>
   </div>
   <br>
   <br>

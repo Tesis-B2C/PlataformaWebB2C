@@ -47,8 +47,8 @@
 }
 
 body{
-  max-height: 90vh;
-  overflow: hidden;
+  max-height: 100%;
+  overflow: auto;
 }
 
 

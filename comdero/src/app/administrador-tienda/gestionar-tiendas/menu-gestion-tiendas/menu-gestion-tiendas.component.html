@@ -1,191 +1,152 @@
-<div class=" border-bottom colorNavbar  py-1  ">
+
+<div class=" border-bottom colorNavbar  py-1 p-absolute">
   <p class=" encabezado ">
-    <button (click)="_toggleOpened()"><i class=" col-sm-1  fa fa-bars px-3  "></i></button>
+    <button (click)="abrirSideBar()"><i class=" col-sm-1  fa fa-bars px-3  "></i></button>
     Gestion de tienda
   </p>
 </div>
+<div class="wrapper">
+  <!-- Sidebar  -->
 
-
-<ng-sidebar-container>
-  <ng-sidebar
-
-    (onCloseStart)="_onCloseStart()"
-    (onClosed)="_onClosed()"
-    (onOpenStart)="_onOpenStart()"
-    (onOpened)="_onOpened()"
-    [(opened)]="_opened"
-    [animate]="_animate"
-    [autoCollapseHeight]="_autoCollapseHeight"
-    [autoCollapseWidth]="_autoCollapseWidth"
-    [mode]="_MODES[_modeNum]"
-    [position]="_POSITIONS[_positionNum]"
-  >
-
-
-    <ul class="navbar-nav navbar-sidenav ml-2">
-      <li class="nav-item" data-placement="right " data-toggle="tooltip">
-        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse"  [routerLink]="['inicio-administracion']">
-          <i class="fa fa-fw fa-home " > </i>
-          <span class="nav-link-text ml-2">Inicio</span>
-
+  <nav id="sidebar" [ngClass]="{'active':banderaSideBar}">
+    <br><br>
+    <ul class="list-unstyled  mx-2">
+      <li class="mb-2" routerLink="inicio-administracion" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}">
+        <a>
+          <i class="fas fa-home mr-2"></i>
+          Inicio
         </a>
-
       </li>
-    </ul>
 
-    <ul class="navbar-nav navbar-sidenav mt-2 ml-2">
-      <li class="nav-item" data-placement="right " data-toggle="tooltip">
-        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#producto">
-          <i class="fa fa-fw fa-tags "></i>
-          <span class="nav-link-text ml-2">Productos</span>
+      <li class="mb-3">
+        <a href="#producto" data-toggle="collapse" aria-expanded="false" class=" dropdown-toggle ">
+          <i class="fa fa-tags mr-2"></i>
+          Productos
         </a>
-        <ul class="sidenav-second-level collapse" id="producto">
-          <li>
-            <a class="ml-4  nav-item nav-link opcion-interna " [routerLink]="['productos']"
-               routerLinkActive="active"> &nbsp; &nbsp; - Nuevo</a>
-          </li>
-          <br>
-          <li><a class="ml-4  nav-item nav-link opcion-interna "> &nbsp; &nbsp; - Listado</a>
-          </li>
-        </ul>
-      </li>
-    </ul>
-
-    <ul class="navbar-nav navbar-sidenav mt-2 ml-2">
-      <li class="nav-item" data-placement="right " data-toggle="tooltip">
-        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#pedidos">
-          <i class="fa fa-fw fa-truck "></i>
-
-          <span class="nav-link-text ml-2">Pedidos</span>
-        </a>
-        <ul class="sidenav-second-level collapse" id="pedidos">
-          <li (click)="apareceIngreseUsuario()" class="ml-4 opcion-interna" style="cursor:pointer "> &nbsp; &nbsp;
-            Nuevo
-          </li>
-        </ul>
-      </li>
-    </ul>
-
-    <ul class="navbar-nav navbar-sidenav mt-2 ml-2">
-      <li class="nav-item" data-placement="right " data-toggle="tooltip">
-        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#clientes">
-          <i class="fa fa-fw fa-users "></i>
-          <span class="nav-link-text ml-2">Clientes</span>
-        </a>
-        <ul class="sidenav-second-level collapse" id="clientes">
-          <li (click)="apareceIngreseUsuario()" class="ml-4 opcion-interna" style="cursor:pointer "> &nbsp; &nbsp;
-            Nuevo
-          </li>
-        </ul>
-      </li>
-    </ul>
-
-    <ul class="navbar-nav navbar-sidenav mt-2 ml-2">
-      <li class="nav-item" data-placement="right " data-toggle="tooltip">
-        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#estadisticas">
-          <i class="fa fa-fw fa-bar-chart "></i>
-          <span class="nav-link-text ml-2">Estadisticas</span>
-        </a>
-        <ul class="sidenav-second-level collapse" id="estadisticas">
-          <li (click)="apareceIngreseUsuario()" class="ml-4 opcion-interna" style="cursor:pointer "> &nbsp; &nbsp;
-            Nuevo
-          </li>
-        </ul>
-      </li>
-    </ul>
-
-    <ul class="navbar-nav navbar-sidenav mt-2 ml-2">
-      <li class="nav-item" data-placement="right " data-toggle="tooltip">
-        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#tienda">
-          <i class="fa fa-fw fa-shopping-bag "></i>
-          <span class="nav-link-text ml-2">Tienda</span>
-        </a>
-        <ul class="sidenav-second-level collapse" id="tienda1">
-          <li (click)="apareceIngreseUsuario()" class="ml-4 subOpcion" style="cursor:pointer "> &nbsp; &nbsp; Nuevo</li>
-        </ul>
-      </li>
-    </ul>
-
-    <hr>
-    <p>Configuraciones</p>
-
-    <ul class="navbar-nav navbar-sidenav mt-2 ml-2">
-      <li class="nav-item" data-placement="right " data-toggle="tooltip">
-        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#tienda">
-          <i class="fa fa-fw fa-store "></i>
-          <span class="nav-link-text ml-2">Tienda</span>
-        </a>
-        <ul class="sidenav-second-level collapse" id="tienda">
-          <li>
-            <a class="ml-4 nav-item nav-link opcion-interna" [routerLink]="['general-tienda']"
-               routerLinkActive="active"> &nbsp; &nbsp; - General</a>
+        <ul class="collapse list-unstyled" id="producto">
+          <li routerLink="productos" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a>Nuevo</a>
           </li>
           <li>
-            <a class="ml-4 nav-item nav-link opcion-interna" [routerLink]="['sucursales-tienda']"
-               routerLinkActive="active"> &nbsp; &nbsp; - Sucursales</a>
+            <a href="#">Listado</a>
+          </li>
+
+        </ul>
+      </li>
+
+      <li class="mb-3 ">
+        <a href="#pedidos" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle ">
+          <i class="fas fa-truck mr-2"></i>
+          Pedidos
+        </a>
+        <ul class="collapse list-unstyled" id="pedidos">
+          <li>
+            <a href="#">Home 1</a>
+          </li>
+
+        </ul>
+      </li>
+      <li class="mb-3 ">
+        <a href="#clientes" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle ">
+          <i class="fa fa-users mr-2"></i>
+          Clientes
+        </a>
+        <ul class="collapse list-unstyled" id="clientes">
+          <li>
+            <a href="#">Listado</a>
+          </li>
+
+        </ul>
+      </li>
+      <li class="mb-3">
+        <a href="#estadisticas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle ">
+          <i class="fa fa-bar-chart mr-2"></i>
+          Estadisticas
+        </a>
+        <ul class="collapse list-unstyled" id="estadisticas">
+          <li>
+            <a href="#">Home 1</a>
           </li>
           <li>
-            <a class="ml-4 nav-item nav-link opcion-interna" [routerLink]="['personalizacion-tienda']"
-               routerLinkActive="active"> &nbsp; &nbsp; - Personalización</a>
+            <a href="#">Home 2</a>
+          </li>
+          <li>
+            <a href="#">Home 3</a>
           </li>
         </ul>
       </li>
-    </ul>
 
-    <ul class="navbar-nav navbar-sidenav mt-2 ml-2">
-      <li class="nav-item" data-placement="right " data-toggle="tooltip">
-        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" [routerLink]="['metodos-pago']"
-           routerLinkActive="active">
-          <i class="fa fa-fw fa-credit-card  "></i>
-          <span class="nav-link-text ml-2">Métodos de Pago</span>
+    </ul>
+    <ul class="mx-2">
+      <hr>
+      <p>Configuraciones &nbsp;<span class="fa fa-cog mb-4"></span></p>
+
+      <li class="mb-2 ">
+        <a href="#tienda" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle ">
+          <i class="fa fa-store mr-2"></i>
+          Tienda
+        </a>
+        <ul class="collapse list-unstyled" id="tienda">
+          <li routerLink="general-tienda" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" >
+            <a >General</a>
+          </li>
+          <li routerLink="sucursales-tienda" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a>Sucursales</a>
+          </li>
+          <li routerLink="personalizacion-tienda" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" >
+            <a>Personalización</a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="mb-2" routerLink="metodos-pago" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a>
+          <i class="fas fa-credit-card mr-2"></i>
+          Métodos de Pago
+        </a>
+      </li>
+      <li class="mb-2" routerLink="metodos-envio" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a>
+          <i class="fa fa-truck-moving mr-2"></i>
+          Métodos de envio
+        </a>
+      </li>
+
+      <li class="mb-2" routerLink="metodos-envioT" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a>
+          <i class="fas fa-briefcase mr-2"></i>
+          Métodos de envioT
+        </a>
+      </li>
+
+      <li class="mb-2">
+        <a>
+          <i class="fas fa-briefcase mr-2"></i>
+          Puntos de venta
         </a>
       </li>
     </ul>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+  </nav>
 
-    <ul class="navbar-nav navbar-sidenav mt-2 ml-2">
-      <li class="nav-item" data-placement="right " data-toggle="tooltip">
-        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" [routerLink]="['metodos-envio']"
-           routerLinkActive="active">
-          <i class="fa fa-fw fa-truck-moving  "></i>
-          <span class="nav-link-text ml-2">Métodos de Envio</span>
-        </a>
-      </li>
-    </ul>
+  <!-- Page Content  -->
 
-    <ul class="navbar-nav navbar-sidenav mt-2 ml-2">
-      <li class="nav-item" data-placement="right " data-toggle="tooltip">
-        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" [routerLink]="['metodos-envioT']"
-           routerLinkActive="active">
-          <i class="fa fa-fw fa-truck-moving  "></i>
-          <span class="nav-link-text ml-2">Métodos de Envio T</span>
-        </a>
-      </li>
-    </ul>
-
-    <ul class="navbar-nav navbar-sidenav mt-2 ml-2">
-      <li class="nav-item" data-placement="right " data-toggle="tooltip">
-        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#puntos-venta">
-          <i class="fa fa-fw fa-map  "></i>
-          <span class="nav-link-text ml-2">Puntos de venta</span>
-        </a>
-      </li>
-    </ul>
-
-  </ng-sidebar
->
-
-  <div class=" demo-contents scrollbar" ng-sidebar-content>
-
-
-    <!--<div>
-      <img class="imagenFondo" src="../../../../assets/images/fondo-administrador.png">
-    </div>-->
+  <div id="content" class="w-100">
     <router-outlet></router-outlet>
-
   </div>
-
-</ng-sidebar-container>
-
+</div>
 
 
 
