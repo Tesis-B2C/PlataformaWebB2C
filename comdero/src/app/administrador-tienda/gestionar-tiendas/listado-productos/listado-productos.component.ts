@@ -1,16 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 
-
-
-
-interface Country {
-  name: string;
-  flag: string;
-  area: number;
-  population: number;
-}
-
-
+import {ProductoServicio} from "../../../servicios/producto.servicio";
 
 
 @Component({
@@ -23,88 +13,39 @@ export class ListadoProductosComponent implements OnInit {
 
 
 
- public COUNTRIES= [
-    {
-      name: 'Russia',
-      flag: 'f/f3/Flag_of_Russia.svg',
-      area: 17075200,
-      population: 146989754
-    },
-    {
-      name: 'Canada',
-      flag: 'c/cf/Flag_of_Canada.svg',
-      area: 9976140,
-      population: 36624199
-    },
-    {
-      name: 'United States',
-      flag: 'a/a4/Flag_of_the_United_States.svg',
-      area: 9629091,
-      population: 324459463
-    },
-    {
-      name: 'China',
-      flag: 'f/fa/Flag_of_the_People%27s_Republic_of_China.svg',
-      area: 9596960,
-      population: 1409517397
-    },
-   {
-     name: 'China',
-     flag: 'f/fa/Flag_of_the_People%27s_Republic_of_China.svg',
-     area: 9596960,
-     population: 1409517397
-   },
-   {
-     name: 'China',
-     flag: 'f/fa/Flag_of_the_People%27s_Republic_of_China.svg',
-     area: 9596960,
-     population: 1409517397
-   },
-   {
-     name: 'China',
-     flag: 'f/fa/Flag_of_the_People%27s_Republic_of_China.svg',
-     area: 9596960,
-     population: 1409517397
-   },
-   {
-     name: 'China',
-     flag: 'f/fa/Flag_of_the_People%27s_Republic_of_China.svg',
-     area: 9596960,
-     population: 1409517397
-   },
-   {
-     name: 'China',
-     flag: 'f/fa/Flag_of_the_People%27s_Republic_of_China.svg',
-     area: 9596960,
-     population: 1409517397
-   }
-  ];
-
   public busqueda
 
   page = 1;
   pageSize = 4;
 
-  banderaTabla: boolean = true;
 
-  constructor() {
-    this.result=this.COUNTRIES;
+  constructor(private _productoServicio: ProductoServicio) {
+
   }
 
-   search(text: string): Country[] {
-    return this.COUNTRIES.filter(country => {
+  search(text: string): any[] {
+    return this.misProductos.filter(producto => {
       const term = text.toLowerCase();
-      return country.name.toLowerCase().includes(term)  // || siguiente
+      debugger
+      return producto.PRODUCTO.NOMBRE_PRODUCTO.toLowerCase().includes(term)  // || siguiente
     });
   }
 
-  ngOnInit() {
+  public identidadTienda;
+  public misProductos;
+  public result=[];
+  async ngOnInit() {
+    this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
+    let response = await this._productoServicio.getMisProductos(this.identidadTienda.NUM_TIENDA).toPromise();
+    this.misProductos = response.data;
+    debugger;
+    this.result = this.misProductos;
+    console.log("mis productos", this.misProductos);
   }
 
-  public result;
+
 
   async busquedasasd() {
-
     this.result = await this.search(this.busqueda);
   }
 

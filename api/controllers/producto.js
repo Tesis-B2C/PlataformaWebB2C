@@ -9,6 +9,7 @@ const moment = require('moment');
 const db = require('../database/db');
 const fs = require('fs-extra');
 const path = require('path');
+
 async function saveProducto(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
     const vvariantesGuardas = [];
@@ -123,15 +124,41 @@ async function saveProducto(req, res) {
             }
         }
 
-    await t.rollback();
-    res.status(500).send({
-        message: 'error:' + err
-    });
+        await t.rollback();
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
 }
+
+
+async function getMisProductos(req, res) {
+    try {
+        let productosObtenidas = await Oferta.findAll({where: {NUM_TIENDA: req.params.id},include: {model: Producto}});
+
+        if (productosObtenidas.length) {
+            res.status(200).send({
+                data: productosObtenidas,
+                message: "Productos cargadas correctamente"
+            });
+        } else {
+            res.status(404).send({
+                message: 'Al parecer no se encuentra productos registrados en la base de datos'
+            });
+
+
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+
 }
 
 module.exports = {          // para exportar todas las funciones de este modulo
 
-    saveProducto
+    saveProducto,
+    getMisProductos
 
 };

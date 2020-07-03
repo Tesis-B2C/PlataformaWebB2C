@@ -4,7 +4,7 @@
     <h4 class=" col-md-11 text-left">Listado de productos</h4>
     <hr class=" col-md-11  ">
   </div>
-  <div *ngIf="!banderaTabla" class="row justify-content-center   ">
+  <div *ngIf="!result" class="row justify-content-center   ">
     <div class=" col-md-9  ml-md-5 ">
       <div class=" container  bg-white  shadow ">
         <br><br><br>
@@ -52,34 +52,66 @@
 <div class="container-fluid mx-auto px-5 ">
 
 
+  <div class="form-row mb-2 ">
+    <div class=" input-group col-4 mr-auto">
+      <input class="form-control" style="font-size: small" type="text" #busquedaasd="ngModel" [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="busquedasasd()"/>
 
-    <div class="form-group form-inline">
-      Full text search: <input class="form-control ml-2" type="text"  #busquedaasd="ngModel"
-                               [(ngModel)]="this.busqueda"  name="Busquedaasd"  (input)="busquedasasd()"/>
+      <div class="input-group-append">
+        <span class="input-group-text  small"><li class="fas fa-search"></li></span>
+      </div>
     </div>
-
+    <div class="col-auto">
+      <button class="btn btn-primary" style="font-size:small">Nuevo Producto</button>
+    </div>
+  </div>
 
   <table class="table table table-bordered bg-white small w-100 text-center">
     <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Country</th>
-      <th scope="col">Area</th>
-      <th scope="col">Population</th>
-
+      <th scope="col">ID_PRODUCTO</th>
+      <th scope="col">COD_PRODUCTO</th>
+      <th scope="col">ID_OFERTA</th>
+      <th scope="col">NOMBRE</th>
+      <th scope="col">DESCRIPCION</th>
+      <th scope="col">MARCA</th>
+      <th scope="col">CONDICION</th>
+      <th scope="col">PESO</th>
+      <th scope="col">OPCIÓN</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let country of   this.result |slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+    <tr
+      *ngFor="let producto of   this.result  |slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
       <th scope="row">{{ i + 1 }}</th>
       <td>
-       {{country.name}}
+        {{producto.PRODUCTO.ID_PRODUCTO}}
       </td>
       <td>
-      {{country.name}}
+        {{producto.PRODUCTO.COD_PRODUCTO}}
       </td>
       <td>
-      {{country.name}}
+        {{producto.ID_OFERTA}}
+      </td>
+      <td>
+        {{producto.PRODUCTO.NOMBRE_PRODUCTO}}
+      </td>
+      <td>
+        {{producto.PRODUCTO.DESCRIPCION_PRODUCTO}}
+      </td>
+      <td>
+        {{producto.PRODUCTO.MARCA}}
+      </td>
+      <td>
+        {{producto.PRODUCTO.CONDICION}}
+      </td>
+      <td>
+        {{producto.PRODUCTO.PESO_PRODUCTO}}
+      </td>
+      <td>
+        <button class="btn btn-danger" style="font-size: x-small"><span class="fa fa-trash"></span></button>
+        &nbsp;
+        <button class="btn btn-primary" style="font-size: x-small"><span class="fa fa-edit"></span></button>
       </td>
     </tr>
     </tbody>
@@ -89,11 +121,8 @@
     <ngb-pagination
       [(page)]="page"
       [pageSize]="pageSize"
-      [collectionSize]="result.length"></ngb-pagination>
+      [collectionSize]="this.result.length "></ngb-pagination>
   </div>
-
-
-
 
 
 </div>

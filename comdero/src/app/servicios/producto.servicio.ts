@@ -43,9 +43,9 @@ export class ProductoServicio {
     for (let i = 0; i < variantes.length; i++) {
       for (let j = 0; j < imagenes[i].length; j++) {
         debugger;
-        if(imagenes[i][j].Tipo_Imagen!='youtube'){
-        console.log("antes de enviar imagenes", imagenes[i][j].Imagen)
-        fd.append("imagenes", imagenes[i][j].Imagen);
+        if (imagenes[i][j].Tipo_Imagen != 'youtube') {
+          console.log("antes de enviar imagenes", imagenes[i][j].Imagen)
+          fd.append("imagenes", imagenes[i][j].Imagen);
         }
       }
     }
@@ -58,5 +58,9 @@ export class ProductoServicio {
     return this._http.post<objeto>(this.url + "saveProducto", fd,);
   }
 
+  getMisProductos(Id_Tienda) {
+    let headers = new HttpHeaders({"Content-type": "application/json"});
+    return this._http.get<objeto>(this.url + "getMisProductos/" + Id_Tienda, {headers: headers});
+  }
 
 }
