@@ -1,10 +1,10 @@
 <body>
-<div class="container mt-5">
+<div class="container-fluid mt-5">
   <div class="row  justify-content-center">
     <h4 class=" col-md-11 text-left">Listado de productos</h4>
     <hr class=" col-md-11  ">
   </div>
-  <div class="row justify-content-center   ">
+  <div *ngIf="!banderaTabla" class="row justify-content-center   ">
     <div class=" col-md-9  ml-md-5 ">
       <div class=" container  bg-white  shadow ">
         <br><br><br>
@@ -24,7 +24,7 @@
         </div>
 
         <br> <br>
-        <div class="mx-auto justify-content-center d-flex">
+        <div class="mx-auto text-center">
           <button class="btn btn-primary  px-5" style="font-size: small"> Crear producto</button>
           <br> <br>
         </div>
@@ -47,5 +47,59 @@
     </div>
   </div>
 </div>
+
+
+<div class="container-fluid mx-auto px-5 ">
+
+
+
+    <div class="form-group form-inline">
+      Full text search: <input class="form-control ml-2" type="text"  #busquedaasd="ngModel"
+                               [(ngModel)]="this.busqueda"  name="Busquedaasd"  (input)="busquedasasd()"/>
+    </div>
+
+
+  <table class="table table table-bordered bg-white small w-100 text-center">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Country</th>
+      <th scope="col">Area</th>
+      <th scope="col">Population</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let country of   this.result |slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>
+       {{country.name}}
+      </td>
+      <td>
+      {{country.name}}
+      </td>
+      <td>
+      {{country.name}}
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-between p-2">
+    <ngb-pagination
+      [(page)]="page"
+      [pageSize]="pageSize"
+      [collectionSize]="result.length"></ngb-pagination>
+  </div>
+
+
+
+
+
+</div>
+
+
 <br>
+
+
 </body>
