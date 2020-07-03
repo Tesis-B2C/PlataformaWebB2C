@@ -49,23 +49,23 @@
 </div>
 
 
-<div class="container-fluid mx-auto px-5 ">
+<div class="container-fluid mx-auto px-md-5 ">
 
 
-  <div class="form-row mb-2 ">
-    <div class=" input-group col-4 mr-auto">
+  <div class="form-row mb-2  ">
+    <div class=" input-group col-md-4 mr-md-auto">
       <input class="form-control" style="font-size: small" type="text" #busquedaasd="ngModel" [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="busquedasasd()"/>
 
       <div class="input-group-append">
         <span class="input-group-text  small"><li class="fas fa-search"></li></span>
       </div>
     </div>
-    <div class="col-auto">
-      <button class="btn btn-primary" style="font-size:small">Nuevo Producto</button>
+    <div class="col-md-auto ">
+      <button class="btn btn-primary w-100 mt-md-0 mt-2" style="font-size:small">Nuevo Producto</button>
     </div>
   </div>
 
-  <table class="table table table-bordered bg-white small w-100 text-center">
+  <table class="table table-bordered table-responsive-sm bg-white small w-100 text-center">
     <thead>
     <tr>
       <th scope="col">#</th>
@@ -110,8 +110,8 @@
       </td>
       <td>
         <button class="btn btn-danger" style="font-size: x-small"><span class="fa fa-trash"></span></button>
-        &nbsp;
-        <button class="btn btn-primary" style="font-size: x-small"><span class="fa fa-edit"></span></button>
+
+        <button class="btn btn-primary ml-md-2 mt-md-0 mt-1" style="font-size: x-small"><span class="fa fa-edit"></span></button>
       </td>
     </tr>
     </tbody>
