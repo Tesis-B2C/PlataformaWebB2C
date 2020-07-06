@@ -19,9 +19,11 @@ import {MetodosEnvioComponent} from './metodos-envio/metodos-envio.component';
 import {InicioAdministracionComponent} from './inicio-administracion/inicio-administracion.component';
 import {ListadoProductosComponent} from './listado-productos/listado-productos.component';
 
+import { ModificarProductoComponent } from './modificar-producto/modificar-producto.component';
+
 
 @NgModule({
-  declarations: [MenuGestionTiendasComponent, ProductosComponent, MetodosPagoComponent, MetodosEnvioTComponent, GeneralTiendaComponent, SucursalesTiendaComponent, PersonalizacionTiendaComponent, MetodosEnvioComponent, InicioAdministracionComponent, ListadoProductosComponent],
+  declarations: [MenuGestionTiendasComponent, ProductosComponent, MetodosPagoComponent, MetodosEnvioTComponent, GeneralTiendaComponent, SucursalesTiendaComponent, PersonalizacionTiendaComponent, MetodosEnvioComponent, InicioAdministracionComponent, ListadoProductosComponent, ModificarProductoComponent],
 
   imports: [
     CommonModule,

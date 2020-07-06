@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 
 import {ProductoServicio} from "../../../servicios/producto.servicio";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 
 @Component({
@@ -12,14 +13,13 @@ import {ProductoServicio} from "../../../servicios/producto.servicio";
 export class ListadoProductosComponent implements OnInit {
 
 
-
   public busqueda
 
   page = 1;
   pageSize = 4;
 
 
-  constructor(private _productoServicio: ProductoServicio) {
+  constructor(private modalService: NgbModal,private _productoServicio: ProductoServicio) {
 
   }
 
@@ -33,7 +33,8 @@ export class ListadoProductosComponent implements OnInit {
 
   public identidadTienda;
   public misProductos;
-  public result=[];
+  public result = [];
+
   async ngOnInit() {
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
     let response = await this._productoServicio.getMisProductos(this.identidadTienda.NUM_TIENDA).toPromise();
@@ -44,9 +45,10 @@ export class ListadoProductosComponent implements OnInit {
   }
 
 
-
   async busquedasasd() {
     this.result = await this.search(this.busqueda);
   }
+
+
 
 }

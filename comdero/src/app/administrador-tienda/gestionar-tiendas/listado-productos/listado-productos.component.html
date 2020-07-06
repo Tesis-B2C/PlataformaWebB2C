@@ -1,4 +1,6 @@
 <body>
+
+
 <div class="container-fluid mt-5">
   <div class="row  justify-content-center">
     <h4 class=" col-md-11 text-left">Listado de productos</h4>
@@ -54,7 +56,8 @@
 
   <div class="form-row mb-2  ">
     <div class=" input-group col-md-4 mr-md-auto">
-      <input class="form-control" style="font-size: small" type="text" #busquedaasd="ngModel" [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="busquedasasd()"/>
+      <input class="form-control" style="font-size: small" type="text" #busquedaasd="ngModel"
+             [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="busquedasasd()"/>
 
       <div class="input-group-append">
         <span class="input-group-text  small"><li class="fas fa-search"></li></span>
@@ -109,9 +112,18 @@
         {{producto.PRODUCTO.PESO_PRODUCTO}}
       </td>
       <td>
-        <button class="btn btn-danger" style="font-size: x-small"><span class="fa fa-trash"></span></button>
+        <div class="btn-group">
+          <button class="btn btn-secondary  ml-md-2 mt-md-0 mt-1" style="font-size: x-small"
+          ><span class="fa fa-eye-slash"></span>
+          </button>
 
-        <button class="btn btn-primary ml-md-2 mt-md-0 mt-1" style="font-size: x-small"><span class="fa fa-edit"></span></button>
+          <button class="btn btn-danger  ml-md-2 mt-md-0 mt-1" style="font-size: x-small"
+          ><span class="fa fa-trash"></span></button>
+
+          <button class="btn btn-primary ml-md-2 mt-md-0 mt-1" style="font-size: x-small"
+                  [routerLink]="['../modificar-producto/', producto.PRODUCTO.ID_PRODUCTO ]"><span
+            class="fa fa-edit"></span></button>
+        </div>
       </td>
     </tr>
     </tbody>
