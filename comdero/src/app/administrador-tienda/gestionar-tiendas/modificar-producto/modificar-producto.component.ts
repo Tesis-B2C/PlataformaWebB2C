@@ -11,19 +11,25 @@ import Swal from "sweetalert2";
 export class ModificarProductoComponent implements OnInit {
 
   public idProducto;
+  public identidadProducto;
 
   constructor(private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
+
   }
 
-  async ngOnInit() {
-    this.getProductos();
+   async ngOnInit() {
+
+    await this.getProductos();
+
+
   }
 
   public async getProductos() {
     try {
       this.idProducto = this.route.snapshot.params.id;
-      let response = await this._productoServicio.getProducto(this.idProducto).toPromise();
-      console.log("producto", response);
+       let response = await this._productoServicio.getProducto(this.idProducto).toPromise();
+      this.identidadProducto=response.data
+      console.log("producto", this.identidadProducto);
     } catch (e) {
       console.log("error:" + e);
       if (JSON.stringify((e).error.message))
