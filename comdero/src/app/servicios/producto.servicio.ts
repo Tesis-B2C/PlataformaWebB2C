@@ -18,13 +18,6 @@ export class ProductoServicio {
     this.url = GLOBAL.url;
   }
 
-  /* saveProducto(Producto_Enviar)
-    {
-
-      let params = JSON.stringify(Producto_Enviar);
-      let headers = new HttpHeaders({ "Content-type": "application/json" });
-      return this._http.post<objeto>(this.url + "saveProducto" , params, { headers: headers });
-    }*/
 
   saveProducto(ofertas, productos, variantes, imagenes, categorias) {
 
@@ -50,11 +43,6 @@ export class ProductoServicio {
       }
     }
 
-
-    /* fd.append("logo",logo);
-     fd.append("banner",banner);*/
-    //let params = JSON.stringify(tienda);
-    // let headers = new HttpHeaders({ "Content-type": "application/json" });
     return this._http.post<objeto>(this.url + "saveProducto", fd,);
   }
 
@@ -63,4 +51,8 @@ export class ProductoServicio {
     return this._http.get<objeto>(this.url + "getMisProductos/" + Id_Tienda, {headers: headers});
   }
 
+  getProducto(Id_Producto) {
+    let headers = new HttpHeaders({"Content-type": "application/json"});
+    return this._http.get<objeto>(this.url + "getProducto/" + Id_Producto, {headers: headers});
+  }
 }

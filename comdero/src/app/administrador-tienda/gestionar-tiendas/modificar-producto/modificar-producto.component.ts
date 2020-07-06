@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
+import {ProductoServicio} from "../../../servicios/producto.servicio";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-modificar-producto',
@@ -7,9 +10,42 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ModificarProductoComponent implements OnInit {
 
-  constructor() { }
+  public idProducto;
 
-  ngOnInit() {
+  constructor(private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
   }
 
+  async ngOnInit() {
+    this.getProductos();
+  }
+
+  public async getProductos() {
+    try {
+      this.idProducto = this.route.snapshot.params.id;
+      let response = await this._productoServicio.getProducto(this.idProducto).toPromise();
+      console.log("producto", response);
+    } catch (e) {
+      console.log("error:" + e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
+  }
+
+
+  mensageError(mensaje) {
+    Swal.fire({
+      icon: 'error',
+      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Error..</h5></header>',
+      text: mensaje,
+      position: 'center',
+      width: 600,
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        container: 'my-swal'
+        //icon:'sm'
+      }
+    });
+  }
 }

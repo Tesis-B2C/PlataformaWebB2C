@@ -5,6 +5,7 @@ const Oferta = require("../models/oferta");
 const Producto = require("../models/producto");
 const Producto_Categoria = require("../models/producto_categoria");
 const Variante = require("../models/variante");
+const Categoria = require("../models/categoria");
 const moment = require('moment');
 const db = require('../database/db');
 const fs = require('fs-extra');
@@ -134,7 +135,7 @@ async function saveProducto(req, res) {
 
 async function getMisProductos(req, res) {
     try {
-        let productosObtenidas = await Oferta.findAll({where: {NUM_TIENDA: req.params.id},include: {model: Producto}});
+        let productosObtenidas = await Oferta.findAll({where: {NUM_TIENDA: req.params.id}, include: {model: Producto}});
 
         if (productosObtenidas.length) {
             res.status(200).send({
@@ -156,9 +157,38 @@ async function getMisProductos(req, res) {
 
 }
 
+
+async function getProducto(req, res) {
+    try {
+        let productoObtenido = await Oferta.findOne({
+            where: {ID_OFERTA: req.params.id},
+            include: {model: Producto, include: [{model: Variante, include: {model: Imagen_Producto}}, {model:Producto_Categoria,include: {model:Categoria}}]}
+        });
+
+        if (productoObtenido) {
+            res.status(200).send({
+                data: productoObtenido,
+                message: "Producto cargado correctamente"
+            });
+        } else {
+            res.status(404).send({
+                message: 'Al parecer no se encuentra el producto registrado en la base de datos'
+            });
+
+
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+
+}
+
 module.exports = {          // para exportar todas las funciones de este modulo
 
     saveProducto,
-    getMisProductos
+    getMisProductos,
+    getProducto
 
 };
