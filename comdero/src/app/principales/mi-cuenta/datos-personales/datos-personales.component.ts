@@ -51,9 +51,7 @@ export class DatosPersonalesComponent implements OnInit {
   ngOnInit() {
     this.getDpaProvincias("P");
     this.identidad = this._agenteServicio.getIdentity();
-
     this.iniciarEdicion();
-
     this.comprobarTipoPersona();
 
 

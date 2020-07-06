@@ -43,7 +43,7 @@
           <div class="form-row ">
             <div class="col">
               <label>Nombre</label>
-              <input #NombreProducto="ngModel" [(ngModel)]="this.identidadProducto.PRODUCTO.NOMBRE_PRODUCTO"
+              <input #NombreProducto="ngModel" [(ngModel)]="this.Producto.Nombre_Producto"
                      class=" form-control py-3 "
                      name="nombreProducto" required
                      type="text" [ngClass]="{'is-invalid': NombreProducto.invalid && banderaValidaciones}">
@@ -53,14 +53,14 @@
             </div>
             <div class="col">
               <label>Codigo</label>
-              <input #CodigoProducto="ngModel" [(ngModel)]="this.identidadProducto.PRODUCTO.COD_PRODUCTO"
+              <input #CodigoProducto="ngModel" [(ngModel)]="this.Producto.Cod_Producto"
                      class=" form-control py-3 "
                      name="codigoProducto"
                      type="text">
             </div>
             <div class="col">
               <label>Marca </label>
-              <input #Marca="ngModel" [(ngModel)]="this.identidadProducto.PRODUCTO.MARCA" class="form-control py-3 "
+              <input #Marca="ngModel" [(ngModel)]="this.Producto.Marca" class="form-control py-3 "
                      name="marca"
                      type="text">
             </div>
@@ -71,8 +71,8 @@
                 <select class="form-control"
                         id="selectCondicion">
 
-                  <option value="{{this.identidadProducto.PRODUCTO.CONDICION}}" selected
-                          disabled>{{this.identidadProducto.PRODUCTO.CONDICION}} (actual)
+                  <option value="{{this.Producto.Condicion}}" selected
+                          disabled>{{this.Producto.Condicion}} (actual)
                   </option>
                   <option value="Nuevo">Nuevo</option>
                   <option value="Como nuevo">Como nuevo</option>
@@ -86,13 +86,13 @@
           </div>
           <div class="form-group mt-2">
             <label>Descripción del producto </label>
-            <textarea #DescripcionProducto="ngModel" [(ngModel)]="this.identidadProducto.PRODUCTO.DESCRIPCION_PRODUCTO"
+            <textarea #DescripcionProducto="ngModel" [(ngModel)]="this.Producto.Descripcion_Producto"
                       class="form-control" name="descripcionProducto" required
                       rows="2" type="text"></textarea>
           </div>
           <div class="form-group">
             <label>Detalles del producto </label>
-            <app-ngx-editor #DetalleProducto="ngModel" [(ngModel)]="this.identidadProducto.PRODUCTO.DETALLE_PRODUCTO"
+            <app-ngx-editor #DetalleProducto="ngModel" [(ngModel)]="this.Producto.Detalle_Producto"
                             [config]="editorConfig" name="detalleProducto"></app-ngx-editor>
 
             <!--<div [innerHTML]=this.htmlcomponent>
@@ -153,19 +153,19 @@
           <div class="form-group">
             <div class="radio-item">
               <input (click)="opcionGarantia($event.target.value)" name="garantia"
-                     type="radio" value="Garantia del vendedor" id="GarantiaVendedor" checked>
+                     type="radio" value="Garantia del vendedor" id="GarantiaVendedor" [checked]="this.Oferta.Garantia=='Garantia del vendedor'">
               <label for="GarantiaVendedor">&nbsp;&nbsp;Garantia del vendedor</label>
             </div>
             <br>
             <div class="radio-item">
               <input (click)="opcionGarantia($event.target.value)" name="garantia"
-                     type="radio" value=" Garantia de fabrica" id="GarantiaFabrica">
+                     type="radio" value="Garantia de fabrica" id="GarantiaFabrica"  [checked]="this.Oferta.Garantia=='Garantia de fabrica'">
               <label for="GarantiaFabrica">&nbsp;&nbsp;Garantia de fabrica </label>
             </div>
             <br>
             <div class="radio-item">
               <input (click)="opcionGarantia($event.target.value)" name="garantia"
-                     type="radio" value=" Sin garantia" id="SinGarantia">
+                     type="radio" value="Sin garantia" id="SinGarantia" [checked]="this.Oferta.Garantia=='Sin garantia'">
               <label for="SinGarantia">&nbsp;&nbsp; Sin garantia </label>
             </div>
           </div>
@@ -173,7 +173,7 @@
         </div>
       </form>
 
-      <form class=" card card-body ">
+   <form class=" card card-body " >
 
         <h6>Inventario</h6>
         <hr>
@@ -182,7 +182,7 @@
 
           <div class="form-group ml-2">
             <div class="checkbox-item">
-              <input (click)="opcionRastrearStock($event)" id="rastrearCantidad" type="checkbox">
+              <input (click)="opcionRastrearStock($event)" id="rastrearCantidad" type="checkbox" [checked]="this.Producto.Rastrear_Stock==0">
               <label for="rastrearCantidad">&nbsp;&nbsp;Rastrear la cantidad</label>
             </div>
           </div>
@@ -191,7 +191,7 @@
           <div class="form-group ml-2">
             <div class="checkbox-item">
               <input (click)="opcionVenderSinStock($event)" id="venderDespuesAgotado"
-                     type="checkbox">
+                     type="checkbox" [checked]="this.Producto.Rastrear_Stock==0">
               <label for="venderDespuesAgotado">&nbsp;&nbsp;Continuar vendiendo cuando se haya
                 agotado</label>
             </div>
@@ -201,9 +201,37 @@
           <br>
         </div>
       </form>
+      <form class=" card card-body ">
+        <h6>Categorias seleccionadas</h6>
+        <hr>
+        <div class="form-row ">
+          <div *ngIf="this.categoriasSeleccionadas.size==0 &&!banderaValidaciones" class="form-group">
+            <div class="alert alert-primary col-12" role="alert">
+              <a><span class="fa fa-exclamation fa-1x"></span></a>
+              No existe categorias seleccionadas
+            </div>
+          </div>
+          <div *ngIf="this.categoriasSeleccionadas.size==0 && banderaValidaciones" class="form-group">
+            <div class="alert alert-danger col-12" role="alert">
+              <a><span class="fa fa-exclamation fa-1x"></span></a>
+              Debe seleccionar almenos una categoria
+            </div>
+          </div>
 
+          <div *ngFor="let cs of categoriasSeleccionadas">
 
-      <form class="card card-body" name="form">
+            <div class="mr-2 btn-group">
+              <button class="col chip mt-2" style="font-size: smaller">{{cs.NOMBRE}}
+                <button (click)="eliminarCategoria(cs)" class="chip-resumen-categorias"> &nbsp; | x
+                </button>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </form>
+
+     <!-- <form class="card card-body" name="form">
         <h6>Multimedia</h6>
         <hr>
         <div class="form-group ">
@@ -325,7 +353,8 @@
             Agregar video desde el ordenador &nbsp; <span class="fa fa-laptop "></span>
           </a>
         </div>
-      </form>
+      </form>-->
+
 
     </div>
   </div>
