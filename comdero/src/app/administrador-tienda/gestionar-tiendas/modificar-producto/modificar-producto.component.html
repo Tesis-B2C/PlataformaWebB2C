@@ -270,6 +270,7 @@
 
         <div class="row justify-content-between mx-2">
           <h6>Categorias seleccionadas </h6>
+
           <div ngbDropdown class="d-inline-block justify-content-end text-right">
             <button id="btnCategorias" ngbDropdownToggle><i class="fa fa-ellipsis-h"></i>
             </button>
@@ -282,6 +283,7 @@
           </div>
         </div>
         <hr>
+        <div class="container">
         <div class="form-row ">
           <div *ngIf="this.categoriasSeleccionadas.size==0 &&!banderaValidaciones" class="form-group">
             <div class="alert alert-primary col-12" role="alert">
@@ -306,134 +308,139 @@
             </div>
           </div>
         </div>
-
+        </div>
       </form>
       <br>
-      <!-- <form class="card card-body" name="form">
-         <h6>Multimedia</h6>
-         <hr>
-         <div class="form-group ">
-           <a class="ml-2 mt-5">
-             <label>Imagenes del producto </label>
-             <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
-           <div
-             [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[0]==false,'borde-imagenes1':vectorBanderaAgregarImagen[0]==true,'borde-error': (imagenes[0].length==0 && banderaValidaciones) }"
-             class="row  mt-3 mx-0 ">
-             <div *ngFor='let url of imagenes[0]; let i = index ' class="ml-1">
-               <div class="col-auto card mt-2 px-0 pb-0">
-                 <label style="border: none;  ">
-                   <img [src]="url" class="px-0" height="140px" width="140px">
-                   <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple name="files"
-                          type="file">
-                 </label>
-                 <button (click)="quitarImagenes(0,i)" class="boton-cerrar btn-outline-danger px-0 py-0 "><span
-                   class="fa  fa-trash"></span>
-                 </button>
-               </div>
-             </div>
-             <div *ngIf="vectorBanderaAgregarImagen[0]==false" class="mx-auto ">
-               <div class="col-auto pt-4">
-                 <label class="imagen-agregar ">
-                   <i class="fas fa-cloud-upload-alt fa-4x"></i>
-                   &lt;!&ndash; <i class="fas fa-cloud-upload-alt fa-2x ml-1"></i>&ndash;&gt;
-                   <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple type="file"
-                          (drop)="subirImagenes($event,0)">
-                 </label>
-               </div>
-             </div>
-             <div *ngIf="vectorBanderaAgregarImagen[0]==false" class=" col-12 pb-5 mx-auto ">
-               <p class="link-agregar-imagenes ">Click para Agregar imagenes </p>
-             </div>
+      <form class=" card card-body ">
+        <h6>Variantes</h6>
+        <hr>
+        <div class="container">
+      <div *ngFor="let item of this.Variantes; index as i" class="form-row justify-content-center px-0 ">
+        <div class="form-group col-11  mt-4 mb-0">
+          <p style="font-weight: bolder; font-size: medium">Opcion {{i }}</p>
+        </div>
+        <div class="form-group  col-1 mt-4 mb-0">
+          <button (click)="borrarOpcionesProducto(i)" class="form-control " style=" border: none; color: red">
+            <span class="fa fa-trash "></span>
+          </button>
+        </div>
+        <hr class="col-12 mt-0">
+        <div class="form-group col-md-2 offset-lg-1 justify-content-center">
+          <label>Color</label>
+          <input (colorPickerChange)="cambiarColor($event,i+1)" [(colorPicker)]=item.COLOR
+                 [style.background]=item.COLOR
+                 class="form-control input-colores"/>
+        </div>
+        <div class="form-group  col-md-4">
+          <label> Talla </label>
+          <input #Talla="ngModel" [(ngModel)]="item.TALLA" class="form-control " name="talla{{i}}"
+                 placeholder="Ej. xl o 34 o etc" type="text">
+        </div>
+        <div class="form-group  col-md-4">
+          <label>Material</label>
+          <input #Material="ngModel" [(ngModel)]="item.MATERIAL" class="form-control  "
+                 name="material{{i}}"
+                 placeholder="Ej. Gamusa/algodon" type="text">
+        </div>
 
-             <div *ngIf="vectorBanderaAgregarImagen[0]==true && imagenes[0].length<6" class="py-2">
-               <div class=" py-4  card  ml-1 px-2">
-                 <label class="imagen-agregar">
-                   <i class="fa fa-picture-o fa-4x ml-4"></i>
-                   <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                   <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple type="file">
-                   <br>
-                   <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imagenes </p>
-                   <p class=" link-agregar-imagenes2">maximo 6</p>
-                 </label>
-               </div>
-             </div>
-           </div>
+        <div class="form-group col-12 ">
+          <a class=" mt-5">
+            <label>Imagenes de la opcion {{i}} </label>
+            <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
+          <div
+            [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[i+1]==false,'borde-imagenes1':vectorBanderaAgregarImagen[i+1]==true }"
+            class="row  mt-3 ">
+            <div *ngFor='let url of imagenes[i+1]; index as j ' class="ml-1">
+              <div class="col-auto card mt-2 px-0 pb-0">
+                <label style="border: none;  ">
+                  <img [src]="url" class="px-0" height="140px" width="140px">
+                  <input (change)="subirImagenes($event,(i+1))" accept="image/*" class="file" multiple name="files"
+                         type="file">
+                </label>
+                <button (click)="quitarImagenes((i+1),j)" class="boton-cerrar  btn-outline-danger px-0 py-0 ">
 
-           <div *ngIf="(imagenes[0].length==0 && banderaValidaciones)">
-             <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Debes ingresar al menos una
-               imagen.</p>
-           </div>
+                  <span class="fa fa-trash"></span>
+                </button>
+              </div>
+            </div>
+            <div *ngIf="vectorBanderaAgregarImagen[i+1]==false" class="mx-auto ">
+              <div class="col-auto pt-4">
+                <label class="imagen-agregar ">
+                  <i class="fa fa-cloud-upload-alt fa-4x"></i>
+                  <!--   <i class="fa fa-plus-circle fa-2x ml-1"></i>-->
+                  <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file">
+                </label>
+              </div>
+            </div>
+            <div *ngIf="vectorBanderaAgregarImagen[i+1]==false" class=" col-12 pb-5 mx-auto ">
+              <p class="link-agregar-imagenes ">Click para Agregar imagenes</p>
+            </div>
 
+            <div *ngIf="vectorBanderaAgregarImagen[i+1]==true && imagenes[i+1].length<6" class="py-2">
+              <div class=" px-2 py-4  card  ml-2 ">
+                <label class="imagen-agregar">
+                  <i class="fa fa-picture-o fa-4x ml-4"></i>
+                  <i class="fa fa-plus-circle fa-2x ml-1"></i>
+                  <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file">
+                  <br>
+                  <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imagenes </p>
+                  <p class=" link-agregar-imagenes2">maximo 6</p>
 
-         </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div> <!-- form-group end.// -->
 
-         <br>
+        <div class="form-group col-lg-7">
+          <label> Stock y unidad de medida del producto</label>
+          <div class="input-group">
 
+            <input #Stock="ngModel" [(ngModel)]="item.STOCK" class="form-control" name="stock{{i}}"
+                   placeholder="200" type="number" min="0" step="0.01" oninput="validity.valid||(value='');"
+                   required [ngClass]="{'is-invalid': Stock.invalid && banderaValidaciones}">
 
-         <div class="form-row">
-           <a class="ml-2 col-md-5"><label>Video promocional del producto </label> </a>
-           <span *ngIf="banderaMensajeMaximoVideo" class=" col-md-5" style="color: red;font-size: small">* Recuerda Maximo 150MB</span>
-           <a (click)="abrirModalVideoYoutube(modalVideoYoutube)" class="agregarVideoYoutube ml-2 col-md-5 ">
-             Agregar video de youtube &nbsp; <span class="fab fa-youtube "></span>
-           </a>
-         </div>
+            <select #Unidad="ngModel" [(ngModel)]="item.UNIDAD_MEDIDA" class=" form-control col-lg-5 "
+                    id="selectUnidades" name="unidad{{i}}"
+                    [ngClass]="{'errorSelect': Stock.invalid && banderaValidaciones}">
 
+              <option *ngFor="let unidad of this.unidades"
+                      [selected]="unidad.COD_UNIDAD_MEDIDA=='unidades'">{{unidad.COD_UNIDAD_MEDIDA}}</option>
+            </select>
 
-         <div class="form-group ">
+          </div>
+          <div *ngIf="Stock.errors?.required && banderaValidaciones">
+            <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+          </div>
+        </div>
 
+        <div class="form-group  col-md-4">
+          <label>Precio</label>
+          <div class="input-group mb-3">
+            <input #PrecioUnitario="ngModel" [(ngModel)]="item.PRECIO_UNITARIO"
+                   aria-label="Amount (to the nearest dollar)" class="form-control"
+                   name="precioUnitario{{i+1}}" placeholder="20" (focusout)="formatear($event)"
+                   type="number" min="0" step="0.01" oninput="validity.valid||(value='');" required
+                   [ngClass]="{'is-invalid': PrecioUnitario.invalid && banderaValidaciones}">
+            <div class="input-group-append">
+              <span class="input-group-text unidades">$</span>
+            </div>
+            <div *ngIf="PrecioUnitario.errors?.required && banderaValidaciones">
+              <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+            </div>
 
-           <div [ngClass]="{'borde-imagenes':!data.video,'borde-imagenes1':data.video }" class="row mt-3 mx-1 ">
-             <div class="  mx-auto">
-               <div *ngIf="this.banderaAnimacionVideo==true">
-                 <div class="fondoAnimacionCarga py-5">
-                   <div class="pulse animated infinite py-5  ">
-                     <img class="imagenCarga" src="assets/images/cargando.png">
-                     <br><br>
-                     <div>
-                     </div>
-                   </div>
-                   <label style="color: white; text-align: center">Cargando previsualización, espere
-                     porfavor....</label>
-                 </div>
-
-               </div>
-             </div>
-             <div class=" col-12 mx-auto">
-               <div *ngIf="this.videoYoutube">
-                 <iframe width="100%" height="315" [src]="this.videoYoutube" frameborder="0"
-                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                         allowfullscreen></iframe>
-               </div>
-
-               <div *ngIf="data.video">
-
-                 <div class="mx-auto fondo-animacion-carga-video">
-                   <video class="video-carga" controls height="auto" width="auto">
-                     <source [src]="data.video" type="{{ data.type }}">
-                   </video>
-                 </div>
-               </div>
-             </div>
-             <div *ngIf="!this.videoYoutube" class=" col-auto  mx-auto">
-               <div class=" pt-4 ml-2  ">
-                 <label class="imagen-agregar ">
-                   <i class="fa fa-film fa-4x  "></i>
-                   <i class="fa fa-upload fa-2x ml-1 "></i>
-                   <input (change)="subirVideo($event)" accept="video/*" class="file" type="file">
-                 </label>
-               </div>
-             </div>
-             <div *ngIf="!this.videoYoutube" class=" col-12 mx-auto ">
-               <p class="link-agregar-imagenes pb-5">Click para subir un video promocional del producto </p>
-             </div>
-           </div>
-           <a *ngIf="this.videoYoutube" (click)="resetearVideoYoutube()" class="agregarVideoYoutube ml-2 col-md-5 ">
-             Agregar video desde el ordenador &nbsp; <span class="fa fa-laptop "></span>
-           </a>
-         </div>
-       </form>-->
+          </div>
+        </div>
 
 
+      </div>
+      <div  class="form-group col-md-12">
+        <p (click)="agregarOpcionesProducto()" class="agregar">
+          <span class="fa fa-plus "></span> &nbsp;Agregar opcion
+        </p>
+      </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>

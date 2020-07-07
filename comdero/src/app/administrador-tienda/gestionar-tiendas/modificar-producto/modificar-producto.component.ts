@@ -6,6 +6,9 @@ import {Oferta} from "../../../modelos/oferta";
 import {Producto} from "../../../modelos/producto";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {CategoriaServicio} from "../../../servicios/categoria.servicio";
+import {Variante} from "../../../modelos/variante";
+import {Imagen_Producto} from "../../../modelos/imagen_producto";
+import {UnidadMedidaServicio} from "../../../servicios/unidad_medida.servicio";
 
 @Component({
   selector: 'app-modificar-producto',
@@ -18,6 +21,7 @@ export class ModificarProductoComponent implements OnInit {
   public identidadProducto;
   public Oferta;
   public Producto;
+  public Variantes=[];
   public categoriasSeleccionadas=new Set();
   public banderaValidaciones:boolean=true;
   public editorConfig = {
@@ -57,9 +61,25 @@ export class ModificarProductoComponent implements OnInit {
     'fa fa-car', 'fa fa-dumbbell', 'fa fa-book',
     'fa fa-dog', 'fa fa-gamepad', 'fa fa-grin-stars', 'fa fa-heartbeat', 'fa fa-building', 'fa fa-tractor'];
 
-  constructor(private _categoriaServicio: CategoriaServicio,private modalService: NgbModal,private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
+// multimedia
+  public Imagenes_Producto = [[]];
+  public imagenes = [[]];
+  public vectorBanderaAgregarImagen = [false];
+  public banderaMaximoImagenes: boolean = true;
+  public banderaMensajeMaximoImagenes: boolean = false;
+  public banderaMensajeMaximoVideo: boolean = false;
+  public data: any = [];
+  public banderaAnimacionVideo: boolean = false;
+
+
+
+  //UNIDADES DE MEDIDA
+  public unidades: any;
+
+  constructor(private _unidadesMedidaServicio: UnidadMedidaServicio,private _categoriaServicio: CategoriaServicio,private modalService: NgbModal,private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
     this.Oferta = new Oferta(null, null, "Garantia del vendedor");
     this.Producto = new Producto(null, null, null, null, null, null, null, null, null);
+
 
   }
 
@@ -67,6 +87,7 @@ export class ModificarProductoComponent implements OnInit {
     this.getCategorias();
     await this.getProductos();
     this.iniciarModificarProducto();
+    this.getUnidadesMedida()
 
   }
 
@@ -100,6 +121,11 @@ export class ModificarProductoComponent implements OnInit {
 
     this.identidadProducto.PRODUCTO.PRODUCTO_CATEGORIA.forEach(c=>{
       this.categoriasSeleccionadas.add(c.CATEGORIum);
+    })
+
+    this.identidadProducto.PRODUCTO.VARIANTEs.forEach(v=>{
+      this.Variantes.push(v);
+
     })
 
   }
@@ -180,6 +206,80 @@ export class ModificarProductoComponent implements OnInit {
   }
 
 
+  public async subirImagenes(eventEntrante, indice) {
+    if (this.imagenes[indice] == null) {
+      this.imagenes[indice] = [];
+    }
+    if (eventEntrante.target.files && eventEntrante.target.files[0]) {
+      var filesAmount = eventEntrante.target.files.length;
+
+
+      this.vectorBanderaAgregarImagen[indice] = true;
+      if (filesAmount > 6) {
+        this.banderaMensajeMaximoImagenes = true;
+      } else {
+        for (let i = 0; i < filesAmount; i++) {
+          this.Imagenes_Producto[indice].push(new Imagen_Producto(eventEntrante.target.files[i].name, eventEntrante.target.files[i].type, eventEntrante.target.files[i], eventEntrante.target.files[i].size));
+          var reader = new FileReader();
+          reader.onload = (event: any) => {
+            if (this.imagenes[indice] != null)
+              this.imagenes[indice].push(event.target.result);
+            document.forms["form"].reset();
+          }
+          await reader.readAsDataURL(eventEntrante.target.files[i]);
+        }
+        if (this.Imagenes_Producto[indice].length > 6) {
+          this.imagenes[indice] = null;
+          this.Imagenes_Producto[indice].splice(0, this.Imagenes_Producto[indice].length);
+          document.forms["form"].reset();
+          this.vectorBanderaAgregarImagen[indice] = false;
+          this.banderaMensajeMaximoImagenes = true;
+        } else if (this.Imagenes_Producto[indice].length == 6) {
+          this.banderaMensajeMaximoImagenes = false
+          this.banderaMaximoImagenes = false;
+        }
+      }
+    }
+  }
+
+
+  public subirVideo(event) {
+
+    let fileList: FileList = event.target.files;
+    this.data = {};
+    if (fileList.length > 0) {
+      this.banderaAnimacionVideo = true;
+      let file: File = fileList[0];
+      this.videoPorGuardar = new Imagen_Producto(file.name, file.type, event.target.files[0], file.size);
+
+      /*  console.log('video seleccionado', file);*/
+      if (file.size < 150000000) {
+        this.banderaMensajeMaximoVideo = false
+        let myReader: FileReader = new FileReader();
+        let that = this;
+        myReader.onloadend = (loadEvent: any) => {
+          //  console.log('video', myReader.result);
+          this.data.video = myReader.result;
+          this.data.type = file.type;
+          this.banderaAnimacionVideo = false;
+        };
+        myReader.readAsDataURL(file);
+      } else {
+        this.banderaAnimacionVideo = false;
+        this.banderaMensajeMaximoVideo = true;
+      }
+    }
+  }
+
+  public async getUnidadesMedida() {
+    try {
+      let response = await this._unidadesMedidaServicio.getUnidadesMedida().toPromise();
+      this.unidades = response.data;
+
+    } catch (e) {
+      console.log("error:" + JSON.stringify((e).error.message));
+    }
+  }
   mensageError(mensaje) {
     Swal.fire({
       icon: 'error',
