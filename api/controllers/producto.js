@@ -162,7 +162,15 @@ async function getProducto(req, res) {
     try {
         let productoObtenido = await Oferta.findOne({
             where: {ID_OFERTA: req.params.id},
-            include: {model: Producto, include: [{model: Variante, include: {model: Imagen_Producto}}, {model:Producto_Categoria,include: {model:Categoria}}]}
+            include: {
+                model: Producto,
+                include: [{model: Variante,separate:true,order: [['NUM_VARIANTE', 'ASC']], include: {model: Imagen_Producto,separate:true,order: [['ID_IMAGEN', 'ASC']]}}, {
+                    model: Producto_Categoria,
+                    include: {model: Categoria}
+                }],
+
+            },
+
         });
 
         if (productoObtenido) {

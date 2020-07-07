@@ -16,6 +16,8 @@ export class ModificarProductoComponent implements OnInit {
   public identidadProducto;
   public Oferta;
   public Producto;
+  public categoriasSeleccionadas=[];
+  public banderaValidaciones:boolean=true;
   public editorConfig = {
     "editable": true,
     "spellcheck": true,
@@ -75,6 +77,11 @@ export class ModificarProductoComponent implements OnInit {
     this.Producto.Vender_Sin_Stoc = this.identidadProducto.PRODUCTO.VENDER_SIN_STOCK;
     this.Producto.Condicion = this.identidadProducto.PRODUCTO.CONDICION;
     this.Producto.Peso_Producto = this.identidadProducto.PRODUCTO.PESO_PRODUCTO;
+
+    this.identidadProducto.PRODUCTO.PRODUCTO_CATEGORIA.forEach(c=>{
+      this.categoriasSeleccionadas.push(c.CATEGORIum);
+    })
+
   }
 
   mensageError(mensaje) {

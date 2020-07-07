@@ -143,7 +143,7 @@
           </div>
         </div>
       </form>
-
+      <br>
       <form class="card card-body ">
         <h6>Garantia</h6>
         <hr>
@@ -153,27 +153,30 @@
           <div class="form-group">
             <div class="radio-item">
               <input (click)="opcionGarantia($event.target.value)" name="garantia"
-                     type="radio" value="Garantia del vendedor" id="GarantiaVendedor" [checked]="this.Oferta.Garantia=='Garantia del vendedor'">
+                     type="radio" value="Garantia del vendedor" id="GarantiaVendedor"
+                     [checked]="this.Oferta.Garantia=='Garantia del vendedor'">
               <label for="GarantiaVendedor">&nbsp;&nbsp;Garantia del vendedor</label>
             </div>
             <br>
             <div class="radio-item">
               <input (click)="opcionGarantia($event.target.value)" name="garantia"
-                     type="radio" value="Garantia de fabrica" id="GarantiaFabrica"  [checked]="this.Oferta.Garantia=='Garantia de fabrica'">
+                     type="radio" value="Garantia de fabrica" id="GarantiaFabrica"
+                     [checked]="this.Oferta.Garantia=='Garantia de fabrica'">
               <label for="GarantiaFabrica">&nbsp;&nbsp;Garantia de fabrica </label>
             </div>
             <br>
             <div class="radio-item">
               <input (click)="opcionGarantia($event.target.value)" name="garantia"
-                     type="radio" value="Sin garantia" id="SinGarantia" [checked]="this.Oferta.Garantia=='Sin garantia'">
+                     type="radio" value="Sin garantia" id="SinGarantia"
+                     [checked]="this.Oferta.Garantia=='Sin garantia'">
               <label for="SinGarantia">&nbsp;&nbsp; Sin garantia </label>
             </div>
           </div>
           <br>
         </div>
       </form>
-
-   <form class=" card card-body " >
+      <br>
+      <form class=" card card-body ">
 
         <h6>Inventario</h6>
         <hr>
@@ -182,7 +185,8 @@
 
           <div class="form-group ml-2">
             <div class="checkbox-item">
-              <input (click)="opcionRastrearStock($event)" id="rastrearCantidad" type="checkbox" [checked]="this.Producto.Rastrear_Stock==0">
+              <input (click)="opcionRastrearStock($event)" id="rastrearCantidad" type="checkbox"
+                     [checked]="this.Producto.Rastrear_Stock==0">
               <label for="rastrearCantidad">&nbsp;&nbsp;Rastrear la cantidad</label>
             </div>
           </div>
@@ -201,6 +205,7 @@
           <br>
         </div>
       </form>
+      <br>
       <form class=" card card-body ">
         <h6>Categorias seleccionadas</h6>
         <hr>
@@ -230,130 +235,130 @@
         </div>
 
       </form>
+      <br>
+      <!-- <form class="card card-body" name="form">
+         <h6>Multimedia</h6>
+         <hr>
+         <div class="form-group ">
+           <a class="ml-2 mt-5">
+             <label>Imagenes del producto </label>
+             <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
+           <div
+             [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[0]==false,'borde-imagenes1':vectorBanderaAgregarImagen[0]==true,'borde-error': (imagenes[0].length==0 && banderaValidaciones) }"
+             class="row  mt-3 mx-0 ">
+             <div *ngFor='let url of imagenes[0]; let i = index ' class="ml-1">
+               <div class="col-auto card mt-2 px-0 pb-0">
+                 <label style="border: none;  ">
+                   <img [src]="url" class="px-0" height="140px" width="140px">
+                   <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple name="files"
+                          type="file">
+                 </label>
+                 <button (click)="quitarImagenes(0,i)" class="boton-cerrar btn-outline-danger px-0 py-0 "><span
+                   class="fa  fa-trash"></span>
+                 </button>
+               </div>
+             </div>
+             <div *ngIf="vectorBanderaAgregarImagen[0]==false" class="mx-auto ">
+               <div class="col-auto pt-4">
+                 <label class="imagen-agregar ">
+                   <i class="fas fa-cloud-upload-alt fa-4x"></i>
+                   &lt;!&ndash; <i class="fas fa-cloud-upload-alt fa-2x ml-1"></i>&ndash;&gt;
+                   <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple type="file"
+                          (drop)="subirImagenes($event,0)">
+                 </label>
+               </div>
+             </div>
+             <div *ngIf="vectorBanderaAgregarImagen[0]==false" class=" col-12 pb-5 mx-auto ">
+               <p class="link-agregar-imagenes ">Click para Agregar imagenes </p>
+             </div>
 
-     <!-- <form class="card card-body" name="form">
-        <h6>Multimedia</h6>
-        <hr>
-        <div class="form-group ">
-          <a class="ml-2 mt-5">
-            <label>Imagenes del producto </label>
-            <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
-          <div
-            [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[0]==false,'borde-imagenes1':vectorBanderaAgregarImagen[0]==true,'borde-error': (imagenes[0].length==0 && banderaValidaciones) }"
-            class="row  mt-3 mx-0 ">
-            <div *ngFor='let url of imagenes[0]; let i = index ' class="ml-1">
-              <div class="col-auto card mt-2 px-0 pb-0">
-                <label style="border: none;  ">
-                  <img [src]="url" class="px-0" height="140px" width="140px">
-                  <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple name="files"
-                         type="file">
-                </label>
-                <button (click)="quitarImagenes(0,i)" class="boton-cerrar btn-outline-danger px-0 py-0 "><span
-                  class="fa  fa-trash"></span>
-                </button>
-              </div>
-            </div>
-            <div *ngIf="vectorBanderaAgregarImagen[0]==false" class="mx-auto ">
-              <div class="col-auto pt-4">
-                <label class="imagen-agregar ">
-                  <i class="fas fa-cloud-upload-alt fa-4x"></i>
-                  &lt;!&ndash; <i class="fas fa-cloud-upload-alt fa-2x ml-1"></i>&ndash;&gt;
-                  <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple type="file"
-                         (drop)="subirImagenes($event,0)">
-                </label>
-              </div>
-            </div>
-            <div *ngIf="vectorBanderaAgregarImagen[0]==false" class=" col-12 pb-5 mx-auto ">
-              <p class="link-agregar-imagenes ">Click para Agregar imagenes </p>
-            </div>
+             <div *ngIf="vectorBanderaAgregarImagen[0]==true && imagenes[0].length<6" class="py-2">
+               <div class=" py-4  card  ml-1 px-2">
+                 <label class="imagen-agregar">
+                   <i class="fa fa-picture-o fa-4x ml-4"></i>
+                   <i class="fa fa-plus-circle fa-2x ml-1"></i>
+                   <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple type="file">
+                   <br>
+                   <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imagenes </p>
+                   <p class=" link-agregar-imagenes2">maximo 6</p>
+                 </label>
+               </div>
+             </div>
+           </div>
 
-            <div *ngIf="vectorBanderaAgregarImagen[0]==true && imagenes[0].length<6" class="py-2">
-              <div class=" py-4  card  ml-1 px-2">
-                <label class="imagen-agregar">
-                  <i class="fa fa-picture-o fa-4x ml-4"></i>
-                  <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                  <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple type="file">
-                  <br>
-                  <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imagenes </p>
-                  <p class=" link-agregar-imagenes2">maximo 6</p>
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <div *ngIf="(imagenes[0].length==0 && banderaValidaciones)">
-            <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Debes ingresar al menos una
-              imagen.</p>
-          </div>
-
-
-        </div>
-
-        <br>
+           <div *ngIf="(imagenes[0].length==0 && banderaValidaciones)">
+             <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Debes ingresar al menos una
+               imagen.</p>
+           </div>
 
 
-        <div class="form-row">
-          <a class="ml-2 col-md-5"><label>Video promocional del producto </label> </a>
-          <span *ngIf="banderaMensajeMaximoVideo" class=" col-md-5" style="color: red;font-size: small">* Recuerda Maximo 150MB</span>
-          <a (click)="abrirModalVideoYoutube(modalVideoYoutube)" class="agregarVideoYoutube ml-2 col-md-5 ">
-            Agregar video de youtube &nbsp; <span class="fab fa-youtube "></span>
-          </a>
-        </div>
+         </div>
+
+         <br>
 
 
-        <div class="form-group ">
+         <div class="form-row">
+           <a class="ml-2 col-md-5"><label>Video promocional del producto </label> </a>
+           <span *ngIf="banderaMensajeMaximoVideo" class=" col-md-5" style="color: red;font-size: small">* Recuerda Maximo 150MB</span>
+           <a (click)="abrirModalVideoYoutube(modalVideoYoutube)" class="agregarVideoYoutube ml-2 col-md-5 ">
+             Agregar video de youtube &nbsp; <span class="fab fa-youtube "></span>
+           </a>
+         </div>
 
 
-          <div [ngClass]="{'borde-imagenes':!data.video,'borde-imagenes1':data.video }" class="row mt-3 mx-1 ">
-            <div class="  mx-auto">
-              <div *ngIf="this.banderaAnimacionVideo==true">
-                <div class="fondoAnimacionCarga py-5">
-                  <div class="pulse animated infinite py-5  ">
-                    <img class="imagenCarga" src="assets/images/cargando.png">
-                    <br><br>
-                    <div>
-                    </div>
-                  </div>
-                  <label style="color: white; text-align: center">Cargando previsualización, espere
-                    porfavor....</label>
-                </div>
+         <div class="form-group ">
 
-              </div>
-            </div>
-            <div class=" col-12 mx-auto">
-              <div *ngIf="this.videoYoutube">
-                <iframe width="100%" height="315" [src]="this.videoYoutube" frameborder="0"
-                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen></iframe>
-              </div>
 
-              <div *ngIf="data.video">
+           <div [ngClass]="{'borde-imagenes':!data.video,'borde-imagenes1':data.video }" class="row mt-3 mx-1 ">
+             <div class="  mx-auto">
+               <div *ngIf="this.banderaAnimacionVideo==true">
+                 <div class="fondoAnimacionCarga py-5">
+                   <div class="pulse animated infinite py-5  ">
+                     <img class="imagenCarga" src="assets/images/cargando.png">
+                     <br><br>
+                     <div>
+                     </div>
+                   </div>
+                   <label style="color: white; text-align: center">Cargando previsualización, espere
+                     porfavor....</label>
+                 </div>
 
-                <div class="mx-auto fondo-animacion-carga-video">
-                  <video class="video-carga" controls height="auto" width="auto">
-                    <source [src]="data.video" type="{{ data.type }}">
-                  </video>
-                </div>
-              </div>
-            </div>
-            <div *ngIf="!this.videoYoutube" class=" col-auto  mx-auto">
-              <div class=" pt-4 ml-2  ">
-                <label class="imagen-agregar ">
-                  <i class="fa fa-film fa-4x  "></i>
-                  <i class="fa fa-upload fa-2x ml-1 "></i>
-                  <input (change)="subirVideo($event)" accept="video/*" class="file" type="file">
-                </label>
-              </div>
-            </div>
-            <div *ngIf="!this.videoYoutube" class=" col-12 mx-auto ">
-              <p class="link-agregar-imagenes pb-5">Click para subir un video promocional del producto </p>
-            </div>
-          </div>
-          <a *ngIf="this.videoYoutube" (click)="resetearVideoYoutube()" class="agregarVideoYoutube ml-2 col-md-5 ">
-            Agregar video desde el ordenador &nbsp; <span class="fa fa-laptop "></span>
-          </a>
-        </div>
-      </form>-->
+               </div>
+             </div>
+             <div class=" col-12 mx-auto">
+               <div *ngIf="this.videoYoutube">
+                 <iframe width="100%" height="315" [src]="this.videoYoutube" frameborder="0"
+                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                         allowfullscreen></iframe>
+               </div>
+
+               <div *ngIf="data.video">
+
+                 <div class="mx-auto fondo-animacion-carga-video">
+                   <video class="video-carga" controls height="auto" width="auto">
+                     <source [src]="data.video" type="{{ data.type }}">
+                   </video>
+                 </div>
+               </div>
+             </div>
+             <div *ngIf="!this.videoYoutube" class=" col-auto  mx-auto">
+               <div class=" pt-4 ml-2  ">
+                 <label class="imagen-agregar ">
+                   <i class="fa fa-film fa-4x  "></i>
+                   <i class="fa fa-upload fa-2x ml-1 "></i>
+                   <input (change)="subirVideo($event)" accept="video/*" class="file" type="file">
+                 </label>
+               </div>
+             </div>
+             <div *ngIf="!this.videoYoutube" class=" col-12 mx-auto ">
+               <p class="link-agregar-imagenes pb-5">Click para subir un video promocional del producto </p>
+             </div>
+           </div>
+           <a *ngIf="this.videoYoutube" (click)="resetearVideoYoutube()" class="agregarVideoYoutube ml-2 col-md-5 ">
+             Agregar video desde el ordenador &nbsp; <span class="fa fa-laptop "></span>
+           </a>
+         </div>
+       </form>-->
 
 
     </div>
