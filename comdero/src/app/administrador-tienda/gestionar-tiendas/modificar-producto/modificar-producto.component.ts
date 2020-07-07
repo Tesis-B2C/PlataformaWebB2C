@@ -21,9 +21,9 @@ export class ModificarProductoComponent implements OnInit {
   public identidadProducto;
   public Oferta;
   public Producto;
-  public Variantes=[];
-  public categoriasSeleccionadas=new Set();
-  public banderaValidaciones:boolean=true;
+  public Variantes = [];
+  public categoriasSeleccionadas = new Set();
+  public banderaValidaciones: boolean = true;
   public editorConfig = {
     "editable": true,
     "spellcheck": true,
@@ -64,7 +64,7 @@ export class ModificarProductoComponent implements OnInit {
 // multimedia
   public Imagenes_Producto = [[]];
   public imagenes = [[]];
-  public vectorBanderaAgregarImagen = [false];
+  public vectorBanderaAgregarImagen = [];
   public banderaMaximoImagenes: boolean = true;
   public banderaMensajeMaximoImagenes: boolean = false;
   public banderaMensajeMaximoVideo: boolean = false;
@@ -72,11 +72,10 @@ export class ModificarProductoComponent implements OnInit {
   public banderaAnimacionVideo: boolean = false;
 
 
-
   //UNIDADES DE MEDIDA
   public unidades: any;
 
-  constructor(private _unidadesMedidaServicio: UnidadMedidaServicio,private _categoriaServicio: CategoriaServicio,private modalService: NgbModal,private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
+  constructor(private _unidadesMedidaServicio: UnidadMedidaServicio, private _categoriaServicio: CategoriaServicio, private modalService: NgbModal, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
     this.Oferta = new Oferta(null, null, "Garantia del vendedor");
     this.Producto = new Producto(null, null, null, null, null, null, null, null, null);
 
@@ -109,7 +108,7 @@ export class ModificarProductoComponent implements OnInit {
   iniciarModificarProducto() {
     this.Oferta.Iva = this.identidadProducto.IVA;
     this.Oferta.Garantia = this.identidadProducto.GARANTIA;
-    this.Producto.Cod_Producto=this.identidadProducto.PRODUCTO.COD_PRODUCTO;
+    this.Producto.Cod_Producto = this.identidadProducto.PRODUCTO.COD_PRODUCTO;
     this.Producto.Nombre_Producto = this.identidadProducto.PRODUCTO.NOMBRE_PRODUCTO;
     this.Producto.Descripcion_Producto = this.identidadProducto.PRODUCTO.DESCRIPCION_PRODUCTO;
     this.Producto.Detalle_Producto = this.identidadProducto.PRODUCTO.DETALLE_PRODUCTO;
@@ -119,19 +118,31 @@ export class ModificarProductoComponent implements OnInit {
     this.Producto.Condicion = this.identidadProducto.PRODUCTO.CONDICION;
     this.Producto.Peso_Producto = this.identidadProducto.PRODUCTO.PESO_PRODUCTO;
 
-    this.identidadProducto.PRODUCTO.PRODUCTO_CATEGORIA.forEach(c=>{
+    this.identidadProducto.PRODUCTO.PRODUCTO_CATEGORIA.forEach(c => {
       this.categoriasSeleccionadas.add(c.CATEGORIum);
     })
+    let v = this.identidadProducto.PRODUCTO.VARIANTEs;
+    for (let i in v) {
+      this.Imagenes_Producto.push([]);
+      this.imagenes.push([]);
+      this.vectorBanderaAgregarImagen.push(true);
+      this.Variantes.push(new Variante(v[i].COLOR, v[i].TALLA, v[i].MATERIAL, v[i].PRECIO_UNITARIO, v[i].STOCK, v[i].COD_UNIDAD));
 
-    this.identidadProducto.PRODUCTO.VARIANTEs.forEach(v=>{
-      this.Variantes.push(v);
+      for (let j in v[i].IMAGEN_PRODUCTOs) {
+        debugger;
+       console.log("tipo",v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN)
+        if (v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN != "video/mp4" && v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN != "youtube") {
+          this.Imagenes_Producto[i].push(new Imagen_Producto(v[i].IMAGEN_PRODUCTOs[j].NOMBRE_IMAGEN, v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN, v[i].IMAGEN_PRODUCTOs[j].IMAGEN, v[i].IMAGEN_PRODUCTOs[j].TAMANIO_IMAGEN));
+          this.imagenes[i][j] = 'http://localhost:3977/' + v[i].IMAGEN_PRODUCTOs[j].IMAGEN
+        }
+      }
+      console.log("variantes", this.imagenes)
 
-    })
-
+    }
   }
 
-  abrirModalCategorias(content){
-    this.modalService.open(content, { scrollable: true});
+  abrirModalCategorias(content) {
+    this.modalService.open(content, {scrollable: true});
   }
 
 
@@ -157,6 +168,7 @@ export class ModificarProductoComponent implements OnInit {
     }
 
   }
+
   public busquedaCategoria3(busqueda, event, c22, i) {
 
     let elemento = document.getElementById('labelcheckCategoria2' + i) as HTMLElement;
@@ -250,7 +262,7 @@ export class ModificarProductoComponent implements OnInit {
     if (fileList.length > 0) {
       this.banderaAnimacionVideo = true;
       let file: File = fileList[0];
-      this.videoPorGuardar = new Imagen_Producto(file.name, file.type, event.target.files[0], file.size);
+      //this.videoPorGuardar = new Imagen_Producto(file.name, file.type, event.target.files[0], file.size);
 
       /*  console.log('video seleccionado', file);*/
       if (file.size < 150000000) {
@@ -280,6 +292,7 @@ export class ModificarProductoComponent implements OnInit {
       console.log("error:" + JSON.stringify((e).error.message));
     }
   }
+
   mensageError(mensaje) {
     Swal.fire({
       icon: 'error',

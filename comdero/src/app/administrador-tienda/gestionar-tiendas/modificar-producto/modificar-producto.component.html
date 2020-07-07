@@ -29,17 +29,16 @@
 <ng-template #modalCategorias let-modal>
 
   <div class="modal-header">
-    <h4 class="modal-title">Modal title</h4>
+    <h4 class="modal-title">Categorias</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
+      <span aria-hidden="true" style="font-size: x-large">&times;</span>
     </button>
   </div>
   <div class="modal-body">
+
+    <label class="">Seleccione las categorias a las cuales pertenece el producto</label>
     <div class="container">
 
-      <h6>Categorias</h6>
-      <hr class="mb-0">
-      <label class="">Seleccione las categorias a las cuales pertenece el producto</label>
 
       <div *ngFor="let c11 of this.c1; let i = index">
         <hr class="mb-1 mt-1">
@@ -100,7 +99,7 @@
         <hr>
         <div class="container">
           <div class="form-row ">
-            <div class="col">
+            <div class="col-md-3 ">
               <label>Nombre</label>
               <input #NombreProducto="ngModel" [(ngModel)]="this.Producto.Nombre_Producto"
                      class=" form-control py-3 "
@@ -110,20 +109,20 @@
                 <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
               </div>
             </div>
-            <div class="col">
+            <div class="col-md-3 ">
               <label>Codigo</label>
               <input #CodigoProducto="ngModel" [(ngModel)]="this.Producto.Cod_Producto"
                      class=" form-control py-3 "
                      name="codigoProducto"
                      type="text">
             </div>
-            <div class="col">
+            <div class="col-md-3 ">
               <label>Marca </label>
               <input #Marca="ngModel" [(ngModel)]="this.Producto.Marca" class="form-control py-3 "
                      name="marca"
                      type="text">
             </div>
-            <div class="col">
+            <div class="col-md-3 ">
 
               <div class="form-group">
                 <label for="selectCondicion">Condición</label>
@@ -162,7 +161,7 @@
         <div class="container">
           <div class="form-row mt-2 ">
 
-            <div class="col">
+            <div class="col-md-6">
               <div class="form-group">
                 <label>Porcentaje de Iva </label>
                 <div class="input-group mb-3">
@@ -177,7 +176,7 @@
 
               </div>
             </div>
-            <div class="col">
+            <div class="col-md-6">
               <div class="form-group mb-0">
                 <label>Peso aproximado <span style="font-size: x-small" class="ml-2">(El peso de los productos ayudará a calcular el precio de
                   envío)</span></label>
@@ -317,7 +316,7 @@
         <div class="container">
       <div *ngFor="let item of this.Variantes; index as i" class="form-row justify-content-center px-0 ">
         <div class="form-group col-11  mt-4 mb-0">
-          <p style="font-weight: bolder; font-size: medium">Opcion {{i }}</p>
+          <p style="font-weight: bolder; font-size: medium">Opcion {{i + 1}}</p>
         </div>
         <div class="form-group  col-1 mt-4 mb-0">
           <button (click)="borrarOpcionesProducto(i)" class="form-control " style=" border: none; color: red">
@@ -327,18 +326,18 @@
         <hr class="col-12 mt-0">
         <div class="form-group col-md-2 offset-lg-1 justify-content-center">
           <label>Color</label>
-          <input (colorPickerChange)="cambiarColor($event,i+1)" [(colorPicker)]=item.COLOR
-                 [style.background]=item.COLOR
+          <input (colorPickerChange)="cambiarColor($event,i)" [(colorPicker)]=this.Variantes[i].Color
+                 [style.background]=this.Variantes[i].Color
                  class="form-control input-colores"/>
         </div>
         <div class="form-group  col-md-4">
           <label> Talla </label>
-          <input #Talla="ngModel" [(ngModel)]="item.TALLA" class="form-control " name="talla{{i}}"
+          <input #Talla="ngModel" [(ngModel)]="this.Variantes[i].Talla" class="form-control " name="talla{{i}}"
                  placeholder="Ej. xl o 34 o etc" type="text">
         </div>
         <div class="form-group  col-md-4">
           <label>Material</label>
-          <input #Material="ngModel" [(ngModel)]="item.MATERIAL" class="form-control  "
+          <input #Material="ngModel" [(ngModel)]="this.Variantes[i].Material" class="form-control  "
                  name="material{{i}}"
                  placeholder="Ej. Gamusa/algodon" type="text">
         </div>
@@ -348,40 +347,40 @@
             <label>Imagenes de la opcion {{i}} </label>
             <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
           <div
-            [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[i+1]==false,'borde-imagenes1':vectorBanderaAgregarImagen[i+1]==true }"
+            [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[i]==false,'borde-imagenes1':vectorBanderaAgregarImagen[i]==true }"
             class="row  mt-3 ">
-            <div *ngFor='let url of imagenes[i+1]; index as j ' class="ml-1">
+            <div *ngFor='let url of imagenes[i]; index as j ' class="ml-1">
               <div class="col-auto card mt-2 px-0 pb-0">
                 <label style="border: none;  ">
                   <img [src]="url" class="px-0" height="140px" width="140px">
-                  <input (change)="subirImagenes($event,(i+1))" accept="image/*" class="file" multiple name="files"
+                  <input (change)="subirImagenes($event,(i))" accept="image/*" class="file" multiple name="files"
                          type="file">
                 </label>
-                <button (click)="quitarImagenes((i+1),j)" class="boton-cerrar  btn-outline-danger px-0 py-0 ">
+                <button (click)="quitarImagenes((i),j)" class="boton-cerrar  btn-outline-danger px-0 py-0 ">
 
                   <span class="fa fa-trash"></span>
                 </button>
               </div>
             </div>
-            <div *ngIf="vectorBanderaAgregarImagen[i+1]==false" class="mx-auto ">
+            <div *ngIf="vectorBanderaAgregarImagen[i]==false" class="mx-auto ">
               <div class="col-auto pt-4">
                 <label class="imagen-agregar ">
                   <i class="fa fa-cloud-upload-alt fa-4x"></i>
                   <!--   <i class="fa fa-plus-circle fa-2x ml-1"></i>-->
-                  <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file">
+                  <input (change)="subirImagenes($event,i)" accept="image/*" class="file" multiple type="file">
                 </label>
               </div>
             </div>
-            <div *ngIf="vectorBanderaAgregarImagen[i+1]==false" class=" col-12 pb-5 mx-auto ">
+            <div *ngIf="vectorBanderaAgregarImagen[i]==false" class=" col-12 pb-5 mx-auto ">
               <p class="link-agregar-imagenes ">Click para Agregar imagenes</p>
             </div>
 
-            <div *ngIf="vectorBanderaAgregarImagen[i+1]==true && imagenes[i+1].length<6" class="py-2">
+            <div *ngIf="vectorBanderaAgregarImagen[i]==true && imagenes[i].length<6" class="py-2">
               <div class=" px-2 py-4  card  ml-2 ">
                 <label class="imagen-agregar">
                   <i class="fa fa-picture-o fa-4x ml-4"></i>
                   <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                  <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file">
+                  <input (change)="subirImagenes($event,i)" accept="image/*" class="file" multiple type="file">
                   <br>
                   <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imagenes </p>
                   <p class=" link-agregar-imagenes2">maximo 6</p>
@@ -396,16 +395,16 @@
           <label> Stock y unidad de medida del producto</label>
           <div class="input-group">
 
-            <input #Stock="ngModel" [(ngModel)]="item.STOCK" class="form-control" name="stock{{i}}"
+            <input #Stock="ngModel" [(ngModel)]="this.Variantes[i].Stock" class="form-control" name="stock{{i}}"
                    placeholder="200" type="number" min="0" step="0.01" oninput="validity.valid||(value='');"
                    required [ngClass]="{'is-invalid': Stock.invalid && banderaValidaciones}">
 
-            <select #Unidad="ngModel" [(ngModel)]="item.UNIDAD_MEDIDA" class=" form-control col-lg-5 "
-                    id="selectUnidades" name="unidad{{i}}"
+            <select #Unidad="ngModel" [(ngModel)]="this.Variantes[i].Cod_Unidad" class=" form-control col-lg-5 " id="selectUnidades" name="unidad{{i}}"
+
                     [ngClass]="{'errorSelect': Stock.invalid && banderaValidaciones}">
 
               <option *ngFor="let unidad of this.unidades"
-                      [selected]="unidad.COD_UNIDAD_MEDIDA=='unidades'">{{unidad.COD_UNIDAD_MEDIDA}}</option>
+                      [selected]="unidad.COD_UNIDAD_MEDIDA==this.Variantes[i].Cod_Unidad">{{unidad.COD_UNIDAD_MEDIDA}}</option>
             </select>
 
           </div>
@@ -417,9 +416,9 @@
         <div class="form-group  col-md-4">
           <label>Precio</label>
           <div class="input-group mb-3">
-            <input #PrecioUnitario="ngModel" [(ngModel)]="item.PRECIO_UNITARIO"
+            <input #PrecioUnitario="ngModel" [(ngModel)]="this.Variantes[i].Precio_Unitario"
                    aria-label="Amount (to the nearest dollar)" class="form-control"
-                   name="precioUnitario{{i+1}}" placeholder="20" (focusout)="formatear($event)"
+                   name="precioUnitario{{i}}" placeholder="20" (focusout)="formatear($event)"
                    type="number" min="0" step="0.01" oninput="validity.valid||(value='');" required
                    [ngClass]="{'is-invalid': PrecioUnitario.invalid && banderaValidaciones}">
             <div class="input-group-append">
