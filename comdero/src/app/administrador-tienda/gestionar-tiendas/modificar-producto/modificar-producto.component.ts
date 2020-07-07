@@ -10,11 +10,14 @@ import {Variante} from "../../../modelos/variante";
 import {Imagen_Producto} from "../../../modelos/imagen_producto";
 import {UnidadMedidaServicio} from "../../../servicios/unidad_medida.servicio";
 import {DomSanitizer} from "@angular/platform-browser";
+import {CurrencyPipe} from "@angular/common";
+import {Cmyk, ColorPickerService} from "ngx-color-picker";
 
 @Component({
   selector: 'app-modificar-producto',
   templateUrl: './modificar-producto.component.html',
-  styleUrls: ['./modificar-producto.component.css']
+  styleUrls: ['./modificar-producto.component.css'],
+  providers: [CurrencyPipe]
 })
 export class ModificarProductoComponent implements OnInit {
 
@@ -76,7 +79,7 @@ export class ModificarProductoComponent implements OnInit {
   //UNIDADES DE MEDIDA
   public unidades: any;
 
-  constructor(private _sanitizer: DomSanitizer, private _unidadesMedidaServicio: UnidadMedidaServicio, private _categoriaServicio: CategoriaServicio, private modalService: NgbModal, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
+  constructor( private cpService: ColorPickerService,private cp: CurrencyPipe, private _sanitizer: DomSanitizer, private _unidadesMedidaServicio: UnidadMedidaServicio, private _categoriaServicio: CategoriaServicio, private modalService: NgbModal, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
     this.Oferta = new Oferta(null, null, "Garantia del vendedor");
     this.Producto = new Producto(null, null, null, null, null, null, null, null, null);
 
@@ -326,6 +329,54 @@ export class ModificarProductoComponent implements OnInit {
 
   public resetearVideoYoutube() {
     this.videoYoutube = null;
+  }
+
+  public formatear(element) {
+    debugger;
+    let valor = this.cp.transform(element.target.value, '$',);
+    //let alter=formatCurrency(element.target.value,'USD',getCurrencySymbol('USD', 'wide'));
+    let valor2 = valor.split("$")
+    element.target.value = valor2[1].replace(',', "");
+  }
+
+  public opcionGarantia(garantia) {
+    console.log("Garantia", garantia)
+    this.Oferta.Garantia = garantia;
+  }
+
+  public opcionRastrearStock(event) {
+    if (event.target.checked) {
+      this.Producto.Rastrear_Stock = 0;
+    } else {
+      this.Producto.Rastrear_Stock = 1;
+    }
+  }
+
+  public opcionVenderSinStock(event) {
+    if (event.target.checked) {
+      this.Producto.Vender_Sin_Stock = 0;
+    } else {
+      this.Producto.Vender_Sin_Stock = 1;
+    }
+  }
+
+  public cambiarColor(color: string, indice): Cmyk {
+    const hsva = this.cpService.stringToHsva(color);
+    const rgba = this.cpService.hsvaToRgba(hsva);
+    console.log(color);
+    console.log(rgba);
+    this.Variantes[indice].Color = color;
+    console.log("Variante despuez de color", this.Variantes[indice]);
+    return this.cpService.rgbaToCmyk(rgba);
+  }
+
+  public agregarOpcionesProducto() {
+
+    this.vectorBanderaAgregarImagen.push(false);
+    this.Variantes.push(new Variante(null, null, null, null, 1, "unidades"));
+    this.Imagenes_Producto.push([]);
+    this.imagenes.push([]);
+    console.log("asdasd");
   }
 
 
