@@ -9,6 +9,7 @@ import {CategoriaServicio} from "../../../servicios/categoria.servicio";
 import {Variante} from "../../../modelos/variante";
 import {Imagen_Producto} from "../../../modelos/imagen_producto";
 import {UnidadMedidaServicio} from "../../../servicios/unidad_medida.servicio";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-modificar-producto',
@@ -75,7 +76,7 @@ export class ModificarProductoComponent implements OnInit {
   //UNIDADES DE MEDIDA
   public unidades: any;
 
-  constructor(private _unidadesMedidaServicio: UnidadMedidaServicio, private _categoriaServicio: CategoriaServicio, private modalService: NgbModal, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
+  constructor(private _sanitizer: DomSanitizer, private _unidadesMedidaServicio: UnidadMedidaServicio, private _categoriaServicio: CategoriaServicio, private modalService: NgbModal, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
     this.Oferta = new Oferta(null, null, "Garantia del vendedor");
     this.Producto = new Producto(null, null, null, null, null, null, null, null, null);
 
@@ -104,6 +105,7 @@ export class ModificarProductoComponent implements OnInit {
     }
   }
 
+  public videoYoutube;
 
   iniciarModificarProducto() {
     this.Oferta.Iva = this.identidadProducto.IVA;
@@ -120,7 +122,7 @@ export class ModificarProductoComponent implements OnInit {
 
     this.identidadProducto.PRODUCTO.PRODUCTO_CATEGORIA.forEach(c => {
       this.categoriasSeleccionadas.add(c.CATEGORIum);
-    })
+    });
     let v = this.identidadProducto.PRODUCTO.VARIANTEs;
     for (let i in v) {
       this.Imagenes_Producto.push([]);
@@ -130,15 +132,21 @@ export class ModificarProductoComponent implements OnInit {
 
       for (let j in v[i].IMAGEN_PRODUCTOs) {
         debugger;
-       console.log("tipo",v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN)
+        console.log("tipo", v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN)
         if (v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN != "video/mp4" && v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN != "youtube") {
           this.Imagenes_Producto[i].push(new Imagen_Producto(v[i].IMAGEN_PRODUCTOs[j].NOMBRE_IMAGEN, v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN, v[i].IMAGEN_PRODUCTOs[j].IMAGEN, v[i].IMAGEN_PRODUCTOs[j].TAMANIO_IMAGEN));
           this.imagenes[i][j] = 'http://localhost:3977/' + v[i].IMAGEN_PRODUCTOs[j].IMAGEN
+        } else if (v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN == "video/mp4") {
+          this.data.video = 'http://localhost:3977/' + v[i].IMAGEN_PRODUCTOs[j].IMAGEN;
+        } else if (v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN != "youtube") {
+          this.videoYoutube = v[i].IMAGEN_PRODUCTOs[j].IMAGEN;
         }
       }
       console.log("variantes", this.imagenes)
 
     }
+
+
   }
 
   abrirModalCategorias(content) {
@@ -292,6 +300,34 @@ export class ModificarProductoComponent implements OnInit {
       console.log("error:" + JSON.stringify((e).error.message));
     }
   }
+
+  public abrirModalVideoYoutube(content) {
+    this.modalService.open(content, {centered: true, size: 'md'});
+  }
+
+  public videoPorGuardar;
+  public videoYoutubeGuardar: any;
+  public direccionVideoYoutube: any;
+
+  public getVideoIframe() {
+    let url = this.direccionVideoYoutube;
+    var video, results;
+
+    if (url === null) {
+      return '';
+    }
+    results = url.match('[\\?&]v=([^&#]*)');
+    video = (results === null) ? url : results[1];
+    delete this.videoPorGuardar;
+    this.videoYoutube = this._sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + video);
+    delete this.videoPorGuardar;
+    this.data.video = "";
+  }
+
+  public resetearVideoYoutube() {
+    this.videoYoutube = null;
+  }
+
 
   mensageError(mensaje) {
     Swal.fire({

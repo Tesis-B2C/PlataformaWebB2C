@@ -440,6 +440,74 @@
       </div>
         </div>
       </form>
+<br>
+      <form  class=" card card-body ">
+        <h6>Video promocional</h6>
+        <hr>
+        <div class="container">
+        <div class="form-row">
+
+          <span *ngIf="banderaMensajeMaximoVideo" class=" col-md-5" style="color: red;font-size: small">* Recuerda Maximo 150MB</span>
+          <a (click)="abrirModalVideoYoutube(modalVideoYoutube)" class="agregarVideoYoutube ml-2 col-md-5 ">
+            Agregar video de youtube &nbsp; <span class="fab fa-youtube "></span>
+          </a>
+        </div>
+
+
+        <div class="form-group ">
+
+
+          <div [ngClass]="{'borde-imagenes':!data.video,'borde-imagenes1':data.video }" class="row mt-3 mx-1 ">
+            <div class="  mx-auto">
+              <div *ngIf="this.banderaAnimacionVideo==true">
+                <div class="fondoAnimacionCarga py-5">
+                  <div class="pulse animated infinite py-5  ">
+                    <img class="imagenCarga" src="assets/images/cargando.png">
+                    <br><br>
+                    <div>
+                    </div>
+                  </div>
+                  <label style="color: white; text-align: center">Cargando previsualización, espere
+                    porfavor....</label>
+                </div>
+
+              </div>
+            </div>
+            <div class=" col-12 mx-auto">
+              <div *ngIf="this.videoYoutube">
+                <iframe width="100%" height="315" [src]="this.videoYoutube" frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+              </div>
+
+              <div *ngIf="data.video">
+
+                <div class="mx-auto fondo-animacion-carga-video">
+                  <video class="video-carga" controls height="auto" width="auto">
+                    <source [src]="data.video" type="{{ data.type }}">
+                  </video>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="!this.videoYoutube" class=" col-auto  mx-auto">
+              <div class=" pt-4 ml-2  ">
+                <label class="imagen-agregar ">
+                  <i class="fa fa-film fa-4x  "></i>
+                  <i class="fa fa-upload fa-2x ml-1 "></i>
+                  <input (change)="subirVideo($event)" accept="video/*" class="file" type="file">
+                </label>
+              </div>
+            </div>
+            <div *ngIf="!this.videoYoutube" class=" col-12 mx-auto ">
+              <p class="link-agregar-imagenes pb-5">Click para subir un video promocional del producto </p>
+            </div>
+          </div>
+          <a *ngIf="this.videoYoutube" (click)="resetearVideoYoutube()" class="agregarVideoYoutube ml-2 col-md-5 ">
+            Agregar video desde el ordenador &nbsp; <span class="fa fa-laptop "></span>
+          </a>
+        </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>
