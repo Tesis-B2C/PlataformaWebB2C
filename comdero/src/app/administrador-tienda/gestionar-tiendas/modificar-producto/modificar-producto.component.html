@@ -25,6 +25,65 @@
 
 </ng-template>
 
+
+<ng-template #modalCategorias let-modal>
+
+  <div class="modal-header">
+    <h4 class="modal-title">Modal title</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container">
+
+      <h6>Categorias</h6>
+      <hr class="mb-0">
+      <label class="">Seleccione las categorias a las cuales pertenece el producto</label>
+
+      <div *ngFor="let c11 of this.c1; let i = index">
+        <hr class="mb-1 mt-1">
+
+        <div class="dropdown justify-content-center">
+          <button (click)="busquedaCategoria2(c11.ID_CATEGORIA)" [attr.data-target]="'#myModal'+i"
+                  aria-expanded="false" aria-haspopup="true" class="categoria dropdown-toggle  dropdown-toggle-split"
+                  data-toggle="collapse"><span class="{{this.vectorIconos[i]}} iconos-categoria"></span>&nbsp;&nbsp;&nbsp;&nbsp;{{c11.NOMBRE}}
+          </button>
+          <div class="form-row mb-3 collapse justify-content-center" id="myModal{{i}}">
+            <div *ngFor="let c22 of this.categoriaEncontrada2; let i = index">
+              <div class="checkbox">
+                <label
+                  *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA" class="chip  col btn" for="checkCategoria{{i}}"
+                  id="labelcheckCategoria2{{i}}">{{c22.NOMBRE}}
+                  <input (change)="busquedaCategoria3(c22.ID_CATEGORIA,$event,c22,i)" id="checkCategoria{{i}}"
+                         style="display: none" type="checkbox">
+                </label>
+              </div>
+              <div class="form-row  justify-content-center">
+                <div *ngFor="let c33 of this.categoriaEncontrada; let i =index">
+                  <label *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA && c22.ID_CATEGORIA==c33.CAT_ID_CATEGORIA"
+                         class="chip2 col btn btn-light"
+                         for="checkCategoria3{{i}}" id="labelcheckCategoria3{{i}}">{{c33.NOMBRE}}
+                    <input (change)="seleccionarCategoria3($event,c33,i)" id="checkCategoria3{{i}}"
+                           style="display: none"
+                           type="checkbox">
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <button (click)="cc($event)" class="col btn btn-light clicked">asd</button>-->
+      </div>
+    </div>
+   </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+
+
+</ng-template>
+
 <body id="body">
 
 <div class="container-fluid mt-5 ">
@@ -119,9 +178,10 @@
               </div>
             </div>
             <div class="col">
-              <div class="form-group">
-                <label>Peso aproximado</label>
-                <div class="input-group mb-3">
+              <div class="form-group mb-0">
+                <label>Peso aproximado <span style="font-size: x-small" class="ml-2">(El peso de los productos ayudará a calcular el precio de
+                  envío)</span></label>
+                <div class="input-group mb-0">
                   <input #Peso="ngModel" [(ngModel)]="this.Producto.Peso_Producto" class="form-control" name="peso"
                          placeholder="120" min="0" step="0.01" oninput="validity.valid||(value='');"
                          type="number" required [ngClass]="{'is-invalid': Peso.invalid && banderaValidaciones}">
@@ -129,15 +189,15 @@
                     <span class="input-group-text unidades">Kg</span>
                   </div>
 
-                  <p style="font-size: x-small" class="ml-2">El peso de los productos ayudará a calcular el precio de
-                    envío</p>
 
-
-                  <div *ngIf="Peso.errors?.required && banderaValidaciones">
-                    <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
-                  </div>
                 </div>
 
+              </div>
+
+
+
+              <div *ngIf="Peso.errors?.required && banderaValidaciones">
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
               </div>
             </div>
           </div>
@@ -207,7 +267,20 @@
       </form>
       <br>
       <form class=" card card-body ">
-        <h6>Categorias seleccionadas</h6>
+
+        <div class="row justify-content-between mx-2">
+          <h6>Categorias seleccionadas </h6>
+          <div ngbDropdown class="d-inline-block justify-content-end text-right">
+            <button id="btnCategorias" ngbDropdownToggle><i class="fa fa-ellipsis-h"></i>
+            </button>
+            <div ngbDropdownMenu aria-labelledby="btnCategorias">
+              <button ngbDropdownItem class="btnOpcTarifaLocal" (click)="abrirModalCategorias(modalCategorias)">
+                Agregar Categorias
+              </button>
+
+            </div>
+          </div>
+        </div>
         <hr>
         <div class="form-row ">
           <div *ngIf="this.categoriasSeleccionadas.size==0 &&!banderaValidaciones" class="form-group">

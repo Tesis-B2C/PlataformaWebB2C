@@ -31,11 +31,11 @@ textarea {
   background-color: white
 }
 
-.borde-error{
+.borde-error {
   border: #c80000 2px dashed;
 }
 
-.borde-error:hover{
+.borde-error:hover {
   border: #c80000 2px dashed;
 
 }
@@ -418,4 +418,8 @@ button {
 body {
   height: 100vh !important;
   overflow: auto;
+}
+
+.dropdown-toggle::after {
+  display: none;
 }
