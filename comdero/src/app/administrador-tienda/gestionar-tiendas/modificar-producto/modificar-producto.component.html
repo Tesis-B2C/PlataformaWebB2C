@@ -310,7 +310,7 @@
         </div>
       </form>
       <br>
-      <form class=" card card-body " name="form">
+      <div class=" card card-body " >
         <h6>Variantes</h6>
         <hr>
         <div class="container">
@@ -343,6 +343,7 @@
             </div>
 
             <div class="form-group col-12 ">
+             <form name="form">
               <a class=" mt-5">
                 <label>Imagenes de la opcion {{i}} </label>
                 <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
@@ -389,6 +390,7 @@
                   </div>
                 </div>
               </div>
+             </form>
             </div> <!-- form-group end.// -->
 
             <div class="form-group col-lg-7">
@@ -440,7 +442,7 @@
             </p>
           </div>
         </div>
-      </form>
+      </div>
       <br>
       <form class=" card card-body ">
         <h6>Video promocional</h6>

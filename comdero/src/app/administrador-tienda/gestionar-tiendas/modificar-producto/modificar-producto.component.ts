@@ -111,8 +111,8 @@ export class ModificarProductoComponent implements OnInit {
 
   iniciarModificarProducto() {
     this.Imagenes_Producto = [[]];
-    this.imagenes = [];
-    this.Variantes=[];
+    this.imagenes = [[]];
+    this.Variantes = [];
     this.data = [];
     this.videoYoutube = "";
     this.categoriasSeleccionadas = new Set();
@@ -134,7 +134,7 @@ export class ModificarProductoComponent implements OnInit {
     let v = this.identidadProducto.PRODUCTO.VARIANTEs;
     for (let i in v) {
       this.Imagenes_Producto.push([]);
-     this.imagenes.push([]);
+      this.imagenes.push([]);
       this.vectorBanderaAgregarImagen.push(true);
       debugger
       this.Variantes.push(new Variante(v[i].COLOR, v[i].TALLA, v[i].MATERIAL, v[i].PRECIO_UNITARIO, v[i].STOCK, v[i].MEDIDA));

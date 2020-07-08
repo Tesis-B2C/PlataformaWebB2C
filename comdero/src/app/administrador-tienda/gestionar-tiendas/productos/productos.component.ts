@@ -156,6 +156,8 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
             if (this.imagenes[indice] != null)
               this.imagenes[indice].push(event.target.result);
             document.forms["form"].reset();
+            document.forms["formVariaciones"].reset();
+
           }
           await reader.readAsDataURL(eventEntrante.target.files[i]);
         }
@@ -163,6 +165,8 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
           this.imagenes[indice] = null;
           this.Imagenes_Producto[indice].splice(0, this.Imagenes_Producto[indice].length);
           document.forms["form"].reset();
+          document.forms["formVariaciones"].reset();
+
           this.vectorBanderaAgregarImagen[indice] = false;
           this.banderaMensajeMaximoImagenes = true;
         } else if (this.Imagenes_Producto[indice].length == 6) {
@@ -205,6 +209,8 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   public quitarImagenes(indice: any, imagen) {
     this.imagenes[indice].splice(imagen, 1);
     document.forms["form"].reset();
+    document.forms["formVariaciones"].reset();
+
     this.Imagenes_Producto[indice].splice(imagen, 1);
     console.log("vector imagenes", this.imagenes[indice]);
     if (this.imagenes[indice].length == 0)
