@@ -88,7 +88,7 @@ export class ModificarProductoComponent implements OnInit {
 
 
   constructor(private cpService: ColorPickerService, private cp: CurrencyPipe, private _sanitizer: DomSanitizer, private _unidadesMedidaServicio: UnidadMedidaServicio, private _categoriaServicio: CategoriaServicio, private modalService: NgbModal, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
-    this.Oferta = new Oferta(null, null, "Garantia del vendedor");
+    this.Oferta = new Oferta(null, null, null, null);
     this.Producto = new Producto(null, null, null, null, null, null, null, null, null);
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
   }
@@ -123,11 +123,12 @@ export class ModificarProductoComponent implements OnInit {
     this.data = [];
     this.videoYoutube = "";
     this.categoriasSeleccionadas = new Set();
-    this.Oferta.Id_Oferta=this.identidadProducto.ID_OFERTA;
+    this.Oferta.Id_Oferta = this.identidadProducto.ID_OFERTA;
     this.Oferta.Num_Tienda = this.identidadTienda.NUM_TIENDA;
     this.Oferta.Iva = this.identidadProducto.IVA;
     this.Oferta.Garantia = this.identidadProducto.GARANTIA;
-    this.Producto.Id_Producto=this.identidadProducto.PRODUCTO.ID_PRODUCTO;
+    this.Oferta.Estado_Oferta = this.identidadProducto.ESTADO_OFERTA;
+    this.Producto.Id_Producto = this.identidadProducto.PRODUCTO.ID_PRODUCTO;
     this.Producto.Cod_Producto = this.identidadProducto.PRODUCTO.COD_PRODUCTO;
     this.Producto.Nombre_Producto = this.identidadProducto.PRODUCTO.NOMBRE_PRODUCTO;
     this.Producto.Descripcion_Producto = this.identidadProducto.PRODUCTO.DESCRIPCION_PRODUCTO;
@@ -138,31 +139,36 @@ export class ModificarProductoComponent implements OnInit {
     this.Producto.Condicion = this.identidadProducto.PRODUCTO.CONDICION;
     this.Producto.Peso_Producto = this.identidadProducto.PRODUCTO.PESO_PRODUCTO;
 
-    this.identidadProducto.PRODUCTO.PRODUCTO_CATEGORIA.forEach(c => {
-      this.categoriasSeleccionadas.add(c.CATEGORIum);
-    });
+    let c = this.identidadProducto.PRODUCTO.PRODUCTO_CATEGORIA;
+    for (let i in c) {
+      c[i].CATEGORIum.i = i;
+      this.categoriasSeleccionadas.add(c[i].CATEGORIum);
+    }
     let v = this.identidadProducto.PRODUCTO.VARIANTEs;
     for (let i in v) {
       this.Imagenes_Producto.push([]);
       this.imagenes.push([]);
       this.vectorBanderaAgregarImagen.push(true);
       debugger
-      this.Variantes.push(new Variante(v[i].COLOR, v[i].TALLA, v[i].MATERIAL, v[i].PRECIO_UNITARIO, v[i].STOCK, v[i].MEDIDA));
-      this.Variantes[i].Num_Variante=v[i].NUM_VARIANTE;
+      this.Variantes.push(new Variante(v[i].COLOR, v[i].TALLA, v[i].MATERIAL, v[i].PRECIO_UNITARIO, v[i].STOCK, v[i].MEDIDA, v[i].ESTADO_VARIANTE));
+      this.Variantes[i].Num_Variante = v[i].NUM_VARIANTE;
       for (let j in v[i].IMAGEN_PRODUCTOs) {
 
         if (v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN != "video/mp4" && v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN != "youtube") {
           this.Imagenes_Producto[i].push(new Imagen_Producto(v[i].IMAGEN_PRODUCTOs[j].NOMBRE_IMAGEN, v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN, v[i].IMAGEN_PRODUCTOs[j].IMAGEN, v[i].IMAGEN_PRODUCTOs[j].TAMANIO_IMAGEN));
-          this.Imagenes_Producto[i][j].Id_Imagen=v[i].IMAGEN_PRODUCTOs[j].ID_IMAGEN;
+          this.Imagenes_Producto[i][j].Id_Imagen = v[i].IMAGEN_PRODUCTOs[j].ID_IMAGEN;
+          this.Imagenes_Producto[i][j].Estado_Imagen = 0;
           this.imagenes[i][j] = 'http://localhost:3977/' + v[i].IMAGEN_PRODUCTOs[j].IMAGEN
         } else if (v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN == "video/mp4") {
           this.data.video = 'http://localhost:3977/' + v[i].IMAGEN_PRODUCTOs[j].IMAGEN;
           this.videoPorGuardar = new Imagen_Producto(v[i].IMAGEN_PRODUCTOs[j].NOMBRE_IMAGEN, v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN, v[i].IMAGEN_PRODUCTOs[j].IMAGEN, v[i].IMAGEN_PRODUCTOs[j].TAMANIO_IMAGEN);
-          this.videoPorGuardar.Id_Imagen=v[i].IMAGEN_PRODUCTOs[j].ID_IMAGEN;
+          this.videoPorGuardar.Id_Imagen = v[i].IMAGEN_PRODUCTOs[j].ID_IMAGEN;
+          this.videoPorGuardar.Estado_Imagen = 0;
         } else if (v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN != "youtube") {
           this.direccionVideoYoutube = v[i].IMAGEN_PRODUCTOs[j].IMAGEN;
           this.videoYoutubeGuardar = new Imagen_Producto('Video', 'youtube', this.direccionVideoYoutube, 0);
-          this.videoPorGuardar.Id_Imagen=v[i].IMAGEN_PRODUCTOs[j].ID_IMAGEN;
+          this.videoPorGuardar.Id_Imagen = v[i].IMAGEN_PRODUCTOs[j].ID_IMAGEN;
+          this.videoPorGuardar.Estado_Imagen = 0;
         }
       }
       console.log("variantes", this.imagenes)
@@ -198,8 +204,12 @@ export class ModificarProductoComponent implements OnInit {
     }
 
   }
-  public busquedaCategoria3(busqueda, event, c22, i) {
 
+
+  public banderaAux: boolean;
+
+  public busquedaCategoria3(busqueda, event, c22, i) {
+    this.banderaAux = false;
     let elemento = document.getElementById('labelcheckCategoria2' + i) as HTMLElement;
     let banderaSeleccionarCategoria = false;
     this.c3.forEach(c33 => {
@@ -217,13 +227,22 @@ export class ModificarProductoComponent implements OnInit {
     }
     if (banderaSeleccionarCategoria == false && event.target.checked) {
       c22.i = i;
-      this.categoriasSeleccionadas.add(c22);
+      for (let obj of this.categoriasSeleccionadas) {
+        if (obj['ID_CATEGORIA'] == c22.ID_CATEGORIA) {
+          this.banderaAux = true
+        }
+      }
+      debugger;
+      if (this.banderaAux == false) {
+        this.categoriasSeleccionadas.add(c22);
+      }
+
     } else {
       this.categoriasSeleccionadas.delete(c22);
     }
   }
 
- public  busquedaCategoria2(busqueda) {
+  public busquedaCategoria2(busqueda) {
     this.c2.forEach(c22 => {
       if (c22.CAT_ID_CATEGORIA == busqueda) {
         this.categoriaEncontrada2.add(c22);
@@ -231,12 +250,25 @@ export class ModificarProductoComponent implements OnInit {
     });
   }
 
+  public banderaAux2: boolean;
+
   public seleccionarCategoria3(event, c33, i) {
+    this.banderaAux2 = false;
     let elemento = document.getElementById('labelcheckCategoria3' + i) as HTMLElement;
     if (event.target.checked) {
       elemento.classList.add('chip2-alternativo');
       c33.i = i;
-      this.categoriasSeleccionadas.add(c33);
+
+
+      for (let obj of this.categoriasSeleccionadas) {
+        if (obj['ID_CATEGORIA'] == c33.ID_CATEGORIA) {
+          this.banderaAux2 = true
+        }
+      }
+      if (!this.banderaAux2) {
+        this.categoriasSeleccionadas.add(c33);
+      }
+
     } else {
       /* elemento.style.backgroundColor = 'white';*/
       elemento.classList.remove('chip2-alternativo')
@@ -385,7 +417,7 @@ export class ModificarProductoComponent implements OnInit {
 
   public agregarOpcionesProducto() {
     this.vectorBanderaAgregarImagen.push(false);
-    this.Variantes.push(new Variante(null, null, null, null, 1, "unidades"));
+    this.Variantes.push(new Variante(null, null, null, null, 1, "unidades", 0));
     this.Imagenes_Producto.push([]);
     this.imagenes.push([]);
     console.log("asdasd");
@@ -425,7 +457,7 @@ export class ModificarProductoComponent implements OnInit {
       for (let categorias of this.categoriasSeleccionadas) {
         this.categoriasEnviar.push(categorias['ID_CATEGORIA']);
       }
-      console.log("oferta", this.Oferta, "producto", this.Producto, "Variantes", this.Variantes, "Imagen producto", this.Imagenes_Producto,"video producto", this.videoPorGuardar, "categoria", this.categoriasEnviar)
+      console.log("oferta", this.Oferta, "producto", this.Producto, "Variantes", this.Variantes, "Imagen producto", this.Imagenes_Producto, "video producto", this.videoPorGuardar, "categoria", this.categoriasSeleccionadas)
 
       // let response = await this._productoServicio.saveProducto(this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
       // this.mensageCorrecto(response.data);
@@ -439,6 +471,20 @@ export class ModificarProductoComponent implements OnInit {
 
   }
 
+  public eliminarCategoria(cc) {
+    debugger;
+    if (cc.TIPO == "C3") {
+      //  let elemento3 = document.getElementById('labelcheckCategoria3' + cc.i) as HTMLElement;
+      //  elemento3.classList.remove('chip2-alternativo')
+      //elemento3.classList.add('chip2', 'col', 'btn', 'btn-light');
+    } else if (cc.TIPO == "C2") {
+      // let elemento2 = document.getElementById('labelcheckCategoria2' + cc.i) as HTMLElement;
+      // elemento2.classList.remove('chip-alternativo')
+      //elemento2.classList.add('chip', 'col', 'btn', 'btn-light');
+    }
+    this.categoriasSeleccionadas.delete(cc);
+
+  }
 
   mensageError(mensaje) {
     Swal.fire({

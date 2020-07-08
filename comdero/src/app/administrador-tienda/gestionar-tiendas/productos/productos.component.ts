@@ -97,9 +97,9 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
 
   constructor(private cp: CurrencyPipe, public toastr: ToastrService, private _productoServicio: ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
-    this.Oferta = new Oferta(this.identidadTienda.NUM_TIENDA, null, "Garantia del vendedor");
+    this.Oferta = new Oferta(this.identidadTienda.NUM_TIENDA, null, "Garantia del vendedor",0);
     this.Producto = new Producto("000000", null, null, null, null, 1, 1, "Nuevo", null);
-    this.Variantes.push(new Variante(null, null, null, null, 1, "unidades"));
+    this.Variantes.push(new Variante(null, null, null, null, 1, "unidades",0));
   }
 
   ngOnInit() {
@@ -255,7 +255,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     this.vectorOpciones.push(1);
     this.color.push("");
     this.vectorBanderaAgregarImagen.push(false);
-    this.Variantes.push(new Variante(null, null, null, null, 1, "unidades"));
+    this.Variantes.push(new Variante(null, null, null, null, 1, "unidades",0));
     this.Imagenes_Producto.push([]);
     this.imagenes.push([]);
     console.log("asdasd");
@@ -365,6 +365,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   }
 
   public eliminarCategoria(cc) {
+    debugger
     if (cc.TIPO == "C3") {
       let elemento3 = document.getElementById('labelcheckCategoria3' + cc.i) as HTMLElement;
       elemento3.classList.remove('chip2-alternativo')

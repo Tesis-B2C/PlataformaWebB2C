@@ -413,7 +413,7 @@
           </div>
           <div class="form-group  col-md-4">
             <label> Talla </label>
-            <input #Talla0="ngModel" [(ngModel)]="this.Variantes[0].Talla" class="form-control " name="talla0"
+            <input #Talla0="ngModel" [(ngModel)]="this.Variantes[0].Talla" class="form-control " name="talla0" maxlength="2"
                    placeholder="Ej. xl o 34 o etc" type="text">
           </div>
           <div class="form-group  col-md-4">
@@ -524,9 +524,9 @@
             </div>
           </div>
 
-          <div class="form-group  col-md-4">
+          <div class="form-group  col-md-5">
             <label>Precio</label>
-            <div class="input-grou">
+            <div class="input-group">
               <input #PrecioUnitario="ngModel" [(ngModel)]="this.Variantes[i+1].Precio_Unitario"
                      aria-label="Amount (to the nearest dollar)" class="form-control"
                      name="precioUnitario{{i+1}}" placeholder="20" (focusout)="formatear($event)"

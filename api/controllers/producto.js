@@ -27,7 +27,8 @@ async function saveProducto(req, res) {
                 NUM_TIENDA: oferta.Num_Tienda,
                 IVA: oferta.Iva,
                 FECHA_CREACION: moment(),
-                GARANTIA: oferta.Garantia
+                GARANTIA: oferta.Garantia,
+                ESTADO_OFERTA: oferta.Estado_Oferta,
             },
             {
                 transaction: t
@@ -71,7 +72,8 @@ async function saveProducto(req, res) {
                 MATERIAL: v.Material,
                 PRECIO_UNITARIO: v.Precio_Unitario,
                 STOCK: v.Stock,
-                MEDIDA: v.Cod_Unidad
+                MEDIDA: v.Cod_Unidad,
+                ESTADO_VARIANTE:v.Estado_Variante
             }, {
                 transaction: t
             });
@@ -164,7 +166,12 @@ async function getProducto(req, res) {
             where: {ID_OFERTA: req.params.id},
             include: {
                 model: Producto,
-                include: [{model: Variante,separate:true,order: [['NUM_VARIANTE', 'ASC']], include: {model: Imagen_Producto,separate:true,order: [['ID_IMAGEN', 'ASC']]}}, {
+                include: [{
+                    model: Variante,
+                    separate: true,
+                    order: [['NUM_VARIANTE', 'ASC']],
+                    include: {model: Imagen_Producto, separate: true, order: [['ID_IMAGEN', 'ASC']]}
+                }, {
                     model: Producto_Categoria,
                     include: {model: Categoria}
                 }],
