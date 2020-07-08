@@ -526,7 +526,7 @@
 
           <div class="form-group  col-md-4">
             <label>Precio</label>
-            <div class="input-group mb-3">
+            <div class="input-grou">
               <input #PrecioUnitario="ngModel" [(ngModel)]="this.Variantes[i+1].Precio_Unitario"
                      aria-label="Amount (to the nearest dollar)" class="form-control"
                      name="precioUnitario{{i+1}}" placeholder="20" (focusout)="formatear($event)"
@@ -535,10 +535,9 @@
               <div class="input-group-append">
                 <span class="input-group-text unidades">$</span>
               </div>
-              <div *ngIf="PrecioUnitario.errors?.required && banderaValidaciones">
-                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
-              </div>
-
+            </div>
+            <div *ngIf="PrecioUnitario.errors?.required && banderaValidaciones">
+              <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
             </div>
           </div>
 
