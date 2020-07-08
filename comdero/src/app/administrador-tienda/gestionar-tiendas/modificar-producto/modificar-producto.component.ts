@@ -25,7 +25,7 @@ export class ModificarProductoComponent implements OnInit {
   public identidadProducto;
   public Oferta;
   public Producto;
-  public Variantes = [];
+  public Variantes;
   public categoriasSeleccionadas = new Set();
   public banderaValidaciones: boolean = true;
   public editorConfig = {
@@ -74,12 +74,12 @@ export class ModificarProductoComponent implements OnInit {
   public banderaMensajeMaximoVideo: boolean = false;
   public data: any = [];
   public banderaAnimacionVideo: boolean = false;
-
+  public videoYoutube;
 
   //UNIDADES DE MEDIDA
   public unidades: any;
 
-  constructor( private cpService: ColorPickerService,private cp: CurrencyPipe, private _sanitizer: DomSanitizer, private _unidadesMedidaServicio: UnidadMedidaServicio, private _categoriaServicio: CategoriaServicio, private modalService: NgbModal, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
+  constructor(private cpService: ColorPickerService, private cp: CurrencyPipe, private _sanitizer: DomSanitizer, private _unidadesMedidaServicio: UnidadMedidaServicio, private _categoriaServicio: CategoriaServicio, private modalService: NgbModal, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
     this.Oferta = new Oferta(null, null, "Garantia del vendedor");
     this.Producto = new Producto(null, null, null, null, null, null, null, null, null);
 
@@ -108,9 +108,14 @@ export class ModificarProductoComponent implements OnInit {
     }
   }
 
-  public videoYoutube;
 
   iniciarModificarProducto() {
+    this.Imagenes_Producto = [[]];
+    this.imagenes = [];
+    this.Variantes=[];
+    this.data = [];
+    this.videoYoutube = "";
+    this.categoriasSeleccionadas = new Set();
     this.Oferta.Iva = this.identidadProducto.IVA;
     this.Oferta.Garantia = this.identidadProducto.GARANTIA;
     this.Producto.Cod_Producto = this.identidadProducto.PRODUCTO.COD_PRODUCTO;
@@ -119,7 +124,7 @@ export class ModificarProductoComponent implements OnInit {
     this.Producto.Detalle_Producto = this.identidadProducto.PRODUCTO.DETALLE_PRODUCTO;
     this.Producto.Marca = this.identidadProducto.PRODUCTO.MARCA;
     this.Producto.Rastrear_Stock = this.identidadProducto.PRODUCTO.LLEVAR_STOCK;
-    this.Producto.Vender_Sin_Stoc = this.identidadProducto.PRODUCTO.VENDER_SIN_STOCK;
+    this.Producto.Vender_Sin_Stock = this.identidadProducto.PRODUCTO.VENDER_SIN_STOCK;
     this.Producto.Condicion = this.identidadProducto.PRODUCTO.CONDICION;
     this.Producto.Peso_Producto = this.identidadProducto.PRODUCTO.PESO_PRODUCTO;
 
@@ -129,13 +134,12 @@ export class ModificarProductoComponent implements OnInit {
     let v = this.identidadProducto.PRODUCTO.VARIANTEs;
     for (let i in v) {
       this.Imagenes_Producto.push([]);
-      this.imagenes.push([]);
+     this.imagenes.push([]);
       this.vectorBanderaAgregarImagen.push(true);
-      this.Variantes.push(new Variante(v[i].COLOR, v[i].TALLA, v[i].MATERIAL, v[i].PRECIO_UNITARIO, v[i].STOCK, v[i].COD_UNIDAD));
+      debugger
+      this.Variantes.push(new Variante(v[i].COLOR, v[i].TALLA, v[i].MATERIAL, v[i].PRECIO_UNITARIO, v[i].STOCK, v[i].MEDIDA));
 
       for (let j in v[i].IMAGEN_PRODUCTOs) {
-        debugger;
-        console.log("tipo", v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN)
         if (v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN != "video/mp4" && v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN != "youtube") {
           this.Imagenes_Producto[i].push(new Imagen_Producto(v[i].IMAGEN_PRODUCTOs[j].NOMBRE_IMAGEN, v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN, v[i].IMAGEN_PRODUCTOs[j].IMAGEN, v[i].IMAGEN_PRODUCTOs[j].TAMANIO_IMAGEN));
           this.imagenes[i][j] = 'http://localhost:3977/' + v[i].IMAGEN_PRODUCTOs[j].IMAGEN
@@ -248,6 +252,7 @@ export class ModificarProductoComponent implements OnInit {
             if (this.imagenes[indice] != null)
               this.imagenes[indice].push(event.target.result);
             document.forms["form"].reset();
+
           }
           await reader.readAsDataURL(eventEntrante.target.files[i]);
         }
@@ -371,7 +376,6 @@ export class ModificarProductoComponent implements OnInit {
   }
 
   public agregarOpcionesProducto() {
-
     this.vectorBanderaAgregarImagen.push(false);
     this.Variantes.push(new Variante(null, null, null, null, 1, "unidades"));
     this.Imagenes_Producto.push([]);
@@ -379,6 +383,14 @@ export class ModificarProductoComponent implements OnInit {
     console.log("asdasd");
   }
 
+  public quitarImagenes(indice: any, imagen) {
+    this.imagenes[indice].splice(imagen, 1);
+    document.forms["form"].reset();
+    this.Imagenes_Producto[indice].splice(imagen, 1);
+    console.log("vector imagenes", this.imagenes[indice]);
+    if (this.imagenes[indice].length == 0)
+      this.vectorBanderaAgregarImagen[indice] = false;
+  }
 
   mensageError(mensaje) {
     Swal.fire({
