@@ -185,7 +185,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     if (fileList.length > 0) {
       this.banderaAnimacionVideo = true;
       let file: File = fileList[0];
-      this.videoPorGuardar = new Imagen_Producto(file.name, file.type, event.target.files[0], file.size);
+      this.videoPorGuardar = new Imagen_Producto(file.name, 'video', event.target.files[0], file.size);
 
       /*  console.log('video seleccionado', file);*/
       if (file.size < 150000000) {

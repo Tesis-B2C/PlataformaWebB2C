@@ -154,12 +154,12 @@ export class ModificarProductoComponent implements OnInit {
       this.Variantes[i].Num_Variante = v[i].NUM_VARIANTE;
       for (let j in v[i].IMAGEN_PRODUCTOs) {
 
-        if (v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN != "video/mp4" && v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN != "youtube") {
+        if (v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN != "video" && v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN != "youtube") {
           this.Imagenes_Producto[i].push(new Imagen_Producto(v[i].IMAGEN_PRODUCTOs[j].NOMBRE_IMAGEN, v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN, v[i].IMAGEN_PRODUCTOs[j].IMAGEN, v[i].IMAGEN_PRODUCTOs[j].TAMANIO_IMAGEN));
           this.Imagenes_Producto[i][j].Id_Imagen = v[i].IMAGEN_PRODUCTOs[j].ID_IMAGEN;
           this.Imagenes_Producto[i][j].Estado_Imagen = 0;
           this.imagenes[i][j] = 'http://localhost:3977/' + v[i].IMAGEN_PRODUCTOs[j].IMAGEN
-        } else if (v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN == "video/mp4") {
+        } else if (v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN == "video") {
           this.data.video = 'http://localhost:3977/' + v[i].IMAGEN_PRODUCTOs[j].IMAGEN;
           this.videoPorGuardar = new Imagen_Producto(v[i].IMAGEN_PRODUCTOs[j].NOMBRE_IMAGEN, v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN, v[i].IMAGEN_PRODUCTOs[j].IMAGEN, v[i].IMAGEN_PRODUCTOs[j].TAMANIO_IMAGEN);
           this.videoPorGuardar.Id_Imagen = v[i].IMAGEN_PRODUCTOs[j].ID_IMAGEN;
@@ -446,20 +446,22 @@ export class ModificarProductoComponent implements OnInit {
   }
 
   public borrarOpcionesProducto(pocicion: number) {
- debugger;
-    if (this.Variantes.filter(v=>v.Estado_Variante==2).length < this.Variantes.length-1) {
+    debugger;
+    if (this.Variantes.filter(v => v.Estado_Variante == 2).length < this.Variantes.length - 1) {
       if (this.Variantes[pocicion].Estado_Variante == 1) {
         this.Variantes.splice(pocicion, 1);
-       // this.vectorBanderaAgregarImagen[pocicion] = false;
-
-      }else if(this.Variantes[pocicion].Estado_Variante == 0) {
-       // this.vectorBanderaAgregarImagen[pocicion] = false;
+        this.vectorBanderaAgregarImagen[pocicion] = false;
+        this.Imagenes_Producto[pocicion] = [];
+        this.imagenes[pocicion] = [];
+      } else if (this.Variantes[pocicion].Estado_Variante == 0) {
+        this.vectorBanderaAgregarImagen[pocicion] = false;
         this.Variantes[pocicion].Estado_Variante = 2;
 
       }
     }
   }
 
+ 
   categoriasEnviar = [];
 
   public async guardarProducto() {
