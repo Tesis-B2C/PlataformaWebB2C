@@ -164,7 +164,7 @@ export class ModificarProductoComponent implements OnInit {
           this.videoPorGuardar = new Imagen_Producto(v[i].IMAGEN_PRODUCTOs[j].NOMBRE_IMAGEN, v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN, v[i].IMAGEN_PRODUCTOs[j].IMAGEN, v[i].IMAGEN_PRODUCTOs[j].TAMANIO_IMAGEN);
           this.videoPorGuardar.Id_Imagen = v[i].IMAGEN_PRODUCTOs[j].ID_IMAGEN;
           this.videoPorGuardar.Estado_Imagen = 3;
-          this.videoPorGuardar.path=v[i].IMAGEN_PRODUCTOs[j].IMAGEN;
+          this.videoPorGuardar.path = v[i].IMAGEN_PRODUCTOs[j].IMAGEN;
         } else if (v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN == "youtube") {
           this.direccionVideoYoutube = v[i].IMAGEN_PRODUCTOs[j].IMAGEN;
           this.videoPorGuardar = new Imagen_Producto('Video', 'youtube', this.direccionVideoYoutube, 0);
@@ -323,12 +323,12 @@ export class ModificarProductoComponent implements OnInit {
     if (fileList.length > 0) {
       this.banderaAnimacionVideo = true;
       let file: File = fileList[0];
-      this.videoPorGuardar.Nombre_Imagen=file.name;
-      this.videoPorGuardar.Tipo_Imagen= file.type;
-      this.videoPorGuardar.Imagen=event.target.files[0];
-      this.videoPorGuardar.Tamnio_Imagen= file.size;
-     // this.videoPorGuardar = new Imagen_Producto(file.name, file.type, event.target.files[0], file.size);
-    //  this.videoPorGuardar.Estado_Imagen=1;
+      this.videoPorGuardar.Nombre_Imagen = file.name;
+      this.videoPorGuardar.Tipo_Imagen = file.type;
+      this.videoPorGuardar.Imagen = event.target.files[0];
+      this.videoPorGuardar.Tamnio_Imagen = file.size;
+      // this.videoPorGuardar = new Imagen_Producto(file.name, file.type, event.target.files[0], file.size);
+      //  this.videoPorGuardar.Estado_Imagen=1;
       /*  console.log('video seleccionado', file);*/
       if (file.size < 150000000) {
         this.banderaMensajeMaximoVideo = false
@@ -374,7 +374,7 @@ export class ModificarProductoComponent implements OnInit {
     video = (results === null) ? url : results[1];
     //delete this.videoPorGuardar;
     this.videoYoutube = this._sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + video);
-   // delete this.videoPorGuardar;
+    // delete this.videoPorGuardar;
     this.data.video = "";
   }
 
@@ -423,21 +423,22 @@ export class ModificarProductoComponent implements OnInit {
 
   public agregarOpcionesProducto() {
     this.vectorBanderaAgregarImagen.push(false);
-    this.Variantes.push(new Variante(null, null, null, null, 1, "unidades", 0));
+    this.Variantes.push(new Variante(null, null, null, null, 1, "unidades", 1));
     this.Imagenes_Producto.push([]);
     this.imagenes.push([]);
     console.log("asdasd");
   }
 
   public quitarImagenes(indice: any, imagen) {
-
-    if (this.Imagenes_Producto[indice][this.Imagenes_Producto[indice].length - 1].Estado_Imagen == 1) {
+    debugger;
+    if (this.Imagenes_Producto[indice][imagen].Estado_Imagen == 1) {
       this.imagenes[indice].splice(imagen, 1);
       document.forms["form"].reset();
       this.Imagenes_Producto[indice].splice(imagen, 1);
       console.log("vector imagenes", this.imagenes[indice]);
-    } else if (this.Imagenes_Producto[indice][this.Imagenes_Producto[indice].length - 1].Estado_Imagen == 0) {
-      this.Imagenes_Producto[indice][this.Imagenes_Producto[indice].length - 1].Estado_Imagen = 2;
+    } else if (this.Imagenes_Producto[indice][imagen].Estado_Imagen == 0) {
+      this.Imagenes_Producto[indice][imagen].Estado_Imagen = 2;
+      this.imagenes[indice].splice(imagen, 1);
     }
 
     if (this.imagenes[indice].length == 0)
@@ -445,12 +446,18 @@ export class ModificarProductoComponent implements OnInit {
   }
 
   public borrarOpcionesProducto(pocicion: number) {
+ debugger;
+    if (this.Variantes.filter(v=>v.Estado_Variante==2).length < this.Variantes.length-1) {
+      if (this.Variantes[pocicion].Estado_Variante == 1) {
+        this.Variantes.splice(pocicion, 1);
+       // this.vectorBanderaAgregarImagen[pocicion] = false;
 
-    if (this.Variantes.length > 1) {
-      this.Variantes.splice(pocicion, 1);
-      this.vectorBanderaAgregarImagen[pocicion + 1] = false;
+      }else if(this.Variantes[pocicion].Estado_Variante == 0) {
+       // this.vectorBanderaAgregarImagen[pocicion] = false;
+        this.Variantes[pocicion].Estado_Variante = 2;
+
+      }
     }
-
   }
 
   categoriasEnviar = [];
@@ -458,11 +465,11 @@ export class ModificarProductoComponent implements OnInit {
   public async guardarProducto() {
     try {
       if (this.videoYoutube) {
-       // this.videoYoutubeGuardar = new Imagen_Producto('Video', 'youtube', this.direccionVideoYoutube, 0);
-        this.videoPorGuardar.Nombre_Imagen='Video';
-        this.videoPorGuardar.Tipo_Imagen= 'youtube';
-        this.videoPorGuardar.Imagen=this.direccionVideoYoutube;
-        this.videoPorGuardar.Tamnio_Imagen= 0;
+        // this.videoYoutubeGuardar = new Imagen_Producto('Video', 'youtube', this.direccionVideoYoutube, 0);
+        this.videoPorGuardar.Nombre_Imagen = 'Video';
+        this.videoPorGuardar.Tipo_Imagen = 'youtube';
+        this.videoPorGuardar.Imagen = this.direccionVideoYoutube;
+        this.videoPorGuardar.Tamnio_Imagen = 0;
         debugger;
         this.Imagenes_Producto[0].push(this.videoPorGuardar);
         //this.videoPorGuardar = "";
@@ -475,7 +482,7 @@ export class ModificarProductoComponent implements OnInit {
       }
       console.log("oferta", this.Oferta, "producto", this.Producto, "Variantes", this.Variantes, "Imagen producto", this.Imagenes_Producto, "video producto", this.videoPorGuardar, "categoria", this.categoriasSeleccionadas)
 
-      let response = await this._productoServicio.updateProducto(this.identidadProducto.ID_OFERTA,this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
+      let response = await this._productoServicio.updateProducto(this.identidadProducto.ID_OFERTA, this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
       // this.mensageCorrecto(response.data);
     } catch
       (e) {

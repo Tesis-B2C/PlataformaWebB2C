@@ -74,7 +74,7 @@ export class ProductoServicio {
     for (let i = 0; i < variantes.length; i++) {
       for (let j = 0; j < imagenes[i].length; j++) {
         debugger;
-        if (imagenes[i][j].Tipo_Imagen != 'youtube' && imagenes[i][j].Estado_Imagen==1) {
+        if (imagenes[i][j].Imagen.size) {
           console.log("antes de enviar imagenes", imagenes[i][j].Imagen)
           fd.append("imagenes", imagenes[i][j].Imagen);
         }
