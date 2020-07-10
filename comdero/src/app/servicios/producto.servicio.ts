@@ -81,7 +81,7 @@ export class ProductoServicio {
       }
     }
 
-    return this._http.put<objeto>(this.url + "updateProducto/"+Id_Oferta, fd,);
+    return this._http.put<objeto>(this.url + "updateProducto/" + Id_Oferta, fd,);
   }
 
 }

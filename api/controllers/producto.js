@@ -10,6 +10,7 @@ const moment = require('moment');
 const db = require('../database/db');
 const fs = require('fs-extra');
 const path = require('path');
+
 //const {Op} = require("sequelize");
 
 async function saveProducto(req, res) {
@@ -299,7 +300,7 @@ async function updateProducto(req, res) {
                 });
                 vvariantesGuardas.push(variantesGuardadas.dataValues);
             } else if (v.Estado_Variante == 2) {
-                let variantesDestruidas = await Variante.update({ESTADO_VARIANTE:2},{
+                let variantesDestruidas = await Variante.update({ESTADO_VARIANTE: 2}, {
                     where: {NUM_VARIANTE: v.Num_Variante},
                     transaction: t
                 });
@@ -325,11 +326,9 @@ async function updateProducto(req, res) {
                         where: {ID_IMAGEN: vimagenes[i][j].Id_Imagen},
                         transaction: t
                     })
-
                 }
             }
         }
-
         for (let i = 0; i < vvariantesGuardas.length; i++) {
             for (let j = 0; j < vimagenes[i].length; j++) {
                 console.log(vimagenes[i][j].Tamanio_Imagen);
@@ -341,7 +340,6 @@ async function updateProducto(req, res) {
                         TIPO_IMAGEN: vimagenes[i][j].Tipo_Imagen,
                         IMAGEN: vimagenes[i][j].Imagen,
                         TAMANIO_IMAGEN: vimagenes[i][j].Tamanio_Imagen,
-
                     }, {
                         where: {ID_IMAGEN: vimagenes[i][j].Id_Imagen},
                         transaction: t
@@ -357,19 +355,6 @@ async function updateProducto(req, res) {
                         transaction: t
                     });
                 }
-                /*else if (vimagenes[i][j].Estado_Imagen == 3 && num == null) {
-                    await Imagen_Producto.create({
-                        NUM_VARIANTE: vvariantesGuardas[i].NUM_VARIANTE,
-                        NOMBRE_IMAGEN: vimagenes[i][j].Nombre_Imagen,
-                        TIPO_IMAGEN: vimagenes[i][j].Tipo_Imagen,
-                        IMAGEN: vimagenes[i][j].Imagen,
-                        TAMANIO_IMAGEN: vimagenes[i][j].Tamanio_Imagen,
-
-                    }, {
-                        transaction: t
-                    });
-
-                }*/
             }
         }
 

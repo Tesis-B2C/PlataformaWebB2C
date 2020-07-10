@@ -177,6 +177,7 @@ export class ModificarProductoComponent implements OnInit {
           this.auxi = i;
           this.auxj = j;
           this.direccionVideoYoutube = v[i].IMAGEN_PRODUCTOs[j].IMAGEN;
+          this.getVideoIframeInicio();
           this.videoPorGuardar = new Imagen_Producto('Video', 'youtube', this.direccionVideoYoutube, 0);
           this.videoPorGuardar.Id_Imagen = v[i].IMAGEN_PRODUCTOs[j].ID_IMAGEN;
           this.videoPorGuardar.Estado_Imagen = 0;
@@ -187,10 +188,9 @@ export class ModificarProductoComponent implements OnInit {
 
     }
 
-
   }
 
-  abrirModalCategorias(content) {
+  public abrirModalCategorias(content) {
     this.modalService.open(content, {scrollable: true});
   }
 
@@ -295,8 +295,6 @@ export class ModificarProductoComponent implements OnInit {
     }
     if (eventEntrante.target.files && eventEntrante.target.files[0]) {
       var filesAmount = eventEntrante.target.files.length;
-
-
       this.vectorBanderaAgregarImagen[indice] = true;
       if (filesAmount > 6) {
         this.banderaMensajeMaximoImagenes = true;
@@ -320,7 +318,10 @@ export class ModificarProductoComponent implements OnInit {
           document.forms["form"].reset();
           this.vectorBanderaAgregarImagen[indice] = false;
           this.banderaMensajeMaximoImagenes = true;
-        } else if (this.Imagenes_Producto[indice].length == 6) {
+        } else if (this.Imagenes_Producto[0].length == 7) {
+          this.banderaMensajeMaximoImagenes = false
+          this.banderaMaximoImagenes = false;
+        }else if (this.Imagenes_Producto[indice].length == 6  && indice!=0) {
           this.banderaMensajeMaximoImagenes = false
           this.banderaMaximoImagenes = false;
         }
@@ -329,7 +330,6 @@ export class ModificarProductoComponent implements OnInit {
   }
 
   public subirVideo(event) {
-
     let fileList: FileList = event.target.files;
     this.data = {};
     if (fileList.length > 0) {
@@ -376,6 +376,23 @@ export class ModificarProductoComponent implements OnInit {
 
   public abrirModalVideoYoutube(content) {
     this.modalService.open(content, {centered: true, size: 'md'});
+  }
+
+
+
+  public getVideoIframeInicio() {
+    let url = this.direccionVideoYoutube;
+    var video, results;
+
+    if (url === null) {
+      return '';
+    }
+    results = url.match('[\\?&]v=([^&#]*)');
+    video = (results === null) ? url : results[1];
+    //delete this.videoPorGuardar;
+    this.videoYoutube = this._sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + video);
+    // delete this.videoPorGuardar;
+    this.data.video = "";
   }
 
 
@@ -489,7 +506,7 @@ export class ModificarProductoComponent implements OnInit {
 
   public async guardarProducto() {
     try {
-
+      debugger;
       if (this.auxi == null) {
         this.Imagenes_Producto[0].push(this.videoPorGuardar);
       }
