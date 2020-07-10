@@ -205,6 +205,7 @@ async function getProducto(req, res) {
 async function updateProducto(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
     const vvariantesGuardas = [];
+    const vimagenesporborrar = [];
     try {
         let producto = JSON.parse(req.body.producto);
         let oferta = JSON.parse(req.body.oferta);
@@ -318,6 +319,7 @@ async function updateProducto(req, res) {
                         }
                     }
                 } else if (vimagenes[i][j].Estado_Imagen == 2) {
+                    vimagenesporborrar.push(vimagenes[i][j].Imagen);
                     /*  if (fs.exists(path.resolve(vimagenes[i][j].Imagen))) {
                           console.log('existe');
                           await fs.unlink(path.resolve(vimagenes[i][j].Imagen));
@@ -335,6 +337,7 @@ async function updateProducto(req, res) {
                 let num = vvariantesGuardas[i].NUM_VARIANTE;
 
                 if (vimagenes[i][j].Estado_Imagen == 1 && (vimagenes[i][j].Tipo_Imagen == 'video' || vimagenes[i][j].Tipo_Imagen == 'youtube')) {
+                    vimagenesporborrar.push(vimagenes[i][j].path);
                     await Imagen_Producto.update({
                         NOMBRE_IMAGEN: vimagenes[i][j].Nombre_Imagen,
                         TIPO_IMAGEN: vimagenes[i][j].Tipo_Imagen,
@@ -359,6 +362,13 @@ async function updateProducto(req, res) {
         }
 
         if (ofertaActualizada && productoActualizado) {
+            console.log("vector imagene spor borrar", vimagenesporborrar);
+            for (let ipb of vimagenesporborrar) {
+                if (fs.exists(path.resolve(ipb))) {
+                    console.log('existe');
+                    await fs.unlink(path.resolve(ipb));
+                }
+            }
             res.status(200).send({
                 message: "Su producto ha sido registrado  exitosamente"
             });
