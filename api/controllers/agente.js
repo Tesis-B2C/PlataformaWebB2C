@@ -295,7 +295,7 @@ async function actualizarAgenteIdentity(req, res) {
     try {
         let agente = await AGENTE.findOne({
             where: {ESTADO: '0', CORREO: busqueda},
-            include: {model: DPA, include: {model: DPA, as: 'DPAP', equired: true}}
+            include: {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}
         });
 
         if (agente) {

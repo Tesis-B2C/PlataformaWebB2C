@@ -10,6 +10,7 @@ const moment = require('moment');
 const db = require('../database/db');
 const fs = require('fs-extra');
 const path = require('path');
+//const {Op} = require("sequelize");
 
 async function saveProducto(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
@@ -73,7 +74,7 @@ async function saveProducto(req, res) {
                 PRECIO_UNITARIO: v.Precio_Unitario,
                 STOCK: v.Stock,
                 MEDIDA: v.Cod_Unidad,
-                ESTADO_VARIANTE:v.Estado_Variante
+                ESTADO_VARIANTE: v.Estado_Variante
             }, {
                 transaction: t
             });
@@ -204,7 +205,7 @@ async function updateProducto(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
     const vvariantesGuardas = [];
     try {
-       let producto = JSON.parse(req.body.producto);
+        let producto = JSON.parse(req.body.producto);
         let oferta = JSON.parse(req.body.oferta);
         let variantes = JSON.parse(req.body.variantes);
         let vimagenes = JSON.parse(req.body.vimagenes);
@@ -212,37 +213,50 @@ async function updateProducto(req, res) {
         console.log("imagenes", req.files);
         console.log("objetos", oferta, producto, variantes, vimagenes, categorias);
 
-     /*   let ofertaGuardada = await Oferta.create({
+        let ofertaActualizada = await Oferta.update({
                 NUM_TIENDA: oferta.Num_Tienda,
                 IVA: oferta.Iva,
                 FECHA_CREACION: moment(),
                 GARANTIA: oferta.Garantia,
                 ESTADO_OFERTA: oferta.Estado_Oferta,
-            },
-            {
-                transaction: t
-            });
+            }, {
+                where: {ID_OFERTA: req.params.id},
 
-        let productoGuardado = await Producto.create({
-                COD_PRODUCTO: producto.Cod_Producto,
-                ID_OFERTA: ofertaGuardada.dataValues.ID_OFERTA,
-                NOMBRE_PRODUCTO: producto.Nombre_Producto,
-                DESCRIPCION_PRODUCTO: producto.Descripcion_Producto,
-                DETALLE_PRODUCTO: producto.Detalle_Producto,
-                MARCA: producto.Marca,
-                LLEVAR_STOCK: producto.Rastrear_Stock,
-                VENDER_SIN_STOCK: producto.Vender_Sin_Stock,
-                CONDICION: producto.Condicion,
-                PESO_PRODUCTO: producto.Peso_Producto
-            },
-            {
+                transaction: t
+            }
+        );
+
+        let productoActualizado = await Producto.update({
+            COD_PRODUCTO: producto.Cod_Producto,
+            ID_OFERTA: req.params.id,
+            NOMBRE_PRODUCTO: producto.Nombre_Producto,
+            DESCRIPCION_PRODUCTO: producto.Descripcion_Producto,
+            DETALLE_PRODUCTO: producto.Detalle_Producto,
+            MARCA: producto.Marca,
+            LLEVAR_STOCK: producto.Rastrear_Stock,
+            VENDER_SIN_STOCK: producto.Vender_Sin_Stock,
+            CONDICION: producto.Condicion,
+            PESO_PRODUCTO: producto.Peso_Producto
+        }, {
+            where: {ID_PRODUCTO: producto.Id_Producto},
+
+            transaction: t
+        });
+
+
+        for (const c of categorias) {
+            await Producto_Categoria.destroy({
+                where: {ID_PRODUCTO: producto.Id_Producto},
+
                 transaction: t
             });
+        }
+
 
         for (const c of categorias) {
             await Producto_Categoria.create({
-                    ID_PRODUCTO: productoGuardado.dataValues.ID_PRODUCTO,
-                    COD_PRODUCTO: productoGuardado.dataValues.COD_PRODUCTO,
+                    ID_PRODUCTO: producto.Id_Producto,
+                    COD_PRODUCTO: producto.Cod_Producto,
                     ID_CATEGORIA: c,
                 },
                 {
@@ -251,52 +265,115 @@ async function updateProducto(req, res) {
 
         }
 
-
         for (let v of variantes) {
-            let variantesGuardadas = await Variante.create({
-                ID_PRODUCTO: productoGuardado.dataValues.ID_PRODUCTO,
-                COD_PRODUCTO: productoGuardado.dataValues.COD_PRODUCTO,
-                COLOR: v.Color,
-                TALLA: v.Talla,
-                MATERIAL: v.Material,
-                PRECIO_UNITARIO: v.Precio_Unitario,
-                STOCK: v.Stock,
-                MEDIDA: v.Cod_Unidad,
-                ESTADO_VARIANTE:v.Estado_Variante
-            }, {
-                transaction: t
-            });
-            vvariantesGuardas.push(variantesGuardadas);
-
-        }
-
-        for (let i = 0; i < vvariantesGuardas.length; i++) {
-            for (let j = 0; j < vimagenes[i].length; j++) {
-                for (let h = 0; h < req.files.length; h++) {
-                    if (vimagenes[i][j].Nombre_Imagen == req.files[h].originalname) {
-                        vimagenes[i][j].Imagen = req.files[h].path;
-                    }
-                }
-            }
-        }
-        for (let i = 0; i < vvariantesGuardas.length; i++) {
-            for (let j = 0; j < vimagenes[i].length; j++) {
-                console.log(vimagenes[i][j].Tamanio_Imagen);
-                await Imagen_Producto.create({
-                    NUM_VARIANTE: vvariantesGuardas[i].dataValues.NUM_VARIANTE,
-                    NOMBRE_IMAGEN: vimagenes[i][j].Nombre_Imagen,
-                    TIPO_IMAGEN: vimagenes[i][j].Tipo_Imagen,
-                    IMAGEN: vimagenes[i][j].Imagen,
-                    TAMANIO_IMAGEN: vimagenes[i][j].Tamanio_Imagen,
-
+            if (v.Estado_Variante == 0) {
+                let variantesActualizadas = await Variante.update({
+                    ID_PRODUCTO: producto.Id_Producto,
+                    COD_PRODUCTO: producto.Cod_Producto,
+                    COLOR: v.Color,
+                    TALLA: v.Talla,
+                    MATERIAL: v.Material,
+                    PRECIO_UNITARIO: v.Precio_Unitario,
+                    STOCK: v.Stock,
+                    MEDIDA: v.Cod_Unidad,
+                    ESTADO_VARIANTE: v.Estado_Variante
                 }, {
+                    where: {NUM_VARIANTE: v.Num_Variante},
+                    transaction: t
+                });
+                v.NUM_VARIANTE = v.Num_Variante;
+                vvariantesGuardas.push(v);
+            } else if (v.Estado_Variante == 1) {
+                let variantesGuardadas = await Variante.create({
+                    ID_PRODUCTO: producto.Id_Producto,
+                    COD_PRODUCTO: producto.Cod_Producto,
+                    COLOR: v.Color,
+                    TALLA: v.Talla,
+                    MATERIAL: v.Material,
+                    PRECIO_UNITARIO: v.Precio_Unitario,
+                    STOCK: v.Stock,
+                    MEDIDA: v.Cod_Unidad,
+                    ESTADO_VARIANTE: 0
+                }, {
+                    transaction: t
+                });
+                vvariantesGuardas.push(variantesGuardadas.dataValues);
+            } else if (v.Estado_Variante == 2) {
+                let variantesDestruidas = await Variante.update({ESTADO_VARIANTE:2},{
+                    where: {NUM_VARIANTE: v.Num_Variante},
                     transaction: t
                 });
             }
         }
 
 
-        if (ofertaGuardada && productoGuardado) {
+        for (let i = 0; i < vvariantesGuardas.length; i++) {
+            for (let j = 0; j < vimagenes[i].length; j++) {
+
+                if (vimagenes[i][j].Estado_Imagen == 1) {
+                    for (let h = 0; h < req.files.length; h++) {
+                        if (vimagenes[i][j].Nombre_Imagen == req.files[h].originalname) {
+                            vimagenes[i][j].Imagen = req.files[h].path;
+                        }
+                    }
+                } else if (vimagenes[i][j].Estado_Imagen == 2) {
+                    /*  if (fs.exists(path.resolve(vimagenes[i][j].Imagen))) {
+                          console.log('existe');
+                          await fs.unlink(path.resolve(vimagenes[i][j].Imagen));
+                      }*/
+                    await Imagen_Producto.destroy({
+                        where: {ID_IMAGEN: vimagenes[i][j].Id_Imagen},
+                        transaction: t
+                    })
+
+                }
+            }
+        }
+
+        for (let i = 0; i < vvariantesGuardas.length; i++) {
+            for (let j = 0; j < vimagenes[i].length; j++) {
+                console.log(vimagenes[i][j].Tamanio_Imagen);
+                let num = vvariantesGuardas[i].NUM_VARIANTE;
+
+                if (vimagenes[i][j].Estado_Imagen == 1 && (vimagenes[i][j].Tipo_Imagen == 'video' || vimagenes[i][j].Tipo_Imagen == 'youtube')) {
+                    await Imagen_Producto.update({
+                        NOMBRE_IMAGEN: vimagenes[i][j].Nombre_Imagen,
+                        TIPO_IMAGEN: vimagenes[i][j].Tipo_Imagen,
+                        IMAGEN: vimagenes[i][j].Imagen,
+                        TAMANIO_IMAGEN: vimagenes[i][j].Tamanio_Imagen,
+
+                    }, {
+                        where: {ID_IMAGEN: vimagenes[i][j].Id_Imagen},
+                        transaction: t
+                    });
+                } else if (vimagenes[i][j].Estado_Imagen == 1) {
+                    await Imagen_Producto.create({
+                        NUM_VARIANTE: vvariantesGuardas[i].NUM_VARIANTE,
+                        NOMBRE_IMAGEN: vimagenes[i][j].Nombre_Imagen,
+                        TIPO_IMAGEN: vimagenes[i][j].Tipo_Imagen,
+                        IMAGEN: vimagenes[i][j].Imagen,
+                        TAMANIO_IMAGEN: vimagenes[i][j].Tamanio_Imagen,
+                    }, {
+                        transaction: t
+                    });
+                }
+                /*else if (vimagenes[i][j].Estado_Imagen == 3 && num == null) {
+                    await Imagen_Producto.create({
+                        NUM_VARIANTE: vvariantesGuardas[i].NUM_VARIANTE,
+                        NOMBRE_IMAGEN: vimagenes[i][j].Nombre_Imagen,
+                        TIPO_IMAGEN: vimagenes[i][j].Tipo_Imagen,
+                        IMAGEN: vimagenes[i][j].Imagen,
+                        TAMANIO_IMAGEN: vimagenes[i][j].Tamanio_Imagen,
+
+                    }, {
+                        transaction: t
+                    });
+
+                }*/
+            }
+        }
+
+        if (ofertaActualizada && productoActualizado) {
             res.status(200).send({
                 message: "Su producto ha sido registrado  exitosamente"
             });
@@ -306,17 +383,17 @@ async function updateProducto(req, res) {
             res.status(404).send({
                 message: "Al parecer hubo probelmas con el registro del producto"
             });
-        }*/
+        }
 
     } catch (err) {
-       /* for (let h = 0; h < req.files.length; h++) {
+        for (let h = 0; h < req.files.length; h++) {
             if (fs.exists(path.resolve(req.files[h].path))) {
                 console.log('existe');
                 await fs.unlink(path.resolve(req.files[h].path));
             }
         }
 
-        await t.rollback();*/
+        await t.rollback();
         res.status(500).send({
             message: 'error:' + err
         });

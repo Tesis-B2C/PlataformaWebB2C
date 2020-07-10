@@ -91,6 +91,7 @@ export class ModificarProductoComponent implements OnInit {
     this.Oferta = new Oferta(null, null, null, null);
     this.Producto = new Producto(null, null, null, null, null, null, null, null, null);
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
+    this.videoPorGuardar = new Imagen_Producto(null, null, null, null)
   }
 
   async ngOnInit() {
@@ -115,6 +116,8 @@ export class ModificarProductoComponent implements OnInit {
     }
   }
 
+  public auxi = null;
+  public auxj = null;
 
   iniciarModificarProducto() {
     this.Imagenes_Producto = [];
@@ -160,16 +163,24 @@ export class ModificarProductoComponent implements OnInit {
           this.Imagenes_Producto[i][j].Estado_Imagen = 0;
           this.imagenes[i][j] = 'http://localhost:3977/' + v[i].IMAGEN_PRODUCTOs[j].IMAGEN
         } else if (v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN == "video") {
+          this.imagenes[i][j]="video"
+          this.auxi = i;
+          this.auxj = j;
           this.data.video = 'http://localhost:3977/' + v[i].IMAGEN_PRODUCTOs[j].IMAGEN;
           this.videoPorGuardar = new Imagen_Producto(v[i].IMAGEN_PRODUCTOs[j].NOMBRE_IMAGEN, v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN, v[i].IMAGEN_PRODUCTOs[j].IMAGEN, v[i].IMAGEN_PRODUCTOs[j].TAMANIO_IMAGEN);
           this.videoPorGuardar.Id_Imagen = v[i].IMAGEN_PRODUCTOs[j].ID_IMAGEN;
-          this.videoPorGuardar.Estado_Imagen = 3;
+          this.videoPorGuardar.Estado_Imagen = 0;
           this.videoPorGuardar.path = v[i].IMAGEN_PRODUCTOs[j].IMAGEN;
+          this.Imagenes_Producto[i].push(this.videoPorGuardar);
         } else if (v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN == "youtube") {
+          this.imagenes[i][j]="video"
+          this.auxi = i;
+          this.auxj = j;
           this.direccionVideoYoutube = v[i].IMAGEN_PRODUCTOs[j].IMAGEN;
           this.videoPorGuardar = new Imagen_Producto('Video', 'youtube', this.direccionVideoYoutube, 0);
           this.videoPorGuardar.Id_Imagen = v[i].IMAGEN_PRODUCTOs[j].ID_IMAGEN;
-          this.videoPorGuardar.Estado_Imagen = 3;
+          this.videoPorGuardar.Estado_Imagen = 0;
+          this.Imagenes_Producto[i].push(this.videoPorGuardar);
         }
       }
       console.log("variantes", this.imagenes)
@@ -293,6 +304,7 @@ export class ModificarProductoComponent implements OnInit {
         for (let i = 0; i < filesAmount; i++) {
           this.Imagenes_Producto[indice].push(new Imagen_Producto(eventEntrante.target.files[i].name, eventEntrante.target.files[i].type, eventEntrante.target.files[i], eventEntrante.target.files[i].size));
           this.Imagenes_Producto[indice][this.Imagenes_Producto[indice].length - 1].Estado_Imagen = 1;
+          debugger;
           var reader = new FileReader();
           reader.onload = (event: any) => {
             if (this.imagenes[indice] != null)
@@ -324,9 +336,13 @@ export class ModificarProductoComponent implements OnInit {
       this.banderaAnimacionVideo = true;
       let file: File = fileList[0];
       this.videoPorGuardar.Nombre_Imagen = file.name;
-      this.videoPorGuardar.Tipo_Imagen = file.type;
+      this.videoPorGuardar.Tipo_Imagen = 'video';
       this.videoPorGuardar.Imagen = event.target.files[0];
-      this.videoPorGuardar.Tamnio_Imagen = file.size;
+      this.videoPorGuardar.Tamanio_Imagen = file.size;
+      this.videoPorGuardar.Estado_Imagen = 1;
+      if (this.auxi != null) {
+        this.Imagenes_Producto[this.auxi][this.auxj] = this.videoPorGuardar;
+      }
       // this.videoPorGuardar = new Imagen_Producto(file.name, file.type, event.target.files[0], file.size);
       //  this.videoPorGuardar.Estado_Imagen=1;
       /*  console.log('video seleccionado', file);*/
@@ -374,6 +390,13 @@ export class ModificarProductoComponent implements OnInit {
     video = (results === null) ? url : results[1];
     //delete this.videoPorGuardar;
     this.videoYoutube = this._sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + video);
+    this.videoPorGuardar.Nombre_Imagen = 'Video';
+    this.videoPorGuardar.Tipo_Imagen = 'youtube';
+    this.videoPorGuardar.Imagen = this.direccionVideoYoutube;
+    this.videoPorGuardar.Estado_Imagen = 1;
+    if (this.auxi != null) {
+      this.Imagenes_Producto[this.auxi][this.auxj] = this.videoPorGuardar;
+    }
     // delete this.videoPorGuardar;
     this.data.video = "";
   }
@@ -438,7 +461,7 @@ export class ModificarProductoComponent implements OnInit {
       console.log("vector imagenes", this.imagenes[indice]);
     } else if (this.Imagenes_Producto[indice][imagen].Estado_Imagen == 0) {
       this.Imagenes_Producto[indice][imagen].Estado_Imagen = 2;
-      this.imagenes[indice].splice(imagen, 1);
+
     }
 
     if (this.imagenes[indice].length == 0)
@@ -461,21 +484,13 @@ export class ModificarProductoComponent implements OnInit {
     }
   }
 
- 
+
   categoriasEnviar = [];
 
   public async guardarProducto() {
     try {
-      if (this.videoYoutube) {
-        // this.videoYoutubeGuardar = new Imagen_Producto('Video', 'youtube', this.direccionVideoYoutube, 0);
-        this.videoPorGuardar.Nombre_Imagen = 'Video';
-        this.videoPorGuardar.Tipo_Imagen = 'youtube';
-        this.videoPorGuardar.Imagen = this.direccionVideoYoutube;
-        this.videoPorGuardar.Tamnio_Imagen = 0;
-        debugger;
-        this.Imagenes_Producto[0].push(this.videoPorGuardar);
-        //this.videoPorGuardar = "";
-      } else if (!this.videoYoutube) {
+
+      if (this.auxi == null) {
         this.Imagenes_Producto[0].push(this.videoPorGuardar);
       }
       this.categoriasEnviar = [];

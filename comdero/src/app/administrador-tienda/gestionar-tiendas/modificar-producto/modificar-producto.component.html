@@ -355,7 +355,7 @@
                     <div *ngFor='let url of imagenes[i]; index as j ' class="ml-1">
 
                       <div
-                        *ngIf="this.Imagenes_Producto[i][j].Estado_Imagen==0 || this.Imagenes_Producto[i][j].Estado_Imagen==1">
+                        *ngIf="(this.Imagenes_Producto[i][j].Estado_Imagen==0 || this.Imagenes_Producto[i][j].Estado_Imagen==1) && (this.Imagenes_Producto[i][j].Tipo_Imagen!='video' && this.Imagenes_Producto[i][j].Tipo_Imagen!='youtube') ">
                         <div class="col-auto card mt-2 px-0 pb-0">
                           <label style="border: none;  ">
                             <img [src]="url" class="px-0" height="140px" width="140px">
