@@ -89,9 +89,9 @@
                         [(ngModel)]="this.provinciaCasa"
                         [ngClass]="{'errorSelect': ProvinciaC.invalid && (ProvinciaC.dirty || ProvinciaC.touched),
           'satisfactorioSelect': ProvinciaC.valid && (ProvinciaC.dirty || ProvinciaC.touched)}"
-                        class=" tamanioInputs form-control" data-size="4" name="provinciaCasa" required>
+                        class=" tamanioInputs form-control" data-size="4" name="provinciaCasa">
                   <option disabled
-                          *ngIf="!this.ciudadesCasa || banderaEdicionDeshabilitadaCasa">{{this.provinciaCasa}}</option>
+                          *ngIf="!this.ciudadesCasa[0] || banderaEdicionDeshabilitadaCasa">{{this.provinciaCasa}}</option>
                   <option *ngFor="let provincia of this.provinciasCasa"
                           value="{{provincia.COD_DPA}}"> {{provincia.NOMBRE }}</option>
                 </select>
@@ -109,14 +109,13 @@
                         #CiudadC="ngModel" [(ngModel)]="this.ciudadCasa"
                         [ngClass]="{'errorSelect': CiudadC.invalid && (CiudadC.dirty || CiudadC.touched),
           'satisfactorioSelect': CiudadC.valid && (CiudadC.dirty || CiudadC.touched)}"
-                        class="tamanioInputs form-control" name="ciudadCasa" placeholder="" required>
-                  <option disabled
-                          *ngIf="!this.ciudadesCasa || banderaEdicionDeshabilitadaCasa">{{this.ciudadCasa}}</option>
+                        class="tamanioInputs form-control" name="ciudadCasa" placeholder="">
+                  <option disabled *ngIf="!this.ciudadesCasa[0] || banderaEdicionDeshabilitadaCasa">{{this.ciudadCasa}}</option>
                   <option value=""> Selecciona una...</option>
-                  <option *ngFor="let ciudad of this.ciudadesCasa"
+                  <option *ngFor="let ciudad of this.ciudadesCasa[0]"
                           value="{{ciudad.COD_DPA}}"> {{ciudad.NOMBRE }}</option>
                 </select>
-                <div *ngIf="CiudadC.invalid && (CiudadC.touched||CiudadC.dirty)">
+                <div *ngIf="CiudadC.invalid && (CiudadC.touched || CiudadC.dirty)">
                   <div *ngIf="CiudadC.errors.required">
                     <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                       Campo requerido.</p>
@@ -248,7 +247,7 @@
                         #CiudadN="ngModel" [(ngModel)]="this.ciudadNegocio[i]"
                         [ngClass]="{'errorSelect': CiudadN.invalid && (CiudadN.dirty || CiudadN.touched),
                     'satisfactorioSelect': CiudadN.valid && (CiudadN.dirty || CiudadN.touched)}"
-                        class="tamanioInputs form-control" name="ciudad{{i}}" placeholder="" required>
+                        class="tamanioInputs form-control" name="ciudad{{i}}" placeholder="">
                   <option disabled
                           *ngIf="!this.ciudades[i] || banderaEdicionDeshabilitadaNeg">{{this.ciudadNegocio[i]}}</option>
                   <option value="">Selecciona una...</option>
