@@ -104,7 +104,12 @@ body {
   display: block;
   background: #1a56e9;
 }
+
 body {
   height: 100vh !important;
   overflow: auto;
+}
+
+.errorHorario{
+  border: dashed  1px red;
 }

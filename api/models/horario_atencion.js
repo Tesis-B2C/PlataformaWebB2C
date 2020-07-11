@@ -1,14 +1,14 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 
-const Horario_Atencion = db.sequelize.define('Horario_Atencion', {
+const Horario_Atencion = db.sequelize.define('HORARIO_ATENCION', {
 
         ID_HORARIO_ATENCION:
             {
-                type: Sequelize.BIGINT,
                 primaryKey: true,
-                allowNull: false,
-                autoIncrement: true
+                type:Sequelize.BIGINT,
+                allowNull:false,
+                autoIncrement:true
             },
         NUM_TIENDA:
             {
@@ -22,23 +22,23 @@ const Horario_Atencion = db.sequelize.define('Horario_Atencion', {
             },
         INICIO_JORNADA1:
             {
-                type: Sequelize.DATEONLY,
+                type: Sequelize.TIME,
                 allowNull: false
             },
         FIN_JORNADA1:
             {
-                type: Sequelize.DATEONLY,
+                type: Sequelize.TIME,
                 allowNull: false
             },
         INICIO_JORNADA2:
             {
-                type: Sequelize.DATEONLY,
-                allowNull: false
+                type: Sequelize.TIME,
+                allowNull: true
             },
         FIN_JORNADA2:
             {
-                type: Sequelize.DATEONLY,
-                allowNull: false
+                type: Sequelize.TIME,
+                allowNull: true
             }
     },
     {

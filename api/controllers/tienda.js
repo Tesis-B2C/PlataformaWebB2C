@@ -3,6 +3,8 @@
 const moment = require('moment');
 const TIENDA = require('../models/tienda'); //importar el modelo del usuario  o lo que son las clases comunesvar DPA = require('../models/dpa'); //importar el modelo del usuario  o lo que son las clases comunes
 const SUCURSAL = require('../models/sucursal');
+const HORARIO_ATENCION = require('../models/horario_atencion');
+const DPA = require('../models/dpa');
 const jwt = require('../services/jwt');
 const db = require('../database/db');
 const fs = require('fs-extra');
@@ -130,7 +132,13 @@ async function registrarTienda(req, res) {
 async function getDatosTienda(req, res) {
 
     try {
-        let tiendaObtenida = await TIENDA.findOne({where: {NUM_TIENDA: req.params.id}, include: {model: SUCURSAL}});
+        let tiendaObtenida = await TIENDA.findOne({
+            where: {NUM_TIENDA: req.params.id},
+            include: [{
+                model: SUCURSAL,
+                include: {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}
+            }, {model: HORARIO_ATENCION}]
+        });
 
         if (tiendaObtenida) {
             res.status(200).send({
@@ -141,8 +149,6 @@ async function getDatosTienda(req, res) {
             res.status(404).send({
                 message: 'Al parecer la tienda no se encuentra registrada en la base de datos'
             });
-
-
         }
     } catch (err) {
         res.status(500).send({
@@ -248,13 +254,126 @@ async function obtenerImagenTienda(req, res) {
 }
 */
 
+async function actualizarTiendaGeneral(req, res) {
+    const trans = await db.sequelize.transaction({autocommit: false});
+
+    try {
+        let params = req.body;
+        let tiendaId = req.params.id;
+
+        let tiendaActualizado = await TIENDA.update({
+            RAZON_SOCIAL: params.EditarTienda.Razon_Social,
+            NOMBRE_COMERCIAL: params.EditarTienda.Nombre_Comercial,
+            DESCRIPCION_TIENDA: params.EditarTienda.Descripcion_Tienda,
+            CORREO_TIENDA: params.EditarTienda.Correo_Tienda,
+            LINK_PAGINA: params.EditarTienda.Link_Pagina,
+            LINK_FACEBOOK: params.EditarTienda.Link_Facebook,
+            TERMINOS_CONDICIONES: params.EditarTienda.Terminos_Condiciones,
+            HORARIO_ATENCION: params.EditarTienda.Horario_Atencion
+        }, {
+            where: {NUM_TIENDA: tiendaId},
+            transaction: trans
+        });
+
+        let horariosObtenidos = await HORARIO_ATENCION.findAll({where: {NUM_TIENDA: tiendaId}});
+
+        if (horariosObtenidos.length) {
+            await HORARIO_ATENCION.destroy({
+                where: {NUM_TIENDA: tiendaId},
+                transaction: trans
+            });
+        }
+
+        if (params.EditarTienda.Horario_Atencion == 'Concreto') {
+            for (const h of params.Editar_Dias_Atencion) {
+                if (h.Dia != null) {
+                    await HORARIO_ATENCION.create(
+                        {
+                            NUM_TIENDA: tiendaId,
+                            DIA: h.Dia,
+                            INICIO_JORNADA1: h.Inicio_Jornada1,
+                            FIN_JORNADA1: h.Fin_Jornada1,
+                            INICIO_JORNADA2: h.Inicio_Jornada2,
+                            FIN_JORNADA2: h.Fin_Jornada2
+                        },
+                        {transaction: trans});
+                }
+            }
+        }
+
+        if (tiendaActualizado.length) {
+            res.status(200).send({message: 'Los datos generales de la tienda han sido actualizados'});
+            await trans.commit();
+        } else {
+            res.status(404).send({message: 'Los datos generales de la tienda no han sido actualizados'});
+        }
+    } catch (e) {
+        await trans.rollback();
+        res.status(500).send({
+            message: err.name
+        });
+    }
+}
+
+async function actualizarTiendaSucursal(req, res) {
+    const t = await db.sequelize.transaction({autocommit: false});
+    let errorNoCambio = false;
+    try {
+        let params = req.body;
+        let tiendaId = req.params.id;
+
+        let sucursalesObtenidos = await SUCURSAL.findAll({where: {NUM_TIENDA: tiendaId}});
+
+        if (sucursalesObtenidos.length) {
+            await SUCURSAL.destroy({
+                where: {NUM_TIENDA: tiendaId},
+                transaction: t
+            });
+        }
+
+        for (const s of params) {
+            errorNoCambio = true;
+            await SUCURSAL.create(
+                {
+                    NUM_TIENDA: tiendaId,
+                    COD_DPA: s.Ciudad,
+                    DIRECCION_SUCURSAL: s.Direccion_Sucursal,
+                    TELEFONO_SUCURSAL: s.Telefono_Sucursal,
+                    RUC: s.Ruc,
+                    LATITUD: s.Latitud,
+                    LONGITUD: s.Longitud,
+                    NUM_REFERENCIA: s.Num_Referencia,
+                    NUM_COD_POSTAL_SUCURSAL: s.Num_Cod_Postal_Sucursal,
+                    TIPO_SUCURSAL: s.Tipo_Sucursal
+                },
+                {transaction: t});
+            errorNoCambio = false;
+        }
+
+        res.status(200).send({message: 'Sus datos han sido actualizados.'});
+        await t.commit();
+
+    } catch (e) {
+        await t.rollback();
+        if (errorNoCambio == true) {
+            res.status(404).send({message: 'Sus datos no han sido actualizados. Intente nuevamente.'});
+        }else{
+            res.status(500).send({
+                message: err.name
+            });
+        }
+
+    }
+}
+
 module.exports = {          // para exportar todas las funciones de este modulo
     registrarTienda,
     getDatosTienda,
     getMisTiendas,
+    actualizarTiendaGeneral,
+    actualizarTiendaSucursal
     /* subirImagenesTienda,*/
     /*   obtenerImagenTienda*/
-
 };
 
 

@@ -1,4 +1,4 @@
-'use strcit'
+'use strict'
 
 const DPA = require('../models/dpa'); //importar el modelo del usuario  o lo que son las clases comunes
 
@@ -43,8 +43,6 @@ async function getDpaCiudades(req, res) {
             res.status(404).send({
                 message: 'No existe DPA registrada en la base de datos'
             });
-
-
         }
     } catch (err) {
         res.status(500).send({
@@ -80,8 +78,6 @@ console.log("lo logre", JSON.stringify(dpa));*/
 
 
 module.exports = {          // para exportar todas las funciones de este modulo
-
     getDpaProvincias,
     getDpaCiudades
-
 };

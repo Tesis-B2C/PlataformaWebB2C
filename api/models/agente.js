@@ -8,7 +8,6 @@ const  Agente = db.sequelize.define('AGENTE', {
             type:Sequelize.BIGINT,
             allowNull:false,
             autoIncrement:true
-
         },
         ID_AGENTE: {
             type: Sequelize.STRING,

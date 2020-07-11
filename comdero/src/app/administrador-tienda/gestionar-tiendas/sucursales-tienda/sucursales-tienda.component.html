@@ -1,127 +1,158 @@
 <body>
-<form #FormPaso2 id="formPaso2" class="datosregistro" validate-form>
-  <div class="container mt-5">
-    <div class="row justify-content-center">
-      <h4 class="col-11">Sucursales</h4>
-      <hr class="col-11">
-    </div>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <h4 class="col-11">Sucursales</h4>
+    <hr class="col-11">
+  </div>
 
-    <div class="row justify-content-center mb-5">
-      <div class="col-md-11">
+  <div class="row justify-content-center mb-5">
+    <div class="col-md-11">
 
-        <h6>¿Su negocio cuenta con un espacio fisico?</h6>
+      <h6>¿Su negocio cuenta con un espacio fisico?</h6>
 
-        <div class="form-row py-4">
-          <div class="col-md-6 form-group ">
-            <button [disabled]="btnEspacioFisico"
-                    class="btnActivo btn btn-outline-primary px-4 py-3 text-center btn-paso2"
-                    type="submit" (click)="desdeNegocio()">
-              <i class="fas fa-store fa-lg fa-2x"></i> &nbsp; &nbsp;Mi negocio cuenta con un local comercial
-            </button>
-          </div>
-
-          <div class="col-md-6 form-group">
-            <button [disabled]="btnCasa" class="btnActivo btn btn-outline-primary px-4 py-3 text-center btn-paso2"
-                    type="submit" (click)="desdeCasa()">
-              <i class="fas fa-home fa-lg fa-2x"></i> &nbsp; &nbsp;Manejo mi negocio desde casa
-            </button>
-          </div>
+      <div class="form-row py-4">
+        <div class="col-md-6 form-group ">
+          <button [disabled]="btnEspacioFisico"
+                  class="btnActivo btn btn-outline-primary px-4 py-3 text-center btn-paso2"
+                  type="submit" (click)="desdeNegocio()">
+            <i class="fas fa-store fa-lg fa-2x"></i> &nbsp; &nbsp;Mi negocio cuenta con un local comercial
+          </button>
         </div>
 
-        <!--INICIO el modulo de Casa -->
-        <div class="NegocioNoFisico card card-body" *ngIf="this.banderaCasa">
-          <label class="font-weight-bold">Ingrese los datos desde donde opera su negocio</label>
+        <div class="col-md-6 form-group">
+          <button [disabled]="btnCasa" class="btnActivo btn btn-outline-primary px-4 py-3 text-center btn-paso2"
+                  type="submit" (click)="desdeCasa()">
+            <i class="fas fa-home fa-lg fa-2x"></i> &nbsp; &nbsp;Manejo mi negocio desde casa
+          </button>
+        </div>
+      </div>
 
-          <div class="form-row">
-            <div class="form-group col-sm-6">
-              <label>* RUC</label>
-              <input #RucC="ngModel" [(ngModel)]="this.Sucursales[0].Ruc" [ngClass]="{'is-invalid': RucC.invalid && (RucC.dirty || RucC.touched),
+      <!--INICIO el modulo de Casa -->
+      <form #FormCasa id="formCasa" validate-form>
+        <div class="NegocioNoFisico" *ngIf="this.banderaCasa">
+          <div class="card card-body">
+            <label class="font-weight-bold">Ingrese los datos desde donde opera su negocio</label>
+
+            <div class="form-row">
+              <div class="form-group col-sm-6">
+                <label>* RUC</label>
+                <input [disabled]="banderaEdicionDeshabilitadaCasa" #RucC="ngModel" [(ngModel)]="this.vectorCasa.Ruc"
+                       [ngClass]="{'is-invalid': RucC.invalid && (RucC.dirty || RucC.touched),
                  'is-valid': RucC.valid && (RucC.dirty || RucC.touched)}" [pattern]='this.soloNumerosPattern'
-                     class="tamanioInputs form-control" maxlength="13"
-                     minlength="13" name="rucCasa" placeholder="" required type="text">
-              <div *ngIf="RucC.invalid && (RucC.dirty || RucC.touched)">
-                <div *ngIf="RucC.errors.required">
-                  <p class="alert alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
-                    Campo requerido.</p>
+                       class="tamanioInputs form-control" maxlength="13"
+                       minlength="13" name="rucCasa" placeholder="" required type="text">
+                <div *ngIf="RucC.invalid && (RucC.dirty || RucC.touched)">
+                  <div *ngIf="RucC.errors.required">
+                    <p class="alert alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
+                      Campo requerido.</p>
+                  </div>
+                  <div *ngIf="RucC.errors.minlength">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                      Minimo 13 digitos.</p>
+                  </div>
+                  <div *ngIf="RucC.errors.maxlength">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                      Maximo 13 digitos.</p>
+                  </div>
+                  <div *ngIf="RucC.errors.pattern">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                      Use solo numeros.</p>
+                  </div>
                 </div>
-                <div *ngIf="RucC.errors.minlength">
-                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                    Minimo 13 digitos.</p>
-                </div>
-                <div *ngIf="RucC.errors.maxlength">
-                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                    Maximo 13 digitos.</p>
-                </div>
-                <div *ngIf="RucC.errors.pattern">
-                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                    Use solo numeros.</p>
-                </div>
-              </div>
-            </div> <!-- form-group end.-->
+              </div> <!-- form-group end.-->
 
-            <div class="col-sm-6 form-group">
-              <label>* Celular / Convencional</label>
-              <input #TelefonoC="ngModel" [(ngModel)]="this.Sucursales[0].Telefono_Sucursal" [ngClass]="{'is-invalid': TelefonoC.invalid && (TelefonoC.dirty || TelefonoC.touched),
+              <div class="col-sm-6 form-group">
+                <label>* Celular / Convencional</label>
+                <input [disabled]="banderaEdicionDeshabilitadaCasa" #TelefonoC="ngModel"
+                       [(ngModel)]="this.vectorCasa.Telefono_Sucursal" [ngClass]="{'is-invalid': TelefonoC.invalid && (TelefonoC.dirty || TelefonoC.touched),
                  'is-valid': TelefonoC.valid && (TelefonoC.dirty || TelefonoC.touched)}"
-                     [pattern]='this.soloNumerosPattern' class="tamanioInputs form-control" name="telefonoCasa"
-                     required type="tel">
-              <div *ngIf="TelefonoC.invalid && (TelefonoC.dirty|| TelefonoC.touched) ">
-                <div *ngIf="TelefonoC.errors.required">
-                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                    Campo requerido.</p>
+                       [pattern]='this.soloNumerosPattern' class="tamanioInputs form-control" name="telefonoCasa"
+                       required type="tel">
+                <div *ngIf="TelefonoC.invalid && (TelefonoC.dirty|| TelefonoC.touched) ">
+                  <div *ngIf="TelefonoC.errors.required">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                      Campo requerido.</p>
+                  </div>
+                  <div *ngIf="TelefonoC.errors.pattern">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                      Utilice solo numeros.</p>
+                  </div>
                 </div>
-                <div *ngIf="TelefonoC.errors.pattern">
-                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                    Utilice solo numeros.</p>
-                </div>
-              </div>
-            </div> <!-- form-group end.//-->
-          </div> <!-- form-row end.//-->
+              </div> <!-- form-group end.//-->
+            </div> <!-- form-row end.//-->
 
-          <div class="form-row">
-            <div class="form-group col-6">
-              <label>* Provincia</label>
-              <select #ProvinciaC="ngModel" (change)="getDpaCiudades($event.target.value,0)"
-                      [(ngModel)]="this.Sucursales[0].Provincia"
-                      [ngClass]="{'errorSelect': ProvinciaC.invalid && (ProvinciaC.dirty || ProvinciaC.touched),
+            <div class="form-row">
+              <div class="form-group col-6">
+                <label>* Provincia</label>
+                <select [disabled]="banderaEdicionDeshabilitadaCasa" #ProvinciaC="ngModel"
+                        (change)="getDpaCiudadesCasa($event.target.value)"
+                        [(ngModel)]="this.provinciaCasa"
+                        [ngClass]="{'errorSelect': ProvinciaC.invalid && (ProvinciaC.dirty || ProvinciaC.touched),
           'satisfactorioSelect': ProvinciaC.valid && (ProvinciaC.dirty || ProvinciaC.touched)}"
-                      class=" tamanioInputs form-control" data-size="4" name="provinciaCasa" required>
-                <option selecteddisabled="true">Selecciona una..</option>
-                <option *ngFor="let provincia of this.provincias"
-                        value="{{provincia.COD_DPA}}"> {{provincia.NOMBRE }}</option>
-              </select>
-              <div *ngIf="ProvinciaC.invalid && (ProvinciaC.touched||ProvinciaC.dirty)">
-                <div *ngIf="ProvinciaC.errors.required">
-                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                    Campo equerido</p>
+                        class=" tamanioInputs form-control" data-size="4" name="provinciaCasa" required>
+                  <option disabled
+                          *ngIf="!this.ciudadesCasa || banderaEdicionDeshabilitadaCasa">{{this.provinciaCasa}}</option>
+                  <option *ngFor="let provincia of this.provinciasCasa"
+                          value="{{provincia.COD_DPA}}"> {{provincia.NOMBRE }}</option>
+                </select>
+                <div *ngIf="ProvinciaC.invalid && (ProvinciaC.touched||ProvinciaC.dirty)">
+                  <div *ngIf="ProvinciaC.errors.required">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                      Campo requerido</p>
+                  </div>
                 </div>
-              </div>
-            </div> <!--form-group end.-->
+              </div> <!--form-group end.-->
 
-            <div class="form-group col-6">
-              <label>* Ciudad</label>
-              <select #CiudadC="ngModel" [(ngModel)]="this.Sucursales[0].Ciudad" [ngClass]="{
-          'errorSelect': CiudadC.invalid && (CiudadC.dirty || CiudadC.touched),
+              <div class="form-group col-6">
+                <label>* Ciudad</label>
+                <select (change)="seleccionarCiudad($event.target.value)" [disabled]="banderaEdicionDeshabilitadaCasa"
+                        #CiudadC="ngModel" [(ngModel)]="this.ciudadCasa"
+                        [ngClass]="{'errorSelect': CiudadC.invalid && (CiudadC.dirty || CiudadC.touched),
           'satisfactorioSelect': CiudadC.valid && (CiudadC.dirty || CiudadC.touched)}"
-                      class="tamanioInputs form-control" name="ciudadCasa" placeholder="" required>
-                <option selected="true" disabled="true">Selecciona una..</option>
-                <option *ngFor="let ciudad of this.ciudades[0]"
-                        value="{{ciudad.COD_DPA}}"> {{ciudad.NOMBRE }}</option>
-              </select>
-              <div *ngIf="CiudadC.invalid && (CiudadC.touched||CiudadC.dirty)">
-                <div *ngIf="CiudadC.errors.required">
-                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                    Campo requerido.</p>
+                        class="tamanioInputs form-control" name="ciudadCasa" placeholder="" required>
+                  <option disabled
+                          *ngIf="!this.ciudadesCasa || banderaEdicionDeshabilitadaCasa">{{this.ciudadCasa}}</option>
+                  <option value=""> Selecciona una...</option>
+                  <option *ngFor="let ciudad of this.ciudadesCasa"
+                          value="{{ciudad.COD_DPA}}"> {{ciudad.NOMBRE }}</option>
+                </select>
+                <div *ngIf="CiudadC.invalid && (CiudadC.touched||CiudadC.dirty)">
+                  <div *ngIf="CiudadC.errors.required">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                      Campo requerido.</p>
+                  </div>
                 </div>
-              </div>
-            </div><!--form-group end.-->
-          </div><!--form-row.-->
-        </div> <!--FIN CASA-->
-        <!--FIN el modulo de CASA -->
+              </div><!--form-group end.-->
+            </div><!--form-row.-->
+          </div> <!--FIN CASA-->
 
-        <!--Empieza el modulo de Tengo Negocio Fisico -->
+          <br>
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title mb-2">Acciones</h5>
+              <div class="form-row justify-content-end">
+                <button *ngIf="banderaEdicionDeshabilitadaCasa" (click)="habilitarEdicionCasa()" href="#"
+                        class="btn btn-warning text-white "><span class="fa fa-edit"></span> Modificar
+                </button> &nbsp;
+                <button [disabled]="!FormCasa.checkValidity()" *ngIf="!banderaEdicionDeshabilitadaCasa"
+                        (click)="guardarSucursalesCasa()" href="#"
+                        class="btn btn-primary text-white "><span class="fa fa-save"></span> Guardar
+                </button> &nbsp;
+                <button *ngIf="!banderaEdicionDeshabilitadaCasa" href="#" (click)="cancelarModificacion(); "
+                        class="btn btn-light  "><span
+                  class="fa fa-close"></span> Cancelar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <!--FIN el modulo de CASA -->
+
+      <!--Empieza el modulo de Tengo Negocio Fisico -->
+      <form #FormSucursales id="formSucursales" validate-form>
         <div class="NegocioFisico" *ngIf="banderaEspacioFisico && this.bandAgregarSuc">
-          <div class="card card-body mb-2" *ngFor="let item of this.vectorOpciones; index as i">
+          <div class="card card-body mb-2" *ngFor="let item of this.Sucursales; index as i">
             <h6 *ngIf="i==0" class="font-weight-bold">MATRIZ</h6>
             <label *ngIf="i==0" class="font-weight-bold">Ingrese los datos de su negocio (Sucursales en caso de
               existir)</label>
@@ -131,7 +162,9 @@
                 <label style="font-weight: bolder; font-size: small">SUCURSAL&nbsp; {{i}}</label>
               </div>
               <div *ngIf="this.bandAgregarSuc" class="form-group col-1 my-0">
-                <button (click)="borrarOpciones(i)" class="py-0 form-control " style=" border: none; color: red">
+                <button [disabled]="banderaEdicionDeshabilitadaNeg" (click)="borrarOpciones(i)"
+                        class="py-0 form-control "
+                        style=" border: none; color: red">
                   <span class="fa fa-trash "></span>
                 </button>
               </div>
@@ -141,7 +174,8 @@
             <div class="form-row">
               <div class="form-group col-sm-6">
                 <label>* RUC</label>
-                <input #RucN="ngModel" [(ngModel)]="this.Sucursales[i].Ruc" [ngClass]="{'is-invalid': RucN.invalid && (RucN.dirty || RucN.touched),
+                <input [disabled]="banderaEdicionDeshabilitadaNeg" #RucN="ngModel" [(ngModel)]="this.Sucursales[i].Ruc"
+                       [ngClass]="{'is-invalid': RucN.invalid && (RucN.dirty || RucN.touched),
                  'is-valid': RucN.valid && (RucN.dirty || RucN.touched)}" [pattern]='this.soloNumerosPattern'
                        class="tamanioInputs form-control" maxlength="13"
                        minlength="13" name="ruc{{i}}" placeholder="" required type="text">
@@ -167,7 +201,8 @@
 
               <div class="form-group col-sm-6 ">
                 <label>* Celular / Convencional</label>
-                <input #TelefonoN="ngModel" [(ngModel)]="this.Sucursales[i].Telefono_Sucursal" [ngClass]="{'is-invalid': TelefonoN.invalid && (TelefonoN.dirty || TelefonoN.touched),
+                <input [disabled]="banderaEdicionDeshabilitadaNeg" #TelefonoN="ngModel"
+                       [(ngModel)]="this.Sucursales[i].Telefono_Sucursal" [ngClass]="{'is-invalid': TelefonoN.invalid && (TelefonoN.dirty || TelefonoN.touched),
                  'is-valid': TelefonoN.valid && (TelefonoN.dirty || TelefonoN.touched)}"
                        [pattern]='this.soloNumerosPattern' class="tamanioInputs form-control" name="telefono{{i}}"
                        required type="tel">
@@ -187,15 +222,16 @@
             <div class="form-row">
               <div class="form-group col-6">
                 <label>* Provincia</label>
-                <select #ProvinciaN="ngModel" (change)="getDpaCiudades($event.target.value, i)"
-                        [(ngModel)]="this.Sucursales[i].Provincia"
+                <select [disabled]="banderaEdicionDeshabilitadaNeg" #ProvinciaN="ngModel"
+                        (change)="getDpaCiudades($event.target.value, i)"
+                        [(ngModel)]="this.provinciaNegocio[i]"
                         [ngClass]="{'errorSelect': ProvinciaN.invalid && (ProvinciaN.dirty || ProvinciaN.touched),
                             'satisfactorioSelect': ProvinciaN.valid && (ProvinciaN.dirty || ProvinciaN.touched)}"
-                        class=" tamanioInputs form-control" data-size="4" name="provincia{{i}}"
-                >
-                  <option selecteddisabled="true">Selecciona una..</option>
+                        class=" tamanioInputs form-control" data-size="4" name="provincia{{i}}">
+                  <option disabled
+                          *ngIf="!this.ciudades[i] || banderaEdicionDeshabilitadaNeg">{{this.provinciaNegocio[i]}}</option>
                   <option *ngFor="let provincia of this.provincias"
-                          value="{{provincia.COD_DPA}}"> {{provincia.NOMBRE }}</option>
+                          value="{{provincia.COD_DPA}}"> {{provincia.NOMBRE}}</option>
                 </select>
                 <div *ngIf="ProvinciaN.invalid && (ProvinciaN.touched||ProvinciaN.dirty)">
                   <div *ngIf="ProvinciaN.errors.required">
@@ -207,12 +243,15 @@
 
               <div class="form-group col-6">
                 <label>* Ciudad</label>
-                <select #CiudadN="ngModel" [(ngModel)]="this.Sucursales[i].Ciudad" [ngClass]="{
-                    'errorSelect': CiudadN.invalid && (CiudadN.dirty || CiudadN.touched),
+                <select (change)="seleccionarCiudadSucursal($event.target.value, i)"
+                        [disabled]="banderaEdicionDeshabilitadaNeg"
+                        #CiudadN="ngModel" [(ngModel)]="this.ciudadNegocio[i]"
+                        [ngClass]="{'errorSelect': CiudadN.invalid && (CiudadN.dirty || CiudadN.touched),
                     'satisfactorioSelect': CiudadN.valid && (CiudadN.dirty || CiudadN.touched)}"
-                        class="tamanioInputs form-control" name="ciudad{{i}}" placeholder=""
-                >
-                  <option selected="true" disabled="true">Selecciona una..</option>
+                        class="tamanioInputs form-control" name="ciudad{{i}}" placeholder="" required>
+                  <option disabled
+                          *ngIf="!this.ciudades[i] || banderaEdicionDeshabilitadaNeg">{{this.ciudadNegocio[i]}}</option>
+                  <option value="">Selecciona una...</option>
                   <option *ngFor="let ciudad of this.ciudades[i]"
                           value="{{ciudad.COD_DPA}}"> {{ciudad.NOMBRE }}</option>
                 </select>
@@ -227,7 +266,8 @@
 
             <div class="form-group">
               <label>* Dirección</label>
-              <input #CallePrincipal="ngModel" [(ngModel)]="this.Sucursales[i].Direccion_Sucursal"
+              <input [disabled]="banderaEdicionDeshabilitadaNeg" #CallePrincipal="ngModel"
+                     [(ngModel)]="this.Sucursales[i].Direccion_Sucursal"
                      [ngClass]="{'errorSelect': CallePrincipal.invalid && (CallePrincipal.dirty || CallePrincipal.touched),
                           'satisfactorioSelect': CallePrincipal.valid && (CallePrincipal.dirty || CallePrincipal.touched)}"
                      class="tamanioInputs form-control"
@@ -243,30 +283,51 @@
             <div class="form-row">
               <div class="col-sm-6 form-group">
                 <label>Número de referencia</label>
-                <input #NumCasa="ngModel" [(ngModel)]="this.Sucursales[i].Num_Casa_Sucursal"
+                <input [disabled]="banderaEdicionDeshabilitadaNeg" #NumCasa="ngModel"
+                       [(ngModel)]="this.Sucursales[i].Num_Referencia"
                        class="tamanioInputs form-control" name="numCasaSucursal{{i}}" placeholder="" type="text">
               </div>
 
               <div class=" col-sm-6 form-group">
                 <label>Código Postal</label>
-                <input #CodigoPostal="ngModel" [(ngModel)]="this.Sucursales[i].Num_Cod_Postal"
+                <input [disabled]="banderaEdicionDeshabilitadaNeg" #CodigoPostal="ngModel"
+                       [(ngModel)]="this.Sucursales[i].Num_Cod_Postal_Sucursal"
                        class="tamanioInputs form-control" name="codigoPostal{{i}}" type="text">
               </div> <!--form-group end.-->
             </div> <!--form-row end.-->
           </div><!--Fin ngFor-->
 
-          <div *ngIf="this.bandAgregarSuc" class="form-group col-md-12 px-0 py-2 m-0">
+          <div *ngIf="this.bandAgregarSuc && this.banderaEdicionDeshabilitadaNeg == false"
+               class="form-group col-md-12 px-0 py-2 m-0">
             <p (click)="agregarSucursal()" class="agregar-sucursal">
               <span class="fa fa-plus "></span> &nbsp;Agregar sucursal
             </p>
           </div>
+
+          <br>
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title mb-2">Acciones</h5>
+              <div class="form-row justify-content-end">
+                <button *ngIf="banderaEdicionDeshabilitadaNeg" (click)="habilitarEdicionNeg()" href="#"
+                        class="btn btn-warning text-white "><span class="fa fa-edit"></span> Modificar
+                </button> &nbsp;
+                <button [disabled]="!FormSucursales.checkValidity()" *ngIf="!banderaEdicionDeshabilitadaNeg"
+                        (click)="guardarSucursalesNeg()" href="#"
+                        class="btn btn-primary text-white "><span class="fa fa-save"></span> Guardar
+                </button> &nbsp;
+                <button *ngIf="!banderaEdicionDeshabilitadaNeg" href="#" (click)="cancelarModificacion(); "
+                        class="btn btn-light  "><span
+                  class="fa fa-close"></span> Cancelar
+                </button>
+              </div>
+            </div>
+          </div>
         </div><!--Termina el modulo de Tengo Negocio Fisico -->
-
-      </div>
-
+      </form>
     </div>
   </div>
-</form>
+</div>
 <br><br><br><br><br><br>
 </body>
 

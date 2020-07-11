@@ -208,7 +208,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
   public tiendaRegistrada;
 
   public async registrarTienda() {
-    this.loading = true
+    this.loading = true;
     try {
       this.Tienda_Enviar.Tienda = this.Tienda;
       this.Tienda_Enviar.Sucursal = this.Sucursales;

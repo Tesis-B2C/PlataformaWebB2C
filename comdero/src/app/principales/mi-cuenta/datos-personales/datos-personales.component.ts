@@ -129,7 +129,7 @@ export class DatosPersonalesComponent implements OnInit {
     document.getElementById('CallePrincipal').focus();
   }
 
-  public iniciarEdicion() {
+  public  iniciarEdicion() {
     if (this.identidad.DPA)
       this.ciudad = this.identidad.DPA.NOMBRE + ' (Actual)';
     else this.ciudad = "";
@@ -152,7 +152,6 @@ export class DatosPersonalesComponent implements OnInit {
     this.EditarAgente.Ciudad = this.identidad.DPA.COD_DPA;
     this.EditarAgente.Calle_Principal_Agente = this.identidad.CALLE_PRINCIPAL_AGENTE;
     this.EditarAgente.Num_Casa_Agente = this.identidad.NUM_CASA_AGENTE;
-
   }
 
   public comprobarTipoPersona() {
@@ -315,9 +314,6 @@ export class DatosPersonalesComponent implements OnInit {
         confirmButton: 'btn btn-primary px-5'
         //icon:'sm'
       }
-
-
     });
   }
 }
-

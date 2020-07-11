@@ -9,6 +9,7 @@ const moment = require('moment');
 const db = require('../database/db');
 const fs = require('fs-extra');
 const path = require('path');
+
 async function saveProducto(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
     const vvariantesGuardas = [];
@@ -86,6 +87,7 @@ async function saveProducto(req, res) {
                 }
             }
         }
+
         for (let i = 0; i < vvariantesGuardas.length; i++) {
             for (let j = 0; j < vimagenes[i].length; j++) {
                 console.log(vimagenes[i][j].Tamanio_Imagen);
@@ -105,7 +107,7 @@ async function saveProducto(req, res) {
 
         if (ofertaGuardada && productoGuardado) {
             res.status(200).send({
-                message: "Su producto ha sido registrado  exitosamente"
+                message: "Su producto ha sido registrado exitosamente"
             });
 
             await t.commit();

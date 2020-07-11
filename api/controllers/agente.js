@@ -1,4 +1,4 @@
-'use strcit'
+'use strict'
 
 const bcrypt = require('bcrypt-nodejs');
 const moment = require('moment');
@@ -40,7 +40,7 @@ async function registrarAgente(req, res) {
                 let respuestaCorreo = await correo.EnviarCorreo(agente.CORREO, 'Activación de cuenta', agente.NOMBRE, TOKENTEMPORAL);
 
                 if (respuestaCorreo == false) {
-                    agente.destroy({where: {CORREO: agente.CORREO}});
+                   // agente.destroy({where: {CORREO: agente.CORREO}});
                     res.status(500).send({
                         message: 'Parece que hay un error en el correo electrónico intentalo más tarde'
                     });
@@ -213,10 +213,9 @@ async function resetearContrasenia2(req, res) {
 }
 
 async function actualizarAgente(req, res) {
-
     try {
-        let agenteId = req.params.id
-        agente = {
+        let agenteId = req.params.id;
+        let agente = {
             ID_AGENTE: req.body.Id_Agente,
             NOMBRE: req.body.Nombre,
             TELEFONO: req.body.Telefono,
@@ -295,7 +294,7 @@ async function actualizarAgenteIdentity(req, res) {
     try {
         let agente = await AGENTE.findOne({
             where: {ESTADO: '0', CORREO: busqueda},
-            include: {model: DPA, include: {model: DPA, as: 'DPAP', equired: true}}
+            include: {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}
         });
 
         if (agente) {

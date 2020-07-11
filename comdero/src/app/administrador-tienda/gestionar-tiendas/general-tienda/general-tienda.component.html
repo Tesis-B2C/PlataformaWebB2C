@@ -1,5 +1,5 @@
-<body>
-<form #FormPaso1 id="formPaso1" class="datosregistro" validate-form>
+<body id="body">
+<form #FormGeneralTienda id="formGeneralTienda" class="general-tienda" validate-form>
   <div class="container mt-5">
     <div class="row justify-content-center">
       <h4 class="col-11">General</h4>
@@ -16,7 +16,9 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label>* Razón Social</label>
-                <input #Razon_Social="ngModel" style="text-transform: uppercase;" [(ngModel)]="this.Tienda.Razon_Social"
+                <input [disabled]="banderaEdicionDeshabilitada" #Razon_Social="ngModel"
+                       style="text-transform: uppercase;"
+                       [(ngModel)]="this.EditarTienda.Razon_Social"
                        [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched),
                  'is-valid': Razon_Social.valid && (Razon_Social.dirty || Razon_Social.touched)}"
                        [pattern]='this.LetrasNumerosPattern'
@@ -35,8 +37,9 @@
 
               <div class="form-group col-md-6">
                 <label>* Nombre comercial de su negocio</label>
-                <input #Nombre_Comercial="ngModel" style="text-transform: uppercase;"
-                       [(ngModel)]="this.Tienda.Nombre_Comercial" [ngClass]="{'is-invalid': Nombre_Comercial.invalid && (Nombre_Comercial.dirty || Nombre_Comercial.touched),
+                <input [disabled]="banderaEdicionDeshabilitada" #Nombre_Comercial="ngModel"
+                       style="text-transform: uppercase;"
+                       [(ngModel)]="this.EditarTienda.Nombre_Comercial" [ngClass]="{'is-invalid': Nombre_Comercial.invalid && (Nombre_Comercial.dirty || Nombre_Comercial.touched),
                  'is-valid': Nombre_Comercial.valid && (Nombre_Comercial.dirty || Nombre_Comercial.touched)}"
                        [pattern]='this.LetrasNumerosPattern'
                        class="tamanioInputs form-control" name="nombre_Comercial" placeholder=""
@@ -55,8 +58,9 @@
 
             <div class="form-group">
               <label>* Descripción del negocio</label>
-              <textarea rows="3" style="font-size: small; resize: none;" #Descripcion_Tienda="ngModel"
-                        [(ngModel)]="this.Tienda.Descripcion_Tienda"
+              <textarea [disabled]="banderaEdicionDeshabilitada" rows="3" style="font-size: small; resize: none;"
+                        #Descripcion_Tienda="ngModel"
+                        [(ngModel)]="this.EditarTienda.Descripcion_Tienda"
                         [ngClass]="{'is-invalid': Descripcion_Tienda.invalid && (Descripcion_Tienda.dirty || Descripcion_Tienda.touched),
                  'is-valid': Descripcion_Tienda.valid && (Descripcion_Tienda.dirty || Descripcion_Tienda.touched)}"
                         class="tamanioInputs form-control" name="descripcion_Tienda" placeholder=""
@@ -66,7 +70,8 @@
                   <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
                 </div>
               </div>
-              <p class="p">Escribe un breve resumen sobre tu negocio. Una buena descripción comunica a tus clientes acerca de lo
+              <p class="p">Escribe un breve resumen sobre tu negocio. Una buena descripción comunica a tus clientes
+                acerca de lo
                 que ofreces. </p>
             </div> <!-- form-group end.// -->
 
@@ -80,8 +85,9 @@
 
             <div class="form-group col-md-6 px-0">
               <label>* Correo electrónico</label>
-              <input #Correo_Tienda="ngModel" style="text-transform: lowercase;"
-                     [(ngModel)]="this.Tienda.Correo_Tienda" [ngClass]="{'is-invalid': Correo_Tienda.invalid && (Correo_Tienda.dirty || Correo_Tienda.touched),
+              <input [disabled]="banderaEdicionDeshabilitada" #Correo_Tienda="ngModel"
+                     style="text-transform: lowercase;"
+                     [(ngModel)]="this.EditarTienda.Correo_Tienda" [ngClass]="{'is-invalid': Correo_Tienda.invalid && (Correo_Tienda.dirty || Correo_Tienda.touched),
                  'is-valid': Correo_Tienda.valid && (Correo_Tienda.dirty || Correo_Tienda.touched)}"
                      [pattern]='this.emailPattern'
                      class="tamanioInputs form-control" name="correo_tienda" placeholder="negocio@comdero.com"
@@ -100,7 +106,9 @@
             <div class="form-row">
               <div class="form-group col-sm-6">
                 <label>Sitio Web</label>
-                <input #Link_Pagina="ngModel" style="text-transform: lowercase;" [(ngModel)]="this.Tienda.Link_Pagina"
+                <input [disabled]="banderaEdicionDeshabilitada" #Link_Pagina="ngModel"
+                       style="text-transform: lowercase;"
+                       [(ngModel)]="this.EditarTienda.Link_Pagina"
                        [ngClass]="{'is-invalid': Link_Pagina.invalid && (Link_Pagina.dirty || Link_Pagina.touched),
           'is-valid': Link_Pagina.valid && (Link_Pagina.dirty || Link_Pagina.touched)}" [pattern]='this.urlPattern'
                        class="tamanioInputs form-control"
@@ -116,8 +124,9 @@
 
               <div class="col-sm-6 form-group">
                 <label>Link Facebook</label>
-                <input #Link_Facebook="ngModel" style="text-transform: lowercase;"
-                       [(ngModel)]="this.Tienda.Link_Facebook" [ngClass]="{
+                <input [disabled]="banderaEdicionDeshabilitada" #Link_Facebook="ngModel"
+                       style="text-transform: lowercase;"
+                       [(ngModel)]="this.EditarTienda.Link_Facebook" [ngClass]="{
           'is-invalid': Link_Facebook.invalid && (Link_Facebook.dirty || Link_Facebook.touched),
           'is-valid': Link_Facebook.valid && (Link_Facebook.dirty || Link_Facebook.touched)}"
                        [pattern]='this.urlPattern' class="tamanioInputs form-control"
@@ -139,9 +148,7 @@
         <div id="horario-atencion">
           <h6>Horario de atención</h6>
           <p></p>
-          <div class="card card-body mt-3">
-
-
+          <div class="card card-body mt-3" [ngClass]="{'errorHorario': this.banderaErrorHorario}">
             <div class="form-row">
               <div class="form-group col-sm-3">
                 <label>Horario</label>
@@ -149,19 +156,22 @@
 
               <div class="form-group col-sm-9">
                 <div class="radio-item">
-                  <input type="radio" name="horario" id="concreto" (change)="horarioRadio('Concreto')">
+                  <input [disabled]="banderaEdicionDeshabilitada" [checked]="checkConcreto" type="radio" name="horario"
+                         id="concreto" (change)="horarioRadio('Concreto')">
                   <label for="concreto">&nbsp;&nbsp;Abierto en horas concretas</label>
                 </div>
                 <br>
 
                 <div class="radio-item">
-                  <input type="radio" name="horario" id="siempre" (change)="horarioRadio('Siempre')">
+                  <input [disabled]="banderaEdicionDeshabilitada" [checked]="checkSiempre" type="radio" name="horario"
+                         id="siempre" (change)="horarioRadio('Siempre')">
                   <label for="siempre">&nbsp;&nbsp;Siempre abierto</label>
                 </div>
                 <br>
 
                 <div class="radio-item">
-                  <input type="radio" name="horario" id="noDisponible" (change)="horarioRadio('NoDisponible')">
+                  <input [disabled]="banderaEdicionDeshabilitada" [checked]="checkNoDisponible" type="radio"
+                         name="horario" id="noDisponible" (change)="horarioRadio('No disponible')">
                   <label for="noDisponible">&nbsp;&nbsp; Horario no disponible</label>
                 </div>
                 <br>
@@ -172,14 +182,15 @@
                   <div class="form-row mb-0">
                     <div class="form-group col-4">
                       <div class="checkbox-item">
-                        <input type="checkbox" id="Lunes" (click)="horarioCheckLunes($event)">
+                        <input [checked]="banderaCheckLunes" type="checkbox" id="Lunes"
+                               (click)="horarioCheckLunes($event)" [disabled]="banderaEdicionDeshabilitada">
                         <label for="Lunes">&nbsp;&nbsp;Lunes</label>
                       </div>
                     </div><!--Form-group end-->
                     <div class="form-group col-3">
                       <input [disabled]="banderaDisableLunes" class="px-1 tamaniohorario form-control text-center"
                              type="time" name="j1LunesI"
-                             #J1LunesI="ngModel" [(ngModel)]="this.Dias_Atencion[0].Inicio_Jornada1">
+                             #J1LunesI="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[0].Inicio_Jornada1">
                     </div><!--Form-group end-->
 
                     <div class="form-group col-1">
@@ -189,7 +200,7 @@
                     <div class="form-group col-3">
                       <input [disabled]="banderaDisableLunes" class="px-1 tamaniohorario form-control text-center"
                              type="time" name="j1LunesF"
-                             #J1LunesF="ngModel" [(ngModel)]="this.Dias_Atencion[0].Fin_Jornada1">
+                             #J1LunesF="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[0].Fin_Jornada1">
                     </div><!--Form-group end-->
 
                     <div *ngIf="btnMasLunes" class="form-group col-1 my-0">
@@ -204,8 +215,9 @@
                     <div class="form-group col-4">
                     </div><!--Form-group end-->
                     <div class="form-group col-3">
-                      <input class="px-1 tamaniohorario form-control text-center" type="time" name="j2LunesI"
-                             #J2LunesI="ngModel" [(ngModel)]="this.Dias_Atencion[0].Inicio_Jornada2">
+                      <input [disabled]="banderaDisableLunesJ2" class="px-1 tamaniohorario form-control text-center"
+                             type="time" name="j2LunesI"
+                             #J2LunesI="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[0].Inicio_Jornada2">
                     </div><!--Form-group end-->
 
                     <div class="form-group col-1">
@@ -213,12 +225,14 @@
                     </div><!--Form-group end-->
 
                     <div class="form-group col-3">
-                      <input class="px-1 tamaniohorario form-control text-center" type="time" name="j2LunesF"
-                             #J2LunesF="ngModel" [(ngModel)]="this.Dias_Atencion[0].Fin_Jornada2">
+                      <input [disabled]="banderaDisableLunesJ2" class="px-1 tamaniohorario form-control text-center"
+                             type="time" name="j2LunesF"
+                             #J2LunesF="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[0].Fin_Jornada2">
                     </div><!--Form-group end-->
 
                     <div class="form-group col-1 my-0">
-                      <button (click)="cerrarJ2(0)" class="tamaniohorario p-0 form-control">
+                      <button [disabled]="banderaDisableLunesJ2" (click)="cerrarJ2(0)"
+                              class="tamaniohorario p-0 form-control">
                         <span class="fa fa-times text-center"></span>
                       </button>
                     </div>
@@ -229,14 +243,15 @@
                   <div class="form-row mb-0">
                     <div class="form-group col-4">
                       <div class="checkbox-item">
-                        <input type="checkbox" id="Martes" (click)="horarioCheckMartes($event)">
+                        <input [checked]="banderaCheckMartes" type="checkbox" id="Martes"
+                               (click)="horarioCheckMartes($event)" [disabled]="banderaEdicionDeshabilitada">
                         <label for="Martes">&nbsp;&nbsp;Martes</label>
                       </div>
                     </div><!--Form-group end-->
                     <div class="form-group col-3">
                       <input [disabled]="banderaDisableMartes" class="px-1 tamaniohorario form-control text-center"
                              type="time" name="j1MartesI"
-                             #J1MartesI="ngModel" [(ngModel)]="this.Dias_Atencion[1].Inicio_Jornada1">
+                             #J1MartesI="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[1].Inicio_Jornada1">
                     </div><!--Form-group end-->
 
                     <div class="form-group col-1">
@@ -246,7 +261,7 @@
                     <div class="form-group col-3">
                       <input [disabled]="banderaDisableMartes" class="px-1 tamaniohorario form-control text-center"
                              type="time" name="j1MartesF"
-                             #J1MartesF="ngModel" [(ngModel)]="this.Dias_Atencion[1].Fin_Jornada1">
+                             #J1MartesF="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[1].Fin_Jornada1">
                     </div><!--Form-group end-->
 
                     <div *ngIf="btnMasMartes" class="form-group col-1 my-0">
@@ -261,8 +276,9 @@
                     <div class="form-group col-4">
                     </div><!--Form-group end-->
                     <div class="form-group col-3">
-                      <input class="px-1 tamaniohorario form-control text-center" type="time" name="j2MartesI"
-                             #J2MartesI="ngModel" [(ngModel)]="this.Dias_Atencion[1].Inicio_Jornada2">
+                      <input [disabled]="banderaDisableMartesJ2" class="px-1 tamaniohorario form-control text-center"
+                             type="time" name="j2MartesI"
+                             #J2MartesI="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[1].Inicio_Jornada2">
                     </div><!--Form-group end-->
 
                     <div class="form-group col-1">
@@ -270,12 +286,14 @@
                     </div><!--Form-group end-->
 
                     <div class="form-group col-3">
-                      <input class="px-1 tamaniohorario form-control text-center" type="time" name="j2MartesF"
-                             #J2MartesF="ngModel" [(ngModel)]="this.Dias_Atencion[1].Fin_Jornada2">
+                      <input [disabled]="banderaDisableMartesJ2" class="px-1 tamaniohorario form-control text-center"
+                             type="time" name="j2MartesF"
+                             #J2MartesF="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[1].Fin_Jornada2">
                     </div><!--Form-group end-->
 
                     <div class="form-group col-1 my-0">
-                      <button (click)="cerrarJ2(1)" class="tamaniohorario p-0 form-control">
+                      <button [disabled]="banderaDisableMartesJ2" (click)="cerrarJ2(1)"
+                              class="tamaniohorario p-0 form-control">
                         <span class="fa fa-times text-center"></span>
                       </button>
                     </div>
@@ -286,14 +304,15 @@
                   <div class="form-row mb-0">
                     <div class="form-group col-4">
                       <div class="checkbox-item">
-                        <input type="checkbox" id="Miercoles" (click)="horarioCheckMiercoles($event)">
+                        <input [checked]="banderaCheckMiercoles" type="checkbox" id="Miercoles"
+                               (click)="horarioCheckMiercoles($event)" [disabled]="banderaEdicionDeshabilitada">
                         <label for="Miercoles">&nbsp;&nbsp;Miercoles</label>
                       </div>
                     </div><!--Form-group end-->
                     <div class="form-group col-3">
                       <input [disabled]="banderaDisableMiercoles" class="px-1 tamaniohorario form-control text-center"
                              type="time" name="j1MiercolesI"
-                             #J1MiercolesI="ngModel" [(ngModel)]="this.Dias_Atencion[2].Inicio_Jornada1">
+                             #J1MiercolesI="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[2].Inicio_Jornada1">
                     </div><!--Form-group end-->
 
                     <div class="form-group col-1">
@@ -303,7 +322,7 @@
                     <div class="form-group col-3">
                       <input [disabled]="banderaDisableMiercoles" class="px-1 tamaniohorario form-control text-center"
                              type="time" name="j1MiercolesF"
-                             #J1MiercolesF="ngModel" [(ngModel)]="this.Dias_Atencion[2].Fin_Jornada1">
+                             #J1MiercolesF="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[2].Fin_Jornada1">
                     </div><!--Form-group end-->
 
                     <div *ngIf="btnMasMiercoles" class="form-group col-1 my-0">
@@ -318,8 +337,9 @@
                     <div class="form-group col-4">
                     </div><!--Form-group end-->
                     <div class="form-group col-3">
-                      <input class="px-1 tamaniohorario form-control text-center" type="time" name="j2MiercolesI"
-                             #J2MiercolesI="ngModel" [(ngModel)]="this.Dias_Atencion[2].Inicio_Jornada2">
+                      <input [disabled]="banderaDisableMiercolesJ2" class="px-1 tamaniohorario form-control text-center"
+                             type="time" name="j2MiercolesI"
+                             #J2MiercolesI="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[2].Inicio_Jornada2">
                     </div><!--Form-group end-->
 
                     <div class="form-group col-1">
@@ -327,12 +347,14 @@
                     </div><!--Form-group end-->
 
                     <div class="form-group col-3">
-                      <input class="px-1 tamaniohorario form-control text-center" type="time" name="j2MiercolesF"
-                             #J2MiercolesF="ngModel" [(ngModel)]="this.Dias_Atencion[2].Fin_Jornada2">
+                      <input [disabled]="banderaDisableMiercolesJ2" class="px-1 tamaniohorario form-control text-center"
+                             type="time" name="j2MiercolesF"
+                             #J2MiercolesF="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[2].Fin_Jornada2">
                     </div><!--Form-group end-->
 
                     <div class="form-group col-1 my-0">
-                      <button (click)="cerrarJ2(2)" class="tamaniohorario p-0 form-control">
+                      <button [disabled]="banderaDisableMiercolesJ2" (click)="cerrarJ2(2)"
+                              class="tamaniohorario p-0 form-control">
                         <span class="fa fa-times text-center"></span>
                       </button>
                     </div>
@@ -343,14 +365,15 @@
                   <div class="form-row mb-0">
                     <div class="form-group col-4">
                       <div class="checkbox-item">
-                        <input type="checkbox" id="Jueves" (click)="horarioCheckJueves($event)">
+                        <input [checked]="banderaCheckJueves" type="checkbox" id="Jueves"
+                               (click)="horarioCheckJueves($event)" [disabled]="banderaEdicionDeshabilitada">
                         <label for="Jueves">&nbsp;&nbsp;Jueves</label>
                       </div>
                     </div><!--Form-group end-->
                     <div class="form-group col-3">
                       <input [disabled]="banderaDisableJueves" class="px-1 tamaniohorario form-control text-center"
                              type="time" name="j1JuevesI"
-                             #J1JuevesI="ngModel" [(ngModel)]="this.Dias_Atencion[3].Inicio_Jornada1">
+                             #J1JuevesI="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[3].Inicio_Jornada1">
                     </div><!--Form-group end-->
 
                     <div class="form-group col-1">
@@ -360,7 +383,7 @@
                     <div class="form-group col-3">
                       <input [disabled]="banderaDisableJueves" class="px-1 tamaniohorario form-control text-center"
                              type="time" name="j1JuevesF"
-                             #J1JuevesF="ngModel" [(ngModel)]="this.Dias_Atencion[3].Fin_Jornada1">
+                             #J1JuevesF="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[3].Fin_Jornada1">
                     </div><!--Form-group end-->
 
                     <div *ngIf="btnMasJueves" class="form-group col-1 my-0">
@@ -375,8 +398,9 @@
                     <div class="form-group col-4">
                     </div><!--Form-group end-->
                     <div class="form-group col-3">
-                      <input class="px-1 tamaniohorario form-control text-center" type="time" name="j2JuevesI"
-                             #J2JuevesI="ngModel" [(ngModel)]="this.Dias_Atencion[3].Inicio_Jornada2">
+                      <input [disabled]="banderaDisableJuevesJ2" class="px-1 tamaniohorario form-control text-center"
+                             type="time" name="j2JuevesI"
+                             #J2JuevesI="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[3].Inicio_Jornada2">
                     </div><!--Form-group end-->
 
                     <div class="form-group col-1">
@@ -384,12 +408,14 @@
                     </div><!--Form-group end-->
 
                     <div class="form-group col-3">
-                      <input class="px-1 tamaniohorario form-control text-center" type="time" name="j2JuevesF"
-                             #J2JuevesF="ngModel" [(ngModel)]="this.Dias_Atencion[3].Fin_Jornada2">
+                      <input [disabled]="banderaDisableJuevesJ2" class="px-1 tamaniohorario form-control text-center"
+                             type="time" name="j2JuevesF"
+                             #J2JuevesF="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[3].Fin_Jornada2">
                     </div><!--Form-group end-->
 
                     <div class="form-group col-1 my-0">
-                      <button (click)="cerrarJ2(3)" class="tamaniohorario p-0 form-control">
+                      <button [disabled]="banderaDisableJuevesJ2" (click)="cerrarJ2(3)"
+                              class="tamaniohorario p-0 form-control">
                         <span class="fa fa-times text-center"></span>
                       </button>
                     </div>
@@ -400,14 +426,15 @@
                   <div class="form-row mb-0">
                     <div class="form-group col-4">
                       <div class="checkbox-item">
-                        <input type="checkbox" id="Viernes" (click)="horarioCheckViernes($event)">
+                        <input [checked]="banderaCheckViernes" type="checkbox" id="Viernes"
+                               (click)="horarioCheckViernes($event)" [disabled]="banderaEdicionDeshabilitada">
                         <label for="Viernes">&nbsp;&nbsp;Viernes</label>
                       </div>
                     </div><!--Form-group end-->
                     <div class="form-group col-3">
                       <input [disabled]="banderaDisableViernes" class="px-1 tamaniohorario form-control text-center"
                              type="time" name="j1ViernesI"
-                             #J1ViernesI="ngModel" [(ngModel)]="this.Dias_Atencion[4].Inicio_Jornada1">
+                             #J1ViernesI="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[4].Inicio_Jornada1">
                     </div><!--Form-group end-->
 
                     <div class="form-group col-1">
@@ -417,7 +444,7 @@
                     <div class="form-group col-3">
                       <input [disabled]="banderaDisableViernes" class="px-1 tamaniohorario form-control text-center"
                              type="time" name="j1ViernesF"
-                             #J1ViernesF="ngModel" [(ngModel)]="this.Dias_Atencion[4].Fin_Jornada1">
+                             #J1ViernesF="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[4].Fin_Jornada1">
                     </div><!--Form-group end-->
 
                     <div *ngIf="btnMasViernes" class="form-group col-1 my-0">
@@ -432,8 +459,9 @@
                     <div class="form-group col-4">
                     </div><!--Form-group end-->
                     <div class="form-group col-3">
-                      <input class="px-1 tamaniohorario form-control text-center" type="time" name="j2ViernesI"
-                             #J2ViernesI="ngModel" [(ngModel)]="this.Dias_Atencion[4].Inicio_Jornada2">
+                      <input [disabled]="banderaDisableViernesJ2" class="px-1 tamaniohorario form-control text-center"
+                             type="time" name="j2ViernesI"
+                             #J2ViernesI="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[4].Inicio_Jornada2">
                     </div><!--Form-group end-->
 
                     <div class="form-group col-1">
@@ -441,12 +469,14 @@
                     </div><!--Form-group end-->
 
                     <div class="form-group col-3">
-                      <input class="px-1 tamaniohorario form-control text-center" type="time" name="j2ViernesF"
-                             #J2ViernesF="ngModel" [(ngModel)]="this.Dias_Atencion[4].Fin_Jornada2">
+                      <input [disabled]="banderaDisableViernesJ2" class="px-1 tamaniohorario form-control text-center"
+                             type="time" name="j2ViernesF"
+                             #J2ViernesF="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[4].Fin_Jornada2">
                     </div><!--Form-group end-->
 
                     <div class="form-group col-1 my-0">
-                      <button (click)="cerrarJ2(4)" class="tamaniohorario p-0 form-control">
+                      <button [disabled]="banderaDisableViernesJ2" (click)="cerrarJ2(4)"
+                              class="tamaniohorario p-0 form-control">
                         <span class="fa fa-times text-center"></span>
                       </button>
                     </div>
@@ -457,14 +487,15 @@
                   <div class="form-row mb-0">
                     <div class="form-group col-4">
                       <div class="checkbox-item">
-                        <input type="checkbox" id="Sabado" (click)="horarioCheckSabado($event)">
+                        <input [checked]="banderaCheckSabado" type="checkbox" id="Sabado"
+                               (click)="horarioCheckSabado($event)" [disabled]="banderaEdicionDeshabilitada">
                         <label for="Sabado">&nbsp;&nbsp;Sabado</label>
                       </div>
                     </div><!--Form-group end-->
                     <div class="form-group col-3">
                       <input [disabled]="banderaDisableSabado" class="px-1 tamaniohorario form-control text-center"
                              type="time" name="j1SabadoI"
-                             #J1SabadoI="ngModel" [(ngModel)]="this.Dias_Atencion[5].Inicio_Jornada1">
+                             #J1SabadoI="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[5].Inicio_Jornada1">
                     </div><!--Form-group end-->
 
                     <div class="form-group col-1">
@@ -474,7 +505,7 @@
                     <div class="form-group col-3">
                       <input [disabled]="banderaDisableSabado" class="px-1 tamaniohorario form-control text-center"
                              type="time" name="j1SabadoF"
-                             #J1SabadoF="ngModel" [(ngModel)]="this.Dias_Atencion[5].Fin_Jornada1">
+                             #J1SabadoF="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[5].Fin_Jornada1">
                     </div><!--Form-group end-->
 
                     <div *ngIf="btnMasSabado" class="form-group col-1 my-0">
@@ -489,8 +520,9 @@
                     <div class="form-group col-4">
                     </div><!--Form-group end-->
                     <div class="form-group col-3">
-                      <input class="px-1 tamaniohorario form-control text-center" type="time" name="j2SabadoI"
-                             #J2SabadoI="ngModel" [(ngModel)]="this.Dias_Atencion[5].Inicio_Jornada2">
+                      <input [disabled]="banderaDisableSabadoJ2" class="px-1 tamaniohorario form-control text-center"
+                             type="time" name="j2SabadoI"
+                             #J2SabadoI="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[5].Inicio_Jornada2">
                     </div><!--Form-group end-->
 
                     <div class="form-group col-1">
@@ -498,12 +530,14 @@
                     </div><!--Form-group end-->
 
                     <div class="form-group col-3">
-                      <input class="px-1 tamaniohorario form-control text-center" type="time" name="j2SabadoF"
-                             #J2SabadoF="ngModel" [(ngModel)]="this.Dias_Atencion[5].Fin_Jornada2">
+                      <input [disabled]="banderaDisableSabadoJ2" class="px-1 tamaniohorario form-control text-center"
+                             type="time" name="j2SabadoF"
+                             #J2SabadoF="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[5].Fin_Jornada2">
                     </div><!--Form-group end-->
 
                     <div class="form-group col-1 my-0">
-                      <button (click)="cerrarJ2(5)" class="tamaniohorario p-0 form-control">
+                      <button [disabled]="banderaDisableSabadoJ2" (click)="cerrarJ2(5)"
+                              class="tamaniohorario p-0 form-control">
                         <span class="fa fa-times text-center"></span>
                       </button>
                     </div>
@@ -514,14 +548,15 @@
                   <div class="form-row mb-0">
                     <div class="form-group col-4">
                       <div class="checkbox-item">
-                        <input type="checkbox" id="Domingo" (click)="horarioCheckDomingo($event)">
+                        <input [checked]="banderaCheckDomingo" type="checkbox" id="Domingo"
+                               (click)="horarioCheckDomingo($event)" [disabled]="banderaEdicionDeshabilitada">
                         <label for="Domingo">&nbsp;&nbsp;Domingo</label>
                       </div>
                     </div><!--Form-group end-->
                     <div class="form-group col-3">
                       <input [disabled]="banderaDisableDomingo" class="px-1 tamaniohorario form-control text-center"
                              type="time" name="j1DomingoI"
-                             #J1DomingoI="ngModel" [(ngModel)]="this.Dias_Atencion[6].Inicio_Jornada1">
+                             #J1DomingoI="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[6].Inicio_Jornada1">
                     </div><!--Form-group end-->
 
                     <div class="form-group col-1">
@@ -531,7 +566,7 @@
                     <div class="form-group col-3">
                       <input [disabled]="banderaDisableDomingo" class="px-1 tamaniohorario form-control text-center"
                              type="time" name="j1DomingoF"
-                             #J1DomingoF="ngModel" [(ngModel)]="this.Dias_Atencion[6].Fin_Jornada1">
+                             #J1DomingoF="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[6].Fin_Jornada1">
                     </div><!--Form-group end-->
 
                     <div *ngIf="btnMasDomingo" class="form-group col-1 my-0">
@@ -546,8 +581,9 @@
                     <div class="form-group col-4">
                     </div><!--Form-group end-->
                     <div class="form-group col-3">
-                      <input class="px-1 tamaniohorario form-control text-center" type="time" name="j2DomingoI"
-                             #J2DomingoI="ngModel" [(ngModel)]="this.Dias_Atencion[6].Inicio_Jornada2">
+                      <input [disabled]="banderaDisableDomingoJ2" class="px-1 tamaniohorario form-control text-center"
+                             type="time" name="j2DomingoI"
+                             #J2DomingoI="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[6].Inicio_Jornada2">
                     </div><!--Form-group end-->
 
                     <div class="form-group col-1">
@@ -555,12 +591,14 @@
                     </div><!--Form-group end-->
 
                     <div class="form-group col-3">
-                      <input class="px-1 tamaniohorario form-control text-center" type="time" name="j2DomingoF"
-                             #J2DomingoF="ngModel" [(ngModel)]="this.Dias_Atencion[6].Fin_Jornada2">
+                      <input [disabled]="banderaDisableDomingoJ2" class="px-1 tamaniohorario form-control text-center"
+                             type="time" name="j2DomingoF"
+                             #J2DomingoF="ngModel" [(ngModel)]="this.Editar_Dia_Atencion[6].Fin_Jornada2">
                     </div><!--Form-group end-->
 
                     <div class="form-group col-1 my-0">
-                      <button (click)="cerrarJ2(6)" class="tamaniohorario p-0 form-control">
+                      <button [disabled]="banderaDisableDomingoJ2" (click)="cerrarJ2(6)"
+                              class="tamaniohorario p-0 form-control">
                         <span class="fa fa-times text-center"></span>
                       </button>
                     </div>
@@ -569,7 +607,8 @@
 
                 </div>
 
-                <p class="p">Actualiza tu horario comercial para que se muestre a los cliente cuándo esté abierto el negocio.</p>
+                <p class="p">Actualiza tu horario comercial para que se muestre a los cliente cuándo esté abierto el
+                  negocio.</p>
               </div>
 
             </div>
@@ -584,7 +623,8 @@
           <div class="card card-body mt-3">
             <div class="form-group">
               <label>Términos y Condiciones</label>
-              <app-ngx-editor #Terminos_Condiciones="ngModel" [(ngModel)]="this.Tienda.Terminos_Condiciones"
+              <app-ngx-editor #Terminos_Condiciones="ngModel"
+                              [(ngModel)]="this.EditarTienda.Terminos_Condiciones"
                               [(ngModel)]="this.htmlcomponent" [config]="editorConfig"
                               [placeholder]="'Inserte el texto aquí...'"
                               [spellcheck]="true" class="editor_terminos"
@@ -592,7 +632,28 @@
             </div> <!-- form-group end.// -->
           </div>
         </div>
-<br><br><br><br><br><br>
+
+        <br>
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title mb-2">Acciones</h5>
+            <div class="form-row justify-content-end">
+              <button *ngIf="banderaEdicionDeshabilitada" (click)="habilitarEdicion()" href="#"
+                      class="btn btn-warning text-white "><span class="fa fa-edit"></span> Modificar
+              </button> &nbsp;
+              <button [disabled]="!FormGeneralTienda.checkValidity()" *ngIf="!banderaEdicionDeshabilitada"
+                      (click)="verificarHorarioAtencion()" href="#"
+                      class="btn btn-primary text-white "><span class="fa fa-save"></span> Guardar
+              </button> &nbsp;
+              <button *ngIf="!banderaEdicionDeshabilitada" href="#" (click)="cancelarModificacion(); "
+                      class="btn btn-light  "><span
+                class="fa fa-close"></span> Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <br>
       </div>
     </div>
 
