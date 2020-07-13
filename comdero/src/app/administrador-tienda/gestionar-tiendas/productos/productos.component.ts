@@ -415,35 +415,46 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
 
   public async guardarProducto() {
 
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(async (result) => {
+      if (result.value) {
+        this.banderaAnimacionCarga = true;
+        try {
+          if (this.validar()) {
+            if (this.videoYoutube) {
+              this.videoYoutubeGuardar = new Imagen_Producto('Video', 'youtube', this.direccionVideoYoutube, 0);
+              debugger;
+              this.Imagenes_Producto[0].push(this.videoYoutubeGuardar);
+              this.videoPorGuardar = "";
+            } else if (this.videoPorGuardar) {
+              this.Imagenes_Producto[0].push(this.videoPorGuardar);
+            }
+            this.categoriasEnviar = [];
+            for (let categorias of this.categoriasSeleccionadas) {
+              this.categoriasEnviar.push(categorias['ID_CATEGORIA']);
+            }
+            let response = await this._productoServicio.saveProducto(this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
+            this.mensageCorrecto(response['menssage']);
+          }
+          this.banderaAnimacionCarga = false;
+        } catch
+          (e) {
+          this.banderaAnimacionCarga = false;
+          console.log("error:" + e);
+          if (JSON.stringify((e).error.message))
+            this.mensageError(JSON.stringify((e).error.message));
+          else this.mensageError("Error de conexión intentelo mas tarde");
+        }
+      }
+    })
 
-    this.banderaAnimacionCarga = true;
-     try {
-       if (this.validar()) {
-         if (this.videoYoutube) {
-           this.videoYoutubeGuardar = new Imagen_Producto('Video', 'youtube', this.direccionVideoYoutube, 0);
-           debugger;
-           this.Imagenes_Producto[0].push(this.videoYoutubeGuardar);
-           this.videoPorGuardar = "";
-         } else if (this.videoPorGuardar) {
-           this.Imagenes_Producto[0].push(this.videoPorGuardar);
-         }
-         this.categoriasEnviar = [];
-         for (let categorias of this.categoriasSeleccionadas) {
-           this.categoriasEnviar.push(categorias['ID_CATEGORIA']);
-         }
-        let response = await this._productoServicio.saveProducto(this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
-         this.mensageCorrecto(response['menssage']);
-       
-       }
-       this.banderaAnimacionCarga = false;
-     } catch
-       (e) {
-       this.banderaAnimacionCarga = false;
-       console.log("error:" + e);
-       if (JSON.stringify((e).error.message))
-         this.mensageError(JSON.stringify((e).error.message));
-       else this.mensageError("Error de conexión intentelo mas tarde");
-     }
 
   }
 
