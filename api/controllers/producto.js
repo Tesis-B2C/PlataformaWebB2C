@@ -139,7 +139,7 @@ async function saveProducto(req, res) {
 
 async function getMisProductos(req, res) {
     try {
-        let productosObtenidas = await Oferta.findAll({where: {NUM_TIENDA: req.params.id}, include: {model: Producto}});
+        let productosObtenidas = await Oferta.findAll({where: {NUM_TIENDA: req.params.id}, include: {model: Producto}, order: [['ID_OFERTA', 'DESC']]});
 
         if (productosObtenidas.length) {
             res.status(200).send({
@@ -169,12 +169,12 @@ async function getProducto(req, res) {
             include: {
                 model: Producto,
                 include: [{
-                    model: Variante,
+                    model: Variante, where: {ID_PRODUCTO: req.params.id},
                     separate: true,
                     order: [['NUM_VARIANTE', 'ASC']],
                     include: {model: Imagen_Producto, separate: true, order: [['ID_IMAGEN', 'ASC']]}
                 }, {
-                    model: Producto_Categoria,
+                    model: Producto_Categoria, where: {ID_PRODUCTO: req.params.id},
                     include: {model: Categoria}
                 }],
 
@@ -337,16 +337,28 @@ async function updateProducto(req, res) {
                 let num = vvariantesGuardas[i].NUM_VARIANTE;
 
                 if (vimagenes[i][j].Estado_Imagen == 1 && (vimagenes[i][j].Tipo_Imagen == 'video' || vimagenes[i][j].Tipo_Imagen == 'youtube')) {
-                    vimagenesporborrar.push(vimagenes[i][j].path);
-                    await Imagen_Producto.update({
-                        NOMBRE_IMAGEN: vimagenes[i][j].Nombre_Imagen,
-                        TIPO_IMAGEN: vimagenes[i][j].Tipo_Imagen,
-                        IMAGEN: vimagenes[i][j].Imagen,
-                        TAMANIO_IMAGEN: vimagenes[i][j].Tamanio_Imagen,
-                    }, {
-                        where: {ID_IMAGEN: vimagenes[i][j].Id_Imagen},
-                        transaction: t
-                    });
+                    if (vimagenes[i][j].Id_Imagen != null) {
+                        vimagenesporborrar.push(vimagenes[i][j].path);
+                        await Imagen_Producto.update({
+                            NOMBRE_IMAGEN: vimagenes[i][j].Nombre_Imagen,
+                            TIPO_IMAGEN: vimagenes[i][j].Tipo_Imagen,
+                            IMAGEN: vimagenes[i][j].Imagen,
+                            TAMANIO_IMAGEN: vimagenes[i][j].Tamanio_Imagen,
+                        }, {
+                            where: {ID_IMAGEN: vimagenes[i][j].Id_Imagen},
+                            transaction: t
+                        });
+                    }else {
+                        await Imagen_Producto.create({
+                            NUM_VARIANTE: vvariantesGuardas[i].NUM_VARIANTE,
+                            NOMBRE_IMAGEN: vimagenes[i][j].Nombre_Imagen,
+                            TIPO_IMAGEN: vimagenes[i][j].Tipo_Imagen,
+                            IMAGEN: vimagenes[i][j].Imagen,
+                            TAMANIO_IMAGEN: vimagenes[i][j].Tamanio_Imagen,
+                        }, {
+                            transaction: t
+                        });
+                    }
                 } else if (vimagenes[i][j].Estado_Imagen == 1) {
                     await Imagen_Producto.create({
                         NUM_VARIANTE: vvariantesGuardas[i].NUM_VARIANTE,

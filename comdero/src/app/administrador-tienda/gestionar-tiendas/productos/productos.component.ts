@@ -12,6 +12,8 @@ import {ProductoServicio} from '../../../servicios/producto.servicio';
 import Swal from 'sweetalert2'
 import {ToastrService} from 'ngx-toastr';
 import {CurrencyPipe} from '@angular/common'
+import {Location} from '@angular/common';
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-productos',
@@ -20,6 +22,7 @@ import {CurrencyPipe} from '@angular/common'
   providers: [CurrencyPipe]
 })
 export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
+
   public videoPorGuardar;
   public Imagenes_Producto = [[]];
   public imagenes = [[]];
@@ -95,11 +98,11 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
 
   public banderaValidaciones: boolean = false;
 
-  constructor(private cp: CurrencyPipe, public toastr: ToastrService, private _productoServicio: ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
+  constructor(public router: Router, private route: ActivatedRoute, private location: Location, private cp: CurrencyPipe, public toastr: ToastrService, private _productoServicio: ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
-    this.Oferta = new Oferta(this.identidadTienda.NUM_TIENDA, null, "Garantia del vendedor",0);
+    this.Oferta = new Oferta(this.identidadTienda.NUM_TIENDA, 0, "Garantia del vendedor", 0);
     this.Producto = new Producto("000000", null, null, null, null, 1, 1, "Nuevo", null);
-    this.Variantes.push(new Variante(null, null, null, null, 1, "unidades",0));
+    this.Variantes.push(new Variante(null, null, null, null, 1, "unidades", 0));
   }
 
   ngOnInit() {
@@ -134,6 +137,9 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     delete this.Oferta;
     delete this.Variantes;
     this.toastr.clear();
+    delete this.Imagenes_Producto;
+
+
   }
 
 
@@ -156,7 +162,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
             if (this.imagenes[indice] != null)
               this.imagenes[indice].push(event.target.result);
             document.forms["form"].reset();
-            document.forms["formVariaciones"].reset();
+            //  document.forms["formVariaciones"].reset();
 
           }
           await reader.readAsDataURL(eventEntrante.target.files[i]);
@@ -255,17 +261,18 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     this.vectorOpciones.push(1);
     this.color.push("");
     this.vectorBanderaAgregarImagen.push(false);
-    this.Variantes.push(new Variante(null, null, null, null, 1, "unidades",0));
+    this.Variantes.push(new Variante(null, null, null, null, 1, "unidades", 0));
     this.Imagenes_Producto.push([]);
     this.imagenes.push([]);
     console.log("asdasd");
   }
 
   public borrarOpcionesProducto(pocicion: number) {
+
     this.vectorOpciones.splice(pocicion, 1);
     this.Variantes.splice(pocicion + 1, 1);
     this.Imagenes_Producto[pocicion + 1] = [];
-    this.imagenes[pocicion + 1] = [];
+    this.imagenes.splice(pocicion + 1) ;
     this.vectorBanderaAgregarImagen[pocicion + 1] = false;
 
 
@@ -322,7 +329,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   }
 
 
-  busquedaCategoria2(busqueda) {
+  public busquedaCategoria2(busqueda) {
     this.c2.forEach(c22 => {
       if (c22.CAT_ID_CATEGORIA == busqueda) {
         this.categoriaEncontrada2.add(c22);
@@ -404,32 +411,70 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   }
 
   public categoriasEnviar = [];
+  public banderaAnimacionCarga: boolean = false;
 
   public async guardarProducto() {
-    try {
-      if (this.videoYoutube) {
-        this.videoYoutubeGuardar = new Imagen_Producto('Video', 'youtube', this.direccionVideoYoutube, 0);
-        debugger;
-        this.Imagenes_Producto[0].push(this.videoYoutubeGuardar);
-        this.videoPorGuardar = "";
-      } else if (this.videoPorGuardar) {
-        this.Imagenes_Producto[0].push(this.videoPorGuardar);
-      }
-      this.categoriasEnviar = [];
-      for (let categorias of this.categoriasSeleccionadas) {
-        this.categoriasEnviar.push(categorias['ID_CATEGORIA']);
-      }
 
-      let response = await this._productoServicio.saveProducto(this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
-      this.mensageCorrecto(response.data);
-    } catch
-      (e) {
-      console.log("error:" + e);
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
+
+    this.banderaAnimacionCarga = true;
+     try {
+       if (this.validar()) {
+         if (this.videoYoutube) {
+           this.videoYoutubeGuardar = new Imagen_Producto('Video', 'youtube', this.direccionVideoYoutube, 0);
+           debugger;
+           this.Imagenes_Producto[0].push(this.videoYoutubeGuardar);
+           this.videoPorGuardar = "";
+         } else if (this.videoPorGuardar) {
+           this.Imagenes_Producto[0].push(this.videoPorGuardar);
+         }
+         this.categoriasEnviar = [];
+         for (let categorias of this.categoriasSeleccionadas) {
+           this.categoriasEnviar.push(categorias['ID_CATEGORIA']);
+         }
+        let response = await this._productoServicio.saveProducto(this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
+         this.mensageCorrecto(response['menssage']);
+       
+       }
+       this.banderaAnimacionCarga = false;
+     } catch
+       (e) {
+       this.banderaAnimacionCarga = false;
+       console.log("error:" + e);
+       if (JSON.stringify((e).error.message))
+         this.mensageError(JSON.stringify((e).error.message));
+       else this.mensageError("Error de conexión intentelo mas tarde");
+     }
+
+  }
+
+
+  public validar(): boolean {
+    this.banderaValidaciones = true;
+  debugger;
+    if (this.imagenes.filter(v => v.length > 0).length == this.imagenes.length && this.categoriasSeleccionadas.size > 0 && document.forms["formInformacion"].checkValidity()
+      && document.forms["formInventario"].checkValidity() && document.forms["formPrecios"].checkValidity()) {
+      if (document.forms["formVariaciones"] != null) {
+        if (document.forms["formVariaciones"].checkValidity()) {
+          return true;
+        } else {
+          let body = document.getElementById('body') as HTMLElement;
+          body.scrollTo(0, 0);
+          window.scroll(0, 0);
+          this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
+            {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
+          return false
+        }
+      } else {
+        return true;
+      }
+    } else {
+      let body = document.getElementById('body') as HTMLElement;
+      body.scrollTo(0, 0);
+      window.scroll(0, 0);
+      this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
+        {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
+      return false
     }
-
   }
 
 
@@ -466,6 +511,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     });
   }
 
+
   formatear(element) {
     debugger;
     let valor = this.cp.transform(element.target.value, '$',);
@@ -474,14 +520,6 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     element.target.value = valor2[1].replace(',', "");
   }
 
-  validar() {
-    this.banderaValidaciones = true;
-    let body = document.getElementById('body') as HTMLElement;
-    body.scrollTo(0, 0);
-    window.scroll(0, 0)
-    this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
-      {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
-  }
 }
 
 

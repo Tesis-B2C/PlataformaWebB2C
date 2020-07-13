@@ -410,6 +410,7 @@ export class ModificarProductoComponent implements OnInit {
     this.videoPorGuardar.Nombre_Imagen = 'Video';
     this.videoPorGuardar.Tipo_Imagen = 'youtube';
     this.videoPorGuardar.Imagen = this.direccionVideoYoutube;
+    this.videoPorGuardar.Tamanio_Imagen="0";
     this.videoPorGuardar.Estado_Imagen = 1;
     if (this.auxi != null) {
       this.Imagenes_Producto[this.auxi][this.auxj] = this.videoPorGuardar;
