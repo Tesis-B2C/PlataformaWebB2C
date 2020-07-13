@@ -120,7 +120,7 @@ export class DatosPersonalesComponent implements OnInit {
   }
 
   public cancelarEdicion() {
-    //this.banderaTipo;
+    this.banderaTipo = false;
     this.ciudades = null;
     this.bandera = true;
     this.ciudad = "";
