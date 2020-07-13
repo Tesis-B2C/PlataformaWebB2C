@@ -289,7 +289,12 @@ export class DatosPersonalesComponent implements OnInit {
     var cad: any = this.EditarAgente.Id_Agente;
     var i;
     var total = 0;
-    var longitud = cad.length - 3;
+    var longitud;
+    if(this.EditarAgente.Tipo == 'Persona')
+      longitud = cad.length;
+    else
+      longitud = cad.length - 3;
+    
     var longcheck = longitud - 1;
     if (cad !== "" && longitud === 10) {
       for (i = 0; i < longcheck; i++) {
