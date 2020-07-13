@@ -120,7 +120,7 @@ export class DatosPersonalesComponent implements OnInit {
   }
 
   public cancelarEdicion() {
-    this.banderaTipo;
+    //this.banderaTipo;
     this.ciudades = null;
     this.bandera = true;
     this.ciudad = "";
@@ -132,6 +132,12 @@ export class DatosPersonalesComponent implements OnInit {
     this.Correo = "";
     this.codigo = "";
     this.loading = false;
+    this.objetoEmail = {
+      asunto: null,
+      correo: null,
+      codigo: null
+    };
+
     this.EditarAgente = new Agente(null, null, null,
       null, null, null, 0, null, null,
       null, null, null, null);
