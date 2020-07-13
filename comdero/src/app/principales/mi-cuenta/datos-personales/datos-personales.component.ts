@@ -22,6 +22,7 @@ export class DatosPersonalesComponent implements OnInit {
   private LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
   private soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
 
+  public select_ciudad: boolean = false;
   public banderaTipo: boolean;
   public provincias;
   public ciudades;
@@ -81,6 +82,7 @@ export class DatosPersonalesComponent implements OnInit {
   }
 
   async seleccionarCiudad(event) {
+    this.select_ciudad = false;
     this.EditarAgente.Ciudad = event;
   }
 
@@ -120,6 +122,7 @@ export class DatosPersonalesComponent implements OnInit {
   }
 
   public cancelarEdicion() {
+    this.select_ciudad = false;
     this.banderaTipo = false;
     this.ciudades = null;
     this.bandera = true;
@@ -237,6 +240,7 @@ export class DatosPersonalesComponent implements OnInit {
           this.cancelarEdicion();
           this.mensageCorrecto(response['message']);
         }else{
+          this.select_ciudad = true;
           this.mostrarToastError("Asegurate de seleccionar la ciudad de tu negocio.", "");
         }
       } else {

@@ -258,7 +258,7 @@
           <div class="form-group col-md-6">
             <label>* Ciudad</label>
 
-            <select (change)="seleccionarCiudad($event.target.value)" [disabled]="banderaEdicionDeshabilitada"
+            <select [ngClass]="{'select_ciudad': select_ciudad}" (change)="seleccionarCiudad($event.target.value)" [disabled]="banderaEdicionDeshabilitada"
                     #Ciudad="ngModel" [(ngModel)]="this.ciudad" [ngClass]="{
           'errorSelect': Ciudad.invalid && (Ciudad.dirty || Ciudad.touched),
           'satisfactorioSelect': Ciudad.valid && (Ciudad.dirty || Ciudad.touched)}"
