@@ -17,11 +17,12 @@ const places = require("../../../../../node_modules/places.js/dist/cdn/places.js
 
 
 export class DatosPersonalesComponent implements OnInit {
-  public banderaTipo: boolean;
   private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
   public soloLetrasPattern: any = "[ a-zA-ZÑñáéíóúÁÉÍÓÚ ][ a-zA-ZÑñáéíóúÁÉÍÓÚ ]*$[0-9]{0}";
   private LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
   private soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
+
+  public banderaTipo: boolean;
   public provincias;
   public ciudades;
   public identidad;
@@ -47,16 +48,11 @@ export class DatosPersonalesComponent implements OnInit {
       null, null, null, null);
   }
 
-
   ngOnInit() {
     this.getDpaProvincias("P");
     this.identidad = this._agenteServicio.getIdentity();
-
     this.iniciarEdicion();
-
     this.comprobarTipoPersona();
-
-
   }
 
   public mostrarToast(mensaje, icono) {
@@ -64,10 +60,8 @@ export class DatosPersonalesComponent implements OnInit {
       {positionClass: 'toast-top-right', enableHtml: true, closeButton: true});
   }
 
-
   async getDpaProvincias(buscar) {
     try {
-
       let response = await this._dpaServicio.getDpaProvincias(buscar).toPromise();
       this.provincias = response.data;
     } catch (e) {
@@ -106,7 +100,6 @@ export class DatosPersonalesComponent implements OnInit {
       placesAutocomplete.on('change', (e) => {
         console.log(e.suggestion)
       });
-
       var placesAutocomplete2 = places({
         container: document.querySelector('#calleSecundaria'),
         templates: {
@@ -117,26 +110,44 @@ export class DatosPersonalesComponent implements OnInit {
       }).configure({
         type: 'address',
         countries: ['ec'],
-
-
       });
       placesAutocomplete2.on('change', (e) => {
         console.log(e.suggestion)
       });
       this.bandera = false;
-
     }
     document.getElementById('CallePrincipal').focus();
   }
 
-  public  iniciarEdicion() {
+  public cancelarEdicion() {
+    this.banderaTipo;
+    this.ciudades = null;
+    this.bandera = true;
+    this.ciudad = "";
+    this.provincia = "";
+    this.EditarAgente = "";
+    this.banderaEdicionDeshabilitada = true;
+    this.banderaPasoUnoCambiarCorreo = true;
+    this.banderaPasoDosCambiarCorreo = false;
+    this.Correo = "";
+    this.codigo = "";
+    this.loading = false;
+    this.EditarAgente = new Agente(null, null, null,
+      null, null, null, 0, null, null,
+      null, null, null, null);
+
+    this.identidad = this._agenteServicio.getIdentity();
+    this.iniciarEdicion();
+    this.comprobarTipoPersona();
+  }
+
+  public iniciarEdicion() {
     if (this.identidad.DPA)
       this.ciudad = this.identidad.DPA.NOMBRE + ' (Actual)';
     else this.ciudad = "";
     if (this.identidad.DPA)
       this.provincia = this.identidad.DPA.DPAP.NOMBRE + ' (Actual)';
-    else
-      this.provincia = "";
+    else this.provincia = "";
     this.banderaEdicionDeshabilitada = true;
     this.EditarAgente.Id_Agente = this.identidad.ID_AGENTE;
     this.EditarAgente.Num_Cod_Postal = this.identidad.NUM_COD_POSTAL;
@@ -151,6 +162,7 @@ export class DatosPersonalesComponent implements OnInit {
     this.EditarAgente.Estado = this.identidad.ESTADO;
     this.EditarAgente.Ciudad = this.identidad.DPA.COD_DPA;
     this.EditarAgente.Calle_Principal_Agente = this.identidad.CALLE_PRINCIPAL_AGENTE;
+    this.EditarAgente.Calle_Secundaria_Agente = this.identidad.CALLE_SECUNDARIA_AGENTE;
     this.EditarAgente.Num_Casa_Agente = this.identidad.NUM_CASA_AGENTE;
   }
 
@@ -206,14 +218,21 @@ export class DatosPersonalesComponent implements OnInit {
   public async actualizarAgente() {
     try {
       if (this.validarCedula() == true) {
-        this.loading = true;
-        let response = await this._agenteServicio.actualizarAgente(this.EditarAgente).toPromise();
-        let data = await this._agenteServicio.actualizarAgenteIdentity(this.identidad.CORREO).toPromise();
+        let aprobarCiudades: boolean = true;
+        if (this.ciudad == "" || this.ciudad == null)
+          aprobarCiudades = false;
 
-        localStorage.setItem("identity", JSON.stringify(data['data']));
-        this.identidad = this._agenteServicio.getIdentity();
-        this.iniciarEdicion();
-        this.mensageCorrecto(response['message']);
+        if(aprobarCiudades){
+          this.loading = true;
+          let response = await this._agenteServicio.actualizarAgente(this.EditarAgente).toPromise();
+          let data = await this._agenteServicio.actualizarAgenteIdentity(this.identidad.CORREO).toPromise();
+
+          localStorage.setItem("identity", JSON.stringify(data['data']));
+          this.cancelarEdicion();
+          this.mensageCorrecto(response['message']);
+        }else{
+          this.mostrarToastError("Asegurate de seleccionar la ciudad de tu negocio.", "");
+        }
       } else {
         if (this.banderaTipo) {
           this.mostrarToast("La cédula ingresada no es válida", "");
@@ -227,7 +246,6 @@ export class DatosPersonalesComponent implements OnInit {
       if (JSON.stringify((e).error.message))
         this.mensageError(JSON.stringify((e).error.message));
       else this.mensageError("Error de conexión intentelo mas tarde");
-
     }
     this.loading = false;
   }
@@ -240,12 +258,10 @@ export class DatosPersonalesComponent implements OnInit {
   async cambioCorreoAgente() {
     try {
       if (this.codigo == localStorage.getItem('codigoCambioCorreo')) {
-
         let response = await this._agenteServicio.cambioCorreoAgente(this.identidad.CORREO, this.objetoEmail.correo).toPromise();
         let data = await this._agenteServicio.actualizarAgenteIdentity(this.objetoEmail.correo).toPromise();
         localStorage.setItem("identity", JSON.stringify(data['data']));
         this.identidad = this._agenteServicio.getIdentity();
-
         this.iniciarEdicion();
         this.mensageCorrecto(response['message']);
       } else {
@@ -315,5 +331,10 @@ export class DatosPersonalesComponent implements OnInit {
         //icon:'sm'
       }
     });
+  }
+
+  public mostrarToastError(mensaje, icono) {
+    this.toastr.error('<div class="row no-gutters"><p align="justify" class="col-12 LetrasToastInfo"><strong>!Error</strong><br>' + mensaje + '</p> </div>', "",
+      {positionClass: 'toast-top-right', enableHtml: true, closeButton: true});
   }
 }
