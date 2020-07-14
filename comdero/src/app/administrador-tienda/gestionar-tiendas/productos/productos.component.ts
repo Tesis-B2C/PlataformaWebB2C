@@ -272,7 +272,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     this.vectorOpciones.splice(pocicion, 1);
     this.Variantes.splice(pocicion + 1, 1);
     this.Imagenes_Producto[pocicion + 1] = [];
-    this.imagenes.splice(pocicion + 1) ;
+    this.imagenes.splice(pocicion + 1);
     this.vectorBanderaAgregarImagen[pocicion + 1] = false;
 
 
@@ -413,45 +413,56 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   public categoriasEnviar = [];
   public banderaAnimacionCarga: boolean = false;
 
+  public async publicarProducto() {
+    try {
+      if (this.validar()) {
+        if (this.videoYoutube) {
+          this.videoYoutubeGuardar = new Imagen_Producto('Video', 'youtube', this.direccionVideoYoutube, 0);
+          debugger;
+          this.Imagenes_Producto[0].push(this.videoYoutubeGuardar);
+          this.videoPorGuardar = "";
+        } else if (this.videoPorGuardar) {
+          this.Imagenes_Producto[0].push(this.videoPorGuardar);
+        }
+        this.categoriasEnviar = [];
+        for (let categorias of this.categoriasSeleccionadas) {
+          this.categoriasEnviar.push(categorias['ID_CATEGORIA']);
+        }
+        let response = await this._productoServicio.saveProducto(this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
+        this.mensageCorrecto(response['menssage']);
+      }
+      this.banderaAnimacionCarga = false;
+    } catch
+      (e) {
+      this.banderaAnimacionCarga = false;
+      console.log("error:" + e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
+  }
+
   public async guardarProducto() {
 
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title: '<header class="login100-form-title-registro mb-o"><h5 class="card-title"><strong>!Estas seguro</strong></h5></header>',
+      text: "El producto será registrado y publicado en su tienda asegurate de que los datos sean correctos",
       icon: 'warning',
+      position: 'center',
+      width: 600,
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Guardar',
+      cancelButtonText: 'Cancelar',
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        container: 'my-swal',
+        cancelButton: 'btn btn-secondary px-5 ml-5',
+      }
     }).then(async (result) => {
       if (result.value) {
         this.banderaAnimacionCarga = true;
-        try {
-          if (this.validar()) {
-            if (this.videoYoutube) {
-              this.videoYoutubeGuardar = new Imagen_Producto('Video', 'youtube', this.direccionVideoYoutube, 0);
-              debugger;
-              this.Imagenes_Producto[0].push(this.videoYoutubeGuardar);
-              this.videoPorGuardar = "";
-            } else if (this.videoPorGuardar) {
-              this.Imagenes_Producto[0].push(this.videoPorGuardar);
-            }
-            this.categoriasEnviar = [];
-            for (let categorias of this.categoriasSeleccionadas) {
-              this.categoriasEnviar.push(categorias['ID_CATEGORIA']);
-            }
-            let response = await this._productoServicio.saveProducto(this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
-            this.mensageCorrecto(response['menssage']);
-          }
-          this.banderaAnimacionCarga = false;
-        } catch
-          (e) {
-          this.banderaAnimacionCarga = false;
-          console.log("error:" + e);
-          if (JSON.stringify((e).error.message))
-            this.mensageError(JSON.stringify((e).error.message));
-          else this.mensageError("Error de conexión intentelo mas tarde");
-        }
+        this.publicarProducto();
       }
     })
 
@@ -461,7 +472,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
 
   public validar(): boolean {
     this.banderaValidaciones = true;
-  debugger;
+    debugger;
     if (this.imagenes.filter(v => v.length > 0).length == this.imagenes.length && this.categoriasSeleccionadas.size > 0 && document.forms["formInformacion"].checkValidity()
       && document.forms["formInventario"].checkValidity() && document.forms["formPrecios"].checkValidity()) {
       if (document.forms["formVariaciones"] != null) {
@@ -487,7 +498,6 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
       return false
     }
   }
-
 
   mensageError(mensaje) {
     Swal.fire({

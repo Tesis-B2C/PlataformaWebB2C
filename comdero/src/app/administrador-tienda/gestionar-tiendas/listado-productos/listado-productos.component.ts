@@ -49,6 +49,9 @@ export class ListadoProductosComponent implements OnInit {
     this.result = await this.search(this.busqueda);
   }
 
+  public cambiarEstadoProducto(){
+
+  }
 
 
 }
