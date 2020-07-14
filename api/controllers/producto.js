@@ -378,13 +378,16 @@ async function updateProducto(req, res) {
         }
 
         if (ofertaActualizada && productoActualizado) {
-            console.log("vector imagene spor borrar", vimagenesporborrar);
+
+          if(vimagenesporborrar[0]){
+              console.log("vector imagene spor borrar2", vimagenesporborrar);
             for (let ipb of vimagenesporborrar) {
                 if (fs.exists(path.resolve(ipb))) {
                     console.log('existe');
                     await fs.unlink(path.resolve(ipb));
                 }
             }
+          }
             res.status(200).send({
                 message: "Su producto ha sido registrado  exitosamente"
             });

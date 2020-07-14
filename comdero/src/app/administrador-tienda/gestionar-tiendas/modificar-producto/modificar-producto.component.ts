@@ -487,20 +487,23 @@ export class ModificarProductoComponent implements OnInit {
 
   public borrarVideo() {
     debugger;
-    if (this.Imagenes_Producto[0].filter(imagen => (imagen.Tipo_Imagen == 'video' || imagen.Tipo_Imagen == 'youtube'))) {
+    if (this.Imagenes_Producto[0].filter(imagen => (imagen.Tipo_Imagen == 'video' || imagen.Tipo_Imagen == 'youtube')).length>0) {
+      //this.videoPorGuardar = "";
       this.videoYoutube = "";
       this.data.video = "";
       for (let j in this.Imagenes_Producto[0]) {
         if (this.Imagenes_Producto[0][j].Tipo_Imagen == 'video' || this.Imagenes_Producto[0][j].Tipo_Imagen == 'youtube') {
           this.Imagenes_Producto[0][j].Estado_Imagen=2;
+          if(this.Imagenes_Producto[0][j].path){
           this.Imagenes_Producto[0][j].Imagen=this.Imagenes_Producto[0][j].path;
+          }
         }
       }
 
     } else {
-      this.videoYoutube = "";
+      this.videoPorGuardar = "";
       this.data.video = "";
-
+      this.videoYoutube="";
     }
   }
 
@@ -526,7 +529,7 @@ export class ModificarProductoComponent implements OnInit {
   public async guardarProducto() {
     try {
       debugger;
-      if (this.auxi == null) {
+      if (this.auxi == null && this.videoPorGuardar!="" ) {
         this.Imagenes_Producto[0].push(this.videoPorGuardar);
       }
       this.categoriasEnviar = [];
