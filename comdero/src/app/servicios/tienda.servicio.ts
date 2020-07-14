@@ -44,4 +44,13 @@ export class TiendaServicio {
     let headers = new HttpHeaders({ "Content-type": "application/json" });
     return this._http.get<objeto>(this.url + "getMisTiendas/"+Id_Agente , { headers: headers });
   }
+
+  public updateEstadoTienda(Id_Tienda, estado_a_cambiar){
+    let obj = {
+      estado: estado_a_cambiar
+    }
+    let params = JSON.stringify(obj);
+    let headers = new HttpHeaders({"Content-type": "application/json"});
+    return this._http.put<objeto>(this.url + "updateEstadoTienda/" + Id_Tienda, params, {headers: headers});
+  }
 }

@@ -1,7 +1,7 @@
 'use strict'
 
 
-const HORARIO_ATENCION =require('../models/horario_atencion');
+const HORARIO_ATENCION = require('../models/horario_atencion');
 const moment = require('moment');
 const TIENDA = require('../models/tienda'); //importar el modelo del usuario  o lo que son las clases comunesvar DPA = require('../models/dpa'); //importar el modelo del usuario  o lo que son las clases comunes
 const SUCURSAL = require('../models/sucursal');
@@ -9,6 +9,8 @@ const jwt = require('../services/jwt');
 const db = require('../database/db');
 const fs = require('fs-extra');
 const path = require('path');
+const OFERTA = require("../models/oferta");
+const {Op} = require("sequelize");
 
 /*const {QueryTypes} = require('sequelize');*/
 
@@ -132,7 +134,10 @@ async function registrarTienda(req, res) {
 async function getDatosTienda(req, res) {
 
     try {
-        let tiendaObtenida = await TIENDA.findOne({where: {NUM_TIENDA: req.params.id}, include: [{model: SUCURSAL},{model:HORARIO_ATENCION}]});
+        let tiendaObtenida = await TIENDA.findOne({
+            where: {NUM_TIENDA: req.params.id},
+            include: [{model: SUCURSAL}, {model: HORARIO_ATENCION}]
+        });
 
         if (tiendaObtenida) {
             res.status(200).send({
@@ -156,7 +161,7 @@ async function getDatosTienda(req, res) {
 async function getMisTiendas(req, res) {
 
     try {
-        let tiendasObtenidas = await TIENDA.findAll({where: {COD_AGENTE: req.params.id}});
+        let tiendasObtenidas = await TIENDA.findAll({where: {COD_AGENTE: req.params.id,ESTADO_TIENDA: {[Op.or]:[0,1]}}});
 
         if (tiendasObtenidas.length) {
             res.status(200).send({
@@ -171,6 +176,41 @@ async function getMisTiendas(req, res) {
 
         }
     } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+
+async function updateEstadoTienda(req, res) {
+    const t = await db.sequelize.transaction({autocommit: false});
+    try {
+        let tiendaActualizada = await TIENDA.update({
+            ESTADO_TIENDA: req.body.estado,
+        }, {
+            where: {NUM_TIENDA: req.params.id},
+            transaction: t
+        });
+
+        let ofertaActualizada = await OFERTA.update({
+            ESTADO_OFERTA: req.body.estado,
+        }, {
+            where: {NUM_TIENDA: req.params.id},
+            transaction: t
+        });
+
+        if (tiendaActualizada && ofertaActualizada) {
+            res.status(200).send({
+                message: "La tienda ha sido actualizada correctamente"
+            });
+            await t.commit();
+        } else {
+            res.status(404).send({
+                message: 'Al parecer no se encuentra la tienda registrada en la base de datos'
+            });
+        }
+    } catch (err) {
+        await t.rollback();
         res.status(500).send({
             message: 'error:' + err
         });
@@ -250,10 +290,12 @@ async function obtenerImagenTienda(req, res) {
 }
 */
 
+
 module.exports = {          // para exportar todas las funciones de este modulo
     registrarTienda,
     getDatosTienda,
     getMisTiendas,
+    updateEstadoTienda
     /* subirImagenesTienda,*/
     /*   obtenerImagenTienda*/
 

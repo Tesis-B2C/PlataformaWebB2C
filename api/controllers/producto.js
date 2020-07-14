@@ -11,7 +11,7 @@ const db = require('../database/db');
 const fs = require('fs-extra');
 const path = require('path');
 
-//const {Op} = require("sequelize");
+const {Op} = require("sequelize");
 
 async function saveProducto(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
@@ -139,7 +139,11 @@ async function saveProducto(req, res) {
 
 async function getMisProductos(req, res) {
     try {
-        let productosObtenidas = await Oferta.findAll({where: {NUM_TIENDA: req.params.id}, include: {model: Producto}, order: [['ID_OFERTA', 'DESC']]});
+        let productosObtenidas = await Oferta.findAll({ //$or: [{ESTADO_OFERTA: 0},{ESTADO_OFERTA: 1}]
+            where: {NUM_TIENDA: req.params.id,  ESTADO_OFERTA: {[Op.or]:[0,1]} },
+            include: {model: Producto},
+            order: [['ID_OFERTA', 'DESC']]
+        });
 
         if (productosObtenidas.length) {
             res.status(200).send({
@@ -348,7 +352,7 @@ async function updateProducto(req, res) {
                             where: {ID_IMAGEN: vimagenes[i][j].Id_Imagen},
                             transaction: t
                         });
-                    }else {
+                    } else {
                         await Imagen_Producto.create({
                             NUM_VARIANTE: vvariantesGuardas[i].NUM_VARIANTE,
                             NOMBRE_IMAGEN: vimagenes[i][j].Nombre_Imagen,
@@ -407,11 +411,30 @@ async function updateProducto(req, res) {
     }
 }
 
+async function updateEstadoProducto(req, res) {
+
+    let ofertaActualizada = await Oferta.update({
+        ESTADO_OFERTA: req.body.estado,
+    }, {
+        where: {ID_OFERTA: req.params.id},
+    });
+    if (ofertaActualizada) {
+        res.status(200).send({
+            message: "El producto ha sido actualizado correctamente"
+        });
+    } else {
+        res.status(404).send({
+            message: 'Al parecer no se encuentra el producto registrado en la base de datos'
+        });
+    }
+}
+
 module.exports = {          // para exportar todas las funciones de este modulo
 
     saveProducto,
     getMisProductos,
     getProducto,
-    updateProducto
+    updateProducto,
+    updateEstadoProducto
 
 };

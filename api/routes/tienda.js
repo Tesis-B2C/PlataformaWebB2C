@@ -16,6 +16,8 @@ const  multer = require('../librerias/multer');
 api.post('/registrarTienda',multer.fields([{name:'logo'},{name: 'banner'}]), TiendaController.registrarTienda);
 api.get('/getDatosTienda/:id',TiendaController.getDatosTienda);
 api.get('/getMisTiendas/:id',TiendaController.getMisTiendas);
+api.put('/updateEstadoTienda/:id',TiendaController.updateEstadoTienda);
+
 //api.post('/subirImagenesTienda/:id/:tipo',[md_upload],TiendaController.subirImagenesTienda);
 /*api.get('/obtenerImagenTienda/:imageFile', TiendaController.obtenerImagenTienda);*/
 module.exports = api;// exportamos el router de express para que las routas funcionen por todo el back end

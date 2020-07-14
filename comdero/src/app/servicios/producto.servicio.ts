@@ -84,4 +84,13 @@ export class ProductoServicio {
     return this._http.put<objeto>(this.url + "updateProducto/" + Id_Oferta, fd,);
   }
 
+  public updateEstadoProducto(Id_Oferta, estado_a_cambiar){
+    let obj = {
+      estado: estado_a_cambiar
+    }
+    let params = JSON.stringify(obj);
+    let headers = new HttpHeaders({"Content-type": "application/json"});
+    return this._http.put<objeto>(this.url + "updateEstadoProducto/" + Id_Oferta, params, {headers: headers});
+  }
+
 }
