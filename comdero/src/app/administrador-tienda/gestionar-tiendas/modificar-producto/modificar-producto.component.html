@@ -316,7 +316,8 @@
         <hr>
         <div class="container">
           <div *ngFor="let item of this.Variantes; index as i" class="form-row justify-content-center px-0 ">
-            <div *ngIf="this.Variantes[i].Estado_Variante==0 || this.Variantes[i].Estado_Variante==1" class="form-row justify-content-center px-0 ">
+            <div *ngIf="this.Variantes[i].Estado_Variante==0 || this.Variantes[i].Estado_Variante==1"
+                 class="form-row justify-content-center px-0 ">
               <div class="form-group col-11  mt-4 mb-0">
                 <p style="font-weight: bolder; font-size: medium">Opcion {{i + 1}}</p>
               </div>
@@ -454,12 +455,20 @@
         <h6>Video promocional</h6>
         <hr>
         <div class="container">
-          <div class="form-row">
+          <div class="form-row justify-content-between">
 
-            <span *ngIf="banderaMensajeMaximoVideo" class=" col-md-5" style="color: red;font-size: small">* Recuerda Maximo 150MB</span>
-            <a (click)="abrirModalVideoYoutube(modalVideoYoutube)" class="agregarVideoYoutube ml-2 col-md-5 ">
+            <span *ngIf="banderaMensajeMaximoVideo" class=" col-md-5 " style="color: red;font-size: small">* Recuerda Maximo 150MB</span>
+
+            <a (click)="abrirModalVideoYoutube(modalVideoYoutube)" class="agregarVideoYoutube ml-2 col-md-5 mr-auto ">
               Agregar video de youtube &nbsp; <span class="fab fa-youtube "></span>
             </a>
+
+            <div class="form-group  col-1 mb-0 text-right" *ngIf="videoYoutube || data.video">
+              <button (click)="borrarOpcionesProducto(i)" class="form-control " style=" border: none; color: red">
+                <span class="fa fa-trash "></span>
+              </button>
+            </div>
+
           </div>
 
 

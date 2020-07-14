@@ -195,7 +195,7 @@ async function updateEstadoTienda(req, res) {
         let ofertaActualizada = await OFERTA.update({
             ESTADO_OFERTA: req.body.estado,
         }, {
-            where: {NUM_TIENDA: req.params.id},
+            where: {NUM_TIENDA: req.params.id, ESTADO_OFERTA: {[Op.or]:[0,1]}},
             transaction: t
         });
 
