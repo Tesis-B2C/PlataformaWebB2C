@@ -163,7 +163,7 @@ export class ModificarProductoComponent implements OnInit {
           this.Imagenes_Producto[i][j].Estado_Imagen = 0;
           this.imagenes[i][j] = 'http://localhost:3977/' + v[i].IMAGEN_PRODUCTOs[j].IMAGEN
         } else if (v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN == "video") {
-          this.imagenes[i][j]="video"
+          this.imagenes[i][j] = "video"
           this.auxi = i;
           this.auxj = j;
           this.data.video = 'http://localhost:3977/' + v[i].IMAGEN_PRODUCTOs[j].IMAGEN;
@@ -173,7 +173,7 @@ export class ModificarProductoComponent implements OnInit {
           this.videoPorGuardar.path = v[i].IMAGEN_PRODUCTOs[j].IMAGEN;
           this.Imagenes_Producto[i].push(this.videoPorGuardar);
         } else if (v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN == "youtube") {
-          this.imagenes[i][j]="video"
+          this.imagenes[i][j] = "video"
           this.auxi = i;
           this.auxj = j;
           this.direccionVideoYoutube = v[i].IMAGEN_PRODUCTOs[j].IMAGEN;
@@ -321,7 +321,7 @@ export class ModificarProductoComponent implements OnInit {
         } else if (this.Imagenes_Producto[0].length == 7) {
           this.banderaMensajeMaximoImagenes = false
           this.banderaMaximoImagenes = false;
-        }else if (this.Imagenes_Producto[indice].length == 6  && indice!=0) {
+        } else if (this.Imagenes_Producto[indice].length == 6 && indice != 0) {
           this.banderaMensajeMaximoImagenes = false
           this.banderaMaximoImagenes = false;
         }
@@ -379,7 +379,6 @@ export class ModificarProductoComponent implements OnInit {
   }
 
 
-
   public getVideoIframeInicio() {
     let url = this.direccionVideoYoutube;
     var video, results;
@@ -410,7 +409,7 @@ export class ModificarProductoComponent implements OnInit {
     this.videoPorGuardar.Nombre_Imagen = 'Video';
     this.videoPorGuardar.Tipo_Imagen = 'youtube';
     this.videoPorGuardar.Imagen = this.direccionVideoYoutube;
-    this.videoPorGuardar.Tamanio_Imagen="0";
+    this.videoPorGuardar.Tamanio_Imagen = "0";
     this.videoPorGuardar.Estado_Imagen = 1;
     if (this.auxi != null) {
       this.Imagenes_Producto[this.auxi][this.auxj] = this.videoPorGuardar;
@@ -484,6 +483,25 @@ export class ModificarProductoComponent implements OnInit {
 
     if (this.imagenes[indice].length == 0)
       this.vectorBanderaAgregarImagen[indice] = false;
+  }
+
+  public borrarVideo() {
+    debugger;
+    if (this.Imagenes_Producto[0].filter(imagen => (imagen.Tipo_Imagen == 'video' || imagen.Tipo_Imagen == 'youtube'))) {
+      this.videoYoutube = "";
+      this.data.video = "";
+      for (let j in this.Imagenes_Producto[0]) {
+        if (this.Imagenes_Producto[0][j].Tipo_Imagen == 'video' || this.Imagenes_Producto[0][j].Tipo_Imagen == 'youtube') {
+          this.Imagenes_Producto[0][j].Estado_Imagen=2;
+          this.Imagenes_Producto[0][j].Imagen=this.Imagenes_Producto[0][j].path;
+        }
+      }
+
+    } else {
+      this.videoYoutube = "";
+      this.data.video = "";
+
+    }
   }
 
   public borrarOpcionesProducto(pocicion: number) {
