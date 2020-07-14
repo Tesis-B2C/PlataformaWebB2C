@@ -162,14 +162,22 @@
         <br>
 
 
-        <div class="form-row">
-          <a class="ml-2 col-md-5"><label>Video promocional del producto </label> </a>
-          <span *ngIf="banderaMensajeMaximoVideo" class=" col-md-5" style="color: red;font-size: small">* Recuerda Maximo 150MB</span>
-          <a (click)="abrirModalVideoYoutube(modalVideoYoutube)" class="agregarVideoYoutube ml-2 col-md-5 ">
+        <div class="form-row ml-3 ">
+          <a class="col-md-5 mt-2"><label>Video promocional del producto </label> </a>
+
+          <span *ngIf="banderaMensajeMaximoVideo" class=" col-md-4 mt-2" style="color: red;font-size: small">* Recuerda Maximo 150MB</span>
+
+          <a (click)="abrirModalVideoYoutube(modalVideoYoutube)" class="agregarVideoYoutube mt-2 col-md-5 ">
             Agregar video de youtube &nbsp; <span class="fab fa-youtube "></span>
           </a>
-        </div>
 
+
+          <div class="form-group col-1 " *ngIf="videoYoutube || data.video">
+            <button (click)="borrarVideo()" class="form-control " style=" border: none; color: red">
+              <span class="fa fa-trash "></span>
+            </button>
+          </div>
+        </div>
 
         <div class="form-group ">
 
@@ -640,13 +648,13 @@
       <div class=" container">
         <h6>Acciones</h6>
         <hr>
-         <div class="text-right">
-        <button (click)="this.guardarProducto()" class="btn btn-primary text-nowrap mb-4  col-auto"
-                type="button">
-          <span *ngIf="banderaAnimacionCarga" class="spinner-border spinner-border-sm mr-2"></span>
-          Guardar Producto
-        </button>
-         </div>
+        <div class="text-right">
+          <button (click)="this.guardarProducto()" class="btn btn-primary text-nowrap mb-4  col-auto"
+                  type="button">
+            <span *ngIf="banderaAnimacionCarga" class="spinner-border spinner-border-sm mr-2"></span>
+            Guardar Producto
+          </button>
+        </div>
 
       </div>
     </form>

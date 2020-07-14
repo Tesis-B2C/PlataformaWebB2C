@@ -223,6 +223,13 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
       this.vectorBanderaAgregarImagen[indice] = false;
   }
 
+  public borrarVideo() {
+    this.videoYoutubeGuardar="";
+    this.videoPorGuardar="";
+    this.data.video="";
+    this.videoYoutube="";
+  }
+
   public opcionCondicionProducto(condicion) {
     this.Producto.Condicion = condicion;
 
