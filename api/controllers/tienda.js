@@ -161,7 +161,12 @@ async function getDatosTienda(req, res) {
 async function getMisTiendas(req, res) {
 
     try {
-        let tiendasObtenidas = await TIENDA.findAll({where: {COD_AGENTE: req.params.id,ESTADO_TIENDA: {[Op.or]:[0,1]}}});
+        let tiendasObtenidas = await TIENDA.findAll({
+            where: {
+                COD_AGENTE: req.params.id,
+                ESTADO_TIENDA: {[Op.or]: [0, 1]}
+            }
+        });
 
         if (tiendasObtenidas.length) {
             res.status(200).send({
@@ -195,7 +200,7 @@ async function updateEstadoTienda(req, res) {
         let ofertaActualizada = await OFERTA.update({
             ESTADO_OFERTA: req.body.estado,
         }, {
-            where: {NUM_TIENDA: req.params.id, ESTADO_OFERTA: {[Op.or]:[0,1]}},
+            where: {NUM_TIENDA: req.params.id, ESTADO_OFERTA: {[Op.or]: [0, 1]}},
             transaction: t
         });
 
@@ -217,6 +222,103 @@ async function updateEstadoTienda(req, res) {
     }
 }
 
+
+async function updatePersonalizacionTienda(req, res) {
+    console.log("files ", req.files)
+
+    try {
+        let tiendaObtenida = await TIENDA.findOne({
+            where: {NUM_TIENDA: req.params.id}
+
+        });
+
+        if (req.files.logo) {
+            var logo = req.files.logo[0].path;
+
+        }
+        if (req.files.banner) {
+            var banner = req.files.banner[0].path;
+
+        }
+
+        let tiendaGuardado = await TIENDA.update({
+            LOGO: logo,
+            BANNER: banner
+        }, {
+            where: {NUM_TIENDA: req.params.id}
+        });
+
+
+        if (tiendaGuardado) {
+            if (tiendaObtenida.dataValues.LOGO && req.files.logo ) {
+                if (fs.exists(path.resolve(tiendaObtenida.dataValues.LOGO))) {
+                    console.log('existe');
+                    await fs.unlink(path.resolve(tiendaObtenida.dataValues.LOGO));
+                }
+            }
+            if (tiendaObtenida.dataValues.BANNER && req.files.banner) {
+                if (fs.exists(path.resolve(tiendaObtenida.dataValues.BANNER))) {
+                    console.log('existe');
+                    await fs.unlink(path.resolve(tiendaObtenida.dataValues.BANNER));
+                }
+            }
+            res.status(200).send({
+                data: tiendaGuardado.dataValues,
+                message: "Su tienda ha sido actualizada correctamente"
+            });
+
+
+        } else {
+            res.status(404).send({
+                message: "Al parecer hubo probelmas con la actualizacion de su tienda intentalo nuevamente"
+            });
+        }
+
+    } catch
+        (err) {
+        /*if (fs.exists(path.resolve(req.files.logo[0].path))) {
+              console.log('existe');
+              await fs.unlink(path.resolve(req.files.logo[0].path));
+          }
+          if (fs.exists(path.resolve(req.files.banner[0].path))) {
+              console.log('existe');
+              await fs.unlink(path.resolve(req.files.banner[0].path));
+          }*/
+        res.status(500).send({
+            message: err.name
+        });
+
+    }
+
+
+    /* try {
+
+         console.log("ESTO ESTA EN EL BACKEN " + req.body.Tienda);
+       /!* let query ='EXECT guardarTienda :@tienda';
+         let tiendaRegistrada = await sequelize.query(query, {
+             replacements: {
+                 tienda: '{"Correo_Agente":"tefo.aguayo@gmail.com"}',
+                 type:sequelize.QueryTypes.SELECT
+             }
+         });*!/
+
+
+         if (tiendaRegistrada) {
+             res.status(200).send({
+                 message: 'Correcto'
+             });
+         } else {
+             res.status(500).send({
+                 message: 'Error'
+             });
+         }
+
+     } catch (err) {
+         res.status(500).send({
+             message: err.name
+         });
+     }*/
+}
 
 /*async function subirImagenesTienda(req, res) {
 
@@ -295,7 +397,8 @@ module.exports = {          // para exportar todas las funciones de este modulo
     registrarTienda,
     getDatosTienda,
     getMisTiendas,
-    updateEstadoTienda
+    updateEstadoTienda,
+    updatePersonalizacionTienda,
     /* subirImagenesTienda,*/
     /*   obtenerImagenTienda*/
 
