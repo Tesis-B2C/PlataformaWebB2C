@@ -273,7 +273,7 @@
                           [(ngModel)]="this.Sucursales[0].Provincia"
                           [ngClass]="{'errorSelect': ProvinciaC.invalid && (ProvinciaC.dirty || ProvinciaC.touched),
           'satisfactorioSelect': ProvinciaC.valid && (ProvinciaC.dirty || ProvinciaC.touched)}"
-                          class=" tamanioInputs form-control" data-size="4" name="provinciaCasa" required>
+                          class=" tamanioInputs form-control" data-size="4" name="provinciaCasa">
                     <option selecteddisabled="true">Selecciona una..</option>
                     <option *ngFor="let provincia of this.provincias"
                             value="{{provincia.COD_DPA}}"> {{provincia.NOMBRE }}</option>
@@ -291,7 +291,7 @@
                   <select #CiudadC="ngModel" [(ngModel)]="this.Sucursales[0].Ciudad" [ngClass]="{
           'errorSelect': CiudadC.invalid && (CiudadC.dirty || CiudadC.touched),
           'satisfactorioSelect': CiudadC.valid && (CiudadC.dirty || CiudadC.touched)}"
-                          class="tamanioInputs form-control" name="ciudadCasa" placeholder="" required>
+                          class="tamanioInputs form-control" name="ciudadCasa" placeholder="">
                     <option selected="true" disabled="true">Selecciona una..</option>
                     <option *ngFor="let ciudad of this.ciudades[0]"
                             value="{{ciudad.COD_DPA}}"> {{ciudad.NOMBRE }}</option>

@@ -294,7 +294,7 @@ export class DatosPersonalesComponent implements OnInit {
       longitud = cad.length;
     else
       longitud = cad.length - 3;
-    
+
     var longcheck = longitud - 1;
     if (cad !== "" && longitud === 10) {
       for (i = 0; i < longcheck; i++) {

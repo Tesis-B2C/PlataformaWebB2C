@@ -164,12 +164,22 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
   public async ValidarPaso2(validador) {
     if (validador == "2") {
       this.banderaToast = false;
-      console.log("PASO2" + JSON.stringify(this.Tienda));
-      if (this.validarCedula() == true) {
-        this.banderaToastRuc = false;
-        this.wizard.goToNextStep();
-      } else
-        this.banderaToastRuc = true;
+      let vacioCiudad: boolean = false;
+      for (let i in this.Sucursales) {
+        console.log("SUCURSAL CIUDAD" + this.Sucursales[i].Ciudad);
+        if (this.Sucursales[i].Ciudad == "" || this.Sucursales[i].Ciudad == null)
+          vacioCiudad = true;
+      }
+      console.log("vacioCiudad" + vacioCiudad);
+      if (!vacioCiudad) {
+        if (this.validarCedula() == true) {
+          this.banderaToastRuc = false;
+          this.wizard.goToNextStep();
+        } else
+          this.banderaToastRuc = true;
+      }else{
+        this.mostrarToast("Asegurate de ingresar la provincia y ciudad", "");
+      }
     } else {
       this.banderaToast = true;
     }
@@ -210,6 +220,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
   public async registrarTienda() {
     this.loading = true;
     try {
+
       this.Tienda_Enviar.Tienda = this.Tienda;
       this.Tienda_Enviar.Sucursal = this.Sucursales;
       console.log("Objeto a enviar al backend:" + this.Tienda_Enviar);

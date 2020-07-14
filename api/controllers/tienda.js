@@ -137,7 +137,8 @@ async function getDatosTienda(req, res) {
             include: [{
                 model: SUCURSAL,
                 include: {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}
-            }, {model: HORARIO_ATENCION}]
+            }, {model: HORARIO_ATENCION}],
+            order: [[SUCURSAL, 'NUM_SUCURSAL', 'ASC' ]]
         });
 
         if (tiendaObtenida) {
@@ -317,7 +318,6 @@ async function actualizarTiendaGeneral(req, res) {
 
 async function actualizarTiendaSucursal(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
-    let errorNoCambio = false;
     try {
         let params = req.body;
         let tiendaId = req.params.id;
@@ -332,7 +332,6 @@ async function actualizarTiendaSucursal(req, res) {
         }
 
         for (const s of params) {
-            errorNoCambio = true;
             await SUCURSAL.create(
                 {
                     NUM_TIENDA: tiendaId,
@@ -347,7 +346,6 @@ async function actualizarTiendaSucursal(req, res) {
                     TIPO_SUCURSAL: s.Tipo_Sucursal
                 },
                 {transaction: t});
-            errorNoCambio = false;
         }
 
         res.status(200).send({message: 'Sus datos han sido actualizados.'});
@@ -355,14 +353,9 @@ async function actualizarTiendaSucursal(req, res) {
 
     } catch (e) {
         await t.rollback();
-        if (errorNoCambio == true) {
-            res.status(404).send({message: 'Sus datos no han sido actualizados. Intente nuevamente.'});
-        }else{
-            res.status(500).send({
-                message: err.name
-            });
-        }
-
+        res.status(500).send({
+            message: err.name
+        });
     }
 }
 
