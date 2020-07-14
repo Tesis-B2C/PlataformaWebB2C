@@ -20,21 +20,40 @@ export class MenuGestionTiendasComponent {
     this.banderaSideBar = !this.banderaSideBar;
   }
 
-  public async updateEstadoProducto(estado) {
+  public async updateEstadoTienda(estado) {
+    Swal.fire({
+      title: '<header class="login100-form-title-registro mb-o"><h5 class="card-title"><strong>!Estas seguro</strong></h5></header>',
+      text: "Al ocultar la tienda, esta no será visible para los usuarios de la plataforma al igual que los productos que contenga, por otro lado la tienda podra ser recuperada en cualquier momento incluyendo sus productos",
+      icon: 'warning',
+      position: 'center',
+      width: 600,
+      showCancelButton: true,
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar',
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        container: 'my-swal',
+        cancelButton: 'btn btn-secondary px-5 ml-5',
+      }
+    }).then(async (result) => {
+      if (result.value) {
+        try {
+          let responseUpdate = await this._tiendaServicio.updateEstadoTienda(this.identidadTienda.NUM_TIENDA, estado).toPromise();
+          this.mensageCorrecto(responseUpdate['menssage']);
+          localStorage.removeItem("identityTienda");
+          this.router.navigate(['/administrador/administrador-tienda/mis-tiendas'])
 
-    try {
-      let responseUpdate = await this._tiendaServicio.updateEstadoTienda(this.identidadTienda.NUM_TIENDA, estado).toPromise();
-      this.mensageCorrecto(responseUpdate['menssage']);
-      localStorage.removeItem("identityTienda");
-      this.router.navigate(['/administrador/administrador-tienda/mis-tiendas'])
 
+        } catch (e) {
+          console.log("error:" + e);
+          if (JSON.stringify((e).error.message))
+            this.mensageError(JSON.stringify((e).error.message));
+          else this.mensageError("Error de conexión intentelo mas tarde");
+        }
+      }
+    })
 
-    } catch (e) {
-      console.log("error:" + e);
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
-    }
 
   }
 

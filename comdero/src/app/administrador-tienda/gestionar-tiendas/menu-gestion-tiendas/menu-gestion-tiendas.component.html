@@ -80,7 +80,23 @@
     </ul>
     <ul class="mx-2">
       <hr>
-      <p>Configuraciones &nbsp;<span class="fa fa-cog mb-4"></span></p>
+      <p>Configuraciones &nbsp;<span class="fa fa-cog mb-4"></span>&nbsp;&nbsp; &nbsp; | &nbsp;
+        <button placement="top" ngbTooltip="Ocultar tienda" *ngIf="this.identidadTienda.ESTADO_TIENDA==0" (click)="updateEstadoTienda(1)"
+                class="p-0   text-right">
+          <span class="fa fa-eye-slash"></span>
+        </button>
+        <button placement="top" ngbTooltip="Reactivar Tienda" *ngIf="this.identidadTienda.ESTADO_TIENDA==1" (click)="updateEstadoTienda(0)"
+                 class="p-0   text-right">
+          <span class="fa fa-eye"></span>
+        </button>
+        &nbsp;&nbsp;
+        <button  placement="top" ngbTooltip="Eliminar Tienda" (click)="updateEstadoTienda(2)"
+                class="p-0  text-right">
+          <span class="fa fa-trash"></span>
+        </button>
+
+
+      </p>
 
       <li class="mb-2 ">
         <a href="#tienda" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle ">
@@ -97,34 +113,7 @@
           <li routerLink="personalizacion-tienda" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
             <a>Personalización</a>
           </li>
-          <li *ngIf="this.identidadTienda.ESTADO_TIENDA==0">
-            <a>
-              <button (click)="updateEstadoProducto(1)"
-                      class="btn btn-warning  p-0 pr-5 pl-1 text-right" style="font-size: x-small;text-align: left">
-                Ocultar
-              </button>
-            </a>
-          </li>
 
-          <li *ngIf="this.identidadTienda.ESTADO_TIENDA==1">
-            <a>
-              <button (click)="updateEstadoProducto(0)"
-                      class="btn btn-warning  p-0 pr-5 pl-1 text-right" style="font-size: x-small;text-align: left">
-                Aparecer
-              </button>
-
-            </a>
-          </li>
-
-
-          <li>
-            <a>
-              <button (click)="updateEstadoProducto(2)" class="btn btn-danger p-0 pr-5 pl-1 text-right"
-                      style="font-size: x-small;text-align: left">
-                Eliminar
-              </button>
-            </a>
-          </li>
 
         </ul>
       </li>
