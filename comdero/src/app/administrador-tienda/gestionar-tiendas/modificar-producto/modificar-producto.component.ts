@@ -12,6 +12,7 @@ import {UnidadMedidaServicio} from "../../../servicios/unidad_medida.servicio";
 import {DomSanitizer} from "@angular/platform-browser";
 import {CurrencyPipe} from "@angular/common";
 import {Cmyk, ColorPickerService} from "ngx-color-picker";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-modificar-producto',
@@ -87,7 +88,7 @@ export class ModificarProductoComponent implements OnInit {
   public direccionVideoYoutube: any;
 
 
-  constructor(private cpService: ColorPickerService, private cp: CurrencyPipe, private _sanitizer: DomSanitizer, private _unidadesMedidaServicio: UnidadMedidaServicio, private _categoriaServicio: CategoriaServicio, private modalService: NgbModal, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
+  constructor(public toastr: ToastrService, private cpService: ColorPickerService, private cp: CurrencyPipe, private _sanitizer: DomSanitizer, private _unidadesMedidaServicio: UnidadMedidaServicio, private _categoriaServicio: CategoriaServicio, private modalService: NgbModal, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
     this.Oferta = new Oferta(null, null, null, null);
     this.Producto = new Producto(null, null, null, null, null, null, null, null, null);
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
@@ -300,6 +301,7 @@ export class ModificarProductoComponent implements OnInit {
       this.vectorBanderaAgregarImagen[indice] = true;
       if (filesAmount > 6) {
         this.banderaMensajeMaximoImagenes = true;
+        this.vectorBanderaHabilitante[indice]=true;
       } else {
         for (let i = 0; i < filesAmount; i++) {
           this.Imagenes_Producto[indice].push(new Imagen_Producto(eventEntrante.target.files[i].name, eventEntrante.target.files[i].type, eventEntrante.target.files[i], eventEntrante.target.files[i].size));
@@ -316,17 +318,17 @@ export class ModificarProductoComponent implements OnInit {
         }
         debugger;
         if (this.Imagenes_Producto[0].filter(imagen => (imagen.Tipo_Imagen == 'video' || imagen.Tipo_Imagen == 'youtube')).length > 0) {
-          if (this.Imagenes_Producto[indice].length > 5 && indice != 0) {
+          if (this.Imagenes_Producto[indice].length >= 5 && indice != 0) {
             this.banderaMensajeMaximoImagenes = true;
             this.vectorBanderaHabilitante[indice] = false;
 
-          } else if (this.Imagenes_Producto[indice].length > 6) {
+          } else if (this.Imagenes_Producto[indice].length >= 6) {
             this.banderaMensajeMaximoImagenes = true
             this.vectorBanderaHabilitante[indice] = false;
 
           }
         } else {
-          if (this.Imagenes_Producto[indice].length > 6) {
+          if (this.Imagenes_Producto[indice].length >= 6) {
             this.banderaMensajeMaximoImagenes = true;
             this.vectorBanderaHabilitante[indice] = false;
 
@@ -470,7 +472,7 @@ export class ModificarProductoComponent implements OnInit {
 
   public agregarOpcionesProducto() {
     this.vectorBanderaAgregarImagen.push(false);
-    this.vectorBanderaHabilitante.push(true);
+    this.vectorBanderaHabilitante.push(false);
     this.Variantes.push(new Variante(null, null, null, null, 1, "unidades", 1));
     this.Imagenes_Producto.push([]);
     this.imagenes.push([]);
@@ -478,7 +480,7 @@ export class ModificarProductoComponent implements OnInit {
   }
 
   public quitarImagenes(indice: any, imagen) {
-    debugger;
+
     if (this.Imagenes_Producto[indice][imagen].Estado_Imagen == 1) {
       this.imagenes[indice].splice(imagen, 1);
       document.forms["form"].reset();
@@ -491,11 +493,11 @@ export class ModificarProductoComponent implements OnInit {
 
 
     if (this.Imagenes_Producto[0].filter(imagen => (imagen.Tipo_Imagen == 'video' || imagen.Tipo_Imagen == 'youtube')).length > 0) {
-      if (this.Imagenes_Producto[indice].length > 5 && indice != 0) {
+      if (this.Imagenes_Producto[indice].length >= 5 && indice != 0) {
         this.banderaMensajeMaximoImagenes = true;
         this.vectorBanderaHabilitante[indice] = false;
 
-      } else if (this.Imagenes_Producto[indice].length > 6) {
+      } else if (this.Imagenes_Producto[indice].length >= 6) {
         this.banderaMensajeMaximoImagenes = true
         this.vectorBanderaHabilitante[indice] = false;
 
@@ -503,7 +505,7 @@ export class ModificarProductoComponent implements OnInit {
         this.vectorBanderaHabilitante[indice] = true;
       }
     } else {
-      if (this.Imagenes_Producto[indice].length > 6) {
+      if (this.Imagenes_Producto[indice].length >= 6) {
         this.banderaMensajeMaximoImagenes = true;
         this.vectorBanderaHabilitante[indice] = false;
 
@@ -512,8 +514,27 @@ export class ModificarProductoComponent implements OnInit {
       }
     }
 
-    if (this.imagenes[indice].length == 0)
+    if (this.imagenes[indice].length == 0) {
       this.vectorBanderaAgregarImagen[indice] = false;
+    }
+    debugger
+    if (this.Imagenes_Producto[indice].filter(imagen => (imagen.Tipo_Imagen == 'video' || imagen.Tipo_Imagen == 'youtube')).length > 0) {
+      if (this.Imagenes_Producto[indice].filter(imagen => (imagen.Estado_Imagen == 2)).length == this.Imagenes_Producto[indice].length && indice != 0) {
+        this.vectorBanderaAgregarImagen[indice] = false;
+        this.vectorBanderaHabilitante[indice] = false;
+      } else if (this.Imagenes_Producto[indice].filter(imagen => (imagen.Estado_Imagen == 2)).length == this.Imagenes_Producto[indice].length - 1) {
+        this.vectorBanderaAgregarImagen[indice] = false;
+        this.vectorBanderaHabilitante[indice] = false;
+      }
+
+    } else {
+      if (this.Imagenes_Producto[indice].filter(imagen => (imagen.Estado_Imagen == 2)).length == this.Imagenes_Producto[indice].length) {
+        this.vectorBanderaAgregarImagen[indice] = false;
+        this.vectorBanderaHabilitante[indice] = false;
+      }
+    }
+
+
   }
 
   public borrarVideo() {
@@ -555,22 +576,84 @@ export class ModificarProductoComponent implements OnInit {
   }
 
 
+  public validar(): boolean {
+    this.banderaValidaciones = true;
+    debugger;
+    if (this.vectorBanderaHabilitante.filter(v => v == false).length==0 &&  this.categoriasSeleccionadas.size > 0 && document.forms["formInformacion"].checkValidity()) {
+      if (document.forms["formVariaciones"] != null) {
+        if (document.forms["formVariaciones"].checkValidity()) {
+          return true;
+        } else {
+          let body = document.getElementById('body') as HTMLElement;
+          body.scrollTo(0, 0);
+          window.scroll(0, 0);
+          this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
+            {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
+          return false
+        }
+      } else {
+        return true;
+      }
+    } else {
+      let body = document.getElementById('body') as HTMLElement;
+      body.scrollTo(0, 0);
+      window.scroll(0, 0);
+      this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
+        {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
+      return false
+    }
+  }
+
+
   categoriasEnviar = [];
 
+
   public async guardarProducto() {
+
+    Swal.fire({
+      title: '<header class="login100-form-title-registro mb-o"><h5 class="card-title"><strong>!Estas seguro</strong></h5></header>',
+      text: "El producto será registrado y publicado en su tienda asegurate de que los datos sean correctos",
+      icon: 'warning',
+      position: 'center',
+      width: 600,
+      showCancelButton: true,
+      confirmButtonText: 'Guardar',
+      cancelButtonText: 'Cancelar',
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        container: 'my-swal',
+        cancelButton: 'btn btn-secondary px-5 ml-5',
+      }
+    }).then(async (result) => {
+      if (result.value) {
+        // this.banderaAnimacionCarga = true;
+        this.publicarProducto();
+      }
+    })
+
+
+  }
+
+  public async publicarProducto() {
+
+
     try {
       debugger;
-      if (this.auxi == null && this.videoPorGuardar != "") {
-        this.Imagenes_Producto[0].push(this.videoPorGuardar);
-      }
-      this.categoriasEnviar = [];
-      for (let categorias of this.categoriasSeleccionadas) {
-        this.categoriasEnviar.push(categorias['ID_CATEGORIA']);
-      }
-      console.log("oferta", this.Oferta, "producto", this.Producto, "Variantes", this.Variantes, "Imagen producto", this.Imagenes_Producto, "video producto", this.videoPorGuardar, "categoria", this.categoriasSeleccionadas)
+      if (this.validar()) {
 
-      let response = await this._productoServicio.updateProducto(this.identidadProducto.ID_OFERTA, this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
-      // this.mensageCorrecto(response.data);
+        if (this.auxi == null && this.videoPorGuardar.Tamanio_Imagen != null) {
+          this.Imagenes_Producto[0].push(this.videoPorGuardar);
+        }
+        this.categoriasEnviar = [];
+        for (let categorias of this.categoriasSeleccionadas) {
+          this.categoriasEnviar.push(categorias['ID_CATEGORIA']);
+        }
+        console.log("oferta", this.Oferta, "producto", this.Producto, "Variantes", this.Variantes, "Imagen producto", this.Imagenes_Producto, "video producto", this.videoPorGuardar, "categoria", this.categoriasSeleccionadas)
+
+        let response = await this._productoServicio.updateProducto(this.identidadProducto.ID_OFERTA, this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
+        this.mensageCorrecto(response['message']);
+      }
     } catch
       (e) {
       console.log("error:" + e);
@@ -611,4 +694,22 @@ export class ModificarProductoComponent implements OnInit {
       }
     });
   }
+
+
+  mensageCorrecto(mensaje) {
+    Swal.fire({
+      icon: 'success',
+      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Correcto..</h5></header>',
+      text: mensaje,
+      position: 'center',
+      width: 600,
+      buttonsStyling: false,
+      //footer: '<a href="http://localhost:4200/loguin"><b><u>Autentificate Ahora</u></b></a>',
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        //icon:'sm'
+      }
+    });
+  }
+
 }

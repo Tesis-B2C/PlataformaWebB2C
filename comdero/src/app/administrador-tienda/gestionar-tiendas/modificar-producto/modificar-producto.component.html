@@ -94,7 +94,7 @@
 
   <div class="row justify-content-center">
     <div class="col-md-10" id="panelUno">
-      <form #FormInformacion id="formInformacion" class="card card-body validate-form">
+      <form #FormInformacion id="formInformacion" name="formInformacion" class="card card-body validate-form">
         <h6>Información</h6>
         <hr>
         <div class="container">
@@ -114,7 +114,7 @@
               <input #CodigoProducto="ngModel" [(ngModel)]="this.Producto.Cod_Producto"
                      class=" form-control py-3 "
                      name="codigoProducto"
-                     type="text">
+                     type="text" disabled>
             </div>
             <div class="col-md-3 ">
               <label>Marca </label>
@@ -399,48 +399,55 @@
                       </div>
                     </div>
                   </div>
+
+                  <div *ngIf="!vectorBanderaHabilitante[i]">
+                    <p class="alert1 alert-info"><i class='fa fa-exclamation-circle'> </i> &nbsp; Debes ingresar al menos
+                      una
+                      imagen.</p>
+                  </div>
                 </form>
               </div> <!-- form-group end.// -->
-              <div class="form-group col-lg-7">
-                <label> Stock y unidad de medida del producto</label>
-                <div class="input-group">
+              <form  name="formVariaciones" class="container row">
+                <div class="form-group col-lg-7">
+                  <label> Stock y unidad de medida del producto</label>
+                  <div class="input-group">
 
-                  <input #Stock="ngModel" [(ngModel)]="this.Variantes[i].Stock" class="form-control" name="stock{{i}}"
-                         placeholder="200" type="number" min="0" step="0.01" oninput="validity.valid||(value='');"
-                         required [ngClass]="{'is-invalid': Stock.invalid && banderaValidaciones}">
+                    <input #Stock="ngModel" [(ngModel)]="this.Variantes[i].Stock" class="form-control" name="stock{{i}}"
+                           placeholder="200" type="number" min="0" step="0.01" oninput="validity.valid||(value='');"
+                           required [ngClass]="{'is-invalid': Stock.invalid && banderaValidaciones}">
 
-                  <select #Unidad="ngModel" [(ngModel)]="this.Variantes[i].Cod_Unidad" class=" form-control col-lg-5 "
-                          id="selectUnidades" name="unidad{{i}}"
+                    <select #Unidad="ngModel" [(ngModel)]="this.Variantes[i].Cod_Unidad" class=" form-control col-lg-5 "
+                            id="selectUnidades" name="unidad{{i}}"
 
-                          [ngClass]="{'errorSelect': Stock.invalid && banderaValidaciones}">
+                            [ngClass]="{'errorSelect': Stock.invalid && banderaValidaciones}">
 
-                    <option *ngFor="let unidad of this.unidades"
-                            [selected]="unidad.COD_UNIDAD_MEDIDA==this.Variantes[i].Cod_Unidad">{{unidad.COD_UNIDAD_MEDIDA}}</option>
-                  </select>
+                      <option *ngFor="let unidad of this.unidades"
+                              [selected]="unidad.COD_UNIDAD_MEDIDA==this.Variantes[i].Cod_Unidad">{{unidad.COD_UNIDAD_MEDIDA}}</option>
+                    </select>
 
-                </div>
-                <div *ngIf="Stock.errors?.required && banderaValidaciones">
-                  <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
-                </div>
-              </div>
-              <div class="form-group  col-md-4">
-                <label>Precio</label>
-                <div class="input-group">
-                  <input #PrecioUnitario="ngModel" [(ngModel)]="this.Variantes[i].Precio_Unitario"
-                         aria-label="Amount (to the nearest dollar)" class="form-control"
-                         name="precioUnitario{{i}}" placeholder="20" (focusout)="formatear($event)"
-                         type="number" min="0" step="0.01" oninput="validity.valid||(value='');" required
-                         [ngClass]="{'is-invalid': PrecioUnitario.invalid && banderaValidaciones}">
-                  <div class="input-group-append">
-                    <span class="input-group-text unidades">$</span>
                   </div>
-
+                  <div *ngIf="Stock.errors?.required && banderaValidaciones">
+                    <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+                  </div>
                 </div>
-                <div *ngIf="PrecioUnitario.errors?.required && banderaValidaciones">
-                  <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
-                </div>
-              </div>
+                <div class="form-group  col-md-4">
+                  <label>Precio</label>
+                  <div class="input-group">
+                    <input #PrecioUnitario="ngModel" [(ngModel)]="this.Variantes[i].Precio_Unitario"
+                           aria-label="Amount (to the nearest dollar)" class="form-control"
+                           name="precioUnitario{{i}}" placeholder="20" (focusout)="formatear($event)"
+                           type="number" min="0" step="0.01" oninput="validity.valid||(value='');" required
+                           [ngClass]="{'is-invalid': PrecioUnitario.invalid && banderaValidaciones}">
+                    <div class="input-group-append">
+                      <span class="input-group-text unidades">$</span>
+                    </div>
 
+                  </div>
+                  <div *ngIf="PrecioUnitario.errors?.required && banderaValidaciones">
+                    <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
 
