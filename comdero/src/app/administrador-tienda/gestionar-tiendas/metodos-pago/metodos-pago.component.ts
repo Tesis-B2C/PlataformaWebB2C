@@ -22,6 +22,9 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
   public Metodo_Pago_Enviar = [];
 
   constructor(private _metodoPagoServicio: MetodoPagoServicio, private modalService: NgbModal, private _sanitizer: DomSanitizer) {
+    this.Metodo_Pago_Efectivo = new Metodo_Pago(0, 0, "", "", "", 0, "Efectivo");
+    this.Metodo_Pago_Transferencia = new Metodo_Pago(0, 0, "", "", "", 0, "Transferencia");
+    this.Metodo_Pago_Electronico = new Metodo_Pago(0, 0, "", "", "", 0, "Electrónico");
 
   }
 
@@ -40,38 +43,37 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
   }
 
 
-  public opcionPagoEfectivo(bandera) {
-    this.banderaPagoEfectivo = bandera;
-    if (this.banderaPagoEfectivo == true) {
-      this.Metodo_Pago_Efectivo = new Metodo_Pago(0, 0, "", "", "", 0, "");
-      this.Metodo_Pago_Efectivo.Tipo_Pago = 'Efectivo'
+
+
+
+  public opcionPagoEfectivo(event) {
+    if (event.target.checked) {
+      this.banderaPagoEfectivo = true;
     } else {
-      delete this.Metodo_Pago_Efectivo;
+      this.banderaPagoEfectivo = false;
     }
 
   }
 
-  public opcionPagoTransferencia(bandera) {
-    this.banderaPagoTransferencia = bandera;
-    if (this.banderaPagoEfectivo == true) {
-      this.Metodo_Pago_Transferencia = new Metodo_Pago(0, 0, "", "", "", 0, "");
-      this.Metodo_Pago_Transferencia.Tipo_Pago = 'Transferencia'
+  public opcionPagoTransferencia(event) {
+
+    if (event.target.checked) {
+      this.banderaPagoTransferencia = true;
     } else {
-      delete this.Metodo_Pago_Transferencia;
+      this.banderaPagoTransferencia = false;
     }
+
   }
 
   public opcionTipoCuenta(value) {
     this.Metodo_Pago_Transferencia.Tipo_Cuenta = value;
   }
 
-  public opcionPagoElectronico(bandera) {
-    this.banderaPagoElectronico = bandera;
-    if (this.banderaPagoElectronico == true) {
-      this.Metodo_Pago_Electronico = new Metodo_Pago(0, 0, "", "", "", 0, "");
-      this.Metodo_Pago_Electronico.Tipo_Pago = 'Electrónico'
+  public opcionPagoElectronico(event) {
+    if (event.target.checked) {
+      this.banderaPagoElectronico = true;
     } else {
-      delete this.Metodo_Pago_Electronico;
+      this.banderaPagoElectronico = false;
     }
   }
 
