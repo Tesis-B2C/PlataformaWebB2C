@@ -69,7 +69,7 @@ export class ModificarProductoComponent implements OnInit {
   public Imagenes_Producto = [[]];
   public imagenes = [[]];
   public vectorBanderaAgregarImagen = [];
-  public banderaMaximoImagenes: boolean = true;
+  public vectorBanderaHabilitante = [];
   public banderaMensajeMaximoImagenes: boolean = false;
   public banderaMensajeMaximoVideo: boolean = false;
   public data: any = [];
@@ -152,6 +152,7 @@ export class ModificarProductoComponent implements OnInit {
       this.Imagenes_Producto.push([]);
       this.imagenes.push([]);
       this.vectorBanderaAgregarImagen.push(true);
+      this.vectorBanderaHabilitante.push(true);
       debugger
       this.Variantes.push(new Variante(v[i].COLOR, v[i].TALLA, v[i].MATERIAL, v[i].PRECIO_UNITARIO, v[i].STOCK, v[i].MEDIDA, v[i].ESTADO_VARIANTE));
       this.Variantes[i].Num_Variante = v[i].NUM_VARIANTE;
@@ -293,6 +294,7 @@ export class ModificarProductoComponent implements OnInit {
     if (this.imagenes[indice] == null) {
       this.imagenes[indice] = [];
     }
+    this.vectorBanderaHabilitante[indice] = true;
     if (eventEntrante.target.files && eventEntrante.target.files[0]) {
       var filesAmount = eventEntrante.target.files.length;
       this.vectorBanderaAgregarImagen[indice] = true;
@@ -312,18 +314,23 @@ export class ModificarProductoComponent implements OnInit {
           }
           await reader.readAsDataURL(eventEntrante.target.files[i]);
         }
-        if (this.Imagenes_Producto[indice].length > 6) {
-          this.imagenes[indice] = null;
-          this.Imagenes_Producto[indice].splice(0, this.Imagenes_Producto[indice].length);
-          document.forms["form"].reset();
-          this.vectorBanderaAgregarImagen[indice] = false;
-          this.banderaMensajeMaximoImagenes = true;
-        } else if (this.Imagenes_Producto[0].length == 7) {
-          this.banderaMensajeMaximoImagenes = false
-          this.banderaMaximoImagenes = false;
-        } else if (this.Imagenes_Producto[indice].length == 6 && indice != 0) {
-          this.banderaMensajeMaximoImagenes = false
-          this.banderaMaximoImagenes = false;
+        debugger;
+        if (this.Imagenes_Producto[0].filter(imagen => (imagen.Tipo_Imagen == 'video' || imagen.Tipo_Imagen == 'youtube')).length > 0) {
+          if (this.Imagenes_Producto[indice].length > 5 && indice != 0) {
+            this.banderaMensajeMaximoImagenes = true;
+            this.vectorBanderaHabilitante[indice] = false;
+
+          } else if (this.Imagenes_Producto[indice].length > 6) {
+            this.banderaMensajeMaximoImagenes = true
+            this.vectorBanderaHabilitante[indice] = false;
+
+          }
+        } else {
+          if (this.Imagenes_Producto[indice].length > 6) {
+            this.banderaMensajeMaximoImagenes = true;
+            this.vectorBanderaHabilitante[indice] = false;
+
+          }
         }
       }
     }
@@ -463,6 +470,7 @@ export class ModificarProductoComponent implements OnInit {
 
   public agregarOpcionesProducto() {
     this.vectorBanderaAgregarImagen.push(false);
+    this.vectorBanderaHabilitante.push(true);
     this.Variantes.push(new Variante(null, null, null, null, 1, "unidades", 1));
     this.Imagenes_Producto.push([]);
     this.imagenes.push([]);
@@ -481,21 +489,44 @@ export class ModificarProductoComponent implements OnInit {
 
     }
 
+
+    if (this.Imagenes_Producto[0].filter(imagen => (imagen.Tipo_Imagen == 'video' || imagen.Tipo_Imagen == 'youtube')).length > 0) {
+      if (this.Imagenes_Producto[indice].length > 5 && indice != 0) {
+        this.banderaMensajeMaximoImagenes = true;
+        this.vectorBanderaHabilitante[indice] = false;
+
+      } else if (this.Imagenes_Producto[indice].length > 6) {
+        this.banderaMensajeMaximoImagenes = true
+        this.vectorBanderaHabilitante[indice] = false;
+
+      } else {
+        this.vectorBanderaHabilitante[indice] = true;
+      }
+    } else {
+      if (this.Imagenes_Producto[indice].length > 6) {
+        this.banderaMensajeMaximoImagenes = true;
+        this.vectorBanderaHabilitante[indice] = false;
+
+      } else {
+        this.vectorBanderaHabilitante[indice] = true;
+      }
+    }
+
     if (this.imagenes[indice].length == 0)
       this.vectorBanderaAgregarImagen[indice] = false;
   }
 
   public borrarVideo() {
     debugger;
-    if (this.Imagenes_Producto[0].filter(imagen => (imagen.Tipo_Imagen == 'video' || imagen.Tipo_Imagen == 'youtube')).length>0) {
+    if (this.Imagenes_Producto[0].filter(imagen => (imagen.Tipo_Imagen == 'video' || imagen.Tipo_Imagen == 'youtube')).length > 0) {
       //this.videoPorGuardar = "";
       this.videoYoutube = "";
       this.data.video = "";
       for (let j in this.Imagenes_Producto[0]) {
         if (this.Imagenes_Producto[0][j].Tipo_Imagen == 'video' || this.Imagenes_Producto[0][j].Tipo_Imagen == 'youtube') {
-          this.Imagenes_Producto[0][j].Estado_Imagen=2;
-          if(this.Imagenes_Producto[0][j].path){
-          this.Imagenes_Producto[0][j].Imagen=this.Imagenes_Producto[0][j].path;
+          this.Imagenes_Producto[0][j].Estado_Imagen = 2;
+          if (this.Imagenes_Producto[0][j].path) {
+            this.Imagenes_Producto[0][j].Imagen = this.Imagenes_Producto[0][j].path;
           }
         }
       }
@@ -503,7 +534,7 @@ export class ModificarProductoComponent implements OnInit {
     } else {
       this.videoPorGuardar = "";
       this.data.video = "";
-      this.videoYoutube="";
+      this.videoYoutube = "";
     }
   }
 
@@ -529,7 +560,7 @@ export class ModificarProductoComponent implements OnInit {
   public async guardarProducto() {
     try {
       debugger;
-      if (this.auxi == null && this.videoPorGuardar!="" ) {
+      if (this.auxi == null && this.videoPorGuardar != "") {
         this.Imagenes_Producto[0].push(this.videoPorGuardar);
       }
       this.categoriasEnviar = [];

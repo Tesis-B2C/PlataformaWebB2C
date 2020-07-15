@@ -348,10 +348,10 @@
                 <form name="form">
                   <a class=" mt-5">
                     <label>Imagenes de la opcion {{i}} </label>
-                    <span *ngIf="banderaMensajeMaximoImagenes"
+                    <span *ngIf="!vectorBanderaHabilitante[i]"
                           style="color: red"> *Recuerda máximo 6 imagenes </span></a>
                   <div
-                    [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[i]==false,'borde-imagenes1':vectorBanderaAgregarImagen[i]==true }"
+                    [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[i]==false,'borde-imagenes1':vectorBanderaAgregarImagen[i]==true,'borde-error':!vectorBanderaHabilitante[i]}"
                     class="row  mt-3 ">
                     <div *ngFor='let url of imagenes[i]; index as j ' class="ml-1">
 
@@ -384,7 +384,7 @@
                       <p class="link-agregar-imagenes ">Click para Agregar imagenes</p>
                     </div>
 
-                    <div *ngIf="vectorBanderaAgregarImagen[i]==true && imagenes[i].length<6" class="py-2">
+                    <div *ngIf="(vectorBanderaAgregarImagen[i]==true && vectorBanderaHabilitante[i]==true)" class="py-2">
                       <div class=" px-2 py-4  card  ml-2 ">
                         <label class="imagen-agregar">
                           <i class="fa fa-picture-o fa-4x ml-4"></i>
