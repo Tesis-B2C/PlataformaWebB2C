@@ -8,583 +8,627 @@
 
   <div class="row justify-content-center">
     <div class="col-md-8" id="panelUno">
+      <form #FormMetodoEnvio id="formMetodoEnvio" class="metodo-envio" validate-form>
 
-      <div class="form-group">
-        <div class="alert alert-primary col-12" role="alert">
-          <a><span class="fa fa-exclamation fa-1x"></span></a>
-          Establezca los métodos de envío que desea implementar en su tienda, es importante para los pedidos de los
-          clientes.
-        </div>
-      </div>
-      <hr>
-
-
-      <div id="retiro-local">
-        <div class="form-row">
-          <div class="col-10">
-            <h6 class="font-weight-bold">Retiro local</h6>
-            <p class="p">Ofrece a los clientes la opción de retirar su pedido en tu negocio.</p>
-          </div>
-
-          <div class="col-2 text-right">
-            <label class="switch mt-2">
-              <input type="checkbox" (click)="clickRetiroLocal($event)">
-              <span class="slider round"></span>
-            </label>
+        <div class="form-group">
+          <div class="alert alert-primary col-12" role="alert">
+            <a><span class="fa fa-exclamation fa-1x"></span></a>
+            Establezca los métodos de envío que desea implementar en su tienda, es importante para los pedidos de los
+            clientes.
           </div>
         </div>
+        <hr>
 
-        <div class="card card-body mt-3">
-          <div class="form-group">
-            <label>Hora estimada de retiro</label>
-            <select class="browser-default form-control" name="masOpcionesHoraRetiro" [disabled]="banderaRetiroLocal">
-              <option selected>Selecciona una opción...</option>
-              <option value="1hora">Normalmente está listo en 1 hora</option>
-              <option value="4horas">Normalmente está listo en 4 horas</option>
-              <option value="24horas">Normalmente está listo en 24 horas</option>
-              <option value="4dias">Normalmente está listo en 2 a 4 días</option>
-              <option value="5dias">Normalmente está listo en 5 o más días</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label>Instruciones de retiro</label>
-            <textarea rows="3" style="font-size: small; resize: none;"
-                      class="tamanioInputs form-control" name="instruccion_retiro" placeholder=""
-                      required type="text" aria-label="With textarea" maxlength="255"
-                      [disabled]="banderaRetiroLocal"></textarea>
-            <p class="p">Si estás ofreciendo retiro en la tienda, puedes indicar a los clientes qué
-              hacer cuando lleguen a tu tienda. (Máximo 255 caractéres)</p>
-          </div> <!-- form-group end.// -->
-
-        </div>
-      </div>
-      <hr>
-
-      <div id="envio-domicilio">
-        <div class="form-row">
-          <div class="col-10">
-            <h6 class="font-weight-bold">Envío a domicilio</h6>
-            <p class="p">Ofrece a tus cliente la opción de enviar sus pedidos a domicilio dentro y fuera de la
-              ciudad. Las tarifas que configures se agregarán al final de los pedidos. </p>
-          </div>
-
-          <div class="col-2 text-right">
-            <label class="switch mt-2">
-              <input type="checkbox" (click)="clickEnvioDomicilio($event)">
-              <span class="slider round"></span>
-            </label>
-          </div>
-        </div>
-
-        <div class="card card-body p-0 mt-3 mb-4">
-
-          <div class="p-3">
-            <div class="form-group">
-              <label class="tituloDomicilio mb-0">Local</label>
-              <p class="p">Él envió a domicilio local es para los clientes que se encuentran dentro de la zona de tu
-                negocio.</p>
+        <div id="retiro-local">
+          <div class="form-row">
+            <div class="col-10">
+              <h6 class="font-weight-bold">Retiro local</h6>
+              <p class="p">Ofrece a los clientes la opción de retirar su pedido en tu negocio.</p>
             </div>
 
-            <div class="form-group" *ngIf="this.vectorTarifasLocal.length == 0">
-              <div class="alert alert-warning col-12" role="alert">
-                <a><span class="fa fa-exclamation-circle fa-1x"></span></a>
-                &nbsp; &nbsp;No existen tarifas, sus clientes no podrán completar el pago en esta zona.
+            <div class="col-2 text-right">
+              <label class="switch mt-2">
+                <input type="checkbox" (click)="clickRetiroLocal($event)">
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="card card-body mt-3">
+            <div class="form-group">
+              <label>Hora estimada de retiro</label>
+              <select [disabled]="banderaRetiroLocal" #HoraEstimada="ngModel"
+                      [(ngModel)]="this.objetoRetiroLocal.Hora_Estimada_Retiro"
+                      [ngClass]="{'errorSelect': HoraEstimada.invalid && (HoraEstimada.dirty || HoraEstimada.touched),
+          'satisfactorioSelect': HoraEstimada.valid && (HoraEstimada.dirty || HoraEstimada.touched)}"
+                      class="tamanioInputs browser-default form-control" data-size="4"
+                      name="masOpcionesHoraRetiro" required>
+                <option selected value="">Selecciona una opción...</option>
+                <option value="1hora">Normalmente está listo en 1 hora</option>
+                <option value="4horas">Normalmente está listo en 4 horas</option>
+                <option value="24horas">Normalmente está listo en 24 horas</option>
+                <option value="4dias">Normalmente está listo en 2 a 4 días</option>
+                <option value="5dias">Normalmente está listo en 5 o más días</option>
+              </select>
+              <div *ngIf="HoraEstimada.invalid && (HoraEstimada.touched || HoraEstimada.dirty)">
+                <div *ngIf="HoraEstimada.errors.required">
+                  <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                    Campo requerido</p>
+                </div>
               </div>
-            </div>
+            </div> <!--form-group end.-->
 
             <div class="form-group">
-              <table class="table table-hover" *ngIf="this.vectorTarifasLocal.length > 0">
-                <thead>
-                <tr>
-                  <th scope="col" class="tituloTarifas">Nº</th>
-                  <th scope="col" class="tituloTarifas">Condición</th>
-                  <th scope="col" class="tituloTarifas">Precio</th>
-                  <th scope="col"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr class="columnaTarifa" *ngFor="let item of this.vectorTarifasLocal; index as i">
-                  <th scope="row">{{i + 1}}</th>
+              <label>Instruciones de retiro</label>
+              <textarea [disabled]="banderaRetiroLocal" rows="3" style="font-size: small; resize: none;"
+                        #Instruccion_Retiro="ngModel" [(ngModel)]="this.objetoRetiroLocal.Instruccion_Retiro"
+                        [ngClass]="{'is-invalid': Instruccion_Retiro.invalid && (Instruccion_Retiro.dirty || Instruccion_Retiro.touched),
+                 'is-valid': Instruccion_Retiro.valid && (Instruccion_Retiro.dirty || Instruccion_Retiro.touched)}"
+                        class="tamanioInputs form-control" name="instruccion_retiro" placeholder=""
+                        required type="text" aria-label="With textarea" maxlength="255"></textarea>
+              <div *ngIf="Instruccion_Retiro.invalid && (Instruccion_Retiro.dirty || Instruccion_Retiro.touched)">
+                <div *ngIf="Instruccion_Retiro.errors.required">
+                  <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+                </div>
+              </div>
+              <p class="p">Si estás ofreciendo retiro en la tienda, puedes indicar a los clientes qué
+                hacer cuando lleguen a tu tienda. (Máximo 255 caractéres)</p>
+            </div> <!-- form-group end.// -->
+          </div>
+        </div>
+        <hr>
 
-                  <td *ngIf="this.vectorTarifasLocal[i].Tipo_Medida == 'Peso'">{{this.vectorTarifasLocal[i].Minimo}} kg
-                    - {{this.vectorTarifasLocal[i].Maximo}} kg
-                  </td>
-                  <td
-                    *ngIf="this.vectorTarifasLocal[i].Tipo_Medida == 'Precio'">{{this.vectorTarifasLocal[i].Minimo | currency}}
-                    -
-                    {{this.vectorTarifasLocal[i].Maximo | currency}}</td>
+        <div id="envio-domicilio">
+          <div class="form-row">
+            <div class="col-10">
+              <h6 class="font-weight-bold">Envío a domicilio</h6>
+              <p class="p">Ofrece a tus cliente la opción de enviar sus pedidos a domicilio dentro y fuera de la
+                ciudad. Las tarifas que configures se agregarán al final de los pedidos. </p>
+            </div>
 
-                  <td *ngIf="this.vectorTarifasLocal[i].Precio == 0"> Gratis</td>
-                  <td
-                    *ngIf="this.vectorTarifasLocal[i].Precio != 0">{{this.vectorTarifasLocal[i].Precio | currency }}</td>
-                  <td>
-                    <div ngbDropdown class="d-inline-block">
-                      <button id="btnTarifasLocal" ngbDropdownToggle><i class="fa fa-ellipsis-h"></i>
+            <div class="col-2 text-right">
+              <label class="switch mt-2">
+                <input type="checkbox" (click)="clickEnvioDomicilio($event)">
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="card card-body p-0 mt-3 mb-4">
+
+            <div class="p-3">
+              <div class="form-group">
+                <label class="tituloDomicilio mb-0">Local</label>
+                <p class="p">Él envió a domicilio local es para los clientes que se encuentran dentro de la zona de tu
+                  negocio.</p>
+              </div>
+
+              <div class="form-group" *ngIf="this.vectorTarifasLocal.length == 0">
+                <div class="alert alert-warning col-12" role="alert">
+                  <a><span class="fa fa-exclamation-circle fa-1x"></span></a>
+                  &nbsp; &nbsp;No existen tarifas, sus clientes no podrán completar el pago en esta zona.
+                </div>
+              </div>
+
+              <div class="form-group">
+                <table class="table table-hover" *ngIf="this.vectorTarifasLocal.length > 0">
+                  <thead>
+                  <tr>
+                    <th scope="col" class="tituloTarifas">Nº</th>
+                    <th scope="col" class="tituloTarifas">Condición</th>
+                    <th scope="col" class="tituloTarifas">Precio</th>
+                    <th scope="col"></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr class="columnaTarifa" *ngFor="let item of this.vectorTarifasLocal; index as i">
+                    <th scope="row">{{i + 1}}</th>
+
+                    <td *ngIf="this.vectorTarifasLocal[i].Tipo_Medida == 'Peso'">{{this.vectorTarifasLocal[i].Minimo}}
+                      kg
+                      - {{this.vectorTarifasLocal[i].Maximo}} kg
+                    </td>
+                    <td
+                      *ngIf="this.vectorTarifasLocal[i].Tipo_Medida == 'Precio'">{{this.vectorTarifasLocal[i].Minimo | currency}}
+                      -
+                      {{this.vectorTarifasLocal[i].Maximo | currency}}</td>
+
+                    <td *ngIf="this.vectorTarifasLocal[i].Precio == 0"> Gratis</td>
+                    <td
+                      *ngIf="this.vectorTarifasLocal[i].Precio != 0">{{this.vectorTarifasLocal[i].Precio | currency }}</td>
+                    <td>
+                      <div ngbDropdown class="d-inline-block">
+                        <button id="btnTarifasLocal" ngbDropdownToggle><i class="fa fa-ellipsis-h"></i>
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="btnTarifasLocal">
+                          <button ngbDropdownItem class="btnOpcTarifaLocal"
+                                  (click)="editarAbrirTarifaLocal(i,modalLocal)">
+                            Editar tarifa
+                          </button>
+                          <button ngbDropdownItem style="color:red" class="btnOpcTarifaLocal"
+                                  (click)="eliminarTarifaLocal(i)">Eliminar
+                          </button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+
+                <!-- Boton Modal -->
+                <button type="button" class="btn btn-outline-primary btn-sm" (click)="abrirModalLocal(modalLocal)"
+                        [disabled]="banderaEnvioDomicilio">Agregar tarifa
+                </button>
+
+                <!-- Modal -->
+                <ng-template #modalLocal let-modal>
+                  <form #FormModalLocal id="formModalLocal" class="login100-form validate-form">
+                    <div class="modal-header">
+                      <h6 class="modal-title">Agregar tarifa</h6>
+                      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                        <span aria-hidden="true">&times;</span>
                       </button>
-                      <div ngbDropdownMenu aria-labelledby="btnTarifasLocal">
-                        <button ngbDropdownItem class="btnOpcTarifaLocal" (click)="editarAbrirTarifaLocal(i,modalLocal)">
-                          Editar tarifa
-                        </button>
-                        <button ngbDropdownItem style="color:red" class="btnOpcTarifaLocal"
-                                (click)="eliminarTarifaLocal(i)">Eliminar
-                        </button>
+                    </div>
+
+                    <div class="modal-body px-0">
+
+                      <div class="radio-item mx-3">
+                        <input type="radio" name="opcTarifa" id="opcPeso" (change)="opcTarifaLocal('peso', $event)"
+                               [checked]="banderaTarifaLocalPeso">
+                        <label for="opcPeso">&nbsp;&nbsp;Según el peso del pedido</label>
                       </div>
-                    </div>
-                  </td>
-                </tr>
-                </tbody>
-              </table>
+                      <br>
+                      <div class="radio-item mx-3">
+                        <input type="radio" name="opcTarifa" id="opcPrecio" (change)="opcTarifaLocal('precio', $event)"
+                               [checked]="banderaTarifaLocalPrecio">
+                        <label for="opcPrecio">&nbsp;&nbsp;Según el precio del pedido</label>
+                      </div>
 
-              <!-- Boton Modal -->
-              <button type="button" class="btn btn-outline-primary btn-sm" (click)="abrirModalLocal(modalLocal)"
-                      [disabled]="banderaEnvioDomicilio">Agregar tarifa
-              </button>
+                      <hr mt-0 *ngIf="banderaTarifaLocalPeso || banderaTarifaLocalPrecio ">
 
-              <!-- Modal -->
-              <ng-template #modalLocal let-modal>
-                <form #FormModalLocal id="formModalLocal" class="login100-form validate-form">
-                  <div class="modal-header">
-                    <h6 class="modal-title">Agregar tarifa</h6>
-                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-
-                  <div class="modal-body px-0">
-
-                    <div class="radio-item mx-3">
-                      <input type="radio" name="opcTarifa" id="opcPeso" (change)="opcTarifaLocal('peso', $event)"
-                             [checked]="banderaTarifaLocalPeso">
-                      <label for="opcPeso">&nbsp;&nbsp;Según el peso del pedido</label>
-                    </div>
-                    <br>
-                    <div class="radio-item mx-3">
-                      <input type="radio" name="opcTarifa" id="opcPrecio" (change)="opcTarifaLocal('precio', $event)"
-                             [checked]="banderaTarifaLocalPrecio">
-                      <label for="opcPrecio">&nbsp;&nbsp;Según el precio del pedido</label>
-                    </div>
-
-                    <hr mt-0 *ngIf="banderaTarifaLocalPeso || banderaTarifaLocalPrecio ">
-
-                    <div class="form-group col-12" *ngIf="banderaTarifaLocalPeso || banderaTarifaLocalPrecio ">
-                      <label>* Precio</label>
-                      <div class="input-group">
-                        <input #precioTarifaLocal="ngModel" [(ngModel)]="this.objetoAuxiliarLocal.Precio"
-                               [ngClass]="{'is-invalid': precioTarifaLocal.invalid && (precioTarifaLocal.dirty || precioTarifaLocal.touched),
+                      <div class="form-group col-12" *ngIf="banderaTarifaLocalPeso || banderaTarifaLocalPrecio ">
+                        <label>* Precio</label>
+                        <div class="input-group">
+                          <input #precioTarifaLocal="ngModel" [(ngModel)]="this.objetoAuxiliarLocal.Precio"
+                                 [ngClass]="{'is-invalid': precioTarifaLocal.invalid && (precioTarifaLocal.dirty || precioTarifaLocal.touched),
                           'is-valid': precioTarifaLocal.valid && (precioTarifaLocal.dirty || precioTarifaLocal.touched)}"
-                               class="tamanioInputs form-control"
-                               min="0" step="0.01" oninput="validity.valid || (value='');"
-                               name="precioTarifaLocal" id="precioTarifaLocal" type="number"
-                               placeholder="0,00" (focusout)="transformar($event)" required>
-                        <div class="input-group-append" *ngIf="this.objetoAuxiliarLocal.Precio != 0">
-                          <span class="input-group-text tamanioInputs">US$</span>
+                                 class="tamanioInputs form-control"
+                                 min="0" step="0.01" oninput="validity.valid || (value='');"
+                                 name="precioTarifaLocal" id="precioTarifaLocal" type="number"
+                                 placeholder="0,00" (focusout)="transformar($event)" required>
+                          <div class="input-group-append" *ngIf="this.objetoAuxiliarLocal.Precio != 0">
+                            <span class="input-group-text tamanioInputs">US$</span>
+                          </div>
+                          <div class="input-group-append" *ngIf="this.objetoAuxiliarLocal.Precio == 0">
+                            <span class="input-group-text tamanioInputs">Gratis</span>
+                          </div>
                         </div>
-                        <div class="input-group-append" *ngIf="this.objetoAuxiliarLocal.Precio == 0">
-                          <span class="input-group-text tamanioInputs">Gratis</span>
+                        <div
+                          *ngIf="precioTarifaLocal.invalid && (precioTarifaLocal.dirty || precioTarifaLocal.touched)">
+                          <div *ngIf="precioTarifaLocal.errors.required">
+                            <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'></i> &nbsp; Campo
+                              requerido.</p>
+                          </div>
                         </div>
-                      </div>
-                      <div *ngIf="precioTarifaLocal.invalid && (precioTarifaLocal.dirty || precioTarifaLocal.touched)">
-                        <div *ngIf="precioTarifaLocal.errors.required">
-                          <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'></i> &nbsp; Campo
-                            requerido.</p>
-                        </div>
-                      </div>
-                    </div> <!-- form-group end.// -->
+                      </div> <!-- form-group end.// -->
 
-                    <div class="form-group mx-3" *ngIf="banderaTarifaLocalPeso">
+                      <div class="form-group mx-3" *ngIf="banderaTarifaLocalPeso">
 
-                      <div class="form-row">
-                        <div class="form-group col-md-6">
-                          <label>* Peso Minimo</label>
-                          <div class="input-group">
-                            <input #minPesoLocal="ngModel" [(ngModel)]="this.objetoAuxiliarLocal.Minimo"
-                                   [ngClass]="{'is-invalid': (minPesoLocal.invalid && (minPesoLocal.dirty || minPesoLocal.touched))
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label>* Peso Minimo</label>
+                            <div class="input-group">
+                              <input #minPesoLocal="ngModel" [(ngModel)]="this.objetoAuxiliarLocal.Minimo"
+                                     [ngClass]="{'is-invalid': (minPesoLocal.invalid && (minPesoLocal.dirty || minPesoLocal.touched))
                                    || (this.objetoAuxiliarLocal.Minimo>this.objetoAuxiliarLocal.Maximo),
                           'is-valid': minPesoLocal.valid && (minPesoLocal.dirty || minPesoLocal.touched)}"
-                                   class="tamanioInputs form-control" name="minPesoLocal"
-                                   placeholder="0" min="0" step="0.01"
-                                   oninput="validity.valid || (value='');"
-                                   type="number" required>
-                            <div class="input-group-append">
-                              <span class="input-group-text tamanioInputs">kg</span>
+                                     class="tamanioInputs form-control" name="minPesoLocal"
+                                     placeholder="0" min="0" step="0.01"
+                                     oninput="validity.valid || (value='');"
+                                     type="number" required>
+                              <div class="input-group-append">
+                                <span class="input-group-text tamanioInputs">kg</span>
+                              </div>
+                            </div> <!-- input-group end.// -->
+                            <div *ngIf="minPesoLocal.invalid && (minPesoLocal.dirty || minPesoLocal.touched)">
+                              <div *ngIf="minPesoLocal.errors.required">
+                                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo
+                                  requerido.</p>
+                              </div>
                             </div>
-                          </div> <!-- input-group end.// -->
-                          <div *ngIf="minPesoLocal.invalid && (minPesoLocal.dirty || minPesoLocal.touched)">
-                            <div *ngIf="minPesoLocal.errors.required">
-                              <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo
-                                requerido.</p>
-                            </div>
-                          </div>
-                        </div> <!-- form-group end.// -->
+                          </div> <!-- form-group end.// -->
 
-                        <div class="form-group col-md-6">
-                          <label>* Peso Máximo</label>
-                          <div class="input-group">
-                            <input #maxPesoLocal="ngModel" [(ngModel)]="this.objetoAuxiliarLocal.Maximo"
-                                   [ngClass]="{'is-invalid': maxPesoLocal.invalid && (maxPesoLocal.dirty || maxPesoLocal.touched),
+                          <div class="form-group col-md-6">
+                            <label>* Peso Máximo</label>
+                            <div class="input-group">
+                              <input #maxPesoLocal="ngModel" [(ngModel)]="this.objetoAuxiliarLocal.Maximo"
+                                     [ngClass]="{'is-invalid': maxPesoLocal.invalid && (maxPesoLocal.dirty || maxPesoLocal.touched),
                           'is-valid': maxPesoLocal.valid && (maxPesoLocal.dirty || maxPesoLocal.touched)}"
-                                   class="tamanioInputs form-control" name="maxPesoLocal"
-                                   placeholder="999,99" step="0.01"
-                                   oninput="validity.valid || (value='');"
-                                   type="number" required>
-                            <div class="input-group-append">
-                              <span class="input-group-text tamanioInputs">kg</span>
+                                     class="tamanioInputs form-control" name="maxPesoLocal"
+                                     placeholder="999,99" step="0.01"
+                                     oninput="validity.valid || (value='');"
+                                     type="number" required>
+                              <div class="input-group-append">
+                                <span class="input-group-text tamanioInputs">kg</span>
+                              </div>
+                            </div> <!-- input-group end.// -->
+                            <div *ngIf="maxPesoLocal.invalid && (maxPesoLocal.dirty || maxPesoLocal.touched)">
+                              <div *ngIf="maxPesoLocal.errors.required">
+                                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo
+                                  requerido.</p>
+                              </div>
                             </div>
-                          </div> <!-- input-group end.// -->
-                          <div *ngIf="maxPesoLocal.invalid && (maxPesoLocal.dirty || maxPesoLocal.touched)">
-                            <div *ngIf="maxPesoLocal.errors.required">
-                              <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo
-                                requerido.</p>
-                            </div>
-                          </div>
-                        </div> <!-- form-group end.// -->
+                          </div> <!-- form-group end.// -->
+                        </div>
+
+                        <div *ngIf="(this.objetoAuxiliarLocal.Minimo > this.objetoAuxiliarLocal.Maximo)">
+                          <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; El peso mínimo
+                            de pedido no puede ser superior al peso máximo de pedido.</p>
+                        </div>
                       </div>
 
-                      <div *ngIf="(this.objetoAuxiliarLocal.Minimo > this.objetoAuxiliarLocal.Maximo)">
-                        <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; El peso mínimo
-                          de pedido no puede ser superior al peso máximo de pedido.</p>
-                      </div>
-                    </div>
+                      <div class="form-group mx-3" *ngIf="banderaTarifaLocalPrecio">
+                        <div class="form-row">
 
-                    <div class="form-group mx-3" *ngIf="banderaTarifaLocalPrecio">
-                      <div class="form-row">
-
-                        <div class="form-group col-md-6">
-                          <label>* Precio Minimo</label>
-                          <div class="input-group">
-                            <input #minPrecioLocal="ngModel" [(ngModel)]="this.objetoAuxiliarLocal.Minimo"
-                                   [ngClass]="{'is-invalid': minPrecioLocal.invalid && (minPrecioLocal.dirty || minPrecioLocal.touched),
+                          <div class="form-group col-md-6">
+                            <label>* Precio Minimo</label>
+                            <div class="input-group">
+                              <input #minPrecioLocal="ngModel" [(ngModel)]="this.objetoAuxiliarLocal.Minimo"
+                                     [ngClass]="{'is-invalid': minPrecioLocal.invalid && (minPrecioLocal.dirty || minPrecioLocal.touched),
                           'is-valid': minPrecioLocal.valid && (minPrecioLocal.dirty || minPrecioLocal.touched)}"
-                                   class="tamanioInputs form-control"
-                                   min="0" step="0.01"
-                                   oninput="validity.valid || (value='');"
-                                   name="minPrecioLocal" id="minPrecioLocal" type="number"
-                                   placeholder="0,00" (focusout)="transformar($event)" required>
-                            <div class="input-group-append">
-                              <span class="input-group-text tamanioInputs">US$</span>
+                                     class="tamanioInputs form-control"
+                                     min="0" step="0.01"
+                                     oninput="validity.valid || (value='');"
+                                     name="minPrecioLocal" id="minPrecioLocal" type="number"
+                                     placeholder="0,00" (focusout)="transformar($event)" required>
+                              <div class="input-group-append">
+                                <span class="input-group-text tamanioInputs">US$</span>
+                              </div>
+                            </div> <!-- input-group end.// -->
+                            <div *ngIf="minPrecioLocal.invalid && (minPrecioLocal.dirty || minPrecioLocal.touched)">
+                              <div *ngIf="minPrecioLocal.errors.required">
+                                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'></i> &nbsp; Campo
+                                  requerido.</p>
+                              </div>
                             </div>
-                          </div> <!-- input-group end.// -->
-                          <div *ngIf="minPrecioLocal.invalid && (minPrecioLocal.dirty || minPrecioLocal.touched)">
-                            <div *ngIf="minPrecioLocal.errors.required">
-                              <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'></i> &nbsp; Campo
-                                requerido.</p>
-                            </div>
-                          </div>
-                        </div> <!-- form-group end.// -->
+                          </div> <!-- form-group end.// -->
 
-                        <div class="form-group col-md-6">
-                          <label>* Precio Máximo</label>
-                          <div class="input-group">
-                            <input #maxPrecioLocal="ngModel" [(ngModel)]="this.objetoAuxiliarLocal.Maximo"
-                                   [ngClass]="{'is-invalid': maxPrecioLocal.invalid && (maxPrecioLocal.dirty || maxPrecioLocal.touched),
+                          <div class="form-group col-md-6">
+                            <label>* Precio Máximo</label>
+                            <div class="input-group">
+                              <input #maxPrecioLocal="ngModel" [(ngModel)]="this.objetoAuxiliarLocal.Maximo"
+                                     [ngClass]="{'is-invalid': maxPrecioLocal.invalid && (maxPrecioLocal.dirty || maxPrecioLocal.touched),
                           'is-valid': maxPrecioLocal.valid && (maxPrecioLocal.dirty || maxPrecioLocal.touched)}"
-                                   class="tamanioInputs form-control" step="0.01"
-                                   oninput="validity.valid || (value='');"
-                                   name="maxPrecioLocal" id="maxPrecioLocal" type="number"
-                                   placeholder="999,99" (focusout)="transformar($event)" required>
-                            <div class="input-group-append">
-                              <span class="input-group-text tamanioInputs">US$</span>
+                                     class="tamanioInputs form-control" step="0.01"
+                                     oninput="validity.valid || (value='');"
+                                     name="maxPrecioLocal" id="maxPrecioLocal" type="number"
+                                     placeholder="999,99" (focusout)="transformar($event)" required>
+                              <div class="input-group-append">
+                                <span class="input-group-text tamanioInputs">US$</span>
+                              </div>
+                            </div> <!-- input-group end.// -->
+                            <div *ngIf="maxPrecioLocal.invalid && (maxPrecioLocal.dirty || maxPrecioLocal.touched)">
+                              <div *ngIf="maxPrecioLocal.errors.required">
+                                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'></i> &nbsp; Campo
+                                  requerido.</p>
+                              </div>
                             </div>
-                          </div> <!-- input-group end.// -->
-                          <div *ngIf="maxPrecioLocal.invalid && (maxPrecioLocal.dirty || maxPrecioLocal.touched)">
-                            <div *ngIf="maxPrecioLocal.errors.required">
-                              <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'></i> &nbsp; Campo
-                                requerido.</p>
-                            </div>
-                          </div>
-                        </div> <!-- form-group end.// -->
+                          </div> <!-- form-group end.// -->
+                        </div>
+                        <div *ngIf="(this.objetoAuxiliarLocal.Minimo > this.objetoAuxiliarLocal.Maximo)">
+                          <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; El precio
+                            mínimo
+                            de pedido no puede ser superior al precio máximo de pedido.</p>
+                        </div>
                       </div>
-                      <div *ngIf="(this.objetoAuxiliarLocal.Minimo > this.objetoAuxiliarLocal.Maximo)">
-                        <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; El precio mínimo
-                          de pedido no puede ser superior al precio máximo de pedido.</p>
+                      <div class="form-group mx-3 my-0">
+                        <div class="alert alert-info col-12 my-0" role="alert">
+                          <a><span class="fa fa-info-circle fa-1x"></span></a>
+                          &nbsp; &nbsp;Asegurate de llenar los campos obligatorios.
+                        </div>
                       </div>
                     </div>
-                    <div class="form-group mx-3 my-0">
-                      <div class="alert alert-info col-12 my-0" role="alert">
-                        <a><span class="fa fa-info-circle fa-1x"></span></a>
-                        &nbsp; &nbsp;Asegurate de llenar los campos obligatorios.
-                      </div>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
+                    <div class="modal-footer">
 
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"
-                            (click)="cancelarTarifaLocal(); modal.close('Close click')">Cancelar
-                    </button>
-                    <button type="button" class="btn btn-primary btn-sm" *ngIf="banderaTipoAccionLocal=='Agregar'"
-                            [disabled]="!FormModalLocal.checkValidity()||(this.objetoAuxiliarLocal.Minimo > this.objetoAuxiliarLocal.Maximo)"
-                            (click)="agregarTarifaLocal(); modal.close('Save click')">Agregar
-                    </button>
-
-                    <button type="button" class="btn btn-primary btn-sm" *ngIf="banderaTipoAccionLocal=='Editar'"
-                            [disabled]="!FormModalLocal.checkValidity()"
-                            (click)="editarTarifaLocal(); modal.close('Save click')">Aceptar
-                    </button>
-
-                  </div>
-                </form>
-              </ng-template>
-            </div>
-
-          </div>
-
-          <hr class="m-0"> <!--INTERMEDIO DE DOMICILIO-->
-
-          <div class="p-3">
-            <div class="form-group">
-              <label class="tituloDomicilio mb-0">Resto del país</label>
-              <p class="p"></p>
-            </div>
-
-            <div class="form-group" *ngIf="this.vectorTarifasResto.length == 0">
-              <div class="alert alert-warning col-12" role="alert">
-                <a><span class="fa fa-exclamation-circle fa-1x"></span></a>
-                &nbsp; &nbsp;No existen tarifas, sus clientes no podrán completar el pago en esta zona.
-              </div>
-            </div>
-
-            <div class="form-group">
-              <table class="table table-hover" *ngIf="this.vectorTarifasResto.length > 0">
-                <thead>
-                <tr>
-                  <th scope="col" class="tituloTarifas">Nº</th>
-                  <th scope="col" class="tituloTarifas">Condición</th>
-                  <th scope="col" class="tituloTarifas">Precio</th>
-                  <th scope="col"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr class="columnaTarifa" *ngFor="let item of this.vectorTarifasResto; index as i">
-                  <th scope="row">{{i + 1}}</th>
-
-                  <td *ngIf="this.vectorTarifasResto[i].Tipo_Medida == 'Peso'">{{this.vectorTarifasResto[i].Minimo}} kg
-                    - {{this.vectorTarifasResto[i].Maximo}} kg
-                  </td>
-                  <td
-                    *ngIf="this.vectorTarifasResto[i].Tipo_Medida == 'Precio'">{{this.vectorTarifasResto[i].Minimo | currency}}
-                    -
-                    {{this.vectorTarifasResto[i].Maximo | currency}}</td>
-
-                  <td *ngIf="this.vectorTarifasResto[i].Precio == 0"> Gratis</td>
-                  <td
-                    *ngIf="this.vectorTarifasResto[i].Precio != 0">{{this.vectorTarifasResto[i].Precio | currency }}</td>
-                  <td>
-                    <div ngbDropdown class="d-inline-block">
-                      <button id="btnTarifasResto" ngbDropdownToggle><i class="fa fa-ellipsis-h"></i>
+                      <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"
+                              (click)="cancelarTarifaLocal(); modal.close('Close click')">Cancelar
                       </button>
-                      <div ngbDropdownMenu aria-labelledby="btnTarifasResto">
-                        <button ngbDropdownItem class="btnOpcTarifaResto" (click)="editarAbrirTarifaResto(i,modalResto)">
-                          Editar tarifa
+                      <button type="button" class="btn btn-primary btn-sm" *ngIf="banderaTipoAccionLocal=='Agregar'"
+                              [disabled]="!FormModalLocal.checkValidity()||(this.objetoAuxiliarLocal.Minimo > this.objetoAuxiliarLocal.Maximo)"
+                              (click)="agregarTarifaLocal(); modal.close('Save click')">Agregar
+                      </button>
+
+                      <button type="button" class="btn btn-primary btn-sm" *ngIf="banderaTipoAccionLocal=='Editar'"
+                              [disabled]="!FormModalLocal.checkValidity()"
+                              (click)="editarTarifaLocal(); modal.close('Save click')">Aceptar
+                      </button>
+
+                    </div>
+                  </form>
+                </ng-template>
+              </div>
+
+            </div>
+
+            <hr class="m-0"> <!--INTERMEDIO DE DOMICILIO-->
+
+            <div class="p-3">
+              <div class="form-group">
+                <label class="tituloDomicilio mb-0">Resto del país</label>
+                <p class="p"></p>
+              </div>
+
+              <div class="form-group" *ngIf="this.vectorTarifasResto.length == 0">
+                <div class="alert alert-warning col-12" role="alert">
+                  <a><span class="fa fa-exclamation-circle fa-1x"></span></a>
+                  &nbsp; &nbsp;No existen tarifas, sus clientes no podrán completar el pago en esta zona.
+                </div>
+              </div>
+
+              <div class="form-group">
+                <table class="table table-hover" *ngIf="this.vectorTarifasResto.length > 0">
+                  <thead>
+                  <tr>
+                    <th scope="col" class="tituloTarifas">Nº</th>
+                    <th scope="col" class="tituloTarifas">Condición</th>
+                    <th scope="col" class="tituloTarifas">Precio</th>
+                    <th scope="col"></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr class="columnaTarifa" *ngFor="let item of this.vectorTarifasResto; index as i">
+                    <th scope="row">{{i + 1}}</th>
+
+                    <td *ngIf="this.vectorTarifasResto[i].Tipo_Medida == 'Peso'">{{this.vectorTarifasResto[i].Minimo}}
+                      kg
+                      - {{this.vectorTarifasResto[i].Maximo}} kg
+                    </td>
+                    <td
+                      *ngIf="this.vectorTarifasResto[i].Tipo_Medida == 'Precio'">{{this.vectorTarifasResto[i].Minimo | currency}}
+                      -
+                      {{this.vectorTarifasResto[i].Maximo | currency}}</td>
+
+                    <td *ngIf="this.vectorTarifasResto[i].Precio == 0"> Gratis</td>
+                    <td
+                      *ngIf="this.vectorTarifasResto[i].Precio != 0">{{this.vectorTarifasResto[i].Precio | currency }}</td>
+                    <td>
+                      <div ngbDropdown class="d-inline-block">
+                        <button id="btnTarifasResto" ngbDropdownToggle><i class="fa fa-ellipsis-h"></i>
                         </button>
-                        <button ngbDropdownItem style="color:red" class="btnOpcTarifaResto"
-                                (click)="eliminarTarifaResto(i)">Eliminar
-                        </button>
+                        <div ngbDropdownMenu aria-labelledby="btnTarifasResto">
+                          <button ngbDropdownItem class="btnOpcTarifaResto"
+                                  (click)="editarAbrirTarifaResto(i,modalResto)">
+                            Editar tarifa
+                          </button>
+                          <button ngbDropdownItem style="color:red" class="btnOpcTarifaResto"
+                                  (click)="eliminarTarifaResto(i)">Eliminar
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  </td>
-                </tr>
-                </tbody>
-              </table>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
 
-              <!-- Boton Modal -->
-              <button type="button" class="btn btn-outline-primary btn-sm" (click)="abrirModalResto(modalResto)"
-                      [disabled]="banderaEnvioDomicilio">Agregar tarifa
-              </button>
+                <!-- Boton Modal -->
+                <button type="button" class="btn btn-outline-primary btn-sm" (click)="abrirModalResto(modalResto)"
+                        [disabled]="banderaEnvioDomicilio">Agregar tarifa
+                </button>
 
-              <!-- Modal -->
-              <ng-template #modalResto let-modal>
-                <form #FormModalResto id="formModalResto" class="login100-form validate-form">
-                  <div class="modal-header">
-                    <h6 class="modal-title">Agregar tarifa</h6>
-                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-
-                  <div class="modal-body px-0">
-
-                    <div class="radio-item mx-3">
-                      <input type="radio" name="opcTarifaResto" id="opcPesoResto" (change)="opcTarifaResto('peso', $event)"
-                             [checked]="banderaTarifaRestoPeso">
-                      <label for="opcPesoResto">&nbsp;&nbsp;Según el peso del pedido</label>
-                    </div>
-                    <br>
-                    <div class="radio-item mx-3">
-                      <input type="radio" name="opcTarifaResto" id="opcPrecioResto" (change)="opcTarifaResto('precio', $event)"
-                             [checked]="banderaTarifaRestoPrecio">
-                      <label for="opcPrecioResto">&nbsp;&nbsp;Según el precio del pedido</label>
+                <!-- Modal -->
+                <ng-template #modalResto let-modal>
+                  <form #FormModalResto id="formModalResto" class="login100-form validate-form">
+                    <div class="modal-header">
+                      <h6 class="modal-title">Agregar tarifa</h6>
+                      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
                     </div>
 
-                    <hr mt-0 *ngIf="banderaTarifaRestoPeso || banderaTarifaRestoPrecio ">
+                    <div class="modal-body px-0">
 
-                    <div class="form-group col-12" *ngIf="banderaTarifaRestoPeso || banderaTarifaRestoPrecio ">
-                      <label>* Precio</label>
-                      <div class="input-group">
-                        <input #precioTarifaResto="ngModel" [(ngModel)]="this.objetoAuxiliarResto.Precio"
-                               [ngClass]="{'is-invalid': precioTarifaResto.invalid && (precioTarifaResto.dirty || precioTarifaResto.touched),
+                      <div class="radio-item mx-3">
+                        <input type="radio" name="opcTarifaResto" id="opcPesoResto"
+                               (change)="opcTarifaResto('peso', $event)"
+                               [checked]="banderaTarifaRestoPeso">
+                        <label for="opcPesoResto">&nbsp;&nbsp;Según el peso del pedido</label>
+                      </div>
+                      <br>
+                      <div class="radio-item mx-3">
+                        <input type="radio" name="opcTarifaResto" id="opcPrecioResto"
+                               (change)="opcTarifaResto('precio', $event)"
+                               [checked]="banderaTarifaRestoPrecio">
+                        <label for="opcPrecioResto">&nbsp;&nbsp;Según el precio del pedido</label>
+                      </div>
+
+                      <hr mt-0 *ngIf="banderaTarifaRestoPeso || banderaTarifaRestoPrecio ">
+
+                      <div class="form-group col-12" *ngIf="banderaTarifaRestoPeso || banderaTarifaRestoPrecio ">
+                        <label>* Precio</label>
+                        <div class="input-group">
+                          <input #precioTarifaResto="ngModel" [(ngModel)]="this.objetoAuxiliarResto.Precio"
+                                 [ngClass]="{'is-invalid': precioTarifaResto.invalid && (precioTarifaResto.dirty || precioTarifaResto.touched),
                           'is-valid': precioTarifaResto.valid && (precioTarifaResto.dirty || precioTarifaResto.touched)}"
-                               class="tamanioInputs form-control"
-                               min="0" step="0.01" oninput="validity.valid || (value='');"
-                               name="precioTarifaResto" id="precioTarifaResto" type="number"
-                               placeholder="0,00" (focusout)="transformar($event)" required>
-                        <div class="input-group-append" *ngIf="this.objetoAuxiliarResto.Precio != 0">
-                          <span class="input-group-text tamanioInputs">US$</span>
+                                 class="tamanioInputs form-control"
+                                 min="0" step="0.01" oninput="validity.valid || (value='');"
+                                 name="precioTarifaResto" id="precioTarifaResto" type="number"
+                                 placeholder="0,00" (focusout)="transformar($event)" required>
+                          <div class="input-group-append" *ngIf="this.objetoAuxiliarResto.Precio != 0">
+                            <span class="input-group-text tamanioInputs">US$</span>
+                          </div>
+                          <div class="input-group-append" *ngIf="this.objetoAuxiliarResto.Precio == 0">
+                            <span class="input-group-text tamanioInputs">Gratis</span>
+                          </div>
                         </div>
-                        <div class="input-group-append" *ngIf="this.objetoAuxiliarResto.Precio == 0">
-                          <span class="input-group-text tamanioInputs">Gratis</span>
+                        <div
+                          *ngIf="precioTarifaResto.invalid && (precioTarifaResto.dirty || precioTarifaResto.touched)">
+                          <div *ngIf="precioTarifaResto.errors.required">
+                            <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'></i> &nbsp; Campo
+                              requerido.</p>
+                          </div>
                         </div>
-                      </div>
-                      <div *ngIf="precioTarifaResto.invalid && (precioTarifaResto.dirty || precioTarifaResto.touched)">
-                        <div *ngIf="precioTarifaResto.errors.required">
-                          <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'></i> &nbsp; Campo
-                            requerido.</p>
-                        </div>
-                      </div>
-                    </div> <!-- form-group end.// -->
+                      </div> <!-- form-group end.// -->
 
-                    <div class="form-group mx-3" *ngIf="banderaTarifaRestoPeso">
+                      <div class="form-group mx-3" *ngIf="banderaTarifaRestoPeso">
 
-                      <div class="form-row">
-                        <div class="form-group col-md-6">
-                          <label>* Peso Minimo</label>
-                          <div class="input-group">
-                            <input #minPesoResto="ngModel" [(ngModel)]="this.objetoAuxiliarResto.Minimo"
-                                   [ngClass]="{'is-invalid': (minPesoResto.invalid && (minPesoResto.dirty || minPesoResto.touched))
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label>* Peso Minimo</label>
+                            <div class="input-group">
+                              <input #minPesoResto="ngModel" [(ngModel)]="this.objetoAuxiliarResto.Minimo"
+                                     [ngClass]="{'is-invalid': (minPesoResto.invalid && (minPesoResto.dirty || minPesoResto.touched))
                                    || (this.objetoAuxiliarResto.Minimo>this.objetoAuxiliarResto.Maximo),
                           'is-valid': minPesoResto.valid && (minPesoResto.dirty || minPesoResto.touched)}"
-                                   class="tamanioInputs form-control" name="minPesoResto"
-                                   placeholder="0" min="0" step="0.01"
-                                   oninput="validity.valid || (value='');"
-                                   type="number" required>
-                            <div class="input-group-append">
-                              <span class="input-group-text tamanioInputs">kg</span>
+                                     class="tamanioInputs form-control" name="minPesoResto"
+                                     placeholder="0" min="0" step="0.01"
+                                     oninput="validity.valid || (value='');"
+                                     type="number" required>
+                              <div class="input-group-append">
+                                <span class="input-group-text tamanioInputs">kg</span>
+                              </div>
+                            </div> <!-- input-group end.// -->
+                            <div *ngIf="minPesoResto.invalid && (minPesoResto.dirty || minPesoResto.touched)">
+                              <div *ngIf="minPesoResto.errors.required">
+                                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo
+                                  requerido.</p>
+                              </div>
                             </div>
-                          </div> <!-- input-group end.// -->
-                          <div *ngIf="minPesoResto.invalid && (minPesoResto.dirty || minPesoResto.touched)">
-                            <div *ngIf="minPesoResto.errors.required">
-                              <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo
-                                requerido.</p>
-                            </div>
-                          </div>
-                        </div> <!-- form-group end.// -->
+                          </div> <!-- form-group end.// -->
 
-                        <div class="form-group col-md-6">
-                          <label>* Peso Máximo</label>
-                          <div class="input-group">
-                            <input #maxPesoResto="ngModel" [(ngModel)]="this.objetoAuxiliarResto.Maximo"
-                                   [ngClass]="{'is-invalid': maxPesoResto.invalid && (maxPesoResto.dirty || maxPesoResto.touched),
+                          <div class="form-group col-md-6">
+                            <label>* Peso Máximo</label>
+                            <div class="input-group">
+                              <input #maxPesoResto="ngModel" [(ngModel)]="this.objetoAuxiliarResto.Maximo"
+                                     [ngClass]="{'is-invalid': maxPesoResto.invalid && (maxPesoResto.dirty || maxPesoResto.touched),
                           'is-valid': maxPesoResto.valid && (maxPesoResto.dirty || maxPesoResto.touched)}"
-                                   class="tamanioInputs form-control" name="maxPesoResto"
-                                   placeholder="999,99" step="0.01"
-                                   oninput="validity.valid || (value='');"
-                                   type="number" required>
-                            <div class="input-group-append">
-                              <span class="input-group-text tamanioInputs">kg</span>
+                                     class="tamanioInputs form-control" name="maxPesoResto"
+                                     placeholder="999,99" step="0.01"
+                                     oninput="validity.valid || (value='');"
+                                     type="number" required>
+                              <div class="input-group-append">
+                                <span class="input-group-text tamanioInputs">kg</span>
+                              </div>
+                            </div> <!-- input-group end.// -->
+                            <div *ngIf="maxPesoResto.invalid && (maxPesoResto.dirty || maxPesoResto.touched)">
+                              <div *ngIf="maxPesoResto.errors.required">
+                                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo
+                                  requerido.</p>
+                              </div>
                             </div>
-                          </div> <!-- input-group end.// -->
-                          <div *ngIf="maxPesoResto.invalid && (maxPesoResto.dirty || maxPesoResto.touched)">
-                            <div *ngIf="maxPesoResto.errors.required">
-                              <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo
-                                requerido.</p>
-                            </div>
-                          </div>
-                        </div> <!-- form-group end.// -->
+                          </div> <!-- form-group end.// -->
+                        </div>
+
+                        <div *ngIf="(this.objetoAuxiliarResto.Minimo > this.objetoAuxiliarResto.Maximo)">
+                          <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; El peso mínimo
+                            de pedido no puede ser superior al peso máximo de pedido.</p>
+                        </div>
                       </div>
 
-                      <div *ngIf="(this.objetoAuxiliarResto.Minimo > this.objetoAuxiliarResto.Maximo)">
-                        <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; El peso mínimo
-                          de pedido no puede ser superior al peso máximo de pedido.</p>
-                      </div>
-                    </div>
+                      <div class="form-group mx-3" *ngIf="banderaTarifaRestoPrecio">
+                        <div class="form-row">
 
-                    <div class="form-group mx-3" *ngIf="banderaTarifaRestoPrecio">
-                      <div class="form-row">
-
-                        <div class="form-group col-md-6">
-                          <label>* Precio Minimo</label>
-                          <div class="input-group">
-                            <input #minPrecioResto="ngModel" [(ngModel)]="this.objetoAuxiliarResto.Minimo"
-                                   [ngClass]="{'is-invalid': minPrecioResto.invalid && (minPrecioResto.dirty || minPrecioResto.touched),
+                          <div class="form-group col-md-6">
+                            <label>* Precio Minimo</label>
+                            <div class="input-group">
+                              <input #minPrecioResto="ngModel" [(ngModel)]="this.objetoAuxiliarResto.Minimo"
+                                     [ngClass]="{'is-invalid': minPrecioResto.invalid && (minPrecioResto.dirty || minPrecioResto.touched),
                           'is-valid': minPrecioResto.valid && (minPrecioResto.dirty || minPrecioResto.touched)}"
-                                   class="tamanioInputs form-control"
-                                   min="0" step="0.01"
-                                   oninput="validity.valid || (value='');"
-                                   name="minPrecioResto" id="minPrecioResto" type="number"
-                                   placeholder="0,00" (focusout)="transformar($event)" required>
-                            <div class="input-group-append">
-                              <span class="input-group-text tamanioInputs">US$</span>
+                                     class="tamanioInputs form-control"
+                                     min="0" step="0.01"
+                                     oninput="validity.valid || (value='');"
+                                     name="minPrecioResto" id="minPrecioResto" type="number"
+                                     placeholder="0,00" (focusout)="transformar($event)" required>
+                              <div class="input-group-append">
+                                <span class="input-group-text tamanioInputs">US$</span>
+                              </div>
+                            </div> <!-- input-group end.// -->
+                            <div *ngIf="minPrecioResto.invalid && (minPrecioResto.dirty || minPrecioResto.touched)">
+                              <div *ngIf="minPrecioResto.errors.required">
+                                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'></i> &nbsp; Campo
+                                  requerido.</p>
+                              </div>
                             </div>
-                          </div> <!-- input-group end.// -->
-                          <div *ngIf="minPrecioResto.invalid && (minPrecioResto.dirty || minPrecioResto.touched)">
-                            <div *ngIf="minPrecioResto.errors.required">
-                              <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'></i> &nbsp; Campo
-                                requerido.</p>
-                            </div>
-                          </div>
-                        </div> <!-- form-group end.// -->
+                          </div> <!-- form-group end.// -->
 
-                        <div class="form-group col-md-6">
-                          <label>* Precio Máximo</label>
-                          <div class="input-group">
-                            <input #maxPrecioResto="ngModel" [(ngModel)]="this.objetoAuxiliarResto.Maximo"
-                                   [ngClass]="{'is-invalid': maxPrecioResto.invalid && (maxPrecioResto.dirty || maxPrecioResto.touched),
+                          <div class="form-group col-md-6">
+                            <label>* Precio Máximo</label>
+                            <div class="input-group">
+                              <input #maxPrecioResto="ngModel" [(ngModel)]="this.objetoAuxiliarResto.Maximo"
+                                     [ngClass]="{'is-invalid': maxPrecioResto.invalid && (maxPrecioResto.dirty || maxPrecioResto.touched),
                           'is-valid': maxPrecioResto.valid && (maxPrecioResto.dirty || maxPrecioResto.touched)}"
-                                   class="tamanioInputs form-control" step="0.01"
-                                   oninput="validity.valid || (value='');"
-                                   name="maxPrecioResto" id="maxPrecioResto" type="number"
-                                   placeholder="999,99" (focusout)="transformar($event)" required>
-                            <div class="input-group-append">
-                              <span class="input-group-text tamanioInputs">US$</span>
+                                     class="tamanioInputs form-control" step="0.01"
+                                     oninput="validity.valid || (value='');"
+                                     name="maxPrecioResto" id="maxPrecioResto" type="number"
+                                     placeholder="999,99" (focusout)="transformar($event)" required>
+                              <div class="input-group-append">
+                                <span class="input-group-text tamanioInputs">US$</span>
+                              </div>
+                            </div> <!-- input-group end.// -->
+                            <div *ngIf="maxPrecioResto.invalid && (maxPrecioResto.dirty || maxPrecioResto.touched)">
+                              <div *ngIf="maxPrecioResto.errors.required">
+                                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'></i> &nbsp; Campo
+                                  requerido.</p>
+                              </div>
                             </div>
-                          </div> <!-- input-group end.// -->
-                          <div *ngIf="maxPrecioResto.invalid && (maxPrecioResto.dirty || maxPrecioResto.touched)">
-                            <div *ngIf="maxPrecioResto.errors.required">
-                              <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'></i> &nbsp; Campo
-                                requerido.</p>
-                            </div>
-                          </div>
-                        </div> <!-- form-group end.// -->
+                          </div> <!-- form-group end.// -->
+                        </div>
+                        <div *ngIf="(this.objetoAuxiliarResto.Minimo > this.objetoAuxiliarResto.Maximo)">
+                          <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; El precio
+                            mínimo
+                            de pedido no puede ser superior al precio máximo de pedido.</p>
+                        </div>
                       </div>
-                      <div *ngIf="(this.objetoAuxiliarResto.Minimo > this.objetoAuxiliarResto.Maximo)">
-                        <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; El precio mínimo
-                          de pedido no puede ser superior al precio máximo de pedido.</p>
+                      <div class="form-group mx-3 my-0">
+                        <div class="alert alert-info col-12 my-0" role="alert">
+                          <a><span class="fa fa-info-circle fa-1x"></span></a>
+                          &nbsp; &nbsp;Asegurate de llenar los campos obligatorios.
+                        </div>
                       </div>
                     </div>
-                    <div class="form-group mx-3 my-0">
-                      <div class="alert alert-info col-12 my-0" role="alert">
-                        <a><span class="fa fa-info-circle fa-1x"></span></a>
-                        &nbsp; &nbsp;Asegurate de llenar los campos obligatorios.
-                      </div>
+                    <div class="modal-footer">
+
+                      <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"
+                              (click)="cancelarTarifaResto(); modal.close('Close click')">Cancelar
+                      </button>
+                      <button type="button" class="btn btn-primary btn-sm" *ngIf="banderaTipoAccionResto=='Agregar'"
+                              [disabled]="!FormModalResto.checkValidity()||(this.objetoAuxiliarResto.Minimo > this.objetoAuxiliarResto.Maximo)"
+                              (click)="agregarTarifaResto(); modal.close('Save click')">Agregar
+                      </button>
+
+                      <button type="button" class="btn btn-primary btn-sm" *ngIf="banderaTipoAccionResto=='Editar'"
+                              [disabled]="!FormModalResto.checkValidity()"
+                              (click)="editarTarifaResto(); modal.close('Save click')">Aceptar
+                      </button>
+
                     </div>
-                  </div>
-                  <div class="modal-footer">
-
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"
-                            (click)="cancelarTarifaResto(); modal.close('Close click')">Cancelar
-                    </button>
-                    <button type="button" class="btn btn-primary btn-sm" *ngIf="banderaTipoAccionResto=='Agregar'"
-                            [disabled]="!FormModalResto.checkValidity()||(this.objetoAuxiliarResto.Minimo > this.objetoAuxiliarResto.Maximo)"
-                            (click)="agregarTarifaResto(); modal.close('Save click')">Agregar
-                    </button>
-
-                    <button type="button" class="btn btn-primary btn-sm" *ngIf="banderaTipoAccionResto=='Editar'"
-                            [disabled]="!FormModalResto.checkValidity()"
-                            (click)="editarTarifaResto(); modal.close('Save click')">Aceptar
-                    </button>
-
-                  </div>
-                </form>
-              </ng-template>
+                  </form>
+                </ng-template>
+              </div>
             </div>
-
           </div>
-
-
-
         </div>
-      </div>
-      <br><br><br> <br><br><br>
+
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title mb-2">Acciones</h5>
+            <div class="form-row justify-content-end">
+              <button *ngIf="banderaEdicionDeshabilitada" (click)="habilitarEdicion()" href="#"
+                      class="btn btn-warning text-white "><span class="fa fa-edit"></span> Modificar
+              </button> &nbsp;
+              <button [disabled]="!FormMetodoEnvio.checkValidity()" *ngIf="!banderaEdicionDeshabilitada"
+                      (click)="modificarMetodoEnvio()" href="#"
+                      class="btn btn-primary text-white "><span class="fa fa-save"></span> Guardar
+              </button> &nbsp;
+              <button *ngIf="!banderaEdicionDeshabilitada" href="#" (click)="cancelarModificacion(); "
+                      class="btn btn-light  "><span
+                class="fa fa-close"></span> Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <br><br><br>
+      </form>
     </div>
 
     <div class="col-md-3 mt-3 mt-md-0" id="panelDos">

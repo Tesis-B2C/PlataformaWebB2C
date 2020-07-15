@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Sucursal} from "../../../modelos/sucursal";
 import {DpaServicio} from "../../../servicios/dpa.servicio";
 import {ToastrService} from "ngx-toastr";
@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
   templateUrl: './sucursales-tienda.component.html',
   styleUrls: ['./sucursales-tienda.component.css']
 })
-export class SucursalesTiendaComponent implements OnInit {
+export class SucursalesTiendaComponent implements OnInit, OnDestroy {
   private soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
 
   /*Variables Input*/
@@ -50,6 +50,12 @@ export class SucursalesTiendaComponent implements OnInit {
     this.getDpaProvinciasCasa("P");
     this.identidadTienda = this._tiendaServicio.getIdentityTienda();
     this.iniciarEdicion();
+  }
+
+  ngOnDestroy() {
+    delete this.Sucursales;
+    delete this.vectorCasa;
+    this.toastr.clear();
   }
 
   async getDpaProvincias(buscar) {
