@@ -150,11 +150,10 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     if (eventEntrante.target.files && eventEntrante.target.files[0]) {
       var filesAmount = eventEntrante.target.files.length;
 
-
-      this.vectorBanderaAgregarImagen[indice] = true;
       if (filesAmount > 6) {
         this.banderaMensajeMaximoImagenes = true;
       } else {
+        this.vectorBanderaAgregarImagen[indice] = true;
         for (let i = 0; i < filesAmount; i++) {
           this.Imagenes_Producto[indice].push(new Imagen_Producto(eventEntrante.target.files[i].name, eventEntrante.target.files[i].type, eventEntrante.target.files[i], eventEntrante.target.files[i].size));
           var reader = new FileReader();
@@ -171,11 +170,14 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
           this.imagenes[indice] = null;
           this.Imagenes_Producto[indice].splice(0, this.Imagenes_Producto[indice].length);
           document.forms["form"].reset();
-         // document.forms["formVariaciones"].reset();
+          // document.forms["formVariaciones"].reset();
 
           this.vectorBanderaAgregarImagen[indice] = false;
           this.banderaMensajeMaximoImagenes = true;
         } else if (this.Imagenes_Producto[indice].length == 6) {
+          this.banderaMensajeMaximoImagenes = false
+          this.banderaMaximoImagenes = false;
+        } else if (this.Imagenes_Producto[indice].length == 0) {
           this.banderaMensajeMaximoImagenes = false
           this.banderaMaximoImagenes = false;
         }
@@ -215,8 +217,8 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   public quitarImagenes(indice: any, imagen) {
     this.imagenes[indice].splice(imagen, 1);
     document.forms["form"].reset();
-  //  document.forms["formVariaciones"].reset();
-   debugger;
+    //  document.forms["formVariaciones"].reset();
+    debugger;
     this.Imagenes_Producto[indice].splice(imagen, 1);
     console.log("vector imagenes", this.imagenes[indice]);
     if (this.imagenes[indice].length == 0)
@@ -224,10 +226,10 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   }
 
   public borrarVideo() {
-    this.videoYoutubeGuardar="";
-    this.videoPorGuardar="";
-    this.data.video="";
-    this.videoYoutube="";
+    this.videoYoutubeGuardar = "";
+    this.videoPorGuardar = "";
+    this.data.video = "";
+    this.videoYoutube = "";
   }
 
   public opcionCondicionProducto(condicion) {
