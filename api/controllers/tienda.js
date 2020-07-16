@@ -1,7 +1,7 @@
 'use strict'
 
 
-const HORARIO_ATENCION = require('../models/horario_atencion');
+
 const moment = require('moment');
 const TIENDA = require('../models/tienda'); //importar el modelo del usuario  o lo que son las clases comunesvar DPA = require('../models/dpa'); //importar el modelo del usuario  o lo que son las clases comunes
 const SUCURSAL = require('../models/sucursal');
