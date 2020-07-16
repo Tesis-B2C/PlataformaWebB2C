@@ -19,7 +19,7 @@ async function saveMetodosPago(req, res) {
 
             if (mp.Tipo_Pago == 'Efectivo') {
                 await Metodo_Pago.create({
-                        PROCENTAJE_DESCUENTO: mp.Procentaje_Descuento,
+                        PORCENTAJE_DESCUENTO: mp.Porcentaje_Descuento,
                         TIPO_PAGO: mp.Tipo_Pago,
                         NUM_TIENDA: req.params.id
                     },
@@ -46,7 +46,7 @@ async function saveMetodosPago(req, res) {
                 await Metodo_Pago.create({
                         API_KEY_PAYPAL: mp.Api_Key_Paypal,
                         TIPO_PAGO: mp.Tipo_Pago,
-                        PORCENTAJE_DESCUENTO: mp.Porcentaje_Descuento,
+                        PORCENTAJE_RECARGO: mp.Porcentaje_Descuento,
                         NUM_TIENDA: req.params.id
                     },
                     {
