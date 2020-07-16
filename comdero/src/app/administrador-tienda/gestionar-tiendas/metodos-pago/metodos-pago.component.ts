@@ -58,9 +58,9 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
       for (let mp of this.identidadTienda.MEDOTO_PAGOs) {
         if (mp.TIPO_PAGO = 'Efectivo') {
           this.Metodo_Pago_Efectivo.Porcentaje_Descuento = mp.PORCENTAJE_DESCUENTO;
-          this.banderaSlidePagoEfectivo.checked  = true;
+          this.banderaSlidePagoEfectivo.checked = true;
         } else {
-          this.banderaSlidePagoEfectivo.checked  = false;
+          this.banderaSlidePagoEfectivo.checked = false;
         }
 
         if (mp.TIPO_PAGO = 'Transferencia') {
@@ -68,26 +68,26 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
           this.Metodo_Pago_Transferencia.Tipo_Cuenta = mp.TIPO_CUENTA;
           this.Metodo_Pago_Transferencia.Banco_Pertenece = mp.BANCO_PERTENECE;
           this.Metodo_Pago_Transferencia.Porcentaje_Descuento = mp.PORCENTAJE_DESCUENTO;
-          this.banderaSlidePagoTransferencia.checked  = true;
+          this.banderaSlidePagoTransferencia.checked = true;
         } else {
-          this.banderaSlidePagoTransferencia.checked  = true;
+          this.banderaSlidePagoTransferencia.checked = true;
         }
 
         if (mp.TIPO_PAGO = 'Electrónico') {
           this.Metodo_Pago_Electronico.Api_Key_Paypal = mp.API_KEY_PAYPAL;
           this.Metodo_Pago_Electronico.Porcentaje_Recargo = mp.PORCENTAJE_RECARGO;
-          this.banderaSlidePagoEfectivo.checked  = true;
+          this.banderaSlidePagoEfectivo.checked = true;
         } else {
-          this.banderaSlidePagoEfectivo.checked  = false;
+          this.banderaSlidePagoEfectivo.checked = false;
         }
       }
     } else {
 
       this.banderaSlidePagoElectronico.checked = false;
-      this.banderaSlidePagoTransferencia.checked  = false;
-      this.banderaSlidePagoEfectivo.checked  = false;
-      this.Metodo_Pago_Efectivo = new Metodo_Pago(0, 0, "", "", "", 0, "Efectivo");
-      this.Metodo_Pago_Transferencia = new Metodo_Pago(0, 0, "", "", "", 0, "Transferencia");
+      this.banderaSlidePagoTransferencia.checked = false;
+      this.banderaSlidePagoEfectivo.checked = false;
+      this.Metodo_Pago_Efectivo = new Metodo_Pago(0, null, "", "", "", 0, "Efectivo");
+      this.Metodo_Pago_Transferencia = new Metodo_Pago(0, null, "Ahorros", "", "", 0, "Transferencia");
       this.Metodo_Pago_Electronico = new Metodo_Pago(0, 0, "", "", "", 0, "Electrónico");
 
 
@@ -147,9 +147,9 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
 
   public async saveMetodoPago() {
     try {
-      if (this.Metodo_Pago_Efectivo) this.Metodo_Pago_Enviar.push(this.Metodo_Pago_Efectivo);
-      if (this.Metodo_Pago_Transferencia) this.Metodo_Pago_Enviar.push(this.Metodo_Pago_Transferencia);
-      if (this.Metodo_Pago_Electronico) this.Metodo_Pago_Enviar.push(this.Metodo_Pago_Electronico);
+      if (this.banderaSlidePagoEfectivo.checked) this.Metodo_Pago_Enviar.push(this.Metodo_Pago_Efectivo);
+      if (this.banderaSlidePagoTransferencia.checked) this.Metodo_Pago_Enviar.push(this.Metodo_Pago_Transferencia);
+      if (this.banderaSlidePagoElectronico.checked) this.Metodo_Pago_Enviar.push(this.Metodo_Pago_Electronico);
 
       let response = await this._metodoPagoServicio.saveMetodoPago(this.Metodo_Pago_Enviar).toPromise();
       this.mensageCorrecto(response.data);
@@ -159,6 +159,10 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
         this.mensageError(JSON.stringify((e).error.message));
       else this.mensageError("Error de conexión intentelo mas tarde");
     }
+  }
+
+  public validar() {
+
   }
 
   mensageError(mensaje) {

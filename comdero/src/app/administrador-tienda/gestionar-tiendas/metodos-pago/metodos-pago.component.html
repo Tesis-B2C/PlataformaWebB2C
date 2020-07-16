@@ -68,9 +68,12 @@
 
         <div class="col-2 text-right">
           <label class="switch mt-2">
-            <input type="checkbox" (click)="opcionPagoEfectivo($event)" [disabled]="!banderaModificar" id="slidePagoEfectivo">
+            <input type="checkbox" (click)="opcionPagoEfectivo($event)" [disabled]="!banderaModificar"
+                   id="slidePagoEfectivo">
             <span class="slider round"></span>
           </label>
+
+
         </div>
       </div>
       <br>
@@ -81,11 +84,15 @@
               <p>Porcentaje descuento <span class="text-muted" style="font-size: smaller">(Opcional)</span></p>
               <div class="input-group  ">
                 <input class="form-control" name="descuento" #DescuentoPagoEfectivo="ngModel"
+                       [ngClass]="{'is-invalid': DescuentoPagoEfectivo.invalid && banderaModificar}"
                        [(ngModel)]="this.Metodo_Pago_Efectivo.Porcentaje_Descuento"
-                       type="number" [disabled]="!this.banderaPagoEfectivo || !banderaModificar">
+                       type="number" [disabled]="!this.banderaPagoEfectivo || !banderaModificar" required>
                 <div class="input-group-append">
                   <span class="input-group-text unidades">%</span>
                 </div>
+              </div>
+              <div *ngIf="DescuentoPagoEfectivo.errors?.required && banderaModificar">
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
               </div>
             </div>
 
@@ -101,12 +108,13 @@
       <div class="form-row mx-2">
         <div class="col-10">
           <h6 class="font-weight-bold">Pagos con transferencia bancaria</h6>
-          <p class="p">Permite a los clientes la opción de  a traves de una transferencia bancaria .</p>
+          <p class="p">Permite a los clientes la opción de a traves de una transferencia bancaria .</p>
         </div>
 
         <div class="col-2 text-right">
           <label class="switch mt-2">
-            <input type="checkbox" (click)="opcionPagoTransferencia($event)" [disabled]="!banderaModificar" id="slidePagoTransferencia">
+            <input type="checkbox" (click)="opcionPagoTransferencia($event)" [disabled]="!banderaModificar"
+                   id="slidePagoTransferencia">
             <span class="slider round"></span>
           </label>
         </div>
@@ -122,21 +130,32 @@
                   <p>Número de cuenta </p>
                   <input class="form-control" name="numeroCuenta" type="number" #NumeroCuenta="ngModel"
                          [(ngModel)]="this.Metodo_Pago_Transferencia.Numero_Cuenta"
-                         [disabled]="!this.banderaPagoTransferencia || !banderaModificar">
+                         [disabled]="!this.banderaPagoTransferencia || !banderaModificar" required
+                         [ngClass]="{'is-invalid': NumeroCuenta.invalid && banderaModificar}">
+                  <div *ngIf="NumeroCuenta.errors?.required && banderaModificar">
+                    <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+                  </div>
                 </div>
                 <div class="form-group  col-md-6">
                   <p>Tipo de cuenta</p>
                   <select (change)="opcionTipoCuenta($event.target.value)" class="browser-default form-control "
-                          id="tipoCuenta" name="tipoCuenta" [disabled]="!this.banderaPagoTransferencia || !banderaModificar">
-                    <option value="Ahorros">Ahorros</option>
-                    <option value="Corriente">Corriente</option>
+                          id="tipoCuenta" name="tipoCuenta"
+                          [disabled]="!this.banderaPagoTransferencia || !banderaModificar">
+                    <option value="Ahorros" [selected]="Metodo_Pago_Transferencia.Tipo_Cuenta=='Ahorros'">Ahorros
+                    </option>
+                    <option value="Corriente" [selected]="Metodo_Pago_Transferencia.Tipo_Cuenta=='Corriente'">
+                      Corriente
+                    </option>
                   </select>
                 </div>
                 <div class="form-group  col-md-6">
                   <p>Banco al que pertenece</p>
                   <input class="form-control" name="bancoPertenece" type="text" #BancoPertenece="ngModel"
                          [(ngModel)]="this.Metodo_Pago_Transferencia.Banco_Pertenece"
-                         [disabled]="!this.banderaPagoTransferencia || !banderaModificar">
+                         [disabled]="!this.banderaPagoTransferencia || !banderaModificar" required [ngClass]="{'is-invalid': BancoPertenece.invalid && banderaModificar}">
+                  <div *ngIf="BancoPertenece.errors?.required && banderaModificar">
+                    <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+                  </div>
                 </div>
                 <div class="form-group col-md-6">
                   <p>Porcentaje descuento<span class="text-muted" style="font-size: smaller">(Opcional)</span></p>
@@ -170,71 +189,86 @@
 
         <div class="col-2 text-right">
           <label class="switch mt-2">
-            <input type="checkbox" (click)="opcionPagoElectronico($event)" [disabled]="!banderaModificar" id="slidePagoElectronico" >
+            <input type="checkbox" (click)="opcionPagoElectronico($event)" [disabled]="!banderaModificar"
+                   id="slidePagoElectronico">
             <span class="slider round"></span>
           </label>
         </div>
       </div>
       <br>
       <form #formMetodoPagoElectronico class="card card-body mb-md-5">
-      <div class="container">
-        <div class="form-row ">
-          <div class="form-group col-md-8">
+        <div class="container">
+          <div class="form-row ">
+            <div class="form-group col-md-8">
 
-            <div class="form-row" >
-              <div class="form-group  col-12">
-                <p>Api Key PayPal </p>
-                <input class="form-control" name="apiPayPal" type="text" #ApiPayPal="ngModel"
-                       [(ngModel)]="this.Metodo_Pago_Electronico.Api_Key_Paypal" [disabled]="!this.banderaPagoElectronico || !banderaModificar">
-                <a (click)="abrirContentVideosAyuda(contentComoRecivirPagos)" class="alert-link">* Como obtener la Api
-                  Key de PayPal ?</a>
-
-              </div>
-              <div class="form-group col-md-6">
-                <p>Porcentaje de recargo <span class="text-muted" style="font-size: smaller">(Opcional)</span></p>
-                <div class="input-group">
-                  <input class="form-control" name="recargoElectronico" #RecargoElectronico="ngModel"
-                         [(ngModel)]="this.Metodo_Pago_Electronico.Porcentaje_Recargo" [disabled]="!this.banderaPagoElectronico || !banderaModificar"
-                         type="number">
-                  <div class="input-group-append">
-                    <span class="input-group-text unidades">%</span>
+              <div class="form-row">
+                <div class="form-group  col-12">
+                  <p>Api Key PayPal </p>
+                  <input class="form-control" name="apiPayPal" type="text" #ApiPayPal="ngModel"
+                         [(ngModel)]="this.Metodo_Pago_Electronico.Api_Key_Paypal"
+                         [disabled]="!this.banderaPagoElectronico || !banderaModificar"
+                         [ngClass]="{'is-invalid': ApiPayPal.invalid && banderaModificar}" required="">
+                  <div *ngIf="ApiPayPal.errors?.required && banderaModificar">
+                    <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
                   </div>
+                  <hr>
+                  <a (click)="abrirContentVideosAyuda(contentComoRecivirPagos)" style="color: #1a56e9" class="alert-link">* Como obtener la Api
+                    Key de PayPal ?</a>
+
                 </div>
+                <div class="form-group col-md-6">
+                  <p>Porcentaje de recargo <span class="text-muted" style="font-size: smaller">(Opcional)</span></p>
+                  <div class="input-group">
+                    <input class="form-control" name="recargoElectronico" #RecargoElectronico="ngModel"
+                           [(ngModel)]="this.Metodo_Pago_Electronico.Porcentaje_Recargo" required
+                           [disabled]="!this.banderaPagoElectronico || !banderaModificar" [ngClass]="{'is-invalid': RecargoElectronico.invalid && banderaModificar}"
+                           type="number">
+                    <div class="input-group-append">
+                      <span class="input-group-text unidades">%</span>
+                    </div>
+                  </div>
+                  <div *ngIf="RecargoElectronico.errors?.required && banderaModificar">
+                    <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+                  </div>
+
+                </div>
+
+
               </div>
 
+            </div> <!-- form-group end.// -->
 
+
+            <div class=" mx-auto d-flex align-items-center col-md-2">
+              <div class="mx-auto">
+                <p class=" iconos-pagos "><span class="  fab fa-cc-paypal fa-4x" style="color: #2a4c75"></span></p>
+              </div>
             </div>
 
-          </div> <!-- form-group end.// -->
-
-
-          <div class=" mx-auto d-flex align-items-center col-md-2">
-            <div class="mx-auto">
-              <p class=" iconos-pagos "><span class="  fab fa-cc-paypal fa-4x" style="color: #2a4c75"></span></p>
-            </div>
           </div>
-
         </div>
-      </div>
 
       </form>
       <hr>
       <div class="container">
         <div class="form-row justify-content-end">
 
-          <button *ngIf="!banderaModificar" (click)="banderaModificar=true" class="btn btn-outline-primary   text-nowrap col-md-3  mb-4 " type="button">
+          <button *ngIf="!banderaModificar" (click)="banderaModificar=true"
+                  class="btn btn-outline-primary   text-nowrap col-md-3  mb-4 " type="button">
             <span class="spinner-border spinner-border-sm mr-2"></span>
             Modificar
           </button>
 
 
-          <button  *ngIf="banderaModificar" (click)="banderaModificar=false;iniciarEdicion();" class="btn btn-outline-primary   text-nowrap col-md-3  mb-4 " type="button">
+          <button *ngIf="banderaModificar" (click)="banderaModificar=false;iniciarEdicion();"
+                  class="btn btn-outline-primary   text-nowrap col-md-3  mb-4 " type="button">
             <span class="spinner-border spinner-border-sm mr-2"></span>
             Cancelar
           </button>
 
 
-          <button  *ngIf="banderaModificar" (click)="saveMetodoPago()" class="btn btn-outline-primary   text-nowrap col-md-3  mb-4 " type="button">
+          <button *ngIf="banderaModificar" (click)="saveMetodoPago()"
+                  class="btn btn-outline-primary   text-nowrap col-md-3  mb-4 " type="button">
             <span class="spinner-border spinner-border-sm mr-2"></span>
             Guardar
           </button>
