@@ -31,6 +31,7 @@ export class TiendasComponent implements OnInit, AfterContentInit {
   async ngOnInit() {
 
     try {
+      debugger;
       let identidad = this._agenteServicio.getIdentity();
       let response = await this._tiendaServicio.getMisTiendas(identidad.COD_AGENTE).toPromise();
       this.misTiendas = response.data;

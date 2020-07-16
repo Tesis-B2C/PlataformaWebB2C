@@ -3,38 +3,45 @@
   <p class=" encabezado ml-4 text-left"> Catalogo de tiendas</p>
 </div> <!-- container .// -->
 
-<div class="container-fluid mt-5">
+<div class="mt-5">
   <div class="row  justify-content-center">
-    <h4 class=" col-md-6  text-left">Cátalogo de tiendas</h4>
-    <hr class=" offset-md-2 col-md-8  ">
+
+    <div  class=" col-md-4 mr-auto">
+      <h4>Cátalogo de tiendas</h4>
+    </div>
+    <div class="col-lg-3 col-md-4  mt-md-0 mt-3 mr-lg-4">
+      <button class=" btn btn-primary  mb-md-0 mb-2  col-lg-5" routerLink="/registro-tienda">Nueva tienda</button>
+    </div>
+
+    <hr class="col-md-10  mt-1">
   </div>
-  <div class="row justify-content-center  ">
+  <div class="row justify-content-center no-gutters mx-3  ">
     <!--<ngb-pagination [collectionSize]="70"  [pageSize]="2" >
       http://www.techtutorhub.com/article/Simple-Pagination-with-Angular-8-and-ng-bootstrap/64
     </ngb-pagination>-->
 
-    <div class=" col-md-3 col-lg-2   mt-3     mt-md-0">
-      <div class=" card card-body container jackInTheBox  animated alert alert-warning  fade show "
+    <div class=" col-md-2  mt-3   mt-md-0   ">
+      <div class=" card card-body  jackInTheBox  animated  alert alert-warning    fade show "
            role="alert">
 
         <h4 class="alert-heading">Empecemos!</h4>
         <hr class="mb-0">
-        <label class="">Selecciona una de tus tiendas para empezar a configurarla </label>
-        <img class="mx-auto  pt-md-4  mensaje-mascota " src="../../../assets/images/mascota-condero.png" width="80%">
+        <label >Selecciona una de tus tiendas para empezar a configurarla </label>
+        <img class="mx-auto  pt-md-4  mensaje-mascota " src="../../../assets/images/mascota-condero.png" width="70%">
 
       </div>
 
 
     </div>
 
-    <div class=" col-12 col-md-8  catalogo-tiendas">
-      <div class=" container contairner-tiendas bg-white px-lg-5  shadow ">
-        <div class="row pt-5  ">
+    <div class=" col-12 col-md-8  mx-5  catalogo-tiendas">
+      <div class=" container contairner-tiendas bg-white px-lg-5  shadow  ">
+        <div class="row py-3 ">
           <div class="col-md-4 mx-auto" *ngFor="let tienda of misTiendas">
             <a (click)="irAdministracionTienda(tienda.NUM_TIENDA)" class="mb-0 ">
 
-       <img class=" mx-auto " [src]="getImagen(tienda.LOGO)"   width="100%" height="190px">
-        <!--  <img class=" mx-auto " [src]="this.url + 'obtenerImagenTienda/'+tienda.LOGO" width="100%" height="190px">-->
+              <img class=" mx-auto " [src]="getImagen(tienda.LOGO)" width="100%" height="190px">
+              <!--  <img class=" mx-auto " [src]="this.url + 'obtenerImagenTienda/'+tienda.LOGO" width="100%" height="190px">-->
 
             </a>
             <p class="text-center link  mb-3" (click)="irAdministracionTienda(tienda.NUM_TIENDA)">

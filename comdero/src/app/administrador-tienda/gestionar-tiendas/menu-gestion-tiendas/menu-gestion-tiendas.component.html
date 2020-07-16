@@ -1,4 +1,3 @@
-
 <div class=" border-bottom colorNavbar  py-1 p-absolute">
   <p class=" encabezado ">
     <button (click)="abrirSideBar()"><i class=" col-sm-1  fa fa-bars px-3  "></i></button>
@@ -8,7 +7,7 @@
 <div class="wrapper ">
   <!-- Sidebar  -->
 
-  <nav id="sidebar" [ngClass]="{'active':banderaSideBar}">
+  <nav id="sidebar" class="scrollbar" [ngClass]="{'active':banderaSideBar}">
     <br><br>
     <ul class="list-unstyled  mx-2">
       <li class="mb-2" routerLink="inicio-administracion" routerLinkActive="active"
@@ -28,8 +27,8 @@
           <li routerLink="productos" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
             <a>Nuevo</a>
           </li>
-          <li>
-            <a href="#">Listado</a>
+          <li routerLink="listado-productos" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a>Listado</a>
           </li>
 
         </ul>
@@ -77,10 +76,27 @@
         </ul>
       </li>
 
+
     </ul>
     <ul class="mx-2">
       <hr>
-      <p>Configuraciones &nbsp;<span class="fa fa-cog mb-4"></span></p>
+      <p>Configuraciones &nbsp;<span class="fa fa-cog mb-4"></span>&nbsp;&nbsp; &nbsp; | &nbsp;
+        <button placement="top" ngbTooltip="Ocultar tienda" *ngIf="this.identidadTienda.ESTADO_TIENDA==0" (click)="updateEstadoTienda(1)"
+                class="p-0   text-right">
+          <span class="fa fa-eye-slash"></span>
+        </button>
+        <button placement="top" ngbTooltip="Reactivar Tienda" *ngIf="this.identidadTienda.ESTADO_TIENDA==1" (click)="updateEstadoTienda(0)"
+                 class="p-0   text-right">
+          <span class="fa fa-eye"></span>
+        </button>
+        &nbsp;&nbsp;
+        <button  placement="top" ngbTooltip="Eliminar Tienda" (click)="updateEstadoTienda(2)"
+                class="p-0  text-right">
+          <span class="fa fa-trash"></span>
+        </button>
+
+
+      </p>
 
       <li class="mb-2 ">
         <a href="#tienda" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle ">
@@ -88,15 +104,17 @@
           Tienda
         </a>
         <ul class="collapse list-unstyled" id="tienda">
-          <li routerLink="general-tienda" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" >
-            <a >General</a>
+          <li routerLink="general-tienda" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a>General</a>
           </li>
           <li routerLink="sucursales-tienda" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
             <a>Sucursales</a>
           </li>
-          <li routerLink="personalizacion-tienda" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" >
+          <li routerLink="personalizacion-tienda" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
             <a>Personalización</a>
           </li>
+
+
         </ul>
       </li>
 
@@ -119,19 +137,9 @@
           Puntos de venta
         </a>
       </li>
+
     </ul>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+
   </nav>
 
   <!-- Page Content  -->

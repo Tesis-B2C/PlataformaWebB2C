@@ -8,12 +8,16 @@ import {MetodosEnvioComponent} from "./metodos-envio/metodos-envio.component";
 import {GeneralTiendaComponent} from "./general-tienda/general-tienda.component";
 import {SucursalesTiendaComponent} from "./sucursales-tienda/sucursales-tienda.component";
 import {InicioAdministracionComponent} from "./inicio-administracion/inicio-administracion.component";
+import {ListadoProductosComponent} from "./listado-productos/listado-productos.component";
+import {ModificarProductoComponent} from "./modificar-producto/modificar-producto.component";
 
 const routes: Routes = [
   {
     path: 'menu-gestion-tienda', component: MenuGestionTiendasComponent,
     children: [
       { path: 'productos', component: ProductosComponent },
+      { path: 'listado-productos', component: ListadoProductosComponent },
+      { path: 'modificar-producto/:id', component: ModificarProductoComponent },
       { path: 'metodos-pago', component: MetodosPagoComponent },
       { path: 'metodos-envio', component: MetodosEnvioComponent },
       { path: 'general-tienda', component: GeneralTiendaComponent },
