@@ -79,11 +79,6 @@ p {
   line-height: 1.7em;
   color: #999;
 }
-button{
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.85rem;
-  color: #2a4c75;
-}
 
 a, a:hover, a:focus {
   color: inherit;

@@ -32,11 +32,6 @@ const Oferta = db.sequelize.define('OFERTA', {
             {
                 type: Sequelize.STRING,
                 allowNull: false
-            },
-        ESTADO_OFERTA:
-            {
-                type: Sequelize.STRING,
-                allowNull: false
             }
 
     },

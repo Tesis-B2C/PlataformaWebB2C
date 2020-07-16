@@ -65,7 +65,7 @@ export class PrincipalComponent implements OnInit {
      let identidad = this._agenteServicio.getIdentity();
      let response = await this._tiendaServicio.getMisTiendas(identidad.COD_AGENTE).toPromise();
        if(response.data){
-         this.router.navigate(['/administrador/administrador-tienda/mis-tiendas']);
+         this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/inicio-administracion']);
        }
     }catch (e) {
       this.router.navigate(['/registro-tienda']);

@@ -49,10 +49,6 @@ const Variante = db.sequelize.define('VARIANTE', {
                 type: Sequelize.STRING,
                 allowNull: false
             },
-        ESTADO_VARIANTE:{
-            type: Sequelize.INTEGER,
-            allowNull: false
-        }
     },
     {
         timestamps: false,

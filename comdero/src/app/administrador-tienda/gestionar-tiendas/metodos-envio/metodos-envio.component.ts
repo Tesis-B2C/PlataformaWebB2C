@@ -38,8 +38,6 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
   constructor(public toastr: ToastrService, private _tiendaServicio: TiendaServicio, private cp: CurrencyPipe, private modalService: NgbModal) {
   }
 
-
-
   ngOnInit() {
     this.identidadTienda = this._tiendaServicio.getIdentityTienda();
     this.iniciarEdicion();

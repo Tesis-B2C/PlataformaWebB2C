@@ -52,50 +52,49 @@
   <div class="row justify-content-center">
     <div class="col-md-8" id="panelUno">
 
-      <div class="form-group">
-        <div class="alert alert-primary col-12" role="alert">
-          <a><span class="fa fa-exclamation fa-1x"></span></a>
-          Establezca los métodos de pago que desea implementar en su tienda, estas opciones se asignaran a todos
-          los productos que agregue en la tienda
+      <form #formMetodoPago class="card card-body mb-md-5 ">
+        <h6>Tipos de pagos aceptados</h6>
+        <hr>
+        <div class="form-group">
+          <div class="alert alert-primary col-12" role="alert">
+            <a><span class="fa fa-exclamation fa-1x"></span></a>
+            Establezca los métodos de pago que desea implementar en su tienda, estas opciones se asignaran a todos
+            los productos que agregue en la tienda
+          </div>
         </div>
-      </div>
-      <hr>
-      <div class="form-row mx-1">
-        <div class="col-10">
-          <h6 class="font-weight-bold">Pagos en efectivo</h6>
-          <p class="p">Permite a los clientes la opción de pagar en efectivo.</p>
-        </div>
-
-        <div class="col-2 text-right">
-          <label class="switch mt-2">
-            <input type="checkbox" (click)="opcionPagoEfectivo($event)" [disabled]="!banderaModificar"
-                   id="slidePagoEfectivo">
-            <span class="slider round"></span>
-          </label>
-
-
-        </div>
-      </div>
-      <br>
-      <form #formMetodoPagoEfectivo name="formMetodoPagoEfectivo" class="card card-body mb-md-5 ">
+        <hr>
         <div class="container">
           <div class="form-row ">
-            <div class="form-group col-md-8  my-auto ">
-              <p>Porcentaje descuento <span class="text-muted" style="font-size: smaller">(Opcional)</span></p>
-              <div class="input-group  ">
-                <input class="form-control" name="descuento" #DescuentoPagoEfectivo="ngModel"
-                       [ngClass]="{'is-invalid': DescuentoPagoEfectivo.invalid && banderaModificar}"
-                       [(ngModel)]="this.Metodo_Pago_Efectivo.Porcentaje_Descuento"
-                       type="number" min="0" step="1" oninput="validity.valid||(value='');"
-                       [disabled]="!this.banderaPagoEfectivo || !banderaModificar" required>
-                <div class="input-group-append">
-                  <span class="input-group-text unidades">%</span>
+            <div class="form-group col-md-8">
+              <label>¿Desea recibir pagos en efectivo ?</label>
+              <div class="form-group">
+                <div class="radio-item">
+                  <input (change)="opcionPagoEfectivo(true)" name="pagoEfectivo"
+                         id="pagoEfectivoSi" type="radio" value="Si">
+                  <label for="pagoEfectivoSi">&nbsp;&nbsp; Si </label>
+                </div>
+
+                <div class="radio-item">
+                  <input (change)="opcionPagoEfectivo(false)" id="pagoEfectivoNo"
+                         name="pagoEfectivo" type="radio" value="No">
+                  <label for="pagoEfectivoNo">&nbsp;&nbsp; No </label>
                 </div>
               </div>
-              <div *ngIf="DescuentoPagoEfectivo.errors?.required && banderaModificar">
-                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+
+              <div class="form-row" *ngIf="this.banderaPagoEfectivo">
+                <div class="form-group col-md-6">
+                  <p>Porcentaje descuento <span class="text-muted" style="font-size: smaller">(Opcional)</span></p>
+                  <div class="input-group">
+                    <input class="form-control" name="descuento" #DescuentoPagoEfectivo="ngModel"
+                           [(ngModel)]="this.Metodo_Pago_Efectivo.Porcentaje_Descuento"
+                           type="number">
+                    <div class="input-group-append">
+                      <span class="input-group-text unidades">%</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
+            </div> <!-- form-group end.// -->
 
             <div class=" mx-auto d-flex align-items-center col-md-2">
               <div class="mx-auto">
@@ -104,126 +103,98 @@
             </div>
           </div>
         </div>
-      </form>
-      <hr>
-      <div class="form-row mx-2">
-        <div class="col-10">
-          <h6 class="font-weight-bold">Pagos con transferencia bancaria</h6>
-          <p class="p">Permite a los clientes la opción de a traves de una transferencia bancaria .</p>
-        </div>
-
-        <div class="col-2 text-right">
-          <label class="switch mt-2">
-            <input type="checkbox" (click)="opcionPagoTransferencia($event)" [disabled]="!banderaModificar"
-                   id="slidePagoTransferencia">
-            <span class="slider round"></span>
-          </label>
-        </div>
-      </div>
-      <br>
-      <form #formMetodoPagoTransferenciaBancaria name="formMetodoPagoTransferenciaBancaria"
-            class="card card-body mb-md-5 ">
+        <hr>
         <div class="container">
-          <div class="form-row ">
+          <div class="form-row justify-content-center">
+            <div class="form-group col-md-8">
+              <label>¿Desea recibir transferencias bancarias?</label>
+              <div class="form-group">
+                <div class="radio-item">
+                  <input (change)="opcionPagoTransferencia(true)" name="pagoTransferencia"
+                         type="radio" value="Si" id="pagoTransferenciaSi">
+                  <label for="pagoTransferenciaSi">&nbsp;&nbsp; Si </label>
+                </div>
 
-            <div class="col-8">
-              <div class="form-row">
+                <div class="radio-item">
+                  <input (change)="opcionPagoTransferencia(false)" name="pagoTransferencia"
+                         type="radio" value="No" id="pagoTransferenciaNo">
+                  <label for="pagoTransferenciaNo">&nbsp;&nbsp; No </label>
+                </div>
+              </div>
+
+              <div class="form-row" *ngIf="this.banderaPagoTransferencia">
                 <div class="form-group  col-md-12">
                   <p>Número de cuenta </p>
                   <input class="form-control" name="numeroCuenta" type="number" #NumeroCuenta="ngModel"
-                         [(ngModel)]="this.Metodo_Pago_Transferencia.Numero_Cuenta"
-                         [disabled]="!this.banderaPagoTransferencia || !banderaModificar" required
-                         [ngClass]="{'is-invalid': NumeroCuenta.invalid && banderaModificar}" min="0" step="1"
-                         oninput="validity.valid||(value='');">
-                  <div *ngIf="NumeroCuenta.errors?.required && banderaModificar">
-                    <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
-                  </div>
+                         [(ngModel)]="this.Metodo_Pago_Transferencia.Numero_Cuenta">
                 </div>
                 <div class="form-group  col-md-6">
                   <p>Tipo de cuenta</p>
                   <select (change)="opcionTipoCuenta($event.target.value)" class="browser-default form-control "
-                          id="tipoCuenta" name="tipoCuenta"
-                          [disabled]="!this.banderaPagoTransferencia || !banderaModificar">
-                    <option value="Ahorros" [selected]="Metodo_Pago_Transferencia.Tipo_Cuenta=='Ahorros'">Ahorros
-                    </option>
-                    <option value="Corriente" [selected]="Metodo_Pago_Transferencia.Tipo_Cuenta=='Corriente'">
-                      Corriente
-                    </option>
+                          id="tipoCuenta" name="tipoCuenta">
+                    <option value="Ahorros">Ahorros</option>
+                    <option value="Corriente">Corriente</option>
                   </select>
                 </div>
                 <div class="form-group  col-md-6">
                   <p>Banco al que pertenece</p>
-                  <input style="text-transform: uppercase;" class="form-control" name="bancoPertenece" type="text"
-                         #BancoPertenece="ngModel"
-                         [(ngModel)]="this.Metodo_Pago_Transferencia.Banco_Pertenece"
-                         [disabled]="!this.banderaPagoTransferencia || !banderaModificar" required
-                         [ngClass]="{'is-invalid': BancoPertenece.invalid && banderaModificar}">
-                  <div *ngIf="BancoPertenece.errors?.required && banderaModificar">
-                    <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
-                  </div>
+                  <input class="form-control" name="bancoPertenece" type="text" #BancoPertenece="ngModel"
+                         [(ngModel)]="this.Metodo_Pago_Transferencia.Banco_Pertenece">
                 </div>
                 <div class="form-group col-md-6">
                   <p>Porcentaje descuento<span class="text-muted" style="font-size: smaller">(Opcional)</span></p>
                   <div class="input-group">
                     <input class="form-control" name="descuentoTransferencia" #DescuentoTransferencia="ngModel"
                            [(ngModel)]="this.Metodo_Pago_Transferencia.Porcentaje_Descuento"
-                           type="number" [disabled]="!this.banderaPagoTransferencia || !this.banderaModificar" min="0"
-                           step="1" oninput="validity.valid||(value='');"
-                           [ngClass]="{'is-invalid': DescuentoTransferencia.invalid && banderaModificar}" required>
+                           type="number">
                     <div class="input-group-append">
                       <span class="input-group-text unidades">%</span>
                     </div>
                   </div>
-                  <div *ngIf="DescuentoTransferencia.errors?.required && banderaModificar">
-                    <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
-                  </div>
                 </div>
               </div>
-            </div>
+
+
+            </div> <!-- form-group end.// -->
+
+
             <div class=" mx-auto d-flex align-items-center col-md-2">
               <div class="mx-auto">
                 <p class=" iconos-pagos "><span class="  fa fa-university fa-4x" style="color: #2a4c75"></span></p>
               </div>
             </div>
+
+
           </div>
 
 
         </div>
-      </form>
-      <hr>
-      <div class="form-row mx-2">
-        <div class="col-10">
-          <h6 class="font-weight-bold">Pagos electrónicos</h6>
-          <p class="p">Permite a los clientes la opción de pagar a traves de metodos electrónicos como paypal.</p>
-        </div>
-
-        <div class="col-2 text-right">
-          <label class="switch mt-2">
-            <input type="checkbox" (click)="opcionPagoElectronico($event)" [disabled]="!banderaModificar"
-                   id="slidePagoElectronico">
-            <span class="slider round"></span>
-          </label>
-        </div>
-      </div>
-      <br>
-      <form #formMetodoPagoElectronico name="formMetodoPagoElectronico" class="card card-body mb-md-5">
+        <hr>
         <div class="container">
           <div class="form-row ">
             <div class="form-group col-md-8">
+              <label>¿Desea recibir pagos electrónicos con tarjetas de débito o crédito a traves de la plataforma
+                PayPal?</label>
+              <div class="form-group">
+                <div class="radio-item">
+                  <input (change)="opcionPagoElectronico(true)" name="pagoElectronico"
+                         type="radio" value="Si" id="pagoElectronicoSi">
+                  <label for="pagoElectronicoSi">&nbsp;&nbsp; Si </label>
+                </div>
 
-              <div class="form-row">
+                <div class="radio-item">
+                  <input (change)="opcionPagoElectronico(false)" name="pagoElectronico"
+                         type="radio" value="No" id="pagoElectronicoNo">
+                  <label for="pagoElectronicoNo">&nbsp;&nbsp; No </label>
+                </div>
+              </div>
+
+              <div class="form-row" *ngIf="this.banderaPagoElectronico">
                 <div class="form-group  col-12">
                   <p>Api Key PayPal </p>
                   <input class="form-control" name="apiPayPal" type="text" #ApiPayPal="ngModel"
-                         [(ngModel)]="this.Metodo_Pago_Electronico.Api_Key_Paypal"
-                         [disabled]="!this.banderaPagoElectronico || !banderaModificar"
-                         [ngClass]="{'is-invalid': ApiPayPal.invalid && banderaModificar}" required="">
-                  <div *ngIf="ApiPayPal.errors?.required && banderaModificar">
-                    <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
-                  </div>
-                  <hr>
-                  <a (click)="abrirContentVideosAyuda(contentComoRecivirPagos)" style="color: #1a56e9"
-                     class="alert-link">* Como obtener la Api
+                         [(ngModel)]="this.Metodo_Pago_Electronico.Api_Key_Paypal">
+                  <a (click)="abrirContentVideosAyuda(contentComoRecivirPagos)" class="alert-link">* Como obtener la Api
                     Key de PayPal ?</a>
 
                 </div>
@@ -231,18 +202,12 @@
                   <p>Porcentaje de recargo <span class="text-muted" style="font-size: smaller">(Opcional)</span></p>
                   <div class="input-group">
                     <input class="form-control" name="recargoElectronico" #RecargoElectronico="ngModel"
-                           [(ngModel)]="this.Metodo_Pago_Electronico.Porcentaje_Recargo" required
-                           [disabled]="!this.banderaPagoElectronico || !banderaModificar"
-                           [ngClass]="{'is-invalid': RecargoElectronico.invalid && banderaModificar}"
-                           type="number" min="0" step="1" oninput="validity.valid||(value='');">
+                           [(ngModel)]="this.Metodo_Pago_Electronico.Porcentaje_Recargo"
+                           type="number">
                     <div class="input-group-append">
                       <span class="input-group-text unidades">%</span>
                     </div>
                   </div>
-                  <div *ngIf="RecargoElectronico.errors?.required && banderaModificar">
-                    <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
-                  </div>
-
                 </div>
 
 
@@ -259,34 +224,17 @@
 
           </div>
         </div>
+        <hr>
+        <div class="container">
+          <div class="form-row justify-content-end">
+            <button class="btn btn-outline-primary   text-nowrap col-md-3  mb-4 " type="button">
+              <span class="spinner-border spinner-border-sm mr-2"></span>
+              Guardar
+            </button>
+          </div>
+        </div>
 
       </form>
-      <hr>
-      <div class="container">
-        <div class="form-row justify-content-end">
-
-          <button *ngIf="!banderaModificar" (click)="banderaModificar=true"
-                  class="btn btn-outline-primary   text-nowrap col-md-3  mb-4 " type="button">
-            <span class="spinner-border spinner-border-sm mr-2"></span>
-            Modificar
-          </button>
-
-
-          <button *ngIf="banderaModificar" (click)="banderaModificar=false;iniciarEdicion();"
-                  class="btn btn-outline-primary   text-nowrap col-md-3  mb-4 " type="button">
-            <span class="spinner-border spinner-border-sm mr-2"></span>
-            Cancelar
-          </button>
-
-
-          <button *ngIf="banderaModificar" (click)="saveMetodoPago()"
-                  class="btn btn-outline-primary   text-nowrap col-md-3  mb-4 " type="button">
-            <span class="spinner-border spinner-border-sm mr-2"></span>
-            Guardar
-          </button>
-
-        </div>
-      </div>
       <br><br><br><br><br><br>
     </div>
     <div class=" col-md-3  mt-3    mt-md-0" id="panelDos">
