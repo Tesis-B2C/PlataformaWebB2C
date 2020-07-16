@@ -138,6 +138,8 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     delete this.Variantes;
     this.toastr.clear();
     delete this.Imagenes_Producto;
+    delete this.videoYoutubeGuardar;
+    delete this.videoPorGuardar;
 
 
   }
