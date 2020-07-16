@@ -5,6 +5,7 @@ const HORARIO_ATENCION = require('../models/horario_atencion');
 const moment = require('moment');
 const TIENDA = require('../models/tienda'); //importar el modelo del usuario  o lo que son las clases comunesvar DPA = require('../models/dpa'); //importar el modelo del usuario  o lo que son las clases comunes
 const SUCURSAL = require('../models/sucursal');
+const METODO_PAGO = require('../models/metodo_pago');
 const jwt = require('../services/jwt');
 const db = require('../database/db');
 const fs = require('fs-extra');
@@ -136,7 +137,7 @@ async function getDatosTienda(req, res) {
     try {
         let tiendaObtenida = await TIENDA.findOne({
             where: {NUM_TIENDA: req.params.id},
-            include: [{model: SUCURSAL}, {model: HORARIO_ATENCION}]
+            include: [{model: SUCURSAL}, {model: HORARIO_ATENCION},{model:METODO_PAGO}]
         });
 
         if (tiendaObtenida) {

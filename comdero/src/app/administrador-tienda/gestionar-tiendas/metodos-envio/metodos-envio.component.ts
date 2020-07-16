@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Opcion_Envio} from "../../../modelos/opcion_envio";
 import {CurrencyPipe} from "@angular/common";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -10,7 +10,7 @@ import {ToastrService} from "ngx-toastr";
   styleUrls: ['./metodos-envio.component.css'],
   providers: [CurrencyPipe]
 })
-export class MetodosEnvioComponent implements OnInit {
+export class MetodosEnvioComponent implements OnInit, OnDestroy {
   public banderaRetiroLocal = true;
   public banderaEnvioDomicilio = true;
 
@@ -27,10 +27,14 @@ export class MetodosEnvioComponent implements OnInit {
   public banderaTipoAccionLocal;
   public banderaTipoAccionResto;
 
+
   constructor(public toastr: ToastrService, private cp: CurrencyPipe, private modalService: NgbModal) {
     this.objetoAuxiliarLocal = new Opcion_Envio(null, null, 'Peso', null, null, 0, 999.99, 0);
     this.objetoAuxiliarResto = new Opcion_Envio(null, null, 'Peso', null, null, 0, 999.99, 0);
+
   }
+
+
 
   ngOnInit() {
   }
@@ -92,6 +96,7 @@ export class MetodosEnvioComponent implements OnInit {
   }
 
   public indiceEditarLocal;
+
   public editarTarifaLocal() {
     this.vectorTarifasLocal[this.indiceEditarLocal].Tipo_Medida = this.objetoAuxiliarLocal.Tipo_Medida;
     this.vectorTarifasLocal[this.indiceEditarLocal].Minimo = this.objetoAuxiliarLocal.Minimo;
@@ -122,6 +127,7 @@ export class MetodosEnvioComponent implements OnInit {
   public eliminarTarifaLocal(indice) {
     this.vectorTarifasLocal.splice(indice, 1);
   }
+
   //FIN Envio a domicilio LOCAL
 
   //Envio a domicilio RESTO
@@ -158,6 +164,7 @@ export class MetodosEnvioComponent implements OnInit {
   }
 
   public indiceEditarResto;
+
   public editarTarifaResto() {
     this.vectorTarifasResto[this.indiceEditarResto].Tipo_Medida = this.objetoAuxiliarResto.Tipo_Medida;
     this.vectorTarifasResto[this.indiceEditarResto].Minimo = this.objetoAuxiliarResto.Minimo;
@@ -188,6 +195,7 @@ export class MetodosEnvioComponent implements OnInit {
   public eliminarTarifaResto(indice) {
     this.vectorTarifasResto.splice(indice, 1);
   }
+
   //FIN Envio a domicilio RESTO
 
   public transformar(element: any) {
@@ -197,4 +205,6 @@ export class MetodosEnvioComponent implements OnInit {
     let valor2 = valor.split("$")
     element.target.value = valor2[1].replace(',', "");
   }
+
+
 }

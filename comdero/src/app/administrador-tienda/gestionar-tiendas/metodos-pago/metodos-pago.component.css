@@ -162,3 +162,18 @@ input:checked + .slider:before {
   -ms-transform: translateX(18px);
   transform: translateX(18px);
 }
+
+
+.agregar-sucursal {
+  color: #1a56e9;
+  cursor: pointer;
+  border-bottom: #1a56e9 solid 1.5px;
+}
+
+.agregar-sucursal:hover {
+  opacity: 0.8;
+}
+
+.agregar-sucursal span {
+  font-size: 12px;
+}

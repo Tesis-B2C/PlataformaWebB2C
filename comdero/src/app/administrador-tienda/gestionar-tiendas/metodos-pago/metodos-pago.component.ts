@@ -20,17 +20,27 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
   public Metodo_Pago_Transferencia: Metodo_Pago;
   public Metodo_Pago_Electronico: Metodo_Pago;
   public Metodo_Pago_Enviar = [];
+  public identidadTienda;
+  public banderaModificar: boolean = false;
+  public banderaSlidePagoElectronico;
+  public banderaSlidePagoTransferencia;
+  public banderaSlidePagoEfectivo;
 
   constructor(private _metodoPagoServicio: MetodoPagoServicio, private modalService: NgbModal, private _sanitizer: DomSanitizer) {
     this.Metodo_Pago_Efectivo = new Metodo_Pago(0, 0, "", "", "", 0, "Efectivo");
     this.Metodo_Pago_Transferencia = new Metodo_Pago(0, 0, "", "", "", 0, "Transferencia");
     this.Metodo_Pago_Electronico = new Metodo_Pago(0, 0, "", "", "", 0, "Electrónico");
+    this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
+
 
   }
 
 
   ngOnInit() {
-
+    this.banderaSlidePagoElectronico = document.getElementById('slidePagoElectronico') as HTMLInputElement;
+    this.banderaSlidePagoTransferencia = document.getElementById('slidePagoTransferencia') as HTMLInputElement;
+    this.banderaSlidePagoEfectivo = document.getElementById('slidePagoEfectivo') as HTMLInputElement;
+    this.iniciarEdicion();
 
   }
 
@@ -42,8 +52,49 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
     delete this.Metodo_Pago_Efectivo;
   }
 
+  iniciarEdicion() {
+    debugger;
+    if (this.identidadTienda.METODO_PAGOs.length) {
+      for (let mp of this.identidadTienda.MEDOTO_PAGOs) {
+        if (mp.TIPO_PAGO = 'Efectivo') {
+          this.Metodo_Pago_Efectivo.Porcentaje_Descuento = mp.PORCENTAJE_DESCUENTO;
+          this.banderaSlidePagoEfectivo.checked  = true;
+        } else {
+          this.banderaSlidePagoEfectivo.checked  = false;
+        }
+
+        if (mp.TIPO_PAGO = 'Transferencia') {
+          this.Metodo_Pago_Transferencia.Numero_Cuenta = mp.NUMERO_CUENTA;
+          this.Metodo_Pago_Transferencia.Tipo_Cuenta = mp.TIPO_CUENTA;
+          this.Metodo_Pago_Transferencia.Banco_Pertenece = mp.BANCO_PERTENECE;
+          this.Metodo_Pago_Transferencia.Porcentaje_Descuento = mp.PORCENTAJE_DESCUENTO;
+          this.banderaSlidePagoTransferencia.checked  = true;
+        } else {
+          this.banderaSlidePagoTransferencia.checked  = true;
+        }
+
+        if (mp.TIPO_PAGO = 'Electrónico') {
+          this.Metodo_Pago_Electronico.Api_Key_Paypal = mp.API_KEY_PAYPAL;
+          this.Metodo_Pago_Electronico.Porcentaje_Recargo = mp.PORCENTAJE_RECARGO;
+          this.banderaSlidePagoEfectivo.checked  = true;
+        } else {
+          this.banderaSlidePagoEfectivo.checked  = false;
+        }
+      }
+    } else {
+
+      this.banderaSlidePagoElectronico.checked = false;
+      this.banderaSlidePagoTransferencia.checked  = false;
+      this.banderaSlidePagoEfectivo.checked  = false;
+      this.Metodo_Pago_Efectivo = new Metodo_Pago(0, 0, "", "", "", 0, "Efectivo");
+      this.Metodo_Pago_Transferencia = new Metodo_Pago(0, 0, "", "", "", 0, "Transferencia");
+      this.Metodo_Pago_Electronico = new Metodo_Pago(0, 0, "", "", "", 0, "Electrónico");
 
 
+    }
+
+
+  }
 
 
   public opcionPagoEfectivo(event) {
