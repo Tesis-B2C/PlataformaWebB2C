@@ -4,6 +4,7 @@ const moment = require('moment');
 const TIENDA = require('../models/tienda'); //importar el modelo del usuario  o lo que son las clases comunesvar DPA = require('../models/dpa'); //importar el modelo del usuario  o lo que son las clases comunes
 const SUCURSAL = require('../models/sucursal');
 const HORARIO_ATENCION = require('../models/horario_atencion');
+const OPCION_ENVIO = require('../models/opcion_envio');
 const DPA = require('../models/dpa');
 const jwt = require('../services/jwt');
 const db = require('../database/db');
@@ -137,7 +138,7 @@ async function getDatosTienda(req, res) {
             include: [{
                 model: SUCURSAL,
                 include: {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}
-            }, {model: HORARIO_ATENCION}],
+            }, {model: HORARIO_ATENCION}, {model: OPCION_ENVIO}],
             order: [[SUCURSAL, 'NUM_SUCURSAL', 'ASC' ]]
         });
 

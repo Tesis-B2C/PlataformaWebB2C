@@ -5,6 +5,7 @@ var Oferta = require("./oferta");
 var Metodo_Pago = require("./metodo_pago");
 var Opcion_Envio_Tienda = require("./opcion_envio_tienda");
 var Horario_Atencion = require("./horario_atencion");
+var Opcion_Envio = require("./opcion_envio");
 
 const Tienda= db.sequelize.define('TIENDA', {
         NUM_TIENDA:
@@ -98,5 +99,9 @@ Metodo_Pago.belongsTo(Tienda, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'
 // TIENDA-HORARIO_ATENCION
 Tienda.hasMany(Horario_Atencion, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
 Horario_Atencion.belongsTo(Tienda, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
+
+// TIENDA-OPCION_ENVIO
+Tienda.hasMany(Opcion_Envio, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
+Opcion_Envio.belongsTo(Tienda, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
 
 module.exports = Tienda;

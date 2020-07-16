@@ -3,6 +3,7 @@ import {Opcion_Envio} from "../../../modelos/opcion_envio";
 import {CurrencyPipe} from "@angular/common";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from "ngx-toastr";
+import {TiendaServicio} from "../../../servicios/tienda.servicio";
 
 @Component({
   selector: 'app-metodos-envio',
@@ -31,14 +32,15 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
   public banderaTipoAccionLocal;
   public banderaTipoAccionResto;
 
-  constructor(public toastr: ToastrService, private cp: CurrencyPipe, private modalService: NgbModal) {
+  public identidadTienda;
+  public loading: boolean = false;
+
+  constructor(public toastr: ToastrService, private _tiendaServicio: TiendaServicio, private cp: CurrencyPipe, private modalService: NgbModal) {
   }
 
   ngOnInit() {
-    let mensaje = 'Debes traer tu mensaje de confirmación e identificación cuando vengas a retirar tu pedido.';
-    this.objetoAuxiliarLocal = new Opcion_Envio('Domicilio', 'Local', 'Peso', null, null, 0, 999.99, 0);
-    this.objetoAuxiliarResto = new Opcion_Envio('Domicilio', 'Resto', 'Peso', null, null, 0, 999.99, 0);
-    this.objetoRetiroLocal = new Opcion_Envio('Retiro', null, null, null, mensaje, null, null, null);
+    this.identidadTienda = this._tiendaServicio.getIdentityTienda();
+    this.iniciarEdicion();
   }
 
   ngOnDestroy() {
@@ -214,15 +216,32 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
     element.target.value = valor2[1].replace(',', "");
   }
 
-  public habilitarEdicion(){
+  public habilitarEdicion() {
+    this.banderaEdicionDeshabilitada = false;
+  }
+
+  public iniciarEdicion() {
+   // this.objetoAuxiliarLocal = new Opcion_Envio('Domicilio', 'Local', 'Peso', null, null, 0, 999.99, 0);
+   // this.objetoAuxiliarResto = new Opcion_Envio('Domicilio', 'Resto', 'Peso', null, null, 0, 999.99, 0);
+
+    this.objetoRetiroLocal = new Opcion_Envio('Retiro', null, null, null, 'Debes traer tu mensaje de confirmación e identificación cuando vengas a retirar tu pedido.', null, null, null);
+
+    if(this.identidadTienda.OPCION_ENVIOs != ""){       //Hay algo en el vector metodo envio
+
+
+    }else{
+
+
+    }
+  }
+
+  public modificarMetodoEnvio() {
 
   }
 
-  public modificarMetodoEnvio(){
-
+  public cancelarModificacion() {
+    this.banderaEdicionDeshabilitada = true;
   }
-
-  public cancelarModificacion(){}
 
 
 }

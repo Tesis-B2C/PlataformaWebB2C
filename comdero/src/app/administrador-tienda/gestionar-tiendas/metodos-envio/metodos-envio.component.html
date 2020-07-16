@@ -19,6 +19,7 @@
         </div>
         <hr>
 
+        <!-- INICIO DE RETIRO EN EL LOCAL.// -->
         <div id="retiro-local">
           <div class="form-row">
             <div class="col-10">
@@ -28,7 +29,7 @@
 
             <div class="col-2 text-right">
               <label class="switch mt-2">
-                <input type="checkbox" (click)="clickRetiroLocal($event)">
+                <input [disabled]="banderaEdicionDeshabilitada" type="checkbox" (click)="clickRetiroLocal($event)">
                 <span class="slider round"></span>
               </label>
             </div>
@@ -59,7 +60,7 @@
             </div> <!--form-group end.-->
 
             <div class="form-group">
-              <label>Instruciones de retiro</label>
+              <label>Instrucciones de retiro</label>
               <textarea [disabled]="banderaRetiroLocal" rows="3" style="font-size: small; resize: none;"
                         #Instruccion_Retiro="ngModel" [(ngModel)]="this.objetoRetiroLocal.Instruccion_Retiro"
                         [ngClass]="{'is-invalid': Instruccion_Retiro.invalid && (Instruccion_Retiro.dirty || Instruccion_Retiro.touched),
@@ -78,6 +79,7 @@
         </div>
         <hr>
 
+        <!-- INICIO DE ENVIO A DOMICILIO.// -->
         <div id="envio-domicilio">
           <div class="form-row">
             <div class="col-10">
@@ -88,7 +90,7 @@
 
             <div class="col-2 text-right">
               <label class="switch mt-2">
-                <input type="checkbox" (click)="clickEnvioDomicilio($event)">
+                <input [disabled]="banderaEdicionDeshabilitada" type="checkbox" (click)="clickEnvioDomicilio($event)">
                 <span class="slider round"></span>
               </label>
             </div>
