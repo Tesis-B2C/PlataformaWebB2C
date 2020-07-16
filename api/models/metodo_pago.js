@@ -34,7 +34,7 @@ const Sucursal = db.sequelize.define('METODO_PAGO', {
             },
         API_KEY_PAYPAL:
             {
-                type: Sequelize.INTEGER,
+                type: Sequelize.STRING,
 
             },
         PORCENTAJE_RECARGO:
