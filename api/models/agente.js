@@ -12,6 +12,7 @@ const  Agente = db.sequelize.define('AGENTE', {
         ID_AGENTE: {
             type: Sequelize.STRING,
             allowNull: true,
+            defaultValue:'000000'
             //autoIncrement: true
 
         },

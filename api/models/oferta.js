@@ -19,7 +19,8 @@ const Oferta = db.sequelize.define('OFERTA', {
         IVA:
             {
                 type: Sequelize.FLOAT,
-                allowNull: false
+                allowNull: false,
+                defaultValue:0
             },
         FECHA_CREACION:
             {
@@ -42,7 +43,7 @@ const Oferta = db.sequelize.define('OFERTA', {
     },
     {
         timestamps: false,
-        id:false
+        id: false
     })
 
 Oferta.hasOne(Producto, {foreignKey: 'ID_OFERTA', sourceKey: 'ID_OFERTA'});

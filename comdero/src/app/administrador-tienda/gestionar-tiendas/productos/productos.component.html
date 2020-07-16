@@ -53,7 +53,7 @@
             <div class="col-lg-6">
               <label>Codigo</label>
               <input #CodigoProducto="ngModel" [(ngModel)]="this.Producto.Cod_Producto" class=" form-control py-3 "
-                     name="codigoProducto"
+                     name="codigoProducto" id="codigoProducto"
                      type="text">
             </div>
           </div>
@@ -352,7 +352,7 @@
       </form>
       <br>
 
-      <form class="card card-body ">
+      <form name="formGarantia" class="card card-body ">
         <h6>Garantia</h6>
         <hr>
         <div class="container">
@@ -385,6 +385,7 @@
       <div class=" card card-body">
         <h6>Variaciones</h6>
         <hr>
+        <form name="formCheckVariaciones">
         <div class="form-group ml-2">
           <label>Este producto tiene multiples opciones, asi como clores, marca y materiales?</label>
 
@@ -402,7 +403,7 @@
             </div>
           </div>
         </div>
-
+        </form>
         <div *ngIf="banderaVariaciones" class="form-row container px-0">
           <div class="form-group">
             <div class="alert alert-primary col-12" role="alert">
@@ -544,7 +545,7 @@
               <div class="input-group">
                 <input #PrecioUnitario="ngModel" [(ngModel)]="this.Variantes[i+1].Precio_Unitario"
                        aria-label="Amount (to the nearest dollar)" class="form-control"
-                       name="precioUnitario{{i+1}}" placeholder="20" (focusout)="formatear($event)"
+                       name="precioUnitario" placeholder="20" (focusout)="formatear($event)"
                        type="number" min="0" step="0.01" oninput="validity.valid||(value='');" required
                        [ngClass]="{'is-invalid': PrecioUnitario.invalid && banderaValidaciones}">
                 <div class="input-group-append">
