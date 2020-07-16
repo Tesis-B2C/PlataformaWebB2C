@@ -140,7 +140,7 @@ async function saveProducto(req, res) {
 async function getMisProductos(req, res) {
     try {
         let productosObtenidas = await Oferta.findAll({ //$or: [{ESTADO_OFERTA: 0},{ESTADO_OFERTA: 1}]
-            where: {NUM_TIENDA: req.params.id,  ESTADO_OFERTA: {[Op.or]:[0,1]} },
+            where: {NUM_TIENDA: req.params.id, ESTADO_OFERTA: {[Op.or]: [0, 1]}},
             include: {model: Producto},
             order: [['ID_OFERTA', 'DESC']]
         });
@@ -250,13 +250,10 @@ async function updateProducto(req, res) {
         });
 
 
-        for (const c of categorias) {
-            await Producto_Categoria.destroy({
-                where: {ID_PRODUCTO: producto.Id_Producto},
-
-                transaction: t
-            });
-        }
+        await Producto_Categoria.destroy({
+            where: {ID_PRODUCTO: producto.Id_Producto},
+            transaction: t
+        });
 
 
         for (const c of categorias) {
@@ -379,15 +376,15 @@ async function updateProducto(req, res) {
 
         if (ofertaActualizada && productoActualizado) {
 
-          if(vimagenesporborrar[0]){
-              console.log("vector imagene spor borrar2", vimagenesporborrar);
-            for (let ipb of vimagenesporborrar) {
-                if (fs.exists(path.resolve(ipb))) {
-                    console.log('existe');
-                    await fs.unlink(path.resolve(ipb));
+            if (vimagenesporborrar[0]) {
+                console.log("vector imagene spor borrar2", vimagenesporborrar);
+                for (let ipb of vimagenesporborrar) {
+                    if (fs.exists(path.resolve(ipb))) {
+                        console.log('existe');
+                        await fs.unlink(path.resolve(ipb));
+                    }
                 }
             }
-          }
             res.status(200).send({
                 message: "Su producto ha sido registrado  exitosamente"
             });

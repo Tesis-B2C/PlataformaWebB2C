@@ -4,6 +4,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {Metodo_Pago} from '../../../modelos/metodo-pago'
 import {MetodoPagoServicio} from '../../../servicios/metodo_pago.servicio';
 import Swal from "sweetalert2";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-metodos-pago',
@@ -26,7 +27,7 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
   public banderaSlidePagoTransferencia;
   public banderaSlidePagoEfectivo;
 
-  constructor(private _metodoPagoServicio: MetodoPagoServicio, private modalService: NgbModal, private _sanitizer: DomSanitizer) {
+  constructor(public toastr: ToastrService, private _metodoPagoServicio: MetodoPagoServicio, private modalService: NgbModal, private _sanitizer: DomSanitizer) {
     this.Metodo_Pago_Efectivo = new Metodo_Pago(0, 0, "", "", "", 0, "Efectivo");
     this.Metodo_Pago_Transferencia = new Metodo_Pago(0, 0, "", "", "", 0, "Transferencia");
     this.Metodo_Pago_Electronico = new Metodo_Pago(0, 0, "", "", "", 0, "Electrónico");
@@ -147,12 +148,17 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
 
   public async saveMetodoPago() {
     try {
-      if (this.banderaSlidePagoEfectivo.checked) this.Metodo_Pago_Enviar.push(this.Metodo_Pago_Efectivo);
-      if (this.banderaSlidePagoTransferencia.checked) this.Metodo_Pago_Enviar.push(this.Metodo_Pago_Transferencia);
-      if (this.banderaSlidePagoElectronico.checked) this.Metodo_Pago_Enviar.push(this.Metodo_Pago_Electronico);
+      if (document.forms["formMetodoPagoEfectivo"].checkValidity() && document.forms["formMetodoPagoTransferenciaBancaria"].checkValidity() && document.forms["formMetodoPagoElectronico"].checkValidity()) {
+        if (this.banderaSlidePagoEfectivo.checked) this.Metodo_Pago_Enviar.push(this.Metodo_Pago_Efectivo);
+        if (this.banderaSlidePagoTransferencia.checked) this.Metodo_Pago_Enviar.push(this.Metodo_Pago_Transferencia);
+        if (this.banderaSlidePagoElectronico.checked) this.Metodo_Pago_Enviar.push(this.Metodo_Pago_Electronico);
 
-      let response = await this._metodoPagoServicio.saveMetodoPago(this.Metodo_Pago_Enviar).toPromise();
-      this.mensageCorrecto(response.data);
+        let response = await this._metodoPagoServicio.saveMetodosPago(this.identidadTienda.NUM_TIENDA,this.Metodo_Pago_Enviar).toPromise();
+        this.mensageCorrecto(response.data);
+      } else {
+        this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
+          {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
+      }
     } catch (e) {
       console.log("error:" + JSON.stringify((e).error.message));
       if (JSON.stringify((e).error.message))
@@ -161,9 +167,6 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
     }
   }
 
-  public validar() {
-
-  }
 
   mensageError(mensaje) {
     Swal.fire({

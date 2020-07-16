@@ -19,7 +19,7 @@ const Sucursal = db.sequelize.define('METODO_PAGO', {
             },
         NUMERO_CUENTA:
             {
-                type: Sequelize.INTEGER,
+                type: Sequelize.STRING,
 
             },
         TIPO_CUENTA:
