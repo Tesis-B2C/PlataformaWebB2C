@@ -1,12 +1,13 @@
 <body>
-<form #FormPaso3 id="formPaso3" class="datosregistro" validate-form>
-  <div class="container mt-5">
+
+<div class="container mt-5">
+  <form #FormPaso3 id="formPaso3" class="datosregistro" validate-form>
     <div class="row justify-content-center">
       <h4 class="col-11">Personalización de tu tienda</h4>
       <hr class="col-11">
     </div>
 
-    <div class="row justify-content-center mb-5 container-personalizacion">
+    <div class="row justify-content-center mb-5 ">
       <div class="col-md-11">
 
 
@@ -15,8 +16,8 @@
           <p class="p">Así verán los clientes tu tienda cuando la visiten</p>
           <br>
 
-          <div class="form-row m-0 pb-3">  <!-- TABLA DE DOS COLUMNAS -->
-            <div class="col-md-6 form-group px-1 m-0" id="panelUno">    <!-- COLUMNA 1 -->
+          <div class="form-row justify-content-between m-0 pb-3">  <!-- TABLA DE DOS COLUMNAS -->
+            <div class="col-md-5 form-group px-1 m-0" id="panelUno">    <!-- COLUMNA 1 -->
               <form class="card card-body p-0 columnas" name="form">
 
                 <div class="form-group centered-content m-0">  <!-- F1 LOGO-->
@@ -89,7 +90,7 @@
               </form>
             </div>
 
-            <div class="col-md-6 form-group px-1 m-0 mt-md-0 mt-4" id="panelDos">    <!-- COLUMNA 1 -->
+            <div class=" col-md-5   form-group px-1 m-0 mt-md-0 mt-4" id="panelDos">    <!-- COLUMNA 1 -->
               <form class="p-0" name="form">
                 <div style="position: relative;">
                   <div class="form-group posicion-logo mt-1">  <!-- F2 BANNER-->
@@ -144,8 +145,30 @@
         </div>
 
       </div>
+
+
+      <div class="card  col-11  ">
+        <div class=" container">
+          <h6>Acciones</h6>
+          <hr>
+          <div class="text-right">
+            <button (click)="this.updatePersonalizacionTienda()" class="btn btn-primary text-nowrap mb-4  col-auto"
+                    type="button">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+              Guardar Imagenes
+            </button>
+          </div>
+
+        </div>
+      </div>
     </div>
-  </div>
-</form>
+
+
+
+  </form>
+
+
+
+</div>
 <br><br><br><br><br><br>
 </body>

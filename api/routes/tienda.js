@@ -18,6 +18,8 @@ api.get('/getDatosTienda/:id',TiendaController.getDatosTienda);
 api.get('/getMisTiendas/:id',TiendaController.getMisTiendas);
 api.put('/actualizarTiendaGeneral/:id', TiendaController.actualizarTiendaGeneral);
 api.put('/actualizarTiendaSucursal/:id', TiendaController.actualizarTiendaSucursal);
+api.put('/updateEstadoTienda/:id',TiendaController.updateEstadoTienda);
+api.put('/updatePersonalizacionTienda/:id',multer.fields([{name:'logo'},{name: 'banner'}]),TiendaController.updatePersonalizacionTienda);
 
 //api.post('/subirImagenesTienda/:id/:tipo',[md_upload],TiendaController.subirImagenesTienda);
 /*api.get('/obtenerImagenTienda/:imageFile', TiendaController.obtenerImagenTienda);*/

@@ -36,7 +36,7 @@
 
   <div class="row justify-content-center">
     <div class="col-md-7" id="panelUno">
-      <form #FormInformacion id="formInformacion" class="card card-body validate-form">
+      <form #FormInformacion id="formInformacion" name="formInformacion" class="card card-body validate-form">
         <h6>Información</h6>
         <hr>
         <div class="container">
@@ -109,7 +109,7 @@
             <label>Imagenes del producto </label>
             <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
           <div
-            [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[0]==false,'borde-imagenes1':vectorBanderaAgregarImagen[0]==true,'borde-error': (imagenes[0].length==0 && banderaValidaciones) }"
+            [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[0]==false,'borde-imagenes1':vectorBanderaAgregarImagen[0]==true,'borde-error': (Imagenes_Producto[0].length==0 && banderaValidaciones) }"
             class="row  mt-3 mx-0 ">
             <div *ngFor='let url of imagenes[0]; let i = index ' class="ml-1">
               <div class="col-auto card mt-2 px-0 pb-0">
@@ -151,7 +151,7 @@
             </div>
           </div>
 
-          <div *ngIf="(imagenes[0].length==0 && banderaValidaciones)">
+          <div *ngIf="(Imagenes_Producto[0].length==0 && banderaValidaciones)">
             <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Debes ingresar al menos una
               imagen.</p>
           </div>
@@ -162,14 +162,22 @@
         <br>
 
 
-        <div class="form-row">
-          <a class="ml-2 col-md-5"><label>Video promocional del producto </label> </a>
-          <span *ngIf="banderaMensajeMaximoVideo" class=" col-md-5" style="color: red;font-size: small">* Recuerda Maximo 150MB</span>
-          <a (click)="abrirModalVideoYoutube(modalVideoYoutube)" class="agregarVideoYoutube ml-2 col-md-5 ">
+        <div class="form-row ml-3 ">
+          <a class="col-md-5 mt-2"><label>Video promocional del producto </label> </a>
+
+          <span *ngIf="banderaMensajeMaximoVideo" class=" col-md-4 mt-2" style="color: red;font-size: small">* Recuerda Maximo 150MB</span>
+
+          <a (click)="abrirModalVideoYoutube(modalVideoYoutube)" class="agregarVideoYoutube mt-2 col-md-5 ">
             Agregar video de youtube &nbsp; <span class="fab fa-youtube "></span>
           </a>
-        </div>
 
+
+          <div class="form-group col-1 " *ngIf="videoYoutube || data.video">
+            <button (click)="borrarVideo()" class="form-control " style=" border: none; color: red">
+              <span class="fa fa-trash "></span>
+            </button>
+          </div>
+        </div>
 
         <div class="form-group ">
 
@@ -227,7 +235,7 @@
 
       </form>
       <br>
-      <form class=" card card-body ">
+      <form name="formPrecios" class=" card card-body ">
         <h6>Precios</h6>
         <hr>
         <div class="container">
@@ -274,7 +282,7 @@
         </div>
       </form>
       <br>
-      <form class=" card card-body ">
+      <form name="formInventario" class=" card card-body ">
 
         <h6>Inventario</h6>
         <hr>
@@ -359,13 +367,13 @@
             <br>
             <div class="radio-item">
               <input (click)="opcionGarantia($event.target.value)" name="garantia"
-                     type="radio" value=" Garantia de fabrica" id="GarantiaFabrica">
+                     type="radio" value="Garantia de fabrica" id="GarantiaFabrica">
               <label for="GarantiaFabrica">&nbsp;&nbsp;Garantia de fabrica </label>
             </div>
             <br>
             <div class="radio-item">
               <input (click)="opcionGarantia($event.target.value)" name="garantia"
-                     type="radio" value=" Sin garantia" id="SinGarantia">
+                     type="radio" value="Sin garantia" id="SinGarantia">
               <label for="SinGarantia">&nbsp;&nbsp; Sin garantia </label>
             </div>
           </div>
@@ -373,8 +381,8 @@
         </div>
       </form>
       <br>
-      <form class=" card card-body ">
 
+      <div class=" card card-body">
         <h6>Variaciones</h6>
         <hr>
         <div class="form-group ml-2">
@@ -414,6 +422,7 @@
           <div class="form-group  col-md-4">
             <label> Talla </label>
             <input #Talla0="ngModel" [(ngModel)]="this.Variantes[0].Talla" class="form-control " name="talla0"
+                   maxlength="2"
                    placeholder="Ej. xl o 34 o etc" type="text">
           </div>
           <div class="form-group  col-md-4">
@@ -442,104 +451,111 @@
           <div class="form-group  col-md-4">
             <label> Talla </label>
             <input #Talla="ngModel" [(ngModel)]="this.Variantes[i+1].Talla" class="form-control " name="talla{{i+1}}"
-                   placeholder="Ej. xl o 34 o etc" type="text">
+                   placeholder="Ej. xl o 34 o etc" type="text" maxlength="2">
           </div>
           <div class="form-group  col-md-4">
             <label>Material</label>
             <input #Material="ngModel" [(ngModel)]="this.Variantes[i+1].Material" class="form-control  "
-                   name="material{{i+0}}"
+                   name="material{{i+1}}"
                    placeholder="Ej. Gamusa/algodon" type="text">
           </div>
 
           <div class="form-group col-12 ">
-            <a class=" mt-5">
-              <label>Imagenes de la opcion {{i + 1}} </label>
-              <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
-            <div
-              [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[i+1]==false,'borde-imagenes1':vectorBanderaAgregarImagen[i+1]==true }"
-              class="row  mt-3 ">
-              <div *ngFor='let url of imagenes[i+1]; index as j ' class="ml-1">
-                <div class="col-auto card mt-2 px-0 pb-0">
-                  <label style="border: none;  ">
-                    <img [src]="url" class="px-0" height="140px" width="140px">
-                    <input (change)="subirImagenes($event,(i+1))" accept="image/*" class="file" multiple name="files"
-                           type="file">
-                  </label>
-                  <button (click)="quitarImagenes((i+1),j)" class="boton-cerrar  btn-outline-danger px-0 py-0 ">
+            <form name="form">
+              <a class=" mt-5">
+                <label>Imagenes de la opcion {{i + 1}} </label>
+                <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
+              <div
+                [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[i+1]==false,'borde-imagenes1':vectorBanderaAgregarImagen[i+1]==true,'borde-error': (Imagenes_Producto[i+1].length==0 && banderaValidaciones)  }"
+                class="row  mt-3 ">
+                <div *ngFor='let url of imagenes[i+1]; index as j ' class="ml-1">
+                  <div class="col-auto card mt-2 px-0 pb-0">
+                    <label style="border: none;  ">
+                      <img [src]="url" class="px-0" height="140px" width="140px">
+                      <input (change)="subirImagenes($event,(i+1))" accept="image/*" class="file" multiple name="files"
+                             type="file">
+                    </label>
+                    <button (click)="quitarImagenes((i+1),j)" class="boton-cerrar  btn-outline-danger px-0 py-0 ">
 
-                    <span class="fa fa-trash"></span>
-                  </button>
+                      <span class="fa fa-trash"></span>
+                    </button>
+                  </div>
                 </div>
-              </div>
-              <div *ngIf="vectorBanderaAgregarImagen[i+1]==false" class="mx-auto ">
-                <div class="col-auto pt-4">
-                  <label class="imagen-agregar ">
-                    <i class="fa fa-cloud-upload-alt fa-4x"></i>
-                    <!--   <i class="fa fa-plus-circle fa-2x ml-1"></i>-->
-                    <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file">
-                  </label>
+                <div *ngIf="vectorBanderaAgregarImagen[i+1]==false" class="mx-auto ">
+                  <div class="col-auto pt-4">
+                    <label class="imagen-agregar ">
+                      <i class="fa fa-cloud-upload-alt fa-4x"></i>
+                      <!--   <i class="fa fa-plus-circle fa-2x ml-1"></i>-->
+                      <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file">
+                    </label>
+                  </div>
                 </div>
-              </div>
-              <div *ngIf="vectorBanderaAgregarImagen[i+1]==false" class=" col-12 pb-5 mx-auto ">
-                <p class="link-agregar-imagenes ">Click para Agregar imagenes</p>
-              </div>
+                <div *ngIf="vectorBanderaAgregarImagen[i+1]==false" class=" col-12 pb-5 mx-auto ">
+                  <p class="link-agregar-imagenes ">Click para Agregar imagenes</p>
+                </div>
 
-              <div *ngIf="vectorBanderaAgregarImagen[i+1]==true && imagenes[i+1].length<6" class="py-2">
-                <div class=" px-2 py-4  card  ml-2 ">
-                  <label class="imagen-agregar">
-                    <i class="fa fa-picture-o fa-4x ml-4"></i>
-                    <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                    <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file">
-                    <br>
-                    <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imagenes </p>
-                    <p class=" link-agregar-imagenes2">maximo 6</p>
+                <div *ngIf="vectorBanderaAgregarImagen[i+1]==true && imagenes[i+1].length<6" class="py-2">
+                  <div class=" px-2 py-4  card  ml-2 ">
+                    <label class="imagen-agregar">
+                      <i class="fa fa-picture-o fa-4x ml-4"></i>
+                      <i class="fa fa-plus-circle fa-2x ml-1"></i>
+                      <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file">
+                      <br>
+                      <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imagenes </p>
+                      <p class=" link-agregar-imagenes2">maximo 6</p>
 
-                  </label>
+                    </label>
+                  </div>
                 </div>
+
               </div>
-            </div>
+              <div *ngIf="(Imagenes_Producto[i+1].length==0 && banderaValidaciones)">
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Debes ingresar al menos
+                  una
+                  imagen.</p>
+              </div>
+            </form>
           </div> <!-- form-group end.// -->
+          <form name="formVariaciones" class="container row">
+            <div class="form-group col-lg-7">
+              <label> Stock y unidad de medida del producto</label>
+              <div class="input-group">
 
-          <div class="form-group col-lg-7">
-            <label> Stock y unidad de medida del producto</label>
-            <div class="input-group">
+                <input #Stock="ngModel" [(ngModel)]="this.Variantes[i+1].Stock" class="form-control" name="stock{{i+1}}"
+                       placeholder="200" type="number" min="0" step="0.01" oninput="validity.valid||(value='');"
+                       required [ngClass]="{'is-invalid': Stock.invalid && banderaValidaciones}">
 
-              <input #Stock="ngModel" [(ngModel)]="this.Variantes[i+1].Stock" class="form-control" name="stock{{i+1}}"
-                     placeholder="200" type="number" min="0" step="0.01" oninput="validity.valid||(value='');"
-                     required [ngClass]="{'is-invalid': Stock.invalid && banderaValidaciones}">
+                <select #Unidad="ngModel" [(ngModel)]="this.Variantes[i+1].Cod_Unidad" class=" form-control col-lg-5 "
+                        id="selectUnidades" name="unidad{{i+1}}"
+                        [ngClass]="{'errorSelect': Stock.invalid && banderaValidaciones}">
 
-              <select #Unidad="ngModel" [(ngModel)]="this.Variantes[i+1].Cod_Unidad" class=" form-control col-lg-5 "
-                      id="selectUnidades" name="unidad{{i+1}}"
-                      [ngClass]="{'errorSelect': Stock.invalid && banderaValidaciones}">
+                  <option *ngFor="let unidad of this.unidades"
+                          [selected]="unidad.COD_UNIDAD_MEDIDA=='unidades'">{{unidad.COD_UNIDAD_MEDIDA}}</option>
+                </select>
 
-                <option *ngFor="let unidad of this.unidades"
-                        [selected]="unidad.COD_UNIDAD_MEDIDA=='unidades'">{{unidad.COD_UNIDAD_MEDIDA}}</option>
-              </select>
-
+              </div>
+              <div *ngIf="Stock.errors?.required && banderaValidaciones">
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+              </div>
             </div>
-            <div *ngIf="Stock.errors?.required && banderaValidaciones">
-              <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
-            </div>
-          </div>
 
-          <div class="form-group  col-md-4">
-            <label>Precio</label>
-            <div class="input-group mb-3">
-              <input #PrecioUnitario="ngModel" [(ngModel)]="this.Variantes[i+1].Precio_Unitario"
-                     aria-label="Amount (to the nearest dollar)" class="form-control"
-                     name="precioUnitario{{i+1}}" placeholder="20" (focusout)="formatear($event)"
-                     type="number" min="0" step="0.01" oninput="validity.valid||(value='');" required
-                     [ngClass]="{'is-invalid': PrecioUnitario.invalid && banderaValidaciones}">
-              <div class="input-group-append">
-                <span class="input-group-text unidades">$</span>
+            <div class="form-group  col-md-5">
+              <label>Precio</label>
+              <div class="input-group">
+                <input #PrecioUnitario="ngModel" [(ngModel)]="this.Variantes[i+1].Precio_Unitario"
+                       aria-label="Amount (to the nearest dollar)" class="form-control"
+                       name="precioUnitario{{i+1}}" placeholder="20" (focusout)="formatear($event)"
+                       type="number" min="0" step="0.01" oninput="validity.valid||(value='');" required
+                       [ngClass]="{'is-invalid': PrecioUnitario.invalid && banderaValidaciones}">
+                <div class="input-group-append">
+                  <span class="input-group-text unidades">$</span>
+                </div>
               </div>
               <div *ngIf="PrecioUnitario.errors?.required && banderaValidaciones">
                 <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
               </div>
-
             </div>
-          </div>
-
+          </form>
 
         </div>
         <div *ngIf="banderaVariaciones" class="form-group col-md-12">
@@ -547,7 +563,7 @@
             <span class="fa fa-plus "></span> &nbsp;Agregar opcion
           </p>
         </div>
-      </form>
+      </div>
       <br>
 
       <form class=" card card-body ">
@@ -628,23 +644,17 @@
   </div>
 
   <div class="row justify-content-center">
-    <form class="card card-body  col-md-11 ml-md-4 mt-4 w-50">
+    <form class="card card-body  col-md-11 ml-md-4 mt-4">
       <div class=" container">
         <h6>Acciones</h6>
         <hr>
-
-        <button class="btn btn-outline-primary text-nowrap  col-md-5  mb-4 " type="button" (click)="validar()">
-          <span class="spinner-border spinner-border-sm mr-2"></span>
-          Publicar producto
-        </button>
-
-
-        <button (click)="this.guardarProducto()" class="btn btn-outline-primary text-nowrap offset-md-2 col-md-5 mb-4"
-                type="button">
-          <span class="spinner-border spinner-border-sm mr-2"></span>
-          Guardar Producto
-        </button>
-
+        <div class="text-right">
+          <button (click)="this.guardarProducto()" class="btn btn-primary text-nowrap mb-4  col-auto"
+                  type="button">
+            <span *ngIf="banderaAnimacionCarga" class="spinner-border spinner-border-sm mr-2"></span>
+            Guardar Producto
+          </button>
+        </div>
 
       </div>
     </form>

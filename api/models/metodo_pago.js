@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 
-const Sucursal = db.sequelize.define('Metodo_Pago', {
+const Sucursal = db.sequelize.define('METODO_PAGO', {
         ID_METODO_PAGO: {
             type: Sequelize.BIGINT,
             autoIncrement: true,
@@ -19,7 +19,7 @@ const Sucursal = db.sequelize.define('Metodo_Pago', {
             },
         NUMERO_CUENTA:
             {
-                type: Sequelize.INTEGER,
+                type: Sequelize.STRING,
 
             },
         TIPO_CUENTA:
