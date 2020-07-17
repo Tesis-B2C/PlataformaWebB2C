@@ -15,6 +15,8 @@ export class CambiarContraseniaComponent implements OnInit {
     contraseniaNueva: null
   }
 
+  public loading: boolean = false;
+
   constructor(private _agenteServicio: AgenteServicio) {
   }
 
@@ -23,6 +25,7 @@ export class CambiarContraseniaComponent implements OnInit {
 
   public async actualizarContrasenia() {
     try {
+      this.loading = true;
       if (this.objCambiarContrasenia.contraseniaActual == this.objCambiarContrasenia.contraseniaNueva) {
         this.mensageError("La contraseña debe ser diferente a la actual");
 
@@ -30,9 +33,11 @@ export class CambiarContraseniaComponent implements OnInit {
         let identidad = this._agenteServicio.getIdentity();
         let response = await this._agenteServicio.actualizarContrasenia(identidad.CORREO, this.objCambiarContrasenia).toPromise();
         this.mensageCorrecto(response['message']);
+        this.loading = false;
       }
     } catch
       (e) {
+      this.loading=false;
       console.log("error:" + JSON.stringify((e).error.message));
       if (JSON.stringify((e).error.message))
         this.mensageError(JSON.stringify((e).error.message));
