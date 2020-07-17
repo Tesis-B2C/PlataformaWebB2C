@@ -30,7 +30,7 @@ export class ModificarProductoComponent implements OnInit ,OnDestroy{
   public categoriasSeleccionadas = new Set();
   public banderaValidaciones: boolean = false;
   public editorConfig = {
-    "editable": true,
+    "editable": false,
     "spellcheck": true,
     "height": "80px",
     "minHeight": "80px",
@@ -90,6 +90,8 @@ export class ModificarProductoComponent implements OnInit ,OnDestroy{
   public auxi = null;
   public auxj = null;
 
+  public banderaModificar: boolean=false;
+
   constructor(public toastr: ToastrService, private cpService: ColorPickerService, private cp: CurrencyPipe, private _sanitizer: DomSanitizer, private _unidadesMedidaServicio: UnidadMedidaServicio, private _categoriaServicio: CategoriaServicio, private modalService: NgbModal, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
     this.Oferta = new Oferta(null, null, null, null);
     this.Producto = new Producto(null, null, null, null, null, null, null, null, null);
@@ -98,9 +100,10 @@ export class ModificarProductoComponent implements OnInit ,OnDestroy{
   }
 
   async ngOnInit() {
-    this.getCategorias();
+
     await this.getProducto();
     this.iniciarModificarProducto();
+    this.getCategorias();
     this.getUnidadesMedida()
 
   }
@@ -129,6 +132,7 @@ export class ModificarProductoComponent implements OnInit ,OnDestroy{
   }
 
   cancelar(){
+    this.banderaModificar=false;
     this.banderaValidaciones = false;
     this.categoriaEncontrada = new Set();
     this.categoriaEncontrada2 = new Set();
@@ -138,9 +142,7 @@ export class ModificarProductoComponent implements OnInit ,OnDestroy{
     this.data = [];
     this.videoYoutube = "";
     this.categoriasSeleccionadas = new Set();
-    this.c1 = [];
-    this.c2 = [];
-    this.c3 = [];
+
 
     this.vectorBanderaAgregarImagen = [];
     this.vectorBanderaHabilitante = [];
@@ -707,6 +709,11 @@ export class ModificarProductoComponent implements OnInit ,OnDestroy{
     }
     this.categoriasSeleccionadas.delete(cc);
 
+  }
+
+  iniciarEdicion(){
+    this.banderaModificar=true;
+    this.editorConfig.editable = true;
   }
 
   mensageError(mensaje) {
