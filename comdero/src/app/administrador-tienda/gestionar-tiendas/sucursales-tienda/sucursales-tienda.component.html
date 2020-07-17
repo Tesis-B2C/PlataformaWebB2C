@@ -28,7 +28,7 @@
       </div>
 
       <!--INICIO el modulo de Casa -->
-      <form #FormCasa id="formCasa" validate-form>
+      <form #FormCasa id="formCasa" name="formCasa" validate-form>
         <div class="NegocioNoFisico" *ngIf="this.banderaCasa">
           <div class="card card-body">
             <label class="font-weight-bold">Ingrese los datos desde donde opera su negocio</label>
@@ -110,7 +110,8 @@
                         [ngClass]="{'errorSelect': CiudadC.invalid && (CiudadC.dirty || CiudadC.touched),
           'satisfactorioSelect': CiudadC.valid && (CiudadC.dirty || CiudadC.touched)}"
                         class="tamanioInputs form-control" name="ciudadCasa" placeholder="">
-                  <option disabled *ngIf="!this.ciudadesCasa[0] || banderaEdicionDeshabilitadaCasa">{{this.ciudadCasa}}</option>
+                  <option disabled
+                          *ngIf="!this.ciudadesCasa[0] || banderaEdicionDeshabilitadaCasa">{{this.ciudadCasa}}</option>
                   <option value=""> Selecciona una...</option>
                   <option *ngFor="let ciudad of this.ciudadesCasa[0]"
                           value="{{ciudad.COD_DPA}}"> {{ciudad.NOMBRE }}</option>
@@ -125,31 +126,44 @@
             </div><!--form-row.-->
           </div> <!--FIN CASA-->
 
-          <br>
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title mb-2">Acciones</h5>
-              <div class="form-row justify-content-end">
-                <button *ngIf="banderaEdicionDeshabilitadaCasa" (click)="habilitarEdicionCasa()" href="#"
-                        class="btn btn-warning text-white "><span class="fa fa-edit"></span> Modificar
-                </button> &nbsp;
-                <button [disabled]="!FormCasa.checkValidity()" *ngIf="!banderaEdicionDeshabilitadaCasa"
-                        (click)="guardarSucursalesCasa()" href="#"
-                        class="btn btn-primary text-white "><span class="fa fa-save"></span> Guardar
-                </button> &nbsp;
-                <button *ngIf="!banderaEdicionDeshabilitadaCasa" href="#" (click)="cancelarModificacion(); "
-                        class="btn btn-light  "><span
-                  class="fa fa-close"></span> Cancelar
-                </button>
-              </div>
-            </div>
-          </div>
+
         </div>
       </form>
       <!--FIN el modulo de CASA -->
 
+      <form *ngIf="this.banderaCasa" class="card card-body  col-md-12  mt-4">
+        <div class=" container">
+          <h6>Acciones</h6>
+          <hr>
+          <div class="text-right">
+            <button *ngIf="!banderaEdicionDeshabilitadaCasa"
+                    (click)="guardarSucursalesCasa()" class="btn btn-primary text-nowrap mb-4  col-auto"
+                    type="button">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+              Guardar &nbsp;&nbsp;
+              <span class="fa fa-save"></span>
+            </button>
+            &nbsp;&nbsp;
+            <button *ngIf="!banderaEdicionDeshabilitadaCasa" href="#" (click)="cancelarModificacion(); "
+                    class="btn btn-light text-nowrap mb-4  col-auto">
+              Cancelar &nbsp;&nbsp;
+              <span class="fa fa-close"></span></button>
+
+            &nbsp;&nbsp;
+            <button *ngIf="banderaEdicionDeshabilitadaCasa" (click)="habilitarEdicionCasa()"
+                    class="btn btn-warning text-nowrap mb-4  col-auto">
+              Modificar &nbsp;&nbsp;
+              <span class="fa fa-edit"></span></button>
+
+
+          </div>
+
+        </div>
+      </form>
+
+
       <!--Empieza el modulo de Tengo Negocio Fisico -->
-      <form #FormSucursales id="formSucursales" validate-form>
+      <form #FormSucursales id="formSucursales" name="formSucursales" validate-form>
         <div class="NegocioFisico" *ngIf="banderaEspacioFisico && this.bandAgregarSuc">
           <div class="card card-body mb-2" *ngFor="let item of this.Sucursales; index as i">
             <h6 *ngIf="i==0" class="font-weight-bold">MATRIZ</h6>
@@ -303,26 +317,37 @@
             </p>
           </div>
 
-          <br>
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title mb-2">Acciones</h5>
-              <div class="form-row justify-content-end">
-                <button *ngIf="banderaEdicionDeshabilitadaNeg" (click)="habilitarEdicionNeg()" href="#"
-                        class="btn btn-warning text-white "><span class="fa fa-edit"></span> Modificar
-                </button> &nbsp;
-                <button [disabled]="!FormSucursales.checkValidity()" *ngIf="!banderaEdicionDeshabilitadaNeg"
-                        (click)="guardarSucursalesNeg()" href="#"
-                        class="btn btn-primary text-white "><span class="fa fa-save"></span> Guardar
-                </button> &nbsp;
-                <button *ngIf="!banderaEdicionDeshabilitadaNeg" href="#" (click)="cancelarModificacion(); "
-                        class="btn btn-light  "><span
-                  class="fa fa-close"></span> Cancelar
-                </button>
-              </div>
-            </div>
-          </div>
         </div><!--Termina el modulo de Tengo Negocio Fisico -->
+      </form>
+
+      <form *ngIf="this.bandAgregarSuc" class="card card-body  col-md-12  mt-4">
+        <div class=" container">
+          <h6>Acciones</h6>
+          <hr>
+          <div class="text-right">
+            <button *ngIf="!banderaEdicionDeshabilitadaNeg"
+                    (click)="guardarSucursalesNeg()" class="btn btn-primary text-nowrap mb-4  col-auto"
+                    type="button">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+              Guardar &nbsp;&nbsp;
+              <span class="fa fa-save"></span>
+            </button>
+            &nbsp;&nbsp;
+            <button *ngIf="!banderaEdicionDeshabilitadaNeg" href="#" (click)="cancelarModificacion(); "
+                    class="btn btn-light text-nowrap mb-4  col-auto">
+              Cancelar &nbsp;&nbsp;
+              <span class="fa fa-close"></span></button>
+
+            &nbsp;&nbsp;
+            <button *ngIf="banderaEdicionDeshabilitadaNeg" (click)="habilitarEdicionNeg()"
+                    class="btn btn-warning text-nowrap mb-4  col-auto">
+              Modificar &nbsp;&nbsp;
+              <span class="fa fa-edit"></span></button>
+
+
+          </div>
+
+        </div>
       </form>
     </div>
   </div>

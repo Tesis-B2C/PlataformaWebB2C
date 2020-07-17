@@ -60,3 +60,7 @@ body {
   height: 100vh !important;
   overflow: auto;
 }
+
+button{
+  font-size:  small;
+}
