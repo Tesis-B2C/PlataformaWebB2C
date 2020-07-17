@@ -264,6 +264,7 @@ select:hover{
 .container-categoria {
   overflow: auto;
   background-color: #f9fafb;
+  margin-top: 2rem;
 }
 
 .container-categoria::-webkit-scrollbar {

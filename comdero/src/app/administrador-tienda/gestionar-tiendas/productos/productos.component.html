@@ -606,7 +606,7 @@
 
 
     </div>
-    <div class="card card-body col-md-4   mt-4 ml-md-2  mt-md-0 container-categoria " id="panelDos">
+    <div class="card card-body col-md-4   ml-md-1   container-categoria " id="panelDos">
       <div class="container">
 
         <h6>Categorias</h6>
@@ -659,8 +659,9 @@
         <div class="text-right">
           <button (click)="this.guardarProducto()" class="btn btn-primary text-nowrap mb-4  col-auto"
                   type="button">
-            <span *ngIf="banderaAnimacionCarga" class="spinner-border spinner-border-sm mr-2"></span>
-            Guardar Producto
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+            Guardar Producto &nbsp;&nbsp;
+            <span class="fa fa-save"></span>
           </button>
         </div>
 

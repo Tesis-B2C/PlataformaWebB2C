@@ -99,7 +99,8 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   public banderaValidaciones: boolean = false;
 
   public categoriasEnviar = [];
-  public banderaAnimacionCarga: boolean = false;
+
+  public loading: boolean = false;
 
   constructor(public router: Router, private route: ActivatedRoute, private location: Location, private cp: CurrencyPipe, public toastr: ToastrService, private _productoServicio: ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
@@ -155,7 +156,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     this.banderaValidaciones = false;
 
     this.categoriasEnviar = [];
-    this.banderaAnimacionCarga = false;
+    this.loading = false;
 
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
     this.Oferta = new Oferta(this.identidadTienda.NUM_TIENDA, null, "Garantia del vendedor", 0);
@@ -164,7 +165,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
 
     let codigo = document.getElementById('codigoProducto') as HTMLInputElement;
     debugger;
-    codigo.value =this.Producto.Cod_Producto.toString();
+    codigo.value = this.Producto.Cod_Producto.toString();
     this.getCategorias();
     this.getUnidadesMedida();
     debugger;
@@ -495,10 +496,10 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
         this.mensageCorrecto(response['menssage']);
         this.cancelar();
       }
-      this.banderaAnimacionCarga = false;
+      this.loading = false;
     } catch
       (e) {
-      this.banderaAnimacionCarga = false;
+      this.loading = false;
       console.log("error:" + e);
       if (JSON.stringify((e).error.message))
         this.mensageError(JSON.stringify((e).error.message));
@@ -525,7 +526,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
       }
     }).then(async (result) => {
       if (result.value) {
-        this.banderaAnimacionCarga = true;
+        this.loading = true;
         this.publicarProducto();
       }
     })
@@ -545,7 +546,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
         } else {
           let body = document.getElementById('body') as HTMLElement;
           body.scrollTo(0, 0);
-          window.scroll(0, 0);
+           window.scroll(0, 0);
           this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
             {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
           return false
