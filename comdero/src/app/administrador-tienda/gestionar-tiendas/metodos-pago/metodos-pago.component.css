@@ -167,7 +167,8 @@ input:checked + .slider:before {
 .agregar-sucursal {
   color: #1a56e9;
   cursor: pointer;
-  border-bottom: #1a56e9 solid 1.5px;
+  border-bottom: #1a56e9 solid 1px;
+  font-size: small;
 }
 
 .agregar-sucursal:hover {
