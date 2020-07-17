@@ -20,7 +20,7 @@ import {ToastrService} from "ngx-toastr";
   styleUrls: ['./modificar-producto.component.css'],
   providers: [CurrencyPipe]
 })
-export class ModificarProductoComponent implements OnInit ,OnDestroy{
+export class ModificarProductoComponent implements OnInit, OnDestroy {
 
   public idProducto;
   public identidadProducto;
@@ -90,7 +90,8 @@ export class ModificarProductoComponent implements OnInit ,OnDestroy{
   public auxi = null;
   public auxj = null;
 
-  public banderaModificar: boolean=false;
+  public banderaModificar: boolean = false;
+  public loading: boolean = false;
 
   constructor(public toastr: ToastrService, private cpService: ColorPickerService, private cp: CurrencyPipe, private _sanitizer: DomSanitizer, private _unidadesMedidaServicio: UnidadMedidaServicio, private _categoriaServicio: CategoriaServicio, private modalService: NgbModal, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
     this.Oferta = new Oferta(null, null, null, null);
@@ -107,6 +108,7 @@ export class ModificarProductoComponent implements OnInit ,OnDestroy{
     this.getUnidadesMedida()
 
   }
+
   ngOnDestroy(): void {
     delete this.Producto;
     delete this.Oferta;
@@ -131,8 +133,9 @@ export class ModificarProductoComponent implements OnInit ,OnDestroy{
     }
   }
 
-  cancelar(){
-    this.banderaModificar=false;
+  cancelar() {
+    this.loading = false;
+    this.banderaModificar = false;
     this.banderaValidaciones = false;
     this.categoriaEncontrada = new Set();
     this.categoriaEncontrada2 = new Set();
@@ -658,7 +661,7 @@ export class ModificarProductoComponent implements OnInit ,OnDestroy{
       }
     }).then(async (result) => {
       if (result.value) {
-        // this.banderaAnimacionCarga = true;
+        this.loading = true;
         this.publicarProducto();
       }
     })
@@ -685,9 +688,11 @@ export class ModificarProductoComponent implements OnInit ,OnDestroy{
         let response = await this._productoServicio.updateProducto(this.identidadProducto.ID_OFERTA, this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
         this.mensageCorrecto(response['message']);
         this.iniciarModificarProducto();
+        this.loading = false
       }
     } catch
       (e) {
+      this.loading = false;
       console.log("error:" + e);
       if (JSON.stringify((e).error.message))
         this.mensageError(JSON.stringify((e).error.message));
@@ -711,8 +716,8 @@ export class ModificarProductoComponent implements OnInit ,OnDestroy{
 
   }
 
-  iniciarEdicion(){
-    this.banderaModificar=true;
+  iniciarEdicion() {
+    this.banderaModificar = true;
     this.editorConfig.editable = true;
   }
 
