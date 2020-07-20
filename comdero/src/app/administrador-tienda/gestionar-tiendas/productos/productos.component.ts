@@ -98,11 +98,15 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
 
   public banderaValidaciones: boolean = false;
 
+  public categoriasEnviar = [];
+
+  public loading: boolean = false;
+
   constructor(public router: Router, private route: ActivatedRoute, private location: Location, private cp: CurrencyPipe, public toastr: ToastrService, private _productoServicio: ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
-    this.Oferta = new Oferta(this.identidadTienda.NUM_TIENDA, 0, "Garantia del vendedor", 0);
+    this.Oferta = new Oferta(this.identidadTienda.NUM_TIENDA, null, "Garantia del vendedor", 0);
     this.Producto = new Producto("000000", null, null, null, null, 1, 1, "Nuevo", null);
-    this.Variantes.push(new Variante(null, null, null, null, 1, "unidades", 0));
+    this.Variantes.push(new Variante(null, null, null, null, null, "unidades", 0));
   }
 
   ngOnInit() {
@@ -115,6 +119,57 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
 
   }
 
+  public cancelar() {
+
+    document.forms["formInformacion"].reset();
+    document.forms["formInventario"].reset();
+    document.forms["formPrecios"].reset();
+    document.forms["formGarantia"].reset();
+    document.forms["formCheckVariaciones"].reset();
+
+    if (document.forms["formVariaciones"] != null) {
+      document.forms["formVariaciones"].reset();
+    }
+
+    this.Imagenes_Producto = [[]];
+    this.imagenes = [[]];
+
+    this.vectorBanderaAgregarImagen = [false];
+    this.banderaMaximoImagenes = true;
+    this.banderaMensajeMaximoImagenes = false;
+    this.banderaMensajeMaximoVideo = false;
+    this.data = [];
+    this.banderaAnimacionVideo = false;
+    // banderas de envios a domicilio
+    this.banderaVariaciones = false;
+    this.Variantes = [];
+    //
+    this.vectorOpciones = []; // las dos formas swon validas pero la activa es ams facil
+    this.visible = true;
+    this.color = [''];
+    this.categoriasSeleccionadas = new Set();
+    this.c1 = [];
+    this.c2 = [];
+    this.c3 = [];
+    this.categoriaEncontrada = new Set();
+    this.categoriaEncontrada2 = new Set();
+    this.banderaValidaciones = false;
+
+    this.categoriasEnviar = [];
+    this.loading = false;
+
+    this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
+    this.Oferta = new Oferta(this.identidadTienda.NUM_TIENDA, null, "Garantia del vendedor", 0);
+    this.Producto = new Producto("000000", null, null, null, null, 1, 1, "Nuevo", null);
+    this.Variantes.push(new Variante(null, null, null, null, null, "unidades", 0));
+
+    let codigo = document.getElementById('codigoProducto') as HTMLInputElement;
+    debugger;
+    codigo.value = this.Producto.Cod_Producto.toString();
+    this.getCategorias();
+    this.getUnidadesMedida();
+    debugger;
+  }
 
   public mostrarToast(mensaje, icono) {
     this.toastr.info('<div class="row no-gutters"><p class="col-10 LetrasToastInfo"><strong>!Importante</strong><br>' + mensaje + '</p> <a class="d-flex align-items-center col-2"><span class="' + icono + '"></span></a></div>', "",
@@ -138,6 +193,8 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     delete this.Variantes;
     this.toastr.clear();
     delete this.Imagenes_Producto;
+    delete this.videoYoutubeGuardar;
+    delete this.videoPorGuardar;
 
 
   }
@@ -270,7 +327,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     this.vectorOpciones.push(1);
     this.color.push("");
     this.vectorBanderaAgregarImagen.push(false);
-    this.Variantes.push(new Variante(null, null, null, null, 1, "unidades", 0));
+    this.Variantes.push(new Variante(null, null, null, null, null, "unidades", 0));
     this.Imagenes_Producto.push([]);
     this.imagenes.push([]);
     console.log("asdasd");
@@ -419,8 +476,6 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     this.videoYoutube = null;
   }
 
-  public categoriasEnviar = [];
-  public banderaAnimacionCarga: boolean = false;
 
   public async publicarProducto() {
     try {
@@ -439,11 +494,12 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
         }
         let response = await this._productoServicio.saveProducto(this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
         this.mensageCorrecto(response['menssage']);
+        this.cancelar();
       }
-      this.banderaAnimacionCarga = false;
+      this.loading = false;
     } catch
       (e) {
-      this.banderaAnimacionCarga = false;
+      this.loading = false;
       console.log("error:" + e);
       if (JSON.stringify((e).error.message))
         this.mensageError(JSON.stringify((e).error.message));
@@ -470,7 +526,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
       }
     }).then(async (result) => {
       if (result.value) {
-        this.banderaAnimacionCarga = true;
+        this.loading = true;
         this.publicarProducto();
       }
     })
@@ -490,7 +546,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
         } else {
           let body = document.getElementById('body') as HTMLElement;
           body.scrollTo(0, 0);
-          window.scroll(0, 0);
+           window.scroll(0, 0);
           this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
             {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
           return false
@@ -546,8 +602,10 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     debugger;
     let valor = this.cp.transform(element.target.value, '$',);
     //let alter=formatCurrency(element.target.value,'USD',getCurrencySymbol('USD', 'wide'));
-    let valor2 = valor.split("$")
-    element.target.value = valor2[1].replace(',', "");
+    if (valor) {
+      let valor2 = valor.split("$")
+      element.target.value = valor2[1].replace(',', "");
+    }
   }
 
 }

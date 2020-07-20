@@ -36,9 +36,10 @@
 
   <div class="row justify-content-center">
     <div class="col-md-7" id="panelUno">
-      <form #FormInformacion id="formInformacion" name="formInformacion" class="card card-body validate-form">
-        <h6>Información</h6>
-        <hr>
+
+      <h6>Información</h6>
+
+      <form #FormInformacion id="formInformacion" name="formInformacion" class="mt-3 card card-body validate-form">
         <div class="container">
           <div class="form-row ">
             <div class="col-md-6">
@@ -53,7 +54,7 @@
             <div class="col-lg-6">
               <label>Codigo</label>
               <input #CodigoProducto="ngModel" [(ngModel)]="this.Producto.Cod_Producto" class=" form-control py-3 "
-                     name="codigoProducto"
+                     name="codigoProducto" id="codigoProducto"
                      type="text">
             </div>
           </div>
@@ -98,12 +99,10 @@
           </div> <!-- form-group end.// -->
         </div>
       </form>
+      <hr>
+      <h6>Multimedia</h6>
 
-      <br>
-
-      <form class="card card-body" name="form"> <!--Multimedia -->
-        <h6>Multimedia</h6>
-        <hr>
+      <form class="card card-body mt-3" name="form"> <!--Multimedia -->
         <div class="form-group ">
           <a class="ml-2 mt-5">
             <label>Imagenes del producto </label>
@@ -234,10 +233,11 @@
 
 
       </form>
-      <br>
-      <form name="formPrecios" class=" card card-body ">
-        <h6>Precios</h6>
-        <hr>
+
+      <hr>
+      <h6>Precios</h6>
+
+      <form name="formPrecios" class="mt-3 card card-body ">
         <div class="container">
           <div class="form-row">
             <div class="col-lg-6">
@@ -281,14 +281,15 @@
           <br>
         </div>
       </form>
-      <br>
-      <form name="formInventario" class=" card card-body ">
 
-        <h6>Inventario</h6>
-        <hr>
-        <div class="">
 
-          <div class="form-group col-lg-7">
+      <hr>
+      <h6>Inventario</h6>
+
+      <form name="formInventario" class=" mt-3 card card-body ">
+        <div class="container">
+
+          <div class="form-group col-lg-10">
             <label>Stock y unidad de medida en la cual se ofertara el producto </label>
             <div class="input-group">
 
@@ -308,25 +309,23 @@
           </div>
 
 
-          <div class="col-lg-7">
+          <div class="col-lg-10">
             <label>Peso aproximado</label>
-            <div class="input-group mb-3">
+            <div class="input-group ">
               <input #Peso="ngModel" [(ngModel)]="this.Producto.Peso_Producto" class="form-control" name="peso"
                      placeholder="120" min="0" step="0.01" oninput="validity.valid||(value='');"
                      type="number" required [ngClass]="{'is-invalid': Peso.invalid && banderaValidaciones}">
               <div class="input-group-append">
                 <span class="input-group-text unidades">Kg</span>
               </div>
-
-              <p style="font-size: x-small" class="ml-2">El peso de los productos ayudará a calcular el precio de
-                envío</p>
-
-
-              <div *ngIf="Peso.errors?.required && banderaValidaciones">
-                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
-              </div>
             </div>
+            <p style="font-size: x-small" class="ml-2">El peso de los productos ayudará a calcular el precio de
+              envío</p>
 
+
+            <div *ngIf="Peso.errors?.required && banderaValidaciones">
+              <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+            </div>
           </div>
           <br>
           <div class="form-group ml-2">
@@ -350,11 +349,12 @@
           <br>
         </div>
       </form>
-      <br>
 
-      <form class="card card-body ">
-        <h6>Garantia</h6>
-        <hr>
+
+      <hr>
+      <h6>Garantia</h6>
+
+      <form name="formGarantia" class="mt-3 card card-body ">
         <div class="container">
           <label>Seleccione el tipo de garantia ofrecida por este producto</label>
           <br>
@@ -380,195 +380,204 @@
           <br>
         </div>
       </form>
-      <br>
 
-      <div class=" card card-body">
-        <h6>Variaciones</h6>
+      <div>
         <hr>
-        <div class="form-group ml-2">
-          <label>Este producto tiene multiples opciones, asi como clores, marca y materiales?</label>
+        <h6>Variaciones</h6>
+        <div class="card card body container mt-3">
+          <form name="formCheckVariaciones" class="mt-3">
+            <div class="form-group ml-2">
+              <label>Este producto tiene multiples opciones, asi como clores, marca y materiales?</label>
 
-          <div class="form-group">
-            <div class="radio-item">
-              <input (change)="opcionVariaciones(true)" name="variaciones" type="radio"
-                     value="Si" id="VariacionSi">
-              <label for="VariacionSi">&nbsp;&nbsp; Si </label>
-            </div>
-
-            <div class="radio-item">
-              <input (change)="opcionVariaciones(false)" name="variaciones" type="radio"
-                     value="No" id="VariacionNo" checked>
-              <label for="VariacionNo">&nbsp;&nbsp; No </label>
-            </div>
-          </div>
-        </div>
-
-        <div *ngIf="banderaVariaciones" class="form-row container px-0">
-          <div class="form-group">
-            <div class="alert alert-primary col-12" role="alert">
-              <a><span class="fa fa-exclamation fa-1x"></span></a>
-              Primero establesca las opciones base del producto, es decir las correspondientes a las imagenes que agregó
-              anterior mente,
-              luego si desea agregar mas opciones , ademas imagenes, y un precio diferente de click en agregar
-            </div>
-          </div>
-
-          <div class="form-group col-md-2 offset-lg-1 justify-content-center">
-            <label>Color</label>
-
-            <input (colorPickerChange)="cambiarColor($event,0)" [(colorPicker)]=color[0] [style.background]=color[0]
-                   class="form-control input-colores"/>
-          </div>
-          <div class="form-group  col-md-4">
-            <label> Talla </label>
-            <input #Talla0="ngModel" [(ngModel)]="this.Variantes[0].Talla" class="form-control " name="talla0"
-                   maxlength="2"
-                   placeholder="Ej. xl o 34 o etc" type="text">
-          </div>
-          <div class="form-group  col-md-4">
-            <label>Material</label>
-            <input #Material0="ngModel" [(ngModel)]="this.Variantes[0].Material" class="form-control  " name="material0"
-                   placeholder="Ej. Gamusa/algodon" type="text">
-          </div>
-
-        </div>
-        <div *ngFor="let item of this.vectorOpciones; index as i" class="form-row container px-0 ">
-          <div class="form-group col-11  mt-4 mb-0">
-            <p style="font-weight: bolder; font-size: medium">Opcion {{i + 1}}</p>
-          </div>
-          <div class="form-group  col-1 mt-4 mb-0">
-            <button (click)="borrarOpcionesProducto(i)" class="form-control " style=" border: none; color: red">
-              <span class="fa fa-trash "></span>
-            </button>
-          </div>
-          <hr class="col-12 mt-0">
-          <div class="form-group col-md-2 offset-lg-1 justify-content-center">
-            <label>Color</label>
-            <input (colorPickerChange)="cambiarColor($event,i+1)" [(colorPicker)]=color[i+1]
-                   [style.background]=color[i+1]
-                   class="form-control input-colores"/>
-          </div>
-          <div class="form-group  col-md-4">
-            <label> Talla </label>
-            <input #Talla="ngModel" [(ngModel)]="this.Variantes[i+1].Talla" class="form-control " name="talla{{i+1}}"
-                   placeholder="Ej. xl o 34 o etc" type="text" maxlength="2">
-          </div>
-          <div class="form-group  col-md-4">
-            <label>Material</label>
-            <input #Material="ngModel" [(ngModel)]="this.Variantes[i+1].Material" class="form-control  "
-                   name="material{{i+1}}"
-                   placeholder="Ej. Gamusa/algodon" type="text">
-          </div>
-
-          <div class="form-group col-12 ">
-            <form name="form">
-              <a class=" mt-5">
-                <label>Imagenes de la opcion {{i + 1}} </label>
-                <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
-              <div
-                [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[i+1]==false,'borde-imagenes1':vectorBanderaAgregarImagen[i+1]==true,'borde-error': (Imagenes_Producto[i+1].length==0 && banderaValidaciones)  }"
-                class="row  mt-3 ">
-                <div *ngFor='let url of imagenes[i+1]; index as j ' class="ml-1">
-                  <div class="col-auto card mt-2 px-0 pb-0">
-                    <label style="border: none;  ">
-                      <img [src]="url" class="px-0" height="140px" width="140px">
-                      <input (change)="subirImagenes($event,(i+1))" accept="image/*" class="file" multiple name="files"
-                             type="file">
-                    </label>
-                    <button (click)="quitarImagenes((i+1),j)" class="boton-cerrar  btn-outline-danger px-0 py-0 ">
-
-                      <span class="fa fa-trash"></span>
-                    </button>
-                  </div>
-                </div>
-                <div *ngIf="vectorBanderaAgregarImagen[i+1]==false" class="mx-auto ">
-                  <div class="col-auto pt-4">
-                    <label class="imagen-agregar ">
-                      <i class="fa fa-cloud-upload-alt fa-4x"></i>
-                      <!--   <i class="fa fa-plus-circle fa-2x ml-1"></i>-->
-                      <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file">
-                    </label>
-                  </div>
-                </div>
-                <div *ngIf="vectorBanderaAgregarImagen[i+1]==false" class=" col-12 pb-5 mx-auto ">
-                  <p class="link-agregar-imagenes ">Click para Agregar imagenes</p>
+              <div class="form-group">
+                <div class="radio-item">
+                  <input (change)="opcionVariaciones(true)" name="variaciones" type="radio"
+                         value="Si" id="VariacionSi">
+                  <label for="VariacionSi">&nbsp;&nbsp; Si </label>
                 </div>
 
-                <div *ngIf="vectorBanderaAgregarImagen[i+1]==true && imagenes[i+1].length<6" class="py-2">
-                  <div class=" px-2 py-4  card  ml-2 ">
-                    <label class="imagen-agregar">
-                      <i class="fa fa-picture-o fa-4x ml-4"></i>
-                      <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                      <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file">
-                      <br>
-                      <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imagenes </p>
-                      <p class=" link-agregar-imagenes2">maximo 6</p>
-
-                    </label>
-                  </div>
+                <div class="radio-item">
+                  <input (change)="opcionVariaciones(false)" name="variaciones" type="radio"
+                         value="No" id="VariacionNo" checked>
+                  <label for="VariacionNo">&nbsp;&nbsp; No </label>
                 </div>
-
-              </div>
-              <div *ngIf="(Imagenes_Producto[i+1].length==0 && banderaValidaciones)">
-                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Debes ingresar al menos
-                  una
-                  imagen.</p>
-              </div>
-            </form>
-          </div> <!-- form-group end.// -->
-          <form name="formVariaciones" class="container row">
-            <div class="form-group col-lg-7">
-              <label> Stock y unidad de medida del producto</label>
-              <div class="input-group">
-
-                <input #Stock="ngModel" [(ngModel)]="this.Variantes[i+1].Stock" class="form-control" name="stock{{i+1}}"
-                       placeholder="200" type="number" min="0" step="0.01" oninput="validity.valid||(value='');"
-                       required [ngClass]="{'is-invalid': Stock.invalid && banderaValidaciones}">
-
-                <select #Unidad="ngModel" [(ngModel)]="this.Variantes[i+1].Cod_Unidad" class=" form-control col-lg-5 "
-                        id="selectUnidades" name="unidad{{i+1}}"
-                        [ngClass]="{'errorSelect': Stock.invalid && banderaValidaciones}">
-
-                  <option *ngFor="let unidad of this.unidades"
-                          [selected]="unidad.COD_UNIDAD_MEDIDA=='unidades'">{{unidad.COD_UNIDAD_MEDIDA}}</option>
-                </select>
-
-              </div>
-              <div *ngIf="Stock.errors?.required && banderaValidaciones">
-                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
-              </div>
-            </div>
-
-            <div class="form-group  col-md-5">
-              <label>Precio</label>
-              <div class="input-group">
-                <input #PrecioUnitario="ngModel" [(ngModel)]="this.Variantes[i+1].Precio_Unitario"
-                       aria-label="Amount (to the nearest dollar)" class="form-control"
-                       name="precioUnitario{{i+1}}" placeholder="20" (focusout)="formatear($event)"
-                       type="number" min="0" step="0.01" oninput="validity.valid||(value='');" required
-                       [ngClass]="{'is-invalid': PrecioUnitario.invalid && banderaValidaciones}">
-                <div class="input-group-append">
-                  <span class="input-group-text unidades">$</span>
-                </div>
-              </div>
-              <div *ngIf="PrecioUnitario.errors?.required && banderaValidaciones">
-                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
               </div>
             </div>
           </form>
 
-        </div>
-        <div *ngIf="banderaVariaciones" class="form-group col-md-12">
-          <p (click)="agregarOpcionesProducto()" class="agregar">
-            <span class="fa fa-plus "></span> &nbsp;Agregar opcion
-          </p>
+          <div *ngIf="banderaVariaciones" class="form-row  px-0 ">
+            <div class="form-group">
+              <div class="alert alert-primary col-12" role="alert">
+                <a><span class="fa fa-exclamation fa-1x"></span></a>
+                Primero establesca las opciones base del producto, es decir las correspondientes a las imagenes que
+                agregó
+                anterior mente,
+                luego si desea agregar mas opciones , ademas imagenes, y un precio diferente de click en agregar
+              </div>
+            </div>
+
+            <div class="form-group col-md-2 offset-lg-1 justify-content-center">
+              <label>Color</label>
+
+              <input (colorPickerChange)="cambiarColor($event,0)" [(colorPicker)]=color[0] [style.background]=color[0]
+                     class="form-control input-colores"/>
+            </div>
+            <div class="form-group  col-md-4">
+              <label> Talla </label>
+              <input #Talla0="ngModel" [(ngModel)]="this.Variantes[0].Talla" class="form-control " name="talla0"
+                     maxlength="2"
+                     placeholder="Ej. xl o 34 o etc" type="text">
+            </div>
+            <div class="form-group  col-md-4">
+              <label>Material</label>
+              <input #Material0="ngModel" [(ngModel)]="this.Variantes[0].Material" class="form-control  "
+                     name="material0"
+                     placeholder="Ej. Gamusa/algodon" type="text">
+            </div>
+
+          </div>
+          <div *ngFor="let item of this.vectorOpciones; index as i" class="form-row  px-0 ">
+            <div class="form-group col-11  mt-4 mb-0">
+              <p style="font-weight: bolder; font-size: medium">Opcion {{i + 1}}</p>
+            </div>
+            <div class="form-group  col-1 mt-4 mb-0">
+              <button (click)="borrarOpcionesProducto(i)" class="form-control " style=" border: none; color: red">
+                <span class="fa fa-trash "></span>
+              </button>
+            </div>
+            <hr class="col-12 mt-0">
+            <div class="form-group col-md-2 offset-lg-1 justify-content-center">
+              <label>Color</label>
+              <input (colorPickerChange)="cambiarColor($event,i+1)" [(colorPicker)]=color[i+1]
+                     [style.background]=color[i+1]
+                     class="form-control input-colores"/>
+            </div>
+            <div class="form-group  col-md-4">
+              <label> Talla </label>
+              <input #Talla="ngModel" [(ngModel)]="this.Variantes[i+1].Talla" class="form-control " name="talla{{i+1}}"
+                     placeholder="Ej. xl o 34 o etc" type="text" maxlength="2">
+            </div>
+            <div class="form-group  col-md-4">
+              <label>Material</label>
+              <input #Material="ngModel" [(ngModel)]="this.Variantes[i+1].Material" class="form-control  "
+                     name="material{{i+1}}"
+                     placeholder="Ej. Gamusa/algodon" type="text">
+            </div>
+
+            <div class="form-group col-12 ">
+              <form name="form">
+                <a class=" mt-5">
+                  <label>Imagenes de la opcion {{i + 1}} </label>
+                  <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
+                <div
+                  [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[i+1]==false,'borde-imagenes1':vectorBanderaAgregarImagen[i+1]==true,'borde-error': (Imagenes_Producto[i+1].length==0 && banderaValidaciones)  }"
+                  class="row  mt-3 ">
+                  <div *ngFor='let url of imagenes[i+1]; index as j ' class="ml-1">
+                    <div class="col-auto card mt-2 px-0 pb-0">
+                      <label style="border: none;  ">
+                        <img [src]="url" class="px-0" height="140px" width="140px">
+                        <input (change)="subirImagenes($event,(i+1))" accept="image/*" class="file" multiple
+                               name="files"
+                               type="file">
+                      </label>
+                      <button (click)="quitarImagenes((i+1),j)" class="boton-cerrar  btn-outline-danger px-0 py-0 ">
+
+                        <span class="fa fa-trash"></span>
+                      </button>
+                    </div>
+                  </div>
+                  <div *ngIf="vectorBanderaAgregarImagen[i+1]==false" class="mx-auto ">
+                    <div class="col-auto pt-4">
+                      <label class="imagen-agregar ">
+                        <i class="fa fa-cloud-upload-alt fa-4x"></i>
+                        <!--   <i class="fa fa-plus-circle fa-2x ml-1"></i>-->
+                        <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file">
+                      </label>
+                    </div>
+                  </div>
+                  <div *ngIf="vectorBanderaAgregarImagen[i+1]==false" class=" col-12 pb-5 mx-auto ">
+                    <p class="link-agregar-imagenes ">Click para Agregar imagenes</p>
+                  </div>
+
+                  <div *ngIf="vectorBanderaAgregarImagen[i+1]==true && imagenes[i+1].length<6" class="py-2">
+                    <div class=" px-2 py-4  card  ml-2 ">
+                      <label class="imagen-agregar">
+                        <i class="fa fa-picture-o fa-4x ml-4"></i>
+                        <i class="fa fa-plus-circle fa-2x ml-1"></i>
+                        <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file">
+                        <br>
+                        <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imagenes </p>
+                        <p class=" link-agregar-imagenes2">maximo 6</p>
+
+                      </label>
+                    </div>
+                  </div>
+
+                </div>
+                <div *ngIf="(Imagenes_Producto[i+1].length==0 && banderaValidaciones)">
+                  <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Debes ingresar al
+                    menos
+                    una
+                    imagen.</p>
+                </div>
+              </form>
+            </div> <!-- form-group end.// -->
+            <form name="formVariaciones" class="container row">
+              <div class="form-group col-lg-7">
+                <label> Stock y unidad de medida del producto</label>
+                <div class="input-group">
+
+                  <input #Stock="ngModel" [(ngModel)]="this.Variantes[i+1].Stock" class="form-control"
+                         name="stock{{i+1}}"
+                         placeholder="200" type="number" min="0" step="0.01" oninput="validity.valid||(value='');"
+                         required [ngClass]="{'is-invalid': Stock.invalid && banderaValidaciones}">
+
+                  <select #Unidad="ngModel" [(ngModel)]="this.Variantes[i+1].Cod_Unidad" class=" form-control col-lg-5 "
+                          id="selectUnidades" name="unidad{{i+1}}"
+                          [ngClass]="{'errorSelect': Stock.invalid && banderaValidaciones}">
+
+                    <option *ngFor="let unidad of this.unidades"
+                            [selected]="unidad.COD_UNIDAD_MEDIDA=='unidades'">{{unidad.COD_UNIDAD_MEDIDA}}</option>
+                  </select>
+
+                </div>
+                <div *ngIf="Stock.errors?.required && banderaValidaciones">
+                  <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+                </div>
+              </div>
+
+              <div class="form-group  col-md-5">
+                <label>Precio</label>
+                <div class="input-group">
+                  <input #PrecioUnitario="ngModel" [(ngModel)]="this.Variantes[i+1].Precio_Unitario"
+                         aria-label="Amount (to the nearest dollar)" class="form-control"
+                         name="precioUnitario" placeholder="20" (focusout)="formatear($event)"
+                         type="number" min="0" step="0.01" oninput="validity.valid||(value='');" required
+                         [ngClass]="{'is-invalid': PrecioUnitario.invalid && banderaValidaciones}">
+                  <div class="input-group-append">
+                    <span class="input-group-text unidades">$</span>
+                  </div>
+                </div>
+                <div *ngIf="PrecioUnitario.errors?.required && banderaValidaciones">
+                  <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+                </div>
+              </div>
+            </form>
+
+          </div>
+          <br>
+          <div *ngIf="banderaVariaciones" class="form-group col-md-12">
+            <p (click)="agregarOpcionesProducto()" class="agregar">
+              <span class="fa fa-plus "></span> &nbsp;Agregar opcion
+            </p>
+          </div>
         </div>
       </div>
-      <br>
 
-      <form class=" card card-body ">
-        <h6>Categorias seleccionadas</h6>
-        <hr>
+      <hr>
+      <h6>Categorias seleccionadas</h6>
+
+      <form class=" mt-3 card card-body ">
         <div class="form-row ">
           <div *ngIf="this.categoriasSeleccionadas.size==0 &&!banderaValidaciones" class="form-group">
             <div class="alert alert-primary col-12" role="alert">
@@ -598,7 +607,7 @@
 
 
     </div>
-    <div class="card card-body col-md-4   mt-4 ml-md-2  mt-md-0 container-categoria " id="panelDos">
+    <div class="card card-body col-md-4   ml-md-1   container-categoria " id="panelDos">
       <div class="container">
 
         <h6>Categorias</h6>
@@ -651,8 +660,9 @@
         <div class="text-right">
           <button (click)="this.guardarProducto()" class="btn btn-primary text-nowrap mb-4  col-auto"
                   type="button">
-            <span *ngIf="banderaAnimacionCarga" class="spinner-border spinner-border-sm mr-2"></span>
-            Guardar Producto
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+            Guardar Producto &nbsp;&nbsp;
+            <span class="fa fa-save"></span>
           </button>
         </div>
 

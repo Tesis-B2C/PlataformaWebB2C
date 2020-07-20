@@ -226,6 +226,7 @@ export class DatosPersonalesComponent implements OnInit {
 
   public async actualizarAgente() {
     try {
+    if(document.forms['formActualizarDatos'].checkValidity()){
       if (this.validarCedula() == true) {
         let aprobarCiudades: boolean = true;
         if (this.ciudad == "" || this.ciudad == null)
@@ -250,6 +251,9 @@ export class DatosPersonalesComponent implements OnInit {
           this.mostrarToast("El ruc ingresado no es válido", "");
         }
       }
+    }else {
+      this.mostrarToast("Al parecer existe errores en su formulario porfavor reviselo nuevamente", "");
+    }
     } catch (e) {
       this.loading = false;
       console.log("error:" + JSON.stringify((e).error.message));

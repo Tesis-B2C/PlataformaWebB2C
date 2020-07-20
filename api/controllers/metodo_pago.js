@@ -46,7 +46,7 @@ async function saveMetodosPago(req, res) {
                 await Metodo_Pago.create({
                         API_KEY_PAYPAL: mp.Api_Key_Paypal,
                         TIPO_PAGO: mp.Tipo_Pago,
-                        PORCENTAJE_RECARGO: mp.Porcentaje_Descuento,
+                        PORCENTAJE_RECARGO: mp.Porcentaje_Recargo,
                         NUM_TIENDA: req.params.id
                     },
                     {

@@ -201,28 +201,32 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
 
   public async guardarSucursalesNeg() {
     try {
-      if (this.validarCedula(this.Sucursales) == true) {
-        let aprobarCiudades: boolean = true;
-        for (let s in this.Sucursales) {
-          if (this.ciudadNegocio[s] == "")
-            aprobarCiudades = false;
-        }
+      if(document.forms['formSucursales'].checkValidity()) {
+        if (this.validarCedula(this.Sucursales) == true) {
+          let aprobarCiudades: boolean = true;
+          for (let s in this.Sucursales) {
+            if (this.ciudadNegocio[s] == "")
+              aprobarCiudades = false;
+          }
 
-        if (aprobarCiudades) {
-          console.log('hola bebe' + JSON.stringify(this.Sucursales));
-          this.loading = true;
-          let response = await this._tiendaServicio.actualizarTiendaSucursal(this.Sucursales, this.identidadTienda.NUM_TIENDA).toPromise();
-          let data = await this._tiendaServicio.getDatosTienda(this.identidadTienda.NUM_TIENDA).toPromise();
+          if (aprobarCiudades) {
+            console.log('hola bebe' + JSON.stringify(this.Sucursales));
+            this.loading = true;
+            let response = await this._tiendaServicio.actualizarTiendaSucursal(this.Sucursales, this.identidadTienda.NUM_TIENDA).toPromise();
+            let data = await this._tiendaServicio.getDatosTienda(this.identidadTienda.NUM_TIENDA).toPromise();
 
-          localStorage.setItem("identityTienda", JSON.stringify(data['data']));
-          this.identidadTienda = this._tiendaServicio.getIdentityTienda();
-          this.cancelarModificacion();
-          this.mensageCorrecto(response['message']);
+            localStorage.setItem("identityTienda", JSON.stringify(data['data']));
+            this.identidadTienda = this._tiendaServicio.getIdentityTienda();
+            this.cancelarModificacion();
+            this.mensageCorrecto(response['message']);
+          } else {
+            this.mostrarToastError("Asegurate de seleccionar la ciudad de tu negocio.", "");
+          }
         } else {
-          this.mostrarToastError("Asegurate de seleccionar la ciudad de tu negocio.", "");
+          this.mostrarToastError("Al parecer no ingresó un RUC válido", "");
         }
-      } else {
-        this.mostrarToastError("Al parecer no ingresó un RUC válido", "");
+      }else {
+        this.mostrarToastError("Al parecer existe errores en el formulario, porfavor reviselo nuevamente", "");
       }
     } catch (e) {
       this.loading = false;
@@ -271,30 +275,35 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
 
   public async guardarSucursalesCasa() {
     try {
-      let aprobarCiudades: boolean = true;
-      if (this.ciudadCasa == "")
-        aprobarCiudades = false;
+     if(document.forms['formCasa'].checkValidity()){
+       let aprobarCiudades: boolean = true;
+       if (this.ciudadCasa == "")
+         aprobarCiudades = false;
 
-      if (aprobarCiudades) {
-        this.Sucursales[0] = this.vectorCasa;
-        if (this.validarCedula(this.Sucursales) == true) {
-          console.log("CASITAS -------" + JSON.stringify(this.Sucursales));
-          this.loading = true;
-          let response = await this._tiendaServicio.actualizarTiendaSucursal(this.Sucursales, this.identidadTienda.NUM_TIENDA).toPromise();
-          debugger
-          console.log('CASASASAS CIUDADES ====' + this.ciudadesCasa);
+       if (aprobarCiudades) {
+         this.Sucursales[0] = this.vectorCasa;
+         if (this.validarCedula(this.Sucursales) == true) {
+           console.log("CASITAS -------" + JSON.stringify(this.Sucursales));
+           this.loading = true;
+           let response = await this._tiendaServicio.actualizarTiendaSucursal(this.Sucursales, this.identidadTienda.NUM_TIENDA).toPromise();
+           debugger
+           console.log('CASASASAS CIUDADES ====' + this.ciudadesCasa);
 
-          let data = await this._tiendaServicio.getDatosTienda(this.identidadTienda.NUM_TIENDA).toPromise();
+           let data = await this._tiendaServicio.getDatosTienda(this.identidadTienda.NUM_TIENDA).toPromise();
 
-          localStorage.setItem("identityTienda", JSON.stringify(data['data']));
-          this.cancelarModificacion();
-          this.mensageCorrecto(response['message']);
-        } else {
-          this.mostrarToastError("Al parecer no ingresó un RUC válido", "");
-        }
-      } else {
-        this.mostrarToastError("Asegurate de seleccionar la ciudad de tu negocio.", "");
-      }
+           localStorage.setItem("identityTienda", JSON.stringify(data['data']));
+           this.cancelarModificacion();
+           this.mensageCorrecto(response['message']);
+         } else {
+           this.mostrarToastError("Al parecer no ingresó un RUC válido", "");
+         }
+       } else {
+         this.mostrarToastError("Asegurate de seleccionar la ciudad de tu negocio.", "");
+       }
+     }else {
+       this.mostrarToastError("Al parecer existe errores en el formulario, reviselo nuevamente", "");
+     }
+
     } catch (e) {
       this.loading = false;
       console.log("error:" + JSON.stringify((e).error.message));

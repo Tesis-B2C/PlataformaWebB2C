@@ -366,7 +366,7 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
     this.Editar_Dia_Atencion = [];
     for (let i = 0; i < 7; i++)
       this.Editar_Dia_Atencion.push(new Horario_Atencion(null, null, null, null, null));
-    console.log('CAMCELAR'+ JSON.stringify(this.Editar_Dia_Atencion));
+    console.log('CAMCELAR' + JSON.stringify(this.Editar_Dia_Atencion));
     this.iniciarEdicion();
   }
 
@@ -609,7 +609,11 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
         if (this.horarioObligatorio() == true) {
           this.Tienda_Editar_Enviar.Editar_Dias_Atencion = this.Editar_Dia_Atencion;
           console.log("DIAS DE ATENCION A ENVIAR AL BACKLOCAL " + JSON.stringify(this.Editar_Dia_Atencion));
-          this.actualizarGeneral();
+          if (this.validarFormulario()) {
+            this.actualizarGeneral();
+          }else {
+            this.errorMensajeToast("Al parecer existe errores en el formulario reviselo nuevamente");
+          }
         } else
           this.errorMensajeToast("Debe ingresar el inicio y final de la jornada");
       } else {
@@ -618,13 +622,29 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
       }
     } else {
       debugger
-      this.actualizarGeneral();
+      if (this.validarFormulario()) {
+        this.actualizarGeneral();
+      }else {
+        this.errorMensajeToast("Al parecer existe errores en el formulario reviselo nuevamente");
+      }
+    }
+  }
+
+
+  public validarFormulario() {
+    debugger
+
+    if ( document.forms["FormGeneralTienda"].checkValidity()) {
+      return true;
+    } else {
+      return false;
     }
   }
 
   public async actualizarGeneral() {
     try {
       this.loading = true;
+
       this.Tienda_Editar_Enviar.EditarTienda = this.EditarTienda;
       console.log("Esto quiero enviar de la TIENDA-----------" + JSON.stringify(this.Tienda_Editar_Enviar));
       let response = await this._tiendaServicio.actualizarTiendaGeneral(this.Tienda_Editar_Enviar, this.identidadTienda.NUM_TIENDA).toPromise();

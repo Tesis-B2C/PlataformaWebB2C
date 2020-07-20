@@ -151,7 +151,8 @@ input {
 .agregar {
   color: #1a56e9;
   cursor: pointer;
-  border-bottom: #1a56e9 solid 1.5px;
+  border-bottom: #1a56e9 solid 1px;
+  font-size: small;
 }
 
 .agregarVideoYoutube {
@@ -264,6 +265,7 @@ select:hover{
 .container-categoria {
   overflow: auto;
   background-color: #f9fafb;
+  margin-top: 2rem;
 }
 
 .container-categoria::-webkit-scrollbar {

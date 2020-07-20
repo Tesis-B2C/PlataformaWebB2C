@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ProductoServicio} from "../../../servicios/producto.servicio";
 import Swal from "sweetalert2";
@@ -20,7 +20,7 @@ import {ToastrService} from "ngx-toastr";
   styleUrls: ['./modificar-producto.component.css'],
   providers: [CurrencyPipe]
 })
-export class ModificarProductoComponent implements OnInit {
+export class ModificarProductoComponent implements OnInit, OnDestroy {
 
   public idProducto;
   public identidadProducto;
@@ -30,7 +30,7 @@ export class ModificarProductoComponent implements OnInit {
   public categoriasSeleccionadas = new Set();
   public banderaValidaciones: boolean = false;
   public editorConfig = {
-    "editable": true,
+    "editable": false,
     "spellcheck": true,
     "height": "80px",
     "minHeight": "80px",
@@ -87,6 +87,11 @@ export class ModificarProductoComponent implements OnInit {
   public videoYoutubeGuardar: any;
   public direccionVideoYoutube: any;
 
+  public auxi = null;
+  public auxj = null;
+
+  public banderaModificar: boolean = false;
+  public loading: boolean = false;
 
   constructor(public toastr: ToastrService, private cpService: ColorPickerService, private cp: CurrencyPipe, private _sanitizer: DomSanitizer, private _unidadesMedidaServicio: UnidadMedidaServicio, private _categoriaServicio: CategoriaServicio, private modalService: NgbModal, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
     this.Oferta = new Oferta(null, null, null, null);
@@ -96,14 +101,25 @@ export class ModificarProductoComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.getCategorias();
-    await this.getProductos();
+
+    await this.getProducto();
     this.iniciarModificarProducto();
+    this.getCategorias();
     this.getUnidadesMedida()
 
   }
 
-  public async getProductos() {
+  ngOnDestroy(): void {
+    delete this.Producto;
+    delete this.Oferta;
+    delete this.Variantes;
+    this.toastr.clear();
+    delete this.Imagenes_Producto;
+    delete this.videoYoutubeGuardar;
+    delete this.videoPorGuardar;
+  }
+
+  public async getProducto() {
     try {
       this.idProducto = this.route.snapshot.params.id;
       let response = await this._productoServicio.getProducto(this.idProducto).toPromise();
@@ -117,16 +133,32 @@ export class ModificarProductoComponent implements OnInit {
     }
   }
 
-  public auxi = null;
-  public auxj = null;
-
-  iniciarModificarProducto() {
+  cancelar() {
+    this.loading = false;
+    this.banderaModificar = false;
+    this.banderaValidaciones = false;
+    this.categoriaEncontrada = new Set();
+    this.categoriaEncontrada2 = new Set();
     this.Imagenes_Producto = [];
     this.imagenes = [];
     this.Variantes = [];
     this.data = [];
     this.videoYoutube = "";
     this.categoriasSeleccionadas = new Set();
+
+
+    this.vectorBanderaAgregarImagen = [];
+    this.vectorBanderaHabilitante = [];
+    this.banderaMensajeMaximoImagenes = false;
+    this.banderaMensajeMaximoVideo = false;
+    this.banderaAnimacionVideo = false;
+    this.auxi = null;
+    this.auxj = null;
+  }
+
+  public async iniciarModificarProducto() {
+    this.cancelar();
+    await this.getProducto();
     this.Oferta.Id_Oferta = this.identidadProducto.ID_OFERTA;
     this.Oferta.Num_Tienda = this.identidadTienda.NUM_TIENDA;
     this.Oferta.Iva = this.identidadProducto.IVA;
@@ -301,7 +333,7 @@ export class ModificarProductoComponent implements OnInit {
       this.vectorBanderaAgregarImagen[indice] = true;
       if (filesAmount > 6) {
         this.banderaMensajeMaximoImagenes = true;
-        this.vectorBanderaHabilitante[indice]=true;
+        this.vectorBanderaHabilitante[indice] = true;
       } else {
         for (let i = 0; i < filesAmount; i++) {
           this.Imagenes_Producto[indice].push(new Imagen_Producto(eventEntrante.target.files[i].name, eventEntrante.target.files[i].type, eventEntrante.target.files[i], eventEntrante.target.files[i].size));
@@ -435,8 +467,10 @@ export class ModificarProductoComponent implements OnInit {
     debugger;
     let valor = this.cp.transform(element.target.value, '$',);
     //let alter=formatCurrency(element.target.value,'USD',getCurrencySymbol('USD', 'wide'));
-    let valor2 = valor.split("$")
-    element.target.value = valor2[1].replace(',', "");
+    if (valor) {
+      let valor2 = valor.split("$")
+      element.target.value = valor2[1].replace(',', "");
+    }
   }
 
   public opcionGarantia(garantia) {
@@ -579,7 +613,7 @@ export class ModificarProductoComponent implements OnInit {
   public validar(): boolean {
     this.banderaValidaciones = true;
     debugger;
-    if (this.vectorBanderaHabilitante.filter(v => v == false).length==0 &&  this.categoriasSeleccionadas.size > 0 && document.forms["formInformacion"].checkValidity()) {
+    if (this.vectorBanderaHabilitante.filter(v => v == false).length == 0 && this.categoriasSeleccionadas.size > 0 && document.forms["formInformacion"].checkValidity()) {
       if (document.forms["formVariaciones"] != null) {
         if (document.forms["formVariaciones"].checkValidity()) {
           return true;
@@ -627,7 +661,7 @@ export class ModificarProductoComponent implements OnInit {
       }
     }).then(async (result) => {
       if (result.value) {
-        // this.banderaAnimacionCarga = true;
+        this.loading = true;
         this.publicarProducto();
       }
     })
@@ -653,9 +687,12 @@ export class ModificarProductoComponent implements OnInit {
 
         let response = await this._productoServicio.updateProducto(this.identidadProducto.ID_OFERTA, this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
         this.mensageCorrecto(response['message']);
+        this.iniciarModificarProducto();
+        this.loading = false
       }
     } catch
       (e) {
+      this.loading = false;
       console.log("error:" + e);
       if (JSON.stringify((e).error.message))
         this.mensageError(JSON.stringify((e).error.message));
@@ -677,6 +714,11 @@ export class ModificarProductoComponent implements OnInit {
     }
     this.categoriasSeleccionadas.delete(cc);
 
+  }
+
+  iniciarEdicion() {
+    this.banderaModificar = true;
+    this.editorConfig.editable = true;
   }
 
   mensageError(mensaje) {

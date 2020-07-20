@@ -1,5 +1,5 @@
 <body id="body">
-<form #FormGeneralTienda id="formGeneralTienda" class="general-tienda" validate-form>
+<form #FormGeneralTienda id="formGeneralTienda" name="FormGeneralTienda" class="general-tienda" validate-form>
   <div class="container mt-5">
     <div class="row justify-content-center">
       <h4 class="col-11">General</h4>
@@ -19,8 +19,7 @@
                 <input [disabled]="banderaEdicionDeshabilitada" #Razon_Social="ngModel"
                        style="text-transform: uppercase;"
                        [(ngModel)]="this.EditarTienda.Razon_Social"
-                       [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched),
-                 'is-valid': Razon_Social.valid && (Razon_Social.dirty || Razon_Social.touched)}"
+                       [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched)}"
                        [pattern]='this.LetrasNumerosPattern'
                        class="tamanioInputs form-control" name="razon_Social" placeholder=""
                        required type="text">
@@ -39,8 +38,8 @@
                 <label>* Nombre comercial de su negocio</label>
                 <input [disabled]="banderaEdicionDeshabilitada" #Nombre_Comercial="ngModel"
                        style="text-transform: uppercase;"
-                       [(ngModel)]="this.EditarTienda.Nombre_Comercial" [ngClass]="{'is-invalid': Nombre_Comercial.invalid && (Nombre_Comercial.dirty || Nombre_Comercial.touched),
-                 'is-valid': Nombre_Comercial.valid && (Nombre_Comercial.dirty || Nombre_Comercial.touched)}"
+                       [(ngModel)]="this.EditarTienda.Nombre_Comercial"
+                       [ngClass]="{'is-invalid': Nombre_Comercial.invalid && (Nombre_Comercial.dirty || Nombre_Comercial.touched)}"
                        [pattern]='this.LetrasNumerosPattern'
                        class="tamanioInputs form-control" name="nombre_Comercial" placeholder=""
                        required type="text">
@@ -61,8 +60,7 @@
               <textarea [disabled]="banderaEdicionDeshabilitada" rows="3" style="font-size: small; resize: none;"
                         #Descripcion_Tienda="ngModel"
                         [(ngModel)]="this.EditarTienda.Descripcion_Tienda"
-                        [ngClass]="{'is-invalid': Descripcion_Tienda.invalid && (Descripcion_Tienda.dirty || Descripcion_Tienda.touched),
-                 'is-valid': Descripcion_Tienda.valid && (Descripcion_Tienda.dirty || Descripcion_Tienda.touched)}"
+                        [ngClass]="{'is-invalid': Descripcion_Tienda.invalid && (Descripcion_Tienda.dirty || Descripcion_Tienda.touched)}"
                         class="tamanioInputs form-control" name="descripcion_Tienda" placeholder=""
                         required type="text" aria-label="With textarea"></textarea>
               <div *ngIf="Descripcion_Tienda.invalid && (Descripcion_Tienda.dirty || Descripcion_Tienda.touched)">
@@ -87,8 +85,8 @@
               <label>* Correo electrónico</label>
               <input [disabled]="banderaEdicionDeshabilitada" #Correo_Tienda="ngModel"
                      style="text-transform: lowercase;"
-                     [(ngModel)]="this.EditarTienda.Correo_Tienda" [ngClass]="{'is-invalid': Correo_Tienda.invalid && (Correo_Tienda.dirty || Correo_Tienda.touched),
-                 'is-valid': Correo_Tienda.valid && (Correo_Tienda.dirty || Correo_Tienda.touched)}"
+                     [(ngModel)]="this.EditarTienda.Correo_Tienda"
+                     [ngClass]="{'is-invalid': Correo_Tienda.invalid && (Correo_Tienda.dirty || Correo_Tienda.touched)}"
                      [pattern]='this.emailPattern'
                      class="tamanioInputs form-control" name="correo_tienda" placeholder="negocio@comdero.com"
                      required type="text">
@@ -109,8 +107,8 @@
                 <input [disabled]="banderaEdicionDeshabilitada" #Link_Pagina="ngModel"
                        style="text-transform: lowercase;"
                        [(ngModel)]="this.EditarTienda.Link_Pagina"
-                       [ngClass]="{'is-invalid': Link_Pagina.invalid && (Link_Pagina.dirty || Link_Pagina.touched),
-          'is-valid': Link_Pagina.valid && (Link_Pagina.dirty || Link_Pagina.touched)}" [pattern]='this.urlPattern'
+                       [ngClass]="{'is-invalid': Link_Pagina.invalid && (Link_Pagina.dirty || Link_Pagina.touched)}"
+                       [pattern]='this.urlPattern'
                        class="tamanioInputs form-control"
                        name="link_Pagina" placeholder="www.comdero.com" type="text">
 
@@ -127,8 +125,7 @@
                 <input [disabled]="banderaEdicionDeshabilitada" #Link_Facebook="ngModel"
                        style="text-transform: lowercase;"
                        [(ngModel)]="this.EditarTienda.Link_Facebook" [ngClass]="{
-          'is-invalid': Link_Facebook.invalid && (Link_Facebook.dirty || Link_Facebook.touched),
-          'is-valid': Link_Facebook.valid && (Link_Facebook.dirty || Link_Facebook.touched)}"
+          'is-invalid': Link_Facebook.invalid && (Link_Facebook.dirty || Link_Facebook.touched)}"
                        [pattern]='this.urlPattern' class="tamanioInputs form-control"
                        name="link_Facebook" placeholder="www.facebook.com/comdero" type="text">
 
@@ -634,24 +631,37 @@
         </div>
 
         <br>
-        <div class="card mb-3">
-          <div class="card-body">
-            <h5 class="card-title mb-2">Acciones</h5>
-            <div class="form-row justify-content-end">
-              <button *ngIf="banderaEdicionDeshabilitada" (click)="habilitarEdicion()" href="#"
-                      class="btn btn-warning text-white "><span class="fa fa-edit"></span> Modificar
-              </button> &nbsp;
-              <button [disabled]="!FormGeneralTienda.checkValidity()" *ngIf="!banderaEdicionDeshabilitada"
-                      (click)="verificarHorarioAtencion()" href="#"
-                      class="btn btn-primary text-white "><span class="fa fa-save"></span> Guardar
-              </button> &nbsp;
-              <button *ngIf="!banderaEdicionDeshabilitada" href="#" (click)="cancelarModificacion(); "
-                      class="btn btn-light  "><span
-                class="fa fa-close"></span> Cancelar
+
+        <form class="card card-body  col-md-12  mt-4">
+          <div class=" container">
+            <h6>Acciones</h6>
+            <hr>
+            <div class="text-right">
+              <button *ngIf="!banderaEdicionDeshabilitada"
+                      (click)="verificarHorarioAtencion()" class="btn btn-primary text-nowrap mb-4  col-auto"
+                      type="button">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+                Guardar Producto &nbsp;&nbsp;
+                <span class="fa fa-save"></span>
               </button>
+              &nbsp;&nbsp;
+              <button *ngIf="!banderaEdicionDeshabilitada" (click)="cancelarModificacion();"
+                      class="btn btn-light text-nowrap mb-4  col-auto">
+                Cancelar &nbsp;&nbsp;
+                <span class="fa fa-close"></span></button>
+
+              &nbsp;&nbsp;
+              <button *ngIf="banderaEdicionDeshabilitada" (click)="habilitarEdicion()"
+                      class="btn btn-warning text-nowrap mb-4  col-auto">
+                Modificar &nbsp;&nbsp;
+                <span class="fa fa-edit"></span></button>
+
+
             </div>
+
           </div>
-        </div>
+        </form>
+
 
         <br>
       </div>

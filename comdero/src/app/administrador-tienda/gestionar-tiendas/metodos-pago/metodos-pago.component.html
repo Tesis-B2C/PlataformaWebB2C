@@ -262,32 +262,36 @@
         </div>
 
       </form>
-      <hr>
-      <div class="container">
-        <div class="form-row justify-content-end">
-
-          <button *ngIf="!banderaModificar" (click)="banderaModificar=true"
-                  class="btn btn-outline-primary   text-nowrap col-md-3  mb-4 " type="button">
-            <span class="spinner-border spinner-border-sm mr-2"></span>
-            Modificar
-          </button>
 
 
-          <button *ngIf="banderaModificar" (click)="banderaModificar=false;iniciarEdicion();"
-                  class="btn btn-outline-primary   text-nowrap col-md-3  mb-4 " type="button">
-            <span class="spinner-border spinner-border-sm mr-2"></span>
-            Cancelar
-          </button>
+      <form class="card card-body  col-md-12  mt-4">
+        <div class=" container">
+          <h6>Acciones</h6>
+          <hr>
+          <div class="text-right">
+            <button *ngIf="banderaModificar" (click)="saveMetodoPago()" class="btn btn-primary text-nowrap mb-4  col-auto"
+                    type="button">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+              Guardar  &nbsp;&nbsp;
+              <span class="fa fa-save"></span>
+            </button>
+            &nbsp;&nbsp;
+            <button *ngIf="banderaModificar" (click)="banderaModificar=false;iniciarEdicion();" class="btn btn-light text-nowrap mb-4  col-auto" >
+              Cancelar &nbsp;&nbsp;
+              <span class="fa fa-close"></span></button>
+
+            &nbsp;&nbsp;
+            <button *ngIf="!banderaModificar" (click)="banderaModificar=true" class="btn btn-warning text-nowrap mb-4  col-auto" >
+              Modificar &nbsp;&nbsp;
+              <span class="fa fa-edit"></span></button>
 
 
-          <button *ngIf="banderaModificar" (click)="saveMetodoPago()"
-                  class="btn btn-outline-primary   text-nowrap col-md-3  mb-4 " type="button">
-            <span class="spinner-border spinner-border-sm mr-2"></span>
-            Guardar
-          </button>
+          </div>
 
         </div>
-      </div>
+      </form>
+
+
       <br><br><br><br><br><br>
     </div>
     <div class=" col-md-3  mt-3    mt-md-0" id="panelDos">

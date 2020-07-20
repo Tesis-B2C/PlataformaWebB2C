@@ -1,14 +1,6 @@
-<div *ngIf="loading" class="fondoAnimacionCarga">
-  <div class="pulse animated infinite" style="position: absolute;z-index: 150;">
-    <img id="imagenCarga" src="./../assets/images/cargando.png">
-    <br><br>
-    <div>
-      <label style="color: white; text-align: center">Espere por favor..</label>
-    </div>
-  </div>
-</div>
 
-<body [ngClass]="{'body-con-animacion': loading}">
+
+<body>
 <article class="card mb-3">
   <div class="card-body">
 
@@ -83,16 +75,22 @@
     </form>
   </div>
 </article>
-<article class="card  mb-3">
-  <div class="card-body">
-    <h5 class="card-title mb-2">Acciones</h5>
-    <div class="form-row justify-content-end">
 
-      <button [disabled]="!FormCambiarContrasenia.checkValidity()"   (click)="actualizarContrasenia()" href="#"
-              class="btn btn-primary text-white "><span class="fas fa-retweet "></span> &nbsp; Cambiar contraseña
-      </button> &nbsp;
+
+<form class="card card-body  col-md-12  mt-4">
+  <div class=" container">
+    <h6>Acciones</h6>
+    <hr>
+    <div class="text-right">
+      <button [disabled]="!FormCambiarContrasenia.checkValidity()"   (click)="actualizarContrasenia()" href="#" class="btn btn-primary text-nowrap mb-4  col-auto"
+               type="button">
+        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+       &nbsp; Cambiar contraseña  <span class="fas fa-retweet "></span>
+      </button>
+      &nbsp;&nbsp;
 
     </div>
+
   </div>
-</article>
+</form>
 </body>

@@ -75,8 +75,21 @@ export class PersonalizacionTiendaComponent implements OnInit {
   }
 
 
+  public cancelar() {
+    this.urlBanner = "";
+    this.urlLogo = "";
+    this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
+    if (this.identidadTienda.LOGO) {
+      this.urlLogo = 'http://localhost:3977/' + this.identidadTienda.LOGO;
+    }
+    if (this.identidadTienda.BANNER) {
+      this.urlBanner = 'http://localhost:3977/' + this.identidadTienda.BANNER;
+    }
+  }
+
   public async updatePersonalizacionTienda() {
     try {
+      this.loading = true;
       debugger;
       let response = await this._tiendaServicio.updatePersonalizacionTienda(this.identidadTienda.NUM_TIENDA, this.filesToUpload, this.filesToUpload2).toPromise();
       this.mensageCorrecto(response['message']);
