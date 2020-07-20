@@ -22,6 +22,7 @@ import {ArchwizardModule} from 'angular-archwizard';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {ToastrModule} from 'ngx-toastr';
+import {MetodoEnvioServicio} from "./servicios/metodo_envio.servicio";
 
 
 @NgModule({
@@ -43,7 +44,7 @@ import {ToastrModule} from 'ngx-toastr';
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot({preventDuplicates: true})
   ],
-  providers: [DpaServicio, AgenteServicio, CategoriaServicio, UnidadMedidaServicio, ProductoServicio, MetodoPagoServicio, TiendaServicio],
+  providers: [DpaServicio, AgenteServicio, CategoriaServicio, UnidadMedidaServicio, ProductoServicio, MetodoPagoServicio, MetodoEnvioServicio, TiendaServicio],
   bootstrap: [AppComponent]
 })
 export class AppModule {
