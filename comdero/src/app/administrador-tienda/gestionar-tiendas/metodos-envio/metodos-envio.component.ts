@@ -267,36 +267,43 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
   public async modificarMetodoEnvio() {
     try {
       debugger
-      if (!this.vectorTarifasLocal.length && !this.vectorTarifasResto.length && this.banderaslideEnvioDomicilio.checked == true)
-        this.mostrarToastError("Debes ingresar al menos una condición para activar el envio a domicilio", "");
-      else {
-        if (this.banderaslideRetiroLocal.checked == true) {
-          this.vectorTotal.push(new Opcion_Envio(this.objetoRetiroLocal.Tipo_Envio, this.objetoRetiroLocal.Tipo_Ubicacion, this.objetoRetiroLocal.Tipo_Medida, this.objetoRetiroLocal.Hora_Estimada_Retiro, this.objetoRetiroLocal.Instruccion_Retiro, this.objetoRetiroLocal.Minimo, this.objetoRetiroLocal.Maximo, this.objetoRetiroLocal.Precio));
-        }
-
-        if (this.banderaslideEnvioDomicilio.checked == true) {
-          if (this.vectorTarifasLocal.length > 0) {
-            for (let dl of this.vectorTarifasLocal)
-              this.vectorTotal.push(new Opcion_Envio(dl.Tipo_Envio, dl.Tipo_Ubicacion, dl.Tipo_Medida, dl.Hora_Estimada_Retiro, dl.Instruccion_Retiro, dl.Minimo, dl.Maximo, dl.Precio));
+      if (document.forms['formMetodoEnvio'].checkValidity()) {
+        if (!this.vectorTarifasLocal.length && !this.vectorTarifasResto.length && this.banderaslideEnvioDomicilio.checked == true)
+          this.mostrarToastError("Debes ingresar al menos una condición para activar el envio a domicilio", "");
+        else {
+          if (this.banderaslideRetiroLocal.checked == true) {
+            this.vectorTotal.push(new Opcion_Envio(this.objetoRetiroLocal.Tipo_Envio, this.objetoRetiroLocal.Tipo_Ubicacion, this.objetoRetiroLocal.Tipo_Medida, this.objetoRetiroLocal.Hora_Estimada_Retiro, this.objetoRetiroLocal.Instruccion_Retiro, this.objetoRetiroLocal.Minimo, this.objetoRetiroLocal.Maximo, this.objetoRetiroLocal.Precio));
           }
 
-          if (this.vectorTarifasResto.length > 0) {
-            for (let dr of this.vectorTarifasResto)
-              this.vectorTotal.push(new Opcion_Envio(dr.Tipo_Envio, dr.Tipo_Ubicacion, dr.Tipo_Medida, dr.Hora_Estimada_Retiro, dr.Instruccion_Retiro, dr.Minimo, dr.Maximo, dr.Precio));
-          }
-        }
-        debugger
+          if (this.banderaslideEnvioDomicilio.checked == true) {
+            if (this.vectorTarifasLocal.length > 0) {
+              for (let dl of this.vectorTarifasLocal)
+                this.vectorTotal.push(new Opcion_Envio(dl.Tipo_Envio, dl.Tipo_Ubicacion, dl.Tipo_Medida, dl.Hora_Estimada_Retiro, dl.Instruccion_Retiro, dl.Minimo, dl.Maximo, dl.Precio));
+            }
 
-        this.loading = true;
-        console.log("VECTOR CON TODO" + JSON.stringify(this.vectorTotal));
-        let response = await this._metodoEnvioServicio.guardarMetodoEnvio( this.identidadTienda.NUM_TIENDA,this.vectorTotal).toPromise();
-        debugger
-        let data = await this._tiendaServicio.getDatosTienda(this.identidadTienda.NUM_TIENDA).toPromise();
-        localStorage.setItem("identityTienda", JSON.stringify(data['data']));
-        this.cancelarModificacion();
-        this.mensageCorrecto(response['message']);
+            if (this.vectorTarifasResto.length > 0) {
+              for (let dr of this.vectorTarifasResto)
+                this.vectorTotal.push(new Opcion_Envio(dr.Tipo_Envio, dr.Tipo_Ubicacion, dr.Tipo_Medida, dr.Hora_Estimada_Retiro, dr.Instruccion_Retiro, dr.Minimo, dr.Maximo, dr.Precio));
+            }
+          }
+          debugger
+
+          this.loading = true;
+          console.log("VECTOR CON TODO" + JSON.stringify(this.vectorTotal));
+          let response = await this._metodoEnvioServicio.guardarMetodoEnvio(this.identidadTienda.NUM_TIENDA, this.vectorTotal).toPromise();
+          debugger
+          let data = await this._tiendaServicio.getDatosTienda(this.identidadTienda.NUM_TIENDA).toPromise();
+          localStorage.setItem("identityTienda", JSON.stringify(data['data']));
+          this.cancelarModificacion();
+          this.mensageCorrecto(response['message']);
+          this.loading = false;
+        }
+      } else {
+        this.mostrarToastError("Al parecer existe errores en el formulario, porfavor reviselo nuevamente", "");
+        this.loading = false;
       }
     } catch (e) {
+      this.loading = false;
       if (JSON.stringify((e).error.message))
         this.mensageError(JSON.stringify((e).error.message));
       else this.mensageError("Error de conexión intentelo mas tarde");

@@ -8,7 +8,7 @@
 
   <div class="row justify-content-center">
     <div class="col-md-8" id="panelUno">
-      <form #FormMetodoEnvio id="formMetodoEnvio" class="metodo-envio" validate-form>
+      <form #FormMetodoEnvio id="formMetodoEnvio" name="formMetodoEnvio" class="metodo-envio" validate-form>
 
         <div class="form-group">
           <div class="alert alert-primary col-12" role="alert">
@@ -383,7 +383,8 @@
                       *ngIf="this.vectorTarifasResto[i].Precio != 0">{{this.vectorTarifasResto[i].Precio | currency }}</td>
                     <td>
                       <div ngbDropdown class="d-inline-block">
-                        <button [disabled]="!this.banderaEnvioDomicilio || !banderaEdicionDeshabilitada" id="btnTarifasResto" ngbDropdownToggle><i class="fa fa-ellipsis-h"></i>
+                        <button [disabled]="!this.banderaEnvioDomicilio || !banderaEdicionDeshabilitada"
+                                id="btnTarifasResto" ngbDropdownToggle><i class="fa fa-ellipsis-h"></i>
                         </button>
                         <div ngbDropdownMenu aria-labelledby="btnTarifasResto">
                           <button ngbDropdownItem class="btnOpcTarifaResto"
@@ -580,24 +581,38 @@
           </div>
         </div>
 
-        <div class="card mb-3">
-          <div class="card-body">
-            <h5 class="card-title mb-2">Acciones</h5>
-            <div class="form-row justify-content-end">
-              <button *ngIf="!banderaEdicionDeshabilitada" (click)="habilitarEdicion()" href="#"
-                      class="btn btn-warning text-white "><span class="fa fa-edit"></span> Modificar
-              </button> &nbsp;
-              <button *ngIf="banderaEdicionDeshabilitada" [disabled]="!FormMetodoEnvio.checkValidity()"
-                      (click)="modificarMetodoEnvio()" href="#"
-                      class="btn btn-primary text-white "><span class="fa fa-save"></span> Guardar
-              </button> &nbsp;
-              <button *ngIf="banderaEdicionDeshabilitada" (click)="cancelarModificacion()"
-                      class="btn btn-light  "><span
-                class="fa fa-close"></span> Cancelar
+
+
+        <form class="card card-body  col-md-12  mt-4">
+          <div class=" container">
+            <h6>Acciones</h6>
+            <hr>
+            <div class="text-right">
+              <button *ngIf="banderaEdicionDeshabilitada"
+                      (click)="modificarMetodoEnvio()" class="btn btn-primary text-nowrap mb-4  col-auto"
+                      type="button">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+                Guardar &nbsp;&nbsp;
+                <span class="fa fa-save"></span>
               </button>
+              &nbsp;&nbsp;
+              <button *ngIf="banderaEdicionDeshabilitada" (click)="cancelarModificacion()"
+                      class="btn btn-light text-nowrap mb-4  col-auto">
+                Cancelar &nbsp;&nbsp;
+                <span class="fa fa-close"></span></button>
+
+              &nbsp;&nbsp;
+              <button *ngIf="!banderaEdicionDeshabilitada" (click)="habilitarEdicion()"
+                      class="btn btn-warning text-nowrap mb-4  col-auto">
+                Modificar &nbsp;&nbsp;
+                <span class="fa fa-edit"></span></button>
+
+
             </div>
+
           </div>
-        </div>
+        </form>
+
 
         <br><br><br>
       </form>

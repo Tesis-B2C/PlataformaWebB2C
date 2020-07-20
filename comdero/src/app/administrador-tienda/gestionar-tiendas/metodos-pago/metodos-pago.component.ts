@@ -27,6 +27,7 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
   public banderaSlidePagoElectronico;
   public banderaSlidePagoTransferencia;
   public banderaSlidePagoEfectivo;
+  public loading:boolean=false;
 
   constructor(private _tiendaServicio: TiendaServicio, public toastr: ToastrService, private _metodoPagoServicio: MetodoPagoServicio, private modalService: NgbModal, private _sanitizer: DomSanitizer) {
 
@@ -67,6 +68,7 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
 
   iniciarEdicion() {
     debugger;
+
     this.cancelar();
 
     if (this.identidadTienda.METODO_PAGOs.length) {
@@ -162,6 +164,7 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
 
   public async saveMetodoPago() {
     try {
+      this.loading=true;
       if (document.forms["formMetodoPagoEfectivo"].checkValidity() && document.forms["formMetodoPagoTransferenciaBancaria"].checkValidity() && document.forms["formMetodoPagoElectronico"].checkValidity()) {
         if (this.banderaSlidePagoEfectivo.checked) this.Metodo_Pago_Enviar.push(this.Metodo_Pago_Efectivo);
         if (this.banderaSlidePagoTransferencia.checked) this.Metodo_Pago_Enviar.push(this.Metodo_Pago_Transferencia);
@@ -172,7 +175,9 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
         let identidadTienda = await this._tiendaServicio.getDatosTienda(this.identidadTienda.NUM_TIENDA).toPromise();
         localStorage.setItem("identityTienda", JSON.stringify(identidadTienda.data));
         this.iniciarEdicion();
+        this.loading=false;
       } else {
+        this.loading=false;
         this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
           {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
       }
