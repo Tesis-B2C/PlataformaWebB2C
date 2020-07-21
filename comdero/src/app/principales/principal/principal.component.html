@@ -1,9 +1,5 @@
 <body>
-
-
 <!--</header> &lt;!&ndash; section-header.// &ndash;&gt;-->
-
-
 <section>
   <nav class="navbar navbar-main navbar-expand-lg  border-bottom colorNavbar mx-0">
     <div class="mx-lg-auto">
@@ -16,7 +12,8 @@
         <ul class="navbar-nav ">
 
           <li class="nav-item dropdown">
-            <a class="nav-link pl-0" data-toggle="dropdown" href="#" aria-expanded="false"><span class="fa fa-bars"></span> &nbsp;Categorias</a>
+            <a class="nav-link pl-0" data-toggle="dropdown" href="#" aria-expanded="false"><span
+              class="fa fa-bars"></span> &nbsp;Categorias</a>
             <div class="dropdown-menu ">
               <a class="dropdown-item" *ngFor="let c11 of c1; let i =index" href="#"><span
                 class="{{this.vectorIconos[i]}} "></span> &nbsp;{{c11.NOMBRE}}</a>
@@ -28,7 +25,7 @@
 
 
           <li class="nav-item">
-            <a class="nav-link"  (click)="vender()"  >Vender</a>
+            <a class="nav-link" (click)="vender()">Vender</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Supermarket</a>
@@ -89,8 +86,6 @@
 <section class="section-content padding-y-sm">
   <div class="container">
     <article class="card card-body">
-
-
       <div class="row">
         <div class="col-md-4">
           <figure class="item-feature">
@@ -128,6 +123,114 @@
   </div> <!-- container .//  -->
 </section>
 <!-- ========================= SECTION FEATURE END// ========================= -->
+
+<!-- ========================= SECTION CONTENT COMDERO ========================= -->
+<section class="section-content">
+  <div class="container">
+
+    <header class="section-heading">
+      <h3 class="section-title">Productos</h3>
+    </header><!-- sect-heading -->
+
+    <div class="row">
+      <div class="col-md-3">
+        <div href="#" class="card card-product-grid">
+          <a href="#" class="img-wrap"> <img src="../../../assets/estilos-principal/images/items/1.jpg"> </a>
+          <figcaption class="info-wrap">
+            <a href="#" class="title">Just another product name</a>
+
+            <div class="rating-wrap">
+              <ul class="rating-stars">
+                <li style="width:80%" class="stars-active">
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                  class="fa fa-star"></i><i class="fa fa-star"></i>
+                </li>
+                <li>
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                  class="fa fa-star"></i><i class="fa fa-star"></i>
+                </li>
+              </ul>
+              <span class="label-rating text-muted"> 34 reviws</span>
+            </div>
+            <div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
+          </figcaption>
+        </div>
+      </div> <!-- col.// -->
+
+      <div class="col-md-3">
+        <div href="#" class="card card-product-grid">
+          <a href="#" class="img-wrap"> <img src="images/items/2.jpg"> </a>
+          <figcaption class="info-wrap">
+            <a href="#" class="title">Some item name here</a>
+
+            <div class="rating-wrap">
+              <ul class="rating-stars">
+                <li style="width:80%" class="stars-active">
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                  class="fa fa-star"></i><i class="fa fa-star"></i>
+                </li>
+                <li>
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                  class="fa fa-star"></i><i class="fa fa-star"></i>
+                </li>
+              </ul>
+              <span class="label-rating text-muted"> 34 reviws</span>
+            </div>
+            <div class="price mt-1">$280.00</div> <!-- price-wrap.// -->
+          </figcaption>
+        </div>
+      </div> <!-- col.// -->
+      <div class="col-md-3">
+        <div href="#" class="card card-product-grid">
+          <a href="#" class="img-wrap"> <img src="images/items/3.jpg"> </a>
+          <figcaption class="info-wrap">
+            <a href="#" class="title">Great product name here</a>
+
+            <div class="rating-wrap">
+              <ul class="rating-stars">
+                <li style="width:80%" class="stars-active">
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                  class="fa fa-star"></i><i class="fa fa-star"></i>
+                </li>
+                <li>
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                  class="fa fa-star"></i><i class="fa fa-star"></i>
+                </li>
+              </ul>
+              <span class="label-rating text-muted"> 34 reviws</span>
+            </div>
+            <div class="price mt-1">$56.00</div> <!-- price-wrap.// -->
+          </figcaption>
+        </div>
+      </div> <!-- col.// -->
+      <div class="col-md-3">
+        <div href="#" class="card card-product-grid">
+          <a href="#" class="img-wrap"> <img src="images/items/4.jpg"> </a>
+          <figcaption class="info-wrap">
+            <a href="#" class="title">Just another product name</a>
+
+            <div class="rating-wrap">
+              <ul class="rating-stars">
+                <li style="width:80%" class="stars-active">
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                  class="fa fa-star"></i><i class="fa fa-star"></i>
+                </li>
+                <li>
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                  class="fa fa-star"></i><i class="fa fa-star"></i>
+                </li>
+              </ul>
+              <span class="label-rating text-muted"> 34 reviws</span>
+            </div>
+            <div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
+          </figcaption>
+        </div>
+      </div> <!-- col.// -->
+    </div> <!-- row.// -->
+
+  </div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT COMDERO END// ========================= -->
 
 
 <!-- ========================= SECTION CONTENT ========================= -->
