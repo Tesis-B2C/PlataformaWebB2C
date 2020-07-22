@@ -26,7 +26,7 @@ export class CuponDescuentoComponent implements OnInit {
   public banderaCuponDescuento: boolean = true;
 
   constructor(private modalService: NgbModal, private cp: DatePipe, private _productoServicio: ProductoServicio) {
-    this.Descuento = new Descuento(null, null, null, null);
+    this.Descuento = new Descuento(null, null, null, null,null,null,null,0);
 
 
   }
@@ -76,6 +76,11 @@ export class CuponDescuentoComponent implements OnInit {
   public cambiarOpcionDescuento(value) {
     this.banderaCuponDescuento = value;
     this.Descuento.Motivo_Descuento="";
+    if(this.banderaCuponDescuento){
+      this.Descuento.Tipo_Descuento="cupon";
+    }else if(!this.banderaCuponDescuento){
+      this.Descuento.Tipo_Descuento="automatico";
+    }
 
   }
 

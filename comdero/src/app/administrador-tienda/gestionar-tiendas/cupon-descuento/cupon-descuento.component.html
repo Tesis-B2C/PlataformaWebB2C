@@ -135,7 +135,7 @@
 
         <div class="container">
           <div class="form-row " *ngIf="banderaCuponDescuento">
-            <div class="col-md-10 ">
+            <div class="col-md-7 ">
               <label>Código</label>
               <div class="input-group">
                 <input #NombreProducto="ngModel" [(ngModel)]="this.Descuento.Motivo_Descuento"
@@ -181,7 +181,7 @@
         <div class="col-lg-6">
           <label>Porcentaje de Descuento </label>
           <div class="input-group mb-3">
-            <input #descuento="ngModel" [(ngModel)]="this.Descuento.Valor" class="form-control" name="descuento"
+            <input #descuento="ngModel" [(ngModel)]="this.Descuento.Porcentaje_Descuento" class="form-control" name="descuento"
                    placeholder="12"
                    min="0" step="0.01" oninput="validity.valid||(value='');"
                    type="number">
@@ -261,14 +261,14 @@
               <label>Hora de inicio</label>
               <input class="px-1 tamaniohorario form-control text-center"
                      type="time" name="horaInicio"
-                     #HoraInicio="ngModel" [(ngModel)]="asdss">
+                     #HoraInicio="ngModel" [(ngModel)]="this.Descuento.Hora_Inicio">
             </div>
             <div class="col-xs-12 col-12 col-sm-4 col-md-12 col-lg-4 form-group">
 
               <label>Hora de finalizacion</label>
               <input class="px-1 tamaniohorario form-control text-center"
                      type="time" name="horaFin"
-                     #HoraFin="ngModel" [(ngModel)]="asd">
+                     #HoraFin="ngModel" [(ngModel)]="this.Descuento.Fecha_FIn">
             </div>
           </div>
         </div>
@@ -282,24 +282,18 @@
           <h6>Acciones</h6>
           <hr>
           <div class="text-right">
-            <button *ngIf="banderaModificar" (click)="this.guardarProducto()"
+            <button (click)="this.guardarProducto()"
                     class="btn btn-primary text-nowrap mb-4  col-auto"
                     type="button">
               <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
-              Guardar Producto &nbsp;&nbsp;
+              Guardar Cupon &nbsp;&nbsp;
               <span class="fa fa-save"></span>
             </button>
             &nbsp;&nbsp;
-            <button *ngIf="banderaModificar" class="btn btn-light text-nowrap mb-4  col-auto"
-                    (click)="iniciarModificarProducto()">
-              Cancelar &nbsp;&nbsp;
-              <span class="fa fa-close"></span></button>
+
 
             &nbsp;&nbsp;
-            <button *ngIf="!banderaModificar" class="btn btn-warning text-nowrap mb-4  col-auto"
-                    (click)="iniciarEdicion()">
-              Modificar &nbsp;&nbsp;
-              <span class="fa fa-edit"></span></button>
+
 
 
           </div>
