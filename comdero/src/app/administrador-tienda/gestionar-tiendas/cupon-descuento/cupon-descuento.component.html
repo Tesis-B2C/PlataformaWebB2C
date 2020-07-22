@@ -1,58 +1,98 @@
-<!--<ng-template #modalCategorias let-modal>
+<ng-template #modalProductos let-modal >
 
   <div class="modal-header">
-    <h4 class="modal-title">Categorias</h4>
+    <h5 class="modal-title">Productos</h5>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true" style="font-size: x-large">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
+  <div class="modal-body"  style="height: 100vh">
 
-    <label class="">Seleccione las categorias a las cuales pertenece el producto</label>
-    <div class="container">
+    <label class="">Seleccione los productos que desea agregar</label>
 
-      <div *ngFor="let c11 of this.c1; let i = index">
-        <hr class="mb-1 mt-1">
 
-        <div class="dropdown justify-content-center">
-          <button (click)="busquedaCategoria2(c11.ID_CATEGORIA)" [attr.data-target]="'#myModal'+i"
-                  aria-expanded="false" aria-haspopup="true" class="categoria dropdown-toggle  dropdown-toggle-split"
-                  data-toggle="collapse"><span class="{{this.vectorIconos[i]}} iconos-categoria"></span>&nbsp;&nbsp;&nbsp;&nbsp;{{c11.NOMBRE}}
-          </button>
-          <div class="form-row mb-3 collapse justify-content-center" id="myModal{{i}}">
-            <div *ngFor="let c22 of this.categoriaEncontrada2; let i = index">
-              <div class="checkbox">
-                <label
-                  *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA" class="chip  col btn" for="checkCategoria{{i}}"
-                  id="labelcheckCategoria2{{i}}">{{c22.NOMBRE}}
-                  <input (change)="busquedaCategoria3(c22.ID_CATEGORIA,$event,c22,i)" id="checkCategoria{{i}}"
-                         style="display: none" type="checkbox">
-                </label>
-              </div>
-              <div class="form-row  justify-content-center">
-                <div *ngFor="let c33 of this.categoriaEncontrada; let i =index">
-                  <label *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA && c22.ID_CATEGORIA==c33.CAT_ID_CATEGORIA"
-                         class="chip2 col btn btn-light"
-                         for="checkCategoria3{{i}}" id="labelcheckCategoria3{{i}}">{{c33.NOMBRE}}
-                    <input (change)="seleccionarCategoria3($event,c33,i)" id="checkCategoria3{{i}}"
-                           style="display: none"
-                           type="checkbox">
-                  </label>
-                </div>
-              </div>
+      <div class=" mx-auto  ">
+
+        <div class="form-row mb-2  ">
+          <div class=" input-group col-md-4 mr-md-auto">
+            <input class="form-control" style="font-size: small" type="text" #busquedaasd="ngModel"
+                   [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="busquedasasd()"/>
+
+            <div class="input-group-append">
+              <span class="input-group-text  small"><li class="fas fa-search"></li></span>
             </div>
           </div>
+          <div class="col-md-auto ">
+            <button class="btn btn-primary w-100 mt-md-0 mt-2" style="font-size:small">Nuevo Producto</button>
+          </div>
         </div>
-        &lt;!&ndash; <button (click)="cc($event)" class="col btn btn-light clicked">asd</button>&ndash;&gt;
+
+        <table class="table table-bordered table-responsive-sm bg-white small w-100 text-center">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+
+            <th scope="col">NOMBRE</th>
+            <th scope="col">DESCRIPCION</th>
+            <th scope="col">OPCIÓN</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr [ngClass]="{'bg-gray':producto.ESTADO_OFERTA==1}"
+              *ngFor="let producto of   this.result  |slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>
+              {{producto.PRODUCTO.NOMBRE_PRODUCTO}}
+            </td>
+            <td>
+              {{producto.PRODUCTO.DESCRIPCION_PRODUCTO}}
+            </td>
+
+            <td>
+              <div class="btn-group">
+                <button (click)="cambiarEstadoProducto(producto.ID_OFERTA,0)" placement="top" ngbTooltip="Mostrar"
+                        *ngIf="producto.ESTADO_OFERTA==1"
+                        class="btn btn-secondary  ml-md-2 mt-md-0 mt-1" style="font-size: x-small">
+                  <span class="fa fa-eye"></span>
+                </button>
+
+                <button placement="top" ngbTooltip="Ocultar" *ngIf="producto.ESTADO_OFERTA==0"
+                        (click)="cambiarEstadoProducto(producto.ID_OFERTA,1)" class="btn btn-secondary  ml-md-2 mt-md-0 mt-1"
+                        style="font-size: x-small"
+                ><span class="fa fa-eye-slash"></span></button>
+
+                <button (click)="cambiarEstadoProducto(producto.ID_OFERTA,2)" placement="top" ngbTooltip="Borrar"
+                        class="btn btn-danger  ml-md-2 mt-md-0 mt-1"
+                        style="font-size: x-small"
+                ><span class="fa fa-trash"></span></button>
+
+                <button placement="top" ngbTooltip="Editar" *ngIf="producto.ESTADO_OFERTA==0"
+                        class="btn btn-primary ml-md-2 mt-md-0 mt-1" style="font-size: x-small"
+                        [routerLink]="['../modificar-producto/', producto.ID_OFERTA ]"><span
+                  class="fa fa-edit"></span></button>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+        <div class="d-flex justify-content-between p-2">
+          <ngb-pagination
+            [(page)]="page"
+            [pageSize]="pageSize"
+            [collectionSize]="this.result.length "></ngb-pagination>
+        </div>
+
+
       </div>
-    </div>
+
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
   </div>
 
 
-</ng-template>-->
+</ng-template>
 
 <body id="body">
 
@@ -117,24 +157,25 @@
           <br>
           <div class="form-group">
             <div class="radio-item">
-              <input (click)="opcionAplicarA($event.target.value)" name="garantia"
-                     type="radio" value="todos" id="GarantiaVendedor"
-              >
+              <input (click)="opcionAplicarA(true)" name="garantia"
+                     type="radio" value="todos" id="GarantiaVendedor" [checked]="banderaOpcionAplicarA" >
               <label for="GarantiaVendedor">&nbsp;&nbsp;Todos los productos</label>
             </div>
             <br>
             <div class="radio-item">
-              <input (click)="opcionAplicarA($event.target.value)" name="garantia"
+              <input (click)="opcionAplicarA(false)" name="garantia"
                      type="radio" value="espesificos" id="GarantiaFabrica"
-              >
+                     [checked]="!banderaOpcionAplicarA">
               <label for="GarantiaFabrica">&nbsp;&nbsp;Productos espesificos </label>
             </div>
-            <br>
+
 
           </div>
-          <br>
+
         </div>
-        <br>
+
+
+        <button *ngIf="!banderaOpcionAplicarA" class="btn btn-primary col-3 mx-auto p-1" (click)="abrirModalVideoYoutube(modalProductos)">Agregar Producto &nbsp; <span class="fa fa-plus "></span></button>
 
       </form>
       <hr>

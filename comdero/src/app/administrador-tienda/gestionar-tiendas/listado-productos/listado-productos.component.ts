@@ -14,10 +14,10 @@ import Swal from "sweetalert2";
 export class ListadoProductosComponent implements OnInit {
 
 
-  public busqueda
+  public busqueda;
 
-  page = 1;
-  pageSize = 10;
+  public page = 1;
+  public pageSize = 10;
 
 
   constructor(private modalService: NgbModal, private _productoServicio: ProductoServicio) {
