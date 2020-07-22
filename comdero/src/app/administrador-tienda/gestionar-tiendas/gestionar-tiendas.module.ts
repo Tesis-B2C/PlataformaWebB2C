@@ -21,11 +21,12 @@ import {ListadoProductosComponent} from './listado-productos/listado-productos.c
 import { ModificarProductoComponent } from './modificar-producto/modificar-producto.component';
 import { CuponDescuentoComponent } from './cupon-descuento/cupon-descuento.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ListadoCuponDescuentoComponent } from './listado-cupon-descuento/listado-cupon-descuento.component';
 
 
 
 @NgModule({
-  declarations: [MenuGestionTiendasComponent, ProductosComponent, MetodosPagoComponent, GeneralTiendaComponent, SucursalesTiendaComponent, PersonalizacionTiendaComponent, MetodosEnvioComponent, InicioAdministracionComponent, ListadoProductosComponent, ModificarProductoComponent, CuponDescuentoComponent],
+  declarations: [MenuGestionTiendasComponent, ProductosComponent, MetodosPagoComponent, GeneralTiendaComponent, SucursalesTiendaComponent, PersonalizacionTiendaComponent, MetodosEnvioComponent, InicioAdministracionComponent, ListadoProductosComponent, ModificarProductoComponent, CuponDescuentoComponent, ListadoCuponDescuentoComponent],
 
   imports: [
     CommonModule,

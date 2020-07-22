@@ -1,7 +1,7 @@
 <body>
 
 
-<div class="container-fluid mt-5">
+<div class=" mt-5" [ngClass]="{'container':!result, 'container-fluid':result}">
   <div class="row  justify-content-center">
     <h4 class=" col-md-11 text-left">Listado de productos</h4>
     <hr class=" col-md-11  ">
@@ -11,7 +11,7 @@
       <div class=" container  bg-white  shadow ">
         <br><br><br>
         <div class="mx-auto">
-          <p class=" iconos-pagos "><span class="  fas fa-tags fa-5x" style="color: #2a4c75"></span> &nbsp;<label
+          <p class=" iconos-pagos "><span class="  fa fa-box-open fa-5x" style="color: #2a4c75"></span> &nbsp;<label
             style="font-size: large">Productos</label></p>
 
         </div>
@@ -68,7 +68,7 @@
     </div>
   </div>
 
-  <table class="table table-bordered table-responsive-sm bg-white small w-100 text-center" >
+  <table class="table table-bordered table-responsive-sm bg-white small w-100 text-center">
     <thead>
     <tr>
       <th scope="col">#</th>
@@ -85,9 +85,9 @@
     </thead>
     <tbody>
     <tr [ngClass]="{'bg-gray':producto.ESTADO_OFERTA==1}"
-      *ngFor="let producto of   this.result  |slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+        *ngFor="let producto of   this.result  |slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
       <th scope="row">{{ i + 1 }}</th>
-      <td >
+      <td>
         {{producto.PRODUCTO.ID_PRODUCTO}}
       </td>
       <td>
@@ -113,7 +113,8 @@
       </td>
       <td>
         <div class="btn-group">
-          <button  (click)="cambiarEstadoProducto(producto.ID_OFERTA,0)"  placement="top" ngbTooltip="Mostrar" *ngIf="producto.ESTADO_OFERTA==1"
+          <button (click)="cambiarEstadoProducto(producto.ID_OFERTA,0)" placement="top" ngbTooltip="Mostrar"
+                  *ngIf="producto.ESTADO_OFERTA==1"
                   class="btn btn-secondary  ml-md-2 mt-md-0 mt-1" style="font-size: x-small">
             <span class="fa fa-eye"></span>
           </button>
@@ -123,7 +124,8 @@
                   style="font-size: x-small"
           ><span class="fa fa-eye-slash"></span></button>
 
-          <button (click)="cambiarEstadoProducto(producto.ID_OFERTA,2)" placement="top" ngbTooltip="Borrar" class="btn btn-danger  ml-md-2 mt-md-0 mt-1"
+          <button (click)="cambiarEstadoProducto(producto.ID_OFERTA,2)" placement="top" ngbTooltip="Borrar"
+                  class="btn btn-danger  ml-md-2 mt-md-0 mt-1"
                   style="font-size: x-small"
           ><span class="fa fa-trash"></span></button>
 

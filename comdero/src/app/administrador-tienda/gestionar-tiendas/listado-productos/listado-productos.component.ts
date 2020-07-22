@@ -17,7 +17,7 @@ export class ListadoProductosComponent implements OnInit {
   public busqueda
 
   page = 1;
-  pageSize = 4;
+  pageSize = 10;
 
 
   constructor(private modalService: NgbModal, private _productoServicio: ProductoServicio) {

@@ -63,6 +63,7 @@
     <hr class="col-11  ">
   </div>
 
+
   <div class="row justify-content-center">
     <div class="col-md-10" id="panelUno">
       <h6>Código de descuento</h6>
@@ -116,20 +117,20 @@
           <br>
           <div class="form-group">
             <div class="radio-item">
-              <input (click)="opcionGarantia($event.target.value)" name="garantia" [disabled]="!banderaModificar"
-                     type="radio" value="Garantia del vendedor" id="GarantiaVendedor"
+              <input (click)="opcionAplicarA($event.target.value)" name="garantia"
+                     type="radio" value="todos" id="GarantiaVendedor"
               >
               <label for="GarantiaVendedor">&nbsp;&nbsp;Todos los productos</label>
             </div>
             <br>
             <div class="radio-item">
-              <input (click)="opcionGarantia($event.target.value)" name="garantia" [disabled]="!banderaModificar"
-                     type="radio" value="Garantia de fabrica" id="GarantiaFabrica"
+              <input (click)="opcionAplicarA($event.target.value)" name="garantia"
+                     type="radio" value="espesificos" id="GarantiaFabrica"
               >
               <label for="GarantiaFabrica">&nbsp;&nbsp;Productos espesificos </label>
             </div>
             <br>
-              
+
           </div>
           <br>
         </div>
@@ -148,22 +149,41 @@
         <hr>
         <div class="container">
           <label>Seleccione el rango de tienpo que el cupón de descuento va a estar activo</label>
-
-          <br>
-
+          <br> <br>
           <div class="row">
 
-            <div class="col-xs-12 col-12 col-sm-5 col-md-6 col-lg-12 form-group">
-              <input placeholder="Daterangepicker" type="text" class="form-control" bsDaterangepicker
-                     [(ngModel)]="bsRangeValue" name="asdasd"
-                     [bsConfig]='{ rangeInputFormat: "DD/MM/YYYY", locale: "es", adaptivePosition: true, containerClass:"theme-orange" }'
-                     #dpr="bsDaterangepicker">
+            <div class="col-xs-12 col-12 col-sm-5 col-md-6 col-lg-4 form-group">
+              <label>Periodo de duracion</label>
+              <div class="input-group mb-3" style="border-right: none">
+                <input placeholder="01/07/2020 - 04/08/2020" type="text" class="form-control" bsDaterangepicker
+                       style="border-right: none"
+                       [(ngModel)]="bsRangeValue" name="asdasd"
+                       [bsConfig]='{ rangeInputFormat: "DD/MM/YYYY", locale: "es", adaptivePosition: true, containerClass:"theme-orange" }'
+                       #dpr="bsDaterangepicker">
+                <div class="input-group-append">
+                  <span class="input-group-text fa fa-calendar"
+                        style="background-color: white; border-left: none; font-size: small"></span>
+                </div>
+              </div>
+
+            </div>
+
+
+            <div class="col-xs-12 col-12 col-sm-4 col-md-12 col-lg-4 form-group">
+
+              <label>Hora de inicio</label>
+              <input class="px-1 tamaniohorario form-control text-center"
+                     type="time" name="j1LunesI"
+                     #J1LunesI="ngModel" [(ngModel)]="asd">
             </div>
             <div class="col-xs-12 col-12 col-sm-4 col-md-12 col-lg-4 form-group">
-              <button class="btn btn-success" (click)="hola()" [attr.aria-expanded]="dpr.isOpen" type="button">Date
-                Range Picker
-              </button>
+
+              <label>Hora de finalizacion</label>
+              <input class="px-1 tamaniohorario form-control text-center"
+                     type="time" name="j1LunesI"
+                     #J1LunesI="ngModel" [(ngModel)]="asd">
             </div>
+
           </div>
         </div>
       </form>

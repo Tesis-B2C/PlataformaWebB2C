@@ -1,10 +1,12 @@
 import {Component, OnInit, DoCheck} from '@angular/core';
 
 import {Descuento} from "../../../modelos/descuento";
-import { defineLocale } from 'ngx-bootstrap/chronos';
-import { esLocale } from 'ngx-bootstrap/locale';
+import {defineLocale} from 'ngx-bootstrap/chronos';
+import {esLocale} from 'ngx-bootstrap/locale';
 import {CurrencyPipe, DatePipe} from "@angular/common";
+
 defineLocale('es', esLocale);
+
 @Component({
   selector: 'app-cupon-descuento',
   templateUrl: './cupon-descuento.component.html',
@@ -12,9 +14,10 @@ defineLocale('es', esLocale);
   providers: [DatePipe]
 })
 export class CuponDescuentoComponent implements OnInit {
-  Descuento: Descuento
-  banderaValidaciones: boolean = false;
-  bsRangeValue;
+  public Descuento: Descuento
+  public banderaValidaciones: boolean = false;
+  public bsRangeValue;
+  public variableOpcionAplicarA;
 
   constructor(private cp: DatePipe) {
     this.Descuento = new Descuento(null, null, null, null);
@@ -27,12 +30,16 @@ export class CuponDescuentoComponent implements OnInit {
 
   }
 
-  hola(){
+  hola() {
 
     console.log("asdasd", this.bsRangeValue);
     let sdasd = this.bsRangeValue[0].toJSON();
-    console.log("asdasd",this.cp.transform(sdasd, 'yyyy-mm-dd'))
+    console.log("asdasd", this.cp.transform(sdasd, 'yyyy-mm-dd'))
   }
 
+  opcionAplicarA(value) {
+    this.variableOpcionAplicarA = value;
+
+  }
 
 }
