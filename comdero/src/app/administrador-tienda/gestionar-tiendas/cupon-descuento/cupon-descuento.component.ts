@@ -23,6 +23,7 @@ export class CuponDescuentoComponent implements OnInit {
   public page = 1;
   public pageSize = 10;
   public busqueda;
+  public banderaCuponDescuento: boolean = true;
 
   constructor(private modalService: NgbModal, private cp: DatePipe, private _productoServicio: ProductoServicio) {
     this.Descuento = new Descuento(null, null, null, null);
@@ -69,7 +70,28 @@ export class CuponDescuentoComponent implements OnInit {
 
 
   public abrirModalVideoYoutube(content) {
-    this.modalService.open(content, {centered: true, size: 'm',scrollable: true});
+    this.modalService.open(content, {centered: true, size: 'm', scrollable: true});
+  }
+
+  public cambiarOpcionDescuento(value) {
+    this.banderaCuponDescuento = value;
+    this.Descuento.Motivo_Descuento="";
+
+  }
+
+  public generarCodigDeswcuento() {
+    this.Descuento.Motivo_Descuento=this.makeid(8);
+
+  }
+
+  public  makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
   }
 
 }
