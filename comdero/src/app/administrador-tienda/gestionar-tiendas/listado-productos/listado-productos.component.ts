@@ -18,7 +18,7 @@ export class ListadoProductosComponent implements OnInit {
 
   public page = 1;
   public pageSize = 10;
-
+  public vectorProductos = new Set();
 
   constructor(private modalService: NgbModal, private _productoServicio: ProductoServicio) {
 
@@ -69,6 +69,38 @@ export class ListadoProductosComponent implements OnInit {
       if (JSON.stringify((e).error.message))
         this.mensageError(JSON.stringify((e).error.message));
       else this.mensageError("Error de conexión intentelo mas tarde");
+    }
+
+  }
+
+
+  public agregarTodosProductos(event) {
+    if (event.target.checked) {
+      debugger
+      for (let i in this.result) {
+        this.vectorProductos.add(this.result[i].ID_OFERTA);
+      }
+      console.log("vector productos", this.vectorProductos)
+
+
+    } else {
+      this.vectorProductos = new Set();
+    }
+
+  }
+
+
+  public agregarProducto(event, cod) {
+    if (event.target.checked) {
+      debugger
+
+      this.vectorProductos.add(cod);
+
+      console.log("vector productos", this.vectorProductos)
+
+
+    } else {
+      this.vectorProductos = new Set();
     }
 
   }

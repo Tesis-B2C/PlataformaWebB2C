@@ -77,7 +77,7 @@
   </div>
   <div class="btn-group mb-2">
     <button class="btn btn-primary ">
-      Seleccionados &nbsp;<span class="badge badge-light">4</span>
+      Seleccionados &nbsp;<span class="badge badge-light">{{vectorProductos.size}}</span>
     </button>
     <button placement="top" ngbTooltip="Mostrar"
 
@@ -100,7 +100,7 @@
   <table class="table table-bordered table-responsive-sm bg-white small w-100 text-center">
     <thead>
     <tr>
-      <th scope="col"><input (click)="opcionRastrearStock($event)" id="rastrearCantidad" type="checkbox"></th>
+      <th scope="col"><input (click)="agregarTodosProductos($event)" id="rastrearCantidad" type="checkbox"></th>
       <th scope="col">ID_PRODUCTO</th>
       <th scope="col">COD_PRODUCTO</th>
       <th scope="col">ID_OFERTA</th>
@@ -115,7 +115,7 @@
     <tbody>
     <tr [ngClass]="{'bg-gray':producto.ESTADO_OFERTA==1}"
         *ngFor="let producto of   this.result  |slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
-      <th scope="row"><input (click)="opcionRastrearStock($event)" type="checkbox"></th>
+      <th scope="row"><input (click)="agregarProducto($event,producto.PRODUCTO.ID_OFERTA )" type="checkbox" [checked]="vectorProductos.has(producto.PRODUCTO.ID_OFERTA)"></th>
       <td>
         {{producto.PRODUCTO.ID_PRODUCTO}}
       </td>
