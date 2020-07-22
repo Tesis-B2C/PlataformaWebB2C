@@ -23,6 +23,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {ToastrModule} from 'ngx-toastr';
 import {MetodoEnvioServicio} from "./servicios/metodo_envio.servicio";
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import {MetodoEnvioServicio} from "./servicios/metodo_envio.servicio";
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule, // required animations module
-    ToastrModule.forRoot({preventDuplicates: true})
+    ToastrModule.forRoot({preventDuplicates: true}),
+    BsDatepickerModule.forRoot()
   ],
   providers: [DpaServicio, AgenteServicio, CategoriaServicio, UnidadMedidaServicio, ProductoServicio, MetodoPagoServicio, MetodoEnvioServicio, TiendaServicio],
   bootstrap: [AppComponent]

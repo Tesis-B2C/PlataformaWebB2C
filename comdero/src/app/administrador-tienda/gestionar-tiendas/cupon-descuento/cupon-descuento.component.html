@@ -1,0 +1,210 @@
+<!--<ng-template #modalCategorias let-modal>
+
+  <div class="modal-header">
+    <h4 class="modal-title">Categorias</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true" style="font-size: x-large">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <label class="">Seleccione las categorias a las cuales pertenece el producto</label>
+    <div class="container">
+
+      <div *ngFor="let c11 of this.c1; let i = index">
+        <hr class="mb-1 mt-1">
+
+        <div class="dropdown justify-content-center">
+          <button (click)="busquedaCategoria2(c11.ID_CATEGORIA)" [attr.data-target]="'#myModal'+i"
+                  aria-expanded="false" aria-haspopup="true" class="categoria dropdown-toggle  dropdown-toggle-split"
+                  data-toggle="collapse"><span class="{{this.vectorIconos[i]}} iconos-categoria"></span>&nbsp;&nbsp;&nbsp;&nbsp;{{c11.NOMBRE}}
+          </button>
+          <div class="form-row mb-3 collapse justify-content-center" id="myModal{{i}}">
+            <div *ngFor="let c22 of this.categoriaEncontrada2; let i = index">
+              <div class="checkbox">
+                <label
+                  *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA" class="chip  col btn" for="checkCategoria{{i}}"
+                  id="labelcheckCategoria2{{i}}">{{c22.NOMBRE}}
+                  <input (change)="busquedaCategoria3(c22.ID_CATEGORIA,$event,c22,i)" id="checkCategoria{{i}}"
+                         style="display: none" type="checkbox">
+                </label>
+              </div>
+              <div class="form-row  justify-content-center">
+                <div *ngFor="let c33 of this.categoriaEncontrada; let i =index">
+                  <label *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA && c22.ID_CATEGORIA==c33.CAT_ID_CATEGORIA"
+                         class="chip2 col btn btn-light"
+                         for="checkCategoria3{{i}}" id="labelcheckCategoria3{{i}}">{{c33.NOMBRE}}
+                    <input (change)="seleccionarCategoria3($event,c33,i)" id="checkCategoria3{{i}}"
+                           style="display: none"
+                           type="checkbox">
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        &lt;!&ndash; <button (click)="cc($event)" class="col btn btn-light clicked">asd</button>&ndash;&gt;
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+
+
+</ng-template>-->
+
+<body id="body">
+
+<div class="container mt-5 ">
+
+  <div class="row  justify-content-center" id="top">
+    <h4 class=" col-11  ">Cupones de Descuento</h4>
+    <hr class="col-11  ">
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-10" id="panelUno">
+      <h6>Código de descuento</h6>
+        <form #FormInformacion id="formInformacion" name="formInformacion" class="mt-3 card card-body validate-form">
+
+          <div class="container">
+            <div class="form-row ">
+              <div class="col-md-10 ">
+                <label>Código</label>
+                <input #NombreProducto="ngModel" [(ngModel)]="this.Descuento.Motivo_Descuento"
+                       style="text-transform: uppercase"
+                       placeholder="Ej: OFERTASENERO"
+                       class=" form-control py-3 "
+                       name="nombreProducto" required
+                       type="text" [ngClass]="{'is-invalid': NombreProducto.invalid && banderaValidaciones}">
+                <div *ngIf="NombreProducto.errors?.required && banderaValidaciones">
+                  <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+                </div>
+                <p style="font-size: small" class="muted">Los clientes introducirán este código de descuento en la
+                  pantalla de pago.</p>
+              </div>
+            </div>
+          </div>
+        </form>
+
+      <hr>
+      <h6>Valor</h6>
+         <form class="card card-body mt-3">
+           <div class="col-lg-6">
+             <label>Porcentaje de Descuento </label>
+             <div class="input-group mb-3">
+               <input #descuento="ngModel" [(ngModel)]="this.Descuento.Valor" class="form-control" name="descuento" placeholder="12"
+                      min="0" step="0.01" oninput="validity.valid||(value='');"
+                      type="number">
+               <div class="input-group-append">
+                 <span class="input-group-text unidades">%</span>
+               </div>
+
+             </div>
+
+           </div>
+
+         </form>
+      <hr>
+      <h6>Se aplica a </h6>
+         <form class=" card card-body mt-3">
+
+           <div class="container">
+             <label>Seleccione a quien se aplica el descuento</label>
+             <br>
+             <div class="form-group">
+               <div class="radio-item">
+                 <input (click)="opcionGarantia($event.target.value)" name="garantia" [disabled]="!banderaModificar"
+                        type="radio" value="Garantia del vendedor" id="GarantiaVendedor"
+                 >
+                 <label for="GarantiaVendedor">&nbsp;&nbsp;Garantia del vendedor</label>
+               </div>
+               <br>
+               <div class="radio-item">
+                 <input (click)="opcionGarantia($event.target.value)" name="garantia" [disabled]="!banderaModificar"
+                        type="radio" value="Garantia de fabrica" id="GarantiaFabrica"
+                 >
+                 <label for="GarantiaFabrica">&nbsp;&nbsp;Garantia de fabrica </label>
+               </div>
+               <br>
+               <div class="radio-item">
+                 <input (click)="opcionGarantia($event.target.value)" name="garantia" [disabled]="!banderaModificar"
+                        type="radio" value="Sin garantia" id="SinGarantia"
+                 >
+                 <label for="SinGarantia">&nbsp;&nbsp; Sin garantia </label>
+               </div>
+             </div>
+             <br>
+           </div>
+           <br>
+
+         </form>
+      <hr>
+      <div>
+        <div class="row justify-content-between mx-1">
+          <h6>Periodo de activación </h6>
+
+        </div>
+      </div>
+      <form class=" card card-body mt-3">
+
+        <hr>
+        <div class="container">
+          <label>Seleccione el rango de tienpo que el cupón de descuento va a estar activo</label>
+
+          <br>
+
+          <div class="row">
+
+            <div class="col-xs-12 col-12 col-sm-5 col-md-6 col-lg-4 form-group">
+              <input placeholder="Daterangepicker" type="text" class="form-control" bsDaterangepicker [(ngModel)]="bsRangeValue" name="asdasd"
+                     [bsConfig]='{dateInputFormat: "DD/MM/YYYY", locale: "es", adaptivePosition: true, containerClass:"theme-orange" }' #dpr="bsDaterangepicker" >
+            </div>
+            <div class="col-xs-12 col-12 col-sm-4 col-md-12 col-lg-4 form-group">
+              <button class="btn btn-success" (click)="hola()" [attr.aria-expanded]="dpr.isOpen" type="button">Date
+                Range Picker
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <hr>
+
+
+      <form class="card card-body  col-md-12  mt-4">
+        <div class=" container">
+          <h6>Acciones</h6>
+          <hr>
+          <div class="text-right">
+            <button *ngIf="banderaModificar" (click)="this.guardarProducto()"
+                    class="btn btn-primary text-nowrap mb-4  col-auto"
+                    type="button">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+              Guardar Producto &nbsp;&nbsp;
+              <span class="fa fa-save"></span>
+            </button>
+            &nbsp;&nbsp;
+            <button *ngIf="banderaModificar" class="btn btn-light text-nowrap mb-4  col-auto"
+                    (click)="iniciarModificarProducto()">
+              Cancelar &nbsp;&nbsp;
+              <span class="fa fa-close"></span></button>
+
+            &nbsp;&nbsp;
+            <button *ngIf="!banderaModificar" class="btn btn-warning text-nowrap mb-4  col-auto"
+                    (click)="iniciarEdicion()">
+              Modificar &nbsp;&nbsp;
+              <span class="fa fa-edit"></span></button>
+
+
+          </div>
+
+        </div>
+      </form>
+
+
+    </div>
+  </div>
+</div>
+<br><br>
+</body>

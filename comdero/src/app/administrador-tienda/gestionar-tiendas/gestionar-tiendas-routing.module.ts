@@ -10,6 +10,7 @@ import {SucursalesTiendaComponent} from "./sucursales-tienda/sucursales-tienda.c
 import {InicioAdministracionComponent} from "./inicio-administracion/inicio-administracion.component";
 import {ListadoProductosComponent} from "./listado-productos/listado-productos.component";
 import {ModificarProductoComponent} from "./modificar-producto/modificar-producto.component";
+import {CuponDescuentoComponent} from "./cupon-descuento/cupon-descuento.component";
 
 const routes: Routes = [
   {
@@ -24,6 +25,7 @@ const routes: Routes = [
       { path: 'sucursales-tienda', component: SucursalesTiendaComponent },
       { path: 'personalizacion-tienda', component: PersonalizacionTiendaComponent },
       {path: 'inicio-administracion', component: InicioAdministracionComponent},
+      {path: 'cupon-descuento', component: CuponDescuentoComponent}
     ]
   }];
 

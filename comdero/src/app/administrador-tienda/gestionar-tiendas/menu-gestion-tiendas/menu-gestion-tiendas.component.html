@@ -20,7 +20,7 @@
 
       <li class="mb-3">
         <a href="#producto" data-toggle="collapse" aria-expanded="false" class=" dropdown-toggle ">
-          <i class="fa fa-tags mr-2"></i>
+          <i class="fa fa-box-open mr-2"></i>
           Productos
         </a>
         <ul class="collapse list-unstyled" id="producto">
@@ -54,6 +54,21 @@
         <ul class="collapse list-unstyled" id="clientes">
           <li>
             <a href="#">Listado</a>
+          </li>
+
+        </ul>
+      </li>
+      <li class="mb-3">
+        <a href="#descuento" data-toggle="collapse" aria-expanded="false" class=" dropdown-toggle ">
+          <i class="fa fa-tags mr-2"></i>
+          Descuentos
+        </a>
+        <ul class="collapse list-unstyled" id="descuento">
+          <li routerLink="cupon-descuento" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a>Nuevo</a>
+          </li>
+          <li routerLink="listado-productos" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a>Listado</a>
           </li>
 
         </ul>
