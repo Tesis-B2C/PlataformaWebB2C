@@ -66,80 +66,76 @@
   <div class="row justify-content-center">
     <div class="col-md-10" id="panelUno">
       <h6>Código de descuento</h6>
-        <form #FormInformacion id="formInformacion" name="formInformacion" class="mt-3 card card-body validate-form">
+      <form #FormInformacion id="formInformacion" name="formInformacion" class="mt-3 card card-body validate-form">
 
-          <div class="container">
-            <div class="form-row ">
-              <div class="col-md-10 ">
-                <label>Código</label>
-                <input #NombreProducto="ngModel" [(ngModel)]="this.Descuento.Motivo_Descuento"
-                       style="text-transform: uppercase"
-                       placeholder="Ej: OFERTASENERO"
-                       class=" form-control py-3 "
-                       name="nombreProducto" required
-                       type="text" [ngClass]="{'is-invalid': NombreProducto.invalid && banderaValidaciones}">
-                <div *ngIf="NombreProducto.errors?.required && banderaValidaciones">
-                  <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
-                </div>
-                <p style="font-size: small" class="muted">Los clientes introducirán este código de descuento en la
-                  pantalla de pago.</p>
+        <div class="container">
+          <div class="form-row ">
+            <div class="col-md-10 ">
+              <label>Código</label>
+              <input #NombreProducto="ngModel" [(ngModel)]="this.Descuento.Motivo_Descuento"
+                     style="text-transform: uppercase"
+                     placeholder="Ej: OFERTASENERO"
+                     class=" form-control py-3 "
+                     name="nombreProducto" required
+                     type="text" [ngClass]="{'is-invalid': NombreProducto.invalid && banderaValidaciones}">
+              <div *ngIf="NombreProducto.errors?.required && banderaValidaciones">
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
               </div>
+              <p style="font-size: small" class="muted">Los clientes introducirán este código de descuento en la
+                pantalla de pago.</p>
             </div>
           </div>
-        </form>
+        </div>
+      </form>
 
       <hr>
       <h6>Valor</h6>
-         <form class="card card-body mt-3">
-           <div class="col-lg-6">
-             <label>Porcentaje de Descuento </label>
-             <div class="input-group mb-3">
-               <input #descuento="ngModel" [(ngModel)]="this.Descuento.Valor" class="form-control" name="descuento" placeholder="12"
-                      min="0" step="0.01" oninput="validity.valid||(value='');"
-                      type="number">
-               <div class="input-group-append">
-                 <span class="input-group-text unidades">%</span>
-               </div>
+      <form class="card card-body mt-3">
+        <div class="col-lg-6">
+          <label>Porcentaje de Descuento </label>
+          <div class="input-group mb-3">
+            <input #descuento="ngModel" [(ngModel)]="this.Descuento.Valor" class="form-control" name="descuento"
+                   placeholder="12"
+                   min="0" step="0.01" oninput="validity.valid||(value='');"
+                   type="number">
+            <div class="input-group-append">
+              <span class="input-group-text unidades">%</span>
+            </div>
 
-             </div>
+          </div>
 
-           </div>
+        </div>
 
-         </form>
+      </form>
       <hr>
       <h6>Se aplica a </h6>
-         <form class=" card card-body mt-3">
+      <form class=" card card-body mt-3">
 
-           <div class="container">
-             <label>Seleccione a quien se aplica el descuento</label>
-             <br>
-             <div class="form-group">
-               <div class="radio-item">
-                 <input (click)="opcionGarantia($event.target.value)" name="garantia" [disabled]="!banderaModificar"
-                        type="radio" value="Garantia del vendedor" id="GarantiaVendedor"
-                 >
-                 <label for="GarantiaVendedor">&nbsp;&nbsp;Garantia del vendedor</label>
-               </div>
-               <br>
-               <div class="radio-item">
-                 <input (click)="opcionGarantia($event.target.value)" name="garantia" [disabled]="!banderaModificar"
-                        type="radio" value="Garantia de fabrica" id="GarantiaFabrica"
-                 >
-                 <label for="GarantiaFabrica">&nbsp;&nbsp;Garantia de fabrica </label>
-               </div>
-               <br>
-               <div class="radio-item">
-                 <input (click)="opcionGarantia($event.target.value)" name="garantia" [disabled]="!banderaModificar"
-                        type="radio" value="Sin garantia" id="SinGarantia"
-                 >
-                 <label for="SinGarantia">&nbsp;&nbsp; Sin garantia </label>
-               </div>
-             </div>
-             <br>
-           </div>
-           <br>
+        <div class="container">
+          <label>Seleccione a quien se aplica el descuento</label>
+          <br>
+          <div class="form-group">
+            <div class="radio-item">
+              <input (click)="opcionGarantia($event.target.value)" name="garantia" [disabled]="!banderaModificar"
+                     type="radio" value="Garantia del vendedor" id="GarantiaVendedor"
+              >
+              <label for="GarantiaVendedor">&nbsp;&nbsp;Todos los productos</label>
+            </div>
+            <br>
+            <div class="radio-item">
+              <input (click)="opcionGarantia($event.target.value)" name="garantia" [disabled]="!banderaModificar"
+                     type="radio" value="Garantia de fabrica" id="GarantiaFabrica"
+              >
+              <label for="GarantiaFabrica">&nbsp;&nbsp;Productos espesificos </label>
+            </div>
+            <br>
+              
+          </div>
+          <br>
+        </div>
+        <br>
 
-         </form>
+      </form>
       <hr>
       <div>
         <div class="row justify-content-between mx-1">
@@ -157,9 +153,11 @@
 
           <div class="row">
 
-            <div class="col-xs-12 col-12 col-sm-5 col-md-6 col-lg-4 form-group">
-              <input placeholder="Daterangepicker" type="text" class="form-control" bsDaterangepicker [(ngModel)]="bsRangeValue" name="asdasd"
-                     [bsConfig]='{dateInputFormat: "DD/MM/YYYY", locale: "es", adaptivePosition: true, containerClass:"theme-orange" }' #dpr="bsDaterangepicker" >
+            <div class="col-xs-12 col-12 col-sm-5 col-md-6 col-lg-12 form-group">
+              <input placeholder="Daterangepicker" type="text" class="form-control" bsDaterangepicker
+                     [(ngModel)]="bsRangeValue" name="asdasd"
+                     [bsConfig]='{ rangeInputFormat: "DD/MM/YYYY", locale: "es", adaptivePosition: true, containerClass:"theme-orange" }'
+                     #dpr="bsDaterangepicker">
             </div>
             <div class="col-xs-12 col-12 col-sm-4 col-md-12 col-lg-4 form-group">
               <button class="btn btn-success" (click)="hola()" [attr.aria-expanded]="dpr.isOpen" type="button">Date
