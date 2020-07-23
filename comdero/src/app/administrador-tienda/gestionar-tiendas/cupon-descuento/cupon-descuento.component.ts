@@ -3,7 +3,6 @@ import {Component, OnInit, DoCheck} from '@angular/core';
 import {Descuento} from "../../../modelos/descuento";
 import {defineLocale} from 'ngx-bootstrap/chronos';
 import {esLocale} from 'ngx-bootstrap/locale';
-import {CurrencyPipe, DatePipe} from "@angular/common";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ProductoServicio} from "../../../servicios/producto.servicio";
 
@@ -13,7 +12,7 @@ defineLocale('es', esLocale);
   selector: 'app-cupon-descuento',
   templateUrl: './cupon-descuento.component.html',
   styleUrls: ['./cupon-descuento.component.css'],
-  providers: [DatePipe]
+
 })
 export class CuponDescuentoComponent implements OnInit {
   public Descuento: Descuento
@@ -26,8 +25,8 @@ export class CuponDescuentoComponent implements OnInit {
   public banderaCuponDescuento: boolean = true;
   public vectorProductos = new Set();
 
-  constructor(private modalService: NgbModal, private cp: DatePipe, private _productoServicio: ProductoServicio) {
-    this.Descuento = new Descuento(null, null, null, null, null, null, null, 0);
+  constructor(private modalService: NgbModal, private _productoServicio: ProductoServicio) {
+    this.Descuento = new Descuento(null, null, null, null, 'cupon', null, null, 0);
 
 
   }
@@ -58,10 +57,9 @@ export class CuponDescuentoComponent implements OnInit {
     this.result = await this.search(this.busqueda);
   }
 
-  hola() {
-    console.log("asdasd", this.bsRangeValue);
-    let sdasd = this.bsRangeValue[0].toJSON();
-    console.log("asdasd", this.cp.transform(sdasd, 'yyyy-mm-dd'))
+  public obtenerFecha(fecha) {
+    return fecha.toISOString().split('T')[0]
+
   }
 
   opcionAplicarA(value) {
@@ -128,7 +126,7 @@ export class CuponDescuentoComponent implements OnInit {
 
   vectorProductosEnviar = []
 
-  agregar() {
+ public  agregar() {
     this.vectorProductosEnviar = [];
     for (let producto of this.vectorProductos) {
 
@@ -136,14 +134,19 @@ export class CuponDescuentoComponent implements OnInit {
     }
   }
 
-  borrar(producto){
+  public borrar(producto){
     this.vectorProductos.delete(producto)
     this.vectorProductosEnviar = [];
     for (let producto of this.vectorProductos) {
-
       this.vectorProductosEnviar.push(producto);
     }
   }
 
+  public guardarDescuento(){
+    this.Descuento.Fecha_Inicio=this.obtenerFecha(this.bsRangeValue[0]);
+    this.Descuento.Fecha_FIn=this.obtenerFecha(this.bsRangeValue[1]);
+    console.log("Descuento antes de enviar ", this.Descuento,"productos",  this.vectorProductosEnviar);
+
+  }
 
 }

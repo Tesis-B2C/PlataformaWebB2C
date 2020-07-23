@@ -4,11 +4,11 @@ export class Descuento {
   constructor(
     public Motivo_Descuento: String,
     public Porcentaje_Descuento: String,
-    public Fecha_Inicio:Date,
-    public Fecha_FIn:Date,
+    public Fecha_Inicio:String,
+    public Fecha_FIn:String,
     public Tipo_Descuento:String,
     public Hora_Inicio:Time,
-    public hora_FIn:Time,
+    public Hora_Fin:Time,
     public Estado_Descuento:Number
 
   ) {
