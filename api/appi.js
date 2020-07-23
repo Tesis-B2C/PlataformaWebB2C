@@ -17,6 +17,7 @@ var producto_rutas=require('./routes/producto');
 var metodo_pago_rutas=require('./routes/metodo_pago');
 var tienda_rutas = require('./routes/tienda');
 var metodo_envio_rutas=require('./routes/metodo_envio');
+var descuento_rustas=require('./routes/descuento');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); //convertir a json als peticiones
@@ -41,6 +42,7 @@ app.use('/api',producto_rutas);
 app.use('/api', metodo_pago_rutas);
 app.use('/api',tienda_rutas);
 app.use('/api',metodo_envio_rutas);
+app.use('/api',descuento_rustas);
 app.use('/uploads/tiendas',express.static(path.resolve('uploads/tiendas')));
 app.use('/uploads/productos',express.static(path.resolve('uploads/productos')));
 //app.use('/api', administrador_rutes);

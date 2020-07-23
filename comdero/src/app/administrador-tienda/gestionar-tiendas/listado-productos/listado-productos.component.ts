@@ -56,7 +56,7 @@ export class ListadoProductosComponent implements OnInit {
     try {
 
       let responseUpdate = await this._productoServicio.updateEstadoProducto(Id_Oferta, estado).toPromise();
-      this.mensageCorrecto(responseUpdate['menssage']);
+      this.mensageCorrecto(responseUpdate.message);
       let response = await this._productoServicio.getMisProductos(this.identidadTienda.NUM_TIENDA).toPromise();
       this.misProductos = null;
       this.misProductos = response.data;
@@ -80,7 +80,7 @@ export class ListadoProductosComponent implements OnInit {
         this.ofertasPorBorrar.push(producto);
       }
       let responseUpdate = await this._productoServicio.updateEstadoProductos(  this.ofertasPorBorrar,estado).toPromise();
-      this.mensageCorrecto(responseUpdate['menssage']);
+      this.mensageCorrecto(responseUpdate.message);
       this.vectorProductos=new Set();
       let response = await this._productoServicio.getMisProductos(this.identidadTienda.NUM_TIENDA).toPromise();
       this.misProductos = null;

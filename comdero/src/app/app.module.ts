@@ -24,6 +24,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
 import {MetodoEnvioServicio} from "./servicios/metodo_envio.servicio";
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import {DescuentoServicio} from "./servicios/descuento.servicio";
 
 
 @NgModule({
@@ -46,7 +47,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     ToastrModule.forRoot({preventDuplicates: true}),
     BsDatepickerModule.forRoot()
   ],
-  providers: [DpaServicio, AgenteServicio, CategoriaServicio, UnidadMedidaServicio, ProductoServicio, MetodoPagoServicio, MetodoEnvioServicio, TiendaServicio],
+  providers: [DescuentoServicio, DpaServicio, AgenteServicio, CategoriaServicio, UnidadMedidaServicio, ProductoServicio, MetodoPagoServicio, MetodoEnvioServicio, TiendaServicio],
   bootstrap: [AppComponent]
 })
 export class AppModule {

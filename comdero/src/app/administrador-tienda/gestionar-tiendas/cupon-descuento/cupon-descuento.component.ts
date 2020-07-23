@@ -5,6 +5,8 @@ import {defineLocale} from 'ngx-bootstrap/chronos';
 import {esLocale} from 'ngx-bootstrap/locale';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ProductoServicio} from "../../../servicios/producto.servicio";
+import {DescuentoServicio} from "../../../servicios/descuento.servicio";
+import Swal from "sweetalert2";
 
 defineLocale('es', esLocale);
 
@@ -25,7 +27,7 @@ export class CuponDescuentoComponent implements OnInit {
   public banderaCuponDescuento: boolean = true;
   public vectorProductos = new Set();
 
-  constructor(private modalService: NgbModal, private _productoServicio: ProductoServicio) {
+  constructor(private _descuento_Servicio: DescuentoServicio, private modalService: NgbModal, private _productoServicio: ProductoServicio) {
     this.Descuento = new Descuento(null, null, null, null, 'cupon', null, null, 0);
 
 
@@ -142,11 +144,41 @@ export class CuponDescuentoComponent implements OnInit {
     }
   }
 
-  public guardarDescuento(){
+  objDescuento={
+    Descuento:null,
+    vProductos:null
+  };
+  public async guardarDescuento(){
     this.Descuento.Fecha_Inicio=this.obtenerFecha(this.bsRangeValue[0]);
     this.Descuento.Fecha_FIn=this.obtenerFecha(this.bsRangeValue[1]);
     console.log("Descuento antes de enviar ", this.Descuento,"productos",  this.vectorProductosEnviar);
+    this.objDescuento.Descuento=this.Descuento;
+    this.objDescuento.vProductos=this.vectorProductosEnviar;
+    try {
+      let response = await this._descuento_Servicio.saveDescuento(this.objDescuento).toPromise();
+      this.mensageCorrecto(response.message);
+    }catch (e) {
+
+    }
+
 
   }
+
+  mensageCorrecto(mensaje) {
+    Swal.fire({
+      icon: 'success',
+      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Correcto..</h5></header>',
+      text: mensaje,
+      position: 'center',
+      width: 600,
+      buttonsStyling: false,
+      //footer: '<a href="http://localhost:4200/loguin"><b><u>Autentificate Ahora</u></b></a>',
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        //icon:'sm'
+      }
+    });
+  }
+
 
 }
