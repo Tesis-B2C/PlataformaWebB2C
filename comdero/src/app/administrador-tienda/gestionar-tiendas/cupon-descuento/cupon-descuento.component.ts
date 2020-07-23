@@ -71,7 +71,7 @@ export class CuponDescuentoComponent implements OnInit {
 
 
   public abrirModalVideoYoutube(content) {
-    this.modalService.open(content, {centered: true, size: 'm', scrollable: true});
+    this.modalService.open(content, {centered: true, size: 'lg', scrollable: true});
   }
 
   public cambiarOpcionDescuento(value) {
@@ -130,7 +130,18 @@ export class CuponDescuentoComponent implements OnInit {
   vectorProductosEnviar = []
 
   agregar() {
+    this.vectorProductosEnviar = [];
     for (let producto of this.vectorProductos) {
+
+      this.vectorProductosEnviar.push(producto);
+    }
+  }
+
+  borrar(producto){
+    this.vectorProductos.delete(producto)
+    this.vectorProductosEnviar = [];
+    for (let producto of this.vectorProductos) {
+
       this.vectorProductosEnviar.push(producto);
     }
   }

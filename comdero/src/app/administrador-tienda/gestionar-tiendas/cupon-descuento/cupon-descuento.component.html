@@ -8,7 +8,6 @@
   </div>
   <div class="modal-body" style="height: 100vh">
 
-    <label class="">Seleccione los productos que desea agregar</label>
 
     <div class="mx-auto ">
 
@@ -19,13 +18,11 @@
           <div class="input-group-append">
             <span class="input-group-text  small"><li class="fas fa-search"></li></span>
           </div>
-          &nbsp; &nbsp; &nbsp;
-          <label>Buscando...</label>
-          &nbsp; &nbsp; &nbsp;
-          <div class="spinner-grow text-primary ml-auto" role="status" aria-hidden="true"></div>
+
         </div>
       </div>
       <br>
+      <label class="">Seleccione los productos que desea agregar</label>
       <table class="table table-bordered table-responsive-sm bg-white small w-100 text-center">
         <thead>
         <tr>
@@ -33,7 +30,7 @@
           <th scope="col">ID_PRODUCTO</th>
           <th scope="col">COD_PRODUCTO</th>
           <th scope="col">NOMBRE</th>
-          <th scope="col">DESCRIPCION</th>
+
         </tr>
         </thead>
         <tbody>
@@ -51,9 +48,7 @@
           <td>
             {{producto.PRODUCTO.NOMBRE_PRODUCTO}}
           </td>
-          <td>
-            {{producto.PRODUCTO.DESCRIPCION_PRODUCTO}}
-          </td>
+
 
         </tr>
         </tbody>
@@ -72,8 +67,9 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
-    <button (click)="agregar();modal.close('Close click')" class="btn btn-primary" style="font-size:small">Agregar &nbsp; &nbsp; <span
-      class="badge badge-light">{{vectorProductos.size}}</span></button>
+    <button (click)="agregar();modal.close('Close click')" class="btn btn-primary" style="font-size:small">Guardar
+      &nbsp; &nbsp; <span
+        class="badge badge-light">{{vectorProductos.size}}</span></button>
   </div>
 
 
@@ -91,9 +87,9 @@
 
 
   <div class="row justify-content-center">
-    <div class=" col-10  ">
+    <div class=" col-md-10  ">
       <div class="form-row">
-        <div class="col-6  form-group ">
+        <div class="col-md-6  form-group ">
           <button [disabled]="banderaCuponDescuento"
                   class="btnActivo btn btn-outline-primary px-4 py-3 text-center btn-paso2 w-100"
                   type="submit" (click)="cambiarOpcionDescuento(true)">
@@ -101,11 +97,11 @@
           </button>
         </div>
 
-        <div class="col-6  form-group">
+        <div class="col-md-6  form-group">
           <button [disabled]="!banderaCuponDescuento"
-                  class="btnActivo btn btn-outline-primary px-4 py-3 text-center btn-paso2 w-100 "
+                  class="btnActivo btn btn-outline-primary px-3 py-3 text-center btn-paso2 w-100 "
                   type="submit" (click)="cambiarOpcionDescuento(false)">
-            <i class="fa fa-percent fa-lg fa-2x"></i> &nbsp; &nbsp; Descuento automático
+            <i class="fa fa-percentage fa-lg fa-2x"></i> &nbsp; &nbsp; Descuento automático
           </button>
         </div>
       </div>
@@ -206,14 +202,8 @@
         </div>
 
 
-        <button *ngIf="!banderaOpcionAplicarA" class="btn btn-primary col-3 mx-auto p-1"
-                (click)="abrirModalVideoYoutube(modalProductos)">Agregar Producto &nbsp; <span
-          class="fa fa-plus "></span></button>
-
-
-
-
-        <table class="table table-bordered table-responsive-sm bg-white small w-100 text-center">
+        <table *ngIf="vectorProductosEnviar.length>0"
+               class="table  table-responsive-sm bg-white small w-100 text-center">
           <thead>
           <tr>
 
@@ -221,6 +211,7 @@
             <th scope="col">COD_PRODUCTO</th>
             <th scope="col">NOMBRE</th>
             <th scope="col">DESCRIPCION</th>
+            <th scope="col">ACCIÓN</th>
           </tr>
           </thead>
           <tbody>
@@ -240,18 +231,23 @@
             <td>
               {{producto.PRODUCTO.DESCRIPCION_PRODUCTO}}
             </td>
-
+            <td>
+              <button class="btn" (click)="borrar(producto)"><span class="fa fa-trash " style="color: red"></span>
+              </button>
           </tr>
           </tbody>
         </table>
 
-        <div class="d-flex justify-content-between p-2">
+        <div *ngIf="vectorProductosEnviar.length>0" class="d-flex justify-content-between p-2">
           <ngb-pagination
             [(page)]="page"
             [pageSize]="pageSize"
             [collectionSize]=" this.vectorProductosEnviar.length "></ngb-pagination>
         </div>
 
+        <button *ngIf="!banderaOpcionAplicarA" class="btn btn-primary col-md-3 mx-auto p-1"
+                (click)="abrirModalVideoYoutube(modalProductos)">Agregar Producto &nbsp; <span
+          class="fa fa-plus "></span></button>
       </form>
       <hr>
       <div>
