@@ -7,6 +7,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ProductoServicio} from "../../../servicios/producto.servicio";
 import {DescuentoServicio} from "../../../servicios/descuento.servicio";
 import Swal from "sweetalert2";
+import {ToastrService} from "ngx-toastr";
 
 defineLocale('es', esLocale);
 
@@ -27,7 +28,8 @@ export class CuponDescuentoComponent implements OnInit {
   public banderaCuponDescuento: boolean = true;
   public vectorProductos = new Set();
 
-  constructor(private _descuento_Servicio: DescuentoServicio, private modalService: NgbModal, private _productoServicio: ProductoServicio) {
+
+  constructor(public toastr: ToastrService, private _descuento_Servicio: DescuentoServicio, private modalService: NgbModal, private _productoServicio: ProductoServicio) {
     this.Descuento = new Descuento(null, null, null, null, 'cupon', null, null, 0);
 
 
@@ -83,7 +85,7 @@ export class CuponDescuentoComponent implements OnInit {
 
     } else {
       this.vectorProductos = new Set();
-      this.vectorProductosEnviar=[];
+      this.vectorProductosEnviar = [];
     }
   }
 
@@ -169,14 +171,30 @@ export class CuponDescuentoComponent implements OnInit {
   };
 
   public async guardarDescuento() {
-    this.Descuento.Fecha_Inicio = this.obtenerFecha(this.bsRangeValue[0]);
-    this.Descuento.Fecha_FIn = this.obtenerFecha(this.bsRangeValue[1]);
-    console.log("Descuento antes de enviar ", this.Descuento, "productos", this.vectorProductosEnviar);
-    this.objDescuento.Descuento = this.Descuento;
-    this.objDescuento.vProductos = this.vectorProductosEnviar;
     try {
-      //let response = await this._descuento_Servicio.saveDescuento(this.objDescuento).toPromise();
-      //this.mensageCorrecto(response.message);
+      this.banderaValidaciones=true;
+      if (document.forms["formInformacion"].checkValidity() && document.forms["formDescuento"].checkValidity() && document.forms["formTiempo"].checkValidity()) {
+
+        if (this.banderaOpcionAplicarA == false && this.vectorProductosEnviar.length > 0) {
+          this.Descuento.Fecha_Inicio = this.obtenerFecha(this.bsRangeValue[0]);
+          this.Descuento.Fecha_FIn = this.obtenerFecha(this.bsRangeValue[1]);
+          console.log("Descuento antes de enviar ", this.Descuento, "productos", this.vectorProductosEnviar);
+          this.objDescuento.Descuento = this.Descuento;
+          this.objDescuento.vProductos = this.vectorProductosEnviar;
+
+          let response = await this._descuento_Servicio.saveDescuento(this.objDescuento).toPromise();
+          this.mensageCorrecto(response.message);
+        } else {
+          this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Elige al menos un producto</p></div>', "Error!",
+            {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
+        }
+      } else {
+        this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
+          {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
+        let body = document.getElementById('body') as HTMLElement;
+        body.scrollTo(0, 0);
+        window.scroll(0, 0);
+      }
     } catch (e) {
       console.log("error:" + e);
       if (JSON.stringify((e).error.message))

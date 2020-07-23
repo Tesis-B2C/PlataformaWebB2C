@@ -115,18 +115,20 @@
             <div class="col-md-7 ">
               <label>Código</label>
               <div class="input-group">
-                <input #NombreProducto="ngModel" [(ngModel)]="this.Descuento.Motivo_Descuento"
+                <input #Codigo="ngModel" [(ngModel)]="this.Descuento.Motivo_Descuento"
                        style="text-transform: uppercase"
                        placeholder="Ej: OFERTASENERO"
                        class=" form-control py-3 "
                        name="nombreProducto" required
-                       type="text" [ngClass]="{'is-invalid': NombreProducto.invalid && banderaValidaciones}">
+                       type="text" [ngClass]="{'is-invalid': Codigo.invalid && banderaValidaciones}">
                 <div class="input-group-append">
-                  <button class="btn btn-light" (click)="generarCodigDeswcuento()"> Generar</button>
+                  <button class="btn btn-light" (click)="generarCodigDeswcuento()"
+                          [ngClass]="{'border-red': Codigo.invalid && banderaValidaciones}"> Generar
+                  </button>
                 </div>
 
               </div>
-              <div *ngIf="NombreProducto.errors?.required && banderaValidaciones">
+              <div *ngIf="Codigo.errors?.required && banderaValidaciones" class="mt-2">
                 <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
               </div>
               <p style="font-size: small" class="muted">Los clientes introducirán este código de descuento en la
@@ -136,13 +138,14 @@
           <div class="form-row " *ngIf="!banderaCuponDescuento">
             <div class="col-md-10 ">
               <label>Motivo del descuento</label>
-              <input #NombreProducto="ngModel" [(ngModel)]="this.Descuento.Motivo_Descuento"
+              <input #MotivoDescuento="ngModel" [(ngModel)]="this.Descuento.Motivo_Descuento"
                      style="text-transform: uppercase"
                      placeholder="Ej: Descuento por el mes de enero"
                      class=" form-control py-3 "
                      name="nombreProducto" required
-                     type="text" [ngClass]="{'is-invalid': NombreProducto.invalid && banderaValidaciones}">
-              <div *ngIf="NombreProducto.errors?.required && banderaValidaciones">
+                     type="text" [ngClass]="{'is-invalid': MotivoDescuento.invalid && banderaValidaciones}">
+
+              <div *ngIf="MotivoDescuento.errors?.required && banderaValidaciones" class="mt-2">
                 <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
               </div>
               <p style="font-size: small" class="muted">Los clientes veran este descuento en la
@@ -154,19 +157,22 @@
 
       <hr>
       <h6>Valor</h6>
-      <form class="card card-body mt-3">
-        <div class="col-lg-6">
+      <form class="card card-body mt-3" name="formDescuento">
+        <div class="col-lg-4">
           <label>Porcentaje de Descuento </label>
-          <div class="input-group mb-3">
+          <div class="input-group ">
             <input #descuento="ngModel" [(ngModel)]="this.Descuento.Porcentaje_Descuento" class="form-control"
                    name="descuento"
                    placeholder="12"
                    min="0" step="0.01" oninput="validity.valid||(value='');"
-                   type="number">
+                   type="number" required [ngClass]="{'is-invalid': descuento.invalid && banderaValidaciones}">
             <div class="input-group-append">
-              <span class="input-group-text unidades">%</span>
+              <span class="input-group-text unidades" style="font-size: small">%</span>
             </div>
 
+          </div>
+          <div *ngIf="descuento.errors?.required && banderaValidaciones" class="mt-2">
+            <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
           </div>
 
         </div>
@@ -253,7 +259,7 @@
           <h6>Periodo de activación </h6>
         </div>
       </div>
-      <form class=" card card-body mt-3">
+      <form class=" card card-body mt-3" name="formTiempo">
 
         <div class="container">
           <label>Seleccione el rango de tienpo que el cupón de descuento va a estar activo</label>
@@ -261,19 +267,24 @@
           <div class="row">
 
             <div class="col-xs-12 col-12 col-sm-5 col-md-6 col-lg-4 form-group">
-              <label>Periodo de duracion</label>
-              <div class="input-group mb-3" style="border-right: none">
+              <label>Rango de duracion</label>
+              <div class="input-group ">
                 <input placeholder="01/07/2020 - 04/08/2020" type="text" class="form-control" bsDaterangepicker
+                       #Calendario="ngModel"
                        style="border-right: none"
-                       [(ngModel)]="bsRangeValue" name="asdasd"
+                       [(ngModel)]="bsRangeValue" name="calendario"
                        [bsConfig]='{ rangeInputFormat: "DD/MM/YYYY", locale: "es", adaptivePosition: true, containerClass:"theme-orange" }'
-                       #dpr="bsDaterangepicker">
+                       #dpr="bsDaterangepicker" required
+                       [ngClass]="{'borderr-red': Calendario.invalid && banderaValidaciones}">
                 <div class="input-group-append">
                   <span class="input-group-text fa fa-calendar"
-                        style="background-color: white; border-left: none; font-size: small"></span>
+                        [ngClass]="{'borderr-red': Calendario.invalid && banderaValidaciones}"
+                        style="background-color: white; font-size: small"></span>
                 </div>
               </div>
-
+              <div *ngIf="Calendario.errors?.required && banderaValidaciones" class="mt-2">
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+              </div>
             </div>
 
 
@@ -282,14 +293,22 @@
               <label>Hora de inicio</label>
               <input class="px-1 tamaniohorario form-control text-center"
                      type="time" name="horaInicio"
-                     #HoraInicio="ngModel" [(ngModel)]="this.Descuento.Hora_Inicio">
+                     #HoraInicio="ngModel" [(ngModel)]="this.Descuento.Hora_Inicio" required
+                     [ngClass]="{'borderr-red': HoraInicio.invalid && banderaValidaciones}">
+              <div *ngIf="HoraInicio.errors?.required && banderaValidaciones" class="mt-2">
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+              </div>
             </div>
             <div class="col-xs-12 col-12 col-sm-4 col-md-12 col-lg-4 form-group">
 
               <label>Hora de finalizacion</label>
               <input class="px-1 tamaniohorario form-control text-center"
                      type="time" name="horaFin"
-                     #HoraFin="ngModel" [(ngModel)]="this.Descuento.Hora_Fin">
+                     #HoraFin="ngModel" [(ngModel)]="this.Descuento.Hora_Fin"
+                     [ngClass]="{'borderr-red': HoraFin.invalid && banderaValidaciones}" required>
+              <div *ngIf="HoraFin.errors?.required && banderaValidaciones" class="mt-2">
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+              </div>
             </div>
           </div>
         </div>
