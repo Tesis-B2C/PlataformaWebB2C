@@ -67,7 +67,6 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
   }
 
   iniciarEdicion() {
-    debugger;
 
     this.cancelar();
 
