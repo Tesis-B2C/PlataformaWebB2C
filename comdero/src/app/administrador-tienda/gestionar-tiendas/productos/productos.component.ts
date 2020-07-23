@@ -114,9 +114,12 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     this.getUnidadesMedida();
     this.panelUno = document.getElementById('panelUno') as HTMLElement;
     this.panelDos = document.getElementById('panelDos') as HTMLElement;
-    this.mostrarToast("Asegurate de tener configurado tus metodos de envio antes de empezar a vender", "fa fa-truck fa-2x");
-    this.mostrarToast("Asegurate de tener configurado tus metodos de pago antes de empezar a vender", "fas fa-credit-card fa-2x");
-
+    if (this.identidadTienda.OPCION_ENVIOs.length== 0) {
+      this.mostrarToast("Asegurate de tener configurado tus metodos de envio antes de empezar a vender", "fa fa-truck fa-2x");
+    }
+    if (this.identidadTienda.METODO_PAGOs.length == 0) {
+      this.mostrarToast("Asegurate de tener configurado tus metodos de pago antes de empezar a vender", "fas fa-credit-card fa-2x");
+    }
   }
 
   public cancelar() {
@@ -546,7 +549,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
         } else {
           let body = document.getElementById('body') as HTMLElement;
           body.scrollTo(0, 0);
-           window.scroll(0, 0);
+          window.scroll(0, 0);
           this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
             {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
           return false

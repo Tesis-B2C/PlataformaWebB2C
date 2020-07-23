@@ -59,7 +59,6 @@ export class CuponDescuentoComponent implements OnInit {
   }
 
   hola() {
-
     console.log("asdasd", this.bsRangeValue);
     let sdasd = this.bsRangeValue[0].toJSON();
     console.log("asdasd", this.cp.transform(sdasd, 'yyyy-mm-dd'))
