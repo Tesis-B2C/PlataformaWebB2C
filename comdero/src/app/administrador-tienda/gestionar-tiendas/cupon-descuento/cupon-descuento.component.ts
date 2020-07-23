@@ -24,9 +24,10 @@ export class CuponDescuentoComponent implements OnInit {
   public pageSize = 10;
   public busqueda;
   public banderaCuponDescuento: boolean = true;
+  public vectorProductos = new Set();
 
   constructor(private modalService: NgbModal, private cp: DatePipe, private _productoServicio: ProductoServicio) {
-    this.Descuento = new Descuento(null, null, null, null,null,null,null,0);
+    this.Descuento = new Descuento(null, null, null, null, null, null, null, 0);
 
 
   }
@@ -75,28 +76,64 @@ export class CuponDescuentoComponent implements OnInit {
 
   public cambiarOpcionDescuento(value) {
     this.banderaCuponDescuento = value;
-    this.Descuento.Motivo_Descuento="";
-    if(this.banderaCuponDescuento){
-      this.Descuento.Tipo_Descuento="cupon";
-    }else if(!this.banderaCuponDescuento){
-      this.Descuento.Tipo_Descuento="automatico";
+    this.Descuento.Motivo_Descuento = "";
+    if (this.banderaCuponDescuento) {
+      this.Descuento.Tipo_Descuento = "cupon";
+    } else if (!this.banderaCuponDescuento) {
+      this.Descuento.Tipo_Descuento = "automatico";
     }
 
   }
 
   public generarCodigDeswcuento() {
-    this.Descuento.Motivo_Descuento=this.makeid(8);
+    this.Descuento.Motivo_Descuento = this.makeid(8);
 
   }
 
-  public  makeid(length) {
-    var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  public makeid(length) {
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
+    for (var i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
   }
+
+  public agregarTodosProductos(event) {
+    if (event.target.checked) {
+      debugger
+      for (let i in this.result) {
+        this.vectorProductos.add(this.result[i]);
+      }
+      console.log("vector productos", this.vectorProductos)
+
+
+    } else {
+      this.vectorProductos = new Set();
+    }
+
+  }
+
+
+  public agregarProducto(event, cod) {
+    if (event.target.checked) {
+      debugger
+      this.vectorProductos.add(cod);
+      console.log("vector productos", this.vectorProductos)
+    } else {
+      this.vectorProductos.delete(cod);
+    }
+  }
+
+
+  vectorProductosEnviar = []
+
+  agregar() {
+    for (let producto of this.vectorProductos) {
+      this.vectorProductosEnviar.push(producto);
+    }
+  }
+
 
 }

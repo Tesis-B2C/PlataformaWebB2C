@@ -10,37 +10,44 @@
 
     <label class="">Seleccione los productos que desea agregar</label>
 
-
-    <div class=" mx-auto  ">
+    <div class="mx-auto ">
 
       <div class="form-row mb-2  ">
-        <div class=" input-group col-md-4 mr-md-auto">
+        <div class=" input-group col-md-12 mr-md-auto">
           <input class="form-control" style="font-size: small" type="text" #busquedaasd="ngModel"
                  [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="busquedasasd()"/>
-
           <div class="input-group-append">
             <span class="input-group-text  small"><li class="fas fa-search"></li></span>
           </div>
-        </div>
-        <div class="col-md-auto ">
-          <button class="btn btn-primary w-100 mt-md-0 mt-2" style="font-size:small">Nuevo Producto</button>
+          &nbsp; &nbsp; &nbsp;
+          <label>Buscando...</label>
+          &nbsp; &nbsp; &nbsp;
+          <div class="spinner-grow text-primary ml-auto" role="status" aria-hidden="true"></div>
         </div>
       </div>
-
+      <br>
       <table class="table table-bordered table-responsive-sm bg-white small w-100 text-center">
         <thead>
         <tr>
-          <th scope="col">#</th>
-
+          <th scope="col"><input (click)="agregarTodosProductos($event)" id="rastrearCantidad" type="checkbox"></th>
+          <th scope="col">ID_PRODUCTO</th>
+          <th scope="col">COD_PRODUCTO</th>
           <th scope="col">NOMBRE</th>
           <th scope="col">DESCRIPCION</th>
-          <th scope="col">OPCIÓN</th>
         </tr>
         </thead>
         <tbody>
         <tr [ngClass]="{'bg-gray':producto.ESTADO_OFERTA==1}"
             *ngFor="let producto of   this.result  |slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
-          <th scope="row">{{ i + 1 }}</th>
+          <th scope="row"><input (click)="agregarProducto($event,producto )" type="checkbox"
+                                 [checked]="vectorProductos.has(producto)"></th>
+          <td>
+            {{producto.PRODUCTO.ID_PRODUCTO}}
+          </td>
+          <td>
+            {{producto.PRODUCTO.COD_PRODUCTO}}
+          </td>
+
           <td>
             {{producto.PRODUCTO.NOMBRE_PRODUCTO}}
           </td>
@@ -48,31 +55,6 @@
             {{producto.PRODUCTO.DESCRIPCION_PRODUCTO}}
           </td>
 
-          <td>
-            <div class="btn-group">
-              <button (click)="cambiarEstadoProducto(producto.ID_OFERTA,0)" placement="top" ngbTooltip="Mostrar"
-                      *ngIf="producto.ESTADO_OFERTA==1"
-                      class="btn btn-secondary  ml-md-2 mt-md-0 mt-1" style="font-size: x-small">
-                <span class="fa fa-eye"></span>
-              </button>
-
-              <button placement="top" ngbTooltip="Ocultar" *ngIf="producto.ESTADO_OFERTA==0"
-                      (click)="cambiarEstadoProducto(producto.ID_OFERTA,1)"
-                      class="btn btn-secondary  ml-md-2 mt-md-0 mt-1"
-                      style="font-size: x-small"
-              ><span class="fa fa-eye-slash"></span></button>
-
-              <button (click)="cambiarEstadoProducto(producto.ID_OFERTA,2)" placement="top" ngbTooltip="Borrar"
-                      class="btn btn-danger  ml-md-2 mt-md-0 mt-1"
-                      style="font-size: x-small"
-              ><span class="fa fa-trash"></span></button>
-
-              <button placement="top" ngbTooltip="Editar" *ngIf="producto.ESTADO_OFERTA==0"
-                      class="btn btn-primary ml-md-2 mt-md-0 mt-1" style="font-size: x-small"
-                      [routerLink]="['../modificar-producto/', producto.ID_OFERTA ]"><span
-                class="fa fa-edit"></span></button>
-            </div>
-          </td>
         </tr>
         </tbody>
       </table>
@@ -90,6 +72,8 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    <button (click)="agregar();modal.close('Close click')" class="btn btn-primary" style="font-size:small">Agregar &nbsp; &nbsp; <span
+      class="badge badge-light">{{vectorProductos.size}}</span></button>
   </div>
 
 
@@ -145,7 +129,7 @@
                        name="nombreProducto" required
                        type="text" [ngClass]="{'is-invalid': NombreProducto.invalid && banderaValidaciones}">
                 <div class="input-group-append">
-                  <button class="btn btn-light" (click)="generarCodigDeswcuento()" > Generar</button>
+                  <button class="btn btn-light" (click)="generarCodigDeswcuento()"> Generar</button>
                 </div>
 
               </div>
@@ -181,7 +165,8 @@
         <div class="col-lg-6">
           <label>Porcentaje de Descuento </label>
           <div class="input-group mb-3">
-            <input #descuento="ngModel" [(ngModel)]="this.Descuento.Porcentaje_Descuento" class="form-control" name="descuento"
+            <input #descuento="ngModel" [(ngModel)]="this.Descuento.Porcentaje_Descuento" class="form-control"
+                   name="descuento"
                    placeholder="12"
                    min="0" step="0.01" oninput="validity.valid||(value='');"
                    type="number">
@@ -224,6 +209,48 @@
         <button *ngIf="!banderaOpcionAplicarA" class="btn btn-primary col-3 mx-auto p-1"
                 (click)="abrirModalVideoYoutube(modalProductos)">Agregar Producto &nbsp; <span
           class="fa fa-plus "></span></button>
+
+
+
+
+        <table class="table table-bordered table-responsive-sm bg-white small w-100 text-center">
+          <thead>
+          <tr>
+
+            <th scope="col">ID_PRODUCTO</th>
+            <th scope="col">COD_PRODUCTO</th>
+            <th scope="col">NOMBRE</th>
+            <th scope="col">DESCRIPCION</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr [ngClass]="{'bg-gray':producto.ESTADO_OFERTA==1}"
+              *ngFor="let producto of   this.vectorProductosEnviar  |slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+
+            <td>
+              {{producto.PRODUCTO.ID_PRODUCTO}}
+            </td>
+            <td>
+              {{producto.PRODUCTO.COD_PRODUCTO}}
+            </td>
+
+            <td>
+              {{producto.PRODUCTO.NOMBRE_PRODUCTO}}
+            </td>
+            <td>
+              {{producto.PRODUCTO.DESCRIPCION_PRODUCTO}}
+            </td>
+
+          </tr>
+          </tbody>
+        </table>
+
+        <div class="d-flex justify-content-between p-2">
+          <ngb-pagination
+            [(page)]="page"
+            [pageSize]="pageSize"
+            [collectionSize]=" this.vectorProductosEnviar.length "></ngb-pagination>
+        </div>
 
       </form>
       <hr>
@@ -293,7 +320,6 @@
 
 
             &nbsp;&nbsp;
-
 
 
           </div>
