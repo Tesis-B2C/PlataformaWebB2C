@@ -199,7 +199,7 @@
         </div>
 
 
-        <table *ngIf="vectorProductosEnviar.length>0"
+        <table *ngIf="vectorProductosEnviar.length>0 && !banderaOpcionAplicarA"
                class="table  table-responsive-sm bg-white small w-100 text-center">
           <thead>
           <tr>
@@ -235,7 +235,8 @@
           </tbody>
         </table>
 
-        <div *ngIf="vectorProductosEnviar.length>0" class="d-flex justify-content-between p-2">
+        <div *ngIf="vectorProductosEnviar.length>0 && !banderaOpcionAplicarA"
+             class="d-flex justify-content-between p-2">
           <ngb-pagination
             [(page)]="page"
             [pageSize]="pageSize"

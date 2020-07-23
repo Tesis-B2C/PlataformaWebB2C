@@ -52,6 +52,12 @@ export class CuponDescuentoComponent implements OnInit {
     debugger;
     this.result = this.misProductos;
     console.log("mis productos", this.misProductos);
+    for (let i in this.result) {
+      this.vectorProductos.add(this.result[i]);
+    }
+    for (let producto of this.vectorProductos) {
+      this.vectorProductosEnviar.push(producto);
+    }
   }
 
 
@@ -65,7 +71,20 @@ export class CuponDescuentoComponent implements OnInit {
   }
 
   opcionAplicarA(value) {
+    debugger;
     this.banderaOpcionAplicarA = value;
+    if (this.banderaOpcionAplicarA) {
+      for (let i in this.result) {
+        this.vectorProductos.add(this.result[i]);
+      }
+      for (let producto of this.vectorProductos) {
+        this.vectorProductosEnviar.push(producto);
+      }
+
+    } else {
+      this.vectorProductos = new Set();
+      this.vectorProductosEnviar=[];
+    }
   }
 
 
@@ -128,7 +147,7 @@ export class CuponDescuentoComponent implements OnInit {
 
   vectorProductosEnviar = []
 
- public  agregar() {
+  public agregar() {
     this.vectorProductosEnviar = [];
     for (let producto of this.vectorProductos) {
 
@@ -136,7 +155,7 @@ export class CuponDescuentoComponent implements OnInit {
     }
   }
 
-  public borrar(producto){
+  public borrar(producto) {
     this.vectorProductos.delete(producto)
     this.vectorProductosEnviar = [];
     for (let producto of this.vectorProductos) {
@@ -144,21 +163,25 @@ export class CuponDescuentoComponent implements OnInit {
     }
   }
 
-  objDescuento={
-    Descuento:null,
-    vProductos:null
+  objDescuento = {
+    Descuento: null,
+    vProductos: null
   };
-  public async guardarDescuento(){
-    this.Descuento.Fecha_Inicio=this.obtenerFecha(this.bsRangeValue[0]);
-    this.Descuento.Fecha_FIn=this.obtenerFecha(this.bsRangeValue[1]);
-    console.log("Descuento antes de enviar ", this.Descuento,"productos",  this.vectorProductosEnviar);
-    this.objDescuento.Descuento=this.Descuento;
-    this.objDescuento.vProductos=this.vectorProductosEnviar;
-    try {
-      let response = await this._descuento_Servicio.saveDescuento(this.objDescuento).toPromise();
-      this.mensageCorrecto(response.message);
-    }catch (e) {
 
+  public async guardarDescuento() {
+    this.Descuento.Fecha_Inicio = this.obtenerFecha(this.bsRangeValue[0]);
+    this.Descuento.Fecha_FIn = this.obtenerFecha(this.bsRangeValue[1]);
+    console.log("Descuento antes de enviar ", this.Descuento, "productos", this.vectorProductosEnviar);
+    this.objDescuento.Descuento = this.Descuento;
+    this.objDescuento.vProductos = this.vectorProductosEnviar;
+    try {
+      //let response = await this._descuento_Servicio.saveDescuento(this.objDescuento).toPromise();
+      //this.mensageCorrecto(response.message);
+    } catch (e) {
+      console.log("error:" + e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
     }
 
 
@@ -175,6 +198,22 @@ export class CuponDescuentoComponent implements OnInit {
       //footer: '<a href="http://localhost:4200/loguin"><b><u>Autentificate Ahora</u></b></a>',
       customClass: {
         confirmButton: 'btn btn-primary px-5',
+        //icon:'sm'
+      }
+    });
+  }
+
+  mensageError(mensaje) {
+    Swal.fire({
+      icon: 'error',
+      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Error..</h5></header>',
+      text: mensaje,
+      position: 'center',
+      width: 600,
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        container: 'my-swal'
         //icon:'sm'
       }
     });
