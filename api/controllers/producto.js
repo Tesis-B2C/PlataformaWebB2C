@@ -413,22 +413,53 @@ async function updateProducto(req, res) {
 }
 
 async function updateEstadoProducto(req, res) {
-
-    let ofertaActualizada = await Oferta.update({
-        ESTADO_OFERTA: req.body.estado,
-    }, {
-        where: {ID_OFERTA: req.params.id},
-    });
-    if (ofertaActualizada) {
-        res.status(200).send({
-            message: "El producto ha sido actualizado correctamente"
+    try {
+        let ofertaActualizada = await Oferta.update({
+            ESTADO_OFERTA: req.body.estado,
+        }, {
+            where: {ID_OFERTA: req.params.id},
         });
-    } else {
-        res.status(404).send({
-            message: 'Al parecer no se encuentra el producto registrado en la base de datos'
+        if (ofertaActualizada) {
+            res.status(200).send({
+                message: "El producto ha sido actualizado correctamente"
+            });
+        } else {
+            res.status(404).send({
+                message: 'Al parecer no se encuentra el producto registrado en la base de datos'
+            });
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
         });
     }
 }
+
+async function updateEstadoProductos(req, res) {
+    const t = await db.sequelize.transaction({autocommit: false});
+    try{
+    for (const s of req.body) {
+     await Oferta.update({
+            ESTADO_OFERTA: req.params.estado,
+        }, {
+            where: {ID_OFERTA: s}, transact: t
+        });
+    }
+
+    res.status(200).send({
+        message: "El producto ha sido actualizado correctamente"
+    });
+    t.commit();
+    }catch (err) {
+        t.rollback();
+        res.status(500).send({
+            message: 'error:' + err
+        });
+
+    }
+
+}
+
 
 module.exports = {          // para exportar todas las funciones de este modulo
 
@@ -436,6 +467,7 @@ module.exports = {          // para exportar todas las funciones de este modulo
     getMisProductos,
     getProducto,
     updateProducto,
-    updateEstadoProducto
+    updateEstadoProducto,
+    updateEstadoProductos
 
 };

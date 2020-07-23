@@ -73,6 +73,31 @@ export class ListadoProductosComponent implements OnInit {
 
   }
 
+  public ofertasPorBorrar=[];
+  public async cambiarEstadoProductos(estado) {
+    try {
+      for (let producto of this.vectorProductos) {
+        this.ofertasPorBorrar.push(producto);
+      }
+      let responseUpdate = await this._productoServicio.updateEstadoProductos(  this.ofertasPorBorrar,estado).toPromise();
+      this.mensageCorrecto(responseUpdate['menssage']);
+      this.vectorProductos=new Set();
+      let response = await this._productoServicio.getMisProductos(this.identidadTienda.NUM_TIENDA).toPromise();
+      this.misProductos = null;
+      this.misProductos = response.data;
+      this.result = this.misProductos;
+      console.log("mis productos 2", this.misProductos);
+
+    } catch (e) {
+
+      console.log("error:" + e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
+
+  }
+
 
   public agregarTodosProductos(event) {
     if (event.target.checked) {
@@ -93,12 +118,8 @@ export class ListadoProductosComponent implements OnInit {
   public agregarProducto(event, cod) {
     if (event.target.checked) {
       debugger
-
       this.vectorProductos.add(cod);
-
       console.log("vector productos", this.vectorProductos)
-
-
     } else {
       this.vectorProductos = new Set();
     }
