@@ -3,12 +3,12 @@
 //importar el modelo del usuario  o lo que son las clases comunes
 
 
-const Oferta = require('../models/oferta');
-const Producto = require('../models/producto');
 const Producto_Descuento = require('../models/producto_descuento');
 const Descuento = require('../models/descuento');
 const db = require('../database/db');
 const moment = require('moment');
+const {Op} = require("sequelize");
+
 
 async function saveDescuento(req, res) {
     console.log("objetos de productos", req.body);
@@ -60,7 +60,7 @@ async function saveDescuento(req, res) {
 async function getMisDescuentos(req, res) {
     try {
         let descuentoObtenidos = await Descuento.findAll({ //$or: [{ESTADO_OFERTA: 0},{ESTADO_OFERTA: 1}]
-            where: {NUM_TIENDA:req.params.id,ESTADO_DESCUENTO:'0'}, order: [['ID_DESCUENTO', 'DESC']]
+            where: {NUM_TIENDA: req.params.id, ESTADO_DESCUENTO: {[Op.or]: [0, 1]}}, order: [['ID_DESCUENTO', 'DESC']]
         });
 
         if (descuentoObtenidos.length) {

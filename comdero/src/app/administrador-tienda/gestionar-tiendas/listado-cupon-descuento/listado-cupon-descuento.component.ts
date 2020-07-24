@@ -32,15 +32,19 @@ export class ListadoCuponDescuentoComponent implements OnInit {
     this.misDescuentos = response.data;
     this.hoy = new Date();
     for (let i in this.misDescuentos) {
-      if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") < this.misDescuentos[i].FECHA_INICIO) {
-        this.misDescuentos[i].ESTADO_FECHA = "Programado"
-      }
-      if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") > this.misDescuentos[i].FECHA_FIN) {
-        this.misDescuentos[i].ESTADO_FECHA = "Vencido"
-      }
+      if (this.misDescuentos[i].ESTADO_DESCUENTO == 0) {
+        if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") < this.misDescuentos[i].FECHA_INICIO) {
+          this.misDescuentos[i].ESTADO_FECHA = "Programado"
+        }
+        if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") > this.misDescuentos[i].FECHA_FIN) {
+          this.misDescuentos[i].ESTADO_FECHA = "Vencido"
+        }
 
-      if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") >= this.misDescuentos[i].FECHA_INICIO && this.datePipe.transform(this.hoy, "yyyy-MM-dd") <= this.misDescuentos[i].FECHA_FIN) {
-        this.misDescuentos[i].ESTADO_FECHA = "Activo"
+        if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") >= this.misDescuentos[i].FECHA_INICIO && this.datePipe.transform(this.hoy, "yyyy-MM-dd") <= this.misDescuentos[i].FECHA_FIN) {
+          this.misDescuentos[i].ESTADO_FECHA = "Activo"
+        }
+      } else {
+        this.misDescuentos[i].ESTADO_FECHA = "Desactivado"
       }
     }
 
@@ -72,8 +76,25 @@ export class ListadoCuponDescuentoComponent implements OnInit {
       let response = await this._descuentoServicio.getMisDescuentos(this.identidadTienda.NUM_TIENDA).toPromise();
       this.misDescuentos = null;
       this.misDescuentos = response.data;
-      this.result = this.misDescuentos;
+      for (let i in this.misDescuentos) {
+        if (this.misDescuentos[i].ESTADO_DESCUENTO==0) {
+          if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") < this.misDescuentos[i].FECHA_INICIO) {
+            this.misDescuentos[i].ESTADO_FECHA = "Programado"
+          }
+          if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") > this.misDescuentos[i].FECHA_FIN) {
+            this.misDescuentos[i].ESTADO_FECHA = "Vencido"
+          }
 
+          if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") >= this.misDescuentos[i].FECHA_INICIO && this.datePipe.transform(this.hoy, "yyyy-MM-dd") <= this.misDescuentos[i].FECHA_FIN) {
+            this.misDescuentos[i].ESTADO_FECHA = "Activo"
+          }
+        } else {
+          debugger;
+          this.misDescuentos[i].ESTADO_FECHA = "Desactivado"
+        }
+      }
+
+      this.result = this.misDescuentos;
 
     } catch (e) {
 
