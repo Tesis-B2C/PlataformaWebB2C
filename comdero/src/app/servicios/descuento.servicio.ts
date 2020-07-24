@@ -26,4 +26,9 @@ export class DescuentoServicio {
     return this._http.post<objeto>(this.url + "saveDescuento", params, {headers: headers});
   }
 
+  public getMisDescuentos(Id_Tienda){
+    let headers = new HttpHeaders({"Content-type": "application/json"});
+    return this._http.get<objeto>(this.url + "getMisDescuentos/" + Id_Tienda, {headers: headers});
+  }
+
 }

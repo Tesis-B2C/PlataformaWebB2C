@@ -1,8 +1,12 @@
 'use strcit'
 
 //importar el modelo del usuario  o lo que son las clases comunes
+
+
+const Oferta = require('../models/oferta');
+const Producto = require('../models/producto');
+const Producto_Descuento = require('../models/producto_descuento');
 const Descuento = require('../models/descuento');
-const Producto_Descuento = require('../models/producto_descuento')
 const db = require('../database/db');
 const moment = require('moment');
 
@@ -20,7 +24,7 @@ async function saveDescuento(req, res) {
                 TIPO_DESCUENTO: params.Descuento.Fecha_Inicio,
                 HORA_INICIO: params.Descuento.Hora_Inicio,
                 HORA_FIN: params.Descuento.Hora_Fin,
-                ESTADO_DESCUENTO:params.Descuento.Estado_Descuento
+                ESTADO_DESCUENTO: params.Descuento.Estado_Descuento
             },
             {
                 transaction: t
@@ -51,8 +55,36 @@ async function saveDescuento(req, res) {
     }
 }
 
+
+async function getMisDescuentos(req, res) {
+    try {
+        let descuentoObtenidos = await Descuento.findAll({ //$or: [{ESTADO_OFERTA: 0},{ESTADO_OFERTA: 1}]
+             where: {NUM_TIENDA: '11'}
+        });
+
+        if (descuentoObtenidos.length) {
+            res.status(200).send({
+                data: descuentoObtenidos,
+                message: "Productos cargadas correctamente"
+            });
+        } else {
+            res.status(404).send({
+                message: 'Al parecer no se encuentra productos registrados en la base de datos'
+            });
+
+
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+
+}
+
 module.exports = {          // para exportar todas las funciones de este modulo
 
-    saveDescuento
+    saveDescuento,
+    getMisDescuentos
 
 };

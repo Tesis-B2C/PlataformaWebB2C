@@ -28,7 +28,7 @@
 
         <br> <br>
         <div class="mx-auto text-center">
-          <button class="btn btn-primary  px-5" style="font-size: small"> Crear descuento</button>
+          <button class="btn btn-primary  px-5" style="font-size: small" routerLink="../cupon-descuento"> Crear descuento</button>
           <br> <br>
         </div>
         <br>
@@ -45,11 +45,133 @@
           <img class="mx-auto  pt-md-4  mensaje-mascota " src="../../../assets/images/mascota-condero.png" width="100%">
         </p>
         <br><br><br>
-        <button class="btn btn-primary" style="font-size: small"> Crear descuento</button>
+        <button class="btn btn-primary" style="font-size: small" routerLink="../cupon-descuento"> Crear descuento</button>
       </div>
     </div>
   </div>
+<!--  <div class="container-fluid mx-auto px-md-5 ">
 
+
+    <div class="form-row mb-2  ">
+      <div class=" input-group col-md-6 mr-md-auto">
+        <input class="form-control" style="font-size: small" type="text" #busquedaasd="ngModel"
+               [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="busquedasasd()"/>
+
+        <div class="input-group-append">
+          <span class="input-group-text  small"><li class="fas fa-search"></li></span>
+        </div>
+        &nbsp;  &nbsp;  &nbsp;
+        <label>Buscando...</label>
+        &nbsp;  &nbsp;  &nbsp;
+        <div class="spinner-grow text-primary ml-auto" role="status" aria-hidden="true"></div>
+      </div>
+      <div class="col-md-auto ">
+        <button class="btn btn-primary w-100 mt-md-0 mt-2" style="font-size:small">Nuevo Producto</button>
+      </div>
+    </div>
+
+
+    <div class="btn-group mb-2 animated  " [ngClass]="{'fadeOut':vectorProductos.size==0,'fadeIn':vectorProductos.size>0 }" *ngIf="vectorProductos.size>0">
+      <button class="btn btn-primary ">
+        Seleccionados &nbsp;<span class="badge badge-light">{{vectorProductos.size}}</span>
+      </button>
+      <button (click)="cambiarEstadoProductos(0)" placement="top" ngbTooltip="Mostrar"
+              class="btn btn-secondary  mt-md-0 mt-1" style="font-size: x-small">
+        <span class="fa fa-eye"></span>
+      </button>
+
+      <button (click)="cambiarEstadoProductos(1)" placement="top" ngbTooltip="Ocultar"
+              class="btn btn-secondary   mt-md-0 mt-1"
+              style="font-size: x-small"
+      ><span class="fa fa-eye-slash"></span></button>
+
+      <button (click)="cambiarEstadoProductos(2)" placement="top" ngbTooltip="Borrar"
+              class="btn btn-danger   mt-md-0 mt-1"
+              style="font-size: x-small"
+      ><span class="fa fa-trash"></span></button>
+
+
+    </div>
+    <table class="table table-bordered table-responsive-sm bg-white small w-100 text-center">
+      <thead>
+      <tr>
+        <th scope="col"><input (click)="agregarTodosProductos($event)" id="rastrearCantidad" type="checkbox"></th>
+        <th scope="col">ID_PRODUCTO</th>
+        <th scope="col">COD_PRODUCTO</th>
+        <th scope="col">ID_OFERTA</th>
+        <th scope="col">NOMBRE</th>
+        <th scope="col">DESCRIPCION</th>
+        <th scope="col">MARCA</th>
+        <th scope="col">CONDICION</th>
+        <th scope="col">PESO</th>
+        <th scope="col">OPCIÓN</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr [ngClass]="{'bg-gray':producto.ESTADO_OFERTA==1}"
+          *ngFor="let producto of   this.result  |slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+        <th scope="row"><input (click)="agregarProducto($event,producto.PRODUCTO.ID_OFERTA )" type="checkbox" [checked]="vectorProductos.has(producto.PRODUCTO.ID_OFERTA)"></th>
+        <td>
+          {{producto.PRODUCTO.ID_PRODUCTO}}
+        </td>
+        <td>
+          {{producto.PRODUCTO.COD_PRODUCTO}}
+        </td>
+        <td>
+          {{producto.ID_OFERTA}}
+        </td>
+        <td>
+          {{producto.PRODUCTO.NOMBRE_PRODUCTO}}
+        </td>
+        <td>
+          {{producto.PRODUCTO.DESCRIPCION_PRODUCTO}}
+        </td>
+        <td>
+          {{producto.PRODUCTO.MARCA}}
+        </td>
+        <td>
+          {{producto.PRODUCTO.CONDICION}}
+        </td>
+        <td>
+          {{producto.PRODUCTO.PESO_PRODUCTO}}
+        </td>
+        <td>
+          <div class="btn-group">
+            <button (click)="cambiarEstadoProducto(producto.ID_OFERTA,0)" placement="top" ngbTooltip="Mostrar"
+                    *ngIf="producto.ESTADO_OFERTA==1"
+                    class="btn btn-secondary  ml-md-2 mt-md-0 mt-1" style="font-size: x-small">
+              <span class="fa fa-eye"></span>
+            </button>
+
+            <button placement="top" ngbTooltip="Ocultar" *ngIf="producto.ESTADO_OFERTA==0"
+                    (click)="cambiarEstadoProducto(producto.ID_OFERTA,1)" class="btn btn-secondary  ml-md-2 mt-md-0 mt-1"
+                    style="font-size: x-small"
+            ><span class="fa fa-eye-slash"></span></button>
+
+            <button (click)="cambiarEstadoProducto(producto.ID_OFERTA,2)" placement="top" ngbTooltip="Borrar"
+                    class="btn btn-danger  ml-md-2 mt-md-0 mt-1"
+                    style="font-size: x-small"
+            ><span class="fa fa-trash"></span></button>
+
+            <button placement="top" ngbTooltip="Editar" *ngIf="producto.ESTADO_OFERTA==0"
+                    class="btn btn-primary ml-md-2 mt-md-0 mt-1" style="font-size: x-small"
+                    [routerLink]="['../modificar-producto/', producto.ID_OFERTA ]"><span
+              class="fa fa-edit"></span></button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between p-2">
+      <ngb-pagination
+        [(page)]="page"
+        [pageSize]="pageSize"
+        [collectionSize]="this.result.length "></ngb-pagination>
+    </div>
+
+
+  </div>-->
 </div>
 <br><br>
 </body>
