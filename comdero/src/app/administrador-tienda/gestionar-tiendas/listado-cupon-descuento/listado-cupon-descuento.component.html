@@ -1,13 +1,13 @@
 <body id="body">
 
-<div class="mt-5 " [ngClass]="{'container':!result, 'container-fluid':result}">
+<div class="mt-5 " [ngClass]="{'container':result.length==0, 'container-fluid':result.length>0}">
 
   <div class="row  justify-content-center" id="top">
     <h4 class=" col-11  ">Cupones de Descuento</h4>
     <hr class="col-11  ">
   </div>
 
-  <div *ngIf="!result" class="row justify-content-center   ">
+  <div *ngIf="result.length==0" class="row justify-content-center   ">
     <div class=" col-md-9  ml-md-5 ">
       <div class=" container  bg-white  shadow ">
         <br><br><br>
@@ -52,7 +52,7 @@
       </div>
     </div>
   </div>
-<div class="container-fluid mx-auto px-md-5 ">
+<div *ngIf="result.length>0 " class="container-fluid mx-auto px-md-5 ">
 
 
     <div class="form-row mb-2  ">
@@ -136,7 +136,7 @@
           {{descuento.TIPO_DESCUENTO}}
         </td>
         <td >
-          <span class="badge badge-primary W-100">{{descuento.ESTADO_DESCUENTO}}</span>
+          <span class="badge badge-primary W-100">{{descuento.ESTADO_FECHA}}</span>
         </td>
 
         <td>

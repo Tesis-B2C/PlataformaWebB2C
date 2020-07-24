@@ -60,7 +60,7 @@ async function saveDescuento(req, res) {
 async function getMisDescuentos(req, res) {
     try {
         let descuentoObtenidos = await Descuento.findAll({ //$or: [{ESTADO_OFERTA: 0},{ESTADO_OFERTA: 1}]
-            where: {NUM_TIENDA:req.params.id}, order: [['ID_DESCUENTO', 'DESC']]
+            where: {NUM_TIENDA:req.params.id,ESTADO_DESCUENTO:'0'}, order: [['ID_DESCUENTO', 'DESC']]
         });
 
         if (descuentoObtenidos.length) {
