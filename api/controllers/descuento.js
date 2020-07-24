@@ -18,10 +18,11 @@ async function saveDescuento(req, res) {
 
         let descuentoCreado = await Descuento.create({
                 MOTIVO_DESCUENTO: params.Descuento.Motivo_Descuento,
+                NUM_TIENDA: req.params.id,
                 PORCENTAJE_DESCUENTO: params.Descuento.Porcentaje_Descuento,
                 FECHA_INICIO: params.Descuento.Fecha_Inicio,
                 FECHA_FIN: params.Descuento.Fecha_FIn,
-                TIPO_DESCUENTO: params.Descuento.Fecha_Inicio,
+                TIPO_DESCUENTO: params.Descuento.Tipo_Descuento,
                 HORA_INICIO: params.Descuento.Hora_Inicio,
                 HORA_FIN: params.Descuento.Hora_Fin,
                 ESTADO_DESCUENTO: params.Descuento.Estado_Descuento
@@ -59,7 +60,7 @@ async function saveDescuento(req, res) {
 async function getMisDescuentos(req, res) {
     try {
         let descuentoObtenidos = await Descuento.findAll({ //$or: [{ESTADO_OFERTA: 0},{ESTADO_OFERTA: 1}]
-             where: {NUM_TIENDA: '11'}
+            where: {NUM_TIENDA:req.params.id}, order: [['ID_DESCUENTO', 'DESC']]
         });
 
         if (descuentoObtenidos.length) {

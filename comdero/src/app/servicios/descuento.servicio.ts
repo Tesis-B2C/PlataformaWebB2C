@@ -20,10 +20,10 @@ export class DescuentoServicio {
     this.url = GLOBAL.url;
   }
 
-  saveDescuento(objDescuento) {
+  saveDescuento(Id_Tienda,objDescuento) {
     let params = JSON.stringify(objDescuento);
     let headers = new HttpHeaders({"Content-type": "application/json"});
-    return this._http.post<objeto>(this.url + "saveDescuento", params, {headers: headers});
+    return this._http.post<objeto>(this.url + "saveDescuento/"+Id_Tienda, params, {headers: headers});
   }
 
   public getMisDescuentos(Id_Tienda){

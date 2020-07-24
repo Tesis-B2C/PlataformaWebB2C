@@ -11,6 +11,11 @@ const Descuento = db.sequelize.define('DESCUENTO', {
                 allowNull: false,
                 autoIncrement: true
             },
+        NUM_TIENDA:
+            {
+                type: Sequelize.INTEGER,
+                allowNull: false
+            },
         MOTIVO_DESCUENTO:
             {
                 type: Sequelize.STRING,

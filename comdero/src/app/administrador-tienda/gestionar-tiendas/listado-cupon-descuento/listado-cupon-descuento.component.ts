@@ -11,7 +11,13 @@ import {DescuentoServicio} from "../../../servicios/descuento.servicio";
 export class ListadoCuponDescuentoComponent implements OnInit {
 
   public identidadTienda;
-  misDescuentos;
+  public misDescuentos;
+  public busqueda;
+
+  public page = 1;
+  public pageSize = 10;
+  public vectorDescuentos= new Set();
+  public result = [];
   constructor(private _descuentoServicio:DescuentoServicio) { }
 
  async ngOnInit() {
@@ -20,11 +26,23 @@ export class ListadoCuponDescuentoComponent implements OnInit {
     let response = await this._descuentoServicio.getMisDescuentos(this.identidadTienda.NUM_TIENDA).toPromise();
     this.misDescuentos = response.data;
     debugger;
-  /*  this.result = this.misProductos;
-    console.log("mis productos", this.misProductos);*/
+   this.result = this.misDescuentos;
+    console.log("mis productos", this.vectorDescuentos);
     }catch (e) {
 
     }
+  }
+
+  public async filtrar() {
+    this.result = await this.search(this.busqueda);
+  }
+
+  public search(text: string): any[] {
+    return this.misDescuentos.filter(descuento => {
+      const term = text.toLowerCase();
+      debugger
+      return descuento.MOTIVO_DESCUENTO.toLowerCase().includes(term) || descuento.TIPO_DESCUENTO.toLowerCase().includes(term)  // || siguiente
+    });
   }
 
 }

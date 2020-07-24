@@ -19,22 +19,16 @@ export class ListadoProductosComponent implements OnInit {
   public page = 1;
   public pageSize = 10;
   public vectorProductos = new Set();
+  public identidadTienda;
+  public misProductos;
+  public result = [];
+
+  public ofertasPorBorrar = [];
 
   constructor(private modalService: NgbModal, private _productoServicio: ProductoServicio) {
 
   }
 
-  search(text: string): any[] {
-    return this.misProductos.filter(producto => {
-      const term = text.toLowerCase();
-      debugger
-      return producto.PRODUCTO.NOMBRE_PRODUCTO.toLowerCase().includes(term)  // || siguiente
-    });
-  }
-
-  public identidadTienda;
-  public misProductos;
-  public result = [];
 
   async ngOnInit() {
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
@@ -46,10 +40,17 @@ export class ListadoProductosComponent implements OnInit {
   }
 
 
-  async busquedasasd() {
+  public async filtrar() {
     this.result = await this.search(this.busqueda);
   }
 
+  public search(text: string): any[] {
+    return this.misProductos.filter(producto => {
+      const term = text.toLowerCase();
+      debugger
+      return producto.PRODUCTO.NOMBRE_PRODUCTO.toLowerCase().includes(term)  // || siguiente
+    });
+  }
 
   public async cambiarEstadoProducto(Id_Oferta, estado) {
 
@@ -73,15 +74,15 @@ export class ListadoProductosComponent implements OnInit {
 
   }
 
-  public ofertasPorBorrar=[];
+
   public async cambiarEstadoProductos(estado) {
     try {
       for (let producto of this.vectorProductos) {
         this.ofertasPorBorrar.push(producto);
       }
-      let responseUpdate = await this._productoServicio.updateEstadoProductos(  this.ofertasPorBorrar,estado).toPromise();
+      let responseUpdate = await this._productoServicio.updateEstadoProductos(this.ofertasPorBorrar, estado).toPromise();
       this.mensageCorrecto(responseUpdate.message);
-      this.vectorProductos=new Set();
+      this.vectorProductos = new Set();
       let response = await this._productoServicio.getMisProductos(this.identidadTienda.NUM_TIENDA).toPromise();
       this.misProductos = null;
       this.misProductos = response.data;
