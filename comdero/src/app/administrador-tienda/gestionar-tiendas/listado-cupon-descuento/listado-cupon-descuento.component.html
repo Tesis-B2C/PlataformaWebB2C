@@ -69,7 +69,7 @@
         <div class="spinner-grow text-primary ml-auto" role="status" aria-hidden="true"></div>
       </div>
       <div class="col-md-auto ">
-        <button class="btn btn-primary w-100 mt-md-0 mt-2" style="font-size:small">Nuevo Producto</button>
+        <button class="btn btn-primary w-100 mt-md-0 mt-2" style="font-size:small" routerLink="../cupon-descuento">Nuevo Descuento</button>
       </div>
     </div>
 
@@ -107,6 +107,8 @@
         <th scope="col">HORA INICIO</th>
         <th scope="col">HORA FIN</th>
         <th scope="col">TIPO</th>
+        <th scope="col">ESTADO</th>
+        <th scope="col">ACCIÓN</th>
 
       </tr>
       </thead>
@@ -132,6 +134,9 @@
         </td>
         <td>
           {{descuento.TIPO_DESCUENTO}}
+        </td>
+        <td >
+          <span class="badge badge-primary W-100">{{descuento.ESTADO_DESCUENTO}}</span>
         </td>
 
         <td>
