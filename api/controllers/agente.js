@@ -349,7 +349,6 @@ async function actualizarContrasenia(req, res) {
 
 
 module.exports = {          // para exportar todas las funciones de este modulo
-
     registrarAgente,
     autenticarAgente,
     autenticarActivarAgente,

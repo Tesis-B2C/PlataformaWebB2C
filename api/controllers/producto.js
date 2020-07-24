@@ -1,6 +1,6 @@
 'use strict'
 const Imagen_Producto = require("../models/imagen_producto");
-
+const Tienda = require("../models/tienda");
 const Oferta = require("../models/oferta");
 const Producto = require("../models/producto");
 const Producto_Categoria = require("../models/producto_categoria");
@@ -137,7 +137,6 @@ async function saveProducto(req, res) {
     }
 }
 
-
 async function getMisProductos(req, res) {
     try {
         let productosObtenidas = await Oferta.findAll({ //$or: [{ESTADO_OFERTA: 0},{ESTADO_OFERTA: 1}]
@@ -155,8 +154,6 @@ async function getMisProductos(req, res) {
             res.status(404).send({
                 message: 'Al parecer no se encuentra productos registrados en la base de datos'
             });
-
-
         }
     } catch (err) {
         res.status(500).send({
@@ -165,7 +162,6 @@ async function getMisProductos(req, res) {
     }
 
 }
-
 
 async function getProducto(req, res) {
     try {
@@ -430,12 +426,57 @@ async function updateEstadoProducto(req, res) {
     }
 }
 
-module.exports = {          // para exportar todas las funciones de este modulo
+/*     //INICIO SECCION PARA PAGINA PRINCIPAL//      */
+async function obtenerTodosProductos(req, res) {
+    const t = await db.sequelize.transaction({autocommit: false});
+    try {
+        let productosObtenidos = await Oferta.findAll({
+            include: [{
+                model: Producto,
+                attributes: ['ID_PRODUCTO','COD_PRODUCTO','NOMBRE_PRODUCTO'],
+                include: [{
+                    model: Variante,
+                    separate: true,
+                    attributes: ['PRECIO_UNITARIO'],
+                    group: ['ID_PRODUCTO', 'COD_PRODUCTO'],
+                    order: [['NUM_VARIANTE', 'ASC']],
+                    include: {
+                        model: Imagen_Producto,
+                        separate: true,
+                        attributes: ['IMAGEN'],
+                        group: 'NUM_VARIANTE',
+                        order: [['ID_IMAGEN', 'ASC']]
+                    }
+                }]
+            }, {
+                model: Tienda,
+                attributes: ['NOMBRE_COMERCIAL']
+            }],
+            attributes: ['ID_OFERTA'],
+            order: [['ID_OFERTA', 'ASC']],
+            transaction: t
+        });
 
+        await t.commit();
+        res.status(200).send({
+            data: productosObtenidos,
+            message: "Producto cargado correctamente"
+        });
+    } catch (e) {
+        await t.rollback();
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+
+/*     //FIN SECCION PARA PAGINA PRINCIPAL//      */
+
+module.exports = {          // para exportar todas las funciones de este modulo
     saveProducto,
     getMisProductos,
     getProducto,
     updateProducto,
-    updateEstadoProducto
-
+    updateEstadoProducto,
+    obtenerTodosProductos
 };

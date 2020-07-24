@@ -1,38 +1,26 @@
-
-.clearfix
-{
+.clearfix {
   clear: both;
   float: none;
 }
 
-
-
-
-
-.colorNavbar{
+.colorNavbar {
   background-color: #2a4c75;
-
 }
 
-.nav-link{
+.nav-link {
   color: white;
   font-weight: normal;
-
 }
 
 .nav-link:hover {
-
   color: #fca147;
   font-weight: bold;
 }
 
-
-
-
-.menu-categorias{
-display: flow;
+.menu-categorias {
+  display: flow;
 }
 
-.btn{
+.btn {
   font-size: small;
 }

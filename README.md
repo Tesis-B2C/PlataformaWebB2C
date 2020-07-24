@@ -63,3 +63,7 @@ npm install uuid --save // encriptar nombres
 npm install fs-extra --save // permite utilizar file system de forma asyncrona
 https://www.npmjs.com/package/multer
 https://www.npmjs.com/package/uuid
+
+------------PARA EL SLIDER CAROUSEL PRODUCTOS
+npm i ngx-owl-carousel-o@2.1.1 --save
+https://www.npmjs.com/package/ngx-owl-carousel-o#plugins

@@ -89,4 +89,11 @@ export class TiendaServicio {
     return this._http.put<objeto>(this.url + "actualizarTiendaSucursal/" + Num_Tienda, params, {headers: headers});
   }
 
+
+
+  obtenerTodosProductos() {
+    let headers = new HttpHeaders({"Content-type": "application/json"});
+    return this._http.get<objeto>(this.url + "obtenerTodosProductos", {headers: headers});
+  }
+
 }

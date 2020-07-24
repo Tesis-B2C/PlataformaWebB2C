@@ -11,14 +11,12 @@ async function getCategorias(req, res) {
         if (categoriasObtenidas.length) {
             res.status(200).send({
                 data: categoriasObtenidas,
-                message: "Dpa cargado correctamente"
+                message: "Categoria cargado correctamente"
             });
         } else {
             res.status(404).send({
-                message: 'No existe DPA registrada en la base de datos'
+                message: 'No existe categoria registrada en la base de datos'
             });
-
-
         }
     } catch (err) {
         res.status(500).send({
