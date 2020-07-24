@@ -52,7 +52,7 @@
       </div>
     </div>
   </div>
-<div *ngIf="result.length>0 " class="container-fluid mx-auto px-md-5 ">
+  <div *ngIf="result.length>0 " class="container-fluid mx-auto px-md-5 ">
 
 
     <div class="form-row mb-2  ">
@@ -69,7 +69,9 @@
         <div class="spinner-grow text-primary ml-auto" role="status" aria-hidden="true"></div>
       </div>
       <div class="col-md-auto ">
-        <button class="btn btn-primary w-100 mt-md-0 mt-2" style="font-size:small" routerLink="../cupon-descuento">Nuevo Descuento</button>
+        <button class="btn btn-primary w-100 mt-md-0 mt-2" style="font-size:small" routerLink="../cupon-descuento">Nuevo
+          Descuento
+        </button>
       </div>
     </div>
 
@@ -136,12 +138,14 @@
           {{descuento.TIPO_DESCUENTO}}
         </td>
         <td *ngIf="descuento.ESTADO_FECHA=='Programado'">
-          <span class="badge badge-pill badge-secondary" style="font-size: x-small; font-weight: normal">{{descuento.ESTADO_FECHA}}</span>
+          <span class="badge badge-pill badge-secondary"
+                style="font-size: x-small; font-weight: normal">{{descuento.ESTADO_FECHA}}</span>
         </td>
-        <td *ngIf="descuento.ESTADO_FECHA=='Activo'" >
-          <span class="badge badge-pill badge-primary" style="font-size: x-small; font-weight: normal">{{descuento.ESTADO_FECHA}}</span>
+        <td *ngIf="descuento.ESTADO_FECHA=='Activo'">
+          <span class="badge badge-pill badge-primary"
+                style="font-size: x-small; font-weight: normal">{{descuento.ESTADO_FECHA}}</span>
         </td>
-        <td  *ngIf="descuento.ESTADO_FECHA=='Vencido'">
+        <td *ngIf="descuento.ESTADO_FECHA=='Vencido'">
           <span class="badge badge-warning " style="font-size: small">{{descuento.ESTADO_FECHA}}</span>
         </td>
 
@@ -149,12 +153,14 @@
           <div class="btn-group">
 
 
-           
-
-            <button (click)="cambiarEstadoProducto(producto.ID_OFERTA,2)" placement="top" ngbTooltip="Borrar"
+            <button (click)="cambiarEstadoDescuento(descuento.ID_DESCUENTO,2)" placement="top" ngbTooltip="Borrar"
                     class="btn btn-danger  ml-md-2 mt-md-0 mt-1"
                     style="font-size: x-small"
             ><span class="fa fa-trash"></span></button>
+            <button placement="top" ngbTooltip="Ver"
+                    class="btn btn-primary ml-md-2 mt-md-0 mt-1"
+                    style="font-size: x-small"
+            ><u>Ver</u></button>
 
 
           </div>

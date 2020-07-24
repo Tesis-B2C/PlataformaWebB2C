@@ -83,9 +83,33 @@ async function getMisDescuentos(req, res) {
 
 }
 
+async function updateEstadoDescuento(req, res) {
+    try {
+        let descuentoActualizado = await Descuento.update({
+            ESTADO_DESCUENTO: req.body.estado,
+        }, {
+            where: {ID_DESCUENTO: req.params.id},
+        });
+        if (descuentoActualizado) {
+            res.status(200).send({
+                message: "El descuento ha sido actualizado correctamente"
+            });
+        } else {
+            res.status(404).send({
+                message: 'Al parecer no se encuentra un descuento  registrado en la base de datos'
+            });
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+
 module.exports = {          // para exportar todas las funciones de este modulo
 
     saveDescuento,
-    getMisDescuentos
+    getMisDescuentos,
+    updateEstadoDescuento
 
 };
