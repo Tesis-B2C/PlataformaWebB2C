@@ -32,9 +32,8 @@ export class CuponDescuentoComponent implements OnInit {
   public vectorProductos = new Set();
 
 
-  constructor(private router: Router, public toastr: ToastrService, private _descuento_Servicio: DescuentoServicio, private modalService: NgbModal, private _productoServicio: ProductoServicio) {
+  constructor(private router: Router, public toastr: ToastrService, private _descuentoServicio: DescuentoServicio, private modalService: NgbModal, private _productoServicio: ProductoServicio) {
     this.Descuento = new Descuento(null, null, null, null, 'Cupón', null, null, 0,'todos');
-
 
 
   }
@@ -193,7 +192,7 @@ export class CuponDescuentoComponent implements OnInit {
             console.log("Descuento antes de enviar ", this.Descuento, "productos", this.vectorProductosEnviar);
             this.objDescuento.Descuento = this.Descuento;
             this.objDescuento.vProductos = this.vectorProductosEnviar;
-            let response = await this._descuento_Servicio.saveDescuento(this.identidadTienda.NUM_TIENDA, this.objDescuento).toPromise();
+            let response = await this._descuentoServicio.saveDescuento(this.identidadTienda.NUM_TIENDA, this.objDescuento).toPromise();
             this.mensageCorrecto(response.message);
             this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/listado-cupon-descuento'])
 
@@ -208,7 +207,7 @@ export class CuponDescuentoComponent implements OnInit {
           this.objDescuento.Descuento = this.Descuento;
           this.objDescuento.vProductos = this.vectorProductosEnviar;
           console.log("Descuento antes de enviar ", this.Descuento, "productos", this.vectorProductosEnviar);
-          let response = await this._descuento_Servicio.saveDescuento(this.identidadTienda.NUM_TIENDA, this.objDescuento).toPromise();
+          let response = await this._descuentoServicio.saveDescuento(this.identidadTienda.NUM_TIENDA, this.objDescuento).toPromise();
           this.mensageCorrecto(response.message);
           this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/listado-cupon-descuento'])
 

@@ -5,11 +5,13 @@ import Swal from "sweetalert2";
 import {Descuento} from "../../../modelos/descuento";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ProductoServicio} from "../../../servicios/producto.servicio";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-modificar-cupon-descuento',
   templateUrl: './modificar-cupon-descuento.component.html',
-  styleUrls: ['./modificar-cupon-descuento.component.css']
+  styleUrls: ['./modificar-cupon-descuento.component.css'],
+  providers: [DatePipe]
 })
 export class ModificarCuponDescuentoComponent implements OnInit {
   public idDescuento;
@@ -30,8 +32,15 @@ export class ModificarCuponDescuentoComponent implements OnInit {
   public identidadTienda
   public misProductos = [];
   public busqueda;
+  // public bsRangeValue;
 
-  constructor(private _productoServicio: ProductoServicio, private modalService: NgbModal, private _servicioDescuento: DescuentoServicio, private route: ActivatedRoute) {
+
+  public bsValue;
+  public bsRangeValue: Date[];
+  public maxDate;
+  public banderaModificar: boolean = false;
+
+  constructor(private datePipe: DatePipe, private _productoServicio: ProductoServicio, private modalService: NgbModal, private _descuentoServicio: DescuentoServicio, private route: ActivatedRoute) {
     this.Descuento = new Descuento(null, null, null, null, null, null, null, null, null);
 
   }
@@ -44,15 +53,19 @@ export class ModificarCuponDescuentoComponent implements OnInit {
       this.misProductos.push(misProductos[i].PRODUCTO);
       this.result.push(misProductos[i].PRODUCTO);
     }
-
     await this.iniciarModificarDescuento();
+
+  }
+
+  public iniciarEdicion() {
+    this.banderaModificar = true;
 
   }
 
   public async getDescuento() {
     try {
       this.idDescuento = this.route.snapshot.params.id;
-      let response = await this._servicioDescuento.getDescuento(this.idDescuento).toPromise();
+      let response = await this._descuentoServicio.getDescuento(this.idDescuento).toPromise();
       this.identidadDescuento = response.data
 
 
@@ -64,7 +77,9 @@ export class ModificarCuponDescuentoComponent implements OnInit {
     }
   }
 
+
   public async iniciarModificarDescuento() {
+    this.cancelar();
     await this.getDescuento();
     this.Descuento.Motivo_Descuento = this.identidadDescuento.MOTIVO_DESCUENTO;
     this.Descuento.Porcentaje_Descuento = this.identidadDescuento.PORCENTAJE_DESCUENTO;
@@ -75,6 +90,7 @@ export class ModificarCuponDescuentoComponent implements OnInit {
     this.Descuento.Tipo_Descuento = this.identidadDescuento.TIPO_DESCUENTO;
     this.Descuento.Estado_Descuento = this.identidadDescuento.ESTADO_DESCUENTO;
     this.Descuento.AplicarA = this.identidadDescuento.APLICARA;
+
     if (this.Descuento.Tipo_Descuento == 'Cupón') {
       this.banderaCuponDescuento = true;
     } else if (this.Descuento.Tipo_Descuento == 'Automático') {
@@ -97,7 +113,24 @@ export class ModificarCuponDescuentoComponent implements OnInit {
       }
 
     }
+    this.bsValue = new Date(this.datePipe.transform(this.Descuento.Fecha_Inicio));
+    this.maxDate = new Date(this.datePipe.transform(this.Descuento.Fecha_FIn));
+    this.maxDate.setDate(this.maxDate.getDate() + 7);
+    this.bsRangeValue = [this.bsValue, this.maxDate];
 
+  }
+
+  public cancelar() {
+    this.banderaCuponDescuento = true;
+    this.banderaValidaciones = true;
+    this.vectorProductos = new Set();
+    this.vectorProductosEnviar = [];
+    this.page = 1;
+    this.pageSize = 10;
+
+    this.page2 = 1;
+    this.pageSize2 = 10;
+    this.banderaModificar = false
   }
 
   public generarCodigDescuento() {
@@ -115,7 +148,7 @@ export class ModificarCuponDescuentoComponent implements OnInit {
     return result;
   }
 
-  opcionAplicarA(value) {
+  public opcionAplicarA(value) {
     debugger;
     this.banderaOpcionAplicarA = value;
     if (this.banderaOpcionAplicarA) {
@@ -149,7 +182,7 @@ export class ModificarCuponDescuentoComponent implements OnInit {
     this.result = await this.search(this.busqueda);
   }
 
-  search(text: string): any[] {
+  public search(text: string): any[] {
     return this.misProductos.filter(producto => {
       const term = text.toLowerCase();
       debugger
@@ -171,6 +204,34 @@ export class ModificarCuponDescuentoComponent implements OnInit {
     }
 
   }
+
+  public borrar(producto) {
+    this.vectorProductos.delete(producto)
+    this.vectorProductosEnviar = [];
+    for (let producto of this.vectorProductos) {
+      this.vectorProductosEnviar.push(producto);
+    }
+  }
+
+  public agregar() {
+    this.vectorProductosEnviar = [];
+    for (let producto of this.vectorProductos) {
+
+      this.vectorProductosEnviar.push(producto);
+    }
+  }
+
+
+  public agregarProducto(event, cod) {
+    if (event.target.checked) {
+      debugger
+      this.vectorProductos.add(cod);
+      console.log("vector productos", this.vectorProductos)
+    } else {
+      this.vectorProductos.delete(cod);
+    }
+  }
+
 
   mensageError(mensaje) {
     Swal.fire({
