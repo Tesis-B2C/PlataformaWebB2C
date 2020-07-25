@@ -121,7 +121,7 @@
                        name="nombreProducto" required [disabled]="!this.banderaModificar"
                        type="text" [ngClass]="{'is-invalid': Codigo.invalid && banderaValidaciones}">
                 <div class="input-group-append">
-                  <button class="btn btn-light" (click)="generarCodigDescuento()"
+                  <button class="btn btn-light" (click)="generarCodigDescuento()" [disabled]="!banderaModificar"
                           [ngClass]="{'border-red': Codigo.invalid && banderaValidaciones}"> Generar
                   </button>
                 </div>
@@ -234,7 +234,8 @@
               {{producto.DESCRIPCION_PRODUCTO}}
             </td>
             <td>
-              <button class="btn" [disabled]="!this.banderaModificar" (click)="borrar(producto)"><span class="fa fa-trash " style="color: red"></span>
+              <button class="btn" [disabled]="!this.banderaModificar" (click)="borrar(producto)"><span
+                class="fa fa-trash " style="color: red"></span>
               </button>
           </tr>
           </tbody>
@@ -248,7 +249,8 @@
             [collectionSize]=" this.vectorProductosEnviar.length "></ngb-pagination>
         </div>
 
-        <button *ngIf="this.Descuento.AplicarA=='espesificos'" class="btn btn-primary col-md-3 mx-auto p-1" [disabled]="!banderaModificar"
+        <button *ngIf="this.Descuento.AplicarA=='espesificos'" class="btn btn-primary col-md-3 mx-auto p-1"
+                [disabled]="!banderaModificar"
                 (click)="abrirModalProductos(modalProductos)">Agregar Producto &nbsp; <span
           class="fa fa-plus "></span></button>
       </form>
@@ -296,7 +298,8 @@
               <input class="px-1 tamaniohorario form-control text-center"
                      type="time" name="horaInicio"
                      #HoraInicio="ngModel" [(ngModel)]="this.Descuento.Hora_Inicio" required
-                     [ngClass]="{'borderr-red': HoraInicio.invalid && banderaValidaciones}" [disabled]="!this.banderaModificar">
+                     [ngClass]="{'borderr-red': HoraInicio.invalid && banderaValidaciones}"
+                     [disabled]="!this.banderaModificar">
               <div *ngIf="HoraInicio.errors?.required && banderaValidaciones" class="mt-2">
                 <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
               </div>
