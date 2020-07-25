@@ -23,6 +23,10 @@ export class ModificarCuponDescuentoComponent implements OnInit {
   public vectorProductosEnviar = [];
   public page = 1;
   public pageSize = 10;
+
+  public page2 = 1;
+  public pageSize2 = 10;
+
   public identidadTienda
   public misProductos = [];
   public busqueda;
@@ -83,10 +87,15 @@ export class ModificarCuponDescuentoComponent implements OnInit {
         this.vectorProductosEnviar.push(this.result[i]);
       }
     } else {
-      for (let i in this.identidadDescuento.PRODUCTO_DESCUENTOs) {
-        this.vectorProductosEnviar.push(this.identidadDescuento.PRODUCTO_DESCUENTOs[i].producto);
-        //this.vectorProductos.add(this.identidadDescuento.PRODUCTO_DESCUENTOs[i].producto);
+      for (let i in this.result) {
+        for (let j in this.identidadDescuento.PRODUCTO_DESCUENTOs) {
+          if (this.identidadDescuento.PRODUCTO_DESCUENTOs[j].ID_PRODUCTO == this.result[i].ID_PRODUCTO) {
+            this.vectorProductos.add(this.result[i]);
+            this.vectorProductosEnviar.push(this.result[i]);
+          }
+        }
       }
+
     }
 
   }
@@ -110,6 +119,7 @@ export class ModificarCuponDescuentoComponent implements OnInit {
     debugger;
     this.banderaOpcionAplicarA = value;
     if (this.banderaOpcionAplicarA) {
+
       this.Descuento.AplicarA = 'todos';
       for (let i in this.result) {
         this.vectorProductos.add(this.result[i]);

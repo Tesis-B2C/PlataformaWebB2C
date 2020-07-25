@@ -219,7 +219,7 @@
           </thead>
           <tbody>
           <tr [ngClass]="{'bg-gray':producto.ESTADO_OFERTA==1}"
-              *ngFor="let producto of   this.vectorProductosEnviar  |slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+              *ngFor="let producto of   this.vectorProductosEnviar  |slice: (page2-1) * pageSize2 : (page2-1) * pageSize2 + pageSize2; index as i">
 
             <td>
               {{producto.PRODUCTO.ID_PRODUCTO}}
@@ -244,8 +244,8 @@
         <div *ngIf="vectorProductosEnviar.length>0 && !banderaOpcionAplicarA"
              class="d-flex justify-content-between p-2">
           <ngb-pagination
-            [(page)]="page"
-            [pageSize]="pageSize"
+            [(page)]="page2"
+            [pageSize]="pageSize2"
             [collectionSize]=" this.vectorProductosEnviar.length "></ngb-pagination>
         </div>
 

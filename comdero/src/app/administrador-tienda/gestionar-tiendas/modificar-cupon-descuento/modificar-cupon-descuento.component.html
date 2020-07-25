@@ -34,7 +34,7 @@
         <tr [ngClass]="{'bg-gray':producto.ESTADO_OFERTA==1}"
             *ngFor="let producto of   this.result  |slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
           <th scope="row"><input (click)="agregarProducto($event,producto )" type="checkbox"
-                                 [checked]="vectorProductos.has(producto)"></th>
+                                 [checked]="this.vectorProductos.has(producto)"></th>
           <td>
             {{producto.ID_PRODUCTO}}
           </td>
@@ -204,7 +204,7 @@
         </div>
 
 
- <table *ngIf="vectorProductosEnviar.length>0 && this.Descuento.AplicarA=='espesificos'"
+        <table *ngIf="vectorProductosEnviar.length>0 && this.Descuento.AplicarA=='espesificos'"
                class="table  table-responsive-sm bg-white small w-100 text-center">
           <thead>
           <tr>
@@ -218,7 +218,7 @@
           </thead>
           <tbody>
           <tr [ngClass]="{'bg-gray':producto.ESTADO_OFERTA==1}"
-              *ngFor="let producto of   this.vectorProductosEnviar  |slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+              *ngFor="let producto of   this.vectorProductosEnviar  |slice: (page2-1) * pageSize2 : (page-1) * pageSize2 + pageSize2; index as i">
 
             <td>
               {{producto.ID_PRODUCTO}}
@@ -243,8 +243,8 @@
         <div *ngIf="vectorProductosEnviar.length>0 && this.Descuento.AplicarA=='espesificos'"
              class="d-flex justify-content-between p-2">
           <ngb-pagination
-            [(page)]="page"
-            [pageSize]="pageSize"
+            [(page)]="page2"
+            [pageSize]="pageSize2"
             [collectionSize]=" this.vectorProductosEnviar.length "></ngb-pagination>
         </div>
 
@@ -258,108 +258,108 @@
           <h6>Periodo de activación </h6>
         </div>
       </div>
-     <!-- <form class=" card card-body mt-3" name="formTiempo">
+      <!-- <form class=" card card-body mt-3" name="formTiempo">
 
-        <div class="container">
-          <label>Seleccione el rango de tienpo que el cupón de descuento va a estar activo</label>
-          <br> <br>
-          <div class="row">
+         <div class="container">
+           <label>Seleccione el rango de tienpo que el cupón de descuento va a estar activo</label>
+           <br> <br>
+           <div class="row">
 
-            <div class="col-xs-12 col-12 col-sm-5 col-md-6 col-lg-4 form-group">
-              <label>Rango de duracion</label>
-              <div class="input-group ">
-                <input placeholder="01/07/2020 - 04/08/2020" type="text" class="form-control" bsDaterangepicker
-                       #Calendario="ngModel"
-                       style="border-right: none"
-                       [(ngModel)]="bsRangeValue" name="calendario"
-                       [bsConfig]='{ rangeInputFormat: "DD/MM/YYYY", locale: "es", adaptivePosition: true, containerClass:"theme-orange" }'
-                       #dpr="bsDaterangepicker" required
-                       [ngClass]="{'borderr-red': Calendario.invalid && banderaValidaciones}">
-                <div class="input-group-append">
-                  <span class="input-group-text fa fa-calendar"
-                        [ngClass]="{'borderr-red': Calendario.invalid && banderaValidaciones}"
-                        style="background-color: white; font-size: small"></span>
-                </div>
-              </div>
-              <div *ngIf="Calendario.errors?.required && banderaValidaciones" class="mt-2">
-                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
-              </div>
-            </div>
+             <div class="col-xs-12 col-12 col-sm-5 col-md-6 col-lg-4 form-group">
+               <label>Rango de duracion</label>
+               <div class="input-group ">
+                 <input placeholder="01/07/2020 - 04/08/2020" type="text" class="form-control" bsDaterangepicker
+                        #Calendario="ngModel"
+                        style="border-right: none"
+                        [(ngModel)]="bsRangeValue" name="calendario"
+                        [bsConfig]='{ rangeInputFormat: "DD/MM/YYYY", locale: "es", adaptivePosition: true, containerClass:"theme-orange" }'
+                        #dpr="bsDaterangepicker" required
+                        [ngClass]="{'borderr-red': Calendario.invalid && banderaValidaciones}">
+                 <div class="input-group-append">
+                   <span class="input-group-text fa fa-calendar"
+                         [ngClass]="{'borderr-red': Calendario.invalid && banderaValidaciones}"
+                         style="background-color: white; font-size: small"></span>
+                 </div>
+               </div>
+               <div *ngIf="Calendario.errors?.required && banderaValidaciones" class="mt-2">
+                 <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+               </div>
+             </div>
 
 
-            <div class="col-xs-12 col-12 col-sm-4 col-md-12 col-lg-4 form-group">
+             <div class="col-xs-12 col-12 col-sm-4 col-md-12 col-lg-4 form-group">
 
-              <label>Hora de inicio</label>
-              <input class="px-1 tamaniohorario form-control text-center"
-                     type="time" name="horaInicio"
-                     #HoraInicio="ngModel" [(ngModel)]="this.Descuento.Hora_Inicio" required
-                     [ngClass]="{'borderr-red': HoraInicio.invalid && banderaValidaciones}">
-              <div *ngIf="HoraInicio.errors?.required && banderaValidaciones" class="mt-2">
-                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
-              </div>
-            </div>
-            <div class="col-xs-12 col-12 col-sm-4 col-md-12 col-lg-4 form-group">
+               <label>Hora de inicio</label>
+               <input class="px-1 tamaniohorario form-control text-center"
+                      type="time" name="horaInicio"
+                      #HoraInicio="ngModel" [(ngModel)]="this.Descuento.Hora_Inicio" required
+                      [ngClass]="{'borderr-red': HoraInicio.invalid && banderaValidaciones}">
+               <div *ngIf="HoraInicio.errors?.required && banderaValidaciones" class="mt-2">
+                 <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+               </div>
+             </div>
+             <div class="col-xs-12 col-12 col-sm-4 col-md-12 col-lg-4 form-group">
 
-              <label>Hora de finalizacion</label>
-              <input class="px-1 tamaniohorario form-control text-center"
-                     type="time" name="horaFin"
-                     #HoraFin="ngModel" [(ngModel)]="this.Descuento.Hora_Fin"
-                     [ngClass]="{'borderr-red': HoraFin.invalid && banderaValidaciones}" required>
-              <div *ngIf="HoraFin.errors?.required && banderaValidaciones" class="mt-2">
-                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>-->
+               <label>Hora de finalizacion</label>
+               <input class="px-1 tamaniohorario form-control text-center"
+                      type="time" name="horaFin"
+                      #HoraFin="ngModel" [(ngModel)]="this.Descuento.Hora_Fin"
+                      [ngClass]="{'borderr-red': HoraFin.invalid && banderaValidaciones}" required>
+               <div *ngIf="HoraFin.errors?.required && banderaValidaciones" class="mt-2">
+                 <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+               </div>
+             </div>
+           </div>
+         </div>
+       </form>-->
       <hr>
 
 
-    <!--  <form class="card card-body  col-md-12  mt-4">
-        <div class=" container">
-          <h6>Acciones</h6>
-          <hr>
-          <div class="text-right">
-            <button *ngIf="banderaModificar" (click)="this.guardarProducto()"
-                    class="btn btn-primary text-nowrap mb-4  col-auto"
-                    type="button">
-              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
-              Guardar Producto &nbsp;&nbsp;
-              <span class="fa fa-save"></span>
-            </button>
-            &nbsp;&nbsp;
-            <button *ngIf="banderaModificar" class="btn btn-light text-nowrap mb-4  col-auto"
-                    (click)="iniciarModificarProducto()">
-              Cancelar &nbsp;&nbsp;
-              <span class="fa fa-close"></span></button>
+      <!--  <form class="card card-body  col-md-12  mt-4">
+          <div class=" container">
+            <h6>Acciones</h6>
+            <hr>
+            <div class="text-right">
+              <button *ngIf="banderaModificar" (click)="this.guardarProducto()"
+                      class="btn btn-primary text-nowrap mb-4  col-auto"
+                      type="button">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+                Guardar Producto &nbsp;&nbsp;
+                <span class="fa fa-save"></span>
+              </button>
+              &nbsp;&nbsp;
+              <button *ngIf="banderaModificar" class="btn btn-light text-nowrap mb-4  col-auto"
+                      (click)="iniciarModificarProducto()">
+                Cancelar &nbsp;&nbsp;
+                <span class="fa fa-close"></span></button>
 
 
-            &nbsp;&nbsp;
-            <button *ngIf="!banderaModificar && identidadProducto.ESTADO_OFERTA==0"
-                    class="btn btn-warning text-nowrap mb-4  col-auto" (click)="iniciarEdicion()">
-              Modificar &nbsp;&nbsp;
-              <span class="fa fa-edit"></span></button>
-            &nbsp;&nbsp;
-            <button *ngIf="!banderaModificar && identidadProducto.ESTADO_OFERTA==0"
-                    class="btn btn-light text-nowrap mb-4  col-auto" (click)="guardarCambiarEstadoProducto(1)">
-              Ocultar &nbsp;&nbsp;
-              <span class="fa fa-eye-slash"></span></button>
+              &nbsp;&nbsp;
+              <button *ngIf="!banderaModificar && identidadProducto.ESTADO_OFERTA==0"
+                      class="btn btn-warning text-nowrap mb-4  col-auto" (click)="iniciarEdicion()">
+                Modificar &nbsp;&nbsp;
+                <span class="fa fa-edit"></span></button>
+              &nbsp;&nbsp;
+              <button *ngIf="!banderaModificar && identidadProducto.ESTADO_OFERTA==0"
+                      class="btn btn-light text-nowrap mb-4  col-auto" (click)="guardarCambiarEstadoProducto(1)">
+                Ocultar &nbsp;&nbsp;
+                <span class="fa fa-eye-slash"></span></button>
 
-            <button *ngIf="!banderaModificar && identidadProducto.ESTADO_OFERTA==1"
-                    class="btn btn-light text-nowrap mb-4  col-auto" (click)="guardarCambiarEstadoProducto(0)">
-              Mostrar &nbsp;&nbsp;
-              <span class="fa fa-eye"></span></button>
-            &nbsp;&nbsp;
-            <button *ngIf="!banderaModificar" class="btn btn-danger text-nowrap mb-4  col-auto"
-                    (click)="guardarCambiarEstadoProducto(2)">
-              Eliminar &nbsp;&nbsp;
-              <span class="fa fa-trash"></span></button>
+              <button *ngIf="!banderaModificar && identidadProducto.ESTADO_OFERTA==1"
+                      class="btn btn-light text-nowrap mb-4  col-auto" (click)="guardarCambiarEstadoProducto(0)">
+                Mostrar &nbsp;&nbsp;
+                <span class="fa fa-eye"></span></button>
+              &nbsp;&nbsp;
+              <button *ngIf="!banderaModificar" class="btn btn-danger text-nowrap mb-4  col-auto"
+                      (click)="guardarCambiarEstadoProducto(2)">
+                Eliminar &nbsp;&nbsp;
+                <span class="fa fa-trash"></span></button>
 
+
+            </div>
 
           </div>
-
-        </div>
-      </form>-->
+        </form>-->
 
 
     </div>

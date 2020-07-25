@@ -25,6 +25,8 @@ export class CuponDescuentoComponent implements OnInit {
   public banderaOpcionAplicarA: boolean = true;
   public page = 1;
   public pageSize = 10;
+  public page2 = 1;
+  public pageSize2 = 10;
   public busqueda;
   public banderaCuponDescuento: boolean = true;
   public vectorProductos = new Set();
