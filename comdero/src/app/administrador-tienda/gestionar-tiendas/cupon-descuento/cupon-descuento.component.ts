@@ -37,6 +37,8 @@ export class CuponDescuentoComponent implements OnInit {
     vProductos: null
   };
 
+  public loading:boolean=false;
+
   constructor(private router: Router, public toastr: ToastrService, private _descuentoServicio: DescuentoServicio, private modalService: NgbModal, private _productoServicio: ProductoServicio) {
     this.Descuento = new Descuento(null, null, null, null, 'Cupón', null, null, 0,'todos');
 
@@ -181,6 +183,7 @@ export class CuponDescuentoComponent implements OnInit {
 
   public async guardarDescuento() {
     try {
+      this.loading=true;
       this.banderaValidaciones = true;
       if (document.forms["formInformacion"].checkValidity() && document.forms["formDescuento"].checkValidity() && document.forms["formTiempo"].checkValidity()) {
 
@@ -195,10 +198,11 @@ export class CuponDescuentoComponent implements OnInit {
             let response = await this._descuentoServicio.saveDescuento(this.identidadTienda.NUM_TIENDA, this.objDescuento).toPromise();
             this.mensageCorrecto(response.message);
             this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/listado-cupon-descuento'])
-
+            this.loading = false;
           } else {
             this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Elige al menos un producto</p></div>', "Error!",
               {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
+            this.loading=false;
           }
         } else {
           this.Descuento.Fecha_Inicio = this.obtenerFecha(this.bsRangeValue[0]);
@@ -209,6 +213,7 @@ export class CuponDescuentoComponent implements OnInit {
           console.log("Descuento antes de enviar ", this.Descuento, "productos", this.vectorProductosEnviar);
           let response = await this._descuentoServicio.saveDescuento(this.identidadTienda.NUM_TIENDA, this.objDescuento).toPromise();
           this.mensageCorrecto(response.message);
+          this.loading=false;
           this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/listado-cupon-descuento'])
 
         }
@@ -218,8 +223,10 @@ export class CuponDescuentoComponent implements OnInit {
         let body = document.getElementById('body') as HTMLElement;
         body.scrollTo(0, 0);
         window.scroll(0, 0);
+        this.loading=false;
       }
     } catch (e) {
+      this.loading=false;
       console.log("error:" + e);
       if (JSON.stringify((e).error.message))
         this.mensageError(JSON.stringify((e).error.message));

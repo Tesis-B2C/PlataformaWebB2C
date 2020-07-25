@@ -64,9 +64,11 @@
           <span class="input-group-text  small"><li class="fas fa-search"></li></span>
         </div>
         &nbsp; &nbsp; &nbsp;
-        <label>Buscando...</label>
-        &nbsp; &nbsp; &nbsp;
-        <div class="spinner-grow text-primary ml-auto" role="status" aria-hidden="true"></div>
+        <div *ngIf="loading">
+          <label>Buscando...</label>
+          &nbsp; &nbsp; &nbsp;
+          <div class="spinner-grow text-primary ml-auto" role="status" aria-hidden="true"></div>
+        </div>
       </div>
       <div class="col-md-auto ">
         <button class="btn btn-primary w-100 mt-md-0 mt-2" style="font-size:small" routerLink="../cupon-descuento">Nuevo
@@ -146,10 +148,12 @@
                 style="font-size: x-small; font-weight: normal">{{descuento.ESTADO_FECHA}}</span>
         </td>
         <td *ngIf="descuento.ESTADO_FECHA=='Vencido'">
-          <span class="badge badge-pill badge-warning "  style="font-size: x-small; font-weight: normal">{{descuento.ESTADO_FECHA}}</span>
+          <span class="badge badge-pill badge-warning "
+                style="font-size: x-small; font-weight: normal">{{descuento.ESTADO_FECHA}}</span>
         </td>
         <td *ngIf="descuento.ESTADO_FECHA=='Desactivado'">
-          <span class="badge badge-pill badge-danger " style="font-size: x-small; font-weight: normal">{{descuento.ESTADO_FECHA}}</span>
+          <span class="badge badge-pill badge-danger "
+                style="font-size: x-small; font-weight: normal">{{descuento.ESTADO_FECHA}}</span>
         </td>
 
         <td>

@@ -20,9 +20,9 @@ export class ListadoProductosComponent implements OnInit {
   public pageSize = 10;
   public vectorProductos = new Set();
   public identidadTienda;
-  public misProductos:any=[];
+  public misProductos: any = [];
   public result = [];
-
+  public loading: boolean = false;
   public ofertasPorBorrar = [];
 
   constructor(private modalService: NgbModal, private _productoServicio: ProductoServicio) {
@@ -31,17 +31,21 @@ export class ListadoProductosComponent implements OnInit {
 
 
   async ngOnInit() {
+    this.loading=true;
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
     let response = await this._productoServicio.getMisProductos(this.identidadTienda.NUM_TIENDA).toPromise();
     this.misProductos = response.data;
     debugger;
     this.result = this.misProductos;
     console.log("mis productos", this.misProductos);
+    this.loading=false;
   }
 
 
   public async filtrar() {
+    this.loading=true;
     this.result = await this.search(this.busqueda);
+    this.loading=false;
   }
 
   public search(text: string): any[] {
@@ -77,7 +81,7 @@ export class ListadoProductosComponent implements OnInit {
 
   public async cambiarEstadoProductos(estado) {
     try {
-      this.ofertasPorBorrar=[];
+      this.ofertasPorBorrar = [];
       for (let producto of this.vectorProductos) {
         this.ofertasPorBorrar.push(producto);
       }

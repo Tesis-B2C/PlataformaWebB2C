@@ -63,9 +63,11 @@
         <span class="input-group-text  small"><li class="fas fa-search"></li></span>
       </div>
       &nbsp;  &nbsp;  &nbsp;
-      <label>Buscando...</label>
+      <div *ngIf="loading">
+      <label>Buscandos...</label>
       &nbsp;  &nbsp;  &nbsp;
       <div class="spinner-grow text-primary ml-auto" role="status" aria-hidden="true"></div>
+      </div>
     </div>
     <div class="col-md-auto ">
       <button class="btn btn-primary w-100 mt-md-0 mt-2" style="font-size:small">Nuevo Producto</button>
