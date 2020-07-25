@@ -73,7 +73,7 @@ export class CuponDescuentoComponent implements OnInit {
   }
 
 
-  async busquedasasd() {
+  async filtrar() {
     this.result = await this.search(this.busqueda);
   }
 
