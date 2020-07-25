@@ -9,7 +9,8 @@ export class Descuento {
     public Tipo_Descuento:String,
     public Hora_Inicio:Time,
     public Hora_Fin:Time,
-    public Estado_Descuento:Number
+    public Estado_Descuento:Number,
+    public AplicarA:String
 
   ) {
   }

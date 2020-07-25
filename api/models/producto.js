@@ -90,7 +90,7 @@ Comentario.belongsTo(Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PROD
 //PRODUCTO - PRODUCTO_DESCUENTO
 Producto.hasMany(Producto_Descuento, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
 Producto.hasMany(Producto_Descuento, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
-Producto_Descuento.belongsTo(Producto, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
+Producto_Descuento.belongsTo(Producto, {as:'producto',foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
 Producto_Descuento.belongsTo(Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
 
 //PRODUCTO - CALIFICACION

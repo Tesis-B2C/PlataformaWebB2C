@@ -55,6 +55,11 @@ const Descuento = db.sequelize.define('DESCUENTO', {
             {
                 type: Sequelize.INTEGER,
                 allowNull: false
+            },
+        APLICARA:
+            {
+                type: Sequelize.STRING,
+                allowNull: false
             }
     },
     {

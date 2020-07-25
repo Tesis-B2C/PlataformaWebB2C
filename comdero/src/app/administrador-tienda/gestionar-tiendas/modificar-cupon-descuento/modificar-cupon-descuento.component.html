@@ -36,21 +36,20 @@
           <th scope="row"><input (click)="agregarProducto($event,producto )" type="checkbox"
                                  [checked]="vectorProductos.has(producto)"></th>
           <td>
-            {{producto.PRODUCTO.ID_PRODUCTO}}
+            {{producto.ID_PRODUCTO}}
           </td>
           <td>
-            {{producto.PRODUCTO.COD_PRODUCTO}}
+            {{producto.COD_PRODUCTO}}
           </td>
 
           <td>
-            {{producto.PRODUCTO.NOMBRE_PRODUCTO}}
+            {{producto.NOMBRE_PRODUCTO}}
           </td>
 
 
         </tr>
         </tbody>
       </table>
-
       <div class="d-flex justify-content-between p-2">
         <ngb-pagination
           [(page)]="page"
@@ -78,7 +77,7 @@
 <div class="container mt-5 ">
 
   <div class="row  justify-content-center" id="top">
-    <h4 class=" col-11  ">Descuentos</h4>
+    <h4 class=" col-11  ">Modificar Descuento</h4>
     <hr class="col-11  ">
   </div>
 
@@ -86,18 +85,18 @@
   <div class="row justify-content-center">
     <div class=" col-md-10  ">
       <div class="form-row">
-        <div class="col-md-6  form-group ">
-          <button [disabled]="banderaCuponDescuento"
+        <div class="col-12  form-group ">
+          <button *ngIf="banderaCuponDescuento"
                   class="btnActivo btn btn-outline-primary px-4 py-3 text-center btn-paso2 w-100"
-                  type="submit" (click)="cambiarOpcionDescuento(true)">
+                  type="submit">
             <i class="fas fa-tag fa-lg fa-2x"></i> &nbsp; &nbsp;Cupon de descuento
           </button>
         </div>
 
-        <div class="col-md-6  form-group">
-          <button [disabled]="!banderaCuponDescuento"
+        <div class="col-12  form-group">
+          <button *ngIf="!banderaCuponDescuento"
                   class="btnActivo btn btn-outline-primary px-3 py-3 text-center btn-paso2 w-100 "
-                  type="submit" (click)="cambiarOpcionDescuento(false)">
+                  type="submit">
             <i class="fa fa-percentage fa-lg fa-2x"></i> &nbsp; &nbsp; Descuento automático
           </button>
         </div>
@@ -107,7 +106,7 @@
     <br><br><br><br>
     <div class="col-md-10" id="panelUno">
 
-      <h6>Código de descuento</h6>
+      <h6>Código de descuento {{this.Descuento.Motivo_Descuento}}</h6>
       <form #FormInformacion id="formInformacion" name="formInformacion" class="mt-3 card card-body validate-form">
 
         <div class="container">
@@ -122,7 +121,7 @@
                        name="nombreProducto" required
                        type="text" [ngClass]="{'is-invalid': Codigo.invalid && banderaValidaciones}">
                 <div class="input-group-append">
-                  <button class="btn btn-light" (click)="generarCodigDeswcuento()"
+                  <button class="btn btn-light" (click)="generarCodigDescuento()"
                           [ngClass]="{'border-red': Codigo.invalid && banderaValidaciones}"> Generar
                   </button>
                 </div>
@@ -188,14 +187,14 @@
           <div class="form-group">
             <div class="radio-item">
               <input (click)="opcionAplicarA(true)" name="garantia"
-                     type="radio" value="todos" id="GarantiaVendedor" [checked]="banderaOpcionAplicarA">
+                     type="radio" value="todos" id="GarantiaVendedor" [checked]="this.Descuento.AplicarA=='todos'">
               <label for="GarantiaVendedor">&nbsp;&nbsp;Todos los productos</label>
             </div>
             <br>
             <div class="radio-item">
               <input (click)="opcionAplicarA(false)" name="garantia"
                      type="radio" value="espesificos" id="GarantiaFabrica"
-                     [checked]="!banderaOpcionAplicarA">
+                     [checked]="this.Descuento.AplicarA=='espesificos'">
               <label for="GarantiaFabrica">&nbsp;&nbsp;Productos espesificos </label>
             </div>
 
@@ -205,7 +204,7 @@
         </div>
 
 
-        <table *ngIf="vectorProductosEnviar.length>0 && !banderaOpcionAplicarA"
+ <table *ngIf="vectorProductosEnviar.length>0 && this.Descuento.AplicarA=='espesificos'"
                class="table  table-responsive-sm bg-white small w-100 text-center">
           <thead>
           <tr>
@@ -222,17 +221,17 @@
               *ngFor="let producto of   this.vectorProductosEnviar  |slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
 
             <td>
-              {{producto.PRODUCTO.ID_PRODUCTO}}
+              {{producto.ID_PRODUCTO}}
             </td>
             <td>
-              {{producto.PRODUCTO.COD_PRODUCTO}}
+              {{producto.COD_PRODUCTO}}
             </td>
 
             <td>
-              {{producto.PRODUCTO.NOMBRE_PRODUCTO}}
+              {{producto.NOMBRE_PRODUCTO}}
             </td>
             <td>
-              {{producto.PRODUCTO.DESCRIPCION_PRODUCTO}}
+              {{producto.DESCRIPCION_PRODUCTO}}
             </td>
             <td>
               <button class="btn" (click)="borrar(producto)"><span class="fa fa-trash " style="color: red"></span>
@@ -241,7 +240,7 @@
           </tbody>
         </table>
 
-        <div *ngIf="vectorProductosEnviar.length>0 && !banderaOpcionAplicarA"
+        <div *ngIf="vectorProductosEnviar.length>0 && this.Descuento.AplicarA=='espesificos'"
              class="d-flex justify-content-between p-2">
           <ngb-pagination
             [(page)]="page"
@@ -249,7 +248,7 @@
             [collectionSize]=" this.vectorProductosEnviar.length "></ngb-pagination>
         </div>
 
-        <button *ngIf="!banderaOpcionAplicarA" class="btn btn-primary col-md-3 mx-auto p-1"
+        <button *ngIf="this.Descuento.AplicarA=='espesificos'" class="btn btn-primary col-md-3 mx-auto p-1"
                 (click)="abrirModalProductos(modalProductos)">Agregar Producto &nbsp; <span
           class="fa fa-plus "></span></button>
       </form>
@@ -259,7 +258,7 @@
           <h6>Periodo de activación </h6>
         </div>
       </div>
-      <form class=" card card-body mt-3" name="formTiempo">
+     <!-- <form class=" card card-body mt-3" name="formTiempo">
 
         <div class="container">
           <label>Seleccione el rango de tienpo que el cupón de descuento va a estar activo</label>
@@ -312,26 +311,55 @@
             </div>
           </div>
         </div>
-      </form>
+      </form>-->
       <hr>
 
 
-      <form class="card card-body  col-md-12  mt-4">
+    <!--  <form class="card card-body  col-md-12  mt-4">
         <div class=" container">
           <h6>Acciones</h6>
           <hr>
           <div class="text-right">
-            <button (click)="this.guardarDescuento()"
+            <button *ngIf="banderaModificar" (click)="this.guardarProducto()"
                     class="btn btn-primary text-nowrap mb-4  col-auto"
                     type="button">
               <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
-              Guardar Cupon &nbsp;&nbsp;
+              Guardar Producto &nbsp;&nbsp;
               <span class="fa fa-save"></span>
             </button>
+            &nbsp;&nbsp;
+            <button *ngIf="banderaModificar" class="btn btn-light text-nowrap mb-4  col-auto"
+                    (click)="iniciarModificarProducto()">
+              Cancelar &nbsp;&nbsp;
+              <span class="fa fa-close"></span></button>
+
+
+            &nbsp;&nbsp;
+            <button *ngIf="!banderaModificar && identidadProducto.ESTADO_OFERTA==0"
+                    class="btn btn-warning text-nowrap mb-4  col-auto" (click)="iniciarEdicion()">
+              Modificar &nbsp;&nbsp;
+              <span class="fa fa-edit"></span></button>
+            &nbsp;&nbsp;
+            <button *ngIf="!banderaModificar && identidadProducto.ESTADO_OFERTA==0"
+                    class="btn btn-light text-nowrap mb-4  col-auto" (click)="guardarCambiarEstadoProducto(1)">
+              Ocultar &nbsp;&nbsp;
+              <span class="fa fa-eye-slash"></span></button>
+
+            <button *ngIf="!banderaModificar && identidadProducto.ESTADO_OFERTA==1"
+                    class="btn btn-light text-nowrap mb-4  col-auto" (click)="guardarCambiarEstadoProducto(0)">
+              Mostrar &nbsp;&nbsp;
+              <span class="fa fa-eye"></span></button>
+            &nbsp;&nbsp;
+            <button *ngIf="!banderaModificar" class="btn btn-danger text-nowrap mb-4  col-auto"
+                    (click)="guardarCambiarEstadoProducto(2)">
+              Eliminar &nbsp;&nbsp;
+              <span class="fa fa-trash"></span></button>
+
+
           </div>
 
         </div>
-      </form>
+      </form>-->
 
 
     </div>

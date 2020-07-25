@@ -102,7 +102,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
 
-    await this.getProducto();
+    //await this.getProducto();
     this.iniciarModificarProducto();
     this.getCategorias();
     this.getUnidadesMedida()

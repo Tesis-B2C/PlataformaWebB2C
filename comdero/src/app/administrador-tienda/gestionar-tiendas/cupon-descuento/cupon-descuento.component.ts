@@ -31,7 +31,8 @@ export class CuponDescuentoComponent implements OnInit {
 
 
   constructor(private router: Router, public toastr: ToastrService, private _descuento_Servicio: DescuentoServicio, private modalService: NgbModal, private _productoServicio: ProductoServicio) {
-    this.Descuento = new Descuento(null, null, null, null, 'Cupón', null, null, 0);
+    this.Descuento = new Descuento(null, null, null, null, 'Cupón', null, null, 0,'todos');
+
 
 
   }
@@ -77,6 +78,7 @@ export class CuponDescuentoComponent implements OnInit {
     debugger;
     this.banderaOpcionAplicarA = value;
     if (this.banderaOpcionAplicarA) {
+        this.Descuento.AplicarA='todos';
       for (let i in this.result) {
         this.vectorProductos.add(this.result[i]);
       }
@@ -85,14 +87,18 @@ export class CuponDescuentoComponent implements OnInit {
       }
 
     } else {
+      this.Descuento.AplicarA='espesificos';
       this.vectorProductos = new Set();
       this.vectorProductosEnviar = [];
     }
   }
 
 
-  public abrirModalVideoYoutube(content) {
+  public abrirModalProductos(content) {
     this.modalService.open(content, {centered: true, size: 'lg', scrollable: true});
+    for(let producto of this.vectorProductosEnviar){
+        this.vectorProductos.add(producto);
+    }
   }
 
   public cambiarOpcionDescuento(value) {

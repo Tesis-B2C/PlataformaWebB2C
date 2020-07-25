@@ -102,7 +102,7 @@
     <table class="table table-bordered table-responsive-sm bg-white small w-100 text-center">
       <thead>
       <tr>
-        <th scope="col"><input (click)="agregarTodosProductos($event)" id="rastrearCantidad" type="checkbox"></th>
+        <th scope="col"><input (click)="agregarTodosDesuentos($event)" id="rastrearCantidad" type="checkbox"></th>
         <th scope="col">MOTIVO O CÓDIGO DE DESCUENTO</th>
         <th scope="col">FECHA INICIO</th>
         <th scope="col">FECHA FIN</th>
@@ -117,7 +117,7 @@
       <tbody>
       <tr [ngClass]="{'bg-gray':descuento.ESTADO_DESCUENTO==1}"
           *ngFor="let descuento of   this.result  |slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
-        <th scope="row"><input (click)="agregarProducto($event,producto.PRODUCTO.ID_OFERTA )" type="checkbox"
+        <th scope="row"><input (click)="agregarDescuento($event,descuento.ID_DESCUENTO )" type="checkbox"
                                [checked]="vectorDescuentos.has(descuento.ID_DESCUENTO)"></th>
         <td>
           {{descuento.MOTIVO_DESCUENTO}}
@@ -156,23 +156,23 @@
           <div class="btn-group">
             <button (click)="cambiarEstadoDescuento(descuento.ID_DESCUENTO,0)" placement="top" ngbTooltip="Activar"
                     *ngIf="descuento.ESTADO_DESCUENTO==1"
-                    class="btn btn-secondary  ml-md-2 mt-md-0 mt-1" style="font-size: x-small">
+                    class="btn btn-secondary  mt-md-0 mt-1" style="font-size: x-small">
               <span class="fa fa-check"></span>
             </button>
 
             <button placement="top" ngbTooltip="Desactivar" *ngIf="descuento.ESTADO_DESCUENTO==0"
-                    (click)="cambiarEstadoDescuento(descuento.ID_DESCUENTO,1)" class="btn btn-secondary  ml-md-2 mt-md-0 mt-1"
+                    (click)="cambiarEstadoDescuento(descuento.ID_DESCUENTO,1)" class="btn btn-secondary  mt-md-0 mt-1"
                     style="font-size: x-small"
             ><span class="fa fa-ban"></span></button>
 
             <button (click)="cambiarEstadoDescuento(descuento.ID_DESCUENTO,2)" placement="top" ngbTooltip="Borrar"
-                    class="btn btn-danger  ml-md-2 mt-md-0 mt-1"
+                    class="btn btn-danger   mt-md-0 mt-1"
                     style="font-size: x-small"
             ><span class="fa fa-trash"></span></button>
 
             <button placement="top" ngbTooltip="Editar" *ngIf="descuento.ESTADO_DESCUENTO==0"
-                    class="btn btn-primary ml-md-2 mt-md-0 mt-1" style="font-size: x-small"
-                    [routerLink]="['../modificar-producto/', descuento.ID_DESCUENTO ]"><span
+                    class="btn btn-primary mt-md-0 mt-1" style="font-size: x-small"
+                    [routerLink]="['../modificar-cupon-descuento/', descuento.ID_DESCUENTO ]"><span
               class="fa fa-edit"></span></button>
           </div>
         </td>

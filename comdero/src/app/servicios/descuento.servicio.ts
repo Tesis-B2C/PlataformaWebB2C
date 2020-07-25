@@ -40,4 +40,10 @@ export class DescuentoServicio {
     return this._http.put<objeto>(this.url + "updateEstadoDescuento/" + Id_Descuento, params, {headers: headers});
   }
 
+  getDescuento(Id_Descuento) {
+    let headers = new HttpHeaders({"Content-type": "application/json"});
+    return this._http.get<objeto>(this.url + "getDescuento/" + Id_Descuento, {headers: headers});
+  }
+
+
 }

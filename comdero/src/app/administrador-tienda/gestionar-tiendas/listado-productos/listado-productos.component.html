@@ -141,22 +141,22 @@
         <div class="btn-group">
           <button (click)="cambiarEstadoProducto(producto.ID_OFERTA,0)" placement="top" ngbTooltip="Mostrar"
                   *ngIf="producto.ESTADO_OFERTA==1"
-                  class="btn btn-secondary  ml-md-2 mt-md-0 mt-1" style="font-size: x-small">
+                  class="btn btn-secondary   mt-md-0 mt-1" style="font-size: x-small">
             <span class="fa fa-eye"></span>
           </button>
 
           <button placement="top" ngbTooltip="Ocultar" *ngIf="producto.ESTADO_OFERTA==0"
-                  (click)="cambiarEstadoProducto(producto.ID_OFERTA,1)" class="btn btn-secondary  ml-md-2 mt-md-0 mt-1"
+                  (click)="cambiarEstadoProducto(producto.ID_OFERTA,1)" class="btn btn-secondary   mt-md-0 mt-1"
                   style="font-size: x-small"
           ><span class="fa fa-eye-slash"></span></button>
 
           <button (click)="cambiarEstadoProducto(producto.ID_OFERTA,2)" placement="top" ngbTooltip="Borrar"
-                  class="btn btn-danger  ml-md-2 mt-md-0 mt-1"
+                  class="btn btn-danger   mt-md-0 mt-1"
                   style="font-size: x-small"
           ><span class="fa fa-trash"></span></button>
 
           <button placement="top" ngbTooltip="Editar" *ngIf="producto.ESTADO_OFERTA==0"
-                  class="btn btn-primary ml-md-2 mt-md-0 mt-1" style="font-size: x-small"
+                  class="btn btn-primary mt-md-0 mt-1" style="font-size: x-small"
                   [routerLink]="['../modificar-producto/', producto.ID_OFERTA ]"><span
             class="fa fa-edit"></span></button>
         </div>

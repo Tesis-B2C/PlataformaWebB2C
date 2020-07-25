@@ -20,7 +20,7 @@ export class ListadoProductosComponent implements OnInit {
   public pageSize = 10;
   public vectorProductos = new Set();
   public identidadTienda;
-  public misProductos;
+  public misProductos:any=[];
   public result = [];
 
   public ofertasPorBorrar = [];
@@ -122,7 +122,8 @@ export class ListadoProductosComponent implements OnInit {
       this.vectorProductos.add(cod);
       console.log("vector productos", this.vectorProductos)
     } else {
-      this.vectorProductos = new Set();
+      //this.vectorProductos = new Set();
+      this.vectorProductos.delete(cod);
     }
 
   }

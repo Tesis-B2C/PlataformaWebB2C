@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 export class ListadoCuponDescuentoComponent implements OnInit {
 
   public identidadTienda;
-  public misDescuentos;
+  public misDescuentos:any=[];
   public busqueda;
 
   public page = 1;
@@ -77,7 +77,7 @@ export class ListadoCuponDescuentoComponent implements OnInit {
       this.misDescuentos = null;
       this.misDescuentos = response.data;
       for (let i in this.misDescuentos) {
-        if (this.misDescuentos[i].ESTADO_DESCUENTO==0) {
+        if (this.misDescuentos[i].ESTADO_DESCUENTO == 0) {
           if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") < this.misDescuentos[i].FECHA_INICIO) {
             this.misDescuentos[i].ESTADO_FECHA = "Programado"
           }
@@ -105,6 +105,34 @@ export class ListadoCuponDescuentoComponent implements OnInit {
     }
 
   }
+
+  public agregarTodosDesuentos(event) {
+    if (event.target.checked) {
+      debugger
+      for (let i in this.result) {
+        this.vectorDescuentos.add(this.result[i].ID_DESCUENTO);
+      }
+      console.log("vector productos", this.vectorDescuentos)
+
+
+    } else {
+      this.vectorDescuentos = new Set();
+    }
+
+  }
+
+  public agregarDescuento(event, cod) {
+    if (event.target.checked) {
+      debugger
+      this.vectorDescuentos.add(cod);
+      console.log("vector productos", this.vectorDescuentos)
+    } else {
+      //this.vectorDescuentos = new Set();
+      this.vectorDescuentos.delete(cod)
+    }
+
+  }
+
 
 
   mensageError(mensaje) {

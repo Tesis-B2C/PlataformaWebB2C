@@ -5,6 +5,7 @@
 
 const Producto_Descuento = require('../models/producto_descuento');
 const Descuento = require('../models/descuento');
+const Producto=require('../models/producto')
 const db = require('../database/db');
 const moment = require('moment');
 const {Op} = require("sequelize");
@@ -17,7 +18,7 @@ async function saveDescuento(req, res) {
     try {
 
         let descuentoCreado = await Descuento.create({
-                MOTIVO_DESCUENTO: params.Descuento.Motivo_Descuento,
+                MOTIVO_DESCUENTO: params.Descuento.Motivo_Descuento.toUpperCase(),
                 NUM_TIENDA: req.params.id,
                 PORCENTAJE_DESCUENTO: params.Descuento.Porcentaje_Descuento,
                 FECHA_INICIO: params.Descuento.Fecha_Inicio,
@@ -25,7 +26,8 @@ async function saveDescuento(req, res) {
                 TIPO_DESCUENTO: params.Descuento.Tipo_Descuento,
                 HORA_INICIO: params.Descuento.Hora_Inicio,
                 HORA_FIN: params.Descuento.Hora_Fin,
-                ESTADO_DESCUENTO: params.Descuento.Estado_Descuento
+                ESTADO_DESCUENTO: params.Descuento.Estado_Descuento,
+                APLICARA:params.Descuento.AplicarA
             },
             {
                 transaction: t
@@ -106,10 +108,38 @@ async function updateEstadoDescuento(req, res) {
     }
 }
 
+async function getDescuento(req, res) {
+    try {
+        let descuentoObtenido = await Descuento.findOne({
+            where: {ID_DESCUENTO: req.params.id},include:{model:Producto_Descuento,where:{ID_DESCUENTO: req.params.id}, include:{model:Producto, as: 'producto'}}
+        });
+
+        if (descuentoObtenido) {
+            res.status(200).send({
+                data: descuentoObtenido,
+                message: "Descuento cargado correctamente"
+            });
+        } else {
+            res.status(404).send({
+                message: 'Al parecer no se encuentra el descuento registrado en la base de datos'
+            });
+
+
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+
+}
+
+
 module.exports = {          // para exportar todas las funciones de este modulo
 
     saveDescuento,
     getMisDescuentos,
-    updateEstadoDescuento
+    updateEstadoDescuento,
+    getDescuento
 
 };
