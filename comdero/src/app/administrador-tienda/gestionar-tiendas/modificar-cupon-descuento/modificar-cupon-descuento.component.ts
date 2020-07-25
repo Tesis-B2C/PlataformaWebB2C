@@ -68,7 +68,6 @@ export class ModificarCuponDescuentoComponent implements OnInit {
 
   public iniciarEdicion() {
     this.banderaModificar = true;
-
   }
 
   public async getDescuento() {
@@ -306,6 +305,25 @@ export class ModificarCuponDescuentoComponent implements OnInit {
 
   public obtenerFecha(fecha) {
     return fecha.toISOString().split('T')[0]
+
+  }
+
+
+  public async cambiarEstadoDescuento( estado) {
+
+    try {
+      let responseUpdate = await this._descuentoServicio.updateEstadoDescuento(this.identidadDescuento.ID_DESCUENTO, estado).toPromise();
+      this.mensageCorrecto(responseUpdate.message);
+      this.iniciarModificarDescuento();
+
+
+    } catch (e) {
+
+      console.log("error:" + e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
 
   }
 
