@@ -45,5 +45,11 @@ export class DescuentoServicio {
     return this._http.get<objeto>(this.url + "getDescuento/" + Id_Descuento, {headers: headers});
   }
 
+  public updateDescuento(Id_Descuento, objDescuento){
+    let params = JSON.stringify(objDescuento);
+    let headers = new HttpHeaders({"Content-type": "application/json"});
+    return this._http.put<objeto>(this.url + "updateDescuento/" + Id_Descuento, params, {headers: headers});
+  }
+
 
 }

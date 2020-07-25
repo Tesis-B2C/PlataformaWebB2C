@@ -32,6 +32,11 @@ export class CuponDescuentoComponent implements OnInit {
   public vectorProductos = new Set();
 
 
+  objDescuento = {
+    Descuento: null,
+    vProductos: null
+  };
+
   constructor(private router: Router, public toastr: ToastrService, private _descuentoServicio: DescuentoServicio, private modalService: NgbModal, private _productoServicio: ProductoServicio) {
     this.Descuento = new Descuento(null, null, null, null, 'Cupón', null, null, 0,'todos');
 
@@ -173,11 +178,6 @@ export class CuponDescuentoComponent implements OnInit {
       this.vectorProductosEnviar.push(producto);
     }
   }
-
-  objDescuento = {
-    Descuento: null,
-    vProductos: null
-  };
 
   public async guardarDescuento() {
     try {

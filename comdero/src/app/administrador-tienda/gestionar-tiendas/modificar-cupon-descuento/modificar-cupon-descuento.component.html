@@ -271,7 +271,7 @@
               <label>Rango de duracion</label>
               <div class="input-group ">
 
-                <input placeholder="01/07/2020 - 04/08/2020" type="text" class="form-control" bsDaterangepicker
+                <input  type="text" class="form-control" bsDaterangepicker
                        #Calendario="ngModel"
                        style="border-right: none"
                        [(ngModel)]="bsRangeValue" name="calendario" [disabled]="!this.banderaModificar"
@@ -326,7 +326,7 @@
           <h6>Acciones</h6>
           <hr>
           <div class="text-right">
-            <button *ngIf="banderaModificar" (click)="this.guardarProducto()"
+            <button *ngIf="banderaModificar" (click)="this.guardarDescuento()"
                     class="btn btn-primary text-nowrap mb-4  col-auto"
                     type="button">
               <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
@@ -341,17 +341,17 @@
 
 
             &nbsp;&nbsp;
-            <button *ngIf="!banderaModificar && identidadDescuento.ESTADO_DESCUENTO==0"
+            <button *ngIf="!banderaModificar &&  this.Descuento.Estado_Descuento ==0"
                     class="btn btn-warning text-nowrap mb-4  col-auto" (click)="iniciarEdicion()">
               Modificar &nbsp;&nbsp;
               <span class="fa fa-edit"></span></button>
             &nbsp;&nbsp;
-            <button *ngIf="!banderaModificar &&  identidadDescuento.ESTADO_DESCUENTO==0"
+            <button *ngIf="!banderaModificar &&  this.Descuento.Estado_Descuento ==0"
                     class="btn btn-light text-nowrap mb-4  col-auto" (click)="guardarCambiarEstadoProducto(1)">
               Desactivar &nbsp;&nbsp;
               <span class="fa fa-ban"></span></button>
 
-            <button *ngIf="!banderaModificar &&  identidadDescuento.ESTADO_DESCUENTO==1"
+            <button *ngIf="!banderaModificar &&   this.Descuento.Estado_Descuento ==1"
                     class="btn btn-light text-nowrap mb-4  col-auto" (click)="guardarCambiarEstadoProducto(0)">
               Mostrar &nbsp;&nbsp;
               <span class="fa fa-check"></span></button>
