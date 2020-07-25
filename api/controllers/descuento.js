@@ -194,12 +194,37 @@ async function updateDescuento(req, res) {
     }
 }
 
+async function updateEstadoDescuentos(req, res) {
+    const t = await db.sequelize.transaction({autocommit: false});
+    try{
+        for (const d of req.body) {
+            await Descuento.update({
+                ESTADO_DESCUENTO: req.params.estado,
+            }, {
+                where: {ID_DESCUENTO: d}, transact: t
+            });
+        }
+        res.status(200).send({
+            message: "El producto ha sido actualizado correctamente"
+        });
+        t.commit();
+    }catch (err) {
+        t.rollback();
+        res.status(500).send({
+            message: 'error:' + err
+        });
+
+    }
+
+}
+
 module.exports = {          // para exportar todas las funciones de este modulo
 
     saveDescuento,
     getMisDescuentos,
     updateEstadoDescuento,
     getDescuento,
-    updateDescuento
+    updateDescuento,
+    updateEstadoDescuentos
 
 };

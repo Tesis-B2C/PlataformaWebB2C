@@ -82,17 +82,17 @@
       <button class="btn btn-primary ">
         Seleccionados &nbsp;<span class="badge badge-light">{{vectorDescuentos.size}}</span>
       </button>
-      <button (click)="cambiarEstadoProductos(0)" placement="top" ngbTooltip="Mostrar"
+      <button (click)="cambiarEstadoDescuentos(0)" placement="top" ngbTooltip="Mostrar"
               class="btn btn-secondary  mt-md-0 mt-1" style="font-size: x-small">
-        <span class="fa fa-eye"></span>
+        <span class="fa fa-check"></span>
       </button>
 
-      <button (click)="cambiarEstadoProductos(1)" placement="top" ngbTooltip="Ocultar"
+      <button (click)="cambiarEstadoDescuentos(1)" placement="top" ngbTooltip="Ocultar"
               class="btn btn-secondary   mt-md-0 mt-1"
               style="font-size: x-small"
-      ><span class="fa fa-eye-slash"></span></button>
+      ><span class="fa fa-ban"></span></button>
 
-      <button (click)="cambiarEstadoProductos(2)" placement="top" ngbTooltip="Borrar"
+      <button (click)="cambiarEstadoDescuentos(2)" placement="top" ngbTooltip="Borrar"
               class="btn btn-danger   mt-md-0 mt-1"
               style="font-size: x-small"
       ><span class="fa fa-trash"></span></button>

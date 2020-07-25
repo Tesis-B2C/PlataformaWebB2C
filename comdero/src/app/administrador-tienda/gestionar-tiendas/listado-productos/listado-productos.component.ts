@@ -77,6 +77,7 @@ export class ListadoProductosComponent implements OnInit {
 
   public async cambiarEstadoProductos(estado) {
     try {
+      this.ofertasPorBorrar=[];
       for (let producto of this.vectorProductos) {
         this.ofertasPorBorrar.push(producto);
       }

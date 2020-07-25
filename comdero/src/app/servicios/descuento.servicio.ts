@@ -50,6 +50,13 @@ export class DescuentoServicio {
     let headers = new HttpHeaders({"Content-type": "application/json"});
     return this._http.put<objeto>(this.url + "updateDescuento/" + Id_Descuento, params, {headers: headers});
   }
+  public updateEstadoDescuentos(vDescuentos, estado_a_cambiar){
+    debugger;
+    let params = JSON.stringify(vDescuentos);
+    let headers = new HttpHeaders({"Content-type": "application/json"});
+    return this._http.put<objeto>(this.url + "updateEstadoDescuentos/" + estado_a_cambiar, params, {headers: headers});
+  }
+
 
 
 }

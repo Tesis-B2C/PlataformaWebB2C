@@ -21,6 +21,7 @@ export class ListadoCuponDescuentoComponent implements OnInit {
   public result = [];
 
   public hoy;
+  public descuentosPorBorrar=[];
 
   constructor(private datePipe: DatePipe, private _descuentoServicio: DescuentoServicio) {
   }
@@ -133,6 +134,29 @@ export class ListadoCuponDescuentoComponent implements OnInit {
 
   }
 
+  public async cambiarEstadoDescuentos(estado) {
+    try {
+      this.descuentosPorBorrar=[];
+      for (let descuento of this.vectorDescuentos) {
+        this.descuentosPorBorrar.push(descuento);
+      }
+      let responseUpdate = await this._descuentoServicio.updateEstadoDescuentos(this.descuentosPorBorrar, estado).toPromise();
+      this.mensageCorrecto(responseUpdate.message);
+      this.vectorDescuentos = new Set();
+      let response = await this._descuentoServicio.getMisDescuentos(this.identidadTienda.NUM_TIENDA).toPromise();
+      this.misDescuentos = null;
+      this.misDescuentos = response.data;
+      this.result = this.misDescuentos;
+
+    } catch (e) {
+
+      console.log("error:" + e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
+
+  }
 
 
   mensageError(mensaje) {
