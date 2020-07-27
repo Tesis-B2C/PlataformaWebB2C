@@ -76,7 +76,7 @@
 
 
   <div class="btn-group mb-2 animated  " [ngClass]="{'fadeOut':vectorProductos.size==0,'fadeIn':vectorProductos.size>0 }" *ngIf="vectorProductos.size>0">
-    <button class="btn btn-primary ">
+    <button class="btn btn-primary mr-1" style="font-size: small; font-weight: normal">
       Seleccionados &nbsp;<span class="badge badge-light">{{vectorProductos.size}}</span>
     </button>
     <button (click)="cambiarEstadoProductos(0)" placement="top" ngbTooltip="Mostrar"
@@ -85,7 +85,7 @@
     </button>
 
     <button (click)="cambiarEstadoProductos(1)" placement="top" ngbTooltip="Ocultar"
-            class="btn btn-secondary   mt-md-0 mt-1"
+            class="btn btn-dark  mt-md-0 mt-1"
             style="font-size: x-small"
     ><span class="fa fa-eye-slash"></span></button>
 

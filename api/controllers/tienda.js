@@ -14,6 +14,10 @@ const db = require('../database/db');
 const fs = require('fs-extra');
 const path = require('path');
 const OFERTA = require("../models/oferta");
+const PRODUCTO = require("../models/producto");
+const VARIANTE = require("../models/variante");
+const IMAGEN_PRODUCTO = require("../models/imagen_producto");
+
 const {Op} = require("sequelize");
 
 /*const {QueryTypes} = require('sequelize');*/
@@ -502,6 +506,53 @@ async function actualizarTiendaSucursal(req, res) {
     }
 }
 
+
+async function getDetalleTiendaProducto(req, res) {
+
+    try {
+        let tiendaObtenida = await TIENDA.findOne({
+            where: {NUM_TIENDA: req.params.id},
+            include: [{
+                model: SUCURSAL,
+                include: {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}
+            }, {model: OFERTA,   include: [{
+                    model: PRODUCTO,
+                    attributes: ['ID_PRODUCTO','COD_PRODUCTO','NOMBRE_PRODUCTO'],
+                    include: [{
+                        model: VARIANTE,
+                        separate: true,
+                        attributes: ['PRECIO_UNITARIO'],
+                        group: ['ID_PRODUCTO', 'COD_PRODUCTO'],
+                        order: [['NUM_VARIANTE', 'ASC']],
+                        include: {
+                            model: IMAGEN_PRODUCTO,
+                            separate: true,
+                            attributes: ['IMAGEN'],
+                            group: 'NUM_VARIANTE',
+                            order: [['ID_IMAGEN', 'ASC']]
+                        }
+                    }]
+                }],
+            order: [[SUCURSAL, 'NUM_SUCURSAL', 'ASC' ]]
+        }]});
+
+        if (tiendaObtenida) {
+            res.status(200).send({
+                data: tiendaObtenida,
+                message: "Tienda cargada correctamente"
+            });
+        } else {
+            res.status(404).send({
+                message: 'Al parecer la tienda no se encuentra registrada en la base de datos'
+            });
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+
 module.exports = {          // para exportar todas las funciones de este modulo
     registrarTienda,
     getDatosTienda,
@@ -510,6 +561,7 @@ module.exports = {          // para exportar todas las funciones de este modulo
     actualizarTiendaSucursal,
     updateEstadoTienda,
     updatePersonalizacionTienda,
+    getDetalleTiendaProducto
     /* subirImagenesTienda,*/
     /*   obtenerImagenTienda*/
 };

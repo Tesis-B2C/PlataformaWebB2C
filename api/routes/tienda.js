@@ -20,6 +20,7 @@ api.put('/actualizarTiendaGeneral/:id', TiendaController.actualizarTiendaGeneral
 api.put('/actualizarTiendaSucursal/:id', TiendaController.actualizarTiendaSucursal);
 api.put('/updateEstadoTienda/:id',TiendaController.updateEstadoTienda);
 api.put('/updatePersonalizacionTienda/:id',multer.fields([{name:'logo'},{name: 'banner'}]),TiendaController.updatePersonalizacionTienda);
+api.get('/getDetalleTiendaProducto/:id',TiendaController.getDetalleTiendaProducto);
 
 //api.post('/subirImagenesTienda/:id/:tipo',[md_upload],TiendaController.subirImagenesTienda);
 /*api.get('/obtenerImagenTienda/:imageFile', TiendaController.obtenerImagenTienda);*/
