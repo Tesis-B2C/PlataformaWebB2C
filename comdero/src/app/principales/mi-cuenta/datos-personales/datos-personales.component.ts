@@ -73,7 +73,6 @@ export class DatosPersonalesComponent implements OnInit {
   async getDpaCiudades(buscar) {
     try {
       this.ciudad = null;
-      //this.provincia = null;
       let response = await this._dpaServicio.getDpaCiudades(buscar).toPromise();
       this.ciudades = response.data;
     } catch (e) {
@@ -151,12 +150,14 @@ export class DatosPersonalesComponent implements OnInit {
   }
 
   public iniciarEdicion() {
-    if (this.identidad.DPA)
+    if (this.identidad.DPA) {
       this.ciudad = this.identidad.DPA.NOMBRE + ' (Actual)';
-    else this.ciudad = "";
-    if (this.identidad.DPA)
       this.provincia = this.identidad.DPA.DPAP.NOMBRE + ' (Actual)';
-    else this.provincia = "";
+      this.EditarAgente.Ciudad = this.identidad.DPA.COD_DPA;
+    } else {
+      this.ciudad = "";
+      this.provincia = "";
+    }
     this.banderaEdicionDeshabilitada = true;
     this.EditarAgente.Id_Agente = this.identidad.ID_AGENTE;
     this.EditarAgente.Num_Cod_Postal = this.identidad.NUM_COD_POSTAL;
@@ -169,7 +170,7 @@ export class DatosPersonalesComponent implements OnInit {
     if (this.identidad.TIPO == 'Empresa')
       this.banderaTipo = false;
     this.EditarAgente.Estado = this.identidad.ESTADO;
-    this.EditarAgente.Ciudad = this.identidad.DPA.COD_DPA;
+
     this.EditarAgente.Calle_Principal_Agente = this.identidad.CALLE_PRINCIPAL_AGENTE;
     this.EditarAgente.Calle_Secundaria_Agente = this.identidad.CALLE_SECUNDARIA_AGENTE;
     this.EditarAgente.Num_Casa_Agente = this.identidad.NUM_CASA_AGENTE;
@@ -226,34 +227,35 @@ export class DatosPersonalesComponent implements OnInit {
 
   public async actualizarAgente() {
     try {
-    if(document.forms['formActualizarDatos'].checkValidity()){
-      if (this.validarCedula() == true) {
-        let aprobarCiudades: boolean = true;
-        if (this.ciudad == "" || this.ciudad == null)
-          aprobarCiudades = false;
+      debugger;
+      if (document.forms['formActualizarDatos'].checkValidity()) {
+        if (this.validarCedula() == true) {
+          let aprobarCiudades: boolean = true;
+          if ((this.ciudad == "" || this.ciudad == null) && this.ciudades)
+            aprobarCiudades = false;
 
-        if(aprobarCiudades){
-          this.loading = true;
-          let response = await this._agenteServicio.actualizarAgente(this.EditarAgente).toPromise();
-          let data = await this._agenteServicio.actualizarAgenteIdentity(this.identidad.CORREO).toPromise();
+          if (aprobarCiudades) {
+            this.loading = true;
+            let response = await this._agenteServicio.actualizarAgente(this.EditarAgente).toPromise();
+            let data = await this._agenteServicio.actualizarAgenteIdentity(this.identidad.CORREO).toPromise();
 
-          localStorage.setItem("identity", JSON.stringify(data['data']));
-          this.cancelarEdicion();
-          this.mensageCorrecto(response['message']);
-        }else{
-          this.select_ciudad = true;
-          this.mostrarToastError("Asegurate de seleccionar la ciudad de tu negocio.", "");
+            localStorage.setItem("identity", JSON.stringify(data['data']));
+            this.cancelarEdicion();
+            this.mensageCorrecto(response['message']);
+          } else {
+            this.select_ciudad = true;
+            this.mostrarToastError("Asegurate de seleccionar la ciudad de tu negocio.", "");
+          }
+        } else {
+          if (this.banderaTipo) {
+            this.mostrarToast("La cédula ingresada no es válida", "");
+          } else if (!this.banderaTipo) {
+            this.mostrarToast("El ruc ingresado no es válido", "");
+          }
         }
       } else {
-        if (this.banderaTipo) {
-          this.mostrarToast("La cédula ingresada no es válida", "");
-        } else if (!this.banderaTipo) {
-          this.mostrarToast("El ruc ingresado no es válido", "");
-        }
+        this.mostrarToast("Al parecer existe errores en su formulario porfavor reviselo nuevamente", "");
       }
-    }else {
-      this.mostrarToast("Al parecer existe errores en su formulario porfavor reviselo nuevamente", "");
-    }
     } catch (e) {
       this.loading = false;
       console.log("error:" + JSON.stringify((e).error.message));
@@ -294,7 +296,7 @@ export class DatosPersonalesComponent implements OnInit {
     var i;
     var total = 0;
     var longitud;
-    if(this.EditarAgente.Tipo == 'Persona')
+    if (this.EditarAgente.Tipo == 'Persona')
       longitud = cad.length;
     else
       longitud = cad.length - 3;

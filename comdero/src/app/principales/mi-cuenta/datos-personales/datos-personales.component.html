@@ -254,6 +254,7 @@
                     class="tamanioInputs form-control" name="ciudad" placeholder=""
             >
               <option disabled *ngIf="!this.ciudades || banderaEdicionDeshabilitada">{{this.ciudad}}</option>
+              <option *ngIf="!banderaEdicionDeshabilitada"  >"Seleccione una"</option>
               <option *ngFor="let ciudad of this.ciudades" value="{{ciudad.COD_DPA}} "> {{ciudad.NOMBRE }}</option>
             </select>
             <div *ngIf="Ciudad.invalid && (Ciudad.touched||Ciudad.dirty)">

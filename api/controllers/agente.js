@@ -230,7 +230,7 @@ async function actualizarAgente(req, res) {
 
         }
         let agenteActualizado = await AGENTE.update(agente, {where: {ESTADO: '0', CORREO: agenteId}});
-        if (!agenteActualizado.length) {
+        if (!agenteActualizado) {
             res.status(404).send({message: 'El Usuario no ha sido actualizado'});
         } else {
             res.status(200).send({message: 'El Usuario ha sido actualizado'});
