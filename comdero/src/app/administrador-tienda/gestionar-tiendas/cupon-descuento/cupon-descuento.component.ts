@@ -9,6 +9,8 @@ import {DescuentoServicio} from "../../../servicios/descuento.servicio";
 import Swal from "sweetalert2";
 import {ToastrService} from "ngx-toastr";
 import {Router} from "@angular/router";
+import {DatePipe} from "@angular/common";
+
 
 defineLocale('es', esLocale);
 
@@ -16,12 +18,12 @@ defineLocale('es', esLocale);
   selector: 'app-cupon-descuento',
   templateUrl: './cupon-descuento.component.html',
   styleUrls: ['./cupon-descuento.component.css'],
+ providers: [DatePipe]
 
 })
 export class CuponDescuentoComponent implements OnInit {
   public Descuento: Descuento
   public banderaValidaciones: boolean = false;
-  public bsRangeValue;
   public banderaOpcionAplicarA: boolean = true;
   public page = 1;
   public pageSize = 10;
@@ -37,10 +39,15 @@ export class CuponDescuentoComponent implements OnInit {
     vProductos: null
   };
 
-  public loading:boolean=false;
+  public loading: boolean = false;
+  bsRangeValue: Date[];
+  minDate=new Date();
 
-  constructor(private router: Router, public toastr: ToastrService, private _descuentoServicio: DescuentoServicio, private modalService: NgbModal, private _productoServicio: ProductoServicio) {
-    this.Descuento = new Descuento(null, null, null, null, 'Cupón', null, null, 0,'todos');
+  public identidadTienda;
+  public misProductos;
+  public result = [];
+  constructor(private datePipe: DatePipe,private router: Router, public toastr: ToastrService, private _descuentoServicio: DescuentoServicio, private modalService: NgbModal, private _productoServicio: ProductoServicio) {
+    this.Descuento = new Descuento(null, null, null, null, 'Cupón', null, null, 0, 'todos');
 
 
   }
@@ -53,9 +60,7 @@ export class CuponDescuentoComponent implements OnInit {
     });
   }
 
-  public identidadTienda;
-  public misProductos;
-  public result = [];
+
 
   async ngOnInit() {
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
@@ -70,6 +75,8 @@ export class CuponDescuentoComponent implements OnInit {
     for (let producto of this.vectorProductos) {
       this.vectorProductosEnviar.push(producto);
     }
+
+    this.minDate.setDate( this.minDate.getDate());
   }
 
 
@@ -78,6 +85,9 @@ export class CuponDescuentoComponent implements OnInit {
   }
 
   public obtenerFecha(fecha) {
+
+    fecha.setHours(0,0,0);
+   console.log("fecha ", fecha )
     return fecha.toISOString().split('T')[0]
 
   }
@@ -86,7 +96,7 @@ export class CuponDescuentoComponent implements OnInit {
     debugger;
     this.banderaOpcionAplicarA = value;
     if (this.banderaOpcionAplicarA) {
-        this.Descuento.AplicarA='todos';
+      this.Descuento.AplicarA = 'todos';
       for (let i in this.result) {
         this.vectorProductos.add(this.result[i]);
       }
@@ -95,7 +105,7 @@ export class CuponDescuentoComponent implements OnInit {
       }
 
     } else {
-      this.Descuento.AplicarA='espesificos';
+      this.Descuento.AplicarA = 'espesificos';
       this.vectorProductos = new Set();
       this.vectorProductosEnviar = [];
     }
@@ -104,8 +114,8 @@ export class CuponDescuentoComponent implements OnInit {
 
   public abrirModalProductos(content) {
     this.modalService.open(content, {centered: true, size: 'lg', scrollable: true});
-    for(let producto of this.vectorProductosEnviar){
-        this.vectorProductos.add(producto);
+    for (let producto of this.vectorProductosEnviar) {
+      this.vectorProductos.add(producto);
     }
   }
 
@@ -182,8 +192,9 @@ export class CuponDescuentoComponent implements OnInit {
   }
 
   public async guardarDescuento() {
+
     try {
-      this.loading=true;
+      this.loading = true;
       this.banderaValidaciones = true;
       if (document.forms["formInformacion"].checkValidity() && document.forms["formDescuento"].checkValidity() && document.forms["formTiempo"].checkValidity()) {
 
@@ -202,7 +213,7 @@ export class CuponDescuentoComponent implements OnInit {
           } else {
             this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Elige al menos un producto</p></div>', "Error!",
               {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
-            this.loading=false;
+            this.loading = false;
           }
         } else {
           this.Descuento.Fecha_Inicio = this.obtenerFecha(this.bsRangeValue[0]);
@@ -213,7 +224,7 @@ export class CuponDescuentoComponent implements OnInit {
           console.log("Descuento antes de enviar ", this.Descuento, "productos", this.vectorProductosEnviar);
           let response = await this._descuentoServicio.saveDescuento(this.identidadTienda.NUM_TIENDA, this.objDescuento).toPromise();
           this.mensageCorrecto(response.message);
-          this.loading=false;
+          this.loading = false;
           this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/listado-cupon-descuento'])
 
         }
@@ -223,10 +234,10 @@ export class CuponDescuentoComponent implements OnInit {
         let body = document.getElementById('body') as HTMLElement;
         body.scrollTo(0, 0);
         window.scroll(0, 0);
-        this.loading=false;
+        this.loading = false;
       }
     } catch (e) {
-      this.loading=false;
+      this.loading = false;
       console.log("error:" + e);
       if (JSON.stringify((e).error.message))
         this.mensageError(JSON.stringify((e).error.message));

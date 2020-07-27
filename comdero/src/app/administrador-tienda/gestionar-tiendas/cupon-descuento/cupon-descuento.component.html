@@ -269,13 +269,14 @@
             <div class="col-xs-12 col-12 col-sm-5 col-md-6 col-lg-4 form-group">
               <label>Rango de duracion</label>
               <div class="input-group ">
-                <input placeholder="01/07/2020 - 04/08/2020" type="text" class="form-control" bsDaterangepicker
-                       #Calendario="ngModel"
-                       style="border-right: none"
-                       [(ngModel)]="bsRangeValue" name="calendario"
-                       [bsConfig]='{ rangeInputFormat: "DD/MM/YYYY", locale: "es", adaptivePosition: true, containerClass:"theme-orange" }'
-                       #dpr="bsDaterangepicker" required
-                       [ngClass]="{'borderr-red': Calendario.invalid && banderaValidaciones}">
+                <input  type="text" class="form-control" bsDaterangepicker
+                        #Calendario="ngModel"
+                        style="border-right: none"
+                        [(ngModel)]="bsRangeValue" name="calendario"
+                        [minDate]="minDate" placeholder="05/05/2020-24/05/2020"
+                        [bsConfig]='{ rangeInputFormat: "DD/MM/YYYY", locale: "es", adaptivePosition: true, containerClass:"theme-orange" }'
+                        #dpr="bsDaterangepicker" required
+                        [ngClass]="{'borderr-red': Calendario.invalid && banderaValidaciones}">
                 <div class="input-group-append">
                   <span class="input-group-text fa fa-calendar"
                         [ngClass]="{'borderr-red': Calendario.invalid && banderaValidaciones}"

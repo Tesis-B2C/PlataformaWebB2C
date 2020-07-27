@@ -11,7 +11,7 @@
       <div class="form-row mb-2  ">
         <div class=" input-group col-md-12 mr-md-auto">
           <input class="form-control" style="font-size: small" type="text" #busquedaasd="ngModel"
-                 [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="busquedasasd()"/>
+                 [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="filtrar()"/>
           <div class="input-group-append">
             <span class="input-group-text  small"><li class="fas fa-search"></li></span>
           </div>
@@ -141,8 +141,8 @@
                      style="text-transform: uppercase"
                      placeholder="Ej: Descuento por el mes de enero"
                      class=" form-control py-3 "
-                     name="nombreProducto" required, [disabled]="!this.banderaModificar"
-                     type="text" [ngClass]="{'is-invalid': MotivoDescuento.invalid && banderaValidaciones}">
+                     name="motivoDescuento" required [disabled]="!this.banderaModificar"
+                     type="text" [ngClass]="{'is-invalid': MotivoDescuento.invalid && banderaValidaciones}" >
 
               <div *ngIf="MotivoDescuento.errors?.required && banderaValidaciones" class="mt-2">
                 <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>

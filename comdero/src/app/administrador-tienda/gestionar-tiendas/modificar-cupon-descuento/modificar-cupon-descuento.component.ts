@@ -193,7 +193,7 @@ export class ModificarCuponDescuentoComponent implements OnInit {
     console.log("set vector productos", this.vectorProductos)
   }
 
-  async busquedasasd() {
+  async filtrar() {
     this.result = await this.search(this.busqueda);
   }
 
@@ -304,6 +304,8 @@ export class ModificarCuponDescuentoComponent implements OnInit {
 
 
   public obtenerFecha(fecha) {
+    fecha.setHours(0,0,0);
+    console.log("fecha antes", this.bsRangeValue, "fecha entrante",fecha.toISOString());
     return fecha.toISOString().split('T')[0]
 
   }
