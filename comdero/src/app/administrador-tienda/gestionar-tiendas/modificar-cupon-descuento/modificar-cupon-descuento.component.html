@@ -276,7 +276,7 @@
                        style="border-right: none"
                        [(ngModel)]="bsRangeValue" name="calendario" [disabled]="!this.banderaModificar"
 
-                       [bsConfig]='{ rangeInputFormat: "DD/MM/YYYY", locale: "es", adaptivePosition: true, containerClass:"theme-orange" }'
+                       [bsConfig]='{ rangeInputFormat: "YYYY/MM/DD", locale: "es", adaptivePosition: true, containerClass:"theme-orange" }'
                        #dpr="bsDaterangepicker" required
                        [ngClass]="{'borderr-red': Calendario.invalid && banderaValidaciones}">
                 <div class="input-group-append">
