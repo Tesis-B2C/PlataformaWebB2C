@@ -273,8 +273,8 @@
                         #Calendario="ngModel"
                         style="border-right: none"
                         [(ngModel)]="bsRangeValue" name="calendario"
-                        [minDate]="minDate" placeholder="05/05/2020-24/05/2020"
-                        [bsConfig]='{ rangeInputFormat: "YYYY/MM/DD", locale: "es", adaptivePosition: true, containerClass:"theme-orange" }'
+                        [minDate]="minDate" placeholder="2020-05-05 - 2020-06-06"
+                        [bsConfig]='{ rangeInputFormat: "YYYY-MM-DD", locale: "es", adaptivePosition: true, containerClass:"theme-orange" }'
                         #dpr="bsDaterangepicker" required
                         [ngClass]="{'borderr-red': Calendario.invalid && banderaValidaciones}">
                 <div class="input-group-append">

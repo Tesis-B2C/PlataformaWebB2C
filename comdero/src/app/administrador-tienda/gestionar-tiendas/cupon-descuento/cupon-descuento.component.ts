@@ -18,7 +18,7 @@ defineLocale('es', esLocale);
   selector: 'app-cupon-descuento',
   templateUrl: './cupon-descuento.component.html',
   styleUrls: ['./cupon-descuento.component.css'],
- providers: [DatePipe]
+  providers: [DatePipe]
 
 })
 export class CuponDescuentoComponent implements OnInit {
@@ -34,19 +34,20 @@ export class CuponDescuentoComponent implements OnInit {
   public vectorProductos = new Set();
 
 
-  objDescuento = {
+  public objDescuento = {
     Descuento: null,
     vProductos: null
   };
 
   public loading: boolean = false;
-  bsRangeValue: Date[];
-  minDate=new Date();
+  public bsRangeValue: Date[];
+  public minDate = new Date();
 
   public identidadTienda;
   public misProductos;
   public result = [];
-  constructor(private datePipe: DatePipe,private router: Router, public toastr: ToastrService, private _descuentoServicio: DescuentoServicio, private modalService: NgbModal, private _productoServicio: ProductoServicio) {
+
+  constructor(private datePipe: DatePipe, private router: Router, public toastr: ToastrService, private _descuentoServicio: DescuentoServicio, private modalService: NgbModal, private _productoServicio: ProductoServicio) {
     this.Descuento = new Descuento(null, null, null, null, 'Cupón', null, null, 0, 'todos');
 
 
@@ -59,7 +60,6 @@ export class CuponDescuentoComponent implements OnInit {
       return producto.PRODUCTO.NOMBRE_PRODUCTO.toLowerCase().includes(term)  // || siguiente
     });
   }
-
 
 
   async ngOnInit() {
@@ -76,7 +76,7 @@ export class CuponDescuentoComponent implements OnInit {
       this.vectorProductosEnviar.push(producto);
     }
 
-    this.minDate.setDate( this.minDate.getDate());
+    this.minDate.setDate(this.minDate.getDate());
   }
 
 
@@ -86,8 +86,8 @@ export class CuponDescuentoComponent implements OnInit {
 
   public obtenerFecha(fecha) {
 
-    fecha.setHours(0,0,0);
-   console.log("fecha ", fecha )
+    fecha.setHours(0, 0, 0);
+    console.log("fecha ", fecha)
     return fecha.toISOString().split('T')[0]
 
   }

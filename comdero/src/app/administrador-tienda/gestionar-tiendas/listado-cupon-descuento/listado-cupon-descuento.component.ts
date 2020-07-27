@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 export class ListadoCuponDescuentoComponent implements OnInit {
 
   public identidadTienda;
-  public misDescuentos:any=[];
+  public misDescuentos: any = [];
   public busqueda;
 
   public page = 1;
@@ -21,14 +21,15 @@ export class ListadoCuponDescuentoComponent implements OnInit {
   public result = [];
 
   public hoy;
-  public descuentosPorBorrar=[];
-  public loading:boolean=false;
+  public descuentosPorBorrar = [];
+  public loading: boolean = false;
+
 
   constructor(private datePipe: DatePipe, private _descuentoServicio: DescuentoServicio) {
   }
 
   async ngOnInit() {
-  this.loading=true;
+    this.loading = true;
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
     let response = await this._descuentoServicio.getMisDescuentos(this.identidadTienda.NUM_TIENDA).toPromise();
     this.misDescuentos = response.data;
@@ -53,14 +54,15 @@ export class ListadoCuponDescuentoComponent implements OnInit {
     debugger;
     this.result = this.misDescuentos;
     console.log("mis productos", this.vectorDescuentos);
-  this.loading=false;
+    this.loading = false;
+
 
   }
 
   public async filtrar() {
-    this.loading=true;
+    this.loading = true;
     this.result = await this.search(this.busqueda);
-    this.loading=false;
+    this.loading = false;
   }
 
   public search(text: string): any[] {
@@ -139,7 +141,7 @@ export class ListadoCuponDescuentoComponent implements OnInit {
 
   public async cambiarEstadoDescuentos(estado) {
     try {
-      this.descuentosPorBorrar=[];
+      this.descuentosPorBorrar = [];
       for (let descuento of this.vectorDescuentos) {
         this.descuentosPorBorrar.push(descuento);
       }

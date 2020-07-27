@@ -33,20 +33,18 @@ export class ModificarCuponDescuentoComponent implements OnInit {
   public identidadTienda
   public misProductos = [];
   public busqueda;
-  // public bsRangeValue;
-
-
   public bsValue;
   public bsRangeValue: Date[];
   public maxDate;
   public banderaModificar: boolean = false;
 
-  objDescuento = {
+  public objDescuento = {
     Descuento: null,
     vProductos: null
   };
 
   public loading: boolean = false;
+  public minDate = new Date();
 
   constructor(public toastr: ToastrService, private datePipe: DatePipe, private _productoServicio: ProductoServicio, private modalService: NgbModal, private _descuentoServicio: DescuentoServicio, private route: ActivatedRoute) {
     this.Descuento = new Descuento(null, null, null, null, null, null, null, null, null);
@@ -63,6 +61,7 @@ export class ModificarCuponDescuentoComponent implements OnInit {
       this.result.push(misProductos[i].PRODUCTO);
     }
     await this.iniciarModificarDescuento();
+    this.minDate.setDate(this.minDate.getDate());
 
   }
 
