@@ -146,7 +146,7 @@ async function getMisProductos(req, res) {
             order: [['ID_OFERTA', 'DESC']]
         });
 
-        if (productosObtenidas.length) {
+        if (productosObtenidas.length>0) {
             res.status(200).send({
                 data: productosObtenidas,
                 message: "Productos cargadas correctamente"

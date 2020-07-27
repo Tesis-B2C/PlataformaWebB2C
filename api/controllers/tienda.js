@@ -174,7 +174,7 @@ async function getMisTiendas(req, res) {
             }
         });
 
-        if (tiendasObtenidas.length) {
+        if (tiendasObtenidas.length>0) {
             res.status(200).send({
                 data: tiendasObtenidas,
                 message: "Tiendas cargadas correctamente"
@@ -421,7 +421,7 @@ async function actualizarTiendaGeneral(req, res) {
 
         let horariosObtenidos = await HORARIO_ATENCION.findAll({where: {NUM_TIENDA: tiendaId}});
 
-        if (horariosObtenidos.length) {
+        if (horariosObtenidos.length>0) {
             await HORARIO_ATENCION.destroy({
                 where: {NUM_TIENDA: tiendaId},
                 transaction: trans
@@ -445,7 +445,7 @@ async function actualizarTiendaGeneral(req, res) {
             }
         }
 
-        if (tiendaActualizado.length) {
+        if (tiendaActualizado) {
             res.status(200).send({message: 'Los datos generales de la tienda han sido actualizados'});
             await trans.commit();
         } else {
@@ -467,7 +467,7 @@ async function actualizarTiendaSucursal(req, res) {
 
         let sucursalesObtenidos = await SUCURSAL.findAll({where: {NUM_TIENDA: tiendaId}});
 
-        if (sucursalesObtenidos.length) {
+        if (sucursalesObtenidos.length>0) {
             await SUCURSAL.destroy({
                 where: {NUM_TIENDA: tiendaId},
                 transaction: t

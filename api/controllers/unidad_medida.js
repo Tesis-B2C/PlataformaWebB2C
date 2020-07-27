@@ -10,7 +10,7 @@ async function getUnidadesMedida(req, res) {
     try {
         let unidadesMedidaObtenidas = await Unidad_Medida.findAll({where:{UNI_COD_UNIDAD_MEDIDA:{[Op.ne]:'N/A'}},order:[['UNI_COD_UNIDAD_MEDIDA','ASC']]}); // [Op.ne] es diferente
 
-        if (unidadesMedidaObtenidas.length) {
+        if (unidadesMedidaObtenidas.length>0) {
             res.status(200).send({
                 data: unidadesMedidaObtenidas,
                 message: "Unidades de medida cargadas correctamente"

@@ -65,7 +65,7 @@ async function getMisDescuentos(req, res) {
             where: {NUM_TIENDA: req.params.id, ESTADO_DESCUENTO: {[Op.or]: [0, 1]}}, order: [['ID_DESCUENTO', 'DESC']]
         });
 
-        if (descuentoObtenidos.length) {
+        if (descuentoObtenidos.length>0) {
             res.status(200).send({
                 data: descuentoObtenidos,
                 message: "Productos cargadas correctamente"
