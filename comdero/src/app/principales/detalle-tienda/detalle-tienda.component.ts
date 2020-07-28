@@ -11,22 +11,27 @@ import Swal from "sweetalert2";
 export class DetalleTiendaComponent implements OnInit {
 
   public idTienda;
-  public Tienda;
+  public Tienda: any;
+  public Logo = "";
+  public Banner = "";
 
   constructor(private _tiendaServicio: TiendaServicio, private route: ActivatedRoute) {
+
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.getDetalleTiendaProducto();
+    await this.getLogo();
+    await this.getBanner();
 
-    this.getDetalleTiendaProducto();
   }
 
   async getDetalleTiendaProducto() {
     try {
       this.idTienda = this.route.snapshot.params.id;
-      this.Tienda = await this._tiendaServicio.getDetalleTiendaProducto(this.idTienda).toPromise();
-       console.log("tienda buscada", this.Tienda)
-
+      let response = await this._tiendaServicio.getDetalleTiendaProducto(this.idTienda).toPromise();
+      this.Tienda = response.data;
+      console.log("tienda buscada", this.Tienda);
     } catch (e) {
       console.log("error:" + e);
       if (JSON.stringify((e).error.message))
@@ -36,6 +41,28 @@ export class DetalleTiendaComponent implements OnInit {
 
 
   }
+
+  getLogo() {
+    this.Logo = 'assets/images/no-image.png';
+    let pathImagen = this.Tienda.LOGO;
+
+    if (pathImagen) {
+      this.Logo = 'http://localhost:3977/' + pathImagen;
+      console.log("direccion", this.Logo)
+    }
+    return this.Logo;
+  }
+
+  getBanner() {
+    this.Banner='assets/images/no-image.png';
+    let pathImagen = this.Tienda.BANNER;
+    if (pathImagen) {
+      this.Banner = 'http://localhost:3977/' + pathImagen;
+      console.log("direccion", this.Banner)
+    }
+    return this.Banner;
+  }
+
 
 
   mensageError(mensaje) {

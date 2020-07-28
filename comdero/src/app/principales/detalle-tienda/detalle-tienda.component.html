@@ -1,6 +1,124 @@
-<body >
-<section class="section-pagetop bg">
-  <div class="container">
-    <h2 class="title-page">Mi Cuenta</h2>
+<body>
+<section class="section-pagetop   bg px-5">
+  <div class="container-fluid">
+    <h4 class="title-page ">{{this.Tienda?.NOMBRE_COMERCIAL }}</h4>
   </div> <!-- container //  -->
 </section>
+<div>
+<section class="section-main  container-fluid ">
+  <div class="container-fluid">
+    <div class="row ">
+      <aside class="col-md-2">
+
+        <nav class="">
+          <ul class="menu-category">
+            <li><a href="#">Encuentranos</a></li>
+            <li><a href="#">Contactanos</a></li>
+            <li><a href="#">Home interior</a></li>
+            <li><a href="#">Electronics</a></li>
+            <li><a href="#">Technologies</a></li>
+            <li><a href="#">Digital goods</a></li>
+            <li><a href="#">Technologies</a></li>
+            <li><a href="#">Digital goods</a></li>
+
+
+            <li class="has-submenu"><a href="#">More items</a>
+              <ul class="submenu">
+                <li><a href="#">Submenu name</a></li>
+                <li><a href="#">Great submenu</a></li>
+                <li><a href="#">Another menu</a></li>
+                <li><a href="#">Some others</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </aside> <!-- col.// -->
+      <div class="col-md-9  ">
+
+        <section class="px-md-5 w-100 mx-auto">
+
+          <div class="section-intro   w-100 mx-auto  ">
+            <div class="intro-banner-wrap">
+              <img [src]=this.Banner class="w-100" height="350 rem">
+            </div>
+
+            <div class="posicion-logo row w-100  justify-content-center justify-content-md-start  ml-md-5  ">
+              <div class="  centered-content   justify-content-between  mt-n5">
+                <div class="row mx-auto">
+                  <img [src]="this.Logo" class=" rounded-circle"
+                       style=" border: rgba(255, 255, 255, 1) 5px solid;" height="200px" width="200px">
+                </div>
+
+              </div>
+            </div>
+            <div class="bg  mt-n5">
+              <nav class="navbar navbar-main navbar-expand-lg navbar-light border-bottom  ">
+                <div class="container  ">
+
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav"
+                          aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+
+                  <div class="collapse navbar-collapse ml-auto" id="main_nav">
+                    <ul class="navbar-nav ml-auto">
+                      <li class="nav-item dropdown">
+                        <a class="nav-link" href="#">Home</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#">Supermarket</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#">Partnership</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#">Baby &amp Toys</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#">Fitness sport</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#">Clothing</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#">Furnitures</a>
+                      </li>
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"> More</a>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" href="#">Foods and Drink</a>
+                          <a class="dropdown-item" href="#">Home interior</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="#">Category 1</a>
+                          <a class="dropdown-item" href="#">Category 2</a>
+                          <a class="dropdown-item" href="#">Category 3</a>
+                        </div>
+                      </li>
+                    </ul>
+                  </div> <!--  nav .// -->
+                </div> <!-- container .// -->
+              </nav>
+            </div>
+          </div>
+
+
+
+        </section>
+
+      </div> <!-- col.// -->
+
+
+    </div> <!-- row.// -->
+
+  </div> <!-- container //  -->
+
+</section>
+<br>
+</div>
+
+
+</body>
+
