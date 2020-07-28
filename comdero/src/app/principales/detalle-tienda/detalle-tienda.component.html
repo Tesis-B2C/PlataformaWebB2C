@@ -1,122 +1,222 @@
 <body>
-<section class="section-pagetop   bg px-5">
+<section class="section-pagetop   bg px-5  py-3 mb-2 colorNavbar2">
   <div class="container-fluid">
-    <h4 class="title-page ">{{this.Tienda?.NOMBRE_COMERCIAL }}</h4>
+    <h4 class="title-page white">{{this.Tienda?.NOMBRE_COMERCIAL }}</h4>
   </div> <!-- container //  -->
 </section>
 <div>
-<section class="section-main  container-fluid ">
-  <div class="container-fluid">
-    <div class="row ">
-      <aside class="col-md-2">
+  <section class="section-main  container-fluid  bg">
+    <div class="container-fluid">
+      <div class="row no-gutters  justify-content-center">
 
-        <nav class="">
-          <ul class="menu-category">
-            <li><a href="#">Encuentranos</a></li>
-            <li><a href="#">Contactanos</a></li>
-            <li><a href="#">Home interior</a></li>
-            <li><a href="#">Electronics</a></li>
-            <li><a href="#">Technologies</a></li>
-            <li><a href="#">Digital goods</a></li>
-            <li><a href="#">Technologies</a></li>
-            <li><a href="#">Digital goods</a></li>
+        <div class="col-md-9  ">
 
+          <section class="px-md-5 w-100 mx-auto">
 
-            <li class="has-submenu"><a href="#">More items</a>
-              <ul class="submenu">
-                <li><a href="#">Submenu name</a></li>
-                <li><a href="#">Great submenu</a></li>
-                <li><a href="#">Another menu</a></li>
-                <li><a href="#">Some others</a></li>
-              </ul>
-            </li>
-          </ul>
-        </nav>
-      </aside> <!-- col.// -->
-      <div class="col-md-9  ">
+            <div class="section-intro   w-100 mx-auto  ">
+              <div class="intro-banner-wrap">
+                <img [src]=this.Banner class="w-100" height="350 rem">
+              </div>
 
-        <section class="px-md-5 w-100 mx-auto">
+              <div class="posicion-logo row w-100  justify-content-center justify-content-md-start  ml-md-5  ">
+                <div class="  centered-content   justify-content-between  mt-n5">
+                  <div class="row mx-auto">
+                    <img [src]="this.Logo" class=" rounded-circle"
+                         style=" border: rgba(255, 255, 255, 1) 5px solid;" height="180px" width="180px">
+                  </div>
 
-          <div class="section-intro   w-100 mx-auto  ">
-            <div class="intro-banner-wrap">
-              <img [src]=this.Banner class="w-100" height="350 rem">
-            </div>
-
-            <div class="posicion-logo row w-100  justify-content-center justify-content-md-start  ml-md-5  ">
-              <div class="  centered-content   justify-content-between  mt-n5">
-                <div class="row mx-auto">
-                  <img [src]="this.Logo" class=" rounded-circle"
-                       style=" border: rgba(255, 255, 255, 1) 5px solid;" height="200px" width="200px">
                 </div>
+              </div>
+              <div class="colorNavbar  mt-n5">
+                <nav class="navbar navbar-main navbar-expand-lg navbar-light  ">
+                  <div class="container  mt-2 ">
 
+                    <button class=" navbar-toggler" style=" font-size: small; border: none" type="button"
+                            data-toggle="collapse" data-target="#main_nav"
+                            aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="fa fa-bars " style="color: white"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse ml-auto" id="main_nav">
+                      <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown">
+                          <a class="nav-link " style="color: white; font-weight: normal" href="#">Home &nbsp;&nbsp;|</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" style="color: white; font-weight: normal" href="#">About &nbsp;&nbsp;|</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" style="color: white; font-weight: normal" href="#">Supermarket &nbsp;&nbsp;|</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" style="color: white; font-weight: normal" href="#">Partnership &nbsp;&nbsp;|</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" style="color: white; font-weight: normal" href="#">Baby &amp Toys &nbsp;&nbsp;| </a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" style="color: white; font-weight: normal" href="#">Fitness sport &nbsp;&nbsp;|</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" style="color: white; font-weight: normal" href="#">Clothing
+                            &nbsp;&nbsp;|</a>
+                        </li>
+
+
+                        <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" data-toggle="dropdown"
+                             style="color: white; font-weight: normal" href="#"> More</a>
+                          <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Foods and Drink</a>
+                            <a class="dropdown-item" href="#">Home interior</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Category 1</a>
+                            <a class="dropdown-item" href="#">Category 2</a>
+                            <a class="dropdown-item" href="#">Category 3</a>
+                          </div>
+                        </li>
+                      </ul>
+                    </div> <!--  nav .// -->
+                  </div> <!-- container .// -->
+                </nav>
               </div>
             </div>
-            <div class="bg  mt-n5">
-              <nav class="navbar navbar-main navbar-expand-lg navbar-light border-bottom  ">
-                <div class="container  ">
-
-                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav"
-                          aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
-
-                  <div class="collapse navbar-collapse ml-auto" id="main_nav">
-                    <ul class="navbar-nav ml-auto">
-                      <li class="nav-item dropdown">
-                        <a class="nav-link" href="#">Home</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Supermarket</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Partnership</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Baby &amp Toys</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Fitness sport</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Clothing</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Furnitures</a>
-                      </li>
-                      <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"> More</a>
-                        <div class="dropdown-menu">
-                          <a class="dropdown-item" href="#">Foods and Drink</a>
-                          <a class="dropdown-item" href="#">Home interior</a>
-                          <div class="dropdown-divider"></div>
-                          <a class="dropdown-item" href="#">Category 1</a>
-                          <a class="dropdown-item" href="#">Category 2</a>
-                          <a class="dropdown-item" href="#">Category 3</a>
-                        </div>
-                      </li>
-                    </ul>
-                  </div> <!--  nav .// -->
-                </div> <!-- container .// -->
-              </nav>
-            </div>
-          </div>
 
 
+          </section>
 
-        </section>
+        </div> <!-- col.// -->
+        <div class="col-md-9 ">
+          <section class="section-name padding-y-sm ">
+            <div class="  px-5 ">
+              <article class="card card-body">
+                <div class="row">
+                  <div class="col-md-4">
+                    <figure class="item-feature">
+                      <span class="text-primary"><i class="fa fa-2x fa-truck"></i></span>
+                      <figcaption class="pt-3">
+                        <h5 class="title">Fast delivery</h5>
+                        <p>Dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                          tempor incididunt ut labore </p>
+                      </figcaption>
+                    </figure> <!-- iconbox // -->
+                  </div><!-- col // -->
+                  <div class="col-md-4">
+                    <figure  class="item-feature">
+                      <span class="text-primary"><i class="fa fa-2x fa-landmark"></i></span>
+                      <figcaption class="pt-3">
+                        <h5 class="title">Creative Strategy</h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        </p>
+                      </figcaption>
+                    </figure> <!-- iconbox // -->
+                  </div><!-- col // -->
+                  <div class="col-md-4">
+                    <figure  class="item-feature">
+                      <span class="text-primary"><i class="fa fa-2x fa-lock"></i></span>
+                      <figcaption class="pt-3">
+                        <h5 class="title">High secured </h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        </p>
+                      </figcaption>
+                    </figure> <!-- iconbox // -->
+                  </div> <!-- col // -->
+                </div>
+              </article>
 
-      </div> <!-- col.// -->
+              <br>
+
+              <header class="section-heading">
+                <a href="#" class="btn btn-outline-primary float-right">See all</a>
+                <h3 class="section-title">Popular products</h3>
+              </header><!-- sect-heading -->
 
 
-    </div> <!-- row.// -->
+              <div class="row">
+                <div class="col-md-3">
+                  <div href="#" class="card card-product-grid">
+                    <a href="#" class="img-wrap"> <img src="images/items/1.jpg"> </a>
+                    <figcaption class="info-wrap">
+                      <a href="#" class="title">Just another product name</a>
+                      <div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
+                    </figcaption>
+                  </div>
+                </div> <!-- col.// -->
+                <div class="col-md-3">
+                  <div href="#" class="card card-product-grid">
+                    <a href="#" class="img-wrap"> <img src="images/items/2.jpg"> </a>
+                    <figcaption class="info-wrap">
+                      <a href="#" class="title">Some item name here</a>
+                      <div class="price mt-1">$280.00</div> <!-- price-wrap.// -->
+                    </figcaption>
+                  </div>
+                </div> <!-- col.// -->
+                <div class="col-md-3">
+                  <div href="#" class="card card-product-grid">
+                    <a href="#" class="img-wrap"> <img src="images/items/3.jpg"> </a>
+                    <figcaption class="info-wrap">
+                      <a href="#" class="title">Great product name here</a>
+                      <div class="price mt-1">$56.00</div> <!-- price-wrap.// -->
+                    </figcaption>
+                  </div>
+                </div> <!-- col.// -->
+                <div class="col-md-3">
+                  <div href="#" class="card card-product-grid">
+                    <a href="#" class="img-wrap"> <img src="images/items/4.jpg"> </a>
+                    <figcaption class="info-wrap">
+                      <a href="#" class="title">Just another product name</a>
+                      <div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
+                    </figcaption>
+                  </div>
+                </div> <!-- col.// -->
+                <div class="col-md-3">
+                  <div href="#" class="card card-product-grid">
+                    <a href="#" class="img-wrap"> <img src="images/items/5.jpg"> </a>
+                    <figcaption class="info-wrap">
+                      <a href="#" class="title">Just another product name</a>
+                      <div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
+                    </figcaption>
+                  </div>
+                </div> <!-- col.// -->
+                <div class="col-md-3">
+                  <div href="#" class="card card-product-grid">
+                    <a href="#" class="img-wrap"> <img src="images/items/6.jpg"> </a>
+                    <figcaption class="info-wrap">
+                      <a href="#" class="title">Some item name here</a>
+                      <div class="price mt-1">$280.00</div> <!-- price-wrap.// -->
+                    </figcaption>
+                  </div>
+                </div> <!-- col.// -->
+                <div class="col-md-3">
+                  <div href="#" class="card card-product-grid">
+                    <a href="#" class="img-wrap"> <img src="images/items/7.jpg"> </a>
+                    <figcaption class="info-wrap">
+                      <a href="#" class="title">Great product name here</a>
+                      <div class="price mt-1">$56.00</div> <!-- price-wrap.// -->
+                    </figcaption>
+                  </div>
+                </div> <!-- col.// -->
+                <div class="col-md-3">
+                  <div href="#" class="card card-product-grid">
+                    <a href="#" class="img-wrap"> <img src="images/items/9.jpg"> </a>
+                    <figcaption class="info-wrap">
+                      <a href="#" class="title">Just another product name</a>
+                      <div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
+                    </figcaption>
+                  </div>
+                </div> <!-- col.// -->
+              </div> <!-- row.// -->
 
-  </div> <!-- container //  -->
+            </div><!-- container // -->
+          </section>
+        </div>
 
-</section>
-<br>
+      </div> <!-- row.// -->
+
+    </div> <!-- container //  -->
+    <br>
+  </section>
+  <br>
 </div>
 
 
