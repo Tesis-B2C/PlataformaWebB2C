@@ -6,7 +6,7 @@
 </section>
 <div>
   <section class="section-main  container-fluid  bg">
-    <div class="container-fluid">
+
       <div class="row no-gutters  justify-content-center">
 
         <div class="col-md-9  ">
@@ -22,16 +22,16 @@
                 <div class="  centered-content   justify-content-between  mt-n5">
                   <div class="row mx-auto">
                     <img [src]="this.Logo" class=" rounded-circle"
-                         style=" border: rgba(255, 255, 255, 1) 5px solid;" height="180px" width="180px">
+                         style=" border: rgba(244, 246, 246, 0.8) 4px solid;" height="180px" width="180px">
                   </div>
 
                 </div>
               </div>
               <div class="colorNavbar  mt-n5">
                 <nav class="navbar navbar-main navbar-expand-lg navbar-light  ">
-                  <div class="container  mt-2 ">
+                  <div class="container  mt-2 mr-0">
 
-                    <button class=" navbar-toggler" style=" font-size: small; border: none" type="button"
+                    <button class=" navbar-toggler" style=" border: none" type="button"
                             data-toggle="collapse" data-target="#main_nav"
                             aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
                       <span class="fa fa-bars " style="color: white"></span>
@@ -40,32 +40,30 @@
                     <div class="collapse navbar-collapse ml-auto" id="main_nav">
                       <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown">
-                          <a class="nav-link " style="color: white; font-weight: normal" href="#">Home &nbsp;&nbsp;|</a>
+                          <a class="nav-link " style="color: white; font-weight: normal" href="#">Inicio &nbsp;&nbsp;|</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" style="color: white; font-weight: normal" href="#">About &nbsp;&nbsp;|</a>
+                          <a class="nav-link" style="color: white; font-weight: normal" href="#">Quines somos&nbsp;&nbsp;|</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" style="color: white; font-weight: normal" href="#">Supermarket &nbsp;&nbsp;|</a>
+                          <a class="nav-link" style="color: white; font-weight: normal" href="#"> &nbsp;&nbsp;Terminos y condiciones&nbsp;&nbsp; |</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" style="color: white; font-weight: normal" href="#">Partnership &nbsp;&nbsp;|</a>
+                          <a class="nav-link" style="color: white; font-weight: normal" href="#">Encuentranos  &nbsp;&nbsp;|</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" style="color: white; font-weight: normal" href="#">Baby &amp Toys &nbsp;&nbsp;| </a>
+                          <a class="nav-link" style="color: white; font-weight: normal" href="#">Contáctanos&nbsp;&nbsp;| </a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" style="color: white; font-weight: normal" href="#">Fitness sport &nbsp;&nbsp;|</a>
+                          <a class="nav-link" style="color: white; font-weight: normal" href="#">Métodos de pago&nbsp;&nbsp;| </a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" style="color: white; font-weight: normal" href="#">Clothing
-                            &nbsp;&nbsp;|</a>
+                          <a class="nav-link" style="color: white; font-weight: normal" href="#">Métodos de envio&nbsp;&nbsp;| </a>
                         </li>
-
 
                         <li class="nav-item dropdown">
                           <a class="nav-link dropdown-toggle" data-toggle="dropdown"
-                             style="color: white; font-weight: normal" href="#"> More</a>
+                             style="color: white; font-weight: normal" href="#"> Categorias</a>
                           <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">Foods and Drink</a>
                             <a class="dropdown-item" href="#">Home interior</a>
@@ -81,14 +79,28 @@
                 </nav>
               </div>
             </div>
+            <div class="mt-2 mx-auto">
 
+              <div class="input-group  ">
+                <input type="text" class="form-control " placeholder="¿Que estas buscando en  {{this.Tienda?.NOMBRE_COMERCIAL}} ?">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="submit">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </div>
+              </div>
 
+            </div>
           </section>
 
+
         </div> <!-- col.// -->
+
+
+
         <div class="col-md-9 ">
           <section class="section-name padding-y-sm ">
-            <div class="  px-5 ">
+            <div class="  px-md-5 ">
               <article class="card card-body">
                 <div class="row">
                   <div class="col-md-4">
@@ -127,13 +139,13 @@
               <br>
 
               <header class="section-heading">
-                <a href="#" class="btn btn-outline-primary float-right">See all</a>
+
                 <h3 class="section-title">Popular products</h3>
               </header><!-- sect-heading -->
-
+              <div class="container">
 
               <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-3 px-5 ">
                   <div href="#" class="card card-product-grid">
                     <a href="#" class="img-wrap"> <img src="images/items/1.jpg"> </a>
                     <figcaption class="info-wrap">
@@ -142,7 +154,7 @@
                     </figcaption>
                   </div>
                 </div> <!-- col.// -->
-                <div class="col-md-3">
+                <div class="col-md-3  px-5 px-md-0">
                   <div href="#" class="card card-product-grid">
                     <a href="#" class="img-wrap"> <img src="images/items/2.jpg"> </a>
                     <figcaption class="info-wrap">
@@ -151,7 +163,7 @@
                     </figcaption>
                   </div>
                 </div> <!-- col.// -->
-                <div class="col-md-3">
+                <div class="col-md-3  px-5 px-md-0">
                   <div href="#" class="card card-product-grid">
                     <a href="#" class="img-wrap"> <img src="images/items/3.jpg"> </a>
                     <figcaption class="info-wrap">
@@ -160,7 +172,7 @@
                     </figcaption>
                   </div>
                 </div> <!-- col.// -->
-                <div class="col-md-3">
+                <div class="col-md-3  px-5 px-md-0">
                   <div href="#" class="card card-product-grid">
                     <a href="#" class="img-wrap"> <img src="images/items/4.jpg"> </a>
                     <figcaption class="info-wrap">
@@ -169,7 +181,7 @@
                     </figcaption>
                   </div>
                 </div> <!-- col.// -->
-                <div class="col-md-3">
+                <div class="col-md-3  px-5 px-md-0">
                   <div href="#" class="card card-product-grid">
                     <a href="#" class="img-wrap"> <img src="images/items/5.jpg"> </a>
                     <figcaption class="info-wrap">
@@ -178,7 +190,7 @@
                     </figcaption>
                   </div>
                 </div> <!-- col.// -->
-                <div class="col-md-3">
+                <div class="col-md-3 px-5 px-md-0">
                   <div href="#" class="card card-product-grid">
                     <a href="#" class="img-wrap"> <img src="images/items/6.jpg"> </a>
                     <figcaption class="info-wrap">
@@ -187,7 +199,7 @@
                     </figcaption>
                   </div>
                 </div> <!-- col.// -->
-                <div class="col-md-3">
+                <div class="col-md-3 px-5 px-md-0">
                   <div href="#" class="card card-product-grid">
                     <a href="#" class="img-wrap"> <img src="images/items/7.jpg"> </a>
                     <figcaption class="info-wrap">
@@ -196,7 +208,7 @@
                     </figcaption>
                   </div>
                 </div> <!-- col.// -->
-                <div class="col-md-3">
+                <div class="col-md-3 px-5 px-md-0">
                   <div href="#" class="card card-product-grid">
                     <a href="#" class="img-wrap"> <img src="images/items/9.jpg"> </a>
                     <figcaption class="info-wrap">
@@ -206,14 +218,14 @@
                   </div>
                 </div> <!-- col.// -->
               </div> <!-- row.// -->
-
+</div>
             </div><!-- container // -->
           </section>
         </div>
 
       </div> <!-- row.// -->
 
-    </div> <!-- container //  -->
+
     <br>
   </section>
   <br>
