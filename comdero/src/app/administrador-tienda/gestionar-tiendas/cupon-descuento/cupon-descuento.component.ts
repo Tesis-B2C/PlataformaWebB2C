@@ -1,4 +1,4 @@
-import {Component, OnInit, DoCheck} from '@angular/core';
+import {Component, OnInit, DoCheck, OnDestroy} from '@angular/core';
 
 import {Descuento} from "../../../modelos/descuento";
 import {defineLocale} from 'ngx-bootstrap/chronos';
@@ -21,7 +21,7 @@ defineLocale('es', esLocale);
   providers: [DatePipe]
 
 })
-export class CuponDescuentoComponent implements OnInit {
+export class CuponDescuentoComponent implements OnInit , OnDestroy{
   public Descuento: Descuento
   public banderaValidaciones: boolean = false;
   public banderaOpcionAplicarA: boolean = true;
@@ -79,6 +79,10 @@ export class CuponDescuentoComponent implements OnInit {
     this.minDate.setDate(this.minDate.getDate());
   }
 
+  ngOnDestroy() {
+
+    delete this.Descuento;
+  }
 
   async filtrar() {
     this.result = await this.search(this.busqueda);
