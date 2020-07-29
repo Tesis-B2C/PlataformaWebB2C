@@ -3,7 +3,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {MenuComponent} from "./menu/menu.component";
 import {PrincipalComponent} from "./principal/principal.component";
 import {CategoriasComponent} from "./categorias/categorias.component";
-import {DetalleTiendaComponent} from "./detalle-tienda/detalle-tienda.component";
+
 
 
 const routes: Routes = [
@@ -13,7 +13,7 @@ const routes: Routes = [
     children: [
       {path: 'principal', component: PrincipalComponent},
       {path: 'categorias', component: CategoriasComponent},
-      {path: 'detalle-tienda/:id', component: DetalleTiendaComponent},
+      {path: 'detalle-tienda', loadChildren:'./detalle-tienda/detalle-tienda.module#DetalleTiendaModule'},
       {path: 'mi-cuenta/:id', loadChildren: './mi-cuenta/mi-cuenta.module#MiCuentaModule'}
     ]
   },

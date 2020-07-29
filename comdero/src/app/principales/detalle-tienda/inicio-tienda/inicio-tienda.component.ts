@@ -1,37 +1,27 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {TiendaServicio} from "../../servicios/tienda.servicio";
+import { Component, OnInit } from '@angular/core';
+import {TiendaServicio} from "../../../servicios/tienda.servicio";
+import {ActivatedRoute, Router} from "@angular/router";
 import Swal from "sweetalert2";
 
 @Component({
-  selector: 'app-detalle-tienda',
-  templateUrl: './detalle-tienda.component.html',
-  styleUrls: ['./detalle-tienda.component.css']
+  selector: 'app-inicio-tienda',
+  templateUrl: './inicio-tienda.component.html',
+  styleUrls: ['./inicio-tienda.component.css']
 })
-export class DetalleTiendaComponent implements OnInit {
-
+export class InicioTiendaComponent implements OnInit {
   public idTienda;
   public Tienda: any;
-  public Logo = "";
-  public Banner = "";
+  constructor(private _tiendaServicio: TiendaServicio, private route: ActivatedRoute,private router: Router) { }
 
-  constructor(private _tiendaServicio: TiendaServicio, private route: ActivatedRoute) {
-
+  ngOnInit() {
+    this.getDetalleTiendaProducto();
   }
-
-  async ngOnInit() {
-    await this.getDetalleTiendaProducto();
-    await this.getLogo();
-    await this.getBanner();
-
-  }
-
   async getDetalleTiendaProducto() {
     try {
-      this.idTienda = this.route.snapshot.params.id;
+      this.idTienda = this.route.parent.snapshot.params.id;
       let response = await this._tiendaServicio.getDetalleTiendaProducto(this.idTienda).toPromise();
       this.Tienda = response.data;
-      console.log("tienda buscada", this.Tienda);
+      console.log("tienda buscada en inicio pilas", this.Tienda);
     } catch (e) {
       console.log("error:" + e);
       if (JSON.stringify((e).error.message))
@@ -41,29 +31,6 @@ export class DetalleTiendaComponent implements OnInit {
 
 
   }
-
-  getLogo() {
-    this.Logo = 'assets/images/no-image.png';
-    let pathImagen = this.Tienda.LOGO;
-
-    if (pathImagen) {
-      this.Logo = 'http://localhost:3977/' + pathImagen;
-      console.log("direccion", this.Logo)
-    }
-    return this.Logo;
-  }
-
-  getBanner() {
-    this.Banner='assets/images/no-image.png';
-    let pathImagen = this.Tienda.BANNER;
-    if (pathImagen) {
-      this.Banner = 'http://localhost:3977/' + pathImagen;
-      console.log("direccion", this.Banner)
-    }
-    return this.Banner;
-  }
-
-
 
   mensageError(mensaje) {
     Swal.fire({
@@ -97,6 +64,5 @@ export class DetalleTiendaComponent implements OnInit {
       }
     });
   }
-
 
 }

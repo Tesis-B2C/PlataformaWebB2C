@@ -1,0 +1,57 @@
+.posicion-logo {
+  margin-top: -100px;
+}
+
+
+.colorNavbar {
+  background-color: #2a4c75;
+
+}
+
+.colorNavbar2 {
+  background: -webkit-repeating-linear-gradient(right, #2a4c75, #ff6500, #2a4c75, #ff6500);
+
+}
+
+.nav-link {
+  color: white;
+  border-right: 0.1px solid rgba(244, 246, 246, 0.2);
+  font-size: small;
+}
+
+.active {
+  color: white;
+  background-color: rgba(244, 246, 246, 0.2);
+
+}
+
+.nav-link:hover {
+  color: white;
+  background-color: rgba(244, 246, 246, 0.2);
+}
+
+.alto-banner {
+  height: 320px;
+}
+
+.alto-logo {
+  border: rgba(244, 246, 246, 0.8) 4px solid;
+  height: 180px;
+  width: 180px;
+}
+
+@media (max-width: 720px) {
+  .alto-banner {
+    height: 200px;
+  }
+
+  .alto-logo {
+    border: rgba(244, 246, 246, 0.8) 4px solid;
+    height: 160px;
+    width: 160px;
+  }
+  .posicion-logo {
+    margin-top: -70px;
+  }
+
+}
