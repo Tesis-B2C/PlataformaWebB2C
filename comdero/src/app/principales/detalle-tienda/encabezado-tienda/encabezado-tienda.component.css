@@ -39,6 +39,11 @@
   height: 180px;
   width: 180px;
 }
+.dropdown-menu{
+  max-height: 25vw;
+  overflow: auto;
+}
+
 
 @media (max-width: 720px) {
   .alto-banner {
@@ -52,6 +57,10 @@
   }
   .posicion-logo {
     margin-top: -70px;
+  }
+  .dropdown-menu{
+    max-height: 100vw;
+    overflow: auto;
   }
 
 }
@@ -74,4 +83,22 @@ i{
 .link{
   color: #495057;
 
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb {
+  background-color: #2a4c75;
+  border-radius: 50px;
+}
+
+.dropdown-menu::-webkit-scrollbar {
+  width:6px;
+  height: 6px;
+
+}
+.dropdown-menu::-webkit-scrollbar-track {
+  background-color: rgba(35, 35, 35, 0.1);
+}
+.dropdown-menu::-webkit-scrollbar-thumb {
+  background-color: #2a4c75;
+  border-radius: 50px;
 }
