@@ -1,113 +1,123 @@
 <body>
-<section class="   bg  py-0 mb-1  colorNavbar">
-      <nav class="navbar   navbar-expand-xl  justify-content-between px-lg-5 ">
 
-        <button class="navbar-toggler" style=" border: none" type="button"
-                data-toggle="collapse" data-target="#main_nav"
-                aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="fa fa-bars " style="color: white"></span>
-        </button>
-        <a class="navbar-brand mx-auto mx-lg-0" href="#">
-          <h6 class="title-page white">{{this.Tienda?.NOMBRE_COMERCIAL }}</h6>
-        </a>
-        <div class="container   mr-0 pr-0 ">
-          <div class="collapse navbar-collapse ml-auto" id="main_nav">
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item ">
-                <a class="nav-link" routerLink="inicio-tienda" routerLinkActive='active'
-                   [routerLinkActiveOptions]="{exact: true} ">Inicio </a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown"
-                   href="#"> Categorias</a>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="#">Foods and Drink</a>
-                  <a class="dropdown-item" href="#">Home interior</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Category 1</a>
-                  <a class="dropdown-item" href="#">Category 2</a>
-                  <a class="dropdown-item" href="#">Category 3</a>
-                </div>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link">Quines
-                  somos</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link"> Terminos y
-                  condiciones </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link">Encuentranos </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link"
-                >Contáctanos </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link">Métodos de pago</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link">Métodos de envio</a>
-              </li>
-
-
-            </ul>
-          </div> <!--  nav .// -->
-
-
-        </div> <!-- container .// -->
-
-      </nav>
-</section>
 <div class="px-2">
   <section class="section-main    bg">
 
     <div class="row no-gutters  justify-content-center">
 
-      <div class="col-xl-10 ">
+      <div class="col-xl-10 mt-1 ">
+        <section class=" w-100">
+          <section class="py-0   colorNavbar">
+            <nav class="navbar   navbar-expand-xl  justify-content-between px-lg-5 ">
 
-        <section class="px-md-5 w-100 mx-auto">
+              <button class="navbar-toggler" style=" border: none" type="button"
+                      data-toggle="collapse" data-target="#main_nav"
+                      aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="fa fa-bars " style="color: white"></span>
+              </button>
+              <a class="navbar-brand mr-auto  ml-2 mx-lg-0 " href="#">
+                <h6 class="title-page white">{{this.Tienda?.NOMBRE_COMERCIAL }}</h6>
+              </a>
+              <div class="container   mr-0 pr-0 ">
+                <div class="collapse navbar-collapse ml-auto" id="main_nav">
+                  <ul class="navbar-nav ml-auto">
+                    <li class="nav-item ">
+                      <a class="nav-link" routerLink="inicio-tienda" routerLinkActive='active'
+                         [routerLinkActiveOptions]="{exact: true} ">Inicio </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" data-toggle="dropdown"
+                         href="#"> Categorias</a>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Foods and Drink</a>
+                        <a class="dropdown-item" href="#">Home interior</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Category 1</a>
+                        <a class="dropdown-item" href="#">Category 2</a>
+                        <a class="dropdown-item" href="#">Category 3</a>
+                      </div>
+                    </li>
 
-          <div class="section-intro   w-100 mx-auto  ">
+                    <li class="nav-item">
+                      <a class="nav-link">Quines
+                        somos</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link"> Terminos y
+                        condiciones </a>
+                    </li>
+
+                    <li class="nav-item">
+                      <a class="nav-link">Métodos de pago</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link">Métodos de envio</a>
+                    </li>
+
+
+                  </ul>
+                </div> <!--  nav .// -->
+
+
+              </div> <!-- container .// -->
+
+            </nav>
+          </section><!-- menu-->
+          <div class="section-intro   w-100 mx-auto   ">
             <div class="intro-banner-wrap">
-              <img [src]=this.Banner class="w-100 alto-banner rounded-top ">
+              <img [src]=this.Banner class="w-100 alto-banner  ">
             </div>
+            <div class="mt-2 mx-auto ">
 
+
+            </div>
             <div class="posicion-logo row w-100  justify-content-center justify-content-md-start  ml-md-5 ml-1  ">
               <div class="  centered-content   justify-content-between  mt-n5">
                 <div class="row mx-auto">
                   <img [src]="this.Logo" class=" rounded-circle alto-logo"
-                       >
+                  >
+
                 </div>
 
               </div>
             </div>
 
 
+          </div> <!--banner-->
 
-          </div>
+          <div class="  mt-n5  py-3 bg-white border-bottom ">
+            <div class="px-lg-5  mt-5  mt-md-0  text-center ">
 
-          <div class="mt-2 mx-auto">
-
-            <div class="input-group  ">
-              <input type="text" class="form-control "
-                     placeholder="¿Que estas buscando en  {{this.Tienda?.NOMBRE_COMERCIAL}} ?">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="submit">
-                  <i class="fa fa-search"></i>
-                </button>
+              <div class="widget-header form-inline mr-5">
+                <a href="#" class="icon icon-sm rounded-circle border border-primary "><i
+                  class="fab fa-whatsapp text-primary" aria-hidden="true"></i>
+                  <p class="text-primary  ml-n2  " style="font-size: x-small">Contáctanos</p></a>
               </div>
-            </div>
+              <div class="widget-header mr-5 ml-2 ">
+                <a href="#" class="icon icon-sm rounded-circle border border-primary"><i
+                  class="fa fa-directions text-primary" aria-hidden="true"></i>
+                  <p class="text-primary  ml-n2  " style="font-size: x-small;">Encuentranos</p></a>
 
-          </div>
+              </div>
+              <div class="widget-header  ">
+                <a href="#" class="icon icon-sm rounded-circle border border-primary"><i
+                  class="fa fa-globe-americas text-primary" aria-hidden="true"></i>
+                  <p class="text-primary     " style="font-size: x-small;">Sitio Web</p></a>
+
+              </div>
+
+            </div>
+          </div> <!--iconos pequenios-->
+
+          <br>
+
 
         </section>
 
-
       </div>
+
       <div class="col-md-9 ">
+
         <router-outlet></router-outlet>
       </div>
     </div> <!-- row.// -->
