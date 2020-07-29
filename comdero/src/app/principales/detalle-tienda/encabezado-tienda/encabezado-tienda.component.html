@@ -109,12 +109,12 @@
 
                   <div class="dropdown-menu ">
                     <div *ngFor="let pagina of vPaginasWeb">
-                      <a class="dropdown-item  text-secondary" *ngIf="pagina.tipo=='facebook'" href="{{pagina.direccion}}" target="_blank"><span
-                        class="fab fa-facebook"></span> &nbsp; Facebook</a>
+                      <a class="dropdown-item   link" *ngIf="pagina.tipo=='facebook'" href="{{pagina.direccion}}" target="_blank"><span
+                        class="fab fa-facebook"></span> &nbsp; Link de facebook</a>
 
-                      <a class="dropdown-item  text-secondary" *ngIf="pagina.tipo=='pagina'"
+                      <a class="dropdown-item   link" *ngIf="pagina.tipo=='pagina'"
                          href="{{pagina.direccion}} " target="_blank"><span
-                        class="fas fa-pager "></span> &nbsp;Pagina</a>
+                        class="fas fa-pager "></span> &nbsp;link a página externa</a>
                     </div>
 
                   </div>
