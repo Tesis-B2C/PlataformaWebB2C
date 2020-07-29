@@ -14,7 +14,6 @@ const  Agente = db.sequelize.define('AGENTE', {
             allowNull: true,
             defaultValue:'000000'
             //autoIncrement: true
-
         },
         NUM_COD_POSTAL:
             {

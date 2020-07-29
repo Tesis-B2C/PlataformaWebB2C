@@ -121,113 +121,52 @@
 </section>
 <!-- ========================= SECTION FEATURE END// ========================= -->
 
-<!-- ========================= SECTION CONTENT COMDERO ========================= -->
+<!-- ========================= SECTION CONTENT COMDERO PRODUCTOS ========================= -->
 <section class="section-content">
-  <div class="container">
+  <div class="container" >
 
     <header class="section-heading">
       <h3 class="section-title">Productos</h3>
     </header><!-- sect-heading -->
 
-    <ngb-carousel #carouselTodosProductos class="p-1">
-      <ng-template ngbSlide *ngFor="let image of product; index as i">
-        <div class="row">
-          <div class="col-md-3">
-            <div href="#" class="card card-product-grid">
-              <a href="#" class="img-wrap"> <img src="../../../assets/estilos-principal/images/items/1.jpg"> </a>
+    <div style="position: relative">
+      <button (click)="carrouselFilaUno.prev()" style="display: block;" class="btn-atras-carrousel"><i
+        class='fa fa-chevron-left'></i></button>
+
+      <owl-carousel-o [options]="opcionesCarrouselFilaUno" #carrouselFilaUno>
+        <ng-container *ngFor="let producto of vectorProductosObtenidos;index as i">
+          <ng-template carouselSlide id="slider+{{i}}">
+            <div class="card card-product-grid mx-2">
+              <a class="img-wrap"><img [src]="getImagen(producto.PRODUCTO.VARIANTEs[0].IMAGEN_PRODUCTOs[0].IMAGEN)"></a>
               <figcaption class="info-wrap">
-                <a href="#" class="title">Just another product name {{i}}</a>
+                <a href="#"  class="title"> {{producto.PRODUCTO.NOMBRE_PRODUCTO}}</a>
                 <div class="rating-wrap">
                   <ul class="rating-stars">
-                    <li style="width:80%" class="stars-active">
-                      <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                      class="fa fa-star"></i><i class="fa fa-star"></i>
-                    </li>
-                    <li>
-                      <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                      class="fa fa-star"></i><i class="fa fa-star"></i>
-                    </li>
+
+                    <ngb-rating *ngIf="producto.PRODUCTO.CALIFICACIONs[0]" [(rate)]="producto.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL">
+                      <ng-template let-fill="fill">
+                        <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                      </ng-template>
+                    </ngb-rating>
+                    <ngb-rating *ngIf="!producto.PRODUCTO.CALIFICACIONs[0]" [(rate)]="currentRate">
+                      <ng-template let-fill="fill">
+                        <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                      </ng-template>
+                    </ngb-rating>
+
                   </ul>
-                  <span class="label-rating text-muted"> 34 reviws</span>
+                  <span *ngIf="producto.PRODUCTO.COMENTARIOs[0]" class="label-rating text-muted">{{producto.PRODUCTO.COMENTARIOs[0].TOTAL_COM}} comentarios</span>
+                  <span *ngIf="!producto.PRODUCTO.COMENTARIOs[0]" class="label-rating text-muted">0 Comentarios </span>
                 </div>
-                <div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
+                <div class="price mt-1">{{producto.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO | currency }}</div> <!-- price-wrap.// -->
+                <a href="#"  class="title tituloTienda"> {{producto.TIENDA.NOMBRE_COMERCIAL}}</a>
               </figcaption>
             </div>
-          </div> <!-- col.// -->
-
-          <div class="col-md-3">
-            <div href="#" class="card card-product-grid">
-              <a href="#" class="img-wrap"> <img src="images/items/2.jpg"> </a>
-              <figcaption class="info-wrap">
-                <a href="#" class="title">Some item name here</a>
-
-                <div class="rating-wrap">
-                  <ul class="rating-stars">
-                    <li style="width:80%" class="stars-active">
-                      <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                      class="fa fa-star"></i><i class="fa fa-star"></i>
-                    </li>
-                    <li>
-                      <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                      class="fa fa-star"></i><i class="fa fa-star"></i>
-                    </li>
-                  </ul>
-                  <span class="label-rating text-muted"> 34 reviws</span>
-                </div>
-                <div class="price mt-1">$280.00</div> <!-- price-wrap.// -->
-              </figcaption>
-            </div>
-          </div> <!-- col.// -->
-          <div class="col-md-3">
-            <div href="#" class="card card-product-grid">
-              <a href="#" class="img-wrap"> <img src="images/items/3.jpg"> </a>
-              <figcaption class="info-wrap">
-                <a href="#" class="title">Great product name here</a>
-
-                <div class="rating-wrap">
-                  <ul class="rating-stars">
-                    <li style="width:80%" class="stars-active">
-                      <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                      class="fa fa-star"></i><i class="fa fa-star"></i>
-                    </li>
-                    <li>
-                      <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                      class="fa fa-star"></i><i class="fa fa-star"></i>
-                    </li>
-                  </ul>
-                  <span class="label-rating text-muted"> 34 reviws</span>
-                </div>
-                <div class="price mt-1">$56.00</div> <!-- price-wrap.// -->
-              </figcaption>
-            </div>
-          </div> <!-- col.// -->
-          <div class="col-md-3">
-            <div href="#" class="card card-product-grid">
-              <a href="#" class="img-wrap"> <img src="images/items/4.jpg"> </a>
-              <figcaption class="info-wrap">
-                <a href="#" class="title">Just another product name</a>
-
-                <div class="rating-wrap">
-                  <ul class="rating-stars">
-                    <li style="width:80%" class="stars-active">
-                      <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                      class="fa fa-star"></i><i class="fa fa-star"></i>
-                    </li>
-                    <li>
-                      <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                      class="fa fa-star"></i><i class="fa fa-star"></i>
-                    </li>
-                  </ul>
-                  <span class="label-rating text-muted"> 34 reviws</span>
-                </div>
-                <div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
-              </figcaption>
-            </div>
-          </div> <!-- col.// -->
-        </div> <!-- row.// -->
-      </ng-template>
-    </ngb-carousel>
-
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
+      <button (click)="carrouselFilaUno.next()" style="display: block;" class="btn-adelante-carrousel"><i class='fa fa-chevron-right'></i></button>
+    </div>
   </div> <!-- container .//  -->
 </section>
 <!-- ========================= SECTION CONTENT COMDERO END// ========================= -->

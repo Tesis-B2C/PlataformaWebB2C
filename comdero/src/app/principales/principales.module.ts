@@ -1,17 +1,22 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { PrincipalesRoutingModule } from './principales-routing.module';
+import {PrincipalesRoutingModule} from './principales-routing.module';
 import {PrincipalComponent} from "./principal/principal.component";
 import {MenuComponent} from "./menu/menu.component";
-import { CategoriasComponent } from './categorias/categorias.component';
+import {CategoriasComponent} from './categorias/categorias.component';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
-  declarations: [PrincipalComponent,MenuComponent, CategoriasComponent],
+  declarations: [PrincipalComponent, MenuComponent, CategoriasComponent],
   imports: [
     CommonModule,
     PrincipalesRoutingModule,
-    NgbModule
+    NgbModule,
+    CarouselModule,
+    FormsModule
   ]
 })
-export class PrincipalesModule { }
+export class PrincipalesModule {
+}

@@ -2,8 +2,7 @@ const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 
 
-const Comentario = db.sequelize.define('Comentario', {
-
+const Comentario = db.sequelize.define('COMENTARIO', {
         ID_COMENTARIO:
             {
                 type: Sequelize.BIGINT,
@@ -29,9 +28,7 @@ const Comentario = db.sequelize.define('Comentario', {
     },
     {
         timestamps: false,
-        id:false
+        id: false
     })
-
-
 
 module.exports = Comentario;

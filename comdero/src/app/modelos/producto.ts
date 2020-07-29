@@ -1,6 +1,5 @@
 export class Producto {
   constructor(
-
     public Cod_Producto: String,
     public Nombre_Producto: String,
     public Descripcion_Producto: String,

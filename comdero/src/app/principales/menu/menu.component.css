@@ -1,23 +1,18 @@
-.section-header
-{
+.section-header {
   background-color: white;
 }
 
-
-.clearfix
-{
+.clearfix {
   clear: both;
   float: none;
 }
-.logo{
+
+.logo {
 
   max-height: 55px;
   align-items: center;
   position: center;
-
-
 }
-
 
 .mx-auto {
   margin-right: auto !important;
@@ -33,24 +28,39 @@
 }
 
 @media (min-width: 1035px) {
-  .container-menu{
+  .container-menu {
     padding-right: 150px;
     padding-left: 150px;
     margin-right: auto;
     margin-left: auto;
   }
-  .search{
+
+  .search {
     margin-left: 140px;
     margin-right: -100px;
   }
-
 }
 
-body{
+body {
   max-height: 100%;
   overflow: auto;
 }
 
+/*Buscador de contenido*/
+.search{
+  z-index: 9;
+}
+
+#box-search {
+  background: #fff;
+  z-index: 8;
+}
+
+#box-search li a{
+  display: block;
+  color: #777777;
+  padding: 6px 15px;
+}
 
 
 

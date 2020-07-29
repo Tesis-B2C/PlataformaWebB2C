@@ -95,16 +95,16 @@ Producto_Descuento.belongsTo(Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: '
 
 //PRODUCTO - CALIFICACION
 Producto.hasMany(Calificacion, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
-Producto.hasMany(Calificacion, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
+//Producto.hasMany(Calificacion, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
 Calificacion.belongsTo(Producto, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
-Calificacion.belongsTo(Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
+//Calificacion.belongsTo(Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
 
 
 //PRODUCTO - VARIANTE
-Producto.hasMany(Variante, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
-Producto.hasMany(Variante, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
-Variante.belongsTo(Producto, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
-Variante.belongsTo(Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
+Producto.hasMany(Variante, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'}, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
+//Producto.hasMany(Variante, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
+Variante.belongsTo(Producto, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'}, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
+//Variante.belongsTo(Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
 
 //PRODUCTO - PRODUCTO_CATEGORIA
 Producto.hasMany(Producto_Categoria, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});

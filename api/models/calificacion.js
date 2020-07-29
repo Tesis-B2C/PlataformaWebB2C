@@ -1,14 +1,13 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 
-const Calificacion = db.sequelize.define('Calificacion', {
-
+const Calificacion = db.sequelize.define('CALIFICACION', {
         ID_CALIFICACION:
             {
-                type: Sequelize.BIGINT,
                 primaryKey: true,
-                allowNull: false,
-                autoIncrement: true
+                type:Sequelize.BIGINT,
+                allowNull:false,
+                autoIncrement:true
             },
         ID_PRODUCTO:
             {

@@ -1,14 +1,17 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CategoriaServicio} from "../../servicios/categoria.servicio";
 import {TiendaServicio} from "../../servicios/tienda.servicio";
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NgbCarouselConfig} from "@ng-bootstrap/ng-bootstrap";
+import {OwlOptions} from 'ngx-owl-carousel-o';
+import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-principal',
   templateUrl: './principal.component.html',
-  styleUrls: ['./principal.component.css']
+  styleUrls: ['./principal.component.css'],
+  providers: [NgbRatingConfig]
 })
 export class PrincipalComponent implements OnInit {
   /*images = [1055, 194, 368].map((n) => `https://picsum.photos/id/${n}/2000/400`);*/
@@ -28,9 +31,38 @@ export class PrincipalComponent implements OnInit {
     'fa fa-dog', 'fa fa-gamepad', 'fa fa-grin-stars', 'fa fa-heartbeat', 'fa fa-building', 'fa fa-tractor'];
 
   public productosObtenidos;
-  public product = [1, 1, 9, 8, 4, 5, 5, 4, 3, 3, 4, 5, 6, 3, 4, 5];
 
-  constructor(private route: ActivatedRoute, private router: Router, private _agenteServicio: AgenteServicio, private _tiendaServicio: TiendaServicio, private _categoriaServicio: CategoriaServicio, config: NgbCarouselConfig) {
+  opcionesCarrouselFilaUno: OwlOptions = {
+    loop: true,
+    mouseDrag: false,
+    touchDrag: false,
+    pullDrag: false,
+    dots: true,
+    navSpeed: 700,
+    navText: ["", ""],
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 2
+      },
+      740: {
+        items: 4
+      },
+      940: {
+        items: 4
+      }
+    },
+    nav: false
+  }
+
+  public vectorProductosObtenidos = [];
+  currentRate = 1;
+
+  constructor(configRating: NgbRatingConfig, private route: ActivatedRoute, private router: Router, private _agenteServicio: AgenteServicio, private _tiendaServicio: TiendaServicio, private _categoriaServicio: CategoriaServicio, config: NgbCarouselConfig) {
+    configRating.max = 5;
+    configRating.readonly = true;
     // customize default values of carousels used by this component tree
     config.showNavigationArrows = true;
     config.showNavigationIndicators = true;
@@ -41,12 +73,22 @@ export class PrincipalComponent implements OnInit {
     this.obtenerTodosProductos();
   }
 
+  public noExite = 'assets/images/no-image.png';
+
+  getImagen(pathImagen) {
+    this.noExite = 'assets/images/no-image.png';
+    if (pathImagen) {
+      this.noExite = 'http://localhost:3977/' + pathImagen;
+    }
+    return this.noExite;
+  }
+
   public async obtenerTodosProductos() {
     let response = await this._tiendaServicio.obtenerTodosProductos().toPromise();
     console.log("PRODUCTOS" + JSON.stringify(response));
     this.productosObtenidos = response.data;
     this.productosObtenidos.forEach(elemnt => {
-      console.log(elemnt.PRODUCTO.NOMBRE_PRODUCTO);
+      this.vectorProductosObtenidos.push(elemnt);
     })
 
   }

@@ -17,19 +17,14 @@ import {MetodoPagoServicio} from "./servicios/metodo_pago.servicio";
 import {AdministradorTiendaModule} from "./administrador-tienda/administrador-tienda.module";
 import {GestionarTiendasModule} from "./administrador-tienda/gestionar-tiendas/gestionar-tiendas.module";
 import {FormsModule} from "@angular/forms";
-
 import {ArchwizardModule} from 'angular-archwizard';
-
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
 import {ToastrModule} from 'ngx-toastr';
 import {MetodoEnvioServicio} from "./servicios/metodo_envio.servicio";
 
-
 @NgModule({
   declarations: [
-    AppComponent,
-
+    AppComponent
   ],
   imports: [
     ArchwizardModule,

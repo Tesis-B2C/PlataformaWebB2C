@@ -2,7 +2,6 @@ const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 
 const Horario_Atencion = db.sequelize.define('HORARIO_ATENCION', {
-
         ID_HORARIO_ATENCION:
             {
                 primaryKey: true,

@@ -5,6 +5,8 @@ const Oferta = require("../models/oferta");
 const Producto = require("../models/producto");
 const Producto_Categoria = require("../models/producto_categoria");
 const Variante = require("../models/variante");
+const Calificacion = require("../models/calificacion");
+const Comentario = require("../models/comentario");
 const Categoria = require("../models/categoria");
 const moment = require('moment');
 const db = require('../database/db');
@@ -389,7 +391,7 @@ async function updateProducto(req, res) {
             await t.commit();
         } else {
             res.status(404).send({
-                message: "Al parecer hubo probelmas con el registro del producto"
+                message: "Al parecer hubo problemas con el registro del producto"
             });
         }
 
@@ -447,6 +449,16 @@ async function obtenerTodosProductos(req, res) {
                         group: 'NUM_VARIANTE',
                         order: [['ID_IMAGEN', 'ASC']]
                     }
+                },{
+                    model: Calificacion,
+                    separate: true,
+                    attributes:['ID_PRODUCTO',[Calificacion.sequelize.fn('AVG', Calificacion.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
+                    group: ['ID_PRODUCTO']
+                },{
+                    model: Comentario,
+                    separate: true,
+                    attributes:['ID_PRODUCTO',[Comentario.sequelize.fn('COUNT', Comentario.sequelize.col('ID_COMENTARIO')), 'TOTAL_COM']],
+                    group: ['ID_PRODUCTO']
                 }]
             }, {
                 model: Tienda,
