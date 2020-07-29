@@ -25,6 +25,8 @@ export class EncabezadoTiendaComponent implements OnInit {
     await this.getBanner();
     await this.getSitiosWeb();
     await this.getCategorias();
+    await this.getDisponibilidad();
+
     // this.router.navigate(['/principales/menu/detalle-tienda/118/tienda',this.Tienda.NUM_TIENDA])
 
   }
@@ -104,6 +106,35 @@ export class EncabezadoTiendaComponent implements OnInit {
     }
     console.log("categorias", this.categorias);
 
+  }
+
+  public Disponibilidad;
+  public JornadaActual;
+  getDisponibilidad() {
+    this.Disponibilidad;
+    this.JornadaActual;
+    let data = new Date();
+    var diasSemana = new Array("Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado");
+    let hoy = diasSemana[data.getDay()];
+    if (this.Tienda.HORARIO_ATENCION == 'Concreto') {
+      for (let d of this.Tienda.HORARIO_ATENCIONs) {
+        if (hoy == d.DIA) {
+          let horaActual=data.getHours() + ':' + data.getMinutes() + ':' + data.getSeconds();
+         if((horaActual>d.INICIO_JORNADA1 &&  horaActual <d.FIN_JORNADA1) || (horaActual>d.INICIO_JORNADA2 &&  horaActual <d.FIN_JORNADA2)  ){
+          this.Disponibilidad="Disponible";
+          if(d.INICIO_JORNADA2){
+          this.JornadaActual=d.INICIO_JORNADA1+"-"+d.FIN_JORNADA1+":"+d.INICIO_JORNADA2+"-"+d.FIN_JORNADA2 ;
+          }else {
+            this.JornadaActual="Mañana: "+d.INICIO_JORNADA1+"-"+d.FIN_JORNADA1;
+          }
+         }else {
+           this.Disponibilidad="Cerrado";
+         }
+        }
+
+
+      }
+    }
   }
 
   mensageError(mensaje) {

@@ -116,9 +116,12 @@
                   </div>
                 </li>
 
+
               </div>
-
-
+<hr>
+              <li class="small">
+                <p [ngClass]="{'text-success':this.Disponibilidad=='Disponible', 'text-danger': this.Disponibilidad=='Cerrado'}"  class=" text-center ml-2"> <span class="fa fa-clock"></span> &nbsp;  {{this.Disponibilidad}} &nbsp;&nbsp;<a class="text-dark">{{this.JornadaActual}}</a></p>
+              </li>
             </div>
           </div> <!--iconos pequenios-->
 
