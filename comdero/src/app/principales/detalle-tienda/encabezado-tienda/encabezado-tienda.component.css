@@ -55,3 +55,19 @@
   }
 
 }
+
+i{
+  color:#017bff ;
+}
+
+.active-icon {
+  background-color: #017bff;
+
+
+}
+.active-icon i  {
+
+  color: white;
+
+}
+

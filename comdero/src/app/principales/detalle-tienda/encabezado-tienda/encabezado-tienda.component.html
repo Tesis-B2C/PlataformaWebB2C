@@ -90,21 +90,38 @@
 
               <div class="widget-header form-inline mr-5">
                 <a href="#" class="icon icon-sm rounded-circle border border-primary "><i
-                  class="fab fa-whatsapp text-primary" aria-hidden="true"></i>
+                  class="fab fa-whatsapp " aria-hidden="true"></i>
                   <p class="text-primary  ml-n2  " style="font-size: x-small">Contáctanos</p></a>
               </div>
-              <div class="widget-header mr-5 ml-2 ">
-                <a href="#" class="icon icon-sm rounded-circle border border-primary"><i
-                  class="fa fa-directions text-primary" aria-hidden="true"></i>
+              <div class="widget-header mr-5 ml-2 " [ngClass]="{'mr-5':this.vPaginasWeb.length>0 }">
+                <a routerLink="encuentranos-tienda" routerLinkActive='active-icon'
+                   [routerLinkActiveOptions]="{exact: true} " class="icon icon-sm rounded-circle border border-primary"><i
+                  class="fa fa-directions " aria-hidden="true"></i>
                   <p class="text-primary  ml-n2  " style="font-size: x-small;">Encuentranos</p></a>
 
               </div>
-              <div class="widget-header  ">
-                <a href="#" class="icon icon-sm rounded-circle border border-primary"><i
-                  class="fa fa-globe-americas text-primary" aria-hidden="true"></i>
-                  <p class="text-primary     " style="font-size: x-small;">Sitio Web</p></a>
+              <div class="widget-header " *ngIf="this.vPaginasWeb.length>0 ">
+                <li class="nav-item dropdown">
+                  <a href="#" class="icon icon-sm rounded-circle border border-primary  " data-toggle="dropdown" href="#"
+                     aria-expanded="false"><i class="fa fa-globe-americas"></i>
+                    <p class="text-primary     " style="font-size: x-small;">Sitio Web</p>
+                  </a>
+
+                  <div class="dropdown-menu ">
+                    <div *ngFor="let pagina of vPaginasWeb">
+                      <a class="dropdown-item  text-secondary" *ngIf="pagina.tipo=='facebook'" href="{{pagina.direccion}}" target="_blank"><span
+                        class="fab fa-facebook"></span> &nbsp; Facebook</a>
+
+                      <a class="dropdown-item  text-secondary" *ngIf="pagina.tipo=='pagina'"
+                         href="{{pagina.direccion}} " target="_blank"><span
+                        class="fas fa-pager "></span> &nbsp;Pagina</a>
+                    </div>
+
+                  </div>
+                </li>
 
               </div>
+
 
             </div>
           </div> <!--iconos pequenios-->

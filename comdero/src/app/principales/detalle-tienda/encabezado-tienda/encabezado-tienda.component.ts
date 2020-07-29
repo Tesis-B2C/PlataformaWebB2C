@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TiendaServicio} from "../../../servicios/tienda.servicio";
 import {ActivatedRoute, Router} from "@angular/router";
 import Swal from "sweetalert2";
@@ -13,8 +13,9 @@ export class EncabezadoTiendaComponent implements OnInit {
   public Tienda: any;
   public Logo = "";
   public Banner = "";
+  public vPaginasWeb = [];
 
-  constructor(private _tiendaServicio: TiendaServicio, private route: ActivatedRoute,private router: Router) {
+  constructor(private _tiendaServicio: TiendaServicio, private route: ActivatedRoute, private router: Router) {
 
   }
 
@@ -22,6 +23,7 @@ export class EncabezadoTiendaComponent implements OnInit {
     await this.getDetalleTiendaProducto();
     await this.getLogo();
     await this.getBanner();
+    await this.getSitiosWeb();
     // this.router.navigate(['/principales/menu/detalle-tienda/118/tienda',this.Tienda.NUM_TIENDA])
 
   }
@@ -54,7 +56,7 @@ export class EncabezadoTiendaComponent implements OnInit {
   }
 
   getBanner() {
-    this.Banner='assets/images/no-image.png';
+    this.Banner = 'assets/images/no-image.png';
     let pathImagen = this.Tienda.BANNER;
     if (pathImagen) {
       this.Banner = 'http://localhost:3977/' + pathImagen;
@@ -63,6 +65,33 @@ export class EncabezadoTiendaComponent implements OnInit {
     return this.Banner;
   }
 
+  obj = {
+    tipo: null,
+    direccion: null
+  }
+
+  getSitiosWeb() {
+    debugger;
+    this.obj ={
+      tipo: null,
+      direccion: null
+    };
+    if (this.Tienda.LINK_FACEBOOK) {
+      this.obj.tipo = "facebook";
+      this.obj.direccion = this.Tienda.LINK_FACEBOOK;
+      this.vPaginasWeb.push(this.obj);
+    }
+    this.obj ={
+      tipo: null,
+      direccion: null
+    };
+    if (this.Tienda.LINK_PAGINA) {
+      this.obj.tipo = "pagina";
+      this.obj.direccion = this.Tienda.LINK_PAGINA;
+      this.vPaginasWeb.push(this.obj);
+    }
+
+  }
 
 
   mensageError(mensaje) {

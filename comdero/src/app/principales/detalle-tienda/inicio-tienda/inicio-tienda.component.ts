@@ -18,7 +18,7 @@ export class InicioTiendaComponent implements OnInit {
   }
   async getDetalleTiendaProducto() {
     try {
-      this.idTienda = this.route.parent.snapshot.params.id;
+      this.idTienda =  this.route.parent.snapshot.params.id;
       let response = await this._tiendaServicio.getDetalleTiendaProducto(this.idTienda).toPromise();
       this.Tienda = response.data;
       console.log("tienda buscada en inicio pilas", this.Tienda);
