@@ -25,16 +25,12 @@
                       <a class="nav-link pl-2 pl-lg-2" routerLink="inicio-tienda" routerLinkActive='active'
                          [routerLinkActiveOptions]="{exact: true} ">Inicio </a>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown ">
                       <a class="nav-link dropdown-toggle pl-2 pl-lg-2" data-toggle="dropdown"
                          href="#"> Categorias</a>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Foods and Drink</a>
-                        <a class="dropdown-item" href="#">Home interior</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Category 1</a>
-                        <a class="dropdown-item" href="#">Category 2</a>
-                        <a class="dropdown-item" href="#">Category 3</a>
+                      <div class="dropdown-menu " >
+                        <a class="dropdown-item " *ngFor="let c of this.categorias" href="#"><span class="fas fa-tag"></span> &nbsp;&nbsp;{{c}}</a>
+
                       </div>
                     </li>
 

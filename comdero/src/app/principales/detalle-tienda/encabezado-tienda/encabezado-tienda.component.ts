@@ -24,6 +24,7 @@ export class EncabezadoTiendaComponent implements OnInit {
     await this.getLogo();
     await this.getBanner();
     await this.getSitiosWeb();
+    await this.getCategorias();
     // this.router.navigate(['/principales/menu/detalle-tienda/118/tienda',this.Tienda.NUM_TIENDA])
 
   }
@@ -71,8 +72,8 @@ export class EncabezadoTiendaComponent implements OnInit {
   }
 
   getSitiosWeb() {
-    debugger;
-    this.obj ={
+
+    this.obj = {
       tipo: null,
       direccion: null
     };
@@ -81,7 +82,7 @@ export class EncabezadoTiendaComponent implements OnInit {
       this.obj.direccion = this.Tienda.LINK_FACEBOOK;
       this.vPaginasWeb.push(this.obj);
     }
-    this.obj ={
+    this.obj = {
       tipo: null,
       direccion: null
     };
@@ -93,6 +94,17 @@ export class EncabezadoTiendaComponent implements OnInit {
 
   }
 
+  categorias = new Set();
+
+  getCategorias() {
+    this.categorias = new Set();
+    for (let c of this.Tienda.OFERTA) {
+      this.categorias.add(c.PRODUCTO.PRODUCTO_CATEGORIA[0].CATEGORIum.NOMBRE);
+
+    }
+    console.log("categorias", this.categorias);
+
+  }
 
   mensageError(mensaje) {
     Swal.fire({

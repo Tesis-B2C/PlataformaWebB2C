@@ -1,7 +1,6 @@
 'use strict'
 
 
-
 const moment = require('moment');
 const TIENDA = require('../models/tienda'); //importar el modelo del usuario  o lo que son las clases comunesvar DPA = require('../models/dpa'); //importar el modelo del usuario  o lo que son las clases comunes
 const SUCURSAL = require('../models/sucursal');
@@ -17,6 +16,8 @@ const OFERTA = require("../models/oferta");
 const PRODUCTO = require("../models/producto");
 const VARIANTE = require("../models/variante");
 const IMAGEN_PRODUCTO = require("../models/imagen_producto");
+const PRODUCTO_CATEGORIA = require("../models/producto_categoria");
+const CATEGORIA = require("../models/categoria");
 
 const {Op} = require("sequelize");
 
@@ -147,8 +148,8 @@ async function getDatosTienda(req, res) {
             include: [{
                 model: SUCURSAL,
                 include: {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}
-            }, {model: HORARIO_ATENCION}, {model:METODO_PAGO},{model: OPCION_ENVIO}],
-            order: [[SUCURSAL, 'NUM_SUCURSAL', 'ASC' ]]
+            }, {model: HORARIO_ATENCION}, {model: METODO_PAGO}, {model: OPCION_ENVIO}],
+            order: [[SUCURSAL, 'NUM_SUCURSAL', 'ASC']]
         });
 
         if (tiendaObtenida) {
@@ -178,7 +179,7 @@ async function getMisTiendas(req, res) {
             }
         });
 
-        if (tiendasObtenidas.length>0) {
+        if (tiendasObtenidas.length > 0) {
             res.status(200).send({
                 data: tiendasObtenidas,
                 message: "Tiendas cargadas correctamente"
@@ -260,7 +261,7 @@ async function updatePersonalizacionTienda(req, res) {
 
 
         if (tiendaGuardado) {
-            if (tiendaObtenida.dataValues.LOGO && req.files.logo ) {
+            if (tiendaObtenida.dataValues.LOGO && req.files.logo) {
                 if (fs.exists(path.resolve(tiendaObtenida.dataValues.LOGO))) {
                     console.log('existe');
                     await fs.unlink(path.resolve(tiendaObtenida.dataValues.LOGO));
@@ -425,7 +426,7 @@ async function actualizarTiendaGeneral(req, res) {
 
         let horariosObtenidos = await HORARIO_ATENCION.findAll({where: {NUM_TIENDA: tiendaId}});
 
-        if (horariosObtenidos.length>0) {
+        if (horariosObtenidos.length > 0) {
             await HORARIO_ATENCION.destroy({
                 where: {NUM_TIENDA: tiendaId},
                 transaction: trans
@@ -471,7 +472,7 @@ async function actualizarTiendaSucursal(req, res) {
 
         let sucursalesObtenidos = await SUCURSAL.findAll({where: {NUM_TIENDA: tiendaId}});
 
-        if (sucursalesObtenidos.length>0) {
+        if (sucursalesObtenidos.length > 0) {
             await SUCURSAL.destroy({
                 where: {NUM_TIENDA: tiendaId},
                 transaction: t
@@ -515,10 +516,14 @@ async function getDetalleTiendaProducto(req, res) {
             include: [{
                 model: SUCURSAL,
                 include: {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}
-            }, {model: OFERTA,   include: [{
+            }, {
+                model: OFERTA, include: [ {
                     model: PRODUCTO,
-                    attributes: ['ID_PRODUCTO','COD_PRODUCTO','NOMBRE_PRODUCTO'],
+                    attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'NOMBRE_PRODUCTO'],
                     include: [{
+                        model: PRODUCTO_CATEGORIA,
+                        include: {model: CATEGORIA}
+                    },{
                         model: VARIANTE,
                         separate: true,
                         attributes: ['PRECIO_UNITARIO'],
@@ -533,8 +538,9 @@ async function getDetalleTiendaProducto(req, res) {
                         }
                     }]
                 }],
-            order: [[SUCURSAL, 'NUM_SUCURSAL', 'ASC' ]]
-        }]});
+                order: [[SUCURSAL, 'NUM_SUCURSAL', 'ASC']]
+            }]
+        });
 
         if (tiendaObtenida) {
             res.status(200).send({
