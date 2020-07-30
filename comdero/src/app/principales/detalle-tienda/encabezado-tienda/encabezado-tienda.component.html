@@ -10,7 +10,7 @@
           <section class="py-0   colorNavbar">
             <nav class="navbar   navbar-expand-xl  justify-content-between px-lg-5 ">
 
-              <button class="navbar-toggler" style=" border: none" type="button"
+              <button class="navbar-toggler" style=" border: none" type="button" #menu name="menu"
                       data-toggle="collapse" data-target="#main_nav"
                       aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="fa fa-bars " style="color: white"></span>
@@ -23,7 +23,7 @@
                   <ul class="navbar-nav ml-auto ">
                     <li class="nav-item  ">
                       <a class="nav-link pl-2 pl-lg-2" routerLink="inicio-tienda" routerLinkActive='active'
-                         [routerLinkActiveOptions]="{exact: true} ">Inicio </a>
+                         [routerLinkActiveOptions]="{exact: true} " (click)="menu.click()">Inicio </a>
                     </li>
                     <li class="nav-item dropdown ">
                       <a class="nav-link dropdown-toggle pl-2 pl-lg-2" data-toggle="dropdown"
@@ -36,20 +36,15 @@
                     </li>
 
                     <li class="nav-item">
-                      <a class="nav-link pl-2 pl-lg-2">Quines
-                        somos</a>
+                      <a class="nav-link pl-2 pl-lg-2" routerLink="informacion-tienda" routerLinkActive='active'
+                         [routerLinkActiveOptions]="{exact: true} ">Información</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link pl-2 pl-lg-2"> Terminos y
                         condiciones </a>
                     </li>
 
-                    <li class="nav-item">
-                      <a class="nav-link pl-2 pl-lg-2">Métodos de pago</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link pl-2 pl-lg-2">Métodos de envio</a>
-                    </li>
+                
 
 
                   </ul>
@@ -138,10 +133,10 @@
                     <hr class="mb-0">
                     <p class="mb-1"><strong>Horarios</strong></p>
                     <div *ngFor="let jornada of vJornadas " class="text-left">
-                        <p class="row">
-                          <a class="col-4"> <strong>{{jornada.dia}}:</strong> </a>
-                          <a class="col-8">   {{jornada.jornada}}</a>
-                        </p>
+                      <p class="row">
+                        <a class="col-4"> <strong>{{jornada.dia}}:</strong> </a>
+                        <a class="col-8">   {{jornada.jornada}}</a>
+                      </p>
 
 
                     </div>
