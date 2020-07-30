@@ -28,8 +28,9 @@
                     <li class="nav-item dropdown ">
                       <a class="nav-link dropdown-toggle pl-2 pl-lg-2" data-toggle="dropdown"
                          href="#"> Categorias</a>
-                      <div class="dropdown-menu " >
-                        <a class="dropdown-item " *ngFor="let c of this.categorias" href="#"><span class="fas fa-tag"></span> &nbsp;&nbsp;{{c}}</a>
+                      <div class="dropdown-menu ">
+                        <a class="dropdown-item " *ngFor="let c of this.categorias" href="#"><span
+                          class="fas fa-tag"></span> &nbsp;&nbsp;{{c}}</a>
 
                       </div>
                     </li>
@@ -85,7 +86,9 @@
             <div class="px-lg-5  mt-5  mt-md-0  text-center ">
 
               <div class="widget-header form-inline mr-5">
-                <a href="https://api.whatsapp.com/send?phone=593992452430&text=Hola!%20Quiero%20conocer%20acerca%20de%20su%20tienda!" target="_blank" class="icon icon-sm rounded-circle border border-primary "><i
+                <a
+                  href="https://api.whatsapp.com/send?phone=593992452430&text=Hola!%20Quiero%20conocer%20acerca%20de%20su%20tienda!"
+                  target="_blank" class="icon icon-sm rounded-circle border border-primary "><i
                   class="fab fa-whatsapp " aria-hidden="true"></i>
                   <p class="text-primary  ml-n2  " style="font-size: x-small">Contáctanos</p></a>
               </div>
@@ -98,14 +101,16 @@
               </div>
               <div class="widget-header " *ngIf="this.vPaginasWeb.length>0 ">
                 <li class="nav-item dropdown">
-                  <a href="#" class="icon icon-sm rounded-circle border border-primary  " data-toggle="dropdown" href="#"
+                  <a href="#" class="icon icon-sm rounded-circle border border-primary  " data-toggle="dropdown"
+                     href="#"
                      aria-expanded="false"><i class="fa fa-globe-americas"></i>
                     <p class="text-primary     " style="font-size: x-small;">Sitio Web</p>
                   </a>
 
                   <div class="dropdown-menu ">
                     <div *ngFor="let pagina of vPaginasWeb">
-                      <a class="dropdown-item   link" *ngIf="pagina.tipo=='facebook'" href="{{pagina.direccion}}" target="_blank"><span
+                      <a class="dropdown-item   link" *ngIf="pagina.tipo=='facebook'" href="{{pagina.direccion}}"
+                         target="_blank"><span
                         class="fab fa-facebook"></span> &nbsp; Link de facebook</a>
 
                       <a class="dropdown-item   link" *ngIf="pagina.tipo=='pagina'"
@@ -118,10 +123,29 @@
 
 
               </div>
-<hr>
-              <li class="small">
-                <p [ngClass]="{'text-success':this.Disponibilidad=='Disponible', 'text-danger': this.Disponibilidad=='Cerrado'}"  class=" text-center ml-2"> <span class="fa fa-clock"></span> &nbsp;  {{this.Disponibilidad}} &nbsp;&nbsp;<a class="text-dark">{{this.JornadaActual}}</a></p>
-              </li>
+              <hr>
+              <div class="widget-header ">
+                <li class="small">
+                  <p
+                    [ngClass]="{'text-success':(this.Disponibilidad=='Disponible' || this.Disponibilidad=='Siempre abierto'), 'text-danger': (this.Disponibilidad=='Cerrado'|| this.Disponibilidad=='No disponible')}"
+                    class=" text-center ml-2"><span class="fa fa-clock"></span> &nbsp; {{this.Disponibilidad}} &nbsp;&nbsp;<a
+                    class="text-dark">{{this.JornadaActual}}</a> &nbsp;&nbsp;<span href="#producto"
+                                                                                   data-toggle="collapse"
+                                                                                   aria-expanded="false"
+                                                                                   class=" dropdown-toggle "
+                                                                                   class="fa fa-caret-down"></span></p>
+
+                  <ul class="collapse list-unstyled ml-2" id="producto">
+                    <hr class="mb-0">
+                    <p class="mb-1"><strong>Horarios</strong></p>
+                    <p *ngFor="let jornada of vJornadas " class="text-left">
+                      <a> <strong>{{jornada.dia}}:</strong> {{jornada.jornada}}</a>
+                    </p>
+                  </ul>
+                </li>
+              </div>
+
+
             </div>
           </div> <!--iconos pequenios-->
 

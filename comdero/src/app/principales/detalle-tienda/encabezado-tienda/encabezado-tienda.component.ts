@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {TiendaServicio} from "../../../servicios/tienda.servicio";
 import {ActivatedRoute, Router} from "@angular/router";
 import Swal from "sweetalert2";
+import {esLocale} from "ngx-bootstrap";
 
 @Component({
   selector: 'app-encabezado-tienda',
@@ -110,6 +111,13 @@ export class EncabezadoTiendaComponent implements OnInit {
 
   public Disponibilidad;
   public JornadaActual;
+
+  public vJornadas = []
+  public jornadas = {
+    dia: null,
+    jornada: null
+  };
+
   getDisponibilidad() {
     this.Disponibilidad;
     this.JornadaActual;
@@ -118,23 +126,58 @@ export class EncabezadoTiendaComponent implements OnInit {
     let hoy = diasSemana[data.getDay()];
     if (this.Tienda.HORARIO_ATENCION == 'Concreto') {
       for (let d of this.Tienda.HORARIO_ATENCIONs) {
-        if (hoy == d.DIA) {
-          let horaActual=data.getHours() + ':' + data.getMinutes() + ':' + data.getSeconds();
-         if((horaActual>d.INICIO_JORNADA1 &&  horaActual <d.FIN_JORNADA1) || (horaActual>d.INICIO_JORNADA2 &&  horaActual <d.FIN_JORNADA2)  ){
-          this.Disponibilidad="Disponible";
-          if(d.INICIO_JORNADA2){
-          this.JornadaActual=d.INICIO_JORNADA1+"-"+d.FIN_JORNADA1+":"+d.INICIO_JORNADA2+"-"+d.FIN_JORNADA2 ;
-          }else {
-            this.JornadaActual="Mañana: "+d.INICIO_JORNADA1+"-"+d.FIN_JORNADA1;
-          }
-         }else {
-           this.Disponibilidad="Cerrado";
-         }
+        this.jornadas = {
+          dia: null,
+          jornada: null
+        };
+        if (d.INICIO_JORNADA2) {
+          this.JornadaActual = this.transformarHora(d.INICIO_JORNADA1) + "-" + this.transformarHora(d.FIN_JORNADA1) + "  -   " + this.transformarHora(d.INICIO_JORNADA2) + "-" + this.transformarHora(d.FIN_JORNADA2);
+          this.jornadas.dia = d.DIA;
+          this.jornadas.jornada = this.JornadaActual;
+          this.vJornadas.push(this.jornadas);
+        } else {
+          this.JornadaActual = this.transformarHora(d.INICIO_JORNADA1) + "-" + this.transformarHora(d.FIN_JORNADA1);
+          this.jornadas.dia = d.DIA;
+          this.jornadas.jornada = this.JornadaActual;
+          this.vJornadas.push(this.jornadas);
         }
 
-
+        if (hoy == d.DIA) {
+          let horaActual = data.getHours() + ':' + data.getMinutes() + ':' + data.getSeconds();
+          if ((this.obtenerMinutos(horaActual) > this.obtenerMinutos(d.INICIO_JORNADA1) && this.obtenerMinutos(horaActual) < this.obtenerMinutos(d.FIN_JORNADA1)) || (this.obtenerMinutos(horaActual) > this.obtenerMinutos(d.INICIO_JORNADA2) && this.obtenerMinutos(horaActual) < this.obtenerMinutos(d.FIN_JORNADA2))) {
+            this.Disponibilidad = "Disponible";
+            if (d.INICIO_JORNADA2) {
+              this.JornadaActual = this.transformarHora(d.INICIO_JORNADA1) + "-" + this.transformarHora(d.FIN_JORNADA1) + "  -   " + this.transformarHora(d.INICIO_JORNADA2) + "-" + this.transformarHora(d.FIN_JORNADA2);
+            } else {
+              this.JornadaActual = this.transformarHora(d.INICIO_JORNADA1) + "-" + this.transformarHora(d.FIN_JORNADA1);
+            }
+          } else {
+            this.Disponibilidad = "Cerrado";
+            if (d.INICIO_JORNADA2) {
+              this.JornadaActual = this.transformarHora(d.INICIO_JORNADA1) + "-" + this.transformarHora(d.FIN_JORNADA1) + " - " + this.transformarHora(d.INICIO_JORNADA2) + "-" + this.transformarHora(d.FIN_JORNADA2);
+            } else {
+              this.JornadaActual = this.transformarHora(d.INICIO_JORNADA1) + "-" + this.transformarHora(d.FIN_JORNADA1);
+            }
+          }
+        }
       }
+    } else if (this.Tienda.HORARIO_ATENCION == 'No disponible') {
+
+      this.Disponibilidad = "No disponible";
+    } else if (this.Tienda.HORARIO_ATENCION == 'Siempre') {
+      this.Disponibilidad = "Siempre abierto";
     }
+  }
+
+
+  transformarHora(hora) {
+    let response = hora.split(":");
+    return response[0] + ":" + response[1];
+  }
+
+  obtenerMinutos(hora) {
+    var spl = hora.split(":");
+    return parseInt(spl[0]) * 60 + parseInt(spl[1]);
   }
 
   mensageError(mensaje) {
