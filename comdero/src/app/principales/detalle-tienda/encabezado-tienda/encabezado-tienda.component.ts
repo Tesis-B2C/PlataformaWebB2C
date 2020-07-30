@@ -131,14 +131,14 @@ export class EncabezadoTiendaComponent implements OnInit {
           jornada: null
         };
         if (d.INICIO_JORNADA2) {
-          this.JornadaActual = this.transformarHora(d.INICIO_JORNADA1) + "-" + this.transformarHora(d.FIN_JORNADA1) + "  -   " + this.transformarHora(d.INICIO_JORNADA2) + "-" + this.transformarHora(d.FIN_JORNADA2);
+         let Jornada = this.transformarHora(d.INICIO_JORNADA1) + "-" + this.transformarHora(d.FIN_JORNADA1) + "  -   " + this.transformarHora(d.INICIO_JORNADA2) + "-" + this.transformarHora(d.FIN_JORNADA2);
           this.jornadas.dia = d.DIA;
-          this.jornadas.jornada = this.JornadaActual;
+          this.jornadas.jornada = Jornada;
           this.vJornadas.push(this.jornadas);
         } else {
-          this.JornadaActual = this.transformarHora(d.INICIO_JORNADA1) + "-" + this.transformarHora(d.FIN_JORNADA1);
+         let Jornada = this.transformarHora(d.INICIO_JORNADA1) + "-" + this.transformarHora(d.FIN_JORNADA1);
           this.jornadas.dia = d.DIA;
-          this.jornadas.jornada = this.JornadaActual;
+          this.jornadas.jornada = Jornada;
           this.vJornadas.push(this.jornadas);
         }
 
@@ -159,6 +159,8 @@ export class EncabezadoTiendaComponent implements OnInit {
               this.JornadaActual = this.transformarHora(d.INICIO_JORNADA1) + "-" + this.transformarHora(d.FIN_JORNADA1);
             }
           }
+        } else {
+          this.Disponibilidad = "Cerrado";
         }
       }
     } else if (this.Tienda.HORARIO_ATENCION == 'No disponible') {

@@ -1,13 +1,86 @@
-<div class="card text-center  border-lg">
-  <div class="card-header bg-gradient-orange">
-    Featured
+<section>
+  <h5 class="font-weight-bold text-lg-left text-center">Encuentranos <span class="fa fa- fa-location-arrow"></span></h5>
+  <hr>
+  <div class="catalogo-tiendas mx-auto w-100 "></div>
+
+  <div class="row justify-content-center  " *ngFor="let sucursal of this.Tienda.SUCURSALs; let i= index">
+    <div class="col-6 mt-3">
+
+      <div class="card bg-white ">
+
+        <div class="card-body text-center">
+          <h5 class="card-title font-weight-bold">Sucursal &nbsp;{{i + 1}}</h5>
+          <p class="map fas fa-map-marked-alt fa-4x text-primary"></p>
+          <hr>
+          <div class="row justify-content-center no-gutters">
+            <p class="col-3 text-left"><strong>Dirección:</strong></p>
+            <p class="card-text col-7 text-left ">{{sucursal.DIRECCION_SUCURSAL}}</p>
+            <p class="col-3 text-left"><strong>Telefono:</strong></p>
+            <p class="card-text col-7 text-left">{{sucursal.TELEFONO_SUCURSAL}}</p>
+            <p class="col-3 text-left"><strong>Cod Postal:</strong></p>
+            <p class="card-text col-7 text-left">{{sucursal.NUM_COD_POSTAL_SUCURSAL}}</p>
+            <p class="col-3 text-left"><strong># Referencia:</strong></p>
+            <p class="card-text col-7 text-left">{{sucursal.NUM_REFERENCIA}}</p>
+            <p class="col-3 text-left"><strong>Provincia:</strong></p>
+            <p class="card-text col-7 text-left">{{sucursal.DPA.NOMBRE}}</p>
+            <p class="col-3 text-left"><strong>Ciudad:</strong></p>
+            <p class="card-text col-7 text-left">{{sucursal.DPA.DPAP.NOMBRE}}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-6 mt-3">
+
+      <div class="card bg-white ">
+
+        <div class="card-body text-center">
+          <h5 class="card-title font-weight-bold">Sucursal &nbsp;{{i + 1}}</h5>
+          <p class="map fas fa-map-marked-alt fa-4x text-primary"></p>
+          <hr>
+          <div class="row justify-content-center no-gutters">
+            <p class="col-3 text-left"><strong>Dirección:</strong></p>
+            <p class="card-text col-7 text-left ">{{sucursal.DIRECCION_SUCURSAL}}</p>
+            <p class="col-3 text-left"><strong>Telefono:</strong></p>
+            <p class="card-text col-7 text-left">{{sucursal.TELEFONO_SUCURSAL}}</p>
+            <p class="col-3 text-left"><strong>Cod Postal:</strong></p>
+            <p class="card-text col-7 text-left">{{sucursal.NUM_COD_POSTAL_SUCURSAL}}</p>
+            <p class="col-3 text-left"><strong># Referencia:</strong></p>
+            <p class="card-text col-7 text-left">{{sucursal.NUM_REFERENCIA}}</p>
+            <p class="col-3 text-left"><strong>Provincia:</strong></p>
+            <p class="card-text col-7 text-left">{{sucursal.DPA.NOMBRE}}</p>
+            <p class="col-3 text-left"><strong>Ciudad:</strong></p>
+            <p class="card-text col-7 text-left">{{sucursal.DPA.DPAP.NOMBRE}}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-6 mt-3">
+
+      <div class="card bg-white ">
+
+        <div class="card-body text-center">
+          <h5 class="card-title font-weight-bold">Sucursal &nbsp;{{i + 1}}</h5>
+          <p class="map fas fa-map-marked-alt fa-4x text-primary"></p>
+          <hr>
+          <div class="row justify-content-center no-gutters">
+            <p class="col-3 text-left"><strong>Dirección:</strong></p>
+            <p class="card-text col-7 text-left ">{{sucursal.DIRECCION_SUCURSAL}}</p>
+            <p class="col-3 text-left"><strong>Telefono:</strong></p>
+            <p class="card-text col-7 text-left">{{sucursal.TELEFONO_SUCURSAL}}</p>
+            <p class="col-3 text-left"><strong>Cod Postal:</strong></p>
+            <p class="card-text col-7 text-left">{{sucursal.NUM_COD_POSTAL_SUCURSAL}}</p>
+            <p class="col-3 text-left"><strong># Referencia:</strong></p>
+            <p class="card-text col-7 text-left">{{sucursal.NUM_REFERENCIA}}</p>
+            <p class="col-3 text-left"><strong>Provincia:</strong></p>
+            <p class="card-text col-7 text-left">{{sucursal.DPA.NOMBRE}}</p>
+            <p class="col-3 text-left"><strong>Ciudad:</strong></p>
+            <p class="card-text col-7 text-left">{{sucursal.DPA.DPAP.NOMBRE}}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
-  <div class="card-body">
-    <h5 class="card-title">Special title treatment</h5>
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
-  <div class="card-footer text-muted bg-gradient-blue">
-    2 days ago
-  </div>
-</div>
+</section>

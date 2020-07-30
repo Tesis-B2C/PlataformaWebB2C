@@ -1,7 +1,7 @@
-<body>
+<body class="bg">
 
 <div class="px-2">
-  <section class="section-main    bg">
+  <section class="section-main    ">
 
     <div class="row no-gutters  justify-content-center">
 
@@ -83,7 +83,7 @@
           </div> <!--banner-->
 
           <div class="  mt-n5  py-3 bg-white border-bottom ">
-            <div class="px-lg-5  mt-5  mt-md-0  text-center ">
+            <div class="  mt-5  mt-md-0  text-center ">
 
               <div class="widget-header form-inline mr-5">
                 <a
@@ -121,7 +121,6 @@
                   </div>
                 </li>
 
-
               </div>
               <hr>
               <div class="widget-header ">
@@ -138,9 +137,14 @@
                   <ul class="collapse list-unstyled ml-2" id="producto">
                     <hr class="mb-0">
                     <p class="mb-1"><strong>Horarios</strong></p>
-                    <p *ngFor="let jornada of vJornadas " class="text-left">
-                      <a> <strong>{{jornada.dia}}:</strong> {{jornada.jornada}}</a>
-                    </p>
+                    <div *ngFor="let jornada of vJornadas " class="text-left">
+                        <p class="row">
+                          <a class="col-4"> <strong>{{jornada.dia}}:</strong> </a>
+                          <a class="col-8">   {{jornada.jornada}}</a>
+                        </p>
+
+
+                    </div>
                   </ul>
                 </li>
               </div>

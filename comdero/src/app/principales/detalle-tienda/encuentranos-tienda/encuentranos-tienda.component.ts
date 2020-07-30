@@ -11,22 +11,23 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrls: ['./encuentranos-tienda.component.css']
 })
 export class EncuentranosTiendaComponent implements OnInit {
-  public identidadTienda;
+  public Tienda;
   public idTienda;
   public Sucursales = [];
 
-  constructor(public toastr: ToastrService, private _tiendaServicio: TiendaServicio, private route: ActivatedRoute,private router: Router) {
+  constructor(public toastr: ToastrService, private _tiendaServicio: TiendaServicio, private route: ActivatedRoute, private router: Router) {
   }
 
   async ngOnInit() {
     await this.getDetalleTiendaProducto();
     await this.iniciar();
+
   }
 
 
   public iniciar() {
-    for (let i in this.identidadTienda.SUCURSALs) {
-      this.Sucursales.push(new Sucursal(this.identidadTienda.SUCURSALs[i].RUC, this.identidadTienda.SUCURSALs[i].DIRECCION_SUCURSAL, this.identidadTienda.SUCURSALs[i].TELEFONO_SUCURSAL, null, null, this.identidadTienda.SUCURSALs[i].NUM_COD_POSTAL_SUCURSAL, this.identidadTienda.SUCURSALs[i].NUM_REFERENCIA, this.identidadTienda.SUCURSALs[i].DPA.COD_DPA, this.identidadTienda.SUCURSALs[i].TIPO_SUCURSAL));
+    for (let i in this.Tienda.SUCURSALs) {
+      this.Sucursales.push(new Sucursal(this.Tienda.SUCURSALs[i].RUC, this.Tienda.SUCURSALs[i].DIRECCION_SUCURSAL, this.Tienda.SUCURSALs[i].TELEFONO_SUCURSAL, null, null, this.Tienda.SUCURSALs[i].NUM_COD_POSTAL_SUCURSAL, this.Tienda.SUCURSALs[i].NUM_REFERENCIA, this.Tienda.SUCURSALs[i].DPA.COD_DPA, this.Tienda.SUCURSALs[i].TIPO_SUCURSAL));
       console.log(this.Sucursales.length + JSON.stringify(this.Sucursales));
     }
   }
@@ -36,8 +37,10 @@ export class EncuentranosTiendaComponent implements OnInit {
     try {
       this.idTienda = this.route.parent.snapshot.params.id;
       let response = await this._tiendaServicio.getDetalleTiendaProducto(this.idTienda).toPromise();
-      this.identidadTienda = response.data;
-      console.log("tienda buscada encuentranos ", this.identidadTienda);
+      this.Tienda = response.data;
+      console.log("tienda buscada encuentranos ", this.Tienda.SUCURSALs);
+
+
     } catch (e) {
       console.log("error:" + e);
       if (JSON.stringify((e).error.message))
