@@ -20,17 +20,10 @@ export class EncuentranosTiendaComponent implements OnInit {
 
   async ngOnInit() {
     await this.getDetalleTiendaProducto();
-    await this.iniciar();
+
 
   }
 
-
-  public iniciar() {
-    for (let i in this.Tienda.SUCURSALs) {
-      this.Sucursales.push(new Sucursal(this.Tienda.SUCURSALs[i].RUC, this.Tienda.SUCURSALs[i].DIRECCION_SUCURSAL, this.Tienda.SUCURSALs[i].TELEFONO_SUCURSAL, null, null, this.Tienda.SUCURSALs[i].NUM_COD_POSTAL_SUCURSAL, this.Tienda.SUCURSALs[i].NUM_REFERENCIA, this.Tienda.SUCURSALs[i].DPA.COD_DPA, this.Tienda.SUCURSALs[i].TIPO_SUCURSAL));
-      console.log(this.Sucursales.length + JSON.stringify(this.Sucursales));
-    }
-  }
 
 
   async getDetalleTiendaProducto() {

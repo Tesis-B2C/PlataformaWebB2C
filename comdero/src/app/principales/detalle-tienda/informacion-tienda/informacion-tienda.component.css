@@ -1,0 +1,36 @@
+.bacground-info {
+  background-image: url("../../../../assets/images/fondo-info-valid.png");
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  -o-background-size: 100% 100%;
+  background-size: 50% 100%;
+  min-height: 300px !important;
+  max-height: 300px;
+  width: 100%;
+  text-align: center;
+  background-color: white;
+  background-repeat: no-repeat;
+  background-position: center;
+
+}
+
+
+@media (max-width: 720px) {
+  .bacground-info {
+    background-image: url("../../../../assets/images/fondo-info-valid.png");
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    min-height: 150px !important;
+    max-height: 200px;
+    width: 100%;
+    text-align: center;
+    background-color: white;
+    background-repeat: no-repeat;
+    background-position: center;
+
+  }
+}
+
+

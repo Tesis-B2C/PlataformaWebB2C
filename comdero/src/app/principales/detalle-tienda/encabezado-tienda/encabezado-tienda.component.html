@@ -15,7 +15,7 @@
                       aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="fa fa-bars " style="color: white"></span>
               </button>
-              <a class="navbar-brand mr-auto  ml-2 mx-lg-0 " href="#">
+             <a class="navbar-brand mr-auto  ml-2 mx-md-0 " href="#">
                 <h6 class="title-page white">{{this.Tienda?.NOMBRE_COMERCIAL }}</h6>
               </a>
               <div class="container   mr-0 pr-0 ">
@@ -23,7 +23,7 @@
                   <ul class="navbar-nav ml-auto ">
                     <li class="nav-item  ">
                       <a class="nav-link pl-2 pl-lg-2" routerLink="inicio-tienda" routerLinkActive='active'
-                         [routerLinkActiveOptions]="{exact: true} " (click)="menu.click()">Inicio </a>
+                         [routerLinkActiveOptions]="{exact: true} " >Inicio </a>
                     </li>
                     <li class="nav-item dropdown ">
                       <a class="nav-link dropdown-toggle pl-2 pl-lg-2" data-toggle="dropdown"
@@ -44,7 +44,12 @@
                         condiciones </a>
                     </li>
 
-                
+                    <li class="nav-item">
+                      <a class="nav-link pl-2 pl-lg-2">Métodos de pago</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link pl-2 pl-lg-2">Métodos de envio</a>
+                    </li>
 
 
                   </ul>
