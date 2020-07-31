@@ -3,18 +3,17 @@
 .iconos-pagos {
   width: 15rem;
   height: 15rem;
-  border-top-right-radius: 50%;
-  border-bottom-right-radius: 50%;
+  border-radius: 100%;
   background: #f1f3f4;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
 
-  padding:3%
+
 }
 .banner-pago{
-  height:400px
+  height:500px
 }
 
 
@@ -27,5 +26,59 @@
 }
 
 .color-fondo{
-  /*background-color: rgba(  251, 176, 101,0.5);*/
+  background-color:#e0f9f8;
+}
+
+.color-fondo-iconos{
+  background-color: #4fb867;
+}
+
+button{
+  font-size: small;
+}
+
+
+
+
+
+h3{
+  font-family: 'Poppins', sans-serif;
+}
+
+.social-box .box{
+  background: #FFF;
+  border-radius: 10px;
+  padding: 40px 10px;
+  margin: 20px 0px;
+  cursor: pointer;
+  transition: all 0.5s ease-out;
+}
+
+.social-box .box:hover{
+  box-shadow: 0 0 6px #4fb867;
+}
+
+.social-box .box .box-text{
+  margin:20px 0px;
+  font-size: 15px;
+  line-height: 30px;
+}
+
+.social-box .box .box-btn a{
+  text-decoration: none;
+
+  font-size: 16px;
+}
+
+.iconos-pagos {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  background: #f1f3f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin:0px auto;
+  padding:3%
 }

@@ -59,15 +59,15 @@ export class InformacionTiendaComponent implements OnInit {
   iniciar() {
     this.objEfectivo = {
       Tipo_Pago: null,
-      Descuento: null
+      Descuento: 0
     };
     this.objElectronico = {
       Tipo_Pago: null,
-      Recargo: null,
+      Recargo: 0,
     };
     this.objTransferencia = {
       Tipo_Pago: null,
-      Descuento: null,
+      Descuento: 0,
       Tipo_Cuenta: null,
       Banco_Pertenece: null,
       Numero_cuenta: null
