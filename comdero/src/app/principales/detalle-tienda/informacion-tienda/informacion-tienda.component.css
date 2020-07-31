@@ -3,12 +3,29 @@
 .iconos-pagos {
   width: 15rem;
   height: 15rem;
-  border-radius: 50%;
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
   background: #f1f3f4;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  margin:0px auto;
+
   padding:3%
+}
+.banner-pago{
+  height:400px
+}
+
+
+
+@media (max-width: 720px) {
+  .banner-pago{
+    height:300px
+  }
+
+}
+
+.color-fondo{
+  /*background-color: rgba(  251, 176, 101,0.5);*/
 }

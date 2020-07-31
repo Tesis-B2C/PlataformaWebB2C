@@ -513,7 +513,7 @@ async function getDetalleTiendaProducto(req, res) {
     try {
         let tiendaObtenida = await TIENDA.findOne({
             where: {NUM_TIENDA: req.params.id},
-            include: [{model:HORARIO_ATENCION},{
+            include: [{model:OPCION_ENVIO},{model:METODO_PAGO},{model:HORARIO_ATENCION},{
                 model: SUCURSAL,
                 include: {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}
             }, {

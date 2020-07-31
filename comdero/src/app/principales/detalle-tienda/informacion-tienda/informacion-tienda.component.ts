@@ -16,8 +16,9 @@ export class InformacionTiendaComponent implements OnInit {
   constructor(public toastr: ToastrService, private _tiendaServicio: TiendaServicio, private route: ActivatedRoute, private router: Router) {
   }
 
-  ngOnInit() {
-    this.getDetalleTiendaProducto();
+  async ngOnInit() {
+    await this.getDetalleTiendaProducto();
+    await this.iniciar();
   }
 
 
@@ -26,7 +27,7 @@ export class InformacionTiendaComponent implements OnInit {
       this.idTienda = this.route.parent.snapshot.params.id;
       let response = await this._tiendaServicio.getDetalleTiendaProducto(this.idTienda).toPromise();
       this.Tienda = response.data;
-      console.log("tienda buscada encuentranos ", this.Tienda.SUCURSALs);
+      console.log("tienda buscada INFORMACION ", this.Tienda);
 
 
     } catch (e) {
@@ -35,6 +36,66 @@ export class InformacionTiendaComponent implements OnInit {
         this.mensageError(JSON.stringify((e).error.message));
       else this.mensageError("Error de conexión intentelo mas tarde");
     }
+
+  }
+
+  objEfectivo = {
+    Tipo_Pago: null,
+    Descuento: null
+  };
+  objElectronico = {
+    Tipo_Pago: null,
+    Recargo: null,
+  };
+  objTransferencia = {
+    Tipo_Pago: null,
+    Descuento: null,
+    Tipo_Cuenta: null,
+    Banco_Pertenece: null,
+    Numero_cuenta: null
+
+  };
+
+  iniciar() {
+    this.objEfectivo = {
+      Tipo_Pago: null,
+      Descuento: null
+    };
+    this.objElectronico = {
+      Tipo_Pago: null,
+      Recargo: null,
+    };
+    this.objTransferencia = {
+      Tipo_Pago: null,
+      Descuento: null,
+      Tipo_Cuenta: null,
+      Banco_Pertenece: null,
+      Numero_cuenta: null
+
+    };
+    for (let pago of this.Tienda.METODO_PAGOs) {
+      debugger;
+      if (pago.TIPO_PAGO == 'Efectivo') {
+        this.objEfectivo.Tipo_Pago = pago.TIPO_PAGO;
+        this.objEfectivo.Descuento = pago.PORCENTAJE_DESCUENTO
+      }
+
+      if (pago.TIPO_PAGO == 'Transferencia') {
+        this.objTransferencia.Tipo_Pago = pago.TIPO_PAGO;
+        this.objTransferencia.Descuento = pago.PORCENTAJE_DESCUENTO;
+        this.objTransferencia.Tipo_Cuenta = pago.TIPO_CUENTA;
+        this.objTransferencia.Banco_Pertenece = pago.BANCO_PERTENECE;
+        this.objTransferencia.Numero_cuenta = pago.NUMERO_CUENTA;
+      }
+
+      if (pago.TIPO_PAGO == 'Electrónico') {
+        this.objElectronico.Tipo_Pago = pago.TIPO_PAGO;
+        this.objElectronico.Recargo = pago.PORCENTAJE_RECARGO;
+
+      }
+
+    }
+
 
   }
 
