@@ -2,13 +2,69 @@
   <h5 class="font-weight-bold text-lg-left text-center py-3 px-5">Información <span
     class="fa fa- fa-info-circle"></span></h5>
   <hr>
-  <div class="bacground-info mx-auto  bg-white "></div>
-  <div class=" row justify-content-center  ">
-    <h3 class=" col-12  text-center py-3 px-5 text-center justify-content-center">Quienes somos ?</h3>
-    <div class="col-9 mt-3 justify-content-center">
-      <h5 class="card-text text-center"> {{this.Tienda.DESCRIPCION_TIENDA}}</h5>
-    </div>
 
+  <div class="row justify-content-center ">
+    <div class=" col-12">
+      <div class="card bg-white text-white">
+        <img class="card-img" src="assets/images/fondo-info-valid2.png" height="600px" alt="Card image">
+        <div class="card-img-overlay">
+          <h3 class="card-title black text-center">¿ Quienes somos ?</h3>
+          <div class="card-body">
+
+            <p class="lead black text-center "> {{this.Tienda.DESCRIPCION_TIENDA}}</p>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
   </div>
-  <hr>
+
+  <br><br><br>
+  <div class="card bg-white text-white py-5">
+
+    <h3 class="card-title black text-center pb-5">Te ofrecemos</h3>
+    <div class="row justify-content-center ">
+    <!--  <div class=" col-md-4">
+        <div class="card">
+          <img class="card-img-top " src="assets/images/metodos-pago.png" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title text-dark">Card title</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+              content.</p>
+          </div>
+        </div>
+      </div>
+      <div class=" col-md-4">
+        <div class="card">
+          <img class="card-img-top" src="assets/images/metodos-pago.png" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title text-dark">Card title</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+              content.</p>
+          </div>
+        </div>
+      </div>-->
+
+      <div class=" col-10 card bg-dark">
+        <div class="form-row  justify-content-center ">
+
+          <div class="form-group col-md-10    ">
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+              content.</p>
+          </div>
+
+          <div class=" mx-auto d-flex align-items-center col-md-2">
+            <div class="mx-auto">
+              <p class=" iconos-pagos ">   <img class="card-img-top " src="assets/images/metodos-pago.png" alt="Card image cap"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
 </section>

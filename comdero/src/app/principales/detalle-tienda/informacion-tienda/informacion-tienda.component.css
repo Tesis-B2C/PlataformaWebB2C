@@ -1,36 +1,14 @@
-.bacground-info {
-  background-image: url("../../../../assets/images/fondo-info-valid2.png");
-  -webkit-background-size: 100% 100%;
-  -moz-background-size: 100% 100%;
-  -o-background-size: 100% 100%;
-  background-size: 100% 100%;
-  min-height: 500px !important;
-  max-height: 400px;
-  width: 100%;
+
+
+.iconos-pagos {
+  width: 15rem;
+  height: 15rem;
+  border-radius: 50%;
+  background: #f1f3f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  background-color: white;
-  background-repeat: no-repeat;
-  background-position: center;
-
+  margin:0px auto;
+  padding:3%
 }
-
-
-@media (max-width: 720px) {
-  .bacground-info {
-    background-image: url("../../../../assets/images/fondo-info-valid2.png");
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    min-height: 150px !important;
-    max-height: 200px;
-    width: 100%;
-    text-align: center;
-    background-color: white;
-    background-repeat: no-repeat;
-    background-position: center;
-
-  }
-}
-
-
