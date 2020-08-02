@@ -31,7 +31,7 @@
 }
 
 .alto-banner {
-  height: 450px;
+  height: 500px;
 }
 
 .alto-logo {
@@ -47,7 +47,7 @@
 
 @media (max-width: 720px) {
   .alto-banner {
-    height: 200px;
+    height: 300px;
   }
 
   .alto-logo {
