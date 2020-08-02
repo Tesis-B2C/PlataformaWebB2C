@@ -18,12 +18,13 @@
 
       </div>
     </div>
-  </div  >
+  </div>
 
   <br><br><br>
 
 
-  <div class="row justify-content-center " *ngIf="this.objTransferencia.Tipo_Pago!=null || this.objEfectivo.Tipo_Pago!=null || this.objElectronico.Tipo_Pago!=null">
+  <div class="row justify-content-center "
+       *ngIf="this.objTransferencia.Tipo_Pago!=null || this.objEfectivo.Tipo_Pago!=null || this.objElectronico.Tipo_Pago!=null">
     <div class=" col-12 ">
       <div class="card shadow-lg text-white color-fondo ">
         <br><br><br>
@@ -46,7 +47,8 @@
   </div>
 
   <br><br><br>
-  <div class="social-box" *ngIf="this.objTransferencia.Tipo_Pago!=null || this.objEfectivo.Tipo_Pago!=null || this.objElectronico.Tipo_Pago!=null">
+  <div class="social-box"
+       *ngIf="this.objTransferencia.Tipo_Pago!=null || this.objEfectivo.Tipo_Pago!=null || this.objElectronico.Tipo_Pago!=null">
     <div class="container">
       <div class="row">
 
@@ -122,7 +124,28 @@
         </div>
       </div>
     </div>
-  </div >
+  </div>
+  <div class="row justify-content-center ">
+    <div class=" col-12 ">
+      <div class="card shadow-lg text-white bg-white ">
+        <br><br><br>
+        <img class="mx-auto  pt-md-0  banner-envio py-5" src="assets/images/banner-envios.png" width="80%"
+             alt="Card image">
+        <div class="card-img-overlay ">
+          <h3 class="card-title black text-center ">Métodos de envío</h3>
+          <div class="card-body">
+
+            <p class=" lead black text-center ">Contamos con varios métodos de envío para facilitar la entrega de
+              nuestros productos</p>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
 
 
 </section>

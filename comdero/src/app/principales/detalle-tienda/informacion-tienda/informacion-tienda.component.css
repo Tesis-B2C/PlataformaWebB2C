@@ -16,11 +16,17 @@
   height:500px
 }
 
-
+.banner-envio{
+  height: 400px;
+}
 
 @media (max-width: 720px) {
   .banner-pago{
-    height:300px
+    height:350px
+  }
+  .banner-envio{
+    height: 200px;
+    margin-top: 100px;
   }
 
 }
@@ -37,6 +43,9 @@ button{
   font-size: small;
 }
 
+.color-fondo3{
+  background-color: #c7d4ff ;
+}
 
 
 

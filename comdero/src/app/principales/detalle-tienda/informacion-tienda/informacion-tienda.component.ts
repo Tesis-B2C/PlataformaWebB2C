@@ -97,6 +97,7 @@ export class InformacionTiendaComponent implements OnInit {
     }
 
 
+
   }
 
   mensageError(mensaje) {
