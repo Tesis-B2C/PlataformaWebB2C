@@ -1,7 +1,5 @@
 'use strict'
 
-
-
 const moment = require('moment');
 const TIENDA = require('../models/tienda'); //importar el modelo del usuario  o lo que son las clases comunesvar DPA = require('../models/dpa'); //importar el modelo del usuario  o lo que son las clases comunes
 const SUCURSAL = require('../models/sucursal');
@@ -9,6 +7,7 @@ const HORARIO_ATENCION = require('../models/horario_atencion');
 const OPCION_ENVIO = require('../models/opcion_envio');
 const DPA = require('../models/dpa');
 const METODO_PAGO = require('../models/metodo_pago');
+const PRODUCTO = require('../models/producto');
 const jwt = require('../services/jwt');
 const db = require('../database/db');
 const fs = require('fs-extra');
@@ -143,8 +142,8 @@ async function getDatosTienda(req, res) {
             include: [{
                 model: SUCURSAL,
                 include: {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}
-            }, {model: HORARIO_ATENCION}, {model:METODO_PAGO},{model: OPCION_ENVIO}],
-            order: [[SUCURSAL, 'NUM_SUCURSAL', 'ASC' ]]
+            }, {model: HORARIO_ATENCION}, {model: METODO_PAGO}, {model: OPCION_ENVIO}],
+            order: [[SUCURSAL, 'NUM_SUCURSAL', 'ASC']]
         });
 
         if (tiendaObtenida) {
@@ -256,7 +255,7 @@ async function updatePersonalizacionTienda(req, res) {
 
 
         if (tiendaGuardado) {
-            if (tiendaObtenida.dataValues.LOGO && req.files.logo ) {
+            if (tiendaObtenida.dataValues.LOGO && req.files.logo) {
                 if (fs.exists(path.resolve(tiendaObtenida.dataValues.LOGO))) {
                     console.log('existe');
                     await fs.unlink(path.resolve(tiendaObtenida.dataValues.LOGO));
@@ -502,6 +501,91 @@ async function actualizarTiendaSucursal(req, res) {
     }
 }
 
+async function obtenerFiltroPrincipalTienda(req, res) {
+    const t = await db.sequelize.transaction({autocommit: false});
+    try {
+        let termino = req.params.termino;
+        let tiendasObtenidos = await TIENDA.findAll({
+            attributes: ['NOMBRE_COMERCIAL'],
+            where: {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino + '%'}},
+            limit: 10,
+            transaction: t
+        });
+
+        await t.commit();
+        res.status(200).send({
+            data: tiendasObtenidos,
+            message: "tiendasObtenidos cargados correctamente"
+        });
+    } catch (e) {
+        await t.rollback();
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+
+async function obtenerFiltroPrincipalProductos(req, res) {
+    const t = await db.sequelize.transaction({autocommit: false});
+    try {
+        let termino = req.params.termino;
+        let productosObtenidos = await PRODUCTO.findAll({
+            attributes: ['NOMBRE_PRODUCTO'],
+            where: {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino + '%'}},
+            limit: 10,
+            transaction: t
+        });
+
+        await t.commit();
+        res.status(200).send({
+            data: productosObtenidos,
+            message: "Productos cargados correctamente"
+        });
+    } catch (e) {
+        await t.rollback();
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+
+async function obtenerFiltroPrincipalTodos(req, res) {
+    const t = await db.sequelize.transaction({autocommit: false});
+    try {
+        let vectorEnviar = [];
+        let termino = req.params.termino;
+        let tiendasObtenidos = await TIENDA.findAll({
+            attributes: ['NOMBRE_COMERCIAL'],
+            where: {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino + '%'}},
+            limit: 5,
+            transaction: t
+        });
+
+        let productosObtenidos = await PRODUCTO.findAll({
+            attributes: ['NOMBRE_PRODUCTO'],
+            where: {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino + '%'}},
+            limit: 5,
+            transaction: t
+        });
+
+        vectorEnviar.push(tiendasObtenidos);
+        vectorEnviar.push(productosObtenidos);
+
+        await t.commit();
+        res.status(200).send({
+            data: vectorEnviar,
+            message: "Busqueda cargada correctamente."
+        });
+
+    } catch (e) {
+        await t.rollback();
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+
+
 module.exports = {          // para exportar todas las funciones de este modulo
     registrarTienda,
     getDatosTienda,
@@ -510,6 +594,9 @@ module.exports = {          // para exportar todas las funciones de este modulo
     actualizarTiendaSucursal,
     updateEstadoTienda,
     updatePersonalizacionTienda,
+    obtenerFiltroPrincipalTienda,
+    obtenerFiltroPrincipalProductos,
+    obtenerFiltroPrincipalTodos
     /* subirImagenesTienda,*/
     /*   obtenerImagenTienda*/
 };

@@ -1,8 +1,6 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpResponse, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {GLOBAL} from "./global";
-
-//import { Http, Headers } from "@angular/http";
 
 interface objeto {
   data: JSON,
@@ -62,7 +60,6 @@ export class TiendaServicio {
     fd.append("logo", logo);
     fd.append("banner", banner);
     return this._http.put<objeto>(this.url + "updatePersonalizacionTienda/" + Id_Tienda, fd,);
-
   }
 
   getIdentityTienda() {
@@ -89,11 +86,24 @@ export class TiendaServicio {
     return this._http.put<objeto>(this.url + "actualizarTiendaSucursal/" + Num_Tienda, params, {headers: headers});
   }
 
-
-
   obtenerTodosProductos() {
     let headers = new HttpHeaders({"Content-type": "application/json"});
     return this._http.get<objeto>(this.url + "obtenerTodosProductos", {headers: headers});
+  }
+
+  obtenerFiltroPrincipalTodos(termino) {
+    let headers = new HttpHeaders({"Content-type": "application/json"});
+    return this._http.get<objeto>(this.url + "obtenerFiltroPrincipalTodos/"+ termino, {headers: headers});
+  }
+
+  obtenerFiltroPrincipalTienda(termino) {
+      let headers = new HttpHeaders({"Content-type": "application/json"});
+      return this._http.get<objeto>(this.url + "obtenerFiltroPrincipalTienda/"+ termino, {headers: headers});
+  }
+
+  obtenerFiltroPrincipalProductos(termino) {
+    let headers = new HttpHeaders({"Content-type": "application/json"});
+    return this._http.get<objeto>(this.url + "obtenerFiltroPrincipalProductos/"+ termino, {headers: headers});
   }
 
 }

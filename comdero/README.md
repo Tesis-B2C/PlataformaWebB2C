@@ -1,4 +1,4 @@
-# Comdero
+********# Comdero
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.6.
 
@@ -28,3 +28,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
  
  ##  el primer comando que instale
  npm install rxjs@latest --save
+
+##COLORES
+    ##LOGO   
+        ##TOMATE        #fca147    rgb(252, 161, 71)
+        ##AZUL          #12345f    rgb(18, 52, 95)

@@ -8,7 +8,6 @@
 }
 
 .logo {
-
   max-height: 55px;
   align-items: center;
   position: center;
@@ -29,15 +28,15 @@
 
 @media (min-width: 1035px) {
   .container-menu {
-    padding-right: 150px;
-    padding-left: 150px;
+    padding-right: 50px;
+    padding-left: 50px;
     margin-right: auto;
     margin-left: auto;
   }
 
   .search {
-    margin-left: 140px;
-    margin-right: -100px;
+    margin-left: 0px;
+    margin-right: 10px;
   }
 }
 
@@ -46,20 +45,15 @@ body {
   overflow: auto;
 }
 
-/*Buscador de contenido*/
-.search{
-  z-index: 9;
+.dropdown-toggle {
+  font-size: small;
 }
 
-#box-search {
-  background: #fff;
-  z-index: 8;
-}
-
-#box-search li a{
-  display: block;
-  color: #777777;
-  padding: 6px 15px;
+.btnTodos {
+  background-color: rgb(42, 76, 117);
+  border-color: rgb(42, 76, 117);
+  border: 1px;
+  color: white;
 }
 
 

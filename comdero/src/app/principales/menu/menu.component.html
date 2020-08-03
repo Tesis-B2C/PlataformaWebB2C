@@ -5,42 +5,39 @@
     <div class="container-fluid container-menu">
       <div class="row align-items-center">
 
-        <div class="col-lg-2 col-md-2 col-sm-12 divlogo ">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-12 divlogo mx-auto">
           <a href="http://bootstrap-ecommerce.com" class="brand-wrap">
             <img class="logo mx-auto" src="../../../assets/images/logoValid4.png">
           </a> <!-- brand-wrap.// -->
         </div>
 
-        <div class="col-lg-6 col-md-5 col-sm-12 mx-auto">
-
+        <div class="col-lg-5 col-md-5 col-sm-5 col-12 mx-auto">
           <div class="input-group search">
-            <input type="text" class="form-control inputSearch" placeholder="Buscar">
+            <div class="input-group-prepend">
+              <button class="btn dropdown-toggle btnTodos" type="button" data-toggle="dropdown" aria-haspopup="true"
+                      aria-expanded="false">{{tipoBuscador}}</button>
+              <div class="dropdown-menu">
+                <a style="cursor:pointer;" (click)="cambiarBuscador('Todos')" class="dropdown-item py-0">Todos</a>
+                <div role="separator" class="dropdown-divider"></div>
+                <a style="cursor:pointer;" (click)="cambiarBuscador('Productos')" class="dropdown-item">Productos</a>
+                <a style="cursor:pointer;" (click)="cambiarBuscador('Tiendas')" class="dropdown-item">Tiendas</a>
+              </div>
+            </div>
+
+            <input id="typeahead-format" type="text" class="form-control" (keyup)="buscarDatos()"
+                   [(ngModel)]="this.palabraBuscadora" />
+
             <div class="input-group-append">
-              <button class="btn btn-primary" type="submit">
+              <button class="btn btnTodos" type="submit">
                 <i class="fa fa-search"></i>
               </button>
             </div>
           </div>
+        </div>
 
-          <ul id="box-search">
-            <li><a href="#"><i class="fa fa-search"></i>HTML</a></li>
-            <li><a href="#"><i class="fa fa-search"></i>CSS</a></li>
-            <li><a href="#"><i class="fa fa-search"></i>HOLA</a></li>
-            <li><a href="#"><i class="fa fa-search"></i>DANI</a></li>
-          </ul>
-
-          <div class="form-control">
-            <input type="search" [(ngModel)]="searchText" placeholder="Search text">
-          </div>
-          <ul *ngFor="let data of dataset | filtro: searchText">
-            <li>{{data}}</li>
-          </ul>
-
-        </div> <!-- col.// -->
-
-        <div class="col-lg-4 col-md-5 col-sm-6 col-12">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-12 mx-auto">
           <div class="widgets-wrap float-md-right">
-            <div class="widget-header  mr-3">
+            <div class="widget-header mr-3">
               <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-bell" aria-hidden="true"></i></a>
               <span class="badge badge-pill badge-danger notify">0</span>
             </div>
@@ -66,7 +63,6 @@
 
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item col-2" href="#">Ver todas</a>
-
                 </div>
               </li>
 

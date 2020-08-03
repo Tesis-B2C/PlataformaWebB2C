@@ -435,7 +435,7 @@ async function obtenerTodosProductos(req, res) {
         let productosObtenidos = await Oferta.findAll({
             include: [{
                 model: Producto,
-                attributes: ['ID_PRODUCTO','COD_PRODUCTO','NOMBRE_PRODUCTO'],
+                attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'NOMBRE_PRODUCTO'],
                 include: [{
                     model: Variante,
                     separate: true,
@@ -449,15 +449,15 @@ async function obtenerTodosProductos(req, res) {
                         group: 'NUM_VARIANTE',
                         order: [['ID_IMAGEN', 'ASC']]
                     }
-                },{
+                }, {
                     model: Calificacion,
                     separate: true,
-                    attributes:['ID_PRODUCTO',[Calificacion.sequelize.fn('AVG', Calificacion.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
+                    attributes: ['ID_PRODUCTO', [Calificacion.sequelize.fn('AVG', Calificacion.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
                     group: ['ID_PRODUCTO']
-                },{
+                }, {
                     model: Comentario,
                     separate: true,
-                    attributes:['ID_PRODUCTO',[Comentario.sequelize.fn('COUNT', Comentario.sequelize.col('ID_COMENTARIO')), 'TOTAL_COM']],
+                    attributes: ['ID_PRODUCTO', [Comentario.sequelize.fn('COUNT', Comentario.sequelize.col('ID_COMENTARIO')), 'TOTAL_COM']],
                     group: ['ID_PRODUCTO']
                 }]
             }, {

@@ -123,7 +123,7 @@
 
 <!-- ========================= SECTION CONTENT COMDERO PRODUCTOS ========================= -->
 <section class="section-content">
-  <div class="container" >
+  <div class="container">
 
     <header class="section-heading">
       <h3 class="section-title">Productos</h3>
@@ -139,11 +139,12 @@
             <div class="card card-product-grid mx-2">
               <a class="img-wrap"><img [src]="getImagen(producto.PRODUCTO.VARIANTEs[0].IMAGEN_PRODUCTOs[0].IMAGEN)"></a>
               <figcaption class="info-wrap">
-                <a href="#"  class="title"> {{producto.PRODUCTO.NOMBRE_PRODUCTO}}</a>
+                <a href="#" class="title"> {{producto.PRODUCTO.NOMBRE_PRODUCTO}}</a>
                 <div class="rating-wrap">
                   <ul class="rating-stars">
 
-                    <ngb-rating *ngIf="producto.PRODUCTO.CALIFICACIONs[0]" [(rate)]="producto.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL">
+                    <ngb-rating *ngIf="producto.PRODUCTO.CALIFICACIONs[0]"
+                                [(rate)]="producto.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL">
                       <ng-template let-fill="fill">
                         <span class="star" [class.filled]="fill === 100">&#9733;</span>
                       </ng-template>
@@ -155,17 +156,21 @@
                     </ngb-rating>
 
                   </ul>
-                  <span *ngIf="producto.PRODUCTO.COMENTARIOs[0]" class="label-rating text-muted">{{producto.PRODUCTO.COMENTARIOs[0].TOTAL_COM}} comentarios</span>
+                  <span *ngIf="producto.PRODUCTO.COMENTARIOs[0]"
+                        class="label-rating text-muted">{{producto.PRODUCTO.COMENTARIOs[0].TOTAL_COM}}
+                    comentarios</span>
                   <span *ngIf="!producto.PRODUCTO.COMENTARIOs[0]" class="label-rating text-muted">0 Comentarios </span>
                 </div>
-                <div class="price mt-1">{{producto.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO | currency }}</div> <!-- price-wrap.// -->
-                <a href="#"  class="title tituloTienda"> {{producto.TIENDA.NOMBRE_COMERCIAL}}</a>
+                <div class="price mt-1">{{producto.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO | currency }}</div>
+                <!-- price-wrap.// -->
+                <a href="#" class="title tituloTienda"> {{producto.TIENDA.NOMBRE_COMERCIAL}}</a>
               </figcaption>
             </div>
           </ng-template>
         </ng-container>
       </owl-carousel-o>
-      <button (click)="carrouselFilaUno.next()" style="display: block;" class="btn-adelante-carrousel"><i class='fa fa-chevron-right'></i></button>
+      <button (click)="carrouselFilaUno.next()" style="display: block;" class="btn-adelante-carrousel"><i
+        class='fa fa-chevron-right'></i></button>
     </div>
   </div> <!-- container .//  -->
 </section>

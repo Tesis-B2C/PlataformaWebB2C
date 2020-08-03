@@ -6,20 +6,24 @@ var md_auth = require('../middleware/authenticated');
 var api = express.Router(); // esto sirve para crear las rutas
 //var multipart = require('connect-multiparty');
 
-const  multer = require('../librerias/multer');
+const multer = require('../librerias/multer');
 /*var md_upload = multipart({
 
     uploadDir: './uploads/tienda'
 });*/
 
 
-api.post('/registrarTienda',multer.fields([{name:'logo'},{name: 'banner'}]), TiendaController.registrarTienda);
-api.get('/getDatosTienda/:id',TiendaController.getDatosTienda);
-api.get('/getMisTiendas/:id',TiendaController.getMisTiendas);
+api.post('/registrarTienda', multer.fields([{name: 'logo'}, {name: 'banner'}]), TiendaController.registrarTienda);
+api.get('/getDatosTienda/:id', TiendaController.getDatosTienda);
+api.get('/getMisTiendas/:id', TiendaController.getMisTiendas);
 api.put('/actualizarTiendaGeneral/:id', TiendaController.actualizarTiendaGeneral);
 api.put('/actualizarTiendaSucursal/:id', TiendaController.actualizarTiendaSucursal);
-api.put('/updateEstadoTienda/:id',TiendaController.updateEstadoTienda);
-api.put('/updatePersonalizacionTienda/:id',multer.fields([{name:'logo'},{name: 'banner'}]),TiendaController.updatePersonalizacionTienda);
+api.put('/updateEstadoTienda/:id', TiendaController.updateEstadoTienda);
+api.put('/updatePersonalizacionTienda/:id', multer.fields([{name: 'logo'}, {name: 'banner'}]), TiendaController.updatePersonalizacionTienda);
+
+api.get('/obtenerFiltroPrincipalTodos/:termino', TiendaController.obtenerFiltroPrincipalTodos);
+api.get('/obtenerFiltroPrincipalTienda/:termino', TiendaController.obtenerFiltroPrincipalTienda);
+api.get('/obtenerFiltroPrincipalProductos/:termino', TiendaController.obtenerFiltroPrincipalProductos);
 
 //api.post('/subirImagenesTienda/:id/:tipo',[md_upload],TiendaController.subirImagenesTienda);
 /*api.get('/obtenerImagenTienda/:imageFile', TiendaController.obtenerImagenTienda);*/
