@@ -119,6 +119,8 @@ export class EncabezadoTiendaComponent implements OnInit {
   };
 
   getDisponibilidad() {
+    this.Disponibilidad = "Cerrado";
+    debugger;
     this.Disponibilidad;
     this.JornadaActual;
     let data = new Date();
@@ -131,12 +133,12 @@ export class EncabezadoTiendaComponent implements OnInit {
           jornada: null
         };
         if (d.INICIO_JORNADA2) {
-         let Jornada = this.transformarHora(d.INICIO_JORNADA1) + "-" + this.transformarHora(d.FIN_JORNADA1) + "  -   " + this.transformarHora(d.INICIO_JORNADA2) + "-" + this.transformarHora(d.FIN_JORNADA2);
+          let Jornada = this.transformarHora(d.INICIO_JORNADA1) + "-" + this.transformarHora(d.FIN_JORNADA1) + "  -   " + this.transformarHora(d.INICIO_JORNADA2) + "-" + this.transformarHora(d.FIN_JORNADA2);
           this.jornadas.dia = d.DIA;
           this.jornadas.jornada = Jornada;
           this.vJornadas.push(this.jornadas);
         } else {
-         let Jornada = this.transformarHora(d.INICIO_JORNADA1) + "-" + this.transformarHora(d.FIN_JORNADA1);
+          let Jornada = this.transformarHora(d.INICIO_JORNADA1) + "-" + this.transformarHora(d.FIN_JORNADA1);
           this.jornadas.dia = d.DIA;
           this.jornadas.jornada = Jornada;
           this.vJornadas.push(this.jornadas);
@@ -152,15 +154,13 @@ export class EncabezadoTiendaComponent implements OnInit {
               this.JornadaActual = this.transformarHora(d.INICIO_JORNADA1) + "-" + this.transformarHora(d.FIN_JORNADA1);
             }
           } else {
-            this.Disponibilidad = "Cerrado";
+
             if (d.INICIO_JORNADA2) {
               this.JornadaActual = this.transformarHora(d.INICIO_JORNADA1) + "-" + this.transformarHora(d.FIN_JORNADA1) + " - " + this.transformarHora(d.INICIO_JORNADA2) + "-" + this.transformarHora(d.FIN_JORNADA2);
             } else {
               this.JornadaActual = this.transformarHora(d.INICIO_JORNADA1) + "-" + this.transformarHora(d.FIN_JORNADA1);
             }
           }
-        } else {
-          this.Disponibilidad = "Cerrado";
         }
       }
     } else if (this.Tienda.HORARIO_ATENCION == 'No disponible') {
@@ -178,8 +178,10 @@ export class EncabezadoTiendaComponent implements OnInit {
   }
 
   obtenerMinutos(hora) {
+    if(hora){
     var spl = hora.split(":");
     return parseInt(spl[0]) * 60 + parseInt(spl[1]);
+    }
   }
 
   mensageError(mensaje) {
