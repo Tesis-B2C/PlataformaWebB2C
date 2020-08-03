@@ -1,0 +1,375 @@
+<ng-template #modalProductos let-modal>
+
+  <div class="modal-header">
+    <h5 class="modal-title">Productos</h5>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true" style="font-size: x-large">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" style="height: 100vh">
+    <div class="mx-auto ">
+      <div class="form-row mb-2  ">
+        <div class=" input-group col-md-12 mr-md-auto">
+          <input class="form-control" style="font-size: small" type="text" #busquedaasd="ngModel"
+                 [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="filtrar()"/>
+          <div class="input-group-append">
+            <span class="input-group-text  small"><li class="fas fa-search"></li></span>
+          </div>
+
+        </div>
+      </div>
+      <br>
+      <label class="">Seleccione los productos que desea agregar</label>
+      <table class="table table-bordered table-responsive-sm bg-white small w-100 text-center">
+        <thead>
+        <tr>
+          <th scope="col"><input (click)="agregarTodosProductos($event)" id="rastrearCantidad" type="checkbox"></th>
+          <th scope="col">ID_PRODUCTO</th>
+          <th scope="col">COD_PRODUCTO</th>
+          <th scope="col">NOMBRE</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr [ngClass]="{'bg-gray':producto.ESTADO_OFERTA==1}"
+            *ngFor="let producto of   this.result  |slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+          <th scope="row"><input (click)="agregarProducto($event,producto )" type="checkbox"
+                                 [checked]="this.vectorProductos.has(producto)"></th>
+          <td>
+            {{producto.ID_PRODUCTO}}
+          </td>
+          <td>
+            {{producto.COD_PRODUCTO}}
+          </td>
+
+          <td>
+            {{producto.NOMBRE_PRODUCTO}}
+          </td>
+
+
+        </tr>
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-between p-2">
+        <ngb-pagination
+          [(page)]="page"
+          [pageSize]="pageSize"
+          [collectionSize]="this.result.length "></ngb-pagination>
+      </div>
+
+
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    <button (click)="agregar();modal.close('Close click')" class="btn btn-primary" style="font-size:small">Guardar
+      &nbsp; &nbsp; <span
+        class="badge badge-light">{{vectorProductos.size}}</span></button>
+  </div>
+
+
+</ng-template>
+
+
+<body id="body">
+
+<div class="container mt-5 ">
+
+  <div class="row  justify-content-center" id="top">
+    <h4 class=" col-11  ">Modificar Descuento</h4>
+    <hr class="col-11  ">
+  </div>
+
+
+  <div class="row justify-content-center">
+    <div class=" col-md-10  ">
+      <div class="form-row">
+        <div class="col-12  form-group ">
+          <button *ngIf="banderaCuponDescuento"
+                  class="btnActivo btn btn-outline-primary px-4 py-3 text-center btn-paso2 w-100"
+                  type="submit">
+            <i class="fas fa-tag fa-lg fa-2x"></i> &nbsp; &nbsp;Cupon de descuento
+          </button>
+        </div>
+
+        <div class="col-12  form-group">
+          <button *ngIf="!banderaCuponDescuento"
+                  class="btnActivo btn btn-outline-primary px-3 py-3 text-center btn-paso2 w-100 "
+                  type="submit">
+            <i class="fa fa-percentage fa-lg fa-2x"></i> &nbsp; &nbsp; Descuento automático
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <br><br><br><br>
+    <div class="col-md-10" id="panelUno">
+
+      <h6>Código de descuento {{this.Descuento.Motivo_Descuento}}</h6>
+      <form #FormInformacion id="formInformacion" name="formInformacion" class="mt-3 card card-body validate-form">
+
+        <div class="container">
+          <div class="form-row " *ngIf="banderaCuponDescuento">
+            <div class="col-md-7 ">
+              <label>Código</label>
+              <div class="input-group">
+                <input #Codigo="ngModel" [(ngModel)]="this.Descuento.Motivo_Descuento"
+                       style="text-transform: uppercase"
+                       placeholder="Ej: OFERTASENERO"
+                       class=" form-control py-3 "
+                       name="nombreProducto" required [disabled]="!this.banderaModificar"
+                       type="text" [ngClass]="{'is-invalid': Codigo.invalid && banderaValidaciones}">
+                <div class="input-group-append">
+                  <button class="btn btn-light" (click)="generarCodigDescuento()" [disabled]="!banderaModificar"
+                          [ngClass]="{'border-red': Codigo.invalid && banderaValidaciones}"> Generar
+                  </button>
+                </div>
+
+              </div>
+              <div *ngIf="Codigo.errors?.required && banderaValidaciones" class="mt-2">
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+              </div>
+              <p style="font-size: small" class="muted">Los clientes introducirán este código de descuento en la
+                pantalla de pago.</p>
+            </div>
+          </div>
+          <div class="form-row " *ngIf="!banderaCuponDescuento">
+            <div class="col-md-10 ">
+              <label>Motivo del descuento</label>
+              <input #MotivoDescuento="ngModel" [(ngModel)]="this.Descuento.Motivo_Descuento"
+                     style="text-transform: uppercase"
+                     placeholder="Ej: Descuento por el mes de enero"
+                     class=" form-control py-3 "
+                     name="motivoDescuento" required [disabled]="!this.banderaModificar"
+                     type="text" [ngClass]="{'is-invalid': MotivoDescuento.invalid && banderaValidaciones}" >
+
+              <div *ngIf="MotivoDescuento.errors?.required && banderaValidaciones" class="mt-2">
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+              </div>
+              <p style="font-size: small" class="muted">Los clientes veran este descuento en la
+                pantalla de pago.</p>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <hr>
+      <h6>Valor</h6>
+      <form class="card card-body mt-3" name="formDescuento">
+        <div class="col-lg-4">
+          <label>Porcentaje de Descuento </label>
+          <div class="input-group ">
+            <input #descuento="ngModel" [(ngModel)]="this.Descuento.Porcentaje_Descuento" class="form-control"
+                   name="descuento"
+                   placeholder="12"
+                   min="0" step="0.01" oninput="validity.valid||(value='');" [disabled]="!this.banderaModificar"
+                   type="number" required [ngClass]="{'is-invalid': descuento.invalid && banderaValidaciones}">
+            <div class="input-group-append">
+              <span class="input-group-text unidades" style="font-size: small">%</span>
+            </div>
+
+          </div>
+          <div *ngIf="descuento.errors?.required && banderaValidaciones" class="mt-2">
+            <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+          </div>
+
+        </div>
+
+      </form>
+      <hr>
+      <h6>Se aplica a </h6>
+      <form class=" card card-body mt-3">
+
+        <div class="container">
+          <label>Seleccione a quien se aplica el descuento</label>
+          <br>
+          <div class="form-group">
+            <div class="radio-item">
+              <input (click)="opcionAplicarA(true)" name="garantia" [disabled]="!this.banderaModificar"
+                     type="radio" value="todos" id="GarantiaVendedor" [checked]="this.Descuento.AplicarA=='todos'">
+              <label for="GarantiaVendedor">&nbsp;&nbsp;Todos los productos</label>
+            </div>
+            <br>
+            <div class="radio-item">
+              <input (click)="opcionAplicarA(false)" name="garantia" [disabled]="!this.banderaModificar"
+                     type="radio" value="espesificos" id="GarantiaFabrica"
+                     [checked]="this.Descuento.AplicarA=='espesificos'">
+              <label for="GarantiaFabrica">&nbsp;&nbsp;Productos espesificos </label>
+            </div>
+
+
+          </div>
+
+        </div>
+
+
+        <table *ngIf="vectorProductosEnviar.length>0 && this.Descuento.AplicarA=='espesificos'"
+               class="table  table-responsive-sm bg-white small w-100 text-center">
+          <thead>
+          <tr>
+
+            <th scope="col">ID_PRODUCTO</th>
+            <th scope="col">COD_PRODUCTO</th>
+            <th scope="col">NOMBRE</th>
+            <th scope="col">DESCRIPCION</th>
+            <th scope="col">ACCIÓN</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr [ngClass]="{'bg-gray':producto.ESTADO_OFERTA==1}"
+              *ngFor="let producto of   this.vectorProductosEnviar  |slice: (page2-1) * pageSize2 : (page-1) * pageSize2 + pageSize2; index as i">
+
+            <td>
+              {{producto.ID_PRODUCTO}}
+            </td>
+            <td>
+              {{producto.COD_PRODUCTO}}
+            </td>
+
+            <td>
+              {{producto.NOMBRE_PRODUCTO}}
+            </td>
+            <td>
+              {{producto.DESCRIPCION_PRODUCTO}}
+            </td>
+            <td>
+              <button class="btn" [disabled]="!this.banderaModificar" (click)="borrar(producto)"><span
+                class="fa fa-trash " style="color: red"></span>
+              </button>
+          </tr>
+          </tbody>
+        </table>
+
+        <div *ngIf="vectorProductosEnviar.length>0 && this.Descuento.AplicarA=='espesificos'"
+             class="d-flex justify-content-between p-2">
+          <ngb-pagination
+            [(page)]="page2"
+            [pageSize]="pageSize2"
+            [collectionSize]=" this.vectorProductosEnviar.length "></ngb-pagination>
+        </div>
+
+        <button *ngIf="this.Descuento.AplicarA=='espesificos'" class="btn btn-primary col-md-3 mx-auto p-1"
+                [disabled]="!banderaModificar"
+                (click)="abrirModalProductos(modalProductos)">Agregar Producto &nbsp; <span
+          class="fa fa-plus "></span></button>
+      </form>
+      <hr>
+      <div>
+        <div class="row justify-content-between mx-1">
+          <h6>Periodo de activación </h6>
+        </div>
+      </div>
+      <form class=" card card-body mt-3" name="formTiempo">
+
+        <div class="container">
+          <label>Seleccione el rango de tienpo que el cupón de descuento va a estar activo</label>
+          <br> <br>
+          <div class="row">
+
+            <div class="col-xs-12 col-12 col-sm-5 col-md-6 col-lg-4 form-group">
+              <label>Rango de duracion</label>
+              <div class="input-group ">
+
+                <input  type="text" class="form-control" bsDaterangepicker
+                       #Calendario="ngModel"
+                       style="border-right: none"
+                       [(ngModel)]="bsRangeValue" name="calendario" [disabled]="!this.banderaModificar"
+                       [minDate]="minDate"
+                       [bsConfig]='{ rangeInputFormat: "YYYY-MM-DD", locale: "es", adaptivePosition: true, containerClass:"theme-orange" }'
+                       #dpr="bsDaterangepicker" required
+                       [ngClass]="{'borderr-red': Calendario.invalid && banderaValidaciones}">
+                <div class="input-group-append">
+                   <span class="input-group-text fa fa-calendar"
+                         [ngClass]="{'borderr-red': Calendario.invalid && banderaValidaciones}"
+                         style="background-color: white; font-size: small"></span>
+                </div>
+              </div>
+
+              <div *ngIf="Calendario.errors?.required && banderaValidaciones" class="mt-2">
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+              </div>
+            </div>
+
+
+            <div class="col-xs-12 col-12 col-sm-4 col-md-12 col-lg-4 form-group">
+
+              <label>Hora de inicio</label>
+              <input class="px-1 tamaniohorario form-control text-center"
+                     type="time" name="horaInicio"
+                     #HoraInicio="ngModel" [(ngModel)]="this.Descuento.Hora_Inicio" required
+                     [ngClass]="{'borderr-red': HoraInicio.invalid && banderaValidaciones}"
+                     [disabled]="!this.banderaModificar">
+              <div *ngIf="HoraInicio.errors?.required && banderaValidaciones" class="mt-2">
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+              </div>
+            </div>
+            <div class="col-xs-12 col-12 col-sm-4 col-md-12 col-lg-4 form-group">
+
+              <label>Hora de finalizacion</label>
+              <input class="px-1 tamaniohorario form-control text-center"
+                     type="time" name="horaFin"
+                     #HoraFin="ngModel" [(ngModel)]="this.Descuento.Hora_Fin" [disabled]="!this.banderaModificar"
+                     [ngClass]="{'borderr-red': HoraFin.invalid && banderaValidaciones}" required>
+              <div *ngIf="HoraFin.errors?.required && banderaValidaciones" class="mt-2">
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <hr>
+
+
+      <form class="card card-body  col-md-12  mt-4">
+        <div class=" container">
+          <h6>Acciones</h6>
+          <hr>
+          <div class="text-right">
+            <button *ngIf="banderaModificar" (click)="this.guardarDescuento()"
+                    class="btn btn-primary text-nowrap mb-4  col-auto"
+                    type="button">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+              Guardar Producto &nbsp;&nbsp;
+              <span class="fa fa-save"></span>
+            </button>
+            &nbsp;&nbsp;
+            <button *ngIf="banderaModificar" class="btn btn-light text-nowrap mb-4  col-auto"
+                    (click)="iniciarModificarDescuento()">
+              Cancelar &nbsp;&nbsp;
+              <span class="fa fa-close"></span></button>
+
+
+            &nbsp;&nbsp;
+            <button *ngIf="!banderaModificar &&  this.Descuento.Estado_Descuento ==0"
+                    class="btn btn-warning text-nowrap mb-4  col-auto" (click)="iniciarEdicion()">
+              Modificar &nbsp;&nbsp;
+              <span class="fa fa-edit"></span></button>
+            &nbsp;&nbsp;
+            <button *ngIf="!banderaModificar &&  this.Descuento.Estado_Descuento ==0"
+                    class="btn btn-light text-nowrap mb-4  col-auto" (click)="cambiarEstadoDescuento(1)">
+              Desactivar &nbsp;&nbsp;
+              <span class="fa fa-ban"></span></button>
+
+            <button *ngIf="!banderaModificar &&   this.Descuento.Estado_Descuento ==1"
+                    class="btn btn-light text-nowrap mb-4  col-auto" (click)="cambiarEstadoDescuento(0)">
+              Mostrar &nbsp;&nbsp;
+              <span class="fa fa-check"></span></button>
+            &nbsp;&nbsp;
+            <button *ngIf="!banderaModificar" class="btn btn-danger text-nowrap mb-4  col-auto"
+                    (click)="cambiarEstadoDescuento(2)">
+              Eliminar &nbsp;&nbsp;
+              <span class="fa fa-trash"></span></button>
+
+
+          </div>
+
+        </div>
+      </form>
+
+
+    </div>
+  </div>
+</div>
+<br><br>
+</body>

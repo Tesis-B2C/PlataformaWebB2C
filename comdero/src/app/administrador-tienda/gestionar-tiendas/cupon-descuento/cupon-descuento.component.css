@@ -1,0 +1,195 @@
+
+
+label {
+  font-size: small;
+  font-weight: normal;
+}
+
+input {
+  font-size: small;
+}
+
+
+
+.alert {
+  font-size: smaller;
+}
+
+
+
+select {
+  font-size: small;
+}
+
+select::-ms-expand {
+  overflow: auto;
+  max-height: 3px;
+}
+
+
+/*
+select:hover{
+  transform: rotate(-45deg); !* Giramos el cuadrado *!
+  transition: all 0.25s ease;
+}
+*/
+
+
+
+.input-colores {
+  width: 40px;
+  height: 40px;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  border-radius: 50px;
+}
+
+::-webkit-input-placeholder {
+  color: #ccc;
+}
+
+:-moz-placeholder {
+  color: #ccc;
+  opacity: 1;
+}
+
+::-moz-placeholder {
+  color: #ccc;
+  opacity: 1;
+}
+
+:-ms-input-placeholder {
+  color: #ccc;
+}
+
+button {
+  font-size: small;
+}
+
+
+/*Radio button*/
+.radio-item {
+  display: inline-block;
+  position: relative;
+  padding: 0 6px;
+}
+
+.radio-item input[type='radio'] {
+  display: none;
+}
+
+.radio-item label:before {
+  content: " ";
+  display: inline-block;
+  position: relative;
+  top: 2px;
+  margin: 0 5px 0 0;
+  width: 15px;
+  height: 15px;
+  border-radius: 11px;
+  border: 2px solid #1a56e9;
+  background-color: transparent;
+}
+
+.radio-item input[type=radio]:checked + label:after {
+  border-radius: 11px;
+  width: 7px;
+  height: 7px;
+  position: absolute;
+  top: 7px;
+  left: 10px;
+  content: " ";
+  display: block;
+  background: #1a56e9;
+}
+
+/*CheckBox*/
+.checkbox-item {
+  display: inline-block;
+  position: relative;
+  padding: 0 6px;
+}
+
+.checkbox-item input[type='checkbox'] {
+  display: none;
+}
+
+.checkbox-item label:before {
+  content: " ";
+  display: inline-block;
+  position: relative;
+  top: 2px;
+  margin: 0 5px 0 0;
+  width: 15px;
+  height: 15px;
+  border: 2px solid #1a56e9;
+  background-color: transparent;
+}
+
+.checkbox-item input[type=checkbox]:checked + label:after {
+  width: 7px;
+  height: 7px;
+  position: absolute;
+  top: 7px;
+  left: 10px;
+  content: " ";
+  display: block;
+  background: #1a56e9;
+}
+
+
+.alert1 {
+  font-size: smaller;
+  padding: 0;
+  background-color: white;
+  border: none;
+  color: #bd2130;
+  margin-left: 4px;
+}
+
+::ng-deep.swal2-container {
+  z-index: 1000000;
+}
+
+.my-swal {
+  display: -webkit-box;
+  display: flex;
+  position: fixed;
+  z-index: 300000;
+}
+
+.errorSelect {
+  border: 1px solid red;
+}
+
+body {
+  height: 100vh !important;
+  overflow: auto;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+
+
+
+
+
+.btnActivo:disabled {
+  background-color: #007bff;
+  opacity: 1;
+  color: white;
+}
+
+.btnActivo{
+  font-size: small;
+}
+
+.border-red{
+  border-left:solid  1px  #c80000;
+}
+
+.borderr-red{
+  border:solid  1px  #c80000;
+}

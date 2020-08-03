@@ -5,7 +5,8 @@ import {GLOBAL} from "./global";
 //import { Http, Headers } from "@angular/http";
 
 interface objeto {
-  data: JSON
+  data: JSON,
+  message: JSON,
 }
 
 @Injectable()
@@ -92,5 +93,14 @@ export class ProductoServicio {
     let headers = new HttpHeaders({"Content-type": "application/json"});
     return this._http.put<objeto>(this.url + "updateEstadoProducto/" + Id_Oferta, params, {headers: headers});
   }
+
+  public updateEstadoProductos(vOfertas, estado_a_cambiar){
+  debugger;
+    let params = JSON.stringify(vOfertas);
+    let headers = new HttpHeaders({"Content-type": "application/json"});
+    return this._http.put<objeto>(this.url + "updateEstadoProductos/" + estado_a_cambiar, params, {headers: headers});
+  }
+
+
 
 }

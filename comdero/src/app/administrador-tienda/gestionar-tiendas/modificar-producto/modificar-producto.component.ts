@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ProductoServicio} from "../../../servicios/producto.servicio";
 import Swal from "sweetalert2";
 import {Oferta} from "../../../modelos/oferta";
@@ -93,7 +93,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
   public banderaModificar: boolean = false;
   public loading: boolean = false;
 
-  constructor(public toastr: ToastrService, private cpService: ColorPickerService, private cp: CurrencyPipe, private _sanitizer: DomSanitizer, private _unidadesMedidaServicio: UnidadMedidaServicio, private _categoriaServicio: CategoriaServicio, private modalService: NgbModal, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
+  constructor(  private router: Router,public toastr: ToastrService, private cpService: ColorPickerService, private cp: CurrencyPipe, private _sanitizer: DomSanitizer, private _unidadesMedidaServicio: UnidadMedidaServicio, private _categoriaServicio: CategoriaServicio, private modalService: NgbModal, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
     this.Oferta = new Oferta(null, null, null, null);
     this.Producto = new Producto(null, null, null, null, null, null, null, null, null);
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
@@ -102,7 +102,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
 
-    await this.getProducto();
+    //await this.getProducto();
     this.iniciarModificarProducto();
     this.getCategorias();
     this.getUnidadesMedida()
@@ -669,6 +669,52 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
 
   }
 
+  public async guardarCambiarEstadoProducto(estado) {
+
+    Swal.fire({
+      title: '<header class="login100-form-title-registro mb-o"><h5 class="card-title"><strong>!Estas seguro</strong></h5></header>',
+      text: "Estas seguro que deseas cambiar de estado a este producto",
+      icon: 'warning',
+      position: 'center',
+      width: 600,
+      showCancelButton: true,
+      confirmButtonText: 'Continuar',
+      cancelButtonText: 'Cancelar',
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        container: 'my-swal',
+        cancelButton: 'btn btn-secondary px-5 ml-5',
+      }
+    }).then(async (result) => {
+      if (result.value) {
+        this.loading = true;
+        this.cambiarEstadoProducto(estado);
+
+      }
+    })
+
+
+  }
+
+  public async cambiarEstadoProducto(estado) {
+
+    try {
+      let responseUpdate = await this._productoServicio.updateEstadoProducto(this.identidadProducto.ID_OFERTA, estado).toPromise();
+      this.mensageCorrecto(responseUpdate['menssage']);
+      let response = await this._productoServicio.getMisProductos(this.identidadTienda.NUM_TIENDA).toPromise();
+      //this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/listado-productos']);
+      this.iniciarModificarProducto();
+    } catch (e) {
+
+      console.log("error:" + e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
+
+  }
+
   public async publicarProducto() {
 
 
@@ -716,7 +762,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
 
   }
 
-  iniciarEdicion() {
+  public iniciarEdicion() {
     this.banderaModificar = true;
     this.editorConfig.editable = true;
   }

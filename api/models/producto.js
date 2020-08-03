@@ -73,25 +73,25 @@ const Producto = db.sequelize.define('PRODUCTO', {
     {
         timestamps: false,
         id: false
-    })
+    });
 
 //PRODUCTO - COMPRA_PRODUCTO
 Producto.hasMany(Compra_Producto, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
-Producto.hasMany(Compra_Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
+//Producto.hasMany(Compra_Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
 Compra_Producto.belongsTo(Producto, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
-Compra_Producto.belongsTo(Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
+//Compra_Producto.belongsTo(Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
 
 //PRODUCTO - COMENTARIO
 Producto.hasMany(Comentario, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
-Producto.hasMany(Comentario, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
+//Producto.hasMany(Comentario, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
 Comentario.belongsTo(Producto, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
-Comentario.belongsTo(Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
+//Comentario.belongsTo(Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
 
 //PRODUCTO - PRODUCTO_DESCUENTO
 Producto.hasMany(Producto_Descuento, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
-Producto.hasMany(Producto_Descuento, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
-Producto_Descuento.belongsTo(Producto, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
-Producto_Descuento.belongsTo(Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
+//Producto.hasMany(Producto_Descuento, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
+Producto_Descuento.belongsTo(Producto, {as:'producto',foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
+//Producto_Descuento.belongsTo(Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
 
 //PRODUCTO - CALIFICACION
 Producto.hasMany(Calificacion, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
@@ -101,21 +101,21 @@ Calificacion.belongsTo(Producto, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PROD
 
 
 //PRODUCTO - VARIANTE
-Producto.hasMany(Variante, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'}, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
+Producto.hasMany(Variante, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
 //Producto.hasMany(Variante, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
-Variante.belongsTo(Producto, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'}, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
+Variante.belongsTo(Producto, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
 //Variante.belongsTo(Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
 
 //PRODUCTO - PRODUCTO_CATEGORIA
 Producto.hasMany(Producto_Categoria, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
-Producto.hasMany(Producto_Categoria, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
+//Producto.hasMany(Producto_Categoria, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
 Producto_Categoria.belongsTo(Producto, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
-Producto_Categoria.belongsTo(Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
+//Producto_Categoria.belongsTo(Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
 
 //PRODUCTO-CARRITO_PRODUCTO
 Producto.hasMany(Carrito_Producto, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
-Producto.hasMany(Carrito_Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
+//Producto.hasMany(Carrito_Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
 Carrito_Producto.belongsTo(Producto, {foreignKey: 'ID_PRODUCTO', sourceKey: 'ID_PRODUCTO'});
-Carrito_Producto.belongsTo(Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
+//Carrito_Producto.belongsTo(Producto, {foreignKey: 'COD_PRODUCTO', sourceKey: 'COD_PRODUCTO'});
 
 module.exports = Producto;

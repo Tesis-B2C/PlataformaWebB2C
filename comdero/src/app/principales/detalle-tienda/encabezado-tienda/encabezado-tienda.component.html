@@ -1,0 +1,177 @@
+<body class="bg">
+
+<div class="px-2">
+  <section class="section-main    ">
+
+    <div class="row no-gutters  justify-content-center">
+
+      <div class="col-xl-12 mt-1  ">
+        <section class=" w-100">
+          <section class="py-0   colorNavbar">
+            <nav class="navbar   navbar-expand-xl  justify-content-between px-lg-5 ">
+
+              <button class="navbar-toggler" style=" border: none" type="button" #menu name="menu"
+                      data-toggle="collapse" data-target="#main_nav"
+                      aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="fa fa-bars " style="color: white"></span>
+              </button>
+             <a class="navbar-brand mr-auto  ml-2 mx-md-0 " href="#">
+                <h6 class="title-page white">{{this.Tienda?.NOMBRE_COMERCIAL }}</h6>
+              </a>
+              <div class="container   mr-0 pr-0 ">
+                <div class="collapse navbar-collapse ml-auto" id="main_nav">
+                  <ul class="navbar-nav ml-auto ">
+                    <li class="nav-item  ">
+                      <a class="nav-link pl-2 pl-lg-2" routerLink="inicio-tienda" routerLinkActive='active'
+                         [routerLinkActiveOptions]="{exact: true} " >Inicio </a>
+                    </li>
+                    <li class="nav-item dropdown ">
+                      <a class="nav-link dropdown-toggle pl-2 pl-lg-2" data-toggle="dropdown"
+                         href="#"> Categorias</a>
+                      <div class="dropdown-menu ">
+                        <a class="dropdown-item " *ngFor="let c of this.categorias" href="#"><span
+                          class="fas fa-tag"></span> &nbsp;&nbsp;{{c}}</a>
+
+                      </div>
+                    </li>
+
+                    <li class="nav-item">
+                      <a class="nav-link pl-2 pl-lg-2" routerLink="informacion-tienda" routerLinkActive='active'
+                         [routerLinkActiveOptions]="{exact: true} ">Información</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link pl-2 pl-lg-2" routerLink="terminos-y-condiciones-tienda" routerLinkActive='active'
+                         [routerLinkActiveOptions]="{exact: true} "> Terminos y
+                        condiciones </a>
+                    </li>
+
+                    <li class="nav-item">
+                      <a class="nav-link pl-2 pl-lg-2">Métodos de pago</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link pl-2 pl-lg-2">Métodos de envio</a>
+                    </li>
+
+
+                  </ul>
+                </div> <!--  nav .// -->
+
+
+              </div> <!-- container .// -->
+
+            </nav>
+          </section><!-- menu-->
+          <div class="section-intro  w-100 mx-auto   ">
+            <div class="intro-banner-wrap">
+              <img [src]=this.Banner class="w-100 alto-banner  ">
+            </div>
+            <div class="mt-2 mx-auto ">
+
+
+            </div>
+            <div class="posicion-logo row w-100  justify-content-center justify-content-md-start  ml-md-5 ml-1  ">
+              <div class="  centered-content   justify-content-between  mt-n5">
+                <div class="row mx-auto">
+                  <img [src]="this.Logo" class=" rounded-circle alto-logo"
+                  >
+
+                </div>
+
+              </div>
+            </div>
+
+
+          </div> <!--banner-->
+
+          <div class="  mt-n5  py-3 bg-white border-bottom ">
+            <div class="  mt-5  mt-md-0  text-center ">
+
+              <div class="widget-header form-inline mr-5">
+                <a
+                  href="https://api.whatsapp.com/send?phone=593992452430&text=Hola!%20Quiero%20conocer%20acerca%20de%20su%20tienda!"
+                  target="_blank" class="icon icon-sm rounded-circle border border-primary "><i
+                  class="fab fa-whatsapp " aria-hidden="true"></i>
+                  <p class="text-primary  ml-n2  " style="font-size: x-small">Contáctanos</p></a>
+              </div>
+              <div class="widget-header mr-5 ml-2 " [ngClass]="{'mr-5':this.vPaginasWeb.length>0 }">
+                <a routerLink="encuentranos-tienda" routerLinkActive='active-icon'
+                   [routerLinkActiveOptions]="{exact: true} " class="icon icon-sm rounded-circle border border-primary"><i
+                  class="fa fa-directions " aria-hidden="true"></i>
+                  <p class="text-primary  ml-n2  " style="font-size: x-small;">Encuentranos</p></a>
+
+              </div>
+              <div class="widget-header " *ngIf="this.vPaginasWeb.length>0 ">
+                <li class="nav-item dropdown">
+                  <a href="#" class="icon icon-sm rounded-circle border border-primary  " data-toggle="dropdown"
+                     href="#"
+                     aria-expanded="false"><i class="fa fa-globe-americas"></i>
+                    <p class="text-primary     " style="font-size: x-small;">Sitio Web</p>
+                  </a>
+
+                  <div class="dropdown-menu ">
+                    <div *ngFor="let pagina of vPaginasWeb">
+                      <a class="dropdown-item   link" *ngIf="pagina.tipo=='facebook'" href="{{pagina.direccion}}"
+                         target="_blank"><span
+                        class="fab fa-facebook"></span> &nbsp; Link de facebook</a>
+
+                      <a class="dropdown-item   link" *ngIf="pagina.tipo=='pagina'"
+                         href="{{pagina.direccion}} " target="_blank"><span
+                        class="fas fa-pager "></span> &nbsp;link a página externa</a>
+                    </div>
+
+                  </div>
+                </li>
+
+              </div>
+              <hr>
+              <div class="widget-header ">
+                <li class="small">
+                  <p
+                    [ngClass]="{'text-success':(this.Disponibilidad=='Disponible' || this.Disponibilidad=='Siempre abierto'), 'text-danger': (this.Disponibilidad=='Cerrado'|| this.Disponibilidad=='No disponible')}"
+                    class=" text-center ml-2"><span class="fa fa-clock"></span> &nbsp; {{this.Disponibilidad}} &nbsp;&nbsp;<a
+                    class="text-dark">{{this.JornadaActual}}</a> &nbsp;&nbsp;<span href="#producto"
+                                                                                   data-toggle="collapse"
+                                                                                   aria-expanded="false"
+                                                                                   class=" dropdown-toggle "
+                                                                                   class="fa fa-caret-down"></span></p>
+
+                  <ul class="collapse list-unstyled ml-2" id="producto">
+                    <hr class="mb-0">
+                    <p class="mb-1"><strong>Horarios</strong></p>
+                    <div *ngFor="let jornada of vJornadas " class="text-left">
+                      <p class="row">
+                        <a class="col-4"> <strong>{{jornada.dia}}:</strong> </a>
+                        <a class="col-8">   {{jornada.jornada}}</a>
+                      </p>
+
+
+                    </div>
+                  </ul>
+                </li>
+              </div>
+
+
+            </div>
+          </div> <!--iconos pequenios-->
+
+          <br>
+
+
+        </section>
+
+      </div>
+
+      <div class="col-xl-9  ">
+
+        <router-outlet></router-outlet>
+      </div>
+    </div> <!-- row.// -->
+
+    <br>
+  </section>
+  <br>
+</div>
+
+
+</body>
+

@@ -7,12 +7,18 @@ const HORARIO_ATENCION = require('../models/horario_atencion');
 const OPCION_ENVIO = require('../models/opcion_envio');
 const DPA = require('../models/dpa');
 const METODO_PAGO = require('../models/metodo_pago');
-const PRODUCTO = require('../models/producto');
+
 const jwt = require('../services/jwt');
 const db = require('../database/db');
 const fs = require('fs-extra');
 const path = require('path');
 const OFERTA = require("../models/oferta");
+const PRODUCTO = require("../models/producto");
+const VARIANTE = require("../models/variante");
+const IMAGEN_PRODUCTO = require("../models/imagen_producto");
+const PRODUCTO_CATEGORIA = require("../models/producto_categoria");
+const CATEGORIA = require("../models/categoria");
+
 const {Op} = require("sequelize");
 
 /*const {QueryTypes} = require('sequelize');*/
@@ -173,7 +179,7 @@ async function getMisTiendas(req, res) {
             }
         });
 
-        if (tiendasObtenidas.length) {
+        if (tiendasObtenidas.length > 0) {
             res.status(200).send({
                 data: tiendasObtenidas,
                 message: "Tiendas cargadas correctamente"
@@ -420,7 +426,7 @@ async function actualizarTiendaGeneral(req, res) {
 
         let horariosObtenidos = await HORARIO_ATENCION.findAll({where: {NUM_TIENDA: tiendaId}});
 
-        if (horariosObtenidos.length) {
+        if (horariosObtenidos.length > 0) {
             await HORARIO_ATENCION.destroy({
                 where: {NUM_TIENDA: tiendaId},
                 transaction: trans
@@ -444,7 +450,7 @@ async function actualizarTiendaGeneral(req, res) {
             }
         }
 
-        if (tiendaActualizado.length) {
+        if (tiendaActualizado) {
             res.status(200).send({message: 'Los datos generales de la tienda han sido actualizados'});
             await trans.commit();
         } else {
@@ -466,7 +472,7 @@ async function actualizarTiendaSucursal(req, res) {
 
         let sucursalesObtenidos = await SUCURSAL.findAll({where: {NUM_TIENDA: tiendaId}});
 
-        if (sucursalesObtenidos.length) {
+        if (sucursalesObtenidos.length > 0) {
             await SUCURSAL.destroy({
                 where: {NUM_TIENDA: tiendaId},
                 transaction: t
@@ -579,6 +585,54 @@ async function obtenerFiltroPrincipalTodos(req, res) {
 
     } catch (e) {
         await t.rollback();
+    }
+}
+
+async function getDetalleTiendaProducto(req, res) {
+
+    try {
+        let tiendaObtenida = await TIENDA.findOne({
+            where: {NUM_TIENDA: req.params.id},
+            include: [{model:OPCION_ENVIO},{model:METODO_PAGO},{model:HORARIO_ATENCION},{
+                model: SUCURSAL,
+                include: {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}
+            }, {
+                model: OFERTA, include: [ {
+                    model: PRODUCTO,
+                    attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'NOMBRE_PRODUCTO'],
+                    include: [{
+                        model: PRODUCTO_CATEGORIA,
+                        include: {model: CATEGORIA}
+                    },{
+                        model: VARIANTE,
+                        separate: true,
+                        attributes: ['PRECIO_UNITARIO'],
+                        group: ['ID_PRODUCTO', 'COD_PRODUCTO'],
+                        order: [['NUM_VARIANTE', 'ASC']],
+                        include: {
+                            model: IMAGEN_PRODUCTO,
+                            separate: true,
+                            attributes: ['IMAGEN'],
+                            group: 'NUM_VARIANTE',
+                            order: [['ID_IMAGEN', 'ASC']]
+                        }
+                    }]
+                }],
+                order: [[SUCURSAL, 'NUM_SUCURSAL', 'ASC']]
+            }]
+        });
+
+        if (tiendaObtenida) {
+            res.status(200).send({
+                data: tiendaObtenida,
+                message: "Tienda cargada correctamente"
+            });
+        } else {
+            res.status(404).send({
+                message: 'Al parecer la tienda no se encuentra registrada en la base de datos'
+            });
+        }
+    } catch (err) {
         res.status(500).send({
             message: 'error:' + err
         });
@@ -596,9 +650,9 @@ module.exports = {          // para exportar todas las funciones de este modulo
     updatePersonalizacionTienda,
     obtenerFiltroPrincipalTienda,
     obtenerFiltroPrincipalProductos,
-    obtenerFiltroPrincipalTodos
+    obtenerFiltroPrincipalTodos,
+    getDetalleTiendaProducto
     /* subirImagenesTienda,*/
     /*   obtenerImagenTienda*/
 };
-
 

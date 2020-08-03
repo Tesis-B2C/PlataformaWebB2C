@@ -52,299 +52,302 @@
 
 
 <div>
-<article class="card mb-3">
-  <div class="card-body">
+  <article class="card mb-3">
+    <div class="card-body">
 
-    <figure class="icontext">
-      <div class="icon">
-        <a href="#" class="icon icon-lg rounded-circle border"><i class="fa fa-user"></i></a>
-      </div>
-      <div class="">
-        <h5 class="card-title"> Datos personales </h5>
-      </div>
-    </figure>
-    <hr>
-    <!--<p class="alert3 justify-content-center pb-2 text-primary small"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-      Los campos marcados con <strong>*</strong> son obligatorios.</p>-->
-    <form #FormActualizarDatos id="formActualizarDatos" name="formActualizarDatos" class="validate-form">
-      <div class="form-row ">
-        <div class=" col-md-6 form-group">
-          <label>Tipo de persona</label>
-          <select (change)="cambiarTipo($event.target.value)" type="text" class="form-control tamanioInputs "
-                  [disabled]="banderaEdicionDeshabilitada">
-            <option [selected]="banderaTipo" value="Persona">Persona Natural</option>
-            <option [selected]="!banderaTipo" value="Empresa">Empresa</option>
-          </select>
+      <figure class="icontext">
+        <div class="icon">
+          <a href="#" class="icon icon-lg rounded-circle border"><i class="fa fa-user"></i></a>
         </div>
-        <div *ngIf="banderaTipo" class="col-md-6 form-group">
-          <label>* Nombres y Apellidos</label>
-          <input [disabled]="banderaEdicionDeshabilitada" #NombreA="ngModel" style="text-transform: uppercase;"
-                 [(ngModel)]="this.EditarAgente.Nombre"
-                 [ngClass]="{'is-invalid': (NombreA.invalid && (NombreA.dirty || NombreA.touched))}"
-                 [pattern]='this.soloLetrasPattern'
-                 class="tamanioInputs form-control " name="nombreA" placeholder="" required
-                 type="text"> <!--form-control-sm-->
-          <div *ngIf="NombreA.invalid && (NombreA.dirty || NombreA.touched)">
-            <div *ngIf="NombreA.errors.required">
-              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
-            </div>
-            <div *ngIf="NombreA.errors.pattern">
-              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                Utilice solo letras.</p>
-            </div>
+        <div class="">
+          <h5 class="card-title"> Datos personales </h5>
+        </div>
+      </figure>
+      <hr>
+      <!--<p class="alert3 justify-content-center pb-2 text-primary small"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+        Los campos marcados con <strong>*</strong> son obligatorios.</p>-->
+      <form #FormActualizarDatos id="formActualizarDatos" name="formActualizarDatos" class="validate-form">
+        <div class="form-row ">
+          <div class=" col-md-6 form-group">
+            <label>Tipo de persona</label>
+            <select (change)="cambiarTipo($event.target.value)" type="text" class="form-control tamanioInputs "
+                    [disabled]="banderaEdicionDeshabilitada">
+              <option [selected]="banderaTipo" value="Persona">Persona Natural</option>
+              <option [selected]="!banderaTipo" value="Empresa">Empresa</option>
+            </select>
           </div>
-        </div>
-
-        <div *ngIf="!banderaTipo" class=" col form-group">
-          <label>* Razon Social</label>
-          <input [disabled]="banderaEdicionDeshabilitada" #Razon_Social="ngModel" style="text-transform: uppercase;"
-                 [(ngModel)]="this.EditarAgente.Nombre"
-                 [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched)}"
-                 [pattern]='this.LetrasNumerosPattern'
-                 class="tamanioInputs form-control" name="razon_Social" placeholder=""
-                 required type="text">
-          <div *ngIf="Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched)">
-            <div *ngIf="Razon_Social.errors.required">
-              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
-            </div>
-            <div *ngIf="Razon_Social.errors.pattern">
-              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
-                numeros.</p>
+          <div *ngIf="banderaTipo" class="col-md-6 form-group">
+            <label>* Nombres y Apellidos</label>
+            <input [disabled]="banderaEdicionDeshabilitada" #NombreA="ngModel" style="text-transform: uppercase;"
+                   [(ngModel)]="this.EditarAgente.Nombre"
+                   [ngClass]="{'is-invalid': (NombreA.invalid && (NombreA.dirty || NombreA.touched))}"
+                   [pattern]='this.soloLetrasPattern'
+                   class="tamanioInputs form-control " name="nombreA" placeholder="" required
+                   type="text"> <!--form-control-sm-->
+            <div *ngIf="NombreA.invalid && (NombreA.dirty || NombreA.touched)">
+              <div *ngIf="NombreA.errors.required">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+              </div>
+              <div *ngIf="NombreA.errors.pattern">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                  Utilice solo letras.</p>
+              </div>
             </div>
           </div>
 
+          <div *ngIf="!banderaTipo" class=" col form-group">
+            <label>* Razon Social</label>
+            <input [disabled]="banderaEdicionDeshabilitada" #Razon_Social="ngModel" style="text-transform: uppercase;"
+                   [(ngModel)]="this.EditarAgente.Nombre"
+                   [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched)}"
+                   [pattern]='this.LetrasNumerosPattern'
+                   class="tamanioInputs form-control" name="razon_Social" placeholder=""
+                   required type="text">
+            <div *ngIf="Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched)">
+              <div *ngIf="Razon_Social.errors.required">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+              </div>
+              <div *ngIf="Razon_Social.errors.pattern">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
+                  numeros.</p>
+              </div>
+            </div>
+
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label>* Correo electrónico</label>
-        <div class="input-group mb-3">
-          <input disabled #Email="ngModel" [(ngModel)]="this.EditarAgente.Correo" style="text-transform: lowercase"
-                 [ngClass]="{
+        <div class="form-group">
+          <label>* Correo electrónico</label>
+          <div class="input-group mb-3">
+            <input disabled #Email="ngModel" [(ngModel)]="this.EditarAgente.Correo" style="text-transform: lowercase"
+                   [ngClass]="{
           'is-invalid': Email.invalid && (Email.dirty || Email.touched)}" [pattern]='this.emailPattern'
-                 class="form-control tamanioInputs"
-                 name="email" placeholder="" required type="email"
-                 type="email">
-          <div class="input-group-append ">
-            <button class="btn  btn-light" type="button" (click)="editarCorreo(modalEditarCorreo)"><span
-              class="fa fa-edit"></span></button>
-          </div>
-        </div>
-
-
-        <div *ngIf="Email.invalid && (Email.touched||Email.dirty)">
-          <div *ngIf="Email.errors.required">
-            <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-              Campo requerido.</p>
-          </div>
-          <div *ngIf="Email.errors.pattern">
-            <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-              Debe cumplir con el formato</p>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-
-        <div class="form-row">
-          <div *ngIf="banderaTipo" class="form-group col-lg-6">
-            <label>* Cédula</label>
-            <input [disabled]="banderaEdicionDeshabilitada" #Cedula="ngModel" [(ngModel)]="this.EditarAgente.Id_Agente"
-                   [ngClass]="{'is-invalid': Cedula.invalid && (Cedula.dirty || Cedula.touched)}"
-                   [pattern]='this.soloNumerosPattern'
-                   class="tamanioInputs form-control" maxlength="10"
-                   minlength="10" name="cedula" placeholder=""
-                   type="text">
-            <div *ngIf="Cedula.invalid && (Cedula.dirty || Cedula.touched)">
-              <div *ngIf="Cedula.errors.required">
-                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo
-                  requerido.</p>
-              </div>
-              <div *ngIf="Cedula.errors.minlength">
-                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Minimo 10 digitos.</p>
-              </div>
-              <div *ngIf="Cedula.errors.maxlength">
-                <p class="alert alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Maximo 10 digitos.</p>
-              </div>
-              <div *ngIf="Cedula.errors.pattern">
-                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Utilice solo numeros. </p>
-
-              </div>
+                   class="form-control tamanioInputs"
+                   name="email" placeholder="" required type="email"
+                   type="email">
+            <div class="input-group-append ">
+              <button class="btn  btn-light" type="button" (click)="editarCorreo(modalEditarCorreo)"><span
+                class="fa fa-edit"></span></button>
             </div>
           </div>
 
-          <div *ngIf="!banderaTipo" class="form-group col-lg-6">
-            <label>* RUC</label>
-            <input [disabled]="banderaEdicionDeshabilitada" #Ruc="ngModel" [(ngModel)]="this.EditarAgente.Id_Agente"
-                   [ngClass]="{'is-invalid': Ruc.invalid && (Ruc.dirty || Ruc.touched)}"
-                   [pattern]='this.soloNumerosPattern'
-                   class="tamanioInputs form-control" maxlength="13"
-                   minlength="13" name="ruc" placeholder="" type="text">
-            <div *ngIf="Ruc.invalid && (Ruc.dirty || Ruc.touched)">
-              <div *ngIf="Ruc.errors.required">
-                <p class="alert alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Campo requerido.</p>
-              </div>
-              <div *ngIf="Ruc.errors.minlength">
-                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Minimo 13 digitos.</p>
 
-              </div>
-              <div *ngIf="Ruc.errors.maxlength">
-                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Maximo 13 digitos.</p>
-              </div>
-              <div *ngIf="Ruc.errors.pattern">
-                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Use solo numeros.</p>
-              </div>
+          <div *ngIf="Email.invalid && (Email.touched||Email.dirty)">
+            <div *ngIf="Email.errors.required">
+              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                Campo requerido.</p>
+            </div>
+            <div *ngIf="Email.errors.pattern">
+              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                Debe cumplir con el formato</p>
             </div>
           </div>
-          <div class="col-lg-6 form-group col-lg-6">
-            <label>* Celular / Convencional</label>
-            <input [disabled]="banderaEdicionDeshabilitada" #Telefono="ngModel" [(ngModel)]="this.EditarAgente.Telefono"
-                   [ngClass]="{'is-invalid': Telefono.invalid && (Telefono.dirty || Telefono.touched)}"
-                   [pattern]='this.soloNumerosPattern' class="tamanioInputs form-control" name="telefono"
-                   type="tel">
-            <div *ngIf="Telefono.invalid && (Telefono.dirty|| Telefono.touched) ">
-              <div *ngIf="Telefono.errors.required">
-                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Campo requerido.</p>
-              </div>
-
-              <div *ngIf="Telefono.errors.pattern">
-                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Utilice solo numeros.</p>
-              </div>
-            </div>
-          </div>
-
         </div>
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label>* Provincia</label>
-            <select [disabled]="banderaEdicionDeshabilitada" #Provincia="ngModel"
-                    (change)="getDpaCiudades($event.target.value)"
-                    [(ngModel)]="this.provincia"
-                    [ngClass]="{
+        <div class="form-group">
+
+          <div class="form-row">
+            <div *ngIf="banderaTipo" class="form-group col-lg-6">
+              <label>* Cédula</label>
+              <input [disabled]="banderaEdicionDeshabilitada" #Cedula="ngModel"
+                     [(ngModel)]="this.EditarAgente.Id_Agente"
+                     [ngClass]="{'is-invalid': Cedula.invalid && (Cedula.dirty || Cedula.touched)}"
+                     [pattern]='this.soloNumerosPattern'
+                     class="tamanioInputs form-control" maxlength="10"
+                     minlength="10" name="cedula" placeholder=""
+                     type="text">
+              <div *ngIf="Cedula.invalid && (Cedula.dirty || Cedula.touched)">
+                <div *ngIf="Cedula.errors.required">
+                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo
+                    requerido.</p>
+                </div>
+                <div *ngIf="Cedula.errors.minlength">
+                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                    Minimo 10 digitos.</p>
+                </div>
+                <div *ngIf="Cedula.errors.maxlength">
+                  <p class="alert alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
+                    Maximo 10 digitos.</p>
+                </div>
+                <div *ngIf="Cedula.errors.pattern">
+                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                    Utilice solo numeros. </p>
+
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="!banderaTipo" class="form-group col-lg-6">
+              <label>* RUC</label>
+              <input [disabled]="banderaEdicionDeshabilitada" #Ruc="ngModel" [(ngModel)]="this.EditarAgente.Id_Agente"
+                     [ngClass]="{'is-invalid': Ruc.invalid && (Ruc.dirty || Ruc.touched)}"
+                     [pattern]='this.soloNumerosPattern'
+                     class="tamanioInputs form-control" maxlength="13"
+                     minlength="13" name="ruc" placeholder="" type="text">
+              <div *ngIf="Ruc.invalid && (Ruc.dirty || Ruc.touched)">
+                <div *ngIf="Ruc.errors.required">
+                  <p class="alert alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
+                    Campo requerido.</p>
+                </div>
+                <div *ngIf="Ruc.errors.minlength">
+                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                    Minimo 13 digitos.</p>
+
+                </div>
+                <div *ngIf="Ruc.errors.maxlength">
+                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                    Maximo 13 digitos.</p>
+                </div>
+                <div *ngIf="Ruc.errors.pattern">
+                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                    Use solo numeros.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 form-group col-lg-6">
+              <label>* Celular / Convencional</label>
+              <input [disabled]="banderaEdicionDeshabilitada" #Telefono="ngModel"
+                     [(ngModel)]="this.EditarAgente.Telefono"
+                     [ngClass]="{'is-invalid': Telefono.invalid && (Telefono.dirty || Telefono.touched)}"
+                     [pattern]='this.soloNumerosPattern' class="tamanioInputs form-control" name="telefono"
+                     type="tel">
+              <div *ngIf="Telefono.invalid && (Telefono.dirty|| Telefono.touched) ">
+                <div *ngIf="Telefono.errors.required">
+                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                    Campo requerido.</p>
+                </div>
+
+                <div *ngIf="Telefono.errors.pattern">
+                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                    Utilice solo numeros.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>* Provincia</label>
+              <select [disabled]="banderaEdicionDeshabilitada" #Provincia="ngModel"
+                      (change)="getDpaCiudades($event.target.value)"
+                      [(ngModel)]="this.provincia"
+                      [ngClass]="{
           'errorSelect': Provincia.invalid && (Provincia.dirty || Provincia.touched)}"
-                    class=" tamanioInputs form-control  " data-size="4" name="provincia"
-            >
-              <option disabled *ngIf="!this.ciudades || banderaEdicionDeshabilitada">{{this.provincia}}</option>
-              <option *ngFor="let provincia of this.provincias"
-                      value="{{provincia.COD_DPA}}"> {{provincia.NOMBRE }}</option>
-            </select>
-            <div *ngIf="Provincia.invalid && (Provincia.touched||Provincia.dirty)">
-              <div *ngIf="Provincia.errors.required">
-                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Campo equerido</p>
+                      class=" tamanioInputs form-control  " data-size="4" name="provincia"
+              >
+                <option disabled *ngIf="!this.ciudades || banderaEdicionDeshabilitada">{{this.provincia}}</option>
+                <option *ngFor="let provincia of this.provincias"
+                        value="{{provincia.COD_DPA}}"> {{provincia.NOMBRE }}</option>
+              </select>
+              <div *ngIf="Provincia.invalid && (Provincia.touched||Provincia.dirty)">
+                <div *ngIf="Provincia.errors.required">
+                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                    Campo equerido</p>
+                </div>
+
               </div>
-
             </div>
-          </div>
 
-          <div class="form-group col-md-6">
-            <label>* Ciudad</label>
+            <div class="form-group col-md-6">
+              <label>* Ciudad</label>
 
-            <select [ngClass]="{'select_ciudad': select_ciudad}" (change)="seleccionarCiudad($event.target.value)"
-                    [disabled]="banderaEdicionDeshabilitada"
-                    #Ciudad="ngModel" [(ngModel)]="this.ciudad" [ngClass]="{
+              <select [ngClass]="{'select_ciudad': select_ciudad}" (change)="seleccionarCiudad($event.target.value)"
+                      [disabled]="banderaEdicionDeshabilitada"
+                      #Ciudad="ngModel" [(ngModel)]="this.ciudad" [ngClass]="{
           'errorSelect': Ciudad.invalid && (Ciudad.dirty || Ciudad.touched)}"
-                    class="tamanioInputs form-control" name="ciudad" placeholder=""
-            >
-              <option disabled *ngIf="!this.ciudades || banderaEdicionDeshabilitada">{{this.ciudad}}</option>
-              <option *ngFor="let ciudad of this.ciudades" value="{{ciudad.COD_DPA}} "> {{ciudad.NOMBRE }}</option>
-            </select>
-            <div *ngIf="Ciudad.invalid && (Ciudad.touched||Ciudad.dirty)">
-              <div *ngIf="Ciudad.errors.required">
-                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Campo requerido.</p>
+                      class="tamanioInputs form-control" name="ciudad" placeholder=""
+              >
+                <option disabled *ngIf="!this.ciudades || banderaEdicionDeshabilitada">{{this.ciudad}}</option>
+                <option *ngIf="!banderaEdicionDeshabilitada">Seleccione una</option>
+                <option *ngFor="let ciudad of this.ciudades" value="{{ciudad.COD_DPA}} "> {{ciudad.NOMBRE }}</option>
+              </select>
+              <div *ngIf="Ciudad.invalid && (Ciudad.touched||Ciudad.dirty)">
+                <div *ngIf="Ciudad.errors.required">
+                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                    Campo requerido.</p>
+                </div>
               </div>
             </div>
+
           </div>
 
-        </div>
-
-        <label>* Calle Principal</label>
-        <input [disabled]="banderaEdicionDeshabilitada" (keyup)="buscadorDirecciones()" #CallePrincipal="ngModel"
-               [(ngModel)]="this.EditarAgente.Calle_Principal_Agente"
-               [ngClass]="{
+          <label>* Calle Principal</label>
+          <input [disabled]="banderaEdicionDeshabilitada" (keyup)="buscadorDirecciones()" #CallePrincipal="ngModel"
+                 [(ngModel)]="this.EditarAgente.Calle_Principal_Agente"
+                 [ngClass]="{
           'errorSelect': CallePrincipal.invalid && (CallePrincipal.dirty || CallePrincipal.touched)}"
-               class="tamanioInputs form-control"
-               name="callePrincipal" placeholder="" id="CallePrincipal">
-        <div *ngIf="CallePrincipal.invalid && (CallePrincipal.touched||CallePrincipal.dirty)">
-          <div *ngIf="CallePrincipal.errors.required">
-            <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-              Campo requerido.</p>
+                 class="tamanioInputs form-control"
+                 name="callePrincipal" placeholder="" id="CallePrincipal">
+          <div *ngIf="CallePrincipal.invalid && (CallePrincipal.touched||CallePrincipal.dirty)">
+            <div *ngIf="CallePrincipal.errors.required">
+              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                Campo requerido.</p>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label>* Calle Secundaria</label>
-        <input [disabled]="banderaEdicionDeshabilitada" #CalleSecundaria="ngModel"
-               [(ngModel)]="this.EditarAgente.Calle_Secundaria_Agente"
-               [ngClass]="{
+        <div class="form-group">
+          <label>* Calle Secundaria</label>
+          <input [disabled]="banderaEdicionDeshabilitada" #CalleSecundaria="ngModel"
+                 [(ngModel)]="this.EditarAgente.Calle_Secundaria_Agente"
+                 [ngClass]="{
           'errorSelect': CalleSecundaria.invalid && (CalleSecundaria.dirty || CalleSecundaria.touched)
          }"
-               class="tamanioInputs form-control"
-               name="calleSecundaria" placeholder="" id="calleSecundaria">
-        <div *ngIf="CalleSecundaria.invalid && (CalleSecundaria.touched||CalleSecundaria.dirty)">
-          <div *ngIf="CalleSecundaria.errors.required">
-            <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-              Campo requerido.</p>
-          </div>
+                 class="tamanioInputs form-control"
+                 name="calleSecundaria" placeholder="" id="calleSecundaria">
+          <div *ngIf="CalleSecundaria.invalid && (CalleSecundaria.touched||CalleSecundaria.dirty)">
+            <div *ngIf="CalleSecundaria.errors.required">
+              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                Campo requerido.</p>
+            </div>
 
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="col-lg-6 form-group">
-          <label>Número de referencia</label>
-          <input [disabled]="banderaEdicionDeshabilitada" #NumCasaAgente="ngModel"
-                 [(ngModel)]="this.EditarAgente.Num_Casa_Agente" class="tamanioInputs form-control"
-                 name="numCasaAgente" placeholder="" type="text">
-          <div>
           </div>
         </div>
-        <div class=" col-lg-6 form-group">
-          <label>Codigo Postal</label>
-          <input [disabled]="banderaEdicionDeshabilitada" #CodigoPostal="ngModel"
-                 [(ngModel)]="this.EditarAgente.Num_Cod_Postal" class="tamanioInputs form-control"
-                 name="codigoPostal" type="text">
+        <div class="form-row">
+          <div class="col-lg-6 form-group">
+            <label>Número de referencia</label>
+            <input [disabled]="banderaEdicionDeshabilitada" #NumCasaAgente="ngModel"
+                   [(ngModel)]="this.EditarAgente.Num_Casa_Agente" class="tamanioInputs form-control"
+                   name="numCasaAgente" placeholder="" type="text">
+            <div>
+            </div>
+          </div>
+          <div class=" col-lg-6 form-group">
+            <label>Codigo Postal</label>
+            <input [disabled]="banderaEdicionDeshabilitada" #CodigoPostal="ngModel"
+                   [(ngModel)]="this.EditarAgente.Num_Cod_Postal" class="tamanioInputs form-control"
+                   name="codigoPostal" type="text">
 
+          </div>
         </div>
+      </form>
+    </div>
+  </article>
+
+  <form class="card card-body  col-md-12  mt-4">
+    <div class=" container">
+      <h6>Acciones</h6>
+      <hr>
+      <div class="text-right">
+        <button *ngIf="!banderaEdicionDeshabilitada"
+                (click)="actualizarAgente()" href="#" class="btn btn-primary text-nowrap mb-4  col-auto"
+                type="button">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+          Guardar &nbsp;&nbsp;
+          <span class="fa fa-save"></span>
+        </button>
+        &nbsp;&nbsp;
+        <button *ngIf="!banderaEdicionDeshabilitada" href="#" (click)="cancelarEdicion()"
+                class="btn btn-light text-nowrap mb-4  col-auto">
+          Cancelar &nbsp;&nbsp;
+          <span class="fa fa-close"></span></button>
+
+        &nbsp;&nbsp;
+        <button *ngIf="banderaEdicionDeshabilitada" (click)="habilitarEdicion()"
+                class="btn btn-warning text-nowrap mb-4  col-auto">
+          Modificar &nbsp;&nbsp;
+          <span class="fa fa-edit"></span></button>
+
+
       </div>
-    </form>
-  </div>
-</article>
-
-<form class="card card-body  col-md-12  mt-4">
-  <div class=" container">
-    <h6>Acciones</h6>
-    <hr>
-    <div class="text-right">
-      <button  *ngIf="!banderaEdicionDeshabilitada"
-              (click)="actualizarAgente()" href="#" class="btn btn-primary text-nowrap mb-4  col-auto"
-              type="button">
-        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
-        Guardar &nbsp;&nbsp;
-        <span class="fa fa-save"></span>
-      </button>
-      &nbsp;&nbsp;
-      <button *ngIf="!banderaEdicionDeshabilitada" href="#" (click)="cancelarEdicion()"
-              class="btn btn-light text-nowrap mb-4  col-auto">
-        Cancelar &nbsp;&nbsp;
-        <span class="fa fa-close"></span></button>
-
-      &nbsp;&nbsp;
-      <button *ngIf="banderaEdicionDeshabilitada" (click)="habilitarEdicion()"
-              class="btn btn-warning text-nowrap mb-4  col-auto">
-        Modificar &nbsp;&nbsp;
-        <span class="fa fa-edit"></span></button>
-
 
     </div>
-
-  </div>
-</form>
+  </form>
 </div>

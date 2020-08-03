@@ -19,10 +19,15 @@ import {InicioAdministracionComponent} from './inicio-administracion/inicio-admi
 import {ListadoProductosComponent} from './listado-productos/listado-productos.component';
 
 import { ModificarProductoComponent } from './modificar-producto/modificar-producto.component';
+import { CuponDescuentoComponent } from './cupon-descuento/cupon-descuento.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ListadoCuponDescuentoComponent } from './listado-cupon-descuento/listado-cupon-descuento.component';
+import { ModificarCuponDescuentoComponent } from './modificar-cupon-descuento/modificar-cupon-descuento.component';
+
 
 
 @NgModule({
-  declarations: [MenuGestionTiendasComponent, ProductosComponent, MetodosPagoComponent, GeneralTiendaComponent, SucursalesTiendaComponent, PersonalizacionTiendaComponent, MetodosEnvioComponent, InicioAdministracionComponent, ListadoProductosComponent, ModificarProductoComponent],
+  declarations: [MenuGestionTiendasComponent, ProductosComponent, MetodosPagoComponent, GeneralTiendaComponent, SucursalesTiendaComponent, PersonalizacionTiendaComponent, MetodosEnvioComponent, InicioAdministracionComponent, ListadoProductosComponent, ModificarProductoComponent, CuponDescuentoComponent, ListadoCuponDescuentoComponent, ModificarCuponDescuentoComponent],
 
   imports: [
     CommonModule,
@@ -32,6 +37,9 @@ import { ModificarProductoComponent } from './modificar-producto/modificar-produ
     FormsModule,
     GestionarTiendasRoutingModule,
     ColorPickerModule,
+    BsDatepickerModule,
+
+
 
 
   ]

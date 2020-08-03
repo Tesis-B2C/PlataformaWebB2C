@@ -8,6 +8,7 @@ import {CategoriasComponent} from './categorias/categorias.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import {FormsModule} from "@angular/forms";
 
+
 @NgModule({
   declarations: [PrincipalComponent, MenuComponent, CategoriasComponent],
   imports: [

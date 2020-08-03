@@ -15,12 +15,15 @@ import {CategoriaServicio} from "./servicios/categoria.servicio";
 import {ProductoServicio} from "./servicios/producto.servicio";
 import {MetodoPagoServicio} from "./servicios/metodo_pago.servicio";
 import {AdministradorTiendaModule} from "./administrador-tienda/administrador-tienda.module";
-import {GestionarTiendasModule} from "./administrador-tienda/gestionar-tiendas/gestionar-tiendas.module";
+/*import {GestionarTiendasModule} from "./administrador-tienda/gestionar-tiendas/gestionar-tiendas.module";*/
 import {FormsModule} from "@angular/forms";
 import {ArchwizardModule} from 'angular-archwizard';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
 import {MetodoEnvioServicio} from "./servicios/metodo_envio.servicio";
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import {DescuentoServicio} from "./servicios/descuento.servicio";
+
 
 @NgModule({
   declarations: [
@@ -33,15 +36,16 @@ import {MetodoEnvioServicio} from "./servicios/metodo_envio.servicio";
     PaginasModule,
     PrincipalesModule,
     AdministradorTiendaModule,
-    GestionarTiendasModule,
+
     NgbModule,
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule, // required animations module
     CarouselModule,
-    ToastrModule.forRoot({preventDuplicates: true})
+    ToastrModule.forRoot({preventDuplicates: true}),
+    BsDatepickerModule.forRoot()
   ],
-  providers: [DpaServicio, AgenteServicio, CategoriaServicio, UnidadMedidaServicio, ProductoServicio, MetodoPagoServicio, MetodoEnvioServicio, TiendaServicio],
+  providers: [DescuentoServicio, DpaServicio, AgenteServicio, CategoriaServicio, UnidadMedidaServicio, ProductoServicio, MetodoPagoServicio, MetodoEnvioServicio, TiendaServicio],
   bootstrap: [AppComponent]
 })
 export class AppModule {

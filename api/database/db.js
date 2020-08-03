@@ -2,10 +2,10 @@
 const Sequelize = require("sequelize");
 const db = {}
 
-//const sequelize = new Sequelize("basetesis", "root", "", {
-const sequelize = new Sequelize("basetesis", "root", "12345678", {
-    //host: '192.168.65.128',
-    host: '192.168.245.129',
+const sequelize = new Sequelize("basetesis", "root", "", {
+//const sequelize = new Sequelize("basetesis", "root", "12345678", {
+    host: '192.168.65.128',
+  //  host: '192.168.245.129',
     dialect: "mysql",
     operatorsAliase: false,
     define:

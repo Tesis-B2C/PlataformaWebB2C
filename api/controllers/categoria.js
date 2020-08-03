@@ -8,14 +8,14 @@ async function getCategorias(req, res) {
     try {
         let categoriasObtenidas = await Categoria.findAll({order:[['ID_CATEGORIA','ASC']]});//{include:[{model:Categoria,as: 'CAT',require:true}],
 
-        if (categoriasObtenidas.length) {
+        if (categoriasObtenidas.length>0) {
             res.status(200).send({
                 data: categoriasObtenidas,
-                message: "Categoria cargado correctamente"
+                message: "Categorias cargadas correctamente"
             });
         } else {
             res.status(404).send({
-                message: 'No existe categoria registrada en la base de datos'
+                message: 'No existen categorias registradas en la base de datos'
             });
         }
     } catch (err) {

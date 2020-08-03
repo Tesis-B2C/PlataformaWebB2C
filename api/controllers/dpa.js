@@ -9,7 +9,7 @@ async function getDpaProvincias(req, res) {
     try {
         let provinciasObtenidas = await DPA.findAll({where: {TIPO: req.params.id},order:[['NOMBRE','ASC']]});
 
-        if (provinciasObtenidas.length) {
+        if (provinciasObtenidas.length>0) {
             res.status(200).send({
                 data: provinciasObtenidas,
                 message: "Dpa cargado correctamente"

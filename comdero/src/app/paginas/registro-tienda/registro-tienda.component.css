@@ -377,3 +377,20 @@ body {
   height: 100vh !important;
   overflow: auto;
 }
+
+
+.bacground-info{
+  background-image: url("../../../assets/images/fondo-tienda-informacion.png");
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  -o-background-size: 100% 100%;
+  background-size: 100% 100%;
+  min-height: 150px !important;
+  max-height: 150px;
+  width: 100% ;
+  text-align: center;
+  background-color: white;
+  background-repeat: no-repeat;
+  background-position: center;
+
+}

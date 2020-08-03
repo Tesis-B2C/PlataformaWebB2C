@@ -1,0 +1,105 @@
+.posicion-logo {
+  margin-top: -100px;
+}
+
+
+.colorNavbar {
+  background-color: #2a4c75;
+
+}
+
+.colorNavbar2 {
+  background: -webkit-repeating-linear-gradient(right, #2a4c75, #ff6500, #2a4c75, #ff6500);
+
+}
+
+.nav-link {
+  color: white;
+  border-right: 0.1px solid rgba(244, 246, 246, 0.2);
+  font-size: small;
+}
+
+.active {
+  color: white;
+  background-color: rgba(244, 246, 246, 0.2);
+
+}
+
+.nav-link:hover {
+  color: white;
+  background-color: rgba(244, 246, 246, 0.2);
+}
+
+.alto-banner {
+  height: 500px;
+}
+
+.alto-logo {
+  border: rgba(244, 246, 246, 0.8) 4px solid;
+  height: 180px;
+  width: 180px;
+}
+.dropdown-menu{
+  max-height: 25vw;
+  overflow: auto;
+}
+
+
+@media (max-width: 720px) {
+  .alto-banner {
+    height: 300px;
+  }
+
+  .alto-logo {
+    border: rgba(244, 246, 246, 0.8) 4px solid;
+    height: 160px;
+    width: 160px;
+  }
+  .posicion-logo {
+    margin-top: -70px;
+  }
+  .dropdown-menu{
+    max-height: 100vw;
+    overflow: auto;
+  }
+
+}
+
+i{
+  color:#017bff ;
+}
+
+.active-icon {
+  background-color: #017bff;
+  font-weight: bold;
+
+
+}
+.active-icon i  {
+
+  color: white;
+
+}
+
+.link{
+  color: #495057;
+
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb {
+  background-color: #2a4c75;
+  border-radius: 50px;
+}
+
+.dropdown-menu::-webkit-scrollbar {
+  width:6px;
+  height: 6px;
+
+}
+.dropdown-menu::-webkit-scrollbar-track {
+  background-color: rgba(35, 35, 35, 0.1);
+}
+.dropdown-menu::-webkit-scrollbar-thumb {
+  background-color: #2a4c75;
+  border-radius: 50px;
+}

@@ -1,0 +1,198 @@
+<body id="body">
+
+<div class="mt-5 " [ngClass]="{'container':misDescuentos.length==0, 'container-fluid':misDescuentos.length>0}">
+
+  <div class="row  justify-content-center" id="top">
+    <h4 class=" col-11  ">Cupones de Descuento</h4>
+    <hr class="col-11  ">
+  </div>
+
+  <div *ngIf="misDescuentos.length==0" class="row justify-content-center   ">
+    <div class=" col-md-9  ml-md-5 ">
+      <div class=" container  bg-white  shadow ">
+        <br><br><br>
+        <div class="mx-auto">
+          <p class=" iconos-pagos "><span class="  fas fa-tags fa-5x" style="color: #2a4c75"></span> &nbsp;<label
+            style="font-size: large">Descuentos</label></p>
+
+        </div>
+        <br><br>
+        <div class="mx-auto">
+          <h5 class="text-center">Gestiona tus descuentos</h5>
+          <br>
+          <div class=" mx-md-5  mx-auto">
+            <p class="text-center mx-md-5">Aquí es donde agregarás descuentos y los gestionarás. También puedes
+              importar y exportar tus cupones de descuentos</p>
+          </div>
+        </div>
+
+        <br> <br>
+        <div class="mx-auto text-center">
+          <button class="btn btn-primary  px-5" style="font-size: small" routerLink="../cupon-descuento"> Crear
+            descuento
+          </button>
+          <br> <br>
+        </div>
+        <br>
+      </div>
+    </div>
+
+
+    <div class=" col-md-2   mt-5 mt-md-0   jackInTheBox   animated px-0 ">
+      <div class="container card  card-body  shadow  ">
+        <h5>Empecemos!</h5>
+        <hr class="mb-0">
+        <br>
+        <p class=" iconos-pagos ">
+          <img class="mx-auto  pt-md-4  mensaje-mascota " src="../../../assets/images/mascota-condero.png" width="100%">
+        </p>
+        <br><br><br>
+        <button class="btn btn-primary" style="font-size: small" routerLink="../cupon-descuento"> Crear descuento
+        </button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="misDescuentos.length>0 " class="container-fluid mx-auto px-md-5 ">
+
+
+    <div class="form-row mb-2  ">
+      <div class=" input-group col-md-6 mr-md-auto">
+        <input class="form-control" style="font-size: small" type="text" #Busquedaasd="ngModel"
+               [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="filtrar()"/>
+
+        <div class="input-group-append">
+          <span class="input-group-text  small"><li class="fas fa-search"></li></span>
+        </div>
+        &nbsp; &nbsp; &nbsp;
+        <div *ngIf="loading">
+          <label>Buscando...</label>
+          &nbsp; &nbsp; &nbsp;
+          <div class="spinner-grow text-primary ml-auto" role="status" aria-hidden="true"></div>
+        </div>
+      </div>
+      <div class="col-md-auto ">
+        <button class="btn btn-primary w-100 mt-md-0 mt-2" style="font-size:small" routerLink="../cupon-descuento">Nuevo
+          Descuento
+        </button>
+      </div>
+    </div>
+
+
+    <div class="btn-group mb-2 animated  "
+         [ngClass]="{'fadeOut':vectorDescuentos.size==0,'fadeIn':vectorDescuentos.size>0 }"
+         *ngIf="vectorDescuentos.size>0">
+      <button class="btn btn-primary mr-1 "  style="font-size: small; font-weight: normal">
+        Seleccionados &nbsp;<span class="badge badge-light">{{vectorDescuentos.size}}</span>
+      </button>
+      <button (click)="cambiarEstadoDescuentos(0)" placement="top" ngbTooltip="Mostrar"
+              class="btn btn-secondary  mt-md-0 mt-1" style="font-size: x-small">
+        <span class="fa fa-check"></span>
+      </button>
+
+      <button (click)="cambiarEstadoDescuentos(1)" placement="top" ngbTooltip="Ocultar"
+              class="btn btn-dark   mt-md-0 mt-1"
+              style="font-size: x-small"
+      ><span class="fa fa-ban"></span></button>
+
+      <button (click)="cambiarEstadoDescuentos(2)" placement="top" ngbTooltip="Borrar"
+              class="btn btn-danger   mt-md-0 mt-1"
+              style="font-size: x-small"
+      ><span class="fa fa-trash"></span></button>
+
+
+    </div>
+    <table class="table table-bordered table-responsive-sm bg-white small w-100 text-center">
+      <thead>
+      <tr>
+        <th scope="col"><input (click)="agregarTodosDesuentos($event)" id="rastrearCantidad" type="checkbox"></th>
+        <th scope="col">MOTIVO O CÓDIGO DE DESCUENTO</th>
+        <th scope="col">FECHA INICIO</th>
+        <th scope="col">FECHA FIN</th>
+        <th scope="col">HORA INICIO</th>
+        <th scope="col">HORA FIN</th>
+        <th scope="col">TIPO</th>
+        <th scope="col">ESTADO</th>
+        <th scope="col">ACCIÓN</th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr [ngClass]="{'bg-gray':descuento.ESTADO_DESCUENTO==1}"
+          *ngFor="let descuento of   this.result  |slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+        <th scope="row"><input (click)="agregarDescuento($event,descuento.ID_DESCUENTO )" type="checkbox"
+                               [checked]="vectorDescuentos.has(descuento.ID_DESCUENTO)"></th>
+        <td>
+          {{descuento.MOTIVO_DESCUENTO}}
+        </td>
+        <td>
+          {{descuento.FECHA_INICIO  }}
+        </td>
+        <td>
+          {{descuento.FECHA_FIN}}
+        </td>
+        <td>
+          {{descuento.HORA_INICIO}}
+        </td>
+        <td>
+          {{descuento.HORA_FIN}}
+        </td>
+        <td>
+          {{descuento.TIPO_DESCUENTO}}
+        </td>
+        <td *ngIf="descuento.ESTADO_FECHA=='Programado'">
+          <span class="badge badge-pill badge-secondary"
+                style="font-size: x-small; font-weight: normal">{{descuento.ESTADO_FECHA}}</span>
+        </td>
+        <td *ngIf="descuento.ESTADO_FECHA=='Activo'">
+          <span class="badge badge-pill badge-primary"
+                style="font-size: x-small; font-weight: normal">{{descuento.ESTADO_FECHA}}</span>
+        </td>
+        <td *ngIf="descuento.ESTADO_FECHA=='Vencido'">
+          <span class="badge badge-pill badge-warning "
+                style="font-size: x-small; font-weight: normal">{{descuento.ESTADO_FECHA}}</span>
+        </td>
+        <td *ngIf="descuento.ESTADO_FECHA=='Desactivado'">
+          <span class="badge badge-pill badge-danger "
+                style="font-size: x-small; font-weight: normal">{{descuento.ESTADO_FECHA}}</span>
+        </td>
+
+        <td>
+          <div class="btn-group">
+            <button (click)="cambiarEstadoDescuento(descuento.ID_DESCUENTO,0)" placement="top" ngbTooltip="Activar"
+                    *ngIf="descuento.ESTADO_DESCUENTO==1"
+                    class="btn btn-secondary  mt-md-0 mt-1" style="font-size: x-small">
+              <span class="fa fa-check"></span>
+            </button>
+
+            <button placement="top" ngbTooltip="Desactivar" *ngIf="descuento.ESTADO_DESCUENTO==0"
+                    (click)="cambiarEstadoDescuento(descuento.ID_DESCUENTO,1)" class="btn btn-secondary  mt-md-0 mt-1"
+                    style="font-size: x-small"
+            ><span class="fa fa-ban"></span></button>
+
+            <button (click)="cambiarEstadoDescuento(descuento.ID_DESCUENTO,2)" placement="top" ngbTooltip="Borrar"
+                    class="btn btn-danger   mt-md-0 mt-1"
+                    style="font-size: x-small"
+            ><span class="fa fa-trash"></span></button>
+
+            <button placement="top" ngbTooltip="Editar" *ngIf="descuento.ESTADO_DESCUENTO==0"
+                    class="btn btn-primary mt-md-0 mt-1" style="font-size: x-small"
+                    [routerLink]="['../modificar-cupon-descuento/', descuento.ID_DESCUENTO ]"><span
+              class="fa fa-edit"></span></button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between p-2">
+      <ngb-pagination
+        [(page)]="page"
+        [pageSize]="pageSize"
+        [collectionSize]="this.result.length "></ngb-pagination>
+    </div>
+
+
+  </div>
+</div>
+<br><br>
+</body>

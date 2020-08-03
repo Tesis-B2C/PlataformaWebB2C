@@ -1,0 +1,177 @@
+<section>
+  <h5 class="font-weight-bold text-lg-left text-center py-3 px-5">Información <span
+    class="fa fa-info-circle"></span></h5>
+  <hr>
+
+  <div class="row justify-content-center ">
+    <div class=" col-12">
+      <div class="card shadow-lg  bg-white text-white">
+        <img class="card-img" src="assets/images/fondo-info-valid2.png" height="600px" alt="Card image">
+        <div class="card-img-overlay">
+          <h3 class="card-title black text-center">¿ Quienes somos ?</h3>
+          <div class="card-body">
+
+            <p class="lead black text-center "> {{this.Tienda?.DESCRIPCION_TIENDA}}</p>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <br><br><br>
+
+
+  <div class="row justify-content-center "
+       *ngIf="this.objTransferencia.Tipo_Pago!=null || this.objEfectivo.Tipo_Pago!=null || this.objElectronico.Tipo_Pago!=null">
+    <div class=" col-12 ">
+      <div class="card shadow-lg text-white color-fondo ">
+        <br><br><br>
+        <img class="mx-auto pt-5 pt-md-0 banner-pago" src="assets/images/banner-pagos.png" width="100%"
+             alt="Card image">
+        <div class="card-img-overlay ">
+          <h3 class="card-title black text-center ">¿ Problemas al pagar tus compras ?</h3>
+          <div class="card-body">
+
+            <p class=" lead black text-center ">Olvidate de ello, nosotros contamos con varios métodos de pago para
+              facilitar la compra de tus productos </p>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <br><br><br>
+  <div class="social-box"
+       *ngIf="this.objTransferencia.Tipo_Pago!=null || this.objEfectivo.Tipo_Pago!=null || this.objElectronico.Tipo_Pago!=null">
+    <div class="container">
+      <div class="row">
+
+
+        <div class="col-lg-4 col-xs-12  text-center" *ngIf="this.objEfectivo.Tipo_Pago!=null">
+          <div class="box">
+
+            <div class="box-title mb-2">
+              <h3>Efectivo</h3>
+            </div>
+            <p class=" iconos-pagos "><img src="assets/images/icon-efectivo.png"
+                                           alt="..."></p>
+            <div class="box-text">
+              <span>Usted puede pagar con efectivo en nuestra tienda, realiza la compra en la plataforma y puedes pagarlo al momento de la entrega.
+           </span>
+            </div>
+            <div class="box-btn text-primary">
+              <a>Porcentaje de descuento:   {{objEfectivo.Descuento}}%</a>
+            </div>
+
+
+          </div>
+        </div>
+        <div class="col-lg-4 col-xs-12  text-center" *ngIf="this.objTransferencia.Tipo_Pago!=null">
+          <div class="box">
+
+            <div class="box-title mb-2">
+              <h3>Transferencia bancaria</h3>
+            </div>
+            <p class=" iconos-pagos "><img src="assets/images/icon-transferencia.png"
+                                           alt="..."></p>
+            <div class="box-text">
+              <span>Usted puede pagar con transferencia bancaria luego de realizar la compra en la
+                plataforma.
+           </span>
+              <hr>
+              <div class="row justify-content-center mx-auto">
+
+                <p class="card-text col-5 ">Banco:</p>
+                <p class="col-6 ">{{this.objTransferencia.Banco_Pertenece}}</p>
+                <p class="card-text col-5 ">Tipo:</p>
+                <p class="col-6 ">{{this.objTransferencia.Tipo_Cuenta}}</p>
+                <p class="card-text col-5  ">#Cuenta:</p>
+                <p class="col-6 ">{{this.objTransferencia.Numero_cuenta}}</p>
+
+              </div>
+            </div>
+            <div class="box-btn text-primary">
+              <a>Porcentaje de descuento:  {{objTransferencia.Descuento}}%</a>
+            </div>
+
+
+          </div>
+        </div>
+        <div class="col-lg-4 col-xs-12  text-center" *ngIf="this.objElectronico.Tipo_Pago!=null">
+          <div class="box">
+
+            <div class="box-title mb-2">
+              <h3>Electrónico</h3>
+            </div>
+            <p class=" iconos-pagos "><img src="assets/images/icon-electronico.png"
+                                           alt="..."></p>
+            <div class="box-text">
+              <span>Usted puede pagar todas sus compras a traves de la plataforma Paypal de manera rápida y segura.
+           </span>
+            </div>
+            <div class="box-btn text-primary">
+              <a>Porcentaje de descuento:  {{objElectronico.Recargo}}%</a>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center ">
+    <div class=" col-12 ">
+      <div class="card shadow-lg text-white bg-white ">
+        <br><br><br>
+        <img class="mx-auto  pt-md-0  banner-envio py-5" src="assets/images/banner-envios.png" width="80%"
+             alt="Card image">
+        <div class="card-img-overlay ">
+          <h3 class="card-title black text-center ">Opciones de envío</h3>
+          <div class="card-body">
+
+            <p class=" lead black text-center ">Contamos con algunas opciones para facilitar la entrega de
+              nuestros productos</p>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+  <br><br><br>
+  <div class="social-box"
+       *ngIf="this.objTransferencia.Tipo_Pago!=null || this.objEfectivo.Tipo_Pago!=null || this.objElectronico.Tipo_Pago!=null">
+    <div class="container">
+      <div class="row justify-content-center">
+
+        <div class="card col-4" *ngFor="let envio of this.Tienda.OPCION_ENVIOs" >
+          <div class="card-body" *ngIf="envio.TIPO_ENVIO=='Domicilio'">
+            <h5 class="card-title">Entrega a {{envio.TIPO_ENVIO}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted" *ngIf="envio.TIPO_UBICACION=='Resto'">Otras provincias <i class="fas fa-map-marker-alt"></i></h6>
+            <h6 class="card-subtitle mb-2 text-muted" *ngIf="envio.TIPO_UBICACION!='Resto'">{{envio.TIPO_UBICACION}}   <i class="fas fa-map-marker-alt"></i></h6>
+            <p class="card-text "  >{{envio.TIPO_MEDIDA}}   Mínimo del pedido: {{envio.MINIMO}}<a *ngIf="envio.TIPO_MEDIDA=='Peso'">Kg</a> <a   *ngIf="envio.TIPO_MEDIDA=='Precio'">$</a>  </p>
+            <p>{{envio.TIPO_MEDIDA}} Máximo: {{envio.MAXIMO}}<a *ngIf="envio.TIPO_MEDIDA=='Peso'">Kg</a> <a   *ngIf="envio.TIPO_MEDIDA=='Precio'">$</a></p>
+            <p style="font-weight: bold" class="text-primary">Costo de envío: <a *ngIf="envio.PRECIO!=0"> {{envio.PRECIO}}$</a> <span *ngIf="envio.PRECIO==0" class="badge badge-pill badge-primary">Gratis</span> </p>
+            <p *ngIf="envio.INSTRUCCION_RETIRO">Instrucciones de envío {{envio.INSTRUCCION_RETIRO}} </p>
+
+          </div>
+
+          <div class="card-body" *ngIf="envio.TIPO_ENVIO=='Retiro'">
+            <h5 class="card-title"> {{envio.TIPO_ENVIO}} en el local</h5>
+            <p *ngIf="envio.INSTRUCCION_RETIRO">Instrucciones de envío:  {{envio.INSTRUCCION_RETIRO}} </p>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

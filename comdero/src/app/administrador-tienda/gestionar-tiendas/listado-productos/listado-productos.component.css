@@ -14,9 +14,15 @@ body {
   margin:0px auto;
   padding:5%
 }
+
 .bg-gray{
-  background-color: lightgray;
+  background-color: #F0F0F0;
 }
 
+button{
+  font-size: small;
+}
 
-
+tr:hover{
+  background-color: #F0F0F0;
+}

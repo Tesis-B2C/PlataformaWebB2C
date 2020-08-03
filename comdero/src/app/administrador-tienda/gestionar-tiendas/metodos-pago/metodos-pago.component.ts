@@ -67,11 +67,10 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
   }
 
   iniciarEdicion() {
-    debugger;
 
     this.cancelar();
 
-    if (this.identidadTienda.METODO_PAGOs.length) {
+    if (this.identidadTienda.METODO_PAGOs.length>0) {
       for (let mp of this.identidadTienda.METODO_PAGOs) {
         if (mp.TIPO_PAGO == 'Efectivo') {
           this.Metodo_Pago_Efectivo.Porcentaje_Descuento = mp.PORCENTAJE_DESCUENTO;
