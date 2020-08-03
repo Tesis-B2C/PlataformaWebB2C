@@ -8,7 +8,8 @@ import { EncabezadoTiendaComponent } from './encabezado-tienda/encabezado-tienda
 import { EncuentranosTiendaComponent } from './encuentranos-tienda/encuentranos-tienda.component';
 import { InformacionTiendaComponent } from './informacion-tienda/informacion-tienda.component';
 import { TerminosTiendaComponent } from './terminos-tienda/terminos-tienda.component';
-
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -16,6 +17,8 @@ import { TerminosTiendaComponent } from './terminos-tienda/terminos-tienda.compo
   imports: [
     CommonModule,
     DetalleTiendaRoutingModule,
+    NgbModule,
+    FormsModule
 
   ]
 })

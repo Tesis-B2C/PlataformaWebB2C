@@ -19,6 +19,9 @@ const IMAGEN_PRODUCTO = require("../models/imagen_producto");
 const PRODUCTO_CATEGORIA = require("../models/producto_categoria");
 const CATEGORIA = require("../models/categoria");
 
+const CALIFICACION = require("../models/calificacion");
+const COMENTARIO = require("../models/comentario");
+
 const {Op} = require("sequelize");
 
 /*const {QueryTypes} = require('sequelize');*/
@@ -616,7 +619,18 @@ async function getDetalleTiendaProducto(req, res) {
                             group: 'NUM_VARIANTE',
                             order: [['ID_IMAGEN', 'ASC']]
                         }
-                    }]
+                    },
+                        {
+                            model: CALIFICACION,
+                            separate: true,
+                            attributes: ['ID_PRODUCTO', [CALIFICACION.sequelize.fn('AVG', CALIFICACION.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
+                            group: ['ID_PRODUCTO']
+                        }, {
+                            model: COMENTARIO,
+                            separate: true,
+                            attributes: ['ID_PRODUCTO', [COMENTARIO.sequelize.fn('COUNT', COMENTARIO.sequelize.col('ID_COMENTARIO')), 'TOTAL_COM']],
+                            group: ['ID_PRODUCTO']
+                        }]
                 }],
                 order: [[SUCURSAL, 'NUM_SUCURSAL', 'ASC']]
             }]

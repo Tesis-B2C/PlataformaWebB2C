@@ -173,8 +173,10 @@ export class EncabezadoTiendaComponent implements OnInit {
 
 
   transformarHora(hora) {
-    let response = hora.split(":");
-    return response[0] + ":" + response[1];
+    if(hora) {
+      let response = hora.split(":");
+      return response[0] + ":" + response[1];
+    }
   }
 
   obtenerMinutos(hora) {

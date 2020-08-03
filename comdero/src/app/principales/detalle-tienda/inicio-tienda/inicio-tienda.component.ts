@@ -1,24 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TiendaServicio} from "../../../servicios/tienda.servicio";
 import {ActivatedRoute, Router} from "@angular/router";
 import Swal from "sweetalert2";
+import {NgbRatingConfig} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-inicio-tienda',
   templateUrl: './inicio-tienda.component.html',
-  styleUrls: ['./inicio-tienda.component.css']
+  styleUrls: ['./inicio-tienda.component.css'],
+  providers: [NgbRatingConfig]
 })
 export class InicioTiendaComponent implements OnInit {
   public idTienda;
   public Tienda: any;
-  constructor(private _tiendaServicio: TiendaServicio, private route: ActivatedRoute,private router: Router) { }
+  currentRate = 1;
 
-  ngOnInit() {
-    this.getDetalleTiendaProducto();
+  public page = 1;
+  public pageSize = 10;
+  public result = [];
+
+  public loading:boolean=false;
+  public busqueda;
+  constructor( configRating: NgbRatingConfig,private _tiendaServicio: TiendaServicio, private route: ActivatedRoute, private router: Router) {
+    configRating.max = 5;
+    configRating.readonly = true;
+    // customize default values of carousels used by this component tree
+
   }
+
+  async ngOnInit() {
+    this.loading=true;
+   await  this.getDetalleTiendaProducto();
+   this.result=this.Tienda.OFERTA;
+   this.loading=false;
+  }
+
   async getDetalleTiendaProducto() {
     try {
-      this.idTienda =  this.route.parent.snapshot.params.id;
+      this.idTienda = this.route.parent.snapshot.params.id;
       let response = await this._tiendaServicio.getDetalleTiendaProducto(this.idTienda).toPromise();
       this.Tienda = response.data;
       console.log("tienda buscada en inicio pilas", this.Tienda);
@@ -30,6 +49,33 @@ export class InicioTiendaComponent implements OnInit {
     }
 
 
+  }
+ public noExiste;
+
+  getImagen(pathImagen) {
+    this.noExiste = 'assets/images/no-image.png';
+    if (pathImagen) {
+      this.noExiste = 'http://localhost:3977/' + pathImagen;
+    }
+    return this.noExiste;
+  }
+
+
+  public async filtrar() {
+    this.loading=true;
+    this.result = await this.search(this.busqueda);
+    //this.loading=false;
+
+  }
+
+  public search(text: string): any[] {
+    return this.Tienda.OFERTA.filter(producto => {
+      const term = text.toLowerCase();
+      debugger
+
+      return producto.PRODUCTO.NOMBRE_PRODUCTO.toLowerCase().includes(term)  // || siguiente
+
+    });
   }
 
   mensageError(mensaje) {
