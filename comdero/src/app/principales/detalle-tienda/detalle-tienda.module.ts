@@ -7,11 +7,12 @@ import { InicioTiendaComponent } from './inicio-tienda/inicio-tienda.component';
 import { EncabezadoTiendaComponent } from './encabezado-tienda/encabezado-tienda.component';
 import { EncuentranosTiendaComponent } from './encuentranos-tienda/encuentranos-tienda.component';
 import { InformacionTiendaComponent } from './informacion-tienda/informacion-tienda.component';
+import { TerminosTiendaComponent } from './terminos-tienda/terminos-tienda.component';
 
 
 
 @NgModule({
-  declarations: [InicioTiendaComponent, EncabezadoTiendaComponent, EncuentranosTiendaComponent, InformacionTiendaComponent],
+  declarations: [InicioTiendaComponent, EncabezadoTiendaComponent, EncuentranosTiendaComponent, InformacionTiendaComponent, TerminosTiendaComponent],
   imports: [
     CommonModule,
     DetalleTiendaRoutingModule,

@@ -6,6 +6,7 @@ import {InicioTiendaComponent} from "./inicio-tienda/inicio-tienda.component";
 import {EncabezadoTiendaComponent} from "./encabezado-tienda/encabezado-tienda.component";
 import {EncuentranosTiendaComponent} from "./encuentranos-tienda/encuentranos-tienda.component";
 import {InformacionTiendaComponent} from "./informacion-tienda/informacion-tienda.component";
+import {TerminosTiendaComponent} from "./terminos-tienda/terminos-tienda.component";
 
 
 
@@ -16,6 +17,7 @@ const routes: Routes = [
       {path: 'inicio-tienda', component: InicioTiendaComponent},
       {path: 'encuentranos-tienda', component: EncuentranosTiendaComponent},
       {path: 'informacion-tienda', component: InformacionTiendaComponent},
+      {path: 'terminos-y-condiciones-tienda', component: TerminosTiendaComponent},
 
     ]
   }];
