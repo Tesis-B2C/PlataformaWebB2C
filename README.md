@@ -67,3 +67,9 @@ https://www.npmjs.com/package/uuid
 ------------PARA EL SLIDER CAROUSEL PRODUCTOS
 npm i ngx-owl-carousel-o@2.1.1 --save
 https://www.npmjs.com/package/ngx-owl-carousel-o#plugins
+
+--------------- para el calendario 
+debe estar instalado ngx-bootstrap 
+agregar en el style p[rincipal
+@import "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css";]
+https://valor-software.com/ngx-bootstrap/#/datepicker
