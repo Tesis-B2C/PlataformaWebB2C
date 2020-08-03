@@ -25,7 +25,7 @@
             </div>
 
             <input id="typeahead-format" type="text" class="form-control" (keyup)="buscarDatos()"
-                   [(ngModel)]="this.palabraBuscadora" />
+                   [(ngModel)]="this.palabraBuscadora" [ngbTypeahead]="buscarDatosTerm"/>
 
             <div class="input-group-append">
               <button class="btn btnTodos" type="submit">

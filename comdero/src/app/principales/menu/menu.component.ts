@@ -56,6 +56,14 @@ export class MenuComponent implements OnInit {
       this.datosObtenidos = response.data;
       console.log('hola' + JSON.stringify(this.datosObtenidos));
 
+      this.datosObtenidos[0].forEach(elemnt => {
+        this.objetoDatos.push(elemnt.NOMBRE_COMERCIAL);
+      })
+
+      this.datosObtenidos[1].forEach(elemnt => {
+         this.objetoDatos.push(elemnt.NOMBRE_PRODUCTO);
+      })
+
       console.log('OBJETO CON TODOS LOS NOMBRES A MOSTRARTODOS' + JSON.stringify(this.objetoDatos));
     }
   }
