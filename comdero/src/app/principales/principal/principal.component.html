@@ -135,7 +135,7 @@
 
       <owl-carousel-o [options]="opcionesCarrouselFilaUno" #carrouselFilaUno>
         <ng-container *ngFor="let producto of vectorProductosObtenidos;index as i">
-          <ng-template carouselSlide id="slider+{{i}}">
+          <ng-template dataHash="one" carouselSlide id="slider+{{i}}">
             <div class="card card-product-grid mx-2">
               <a class="img-wrap"><img [src]="getImagen(producto.PRODUCTO.VARIANTEs[0].IMAGEN_PRODUCTOs[0].IMAGEN)"></a>
               <figcaption class="info-wrap">
@@ -450,47 +450,30 @@
 <section class="section-name bg padding-y-sm">
   <div class="container">
     <header class="section-heading">
-      <h3 class="section-title">Our Brands</h3>
+      <h3 class="section-title">Tiendas asociadas</h3>
     </header><!-- sect-heading -->
 
-    <div class="row">
-      <div class="col-md-2 col-6">
-        <figure class="box item-logo">
-          <a href="#"><img src="images/logos/logo1.png"></a>
-          <figcaption class="border-top pt-2">36 Products</figcaption>
-        </figure> <!-- item-logo.// -->
-      </div> <!-- col.// -->
-      <div class="col-md-2  col-6">
-        <figure class="box item-logo">
-          <a href="#"><img src="images/logos/logo2.png"></a>
-          <figcaption class="border-top pt-2">980 Products</figcaption>
-        </figure> <!-- item-logo.// -->
-      </div> <!-- col.// -->
-      <div class="col-md-2  col-6">
-        <figure class="box item-logo">
-          <a href="#"><img src="images/logos/logo3.png"></a>
-          <figcaption class="border-top pt-2">25 Products</figcaption>
-        </figure> <!-- item-logo.// -->
-      </div> <!-- col.// -->
-      <div class="col-md-2  col-6">
-        <figure class="box item-logo">
-          <a href="#"><img src="images/logos/logo4.png"></a>
-          <figcaption class="border-top pt-2">72 Products</figcaption>
-        </figure> <!-- item-logo.// -->
-      </div> <!-- col.// -->
-      <div class="col-md-2  col-6">
-        <figure class="box item-logo">
-          <a href="#"><img src="images/logos/logo5.png"></a>
-          <figcaption class="border-top pt-2">41 Products</figcaption>
-        </figure> <!-- item-logo.// -->
-      </div> <!-- col.// -->
-      <div class="col-md-2  col-6">
-        <figure class="box item-logo">
-          <a href="#"><img src="images/logos/logo2.png"></a>
-          <figcaption class="border-top pt-2">12 Products</figcaption>
-        </figure> <!-- item-logo.// -->
-      </div> <!-- col.// -->
-    </div> <!-- row.// -->
+    <div style="position: relative">
+      <button (click)="carrouselTiendas.prev()" style="display: block;" class="btn-atras-carrousel"><i
+        class='fa fa-chevron-left'></i></button>
+
+      <owl-carousel-o [options]="opcionesCarrouselTienda" #carrouselTiendas>
+        <ng-container *ngFor="let tienda of vectorTiendasObtenidas;index as i">
+          <ng-template carouselSlide id="sliderTiendas+{{i}}">
+
+            <figure class=" item-logo ">
+              <a routerLink="../detalle-tienda/tienda/{{tienda.NUM_TIENDA}}/inicio-tienda"><img
+                [src]="getImagen(tienda.LOGO) " style="width: 10rem; min-height: 10rem"></a>
+            </figure> <!-- item-logo.// -->
+
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
+      <button (click)="carrouselTiendas.next()" style="display: block;" class="btn-adelante-carrousel"><i
+        class='fa fa-chevron-right'></i></button>
+    </div>
+
+
   </div><!-- container // -->
 </section>
 <!-- ========================= SECTION  END// ========================= -->

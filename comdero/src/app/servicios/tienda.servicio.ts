@@ -110,4 +110,9 @@ export class TiendaServicio {
     let headers = new HttpHeaders({"Content-type": "application/json"});
     return this._http.get<objeto>(this.url + "getDetalleTiendaProducto/" + Id_Tienda, {headers: headers});
   }
+
+  obtenerTodasTiendas() {
+    let headers = new HttpHeaders({"Content-type": "application/json"});
+    return this._http.get<objeto>(this.url + "obtenerTodasTiendas", {headers: headers});
+  }
 }

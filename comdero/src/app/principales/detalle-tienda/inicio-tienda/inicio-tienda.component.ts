@@ -64,7 +64,7 @@ export class InicioTiendaComponent implements OnInit {
   public async filtrar() {
     this.loading=true;
     this.result = await this.search(this.busqueda);
-    //this.loading=false;
+    this.loading=false;
 
   }
 

@@ -596,17 +596,17 @@ async function getDetalleTiendaProducto(req, res) {
     try {
         let tiendaObtenida = await TIENDA.findOne({
             where: {NUM_TIENDA: req.params.id},
-            include: [{model:OPCION_ENVIO},{model:METODO_PAGO},{model:HORARIO_ATENCION},{
+            include: [{model: OPCION_ENVIO}, {model: METODO_PAGO}, {model: HORARIO_ATENCION}, {
                 model: SUCURSAL,
                 include: {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}
             }, {
-                model: OFERTA, include: [ {
+                model: OFERTA, include: [{
                     model: PRODUCTO,
                     attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'NOMBRE_PRODUCTO'],
                     include: [{
                         model: PRODUCTO_CATEGORIA,
                         include: {model: CATEGORIA}
-                    },{
+                    }, {
                         model: VARIANTE,
                         separate: true,
                         attributes: ['PRECIO_UNITARIO'],
@@ -654,6 +654,31 @@ async function getDetalleTiendaProducto(req, res) {
 }
 
 
+async function obtenerTodasTiendas(req, res) {
+
+    try {
+        let tiendasObtenidas = await TIENDA.findAll();
+
+        if (tiendasObtenidas.length > 0) {
+            res.status(200).send({
+                data: tiendasObtenidas,
+                message: "Tiendas cargadas correctamente"
+            });
+        } else {
+            res.status(404).send({
+                message: 'Al parecer  no se encuentra tiendas registradas en la base de datos'
+            });
+
+
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+
+}
+
 module.exports = {          // para exportar todas las funciones de este modulo
     registrarTienda,
     getDatosTienda,
@@ -665,7 +690,8 @@ module.exports = {          // para exportar todas las funciones de este modulo
     obtenerFiltroPrincipalTienda,
     obtenerFiltroPrincipalProductos,
     obtenerFiltroPrincipalTodos,
-    getDetalleTiendaProducto
+    getDetalleTiendaProducto,
+    obtenerTodasTiendas
     /* subirImagenesTienda,*/
     /*   obtenerImagenTienda*/
 };

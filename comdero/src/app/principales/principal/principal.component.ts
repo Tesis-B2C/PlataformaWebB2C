@@ -39,6 +39,11 @@ export class PrincipalComponent implements OnInit {
     pullDrag: false,
     dots: true,
     navSpeed: 700,
+    autoplay: true,
+    autoplaySpeed: 1000,
+
+    animateOut: 'slideOutDown',
+    animateIn: 'flipInX',
     navText: ["", ""],
     responsive: {
       0: {
@@ -57,6 +62,40 @@ export class PrincipalComponent implements OnInit {
     nav: false
   }
 
+  opcionesCarrouselTienda: OwlOptions = {
+    loop: true,
+    mouseDrag: false,
+    touchDrag: false,
+    pullDrag: false,
+    dots: true,
+    navSpeed: 1000,
+
+    autoplay: true,
+    autoplayTimeout:2000,
+    autoplaySpeed: 1000,
+    fluidSpeed: true,
+
+    animateOut: 'slideOutDown',
+    animateIn: 'flipInX',
+    navText: ["", ""],
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 2
+      },
+      740: {
+        items: 4
+      },
+      940: {
+        items: 4
+      }
+    },
+    nav: false
+  }
+
+
   public vectorProductosObtenidos = [];
   currentRate = 1;
 
@@ -71,6 +110,7 @@ export class PrincipalComponent implements OnInit {
   ngOnInit() {
     this.getCategorias();
     this.obtenerTodosProductos();
+    this.obtenerTodasTiendas();
   }
 
   public noExite = 'assets/images/no-image.png';
@@ -85,11 +125,25 @@ export class PrincipalComponent implements OnInit {
 
   public async obtenerTodosProductos() {
     let response = await this._tiendaServicio.obtenerTodosProductos().toPromise();
-    console.log("PRODUCTOS" + JSON.stringify(response));
+    //console.log("PRODUCTOS" + JSON.stringify(response));
     this.productosObtenidos = response.data;
     this.productosObtenidos.forEach(elemnt => {
       this.vectorProductosObtenidos.push(elemnt);
     })
+
+  }
+
+  public tiendasObtenidas;
+  public vectorTiendasObtenidas = [];
+
+  public async obtenerTodasTiendas() {
+    let response = await this._tiendaServicio.obtenerTodasTiendas().toPromise();
+    console.log("tiendas" + response.data);
+    this.tiendasObtenidas = response.data;
+    for (let element of this.tiendasObtenidas) {
+      this.vectorTiendasObtenidas.push(element);
+    }
+    ;
 
   }
 
