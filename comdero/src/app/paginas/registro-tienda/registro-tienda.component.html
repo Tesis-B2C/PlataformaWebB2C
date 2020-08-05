@@ -109,17 +109,24 @@
               <div class="form-group col-md-6">
                 <label>* Contacto de WhatsApp</label>
                 <input #ContactoW="ngModel" style="text-transform: uppercase;"
-                       [(ngModel)]="this.Tienda.ContactoWhatsApp" [ngClass]="{'is-invalid': ContactoW.invalid && (ContactoW.dirty || ContactoW.touched),
+                       [(ngModel)]="this.Tienda.Contacto_WhatsApp" [ngClass]="{'is-invalid': ContactoW.invalid && (ContactoW.dirty || ContactoW.touched),
                  'is-valid': ContactoW.valid && (ContactoW.dirty || ContactoW.touched)}"
                        [pattern]='this.soloNumerosPattern'
-                       class="tamanioInputs form-control" name="contactoW" placeholder=""
-                       required type="text"  minlength="10", maxlength="10">
+                       class="tamanioInputs form-control" name="contactoW" placeholder="0999999999"
+                       required type="text" minlength="10" maxlength="10"  >
+                <span style="font-size: x-small">los clientes podran contactarte a través de tu contacto de WhatsApp</span>
                 <div *ngIf="ContactoW.invalid && (ContactoW.dirty || ContactoW.touched)">
                   <div *ngIf="ContactoW.errors.required">
                     <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
                   </div>
                   <div *ngIf="ContactoW.errors.pattern">
                     <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo numeros.</p>
+                  </div>
+                  <div *ngIf="ContactoW.errors.minlength">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Minimo 10 digitos.</p>
+                  </div>
+                  <div *ngIf="ContactoW.errors.maxlenght">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Minimo 10 digitos.</p>
                   </div>
                 </div>
               </div> <!-- form-group end.// -->
@@ -137,8 +144,7 @@
                     <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
                   </div>
                   <div *ngIf="Correo_Tienda.errors.pattern">
-                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
-                      numeros.</p>
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; No cumple con el formato.</p>
                   </div>
                 </div>
               </div> <!-- form-group end.// -->

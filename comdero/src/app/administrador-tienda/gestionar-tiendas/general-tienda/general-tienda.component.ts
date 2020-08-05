@@ -43,7 +43,7 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
   private LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
   private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
   private urlPattern: any = "(https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9]+\\.[^\\s]{2,}|www\\.[a-zA-Z0-9]+\\.[^\\s]{2,})";
-
+  private soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
   public banderaEdicionDeshabilitada: boolean = true;
 
   public identidadTienda;
@@ -55,7 +55,7 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
 
   constructor(public toastr: ToastrService, private _tiendaServicio: TiendaServicio) {
     this.EditarTienda = new Tienda(null, null, null, null, null,
-      null, null, null, null, null, null, null);
+      null, null, null, null, null, null, null,null);
   }
 
 
@@ -437,7 +437,7 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
     this.EditarTienda.Link_Facebook = this.identidadTienda.LINK_FACEBOOK;
     this.EditarTienda.Terminos_Condiciones = this.identidadTienda.TERMINOS_CONDICIONES;
     this.EditarTienda.Horario_Atencion = this.identidadTienda.HORARIO_ATENCION;
-
+    this.EditarTienda.Contacto_WhatsApp = this.identidadTienda.CONTACTO_WHATSAPP;
     if (this.identidadTienda.HORARIO_ATENCION == 'No disponible') {
       this.banderaHoraConcreta = false;
       this.checkNoDisponible = true;

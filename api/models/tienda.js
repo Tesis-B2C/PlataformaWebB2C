@@ -72,6 +72,11 @@ const Tienda= db.sequelize.define('TIENDA', {
             {
                 type: Sequelize.STRING,
                 allowNull: false
+            },
+        CONTACTO_WHATSAPP:
+            {
+                type: Sequelize.STRING,
+                allowNull: false
             }
     },
     {

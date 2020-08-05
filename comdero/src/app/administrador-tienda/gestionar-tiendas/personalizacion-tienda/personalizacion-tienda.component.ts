@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
   styleUrls: ['./personalizacion-tienda.component.css']
 })
 export class PersonalizacionTiendaComponent implements OnInit {
-  public Tienda;
+
   public identidadTienda;
   public loading: boolean = false;
 
@@ -18,8 +18,8 @@ export class PersonalizacionTiendaComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.Tienda = new Tienda(null, null, null, null, null,
-      null, null, null, null, 1, null, 'No disponible',null);
+   /* this.Tienda = new Tienda(null, null, null, null, null,
+      null, null, null, null, 1, null, 'No disponible',null);*/
 
     if (this.identidadTienda.LOGO) {
       this.urlLogo = 'http://localhost:3977/' + this.identidadTienda.LOGO;
@@ -47,7 +47,7 @@ export class PersonalizacionTiendaComponent implements OnInit {
 
   public quitarLogo() {
     this.urlLogo = "";
-    this.Tienda.Logo = "";
+   // this.Tienda.Logo = "";
 
   }
 
@@ -71,7 +71,7 @@ export class PersonalizacionTiendaComponent implements OnInit {
 
   public quitarBanner() {
     this.urlBanner = "";
-    this.Tienda.Banner = "";
+   // this.Tienda.Banner = "";
   }
 
 

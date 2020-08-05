@@ -12,7 +12,7 @@ export class Tienda {
     public Estado_Tienda: Number,
     public Terminos_Condiciones: String,
     public Horario_Atencion:String,
-    public ContactoWhatsApp:String
+    public Contacto_WhatsApp:String
   ) {
   }
 }

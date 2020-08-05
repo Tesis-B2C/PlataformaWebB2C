@@ -31,7 +31,7 @@ async function registrarTienda(req, res) {
 
     try {
         let params = JSON.parse(req.body.tienda);
-        console.log("body asd", params.Sucursal);
+        console.log("body asd", params);
         if (req.files.logo) {
             var logo = req.files.logo[0].path;
         }
@@ -59,7 +59,8 @@ async function registrarTienda(req, res) {
                     CORREO_TIENDA: params.Tienda.Correo_Tienda,
                     HORARIO_ATENCION: params.Tienda.Horario_Atencion,
                     LOGO: logo,
-                    BANNER: banner
+                    BANNER: banner,
+                    CONTACTO_WHATSAPP:params.Tienda.Contacto_WhatsApp
                 },
                 {
                     transaction: t
@@ -421,7 +422,8 @@ async function actualizarTiendaGeneral(req, res) {
             LINK_PAGINA: params.EditarTienda.Link_Pagina,
             LINK_FACEBOOK: params.EditarTienda.Link_Facebook,
             TERMINOS_CONDICIONES: params.EditarTienda.Terminos_Condiciones,
-            HORARIO_ATENCION: params.EditarTienda.Horario_Atencion
+            HORARIO_ATENCION: params.EditarTienda.Horario_Atencion,
+            CONTACTO_WHATSAPP: params.EditarTienda.Contacto_WhatsApp,
         }, {
             where: {NUM_TIENDA: tiendaId},
             transaction: trans

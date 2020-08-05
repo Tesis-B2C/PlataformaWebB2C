@@ -15,6 +15,7 @@ export class EncabezadoTiendaComponent implements OnInit {
   public Logo = "";
   public Banner = "";
   public vPaginasWeb = [];
+  public contactoWhatsapp;
 
   constructor(private _tiendaServicio: TiendaServicio, private route: ActivatedRoute, private router: Router) {
 
@@ -27,11 +28,18 @@ export class EncabezadoTiendaComponent implements OnInit {
     await this.getSitiosWeb();
     await this.getCategorias();
     await this.getDisponibilidad();
+   this.getContacto();
 
     // this.router.navigate(['/principales/menu/detalle-tienda/118/tienda',this.Tienda.NUM_TIENDA])
 
   }
 
+  public getContacto(){
+    debugger;
+  let contacto=this.Tienda.CONTACTO_WHATSAPP.slice(1,10);
+    this.contactoWhatsapp='593'+contacto;
+
+  }
   async getDetalleTiendaProducto() {
     try {
       this.idTienda = this.route.snapshot.params.id;
