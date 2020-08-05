@@ -54,7 +54,7 @@ export class TiendaServicio {
     return this._http.put<objeto>(this.url + "updateEstadoTienda/" + Id_Tienda, params, {headers: headers});
   }
 
-  public updatePersonalizacionTienda(Id_Tienda,logo: File, banner: File) {
+  public updatePersonalizacionTienda(Id_Tienda, logo: File, banner: File) {
     const fd = new FormData();
     debugger;
     fd.append("logo", logo);
@@ -93,17 +93,21 @@ export class TiendaServicio {
 
   obtenerFiltroPrincipalTodos(termino) {
     let headers = new HttpHeaders({"Content-type": "application/json"});
-    return this._http.get<objeto>(this.url + "obtenerFiltroPrincipalTodos/"+ termino, {headers: headers});
+    return this._http.get<objeto>(this.url + "obtenerFiltroPrincipalTodos/" + termino, {headers: headers});
   }
 
   obtenerFiltroPrincipalTienda(termino) {
-      let headers = new HttpHeaders({"Content-type": "application/json"});
-      return this._http.get<objeto>(this.url + "obtenerFiltroPrincipalTienda/"+ termino, {headers: headers});
+    let headers = new HttpHeaders({"Content-type": "application/json"});
+    return this._http.get<objeto>(this.url + "obtenerFiltroPrincipalTienda/" + termino, {headers: headers});
   }
 
   obtenerFiltroPrincipalProductos(termino) {
     let headers = new HttpHeaders({"Content-type": "application/json"});
-    return this._http.get<objeto>(this.url + "obtenerFiltroPrincipalProductos/"+ termino, {headers: headers});
+    return this._http.get<objeto>(this.url + "obtenerFiltroPrincipalProductos/" + termino, {headers: headers});
   }
 
+  obtenerFiltroBusquedaTodos(termino) {
+    let headers = new HttpHeaders({"Content-type": "application/json"});
+    return this._http.get<objeto>(this.url + "obtenerFiltroBusquedaTodos/" + termino, {headers: headers});
+  }
 }
