@@ -1,0 +1,126 @@
+<!-- ========================= SECTION FRANJA AZUL ========================= -->
+<section>
+  <nav class="navbar navbar-main navbar-expand-lg  border-bottom colorNavbar mx-0">
+    <div class="mx-lg-auto">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav"
+              aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="fa fa-bars" style="color: white"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="main_nav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Supermarket</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Electronics</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Baby &amp Toys</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Fitness sport</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Clothing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Furnitures</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Furnitures</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Furnitures</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Furnitures</a>
+          </li>
+
+        </ul>
+      </div> <!-- collapse .// -->
+    </div> <!-- container .// -->
+  </nav>
+</section>
+<!-- ========================= SECTION FRANJA AZUL END ========================= -->
+
+<!-- ========================= SECTION PAGETOP ========================= -->
+<section *ngIf="!this.banderaNoResultado" class="section-pagetop bg">
+  <div class="container">
+    <p class="title-page">{{datosXpagina}} - 144 de {{this.vectorProductos.length}} resultados para "nike"</p>
+  </div> <!-- container //  -->
+</section>
+<!-- ========================= SECTION PAGETOP END// ========================= -->
+
+
+<!-- ========================= SECTION LISTADO DE PRODUCTOS// ========================= -->
+<section *ngIf="!this.banderaNoResultado" class="section-content padding-y-sm">
+  <div class="container">
+    <article class="card card-product-list" *ngFor="let p of this.vectorProductos | slice: paginaTamano | slice: 0:datosXpagina">
+      <div class="row no-gutters">
+        <aside class="col-lg-3 col-md-3 col-sm-3 col-12">
+          <a href="#" class="img-wrap">
+            <span class="badge badge-danger"> NEW </span>
+            <img [src]="getImagen(p.IMAGEN)">
+          </a>
+        </aside> <!-- col.// -->
+        <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+          <div class="info-main">
+            <a href="#" class="h5 title"> {{p.NOMBRE_PRODUCTO}} </a>
+            <div class="rating-wrap mb-3">
+              <ul class="rating-stars">
+
+                <ngb-rating *ngIf="p.PROMEDIO_CAL != null"
+                            [(rate)]="p.PROMEDIO_CAL">
+                  <ng-template let-fill="fill">
+                    <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                  </ng-template>
+                </ngb-rating>
+                <ngb-rating *ngIf="p.PROMEDIO_CAL == null" [(rate)]="currentRate">
+                  <ng-template let-fill="fill">
+                    <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                  </ng-template>
+                </ngb-rating>
+
+              </ul>
+
+              <span *ngIf="p.TOTAL_COM != null"
+                    class="label-rating text-muted">{{p.TOTAL_COM}} comentarios</span>
+              <span *ngIf="p.TOTAL_COM == null" class="label-rating text-muted">0 Comentarios </span>
+
+            </div> <!-- rating-wrap.// -->
+
+            <p> {{p.DESCRIPCION_PRODUCTO}}
+            </p>
+          </div> <!-- info-main.// -->
+        </div> <!-- col.// -->
+        <aside class="col-lg-3 col-md-3 col-sm-3 col-12">
+          <div class="info-aside">
+            <div class="price-wrap">
+              <span class="price h5"> {{p.PRECIO_UNITARIO | currency }} </span>
+              <del class="price-old"> $198</del>
+            </div> <!-- info-price-detail // -->
+            <p class="text-success">Free shipping</p>
+            <br>
+            <p>
+              <a href="#" class="btn btn-primary btn-block"> Detalles </a>
+              <a href="#" class="btn btn-light btn-block"><i class="fa fa-heart"></i>
+                <span class="text">Lista de deseos</span>
+              </a>
+              <a href="#" class="title tituloTienda"> {{p.NOMBRE_COMERCIAL}}</a>
+            </p>
+          </div> <!-- info-aside.// -->
+        </aside> <!-- col.// -->
+      </div> <!-- row.// -->
+    </article> <!-- card-product .// -->
+
+    <ngb-pagination [collectionSize]="this.vectorProductos.length" #numPagina [(page)]="paginaActual" [pageSize]="datosXpagina" [maxSize]="4"
+                    [rotate]="true" [ellipses]="true"
+                    [boundaryLinks]="false" (pageChange)="onPageChange(paginaActual)"></ngb-pagination>
+
+
+  </div> <!-- container .//  -->
+</section>
+
+
+<!-- ========================= SECTION LISTADO DE PRODUCTOS END// ========================= -->

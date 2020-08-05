@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import { CarouselModule } from 'ngx-owl-carousel-o';
+import {CarouselModule} from 'ngx-owl-carousel-o';
 import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
@@ -45,7 +45,16 @@ import {DescuentoServicio} from "./servicios/descuento.servicio";
     ToastrModule.forRoot({preventDuplicates: true}),
     BsDatepickerModule.forRoot()
   ],
-  providers: [DescuentoServicio, DpaServicio, AgenteServicio, CategoriaServicio, UnidadMedidaServicio, ProductoServicio, MetodoPagoServicio, MetodoEnvioServicio, TiendaServicio],
+  providers: [
+    DescuentoServicio,
+    DpaServicio,
+    AgenteServicio, 
+    CategoriaServicio, 
+    UnidadMedidaServicio,
+    ProductoServicio,
+    MetodoPagoServicio,
+    MetodoEnvioServicio, 
+    TiendaServicio],
   bootstrap: [AppComponent]
 })
 export class AppModule {
