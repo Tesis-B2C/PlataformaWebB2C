@@ -67,7 +67,8 @@
             <ng-template awWizardStepSymbol><i class="fas fa-edit"></i></ng-template>
             <h6 class="font-weight-bold">Datos generales</h6>
             <br>
-            <div class="form-group">
+            <div class="form-row">
+            <div class="form-group col-md-6">
               <label>* Razón Social</label>
               <input #Razon_Social="ngModel" style="text-transform: uppercase;" [(ngModel)]="this.Tienda.Razon_Social"
                      [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched),
@@ -85,26 +86,43 @@
                 </div>
               </div>
             </div> <!-- form-group end.// -->
+            <div class="form-group col-md-6">
+              <label>* Nombre comercial de su empresa o negocio</label>
+              <input #Nombre_Comercial="ngModel" style="text-transform: uppercase;"
+                     [(ngModel)]="this.Tienda.Nombre_Comercial" [ngClass]="{'is-invalid': Nombre_Comercial.invalid && (Nombre_Comercial.dirty || Nombre_Comercial.touched),
+                 'is-valid': Nombre_Comercial.valid && (Nombre_Comercial.dirty || Nombre_Comercial.touched)}"
+                     [pattern]='this.LetrasNumerosPattern'
+                     class="tamanioInputs form-control" name="nombre_Comercial" placeholder=""
+                     required type="text">
+              <div *ngIf="Nombre_Comercial.invalid && (Nombre_Comercial.dirty || Nombre_Comercial.touched)">
+                <div *ngIf="Nombre_Comercial.errors.required">
+                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+                </div>
+                <div *ngIf="Nombre_Comercial.errors.pattern">
+                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
+                    numeros.</p>
+                </div>
+              </div>
+            </div>
+            </div>
             <div class="form-row">
               <div class="form-group col-md-6">
-                <label>* Nombre comercial de su empresa o negocio</label>
-                <input #Nombre_Comercial="ngModel" style="text-transform: uppercase;"
-                       [(ngModel)]="this.Tienda.Nombre_Comercial" [ngClass]="{'is-invalid': Nombre_Comercial.invalid && (Nombre_Comercial.dirty || Nombre_Comercial.touched),
-                 'is-valid': Nombre_Comercial.valid && (Nombre_Comercial.dirty || Nombre_Comercial.touched)}"
-                       [pattern]='this.LetrasNumerosPattern'
-                       class="tamanioInputs form-control" name="nombre_Comercial" placeholder=""
-                       required type="text">
-                <div *ngIf="Nombre_Comercial.invalid && (Nombre_Comercial.dirty || Nombre_Comercial.touched)">
-                  <div *ngIf="Nombre_Comercial.errors.required">
+                <label>* Contacto de WhatsApp</label>
+                <input #ContactoW="ngModel" style="text-transform: uppercase;"
+                       [(ngModel)]="this.Tienda.ContactoWhatsApp" [ngClass]="{'is-invalid': ContactoW.invalid && (ContactoW.dirty || ContactoW.touched),
+                 'is-valid': ContactoW.valid && (ContactoW.dirty || ContactoW.touched)}"
+                       [pattern]='this.soloNumerosPattern'
+                       class="tamanioInputs form-control" name="contactoW" placeholder=""
+                       required type="text"  minlength="10", maxlength="10">
+                <div *ngIf="ContactoW.invalid && (ContactoW.dirty || ContactoW.touched)">
+                  <div *ngIf="ContactoW.errors.required">
                     <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
                   </div>
-                  <div *ngIf="Nombre_Comercial.errors.pattern">
-                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
-                      numeros.</p>
+                  <div *ngIf="ContactoW.errors.pattern">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo numeros.</p>
                   </div>
                 </div>
               </div> <!-- form-group end.// -->
-
 
               <div class="form-group col-md-6">
                 <label>* Correo</label>

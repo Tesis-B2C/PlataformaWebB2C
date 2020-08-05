@@ -11,7 +11,8 @@ export class Tienda {
     public Banner: String,
     public Estado_Tienda: Number,
     public Terminos_Condiciones: String,
-    public Horario_Atencion:String
+    public Horario_Atencion:String,
+    public ContactoWhatsApp:String
   ) {
   }
 }

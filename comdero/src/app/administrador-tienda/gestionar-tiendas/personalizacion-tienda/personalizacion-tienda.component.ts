@@ -19,7 +19,7 @@ export class PersonalizacionTiendaComponent implements OnInit {
 
   ngOnInit() {
     this.Tienda = new Tienda(null, null, null, null, null,
-      null, null, null, null, 1, null, 'No disponible');
+      null, null, null, null, 1, null, 'No disponible',null);
 
     if (this.identidadTienda.LOGO) {
       this.urlLogo = 'http://localhost:3977/' + this.identidadTienda.LOGO;
