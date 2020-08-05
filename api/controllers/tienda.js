@@ -22,6 +22,8 @@ const CATEGORIA = require("../models/categoria");
 const CALIFICACION = require("../models/calificacion");
 const COMENTARIO = require("../models/comentario");
 
+
+
 const {Op} = require("sequelize");
 
 /*const {QueryTypes} = require('sequelize');*/
@@ -655,6 +657,75 @@ async function getDetalleTiendaProducto(req, res) {
     }
 }
 
+async function obtenerFiltroBusquedaTodos(req, res) {
+    const t = await db.sequelize.transaction({autocommit: false});
+    try {
+        let vectorEnviar = [];
+        let termino = req.params.termino;
+
+        let productosObtenidos = await OFERTA.findAll({
+            include: [{
+                model: PRODUCTO,
+                attributes: ['ID_PRODUCTO', 'COD_PRODUCTO','ID_OFERTA', 'NOMBRE_PRODUCTO','DESCRIPCION_PRODUCTO'],
+                where: {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino + '%'}},
+                include: [{
+                    model: VARIANTE,
+                    separate: true,
+                    attributes: ['ID_PRODUCTO','NUM_VARIANTE','PRECIO_UNITARIO'],
+                    group: ['ID_PRODUCTO', 'COD_PRODUCTO'],
+                    order: [['NUM_VARIANTE', 'ASC']],
+                    include: {
+                        model: IMAGEN_PRODUCTO,
+                        separate: true,
+                        attributes: ['NUM_VARIANTE','IMAGEN'],
+                        group: 'NUM_VARIANTE',
+                        order: [['ID_IMAGEN', 'ASC']]
+                    }
+                }, {
+                    model: CALIFICACION,
+                    separate: true,
+                    attributes: ['ID_PRODUCTO', [CALIFICACION.sequelize.fn('AVG', CALIFICACION.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
+                    group: ['ID_PRODUCTO']
+                }, {
+                    model: COMENTARIO,
+                    separate: true,
+                    attributes: ['ID_PRODUCTO', [COMENTARIO.sequelize.fn('COUNT', COMENTARIO.sequelize.col('ID_COMENTARIO')), 'TOTAL_COM']],
+                    group: ['ID_PRODUCTO']
+                }]
+            }, {
+                model: TIENDA,
+                attributes: ['NUM_TIENDA','NOMBRE_COMERCIAL']
+            }],
+            attributes: ['ID_OFERTA'],
+            transaction: t
+        });
+
+
+
+        let tiendasObtenidos = await TIENDA.findAll({
+            attributes: ['NOMBRE_COMERCIAL'],
+            where: {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino + '%'}},
+            limit: 5,
+            transaction: t
+        });
+
+
+        vectorEnviar.push(tiendasObtenidos);
+        vectorEnviar.push(productosObtenidos);
+
+        await t.commit();
+        res.status(200).send({
+            data: vectorEnviar,
+            message: "Busqueda cargada correctamente."
+        });
+
+    } catch (e) {
+        await t.rollback();
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
 
 async function obtenerTodasTiendas(req, res) {
 
@@ -693,7 +764,8 @@ module.exports = {          // para exportar todas las funciones de este modulo
     obtenerFiltroPrincipalProductos,
     obtenerFiltroPrincipalTodos,
     getDetalleTiendaProducto,
-    obtenerTodasTiendas
+    obtenerTodasTiendas,
+    obtenerFiltroBusquedaTodos
     /* subirImagenesTienda,*/
     /*   obtenerImagenTienda*/
 };

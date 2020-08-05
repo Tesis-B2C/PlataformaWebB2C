@@ -24,11 +24,11 @@
               </div>
             </div>
 
-            <input id="typeahead-format" type="text" class="form-control" (keyup)="buscarDatos()"
+            <input (keyup.enter)="buscarPalabra(this.palabraBuscadora)" id="typeahead-format" type="text" class="form-control" (keyup)="buscarDatos()" #buscarTexto
                    [(ngModel)]="this.palabraBuscadora" [ngbTypeahead]="buscarDatosTerm"/>
 
             <div class="input-group-append">
-              <button class="btn btnTodos" type="submit">
+              <button class="btn btnTodos" type="submit" (click)="buscarPalabra(buscarTexto.value)">
                 <i class="fa fa-search"></i>
               </button>
             </div>

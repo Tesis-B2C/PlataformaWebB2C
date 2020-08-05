@@ -220,7 +220,6 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
   public async registrarTienda() {
     this.loading = true;
     try {
-
       this.Tienda_Enviar.Tienda = this.Tienda;
       this.Tienda_Enviar.Sucursal = this.Sucursales;
       console.log("Objeto a enviar al backend:" + this.Tienda_Enviar);
