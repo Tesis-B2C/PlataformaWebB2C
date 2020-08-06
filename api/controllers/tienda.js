@@ -514,89 +514,7 @@ async function actualizarTiendaSucursal(req, res) {
     }
 }
 
-async function obtenerFiltroPrincipalTienda(req, res) {
-    const t = await db.sequelize.transaction({autocommit: false});
-    try {
-        let termino = req.params.termino;
-        let tiendasObtenidos = await TIENDA.findAll({
-            attributes: ['NOMBRE_COMERCIAL'],
-            where: {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino + '%'}},
-            limit: 10,
-            transaction: t
-        });
-
-        await t.commit();
-        res.status(200).send({
-            data: tiendasObtenidos,
-            message: "tiendasObtenidos cargados correctamente"
-        });
-    } catch (e) {
-        await t.rollback();
-        res.status(500).send({
-            message: 'error:' + err
-        });
-    }
-}
-
-async function obtenerFiltroPrincipalProductos(req, res) {
-    const t = await db.sequelize.transaction({autocommit: false});
-    try {
-        let termino = req.params.termino;
-        let productosObtenidos = await PRODUCTO.findAll({
-            attributes: ['NOMBRE_PRODUCTO'],
-            where: {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino + '%'}},
-            limit: 10,
-            transaction: t
-        });
-
-        await t.commit();
-        res.status(200).send({
-            data: productosObtenidos,
-            message: "Productos cargados correctamente"
-        });
-    } catch (e) {
-        await t.rollback();
-        res.status(500).send({
-            message: 'error:' + err
-        });
-    }
-}
-
-async function obtenerFiltroPrincipalTodos(req, res) {
-    const t = await db.sequelize.transaction({autocommit: false});
-    try {
-        let vectorEnviar = [];
-        let termino = req.params.termino;
-        let tiendasObtenidos = await TIENDA.findAll({
-            attributes: ['NOMBRE_COMERCIAL'],
-            where: {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino + '%'}},
-            limit: 5,
-            transaction: t
-        });
-
-        let productosObtenidos = await PRODUCTO.findAll({
-            attributes: ['NOMBRE_PRODUCTO'],
-            where: {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino + '%'}},
-            limit: 5,
-            transaction: t
-        });
-
-        vectorEnviar.push(tiendasObtenidos);
-        vectorEnviar.push(productosObtenidos);
-
-        await t.commit();
-        res.status(200).send({
-            data: vectorEnviar,
-            message: "Busqueda cargada correctamente."
-        });
-
-    } catch (e) {
-        await t.rollback();
-    }
-}
-
 async function getDetalleTiendaProducto(req, res) {
-
     try {
         let tiendaObtenida = await TIENDA.findOne({
             where: {NUM_TIENDA: req.params.id},
@@ -657,6 +575,103 @@ async function getDetalleTiendaProducto(req, res) {
     }
 }
 
+async function obtenerFiltroPrincipalTienda(req, res) {
+    const t = await db.sequelize.transaction({autocommit: false});
+    try {
+        let termino = req.params.termino;
+        let tiendasObtenidos = await TIENDA.findAll({
+            attributes: ['NOMBRE_COMERCIAL'],
+            where: {[Op.or]: [
+                    { NOMBRE_COMERCIAL: {[Op.like]: termino + '%'} },
+                    { NOMBRE_COMERCIAL: {[Op.like]: '%' + termino} },
+                    { NOMBRE_COMERCIAL: {[Op.like]: '%' + termino + '%'} }
+                ]},
+            limit: 10,
+            transaction: t
+        });
+
+        await t.commit();
+        res.status(200).send({
+            data: tiendasObtenidos,
+            message: "tiendasObtenidos cargados correctamente"
+        });
+    } catch (e) {
+        await t.rollback();
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+
+async function obtenerFiltroPrincipalProductos(req, res) {
+    const t = await db.sequelize.transaction({autocommit: false});
+    try {
+        let termino = req.params.termino;
+        let productosObtenidos = await PRODUCTO.findAll({
+            attributes: ['NOMBRE_PRODUCTO'],
+            where: {[Op.or]: [
+                    { NOMBRE_PRODUCTO: {[Op.like]: termino + '%'} },
+                    { NOMBRE_PRODUCTO: {[Op.like]: '%' + termino} },
+                    { NOMBRE_PRODUCTO: {[Op.like]: '%' + termino + '%'} }
+                ]},
+            limit: 10,
+            transaction: t
+        });
+
+        await t.commit();
+        res.status(200).send({
+            data: productosObtenidos,
+            message: "Productos cargados correctamente"
+        });
+    } catch (e) {
+        await t.rollback();
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+
+async function obtenerFiltroPrincipalTodos(req, res) {
+    const t = await db.sequelize.transaction({autocommit: false});
+    try {
+        let vectorEnviar = [];
+        let termino = req.params.termino;
+        let tiendasObtenidos = await TIENDA.findAll({
+            attributes: ['NOMBRE_COMERCIAL'],
+            where: {[Op.or]: [
+                    { NOMBRE_COMERCIAL: {[Op.like]: termino + '%'} },
+                    { NOMBRE_COMERCIAL: {[Op.like]: '%' + termino} },
+                    { NOMBRE_COMERCIAL: {[Op.like]: '%' + termino + '%'} }
+                ]},
+            limit: 8,
+            transaction: t
+        });
+
+        let productosObtenidos = await PRODUCTO.findAll({
+            attributes: ['NOMBRE_PRODUCTO'],
+            where: {[Op.or]: [
+                    { NOMBRE_PRODUCTO: {[Op.like]: termino + '%'} },
+                    { NOMBRE_PRODUCTO: {[Op.like]: '%' + termino} },
+                    { NOMBRE_PRODUCTO: {[Op.like]: '%' + termino + '%'} }
+                ]},
+            limit: 8,
+            transaction: t
+        });
+
+        vectorEnviar.push(tiendasObtenidos);
+        vectorEnviar.push(productosObtenidos);
+
+        await t.commit();
+        res.status(200).send({
+            data: vectorEnviar,
+            message: "Busqueda cargada correctamente."
+        });
+
+    } catch (e) {
+        await t.rollback();
+    }
+}
+
 async function obtenerFiltroBusquedaTodos(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
     try {
@@ -667,7 +682,11 @@ async function obtenerFiltroBusquedaTodos(req, res) {
             include: [{
                 model: PRODUCTO,
                 attributes: ['ID_PRODUCTO', 'COD_PRODUCTO','ID_OFERTA', 'NOMBRE_PRODUCTO','DESCRIPCION_PRODUCTO'],
-                where: {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino + '%'}},
+                where: {[Op.or]: [
+                        { NOMBRE_PRODUCTO: {[Op.like]: termino + '%'} },
+                        { NOMBRE_PRODUCTO: {[Op.like]: '%' + termino} },
+                        { NOMBRE_PRODUCTO: {[Op.like]: '%' + termino + '%'} }
+                    ]},
                 include: [{
                     model: VARIANTE,
                     separate: true,

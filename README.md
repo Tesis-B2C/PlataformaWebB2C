@@ -73,3 +73,8 @@ debe estar instalado ngx-bootstrap
 agregar en el style p[rincipal
 @import "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css";]
 https://valor-software.com/ngx-bootstrap/#/datepicker
+
+
+-------- Para el Buscador
+ng add ngx-bootstrap  --component typeahead
+https://valor-software.com/ngx-bootstrap/#/typeahead

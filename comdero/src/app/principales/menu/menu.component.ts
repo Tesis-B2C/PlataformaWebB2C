@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TiendaServicio} from "../../servicios/tienda.servicio";
 import {Observable} from 'rxjs';
 import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-menu',
@@ -17,7 +17,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   public objetoDatos = [];
   public datosObtenidos: any;
 
-  constructor(private _tiendaServicio: TiendaServicio, private router: Router) {
+  constructor(private route: ActivatedRoute, private _tiendaServicio: TiendaServicio, private router: Router) {
   }
 
   ngOnInit() {
@@ -34,47 +34,49 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.tipoBuscador = busqueda;
   }
 
-  public async buscarDatos() {
+  public async buscarDatos(palabraBuscar) {
     this.objetoDatos = [];
     this.datosObtenidos = '';
 
-    if (this.tipoBuscador == 'Tiendas' && this.palabraBuscadora != '') {
-      console.log('==================================================');
-      let response = await this._tiendaServicio.obtenerFiltroPrincipalTienda(this.palabraBuscadora).toPromise();
-      this.datosObtenidos = response.data;
-      console.log('hola' + JSON.stringify(this.datosObtenidos));
-      this.datosObtenidos.forEach(elemnt => {
-        this.objetoDatos.push(elemnt.NOMBRE_COMERCIAL)
-      })
-      console.log('OBJETO CON TODOS LOS NOMBRES A MOSTRARTIENDA' + JSON.stringify(this.objetoDatos));
-    }
+    if(palabraBuscar != 0){
+      console.log(+palabraBuscar+'XXXXXXXXXXXXXXXXXXX');
+      if (this.tipoBuscador == 'Tiendas' && palabraBuscar != '') {
+        console.log('================================================== palabraBuscar');
+        let response = await this._tiendaServicio.obtenerFiltroPrincipalTienda(palabraBuscar.trim()).toPromise();
+        this.datosObtenidos = response.data;
+        console.log('hola' + JSON.stringify(this.datosObtenidos));
+        this.datosObtenidos.forEach(elemnt => {
+          this.objetoDatos.push(elemnt.NOMBRE_COMERCIAL)
+        })
+        console.log('OBJETO CON TODOS LOS NOMBRES A MOSTRARTIENDA' + JSON.stringify(this.objetoDatos));
+      }
 
-    if (this.tipoBuscador == 'Productos' && this.palabraBuscadora != '') {
-      console.log('==================================================');
-      let response = await this._tiendaServicio.obtenerFiltroPrincipalProductos(this.palabraBuscadora).toPromise();
-      this.datosObtenidos = response.data;
-      console.log('hola' + JSON.stringify(this.datosObtenidos));
-      this.datosObtenidos.forEach(elemnt => {
-        this.objetoDatos.push(elemnt.NOMBRE_PRODUCTO)
-      })
-      console.log('OBJETO CON TODOS LOS NOMBRES A MOSTRARPRODUCTOS' + JSON.stringify(this.objetoDatos));
-    }
+      if (this.tipoBuscador == 'Productos' && palabraBuscar != '') {
+        console.log('==================================================');
+        let response = await this._tiendaServicio.obtenerFiltroPrincipalProductos(palabraBuscar.trim()).toPromise();
+        this.datosObtenidos = response.data;
+        console.log('hola' + JSON.stringify(this.datosObtenidos));
+        this.datosObtenidos.forEach(elemnt => {
+          this.objetoDatos.push(elemnt.NOMBRE_PRODUCTO)
+        })
+        console.log('OBJETO CON TODOS LOS NOMBRES A MOSTRARPRODUCTOS' + JSON.stringify(this.objetoDatos));
+      }
 
-    if (this.tipoBuscador == 'Todos' && this.palabraBuscadora != '') {
-      console.log('==================================================');
-      let response = await this._tiendaServicio.obtenerFiltroPrincipalTodos(this.palabraBuscadora).toPromise();
-      this.datosObtenidos = response.data;
-      console.log('TODOS PALABRA BUSCADORA' + JSON.stringify(this.datosObtenidos));
+      if (this.tipoBuscador == 'Todos' && palabraBuscar != '') {
+        console.log('==================================================');
+        let response = await this._tiendaServicio.obtenerFiltroPrincipalTodos(palabraBuscar.trim()).toPromise();
+        this.datosObtenidos = response.data;
+        console.log('TODOS PALABRA BUSCADORA' + JSON.stringify(this.datosObtenidos));
 
-      this.datosObtenidos[0].forEach(elemnt => {
-        this.objetoDatos.push(elemnt.NOMBRE_COMERCIAL);
-      })
+        this.datosObtenidos[0].forEach(elemnt => {
+          this.objetoDatos.push(elemnt.NOMBRE_COMERCIAL);
+        })
 
-      this.datosObtenidos[1].forEach(elemnt => {
-        this.objetoDatos.push(elemnt.NOMBRE_PRODUCTO);
-      })
-
-      console.log('OBJETO CON TODOS LOS NOMBRES A MOSTRARTODOS' + JSON.stringify(this.objetoDatos));
+        this.datosObtenidos[1].forEach(elemnt => {
+          this.objetoDatos.push(elemnt.NOMBRE_PRODUCTO);
+        })
+        console.log('OBJETO CON TODOS LOS NOMBRES A MOSTRARTODOS' + JSON.stringify(this.objetoDatos));
+      }
     }
   }
 
@@ -83,27 +85,16 @@ export class MenuComponent implements OnInit, OnDestroy {
       debounceTime(200),
       distinctUntilChanged(),
       map(term => term === '' ? [] :
-        this.objetoDatos.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 30))
+        this.objetoDatos.filter(v => v.toLowerCase().indexOf(term.toLowerCase().trim()) > -1).slice(0, 30))
     )
 
   public buscarPalabra(palabraBuscada: string) {
-  
-    if (palabraBuscada == " " || palabraBuscada == null) {
-      this.router.navigate(['**']);
+    if (palabraBuscada.trim() == "" || palabraBuscada.trim() == null) {
+      console.log(palabraBuscada.trim()+ "ya mismo me voy");
+      location.href = '**';
     } else {
-      this.router.navigate(['principales/menu/busqueda/', palabraBuscada]);
+      palabraBuscada = palabraBuscada.trim();
+      location.href = 'principales/menu/busqueda/'+palabraBuscada;
     }
   }
-
-  onRefresh() {
-    this.router.routeReuseStrategy.shouldReuseRoute = function(){return false;};
-    let currentUrl = this.router.url + '?';
-    this.router.navigateByUrl(currentUrl)
-      .then(() => {
-        this.router.navigated = false;
-        this.router.navigate([this.router.url]);
-      });
-  }
-
-
 }

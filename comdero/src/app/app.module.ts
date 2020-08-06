@@ -23,6 +23,7 @@ import {ToastrModule} from 'ngx-toastr';
 import {MetodoEnvioServicio} from "./servicios/metodo_envio.servicio";
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import {DescuentoServicio} from "./servicios/descuento.servicio";
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import {DescuentoServicio} from "./servicios/descuento.servicio";
     BrowserAnimationsModule, // required animations module
     CarouselModule,
     ToastrModule.forRoot({preventDuplicates: true}),
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    TypeaheadModule.forRoot()
   ],
   providers: [
     DescuentoServicio,
