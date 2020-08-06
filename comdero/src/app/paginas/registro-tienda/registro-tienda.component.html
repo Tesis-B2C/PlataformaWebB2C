@@ -51,8 +51,9 @@
   <article class="wrap-register100 card-body px-0">
 
     <header>
-      <h4 class="font-weight-bold p-b-10 text-center">Cuéntanos sobre tu empresa o negocio</h4>
-      <div class="bacground-info mx-auto"></div>
+      <h3 class="font-weight-bold p-b-10 text-center">Cuéntanos sobre tu empresa o negocio</h3>
+
+
 
 
     </header>
@@ -62,6 +63,7 @@
       <aw-wizard [navBarLayout]="'large-empty-symbols'">
 
         <aw-wizard-step [stepTitle]="'Paso 1'">
+          <div class="bacground-info mx-auto"></div>
           <form #FormPaso1 id="formPaso1" class="datosregistro" validate-form>
 
             <ng-template awWizardStepSymbol><i class="fas fa-edit"></i></ng-template>
@@ -224,6 +226,7 @@
         </aw-wizard-step>
 
         <aw-wizard-step [stepTitle]="'Paso 2'">
+          <div class="bacground-info mx-auto"></div>
           <form #FormPaso2 id="formPaso2" class="datosregistro" validate-form>
             <ng-template awWizardStepSymbol><i class="fas fa-store"></i></ng-template>
             <h6 class="font-weight-bold">¿Su negocio cuenta con un espacio fisico?</h6>
@@ -505,6 +508,7 @@
         </aw-wizard-step>
 
         <aw-wizard-step [stepTitle]="'Paso 3'">
+          <div class="bacground-info mx-auto"></div>
           <form #FormPaso3 id="formPaso3" class="datosregistro" validate-form>
             <ng-template awWizardStepSymbol><i class="fa fa-images"></i></ng-template>
 
