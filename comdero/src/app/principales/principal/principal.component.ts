@@ -113,10 +113,10 @@ export class PrincipalComponent implements OnInit {
     this.obtenerTodasTiendas();
   }
 
-  public noExite = 'assets/images/no-image.png';
+  public noExite = 'assets/images/no-imagen1.png';
 
   getImagen(pathImagen) {
-    this.noExite = 'assets/images/no-image.png';
+    this.noExite = 'assets/images/no-imagen1.png';
     if (pathImagen) {
       this.noExite = 'http://localhost:3977/' + pathImagen;
     }
