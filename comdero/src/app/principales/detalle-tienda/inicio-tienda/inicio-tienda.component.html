@@ -1,12 +1,12 @@
-<section class="section-name bg  py-3 px-5  ">
+<section class="section-name bg  py-3 px-md-5  ">
 
   <article class="">
-    <h6 class="">ENCUENTRA LO QUE NECESITAS EN {{this.Tienda?.NOMBRE_COMERCIAL}}</h6>
+    <h6 class="text-center">ENCUENTRA LO QUE NECESITAS EN {{this.Tienda?.NOMBRE_COMERCIAL}}</h6>
     <div class="input-group   mx-auto  mt-3  ">
 
       <input type="text" class="form-control " style="border-radius:50px 0px 0px 50px;"  #Busqueda="ngModel" name="busqueda"   [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="filtrar()">
       <div class="input-group-append ">
-        <button class="btn btn-light  " style="border-radius:0px 50px 50px 0px;" type="submit">
+        <button class="btn btn-light  px-3" style="border-radius:0px 50px 50px 0px;" type="submit">
           <i class="fa fa-search"></i>
         </button>
       </div>
