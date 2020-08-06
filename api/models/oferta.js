@@ -20,7 +20,7 @@ const Oferta = db.sequelize.define('OFERTA', {
             {
                 type: Sequelize.FLOAT,
                 allowNull: false,
-                defaultValue:0
+
             },
         FECHA_CREACION:
             {

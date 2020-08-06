@@ -17,7 +17,8 @@ const Producto = db.sequelize.define('PRODUCTO', {
         COD_PRODUCTO: {
             type: Sequelize.STRING,
             primaryKey: true,
-            allowNull: false
+            allowNull: false,
+            defaultValue:'000000'
         },
         ID_OFERTA:
             {
