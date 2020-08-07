@@ -5,6 +5,7 @@ import {DpaServicio} from "../../servicios/dpa.servicio";
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2'
+import {CorreoServicio} from "../../servicios/correo.servicio";
 
 
 declare const require: any;
@@ -34,7 +35,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
   public loading: boolean = false;
   public banderaTipo: boolean = true;
 
-  constructor(public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio) {
+  constructor(private _correoServicio:CorreoServicio, public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio) {
     this.Agente = new Agente(null, null, null,
       null, null, "Persona", 1, null, null,
       null, null, null, null);
@@ -126,13 +127,16 @@ export class RegistroComponent implements OnInit, OnDestroy {
 
   }
 
+  public agenteRegistrado;
   async registrarAgente1() {
 
     try {
       let response = await this._agenteServicio.registrarAgente(this.Agente).toPromise();
-
+       this.agenteRegistrado= response.data;
       window.scroll(0, 0);
-      this.mensageCorrecto(response['message']);
+      this.mensageCorrecto(response.message);
+      let correoresponse = await this._correoServicio.correoActivacion(this.agenteRegistrado).toPromise();
+      this.mensageCorrecto(correoresponse.message);
       this.loading = false;
       delete this.Agente;
       this.Agente = new Agente(null, null, null,

@@ -14,6 +14,7 @@ import {TiendaServicio} from "./servicios/tienda.servicio";
 import {CategoriaServicio} from "./servicios/categoria.servicio";
 import {ProductoServicio} from "./servicios/producto.servicio";
 import {MetodoPagoServicio} from "./servicios/metodo_pago.servicio";
+import {CorreoServicio} from "./servicios/correo.servicio";
 import {AdministradorTiendaModule} from "./administrador-tienda/administrador-tienda.module";
 /*import {GestionarTiendasModule} from "./administrador-tienda/gestionar-tiendas/gestionar-tiendas.module";*/
 import {FormsModule} from "@angular/forms";
@@ -48,13 +49,14 @@ import {DescuentoServicio} from "./servicios/descuento.servicio";
   providers: [
     DescuentoServicio,
     DpaServicio,
-    AgenteServicio, 
-    CategoriaServicio, 
+    AgenteServicio,
+    CategoriaServicio,
     UnidadMedidaServicio,
     ProductoServicio,
     MetodoPagoServicio,
-    MetodoEnvioServicio, 
-    TiendaServicio],
+    MetodoEnvioServicio,
+    TiendaServicio,
+    CorreoServicio],
   bootstrap: [AppComponent]
 })
 export class AppModule {

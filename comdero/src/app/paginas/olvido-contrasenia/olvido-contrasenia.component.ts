@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import Swal from "sweetalert2";
+import {CorreoServicio} from "../../servicios/correo.servicio";
 @Component({
   selector: 'app-olvido-contrasenia',
   templateUrl: './olvido-contrasenia.component.html',
@@ -10,7 +11,7 @@ export class OlvidoContraseniaComponent implements OnInit {
 
   public Correo;
   public  loading:boolean=false;
-  constructor(private _agenteServicio: AgenteServicio) { }
+  constructor(private _correoServicio:CorreoServicio, private _agenteServicio: AgenteServicio) { }
 
   ngOnInit() {
 
@@ -22,6 +23,8 @@ export class OlvidoContraseniaComponent implements OnInit {
     try {
       let response = await this._agenteServicio.resetearContrasenia(obj).toPromise();
       this.mensageCorrecto(response.message);
+      let correoResponse=  await this._correoServicio.correoCambioContrasenia(response.data).toPromise();
+      this.mensageCorrecto(correoResponse.message);
        this.loading=false;
     } catch (e) {
       this.loading = false;

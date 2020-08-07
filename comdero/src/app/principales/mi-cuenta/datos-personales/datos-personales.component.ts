@@ -5,6 +5,7 @@ import {Agente} from "../../../modelos/agente";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import Swal from "sweetalert2";
 import {ToastrService} from 'ngx-toastr';
+import {CorreoServicio} from "../../../servicios/correo.servicio";
 
 declare const require: any;
 const places = require("../../../../../node_modules/places.js/dist/cdn/places.js");
@@ -43,7 +44,7 @@ export class DatosPersonalesComponent implements OnInit {
     codigo: null
   };
 
-  constructor(public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal) {
+  constructor(private _correoServicio:CorreoServicio, public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal) {
     this.EditarAgente = new Agente(null, null, null,
       null, null, null, 0, null, null,
       null, null, null, null);
@@ -209,12 +210,14 @@ export class DatosPersonalesComponent implements OnInit {
       this.objetoEmail.correo = this.Correo;
       this.objetoEmail.asunto = 'Cambiar Correo';
       let codigo = Math.floor((Math.random() * 100) + 54);
-      this.objetoEmail.codigo = codigo;
+
       let response = await this._agenteServicio.verificarExistenciaCorreo(this.objetoEmail).toPromise();
-      // let response = await this._emailServicio.envioEmail(this.objetoEmail).toPromise();
+      this.mensageCorrecto(response.message);
+      this.objetoEmail.codigo = codigo;
+       let responseCorreo = await this._correoServicio.correoCambioCorreo(this.objetoEmail).toPromise();
       localStorage.setItem("codigoCambioCorreo", JSON.stringify(codigo));
-      console.log("response", response);
-      this.mensageCorrecto(response['message']);
+      this.mensageCorrecto(responseCorreo.message);
+
       this.banderaPasoDosCambiarCorreo = true;
       this.banderaPasoUnoCambiarCorreo = false;
     } catch (e) {
