@@ -21,3 +21,31 @@
   padding-top: 10px;
   text-align: left;
 }
+
+/*TIENDAS*/
+.item-logo {
+  margin: 10px;
+  text-align: center;
+}
+
+.box {
+  padding: 15px;
+}
+
+#paginacion {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#paginacionTienda {
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+
+
+
+

@@ -719,15 +719,16 @@ async function obtenerFiltroBusquedaTodos(req, res) {
             transaction: t
         });
 
-
-
         let tiendasObtenidos = await TIENDA.findAll({
-            attributes: ['NOMBRE_COMERCIAL'],
-            where: {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino + '%'}},
+            attributes: ['NUM_TIENDA','NOMBRE_COMERCIAL', 'LOGO'],
+            where: {[Op.or]: [
+                    { NOMBRE_COMERCIAL: {[Op.like]: termino + '%'} },
+                    { NOMBRE_COMERCIAL: {[Op.like]: '%' + termino} },
+                    { NOMBRE_COMERCIAL: {[Op.like]: '%' + termino + '%'} }
+                ]},
             limit: 5,
             transaction: t
         });
-
 
         vectorEnviar.push(tiendasObtenidos);
         vectorEnviar.push(productosObtenidos);
@@ -735,9 +736,8 @@ async function obtenerFiltroBusquedaTodos(req, res) {
         await t.commit();
         res.status(200).send({
             data: vectorEnviar,
-            message: "Busqueda cargada correctamente."
+            message: "La búsqueda ha sido cargada correctamente."
         });
-
     } catch (e) {
         await t.rollback();
         res.status(500).send({
@@ -747,21 +747,17 @@ async function obtenerFiltroBusquedaTodos(req, res) {
 }
 
 async function obtenerTodasTiendas(req, res) {
-
     try {
         let tiendasObtenidas = await TIENDA.findAll();
-
         if (tiendasObtenidas.length > 0) {
             res.status(200).send({
                 data: tiendasObtenidas,
-                message: "Tiendas cargadas correctamente"
+                message: "Tiendas cargadas correctamente."
             });
         } else {
             res.status(404).send({
-                message: 'Al parecer  no se encuentra tiendas registradas en la base de datos'
+                message: 'Al parecer no se encuentran tiendas registradas en la base de datos'
             });
-
-
         }
     } catch (err) {
         res.status(500).send({

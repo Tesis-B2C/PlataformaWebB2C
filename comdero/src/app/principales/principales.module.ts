@@ -8,6 +8,7 @@ import {CategoriasComponent} from './categorias/categorias.component';
 import {CarouselModule} from 'ngx-owl-carousel-o';
 import {FormsModule} from "@angular/forms";
 import {BusquedaComponent} from './busqueda/busqueda.component';
+import {TypeaheadModule} from "ngx-bootstrap";
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {BusquedaComponent} from './busqueda/busqueda.component';
     PrincipalesRoutingModule,
     NgbModule,
     CarouselModule,
-    FormsModule
+    FormsModule,
+    TypeaheadModule
   ]
 })
 export class PrincipalesModule {

@@ -18,11 +18,11 @@ import {AdministradorTiendaModule} from "./administrador-tienda/administrador-ti
 /*import {GestionarTiendasModule} from "./administrador-tienda/gestionar-tiendas/gestionar-tiendas.module";*/
 import {FormsModule} from "@angular/forms";
 import {ArchwizardModule} from 'angular-archwizard';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
 import {MetodoEnvioServicio} from "./servicios/metodo_envio.servicio";
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import {DescuentoServicio} from "./servicios/descuento.servicio";
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 
@@ -50,12 +50,12 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
   providers: [
     DescuentoServicio,
     DpaServicio,
-    AgenteServicio, 
-    CategoriaServicio, 
+    AgenteServicio,
+    CategoriaServicio,
     UnidadMedidaServicio,
     ProductoServicio,
     MetodoPagoServicio,
-    MetodoEnvioServicio, 
+    MetodoEnvioServicio,
     TiendaServicio],
   bootstrap: [AppComponent]
 })

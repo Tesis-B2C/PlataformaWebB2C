@@ -47,7 +47,7 @@
 <!-- ========================= SECTION PAGETOP ========================= -->
 <section *ngIf="!this.banderaNoResultado" class="section-pagetop bg">
   <div class="container">
-    <p class="title-page">{{datosXpagina}} - 144 de {{this.vectorProductos.length}} resultados para "nike"</p>
+    <p class="title-page">{{paginaTamano+1}} - {{this.ultimoSerie}}  de {{this.vectorProductos.length}} resultados para "{{this.palabraBuscada}}"</p>
   </div> <!-- container //  -->
 </section>
 <!-- ========================= SECTION PAGETOP END// ========================= -->
@@ -56,7 +56,8 @@
 <!-- ========================= SECTION LISTADO DE PRODUCTOS// ========================= -->
 <section *ngIf="!this.banderaNoResultado" class="section-content padding-y-sm">
   <div class="container">
-    <article class="card card-product-list" *ngFor="let p of this.vectorProductos | slice: paginaTamano | slice: 0:datosXpagina">
+    <article class="card card-product-list"
+             *ngFor="let p of this.vectorProductos | slice: paginaTamano | slice: 0:datosXpagina">
       <div class="row no-gutters">
         <aside class="col-lg-3 col-md-3 col-sm-3 col-12">
           <a href="#" class="img-wrap">
@@ -69,7 +70,6 @@
             <a href="#" class="h5 title"> {{p.NOMBRE_PRODUCTO}} </a>
             <div class="rating-wrap mb-3">
               <ul class="rating-stars">
-
                 <ngb-rating *ngIf="p.PROMEDIO_CAL != null"
                             [(rate)]="p.PROMEDIO_CAL">
                   <ng-template let-fill="fill">
@@ -81,15 +81,11 @@
                     <span class="star" [class.filled]="fill === 100">&#9733;</span>
                   </ng-template>
                 </ngb-rating>
-
               </ul>
-
               <span *ngIf="p.TOTAL_COM != null"
                     class="label-rating text-muted">{{p.TOTAL_COM}} comentarios</span>
               <span *ngIf="p.TOTAL_COM == null" class="label-rating text-muted">0 Comentarios </span>
-
             </div> <!-- rating-wrap.// -->
-
             <p> {{p.DESCRIPCION_PRODUCTO}}
             </p>
           </div> <!-- info-main.// -->
@@ -107,20 +103,60 @@
               <a href="#" class="btn btn-light btn-block"><i class="fa fa-heart"></i>
                 <span class="text">Lista de deseos</span>
               </a>
-              <a href="#" class="title tituloTienda"> {{p.NOMBRE_COMERCIAL}}</a>
+              <a href="principales/menu/detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda"
+                 class="title tituloTienda text-primary"> {{p.NOMBRE_COMERCIAL}}</a>
             </p>
           </div> <!-- info-aside.// -->
         </aside> <!-- col.// -->
       </div> <!-- row.// -->
     </article> <!-- card-product .// -->
 
-    <ngb-pagination [collectionSize]="this.vectorProductos.length" #numPagina [(page)]="paginaActual" [pageSize]="datosXpagina" [maxSize]="4"
-                    [rotate]="true" [ellipses]="true"
-                    [boundaryLinks]="false" (pageChange)="onPageChange(paginaActual)"></ngb-pagination>
-
-
+    <ngb-pagination id="paginacionTienda" [collectionSize]="this.vectorProductos.length" #numPagina [(page)]="paginaActual"
+                    [pageSize]="datosXpagina" [maxSize]="4" [rotate]="true" [ellipses]="true"
+                    [boundaryLinks]="false" (pageChange)="onPageChange(paginaActual)">
+      <ng-template ngbPaginationPrevious>Anterior</ng-template>
+      <ng-template ngbPaginationNext>Siguiente</ng-template>
+    </ngb-pagination>
   </div> <!-- container .//  -->
 </section>
-
-
 <!-- ========================= SECTION LISTADO DE PRODUCTOS END// ========================= -->
+
+<!-- ========================= SECTION LISTADO DE TIENDAS  ========================= -->
+<section *ngIf="!this.banderaNoResultadoTiendas" class="section-name bg padding-y-sm">
+  <div class="container">
+    <header class="section-heading">
+      <h3 class="section-title">Tiendas asociadas</h3>
+    </header><!-- sect-heading -->
+
+    <div class="container card">
+      <pre><span class="float-md-right mt-3">Página {{ paginaActualTienda }} de {{numPaginaTienda.pageCount }}</span></pre>
+      <article class="card-product-list">
+        <div class="row no-gutters">
+          <div class="col-lg-3 col-md-3 col-sm-3 col-12"
+               *ngFor="let t of this.vectorTienda | slice: paginaTamanoTienda | slice: 0:datosXpaginaTienda">
+
+              <div class="mx-1">
+                <figure class="box item-logo">
+                  <a routerLink="../detalle-tienda/tienda/{{t.NUM_TIENDA}}/inicio-tienda"><img
+                    [src]="getImagen(t.LOGO) " style="width: 100%; min-height: 10rem"></a>
+                  <figcaption class="border-top pt-2 small">{{t.NOMBRE_COMERCIAL}}</figcaption>
+                </figure> <!-- item-logo.// -->
+              </div>
+
+          </div>
+        </div> <!-- row.// -->
+      </article> <!-- card-product .// -->
+
+      <ngb-pagination id="paginacion" [collectionSize]="this.vectorTienda.length" #numPaginaTienda [(page)]="paginaActualTienda"
+                      [pageSize]="datosXpaginaTienda" [maxSize]="4" [rotate]="true" [ellipses]="true"
+                      [boundaryLinks]="false" (pageChange)="onPageChangeTienda(paginaActualTienda)">
+        <ng-template ngbPaginationPrevious>Anterior</ng-template>
+        <ng-template ngbPaginationNext>Siguiente</ng-template>
+      </ngb-pagination>
+
+    </div> <!-- container .//  -->
+
+
+  </div><!-- container // -->
+</section>
+<!-- ========================= SECTION LISTADO DE TIENDAS  ========================= -->
