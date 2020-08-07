@@ -10,11 +10,13 @@
 
 <body [ngClass]="{'body-con-animacion': loading}">
 
-<div class="mx-auto mt-md-5 container-registro  p-3 bg-white rounded my-0">
-  <div *ngIf="this.agenteRegistrado"  class="alert alert-primary" role="alert">
-    <label  style="font-size: small">Si no recivio el correo de activación por favor de click  <a (click)="reEnviar()"><u><strong>aquí</strong></u></a> </label>
+<div class="mx-auto mt-md-3 container-registro  p-2 bg-white rounded my-0  ">
+  <div *ngIf="agenteRegistrado" class="alert alert-primary mb-0" role="alert">
+    <label  style="font-size: small">Si no recibío el correo de activación por favor de click  <a (click)="reEnviar()"><u><strong>aquí</strong></u></a> </label>
   </div>
-  <article class="  wrap-register100 card-body">
+
+
+  <article class="  wrap-register100 card-body ">
     <div id="divImagenLogo">
       <img id="imagenLogo" src="./../assets/images/logoValid2.png">
     </div>
@@ -334,6 +336,7 @@
   </article><!-- card-body.// -->
   <p class="text-center mt-2 " style="font-size: small">Tienes una cuenta? <a href="/loguin" style="font-size: small">Inicia
     sesión</a></p>
+  <br>
 </div> <!-- card .// -->
 
 

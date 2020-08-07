@@ -271,8 +271,6 @@ export class RegistroComponent implements OnInit, OnDestroy {
       }
 
 
-    }).then(function (Ok) {
-      this.router.navigate(['principales/menu/principal']);
-    });
+    })
   }
 }
