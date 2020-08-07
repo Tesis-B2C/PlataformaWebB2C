@@ -240,7 +240,11 @@ export class RegistroComponent implements OnInit, OnDestroy {
     document.getElementById('CallePrincipal').focus();
   }
 
+  formatear(element) {
+    let valor = element.target.value.trim();
+    element.target.value = valor;
 
+  }
   mensageError(mensaje) {
     Swal.fire({
       icon: 'error',

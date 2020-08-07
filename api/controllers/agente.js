@@ -78,7 +78,7 @@ async function registrarAgente(req, res) {
 async function autenticarAgente(req, res) {
     try {
         let params = req.body;
-        let correo = params.Correo;
+        let correo = params.Correo.trim();
         let contrasenia = params.Contrasenia;
         let agente = await AGENTE.findOne({
             where: {ESTADO: '0', CORREO: correo},
@@ -112,15 +112,15 @@ async function autenticarAgente(req, res) {
 async function autenticarActivarAgente(req, res) {
     try {
         let params = req.body;
-        let correo = params.Correo;
+        let correo = params.Correo.trim();
         let contrasenia = params.Contrasenia;
 
-        if (correo != req.user.email) {
+        if (correo != req.user.email.trim()) {
             res.status(500).send({
                 message: "token no valido"
             });
         } else {
-            let agente = await AGENTE.findOne({where: {ESTADO: '1', CORREO: req.user.email}});
+            let agente = await AGENTE.findOne({where: {ESTADO: '1', CORREO: req.user.email.trim()}});
             if (!agente) {
                 res.status(500).send({
                     message: "Al parecer el usuario no ha sido registrado"
@@ -156,7 +156,7 @@ async function autenticarActivarAgente(req, res) {
 async function resetearContrasenia(req, res) {
     try {
         let params = req.body;
-        let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: params.Correo}});
+        let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: params.Correo.trim()}});
         if (!agente) {
             res.status(404).send({
                 message: 'Usuario no encontrado'
@@ -179,7 +179,7 @@ async function resetearContrasenia(req, res) {
 async function resetearContrasenia2(req, res) {
 
     try {
-        let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: req.user.email}});
+        let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: req.user.email.trim()}});
         if (!agente) {
             res.status(500).send({
                 message: "token no valido"
@@ -214,7 +214,7 @@ async function actualizarAgente(req, res) {
             ID_AGENTE: req.body.Id_Agente,
             NOMBRE: req.body.Nombre,
             TELEFONO: req.body.Telefono,
-            CORREO: req.body.Correo,
+            CORREO: req.body.Correo.trim(),
             NUM_COD_POSTAL: req.body.Num_Cod_Postal,
             TIPO: req.body.Tipo,
             ESTADO: req.body.Estado,
@@ -240,24 +240,24 @@ async function actualizarAgente(req, res) {
 
 async function verificarExistenciaCorreo(req, res) {
     try {
-        let agenteEncontrado = await AGENTE.findOne({where: {CORREO: req.body.correo}});
+        let agenteEncontrado = await AGENTE.findOne({where: {CORREO: req.body.correo.trim()}});
 
         if (agenteEncontrado) {
             res.status(404).send({
                 message: 'Este correo electronico ya esta vinculado a una cuenta'
             });
         } else {
-          /*  let respuestaCorreo = await correo.EnviarCorreo(req.body.correo, req.body.asunto, req.body.codigo, null);
-            if (respuestaCorreo == false) {
-                agente.destroy({where: {CORREO: req.body.correo}});
-                res.status(500).send({
-                    message: 'Parece que hay un error en el correo electrónico intentalo más tarde'
-                });
-            } else {*/
-                res.status(200).send({
-                    message: 'Se ha enviado un código de comprobación a tu correo electronico'
-                });
-          /*  }*/
+            /*  let respuestaCorreo = await correo.EnviarCorreo(req.body.correo, req.body.asunto, req.body.codigo, null);
+              if (respuestaCorreo == false) {
+                  agente.destroy({where: {CORREO: req.body.correo}});
+                  res.status(500).send({
+                      message: 'Parece que hay un error en el correo electrónico intentalo más tarde'
+                  });
+              } else {*/
+            res.status(200).send({
+                message: 'Se ha enviado un código de comprobación a tu correo electronico'
+            });
+            /*  }*/
         }
     } catch (err) {
         res.status(500).send({
@@ -270,7 +270,7 @@ async function cambioCorreoAgente(req, res) {
     try {
         let agenteId = req.params.id;
         let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: agenteId}});
-        let agenteActualizado = await agente.update({CORREO: req.body.correo});
+        let agenteActualizado = await agente.update({CORREO: req.body.correo.trim()});
         if (!agenteActualizado) {
             res.status(404).send({message: 'El Usuario no ha sido actualizado'});
         } else {

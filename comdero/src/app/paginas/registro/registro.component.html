@@ -75,8 +75,8 @@
 
       </div>
       <div class="form-group">
-        <label>* Email</label>
-        <input #Email="ngModel" [(ngModel)]="this.Agente.Correo" style="text-transform: lowercase" [ngClass]="{
+        <label>* Correo electrónico</label>
+        <input #Email="ngModel"   [(ngModel)]="this.Agente.Correo" style="text-transform: lowercase" [ngClass]="{
           'is-invalid': Email.invalid && (Email.dirty || Email.touched),
           'is-valid': Email.valid && (Email.touched || Email.dirty )}" [pattern]='this.emailPattern'
                class="form-control tamanioInputs"
@@ -90,7 +90,7 @@
           </div>
           <div *ngIf="Email.errors.pattern">
             <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-              Debe cumplir con el formato</p>
+              Debe cumplir con el formato de correo electrónico</p>
           </div>
         </div>
       </div>

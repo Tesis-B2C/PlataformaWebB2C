@@ -482,7 +482,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
 
   public async publicarProducto() {
     try {
-      this.loading=true;
+      this.loading = true;
       if (this.validar()) {
         if (this.videoYoutube) {
           this.videoYoutubeGuardar = new Imagen_Producto('Video', 'youtube', this.direccionVideoYoutube, 0);
@@ -529,18 +529,18 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
       }
     }).then(async (result) => {
       if (result.value) {
-       try {
-         let response = await this._productoServicio.saveProducto(this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
-         this.mensageCorrecto(response.message);
-         this.cancelar();
-         this.loading = false;
-       }catch (e) {
-         this.loading = false;
-         console.log("error:" + e);
-         if (JSON.stringify((e).error.message))
-           this.mensageError(JSON.stringify((e).error.message));
-         else this.mensageError("Error de conexión intentelo mas tarde");
-       }
+        try {
+          let response = await this._productoServicio.saveProducto(this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
+          this.mensageCorrecto(response.message);
+          this.cancelar();
+          this.loading = false;
+        } catch (e) {
+          this.loading = false;
+          console.log("error:" + e);
+          if (JSON.stringify((e).error.message))
+            this.mensageError(JSON.stringify((e).error.message));
+          else this.mensageError("Error de conexión intentelo mas tarde");
+        }
       }
     })
 
@@ -612,7 +612,6 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
 
 
   formatear(element) {
-    debugger;
     let valor = this.cp.transform(element.target.value, '$',);
     //let alter=formatCurrency(element.target.value,'USD',getCurrencySymbol('USD', 'wide'));
     if (valor) {
