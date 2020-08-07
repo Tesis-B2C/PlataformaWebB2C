@@ -58,7 +58,7 @@
 
     </header>
 
-    <form #FormRegistroTienda id="formRegistroTienda" class="login100-form validate-form px-5">
+    <form #FormRegistroTienda id="formRegistroTienda" class="login100-form validate-form px-md-5">
 
       <aw-wizard [navBarLayout]="'large-empty-symbols'">
 
@@ -116,7 +116,7 @@
                        [pattern]='this.soloNumerosPattern'
                        class="tamanioInputs form-control" name="contactoW" placeholder="0999999999"
                        required type="text" minlength="10" maxlength="10"  >
-                <span style="font-size: x-small">los clientes podran contactarte a través de tu contacto de WhatsApp</span>
+                <span style="font-size: x-small">los clientes podran contactarte a través de  WhatsApp</span>
                 <div *ngIf="ContactoW.invalid && (ContactoW.dirty || ContactoW.touched)">
                   <div *ngIf="ContactoW.errors.required">
                     <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
@@ -299,7 +299,7 @@
               </div> <!-- form-row end.//-->
 
               <div class="form-row">
-                <div class="form-group col-6">
+                <div class="form-group col-md-6">
                   <label>* Provincia</label>
                   <select #ProvinciaC="ngModel" (change)="getDpaCiudades($event.target.value,0)"
                           [(ngModel)]="this.Sucursales[0].Provincia"
@@ -318,7 +318,7 @@
                   </div>
                 </div> <!--form-group end.-->
 
-                <div class="form-group col-6">
+                <div class="form-group col-md-6">
                   <label>* Ciudad</label>
                   <select #CiudadC="ngModel" [(ngModel)]="this.Sucursales[0].Ciudad" [ngClass]="{
           'errorSelect': CiudadC.invalid && (CiudadC.dirty || CiudadC.touched),
@@ -405,7 +405,7 @@
                 </div> <!-- form-row end.//-->
 
                 <div class="form-row">
-                  <div class="form-group col-6">
+                  <div class="form-group col-md-6">
                     <label>* Provincia</label>
                     <select #ProvinciaN="ngModel" (change)="getDpaCiudades($event.target.value, i)"
                             [(ngModel)]="this.Sucursales[i].Provincia"
@@ -425,7 +425,7 @@
                     </div>
                   </div> <!--form-group end.-->
 
-                  <div class="form-group col-6">
+                  <div class="form-group col-md-6">
                     <label>* Ciudad</label>
                     <select #CiudadN="ngModel" [(ngModel)]="this.Sucursales[i].Ciudad" [ngClass]="{
                     'errorSelect': CiudadN.invalid && (CiudadN.dirty || CiudadN.touched),
@@ -495,7 +495,7 @@
               <div class="col-6 form-group text-right">
                 <button (click)="ValidarPaso2(2)" type="button"
                         [hidden]="!FormPaso2.checkValidity()"
-                        class="btn btn-primary px-4 btn-Wizard">ContinuarValid
+                        class="btn btn-primary px-4 btn-Wizard">Continuar
                 </button>
                 <button (click)="ValidarPaso2(0)" type="button"
                         [hidden]="FormPaso2.checkValidity()"
@@ -659,9 +659,9 @@
               </div>
               <div class="form-group col-8 text-right mb-0">
                 <button (click)="FinalPaso3('Omitir')" style="font-size: small" type="button"
-                        class="btn btn-outline-primary mr-1">Omitir
+                        class="btn btn-outline-primary mr-1 ">Omitir
                 </button>
-                <button (click)="FinalPaso3('Final')" type="button" class="btn btn-primary px-3 btn-Wizard">Enviar
+                <button (click)="FinalPaso3('Final')" type="button" class="btn btn-primary px-3 btn-Wizard ">Enviar
                 </button>
               </div>
               <!--              <div class="form-group col-12 pr-2 pt-1">

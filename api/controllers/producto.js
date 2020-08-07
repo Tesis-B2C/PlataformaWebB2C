@@ -177,12 +177,12 @@ async function getProducto(req, res) {
             include: {
                 model: Producto,
                 include: [{
-                    model: Variante, where: {ID_PRODUCTO: req.params.id},
+                    model: Variante,
                     separate: true,
                     order: [['NUM_VARIANTE', 'ASC']],
                     include: {model: Imagen_Producto, separate: true, order: [['ID_IMAGEN', 'ASC']]}
                 }, {
-                    model: Producto_Categoria, where: {ID_PRODUCTO: req.params.id},
+                    model: Producto_Categoria,
                     include: {model: Categoria}
                 }],
 

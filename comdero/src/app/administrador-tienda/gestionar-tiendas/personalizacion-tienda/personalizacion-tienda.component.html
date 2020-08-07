@@ -156,10 +156,10 @@
           <hr>
           <div class="text-right">
             <button
-              (click)="this.updatePersonalizacionTienda()" class="btn btn-primary text-nowrap mb-4  col-auto"
+              (click)="this.updatePersonalizacionTienda()" [disabled]="loading" class="btn btn-primary text-nowrap mb-4  col-auto"
               type="button">
               <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
-              Guardar Producto &nbsp;&nbsp;
+              Guardar Cambios &nbsp;&nbsp;
               <span class="fa fa-save"></span>
             </button>
             &nbsp;&nbsp;

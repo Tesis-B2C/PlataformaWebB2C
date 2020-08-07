@@ -28,6 +28,7 @@ export class CambiarContraseniaComponent implements OnInit {
       this.loading = true;
       if (this.objCambiarContrasenia.contraseniaActual == this.objCambiarContrasenia.contraseniaNueva) {
         this.mensageError("La contraseña debe ser diferente a la actual");
+        this.loading=false;
 
       } else {
         let identidad = this._agenteServicio.getIdentity();

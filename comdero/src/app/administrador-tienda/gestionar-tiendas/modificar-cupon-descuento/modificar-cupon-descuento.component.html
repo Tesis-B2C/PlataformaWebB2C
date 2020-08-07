@@ -326,11 +326,11 @@
           <h6>Acciones</h6>
           <hr>
           <div class="text-right">
-            <button *ngIf="banderaModificar" (click)="this.guardarDescuento()"
+            <button *ngIf="banderaModificar" (click)="this.guardarDescuento()" [disabled]="loading"
                     class="btn btn-primary text-nowrap mb-4  col-auto"
                     type="button">
               <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
-              Guardar Producto &nbsp;&nbsp;
+              Guardar Cambios &nbsp;&nbsp;
               <span class="fa fa-save"></span>
             </button>
             &nbsp;&nbsp;

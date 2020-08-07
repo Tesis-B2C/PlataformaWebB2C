@@ -14,7 +14,7 @@ const routes: Routes = [
       {path: 'categorias', component: CategoriasComponent},
       {path: 'busqueda/:palabraBuscada', component: BusquedaComponent},
       {path: 'detalle-tienda', loadChildren:'./detalle-tienda/detalle-tienda.module#DetalleTiendaModule'},
-      {path: 'mi-cuenta/:id', loadChildren: './mi-cuenta/mi-cuenta.module#MiCuentaModule'}
+      {path: 'mi-cuenta', loadChildren: './mi-cuenta/mi-cuenta.module#MiCuentaModule'}
     ]
   },
 

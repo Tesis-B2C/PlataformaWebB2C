@@ -82,10 +82,10 @@
     <h6>Acciones</h6>
     <hr>
     <div class="text-right">
-      <button [disabled]="!FormCambiarContrasenia.checkValidity()"   (click)="actualizarContrasenia()" href="#" class="btn btn-primary text-nowrap mb-4  col-auto"
+      <button [disabled]="!FormCambiarContrasenia.checkValidity() || loading"   (click)="actualizarContrasenia()" href="#" class="btn btn-primary text-nowrap mb-4  col-auto"
                type="button">
         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
-       &nbsp; Cambiar contraseña  <span class="fas fa-retweet "></span>
+       &nbsp; Cambiar Contraseña  <span class="fas fa-retweet "></span>
       </button>
       &nbsp;&nbsp;
 

@@ -561,10 +561,10 @@
           <h6>Acciones</h6>
           <hr>
           <div class="text-right">
-            <button *ngIf="banderaModificar" (click)="this.guardarProducto()" class="btn btn-primary text-nowrap mb-4  col-auto"
+            <button *ngIf="banderaModificar" [disabled]="loading" (click)="this.guardarProducto()" class="btn btn-primary text-nowrap mb-4  col-auto"
                     type="button">
               <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
-              Guardar Producto &nbsp;&nbsp;
+              Guardar Cambios &nbsp;&nbsp;
               <span class="fa fa-save"></span>
             </button>
             &nbsp;&nbsp;
@@ -575,15 +575,15 @@
 
 
             &nbsp;&nbsp;
-            <button *ngIf="!banderaModificar && identidadProducto.ESTADO_OFERTA==0" class="btn btn-warning text-nowrap mb-4  col-auto" (click)="iniciarEdicion()">
+            <button *ngIf="!banderaModificar && identidadProducto?.ESTADO_OFERTA==0" class="btn btn-warning text-nowrap mb-4  col-auto" (click)="iniciarEdicion()">
               Modificar &nbsp;&nbsp;
               <span class="fa fa-edit"></span></button>
             &nbsp;&nbsp;
-            <button *ngIf="!banderaModificar && identidadProducto.ESTADO_OFERTA==0" class="btn btn-light text-nowrap mb-4  col-auto" (click)="guardarCambiarEstadoProducto(1)">
+            <button *ngIf="!banderaModificar && identidadProducto?.ESTADO_OFERTA==0" class="btn btn-light text-nowrap mb-4  col-auto" (click)="guardarCambiarEstadoProducto(1)">
               Ocultar &nbsp;&nbsp;
               <span class="fa fa-eye-slash"></span></button>
 
-            <button *ngIf="!banderaModificar && identidadProducto.ESTADO_OFERTA==1" class="btn btn-light text-nowrap mb-4  col-auto" (click)="guardarCambiarEstadoProducto(0)">
+            <button *ngIf="!banderaModificar && identidadProducto?.ESTADO_OFERTA==1" class="btn btn-light text-nowrap mb-4  col-auto" (click)="guardarCambiarEstadoProducto(0)">
               Mostrar &nbsp;&nbsp;
               <span class="fa fa-eye"></span></button>
             &nbsp;&nbsp;
