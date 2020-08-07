@@ -255,7 +255,7 @@ async function verificarExistenciaCorreo(req, res) {
                 });
             } else {*/
                 res.status(200).send({
-                    message: 'El correo ha sido verificado y aceptado '
+                    message: 'Se ha enviado un código de comprobación a tu correo electronico'
                 });
           /*  }*/
         }

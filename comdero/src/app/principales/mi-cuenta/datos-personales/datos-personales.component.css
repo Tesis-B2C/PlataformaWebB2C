@@ -51,3 +51,7 @@ button{
 .select_ciudad{
   border: solid  1px red;
 }
+
+a:hover{
+  cursor: pointer;
+}

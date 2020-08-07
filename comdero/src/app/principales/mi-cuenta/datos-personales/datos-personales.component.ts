@@ -44,7 +44,7 @@ export class DatosPersonalesComponent implements OnInit {
     codigo: null
   };
 
-  constructor(private _correoServicio:CorreoServicio, public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal) {
+  constructor(private _correoServicio: CorreoServicio, public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal) {
     this.EditarAgente = new Agente(null, null, null,
       null, null, null, 0, null, null,
       null, null, null, null);
@@ -210,13 +210,12 @@ export class DatosPersonalesComponent implements OnInit {
       this.objetoEmail.correo = this.Correo;
       this.objetoEmail.asunto = 'Cambiar Correo';
       let codigo = Math.floor((Math.random() * 100) + 54);
-
       let response = await this._agenteServicio.verificarExistenciaCorreo(this.objetoEmail).toPromise();
       this.mensageCorrecto(response.message);
       this.objetoEmail.codigo = codigo;
-       let responseCorreo = await this._correoServicio.correoCambioCorreo(this.objetoEmail).toPromise();
+      let responseCorreo = await this._correoServicio.correoCambioCorreo(this.objetoEmail).toPromise();
       localStorage.setItem("codigoCambioCorreo", JSON.stringify(codigo));
-      this.mensageCorrecto(responseCorreo.message);
+      //this.mensageCorrecto(responseCorreo.message);
 
       this.banderaPasoDosCambiarCorreo = true;
       this.banderaPasoUnoCambiarCorreo = false;
@@ -323,6 +322,18 @@ export class DatosPersonalesComponent implements OnInit {
         this.EditarAgente.Id_Agente = "";
         return false;
       }
+    }
+  }
+
+  public async reEnviar() {
+    try {
+      let responseCorreo = await this._correoServicio.correoCambioCorreo(this.objetoEmail).toPromise();
+      this.mensageCorrecto(responseCorreo.message);
+    } catch (e) {
+      console.log("error:" + JSON.stringify((e).error.message));
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
     }
   }
 
