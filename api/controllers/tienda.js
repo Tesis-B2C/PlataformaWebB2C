@@ -23,7 +23,6 @@ const CALIFICACION = require("../models/calificacion");
 const COMENTARIO = require("../models/comentario");
 
 
-
 const {Op} = require("sequelize");
 
 /*const {QueryTypes} = require('sequelize');*/
@@ -62,7 +61,7 @@ async function registrarTienda(req, res) {
                     HORARIO_ATENCION: params.Tienda.Horario_Atencion,
                     LOGO: logo,
                     BANNER: banner,
-                    CONTACTO_WHATSAPP:params.Tienda.Contacto_WhatsApp
+                    CONTACTO_WHATSAPP: params.Tienda.Contacto_WhatsApp
                 },
                 {
                     transaction: t
@@ -666,18 +665,18 @@ async function obtenerFiltroBusquedaTodos(req, res) {
         let productosObtenidos = await OFERTA.findAll({
             include: [{
                 model: PRODUCTO,
-                attributes: ['ID_PRODUCTO', 'COD_PRODUCTO','ID_OFERTA', 'NOMBRE_PRODUCTO','DESCRIPCION_PRODUCTO'],
+                attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'ID_OFERTA', 'NOMBRE_PRODUCTO', 'DESCRIPCION_PRODUCTO'],
                 where: {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino + '%'}},
                 include: [{
                     model: VARIANTE,
                     separate: true,
-                    attributes: ['ID_PRODUCTO','NUM_VARIANTE','PRECIO_UNITARIO'],
+                    attributes: ['ID_PRODUCTO', 'NUM_VARIANTE', 'PRECIO_UNITARIO'],
                     group: ['ID_PRODUCTO', 'COD_PRODUCTO'],
                     order: [['NUM_VARIANTE', 'ASC']],
                     include: {
                         model: IMAGEN_PRODUCTO,
                         separate: true,
-                        attributes: ['NUM_VARIANTE','IMAGEN'],
+                        attributes: ['NUM_VARIANTE', 'IMAGEN'],
                         group: 'NUM_VARIANTE',
                         order: [['ID_IMAGEN', 'ASC']]
                     }
@@ -694,12 +693,11 @@ async function obtenerFiltroBusquedaTodos(req, res) {
                 }]
             }, {
                 model: TIENDA,
-                attributes: ['NUM_TIENDA','NOMBRE_COMERCIAL']
+                attributes: ['NUM_TIENDA', 'NOMBRE_COMERCIAL']
             }],
             attributes: ['ID_OFERTA'],
             transaction: t
         });
-
 
 
         let tiendasObtenidos = await TIENDA.findAll({
@@ -730,7 +728,11 @@ async function obtenerFiltroBusquedaTodos(req, res) {
 async function obtenerTodasTiendas(req, res) {
 
     try {
-        let tiendasObtenidas = await TIENDA.findAll();
+        let tiendasObtenidas = await TIENDA.findAll({
+            where: {
+                ESTADO_TIENDA: 0
+            }
+        });
 
         if (tiendasObtenidas.length > 0) {
             res.status(200).send({
