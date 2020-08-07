@@ -11,6 +11,9 @@
 <body [ngClass]="{'body-con-animacion': loading}">
 
 <div class="mx-auto mt-md-5 container-registro  p-3 bg-white rounded my-0">
+  <div *ngIf="this.agenteRegistrado"  class="alert alert-primary" role="alert">
+    <label  style="font-size: small">Si no recivio el correo de activación por favor de click  <a (click)="reEnviar()"><u><strong>aquí</strong></u></a> </label>
+  </div>
   <article class="  wrap-register100 card-body">
     <div id="divImagenLogo">
       <img id="imagenLogo" src="./../assets/images/logoValid2.png">
@@ -42,10 +45,10 @@
                  type="text"> <!--form-control-sm-->
           <div *ngIf="NombreA.invalid && (NombreA.dirty || NombreA.touched)">
             <div *ngIf="NombreA.errors.required">
-              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+              <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
             </div>
             <div *ngIf="NombreA.errors.pattern">
-              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+              <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                 Utilice solo letras.</p>
             </div>
           </div>
@@ -60,10 +63,10 @@
                required type="text">
         <div *ngIf="Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched)">
           <div *ngIf="Razon_Social.errors.required">
-            <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+            <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
           </div>
           <div *ngIf="Razon_Social.errors.pattern">
-            <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
+            <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
               numeros.</p>
           </div>
         </div>
@@ -80,11 +83,11 @@
 
         <div *ngIf="Email.invalid && (Email.touched||Email.dirty)">
           <div *ngIf="Email.errors.required">
-            <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+            <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
               Campo requerido.</p>
           </div>
           <div *ngIf="Email.errors.pattern">
-            <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+            <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
               Debe cumplir con el formato</p>
           </div>
         </div>
@@ -114,19 +117,19 @@
                    type="text">
             <div *ngIf="Cedula.invalid && (Cedula.dirty || Cedula.touched)">
               <div *ngIf="Cedula.errors.required">
-                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo
                   requerido.</p>
               </div>
               <div *ngIf="Cedula.errors.minlength">
-                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                   Minimo 10 digitos.</p>
               </div>
               <div *ngIf="Cedula.errors.maxlength">
-                <p class="alert alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
+                <p class="alert1 alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
                   Maximo 10 digitos.</p>
               </div>
               <div *ngIf="Cedula.errors.pattern">
-                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                   Utilice solo numeros. </p>
               </div>
             </div>
@@ -140,20 +143,20 @@
                    minlength="13" name="ruc" placeholder="" required type="text">
             <div *ngIf="Ruc.invalid && (Ruc.dirty || Ruc.touched)">
               <div *ngIf="Ruc.errors.required">
-                <p class="alert alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
+                <p class="alert1 alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
                   Campo requerido.</p>
               </div>
               <div *ngIf="Ruc.errors.minlength">
-                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                   Minimo 13 digitos.</p>
 
               </div>
               <div *ngIf="Ruc.errors.maxlength">
-                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                   Maximo 13 digitos.</p>
               </div>
               <div *ngIf="Ruc.errors.pattern">
-                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                   Use solo numeros.</p>
               </div>
             </div>
@@ -167,12 +170,12 @@
                    type="tel">
             <div *ngIf="Telefono.invalid && (Telefono.dirty|| Telefono.touched) ">
               <div *ngIf="Telefono.errors.required">
-                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                   Campo requerido.</p>
               </div>
 
               <div *ngIf="Telefono.errors.pattern">
-                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                   Utilice solo numeros.</p>
               </div>
             </div>
@@ -196,7 +199,7 @@
             </select>
             <div *ngIf="Provincia.invalid && (Provincia.touched||Provincia.dirty)">
               <div *ngIf="Provincia.errors.required">
-                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                   Campo equerido</p>
               </div>
 
@@ -215,7 +218,7 @@
             </select>
             <div *ngIf="Ciudad.invalid && (Ciudad.touched||Ciudad.dirty)">
               <div *ngIf="Ciudad.errors.required">
-                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                   Campo requerido.</p>
               </div>
             </div>
@@ -234,7 +237,7 @@
                name="callePrincipal" placeholder="" required id="CallePrincipal">
         <div *ngIf="CallePrincipal.invalid && (CallePrincipal.touched||CallePrincipal.dirty)">
           <div *ngIf="CallePrincipal.errors.required">
-            <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+            <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
               Campo requerido.</p>
           </div>
         </div>
@@ -249,7 +252,7 @@
                name="calleSecundaria" placeholder="" required id="calleSecundaria">
         <div *ngIf="CalleSecundaria.invalid && (CalleSecundaria.touched||CalleSecundaria.dirty)">
           <div *ngIf="CalleSecundaria.errors.required">
-            <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+            <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
               Campo requerido.</p>
           </div>
 
@@ -281,11 +284,11 @@
                  name="password" placeholder="" required type="password">
           <div *ngIf="Password.invalid && (Password.touched||Password.dirty)">
             <div *ngIf="Password.errors.required">
-              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+              <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                 Campo requerido.</p>
             </div>
             <div *ngIf="Password.errors.minlength">
-              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+              <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                 Más de 6 caracteres.</p>
             </div>
           </div>
@@ -299,11 +302,11 @@
                  class="tamanioInputs form-control" name="passwordR" placeholder="" required type="password">
           <div *ngIf="PasswordR.invalid && (PasswordR.touched||PasswordR.dirty)">
             <div *ngIf="PasswordR.errors.required">
-              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+              <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                 Campo requerido.</p>
             </div>
             <div *ngIf="PasswordR.errors.pattern">
-              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+              <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                 La contraseña no coincide.</p>
             </div>
           </div>

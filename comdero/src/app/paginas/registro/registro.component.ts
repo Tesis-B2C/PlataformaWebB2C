@@ -35,7 +35,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
   public loading: boolean = false;
   public banderaTipo: boolean = true;
 
-  constructor(private _correoServicio:CorreoServicio, public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio) {
+  constructor(private _correoServicio: CorreoServicio, public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio) {
     this.Agente = new Agente(null, null, null,
       null, null, "Persona", 1, null, null,
       null, null, null, null);
@@ -117,26 +117,27 @@ export class RegistroComponent implements OnInit, OnDestroy {
       this.loading = false;
 
     }
-    if (this.banderaToast&& !document.forms["formRegistro"].checkValidity()) {
+    if (this.banderaToast && !document.forms["formRegistro"].checkValidity()) {
       this.mostrarToast("Asegurate de llenar todos los campos obligatorios marcados con *", "");
     }
 
-    if(this.banderaToastCedula){
+    if (this.banderaToastCedula) {
       this.mostrarToast("Al parecer no ingreso una cédula válida", "");
     }
 
   }
 
   public agenteRegistrado;
+
   async registrarAgente1() {
 
     try {
       let response = await this._agenteServicio.registrarAgente(this.Agente).toPromise();
-       this.agenteRegistrado= response.data;
+      this.agenteRegistrado = response.data;
       window.scroll(0, 0);
       this.mensageCorrecto(response.message);
       let correoresponse = await this._correoServicio.correoActivacion(this.agenteRegistrado).toPromise();
-      this.mensageCorrecto(correoresponse.message);
+      //  this.mensageCorrecto(correoresponse.message);
       this.loading = false;
       delete this.Agente;
       this.Agente = new Agente(null, null, null,
@@ -152,7 +153,21 @@ export class RegistroComponent implements OnInit, OnDestroy {
     }
   }
 
-  async getDpaProvincias(buscar) {
+  async reEnviar() {
+    try {
+      let correoresponse = await this._correoServicio.correoActivacion(this.agenteRegistrado).toPromise();
+      this.mensageCorrecto(correoresponse.message);
+    } catch (e) {
+      console.log("error:" + JSON.stringify((e).error.message));
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+      this.loading = false;
+    }
+
+  }
+
+ async getDpaProvincias(buscar) {
     try {
       let response = await this._dpaServicio.getDpaProvincias(buscar).toPromise();
       this.provincias = response.data;
@@ -161,13 +176,15 @@ export class RegistroComponent implements OnInit, OnDestroy {
     }
   }
 
+
+
   async getDpaCiudades(buscar) {
     try {
       let response = await this._dpaServicio.getDpaCiudades(buscar).toPromise();
       this.ciudades = response.data;
     } catch (e) {
       console.log("error:" + JSON.stringify((e).error.message));
-  }
+    }
   }
 
   activarDireccion() {
@@ -180,7 +197,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
       this.Agente.Calle_Secundaria_Agente = null;
       this.Agente.Id_Agente = null;
       this.Agente.Telefono = null;
-      this.Agente.Ciudad=null;
+      this.Agente.Ciudad = null;
     }
   }
 
@@ -254,7 +271,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
       }
 
 
-    }).then(function(Ok){
+    }).then(function (Ok) {
       this.router.navigate(['principales/menu/principal']);
     });
   }
