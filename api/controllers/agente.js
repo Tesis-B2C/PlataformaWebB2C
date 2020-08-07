@@ -163,7 +163,7 @@ async function resetearContrasenia(req, res) {
             });
         } else {
             res.status(200).send({
-                message: 'Por favor revisa tu correo electrónico para resetear tu contraseña',
+                message: 'Por favor revisa tu correo electrónico para cambiar tu contraseña',
                 data: agente.dataValues
             });
 
