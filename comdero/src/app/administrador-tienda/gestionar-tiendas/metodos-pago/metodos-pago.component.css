@@ -20,6 +20,7 @@ input {
 }
 label{
   font-size: small;
+  text-align: justify;
 }
 select{
   font-size: small;

@@ -16,7 +16,7 @@ export class InicioTiendaComponent implements OnInit {
   currentRate = 1;
 
   public page = 1;
-  public pageSize = 10;
+  public pageSize = 15;
   public result = [];
 
   public loading:boolean=false;

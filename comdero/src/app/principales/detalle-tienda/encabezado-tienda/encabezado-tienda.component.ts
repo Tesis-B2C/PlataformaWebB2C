@@ -68,7 +68,7 @@ export class EncabezadoTiendaComponent implements OnInit {
   }
 
   getBanner() {
-    this.Banner = 'assets/images/no-image.png';
+    this.Banner = 'assets/images/no-imagen8.png';
     let pathImagen = this.Tienda.BANNER;
     if (pathImagen) {
       this.Banner = 'http://localhost:3977/' + pathImagen;

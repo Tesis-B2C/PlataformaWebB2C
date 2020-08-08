@@ -19,6 +19,8 @@ const PRODUCTO_CATEGORIA = require("../models/producto_categoria");
 const CATEGORIA = require("../models/categoria");
 const CALIFICACION = require("../models/calificacion");
 const COMENTARIO = require("../models/comentario");
+
+
 const {Op} = require("sequelize");
 
 /*const {QueryTypes} = require('sequelize');*/
@@ -704,6 +706,7 @@ async function obtenerFiltroBusquedaTodos(req, res) {
             transaction: t
         });
 
+
         let tiendasObtenidos = await TIENDA.findAll({
             attributes: ['NUM_TIENDA', 'NOMBRE_COMERCIAL', 'LOGO'],
             where: {
@@ -735,7 +738,12 @@ async function obtenerFiltroBusquedaTodos(req, res) {
 
 async function obtenerTodasTiendas(req, res) {
     try {
-        let tiendasObtenidas = await TIENDA.findAll();
+        let tiendasObtenidas = await TIENDA.findAll({
+            where: {
+                ESTADO_TIENDA: 0
+            }
+        });
+
         if (tiendasObtenidas.length > 0) {
             res.status(200).send({
                 data: tiendasObtenidas,

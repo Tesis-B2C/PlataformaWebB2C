@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import Swal from "sweetalert2";
+import {CorreoServicio} from "../../servicios/correo.servicio";
 @Component({
   selector: 'app-olvido-contrasenia',
   templateUrl: './olvido-contrasenia.component.html',
@@ -10,18 +11,20 @@ export class OlvidoContraseniaComponent implements OnInit {
 
   public Correo;
   public  loading:boolean=false;
-  constructor(private _agenteServicio: AgenteServicio) { }
+  constructor(private _correoServicio:CorreoServicio, private _agenteServicio: AgenteServicio) { }
 
   ngOnInit() {
 
   }
-
+public response;
   public async resetearContrasenia() {
     this.loading = true;
     let obj={Correo: this.Correo}
     try {
-      let response = await this._agenteServicio.resetearContrasenia(obj).toPromise();
-      this.mensageCorrecto(response.message);
+     this.response= await this._agenteServicio.resetearContrasenia(obj).toPromise();
+      this.mensageCorrecto(this.response.message);
+      let correoResponse=  await this._correoServicio.correoCambioContrasenia(this.response.data).toPromise();
+      //this.mensageCorrecto(correoResponse.message);
        this.loading=false;
     } catch (e) {
       this.loading = false;
@@ -31,6 +34,18 @@ export class OlvidoContraseniaComponent implements OnInit {
     }
   }
 
+  public async reEnviar(){
+    try {
+
+    let correoResponse=  await this._correoServicio.correoCambioContrasenia(this.response.data).toPromise();
+    this.mensageCorrecto(correoResponse.message);
+    } catch (e) {
+      this.loading = false;
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
+  }
 
   mensageError(mensaje)
   {

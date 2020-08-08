@@ -63,14 +63,19 @@
         <span class="input-group-text  small"><li class="fas fa-search"></li></span>
       </div>
       &nbsp;  &nbsp;  &nbsp;
-      <div *ngIf="loading">
-      <label>Buscandos...</label>
-      &nbsp;  &nbsp;  &nbsp;
-      <div class="spinner-grow text-primary ml-auto" role="status" aria-hidden="true"></div>
-      </div>
+
     </div>
+
     <div class="col-md-auto ">
       <button class="btn btn-primary w-100 mt-md-0 mt-2" style="font-size:small">Nuevo Producto</button>
+    </div>
+
+  </div>
+  <div *ngIf="loading">
+    <label>Buscando  . . .</label>
+    &nbsp;  &nbsp;  &nbsp;
+    <div class="progress">
+      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
     </div>
   </div>
 
@@ -96,7 +101,8 @@
 
 
   </div>
-  <table class="table table-bordered table-responsive-sm bg-white small w-100 text-center">
+  <div  *ngIf="this.result.length==0" class="ml-1"><p>No se encontraron resultados.</p></div>
+  <table class="table table-bordered table-responsive-sm bg-white small w-100 text-center" *ngIf="this.result.length>0">
     <thead>
     <tr>
       <th scope="col"><input (click)="agregarTodosProductos($event)" id="rastrearCantidad" type="checkbox"></th>

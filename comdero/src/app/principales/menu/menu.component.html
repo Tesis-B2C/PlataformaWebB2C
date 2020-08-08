@@ -24,9 +24,8 @@
               </div>
             </div>
 
-            <input (keyup.enter)="buscarPalabra(this.palabraBuscadora)" id="typeahead-format" type="text" class="form-control"
-                   (keyup)="buscarDatos(this.palabraBuscadora)" #buscarTexto
-                   [(ngModel)]="this.palabraBuscadora" [ngbTypeahead]="buscarDatosTerm"/>
+            <input (keyup.enter)="buscarPalabra(this.palabraBuscadora)" id="typeahead-format" type="text" class="form-control" (keyup)="buscarDatos()" #buscarTexto
+                   [(ngModel)]="this.palabraBuscadora" [ngbTypeahead]="buscarDatosTerm" />
 
             <div class="input-group-append">
               <button class="btn btnTodos" type="submit" (click)="buscarPalabra(buscarTexto.value)">
@@ -55,7 +54,7 @@
 
                 <div class="dropdown-menu ">
                   <a class="dropdown-item" href="#" routerLink="mi-cuenta/menu-mi-cuenta/vision-general"><span
-                    class="fa fa-user "></span> &nbsp;Mi cuenta</a>
+                    class="fa fa-user "></span> &nbsp;Mi cuentas</a>
 
                   <a class="dropdown-item" href="#" routerLink="/administrador/administrador-tienda/mis-tiendas">
                     <span class="fas fa-store-alt mr-2"></span>

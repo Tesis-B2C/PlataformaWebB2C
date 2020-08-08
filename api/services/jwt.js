@@ -5,7 +5,7 @@ var secret = 'clave_secreta_curso';
 
 exports.createToken = function (user) {
     var payload = {
-        id: user.ID_AGENTE,// para guardar el id del objeto usuario  -----leer esto esta diciendo que nomas va en el hash codificado
+        id: user.COD_AGENTE,// para guardar el id del objeto usuario  -----leer esto esta diciendo que nomas va en el hash codificado
         name: user.NOMBRE,
         email: user.CORREO,
         type: user.TIPO,
@@ -20,7 +20,7 @@ exports.createToken = function (user) {
 
 exports.createToken24h = function (user) {
     var payload = {
-        id: user.ID_AGENTE,// para guardar el id del objeto usuario  -----leer esto esta diciendo que nomas va en el hash codificado
+        id: user.COD_AGENTE,// para guardar el id del objeto usuario  -----leer esto esta diciendo que nomas va en el hash codificado
         name: user.NOMBRE,
         email: user.CORREO,
         type: user.TIPO,

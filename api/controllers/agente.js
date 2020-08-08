@@ -21,7 +21,7 @@ async function registrarAgente(req, res) {
             console.log("params", req.body);
             let agente = AGENTE.build();
             agente.ID_AGENTE = req.body.Id_Agente;
-            agente.NOMBRE = req.body.Nombre;
+            agente.NOMBRE = req.body.Nombre.toUpperCase();
             agente.TELEFONO = req.body.Telefono;
             agente.CORREO = req.body.Correo;
             agente.NUM_COD_POSTAL = req.body.Num_Cod_Postal;
@@ -36,22 +36,25 @@ async function registrarAgente(req, res) {
             });
             let agenteGuardado = await agente.save();
             if (agenteGuardado) {
-                let TOKENTEMPORAL = jwt.createToken24h(agente);
-                let respuestaCorreo = await correo.EnviarCorreo(agente.CORREO, 'Activación de cuenta', agente.NOMBRE, TOKENTEMPORAL);
+                /*  let TOKENTEMPORAL = jwt.createToken24h(agente);
+                  let respuestaCorreo = await correo.EnviarCorreo(agente.CORREO, 'Activación de cuenta', agente.NOMBRE, TOKENTEMPORAL);
 
-                if (respuestaCorreo == false) {
-                   // agente.destroy({where: {CORREO: agente.CORREO}});
-                    res.status(500).send({
-                        message: 'Parece que hay un error en el correo electrónico intentalo más tarde'
-                    });
-                } else if (req.body.Num_Cod_Postal) {
+                  if (respuestaCorreo == false) {
+                     // agente.destroy({where: {CORREO: agente.CORREO}});
+                      res.status(500).send({
+                          message: 'Parece que hay un error en el correo electrónico intentalo más tarde'
+                      });
+                  } else*/
+                if (req.body.Num_Cod_Postal) {
                     res.status(200).send({
-                        message: 'Por favor revisa tu correo electrónico para activar tu cuenta'
+                        message: 'Por favor revisa tu correo electrónico ' + agente.CORREO + 'para activar tu cuenta',
+                        data: agenteGuardado
                     });
                 } else {
                     res.status(200).send({
                         message: 'No se ha registrado una dirección aun, esperamos lo puedas hacer pronto,' +
-                            'Porfavor revisa tu correo electrónico: ' + agente.CORREO + '  para activar tu cuenta'
+                            'Porfavor revisa tu correo electrónico: ' + agente.CORREO + '  para activar tu cuenta',
+                        data: agenteGuardado
                     });
                 }
             } else {
@@ -75,7 +78,7 @@ async function registrarAgente(req, res) {
 async function autenticarAgente(req, res) {
     try {
         let params = req.body;
-        let correo = params.Correo;
+        let correo = params.Correo.trim();
         let contrasenia = params.Contrasenia;
         let agente = await AGENTE.findOne({
             where: {ESTADO: '0', CORREO: correo},
@@ -109,15 +112,15 @@ async function autenticarAgente(req, res) {
 async function autenticarActivarAgente(req, res) {
     try {
         let params = req.body;
-        let correo = params.Correo;
+        let correo = params.Correo.trim();
         let contrasenia = params.Contrasenia;
 
-        if (correo != req.user.email) {
+        if (correo != req.user.email.trim()) {
             res.status(500).send({
                 message: "token no valido"
             });
         } else {
-            let agente = await AGENTE.findOne({where: {ESTADO: '1', CORREO: req.user.email}});
+            let agente = await AGENTE.findOne({where: {ESTADO: '1', CORREO: req.user.email.trim()}});
             if (!agente) {
                 res.status(500).send({
                     message: "Al parecer el usuario no ha sido registrado"
@@ -153,25 +156,17 @@ async function autenticarActivarAgente(req, res) {
 async function resetearContrasenia(req, res) {
     try {
         let params = req.body;
-        let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: params.Correo}});
+        let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: params.Correo.trim()}});
         if (!agente) {
             res.status(404).send({
                 message: 'Usuario no encontrado'
             });
         } else {
-            let TOKENTEMPORAL = jwt.createToken24h(agente.dataValues);
-            let respuestaCorreo = await correo.EnviarCorreo(agente.dataValues.CORREO, 'Cambio de contraseña', agente.dataValues.NOMBRE, TOKENTEMPORAL);
+            res.status(200).send({
+                message: 'Por favor revisa tu correo electrónico para cambiar tu contraseña',
+                data: agente.dataValues
+            });
 
-            // Function to send e-mail to the user
-            if (respuestaCorreo == 'error') {
-                res.status(500).send({
-                    message: 'Al parecer existe un problema intentalo más tarde'
-                });
-            } else {
-                res.status(200).send({
-                    message: 'Por favor revisa tu correo electrónico para resetear tu contraseña'
-                });
-            }
         }
     } catch (e) {
         res.status(500).send({
@@ -184,7 +179,7 @@ async function resetearContrasenia(req, res) {
 async function resetearContrasenia2(req, res) {
 
     try {
-        let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: req.user.email}});
+        let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: req.user.email.trim()}});
         if (!agente) {
             res.status(500).send({
                 message: "token no valido"
@@ -219,7 +214,7 @@ async function actualizarAgente(req, res) {
             ID_AGENTE: req.body.Id_Agente,
             NOMBRE: req.body.Nombre,
             TELEFONO: req.body.Telefono,
-            CORREO: req.body.Correo,
+            CORREO: req.body.Correo.trim(),
             NUM_COD_POSTAL: req.body.Num_Cod_Postal,
             TIPO: req.body.Tipo,
             ESTADO: req.body.Estado,
@@ -245,24 +240,24 @@ async function actualizarAgente(req, res) {
 
 async function verificarExistenciaCorreo(req, res) {
     try {
-        let agenteEncontrado = await AGENTE.findOne({where: {CORREO: req.body.correo}});
+        let agenteEncontrado = await AGENTE.findOne({where: {CORREO: req.body.correo.trim()}});
 
         if (agenteEncontrado) {
             res.status(404).send({
                 message: 'Este correo electronico ya esta vinculado a una cuenta'
             });
         } else {
-            let respuestaCorreo = await correo.EnviarCorreo(req.body.correo, req.body.asunto, req.body.codigo, null);
-            if (respuestaCorreo == false) {
-                agente.destroy({where: {CORREO: req.body.correo}});
-                res.status(500).send({
-                    message: 'Parece que hay un error en el correo electrónico intentalo más tarde'
-                });
-            } else {
-                res.status(200).send({
-                    message: 'Por favor revisa tu correo electrónico'
-                });
-            }
+            /*  let respuestaCorreo = await correo.EnviarCorreo(req.body.correo, req.body.asunto, req.body.codigo, null);
+              if (respuestaCorreo == false) {
+                  agente.destroy({where: {CORREO: req.body.correo}});
+                  res.status(500).send({
+                      message: 'Parece que hay un error en el correo electrónico intentalo más tarde'
+                  });
+              } else {*/
+            res.status(200).send({
+                message: 'Se ha enviado un código de comprobación a tu correo electronico'
+            });
+            /*  }*/
         }
     } catch (err) {
         res.status(500).send({
@@ -275,7 +270,7 @@ async function cambioCorreoAgente(req, res) {
     try {
         let agenteId = req.params.id;
         let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: agenteId}});
-        let agenteActualizado = await agente.update({CORREO: req.body.correo});
+        let agenteActualizado = await agente.update({CORREO: req.body.correo.trim()});
         if (!agenteActualizado) {
             res.status(404).send({message: 'El Usuario no ha sido actualizado'});
         } else {

@@ -1,16 +1,22 @@
-.my-card
-{
-  position:absolute;
-  left:40%;
-  top:-20px;
-  border-radius:50%;
+.my-card {
+  position: absolute;
+  left: 40%;
+  top: -20px;
+  border-radius: 50%;
 }
 
-a,p,button{
+a, p, button {
   font-size: small;
 }
 
 body {
   height: 100vh !important;
   overflow: auto;
+}
+
+.alinear-bienvenida {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
 }

@@ -26,7 +26,9 @@ async function saveProducto(req, res) {
         let categorias = JSON.parse(req.body.categorias);
         console.log("imagenes", req.files);
         console.log("objetos", oferta, producto, variantes, vimagenes, categorias);
-
+        if (!oferta.Iva) {
+            oferta.Iva = 0;
+        }
         let ofertaGuardada = await Oferta.create({
                 NUM_TIENDA: oferta.Num_Tienda,
                 IVA: oferta.Iva,
@@ -38,6 +40,9 @@ async function saveProducto(req, res) {
                 transaction: t
             });
 
+        if (! producto.Cod_Producto) {
+            producto.Cod_Producto = '000000';
+        }
         let productoGuardado = await Producto.create({
                 COD_PRODUCTO: producto.Cod_Producto,
                 ID_OFERTA: ofertaGuardada.dataValues.ID_OFERTA,
@@ -147,7 +152,7 @@ async function getMisProductos(req, res) {
             order: [['ID_OFERTA', 'DESC']]
         });
 
-        if (productosObtenidas.length>0) {
+        if (productosObtenidas.length > 0) {
             res.status(200).send({
                 data: productosObtenidas,
                 message: "Productos cargadas correctamente"
@@ -172,12 +177,12 @@ async function getProducto(req, res) {
             include: {
                 model: Producto,
                 include: [{
-                    model: Variante, where: {ID_PRODUCTO: req.params.id},
+                    model: Variante,
                     separate: true,
                     order: [['NUM_VARIANTE', 'ASC']],
                     include: {model: Imagen_Producto, separate: true, order: [['ID_IMAGEN', 'ASC']]}
                 }, {
-                    model: Producto_Categoria, where: {ID_PRODUCTO: req.params.id},
+                    model: Producto_Categoria,
                     include: {model: Categoria}
                 }],
 
@@ -435,20 +440,20 @@ async function updateEstadoProducto(req, res) {
 
 async function updateEstadoProductos(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
-    try{
-    for (const s of req.body) {
-     await Oferta.update({
-            ESTADO_OFERTA: req.params.estado,
-        }, {
-            where: {ID_OFERTA: s}, transact: t
-        });
-    }
+    try {
+        for (const s of req.body) {
+            await Oferta.update({
+                ESTADO_OFERTA: req.params.estado,
+            }, {
+                where: {ID_OFERTA: s}, transact: t
+            });
+        }
 
-    res.status(200).send({
-        message: "El producto ha sido actualizado correctamente"
-    });
-    t.commit();
-    }catch (err) {
+        res.status(200).send({
+            message: "El producto ha sido actualizado correctamente"
+        });
+        t.commit();
+    } catch (err) {
         t.rollback();
         res.status(500).send({
             message: 'error:' + err

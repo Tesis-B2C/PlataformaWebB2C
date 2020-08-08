@@ -61,7 +61,7 @@ label {
   font-size: small;
 }
 
-.alert {
+.alert1 {
   font-size: smaller;
   padding: 0;
   background-color: white;
@@ -133,4 +133,8 @@ select{
 
   font-size: 5pt;
 
+}
+
+a:hover{
+  cursor: pointer;
 }

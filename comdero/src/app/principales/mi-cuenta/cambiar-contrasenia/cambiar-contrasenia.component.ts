@@ -28,13 +28,19 @@ export class CambiarContraseniaComponent implements OnInit {
       this.loading = true;
       if (this.objCambiarContrasenia.contraseniaActual == this.objCambiarContrasenia.contraseniaNueva) {
         this.mensageError("La contraseña debe ser diferente a la actual");
+        this.loading=false;
+        document.forms["formCambiarContrasenia"].reset();
 
       } else {
         let identidad = this._agenteServicio.getIdentity();
         let response = await this._agenteServicio.actualizarContrasenia(identidad.CORREO, this.objCambiarContrasenia).toPromise();
         this.mensageCorrecto(response['message']);
         this.loading = false;
+        document.forms["formCambiarContrasenia"].reset();
       }
+
+
+
     } catch
       (e) {
       this.loading=false;

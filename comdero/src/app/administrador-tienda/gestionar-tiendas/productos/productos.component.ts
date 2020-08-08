@@ -114,7 +114,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     this.getUnidadesMedida();
     this.panelUno = document.getElementById('panelUno') as HTMLElement;
     this.panelDos = document.getElementById('panelDos') as HTMLElement;
-    if (this.identidadTienda.OPCION_ENVIOs.length== 0) {
+    if (this.identidadTienda.OPCION_ENVIOs.length == 0) {
       this.mostrarToast("Asegurate de tener configurado tus metodos de envio antes de empezar a vender", "fa fa-truck fa-2x");
     }
     if (this.identidadTienda.METODO_PAGOs.length == 0) {
@@ -482,6 +482,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
 
   public async publicarProducto() {
     try {
+      this.loading = true;
       if (this.validar()) {
         if (this.videoYoutube) {
           this.videoYoutubeGuardar = new Imagen_Producto('Video', 'youtube', this.direccionVideoYoutube, 0);
@@ -495,9 +496,8 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
         for (let categorias of this.categoriasSeleccionadas) {
           this.categoriasEnviar.push(categorias['ID_CATEGORIA']);
         }
-        let response = await this._productoServicio.saveProducto(this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
-        this.mensageCorrecto(response['menssage']);
-        this.cancelar();
+        this.guardarProducto();
+
       }
       this.loading = false;
     } catch
@@ -529,8 +529,18 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
       }
     }).then(async (result) => {
       if (result.value) {
-        this.loading = true;
-        this.publicarProducto();
+        try {
+          let response = await this._productoServicio.saveProducto(this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
+          this.mensageCorrecto(response.message);
+          this.cancelar();
+          this.loading = false;
+        } catch (e) {
+          this.loading = false;
+          console.log("error:" + e);
+          if (JSON.stringify((e).error.message))
+            this.mensageError(JSON.stringify((e).error.message));
+          else this.mensageError("Error de conexión intentelo mas tarde");
+        }
       }
     })
 
@@ -602,7 +612,6 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
 
 
   formatear(element) {
-    debugger;
     let valor = this.cp.transform(element.target.value, '$',);
     //let alter=formatCurrency(element.target.value,'USD',getCurrencySymbol('USD', 'wide'));
     if (valor) {
