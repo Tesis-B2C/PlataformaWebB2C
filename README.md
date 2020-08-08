@@ -78,3 +78,6 @@ https://valor-software.com/ngx-bootstrap/#/datepicker
 -------- Para el Buscador
 ng add ngx-bootstrap  --component typeahead
 https://valor-software.com/ngx-bootstrap/#/typeahead
+
+-----active guards
+ng g guard shared/guards/auth
