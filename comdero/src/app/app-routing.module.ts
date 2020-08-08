@@ -11,9 +11,9 @@ import {AuthGuard} from "./shared/guards/auth.guard";
 const routes: Routes = [
 
   {path: 'principales', loadChildren:'./principales/principales.module#PrincipalesModule'},
-  {path: 'administrador', loadChildren:'./administrador-tienda/administrador-tienda.module#AdministradorTiendaModule'},
+  {path: 'administrador', loadChildren:'./administrador-tienda/administrador-tienda.module#AdministradorTiendaModule',canActivate:[AuthGuard]},
   {path: 'loguin/:token', component: LoguinComponent},
-  {path: 'loguin', component: LoguinComponent,canActivate:[AuthGuard]},
+  {path: 'loguin', component: LoguinComponent},
  // {path:'principal', component:PrincipalComponent},
   {path: 'registro', component: RegistroComponent},
   {path: 'registro-tienda', component: RegistroTiendaComponent},
