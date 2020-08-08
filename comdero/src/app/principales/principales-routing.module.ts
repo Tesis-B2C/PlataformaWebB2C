@@ -4,6 +4,7 @@ import {MenuComponent} from "./menu/menu.component";
 import {PrincipalComponent} from "./principal/principal.component";
 import {CategoriasComponent} from "./categorias/categorias.component";
 import {BusquedaComponent} from "./busqueda/busqueda.component";
+import {AuthGuard} from "../shared/guards/auth.guard";
 
 
 const routes: Routes = [
@@ -14,7 +15,7 @@ const routes: Routes = [
       {path: 'categorias', component: CategoriasComponent},
       {path: 'busqueda/:palabraBuscada', component: BusquedaComponent},
       {path: 'detalle-tienda', loadChildren:'./detalle-tienda/detalle-tienda.module#DetalleTiendaModule'},
-      {path: 'mi-cuenta', loadChildren: './mi-cuenta/mi-cuenta.module#MiCuentaModule'}
+      {path: 'mi-cuenta', loadChildren: './mi-cuenta/mi-cuenta.module#MiCuentaModule',canActivate:[AuthGuard]}
     ]
   },
 

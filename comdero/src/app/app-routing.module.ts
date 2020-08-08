@@ -16,7 +16,7 @@ const routes: Routes = [
   {path: 'loguin', component: LoguinComponent},
  // {path:'principal', component:PrincipalComponent},
   {path: 'registro', component: RegistroComponent},
-  {path: 'registro-tienda', component: RegistroTiendaComponent},
+  {path: 'registro-tienda', component: RegistroTiendaComponent,canActivate:[AuthGuard]},
   {path: 'olvido-contrasenia', component: OlvidoContraseniaComponent},
   {path: 'olvido-contrasenia-paso2/:token', component: OlvidoContraseniaPaso2Component},
   {path: '**', redirectTo: 'principales/menu/principal'},
