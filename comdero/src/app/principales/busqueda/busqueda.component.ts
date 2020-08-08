@@ -37,7 +37,6 @@ export class BusquedaComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.ultimoSerie = this.datosXpagina;
     this.palabraBuscada = this.route.snapshot.params.palabraBuscada;
-    console.log(this.palabraBuscada + "HOLA ngOnInit");
     this.buscarDatos();
   }
 
@@ -49,7 +48,6 @@ export class BusquedaComponent implements OnInit, OnDestroy {
   }
 
   public noExite = 'assets/images/no-image.png';
-
   getImagen(pathImagen) {
     this.noExite = 'assets/images/no-image.png';
     if (pathImagen) {
@@ -75,7 +73,7 @@ export class BusquedaComponent implements OnInit, OnDestroy {
     let response = await this._tiendaServicio.obtenerFiltroBusquedaTodos(this.palabraBuscada).toPromise();
     this.datosObtenidos = response.data;
 
-    if (this.datosObtenidos[1].length > 0) {
+    if (this.datosObtenidos[0].length > 0) {
       this.banderaNoResultadoTiendas = false;
       this.datosObtenidos[0].forEach(elemnt => {
         let objTienda = {
@@ -125,6 +123,8 @@ export class BusquedaComponent implements OnInit, OnDestroy {
         objProducto.NUM_TIENDA = elemnt.TIENDA.NUM_TIENDA;
         this.vectorProductos.push(objProducto);
       })
+
+      console.log("VECTOR OBTENIDO"+ JSON.stringify(this.vectorProductos));
     } else {
       this.banderaNoResultado = true;
     }

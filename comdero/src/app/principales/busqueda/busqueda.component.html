@@ -1,4 +1,4 @@
-<!-- ========================= SECTION FRANJA AZUL ========================= -->
+<!-- ========================= SECTION FRANJA AZUL CORREGIR ========================= -->
 <section>
   <nav class="navbar navbar-main navbar-expand-lg  border-bottom colorNavbar mx-0">
     <div class="mx-lg-auto">
@@ -36,7 +36,6 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Furnitures</a>
           </li>
-
         </ul>
       </div> <!-- collapse .// -->
     </div> <!-- container .// -->
@@ -47,7 +46,8 @@
 <!-- ========================= SECTION PAGETOP ========================= -->
 <section *ngIf="!this.banderaNoResultado" class="section-pagetop bg">
   <div class="container">
-    <p class="title-page">{{paginaTamano+1}} - {{this.ultimoSerie}}  de {{this.vectorProductos.length}} resultados para "{{this.palabraBuscada}}"</p>
+    <p class="title-page">{{paginaTamano + 1}} - {{this.ultimoSerie}}  de {{this.vectorProductos.length}} resultados
+      para "{{this.palabraBuscada}}"</p>
   </div> <!-- container //  -->
 </section>
 <!-- ========================= SECTION PAGETOP END// ========================= -->
@@ -111,7 +111,8 @@
       </div> <!-- row.// -->
     </article> <!-- card-product .// -->
 
-    <ngb-pagination id="paginacionTienda" [collectionSize]="this.vectorProductos.length" #numPagina [(page)]="paginaActual"
+    <ngb-pagination id="paginacionTienda" [collectionSize]="this.vectorProductos.length" #numPagina
+                    [(page)]="paginaActual"
                     [pageSize]="datosXpagina" [maxSize]="4" [rotate]="true" [ellipses]="true"
                     [boundaryLinks]="false" (pageChange)="onPageChange(paginaActual)">
       <ng-template ngbPaginationPrevious>Anterior</ng-template>
@@ -135,19 +136,20 @@
           <div class="col-lg-3 col-md-3 col-sm-3 col-12"
                *ngFor="let t of this.vectorTienda | slice: paginaTamanoTienda | slice: 0:datosXpaginaTienda">
 
-              <div class="mx-1">
-                <figure class="box item-logo">
-                  <a routerLink="../detalle-tienda/tienda/{{t.NUM_TIENDA}}/inicio-tienda"><img
-                    [src]="getImagen(t.LOGO) " style="width: 100%; min-height: 10rem"></a>
-                  <figcaption class="border-top pt-2 small">{{t.NOMBRE_COMERCIAL}}</figcaption>
-                </figure> <!-- item-logo.// -->
-              </div>
+            <div class="mx-1">
+              <figure class="box item-logo">
+                <a routerLink="../detalle-tienda/tienda/{{t.NUM_TIENDA}}/inicio-tienda"><img
+                  [src]="getImagen(t.LOGO) " style="width: 100%; min-height: 10rem"></a>
+                <figcaption class="border-top pt-2 small">{{t.NOMBRE_COMERCIAL}}</figcaption>
+              </figure> <!-- item-logo.// -->
+            </div>
 
           </div>
         </div> <!-- row.// -->
       </article> <!-- card-product .// -->
 
-      <ngb-pagination id="paginacion" [collectionSize]="this.vectorTienda.length" #numPaginaTienda [(page)]="paginaActualTienda"
+      <ngb-pagination id="paginacion" [collectionSize]="this.vectorTienda.length" #numPaginaTienda
+                      [(page)]="paginaActualTienda"
                       [pageSize]="datosXpaginaTienda" [maxSize]="4" [rotate]="true" [ellipses]="true"
                       [boundaryLinks]="false" (pageChange)="onPageChangeTienda(paginaActualTienda)">
         <ng-template ngbPaginationPrevious>Anterior</ng-template>
@@ -155,7 +157,6 @@
       </ngb-pagination>
 
     </div> <!-- container .//  -->
-
 
   </div><!-- container // -->
 </section>

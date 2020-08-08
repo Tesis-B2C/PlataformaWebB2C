@@ -633,7 +633,7 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
 
   public validarFormulario() {
     debugger
-
+console.log('hola check'+document.forms["FormGeneralTienda"].checkValidity());
     if ( document.forms["FormGeneralTienda"].checkValidity()) {
       return true;
     } else {

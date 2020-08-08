@@ -9,6 +9,7 @@ import {CarouselModule} from 'ngx-owl-carousel-o';
 import {FormsModule} from "@angular/forms";
 import {BusquedaComponent} from './busqueda/busqueda.component';
 import {TypeaheadModule} from "ngx-bootstrap";
+import { DetalleProductoComponent } from './detalle-producto/detalle-producto.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import {TypeaheadModule} from "ngx-bootstrap";
     PrincipalComponent,
     MenuComponent,
     CategoriasComponent,
-    BusquedaComponent
+    BusquedaComponent,
+    DetalleProductoComponent
   ],
   imports: [
     CommonModule,

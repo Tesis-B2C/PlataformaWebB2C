@@ -7,7 +7,6 @@ const HORARIO_ATENCION = require('../models/horario_atencion');
 const OPCION_ENVIO = require('../models/opcion_envio');
 const DPA = require('../models/dpa');
 const METODO_PAGO = require('../models/metodo_pago');
-
 const jwt = require('../services/jwt');
 const db = require('../database/db');
 const fs = require('fs-extra');
@@ -18,12 +17,8 @@ const VARIANTE = require("../models/variante");
 const IMAGEN_PRODUCTO = require("../models/imagen_producto");
 const PRODUCTO_CATEGORIA = require("../models/producto_categoria");
 const CATEGORIA = require("../models/categoria");
-
 const CALIFICACION = require("../models/calificacion");
 const COMENTARIO = require("../models/comentario");
-
-
-
 const {Op} = require("sequelize");
 
 /*const {QueryTypes} = require('sequelize');*/
@@ -42,13 +37,11 @@ async function registrarTienda(req, res) {
         }
 
         let tiendaEncontrado = await TIENDA.findOne({where: {CORREO_TIENDA: params.Tienda.Correo_Tienda}});
-
         if (tiendaEncontrado) {
             res.status(404).send({
                 message: 'Este correo electronico ya esta vinculado a una tienda'
             });
         } else {
-
             let tiendaGuardado = await TIENDA.create({
                     COD_AGENTE: params.Tienda.Cod_Agente,
                     RAZON_SOCIAL: params.Tienda.Razon_Social,
@@ -62,7 +55,7 @@ async function registrarTienda(req, res) {
                     HORARIO_ATENCION: params.Tienda.Horario_Atencion,
                     LOGO: logo,
                     BANNER: banner,
-                    CONTACTO_WHATSAPP:params.Tienda.Contacto_WhatsApp
+                    CONTACTO_WHATSAPP: params.Tienda.Contacto_WhatsApp
                 },
                 {
                     transaction: t
@@ -95,7 +88,7 @@ async function registrarTienda(req, res) {
                 await t.commit();
             } else {
                 res.status(404).send({
-                    message: "Al parecer hubo probelmas con la creacion de tu tienda intentalo nuevamente"
+                    message: "Al parecer hubo problemas con la creación de tu tienda inténtalo nuevamente"
                 });
             }
         }
@@ -112,9 +105,7 @@ async function registrarTienda(req, res) {
         res.status(500).send({
             message: err.name
         });
-
     }
-
 
     /* try {
 
@@ -127,7 +118,6 @@ async function registrarTienda(req, res) {
              }
          });*!/
 
-
          if (tiendaRegistrada) {
              res.status(200).send({
                  message: 'Correcto'
@@ -137,7 +127,6 @@ async function registrarTienda(req, res) {
                  message: 'Error'
              });
          }
-
      } catch (err) {
          res.status(500).send({
              message: err.name
@@ -147,7 +136,6 @@ async function registrarTienda(req, res) {
 
 
 async function getDatosTienda(req, res) {
-
     try {
         let tiendaObtenida = await TIENDA.findOne({
             where: {NUM_TIENDA: req.params.id},
@@ -176,7 +164,6 @@ async function getDatosTienda(req, res) {
 }
 
 async function getMisTiendas(req, res) {
-
     try {
         let tiendasObtenidas = await TIENDA.findAll({
             where: {
@@ -192,7 +179,7 @@ async function getMisTiendas(req, res) {
             });
         } else {
             res.status(404).send({
-                message: 'Al parecer  no se encuentra tiendas registradas en la base de datos'
+                message: 'Al parecer no se encuentran tiendas registradas en la base de datos'
             });
 
 
@@ -242,20 +229,16 @@ async function updateEstadoTienda(req, res) {
 
 async function updatePersonalizacionTienda(req, res) {
     console.log("files ", req.files)
-
     try {
         let tiendaObtenida = await TIENDA.findOne({
             where: {NUM_TIENDA: req.params.id}
-
         });
 
         if (req.files.logo) {
             var logo = req.files.logo[0].path;
-
         }
         if (req.files.banner) {
             var banner = req.files.banner[0].path;
-
         }
 
         let tiendaGuardado = await TIENDA.update({
@@ -287,7 +270,7 @@ async function updatePersonalizacionTienda(req, res) {
 
         } else {
             res.status(404).send({
-                message: "Al parecer hubo probelmas con la actualizacion de su tienda intentalo nuevamente"
+                message: "Al parecer hubo problemas con la actualización de su tienda inténtalo nuevamente"
             });
         }
 
@@ -307,9 +290,7 @@ async function updatePersonalizacionTienda(req, res) {
 
     }
 
-
     /* try {
-
          console.log("ESTO ESTA EN EL BACKEN " + req.body.Tienda);
        /!* let query ='EXECT guardarTienda :@tienda';
          let tiendaRegistrada = await sequelize.query(query, {
@@ -318,7 +299,6 @@ async function updatePersonalizacionTienda(req, res) {
                  type:sequelize.QueryTypes.SELECT
              }
          });*!/
-
 
          if (tiendaRegistrada) {
              res.status(200).send({
@@ -329,7 +309,6 @@ async function updatePersonalizacionTienda(req, res) {
                  message: 'Error'
              });
          }
-
      } catch (err) {
          res.status(500).send({
              message: err.name
@@ -338,7 +317,6 @@ async function updatePersonalizacionTienda(req, res) {
 }
 
 /*async function subirImagenesTienda(req, res) {
-
     try {
         let Id_Tienda = req.params.id;
         let tipo = req.params.tipo;
@@ -372,12 +350,10 @@ async function updatePersonalizacionTienda(req, res) {
                     message: 'El formato de archivo no es valido '
                 });
             }
-
         } else {
             res.status(200).send({
                 message: 'No ha subido niguna imagen'
             });
-
         }
     } catch (err) {
         res.status(500).send({
@@ -386,12 +362,10 @@ async function updatePersonalizacionTienda(req, res) {
     }
 }*/
 
-
 /*
 async function obtenerImagenTienda(req, res) {
     try {
         var imageFile = req.params.imageFile;
-
        var path_file = './uploads/tienda/' + imageFile;
         console.log("este es el path" + path_file);
         if (fs.existsSync(imageFile)) {
@@ -400,7 +374,6 @@ async function obtenerImagenTienda(req, res) {
             var path_file = './uploads/tienda/sinLogo.png';
             res.sendFile(path.resolve(path_file));
         }
-
     } catch (err) {
         res.status(500).send({
             message: 'error:' + err
@@ -411,7 +384,6 @@ async function obtenerImagenTienda(req, res) {
 
 async function actualizarTiendaGeneral(req, res) {
     const trans = await db.sequelize.transaction({autocommit: false});
-
     try {
         let params = req.body;
         let tiendaId = req.params.id;
@@ -456,7 +428,6 @@ async function actualizarTiendaGeneral(req, res) {
                 }
             }
         }
-
         if (tiendaActualizado) {
             res.status(200).send({message: 'Los datos generales de la tienda han sido actualizados'});
             await trans.commit();
@@ -502,10 +473,8 @@ async function actualizarTiendaSucursal(req, res) {
                 },
                 {transaction: t});
         }
-
-        res.status(200).send({message: 'Sus datos han sido actualizados.'});
+        res.status(200).send({message: 'Sus datos han sido actualizados'});
         await t.commit();
-
     } catch (e) {
         await t.rollback();
         res.status(500).send({
@@ -581,11 +550,13 @@ async function obtenerFiltroPrincipalTienda(req, res) {
         let termino = req.params.termino;
         let tiendasObtenidos = await TIENDA.findAll({
             attributes: ['NOMBRE_COMERCIAL'],
-            where: {[Op.or]: [
-                    { NOMBRE_COMERCIAL: {[Op.like]: termino + '%'} },
-                    { NOMBRE_COMERCIAL: {[Op.like]: '%' + termino} },
-                    { NOMBRE_COMERCIAL: {[Op.like]: '%' + termino + '%'} }
-                ]},
+            where: {
+                [Op.or]: [
+                    {NOMBRE_COMERCIAL: {[Op.like]: termino + '%'}},
+                    {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino}},
+                    {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino + '%'}}
+                ]
+            },
             limit: 10,
             transaction: t
         });
@@ -593,7 +564,7 @@ async function obtenerFiltroPrincipalTienda(req, res) {
         await t.commit();
         res.status(200).send({
             data: tiendasObtenidos,
-            message: "tiendasObtenidos cargados correctamente"
+            message: "Tiendas obtenidas correctamente"
         });
     } catch (e) {
         await t.rollback();
@@ -609,11 +580,13 @@ async function obtenerFiltroPrincipalProductos(req, res) {
         let termino = req.params.termino;
         let productosObtenidos = await PRODUCTO.findAll({
             attributes: ['NOMBRE_PRODUCTO'],
-            where: {[Op.or]: [
-                    { NOMBRE_PRODUCTO: {[Op.like]: termino + '%'} },
-                    { NOMBRE_PRODUCTO: {[Op.like]: '%' + termino} },
-                    { NOMBRE_PRODUCTO: {[Op.like]: '%' + termino + '%'} }
-                ]},
+            where: {
+                [Op.or]: [
+                    {NOMBRE_PRODUCTO: {[Op.like]: termino + '%'}},
+                    {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino}},
+                    {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino + '%'}}
+                ]
+            },
             limit: 10,
             transaction: t
         });
@@ -638,22 +611,26 @@ async function obtenerFiltroPrincipalTodos(req, res) {
         let termino = req.params.termino;
         let tiendasObtenidos = await TIENDA.findAll({
             attributes: ['NOMBRE_COMERCIAL'],
-            where: {[Op.or]: [
-                    { NOMBRE_COMERCIAL: {[Op.like]: termino + '%'} },
-                    { NOMBRE_COMERCIAL: {[Op.like]: '%' + termino} },
-                    { NOMBRE_COMERCIAL: {[Op.like]: '%' + termino + '%'} }
-                ]},
+            where: {
+                [Op.or]: [
+                    {NOMBRE_COMERCIAL: {[Op.like]: termino + '%'}},
+                    {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino}},
+                    {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino + '%'}}
+                ]
+            },
             limit: 8,
             transaction: t
         });
 
         let productosObtenidos = await PRODUCTO.findAll({
             attributes: ['NOMBRE_PRODUCTO'],
-            where: {[Op.or]: [
-                    { NOMBRE_PRODUCTO: {[Op.like]: termino + '%'} },
-                    { NOMBRE_PRODUCTO: {[Op.like]: '%' + termino} },
-                    { NOMBRE_PRODUCTO: {[Op.like]: '%' + termino + '%'} }
-                ]},
+            where: {
+                [Op.or]: [
+                    {NOMBRE_PRODUCTO: {[Op.like]: termino + '%'}},
+                    {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino}},
+                    {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino + '%'}}
+                ]
+            },
             limit: 8,
             transaction: t
         });
@@ -664,7 +641,7 @@ async function obtenerFiltroPrincipalTodos(req, res) {
         await t.commit();
         res.status(200).send({
             data: vectorEnviar,
-            message: "Busqueda cargada correctamente."
+            message: "Busqueda cargada correctamente"
         });
 
     } catch (e) {
@@ -681,23 +658,31 @@ async function obtenerFiltroBusquedaTodos(req, res) {
         let productosObtenidos = await OFERTA.findAll({
             include: [{
                 model: PRODUCTO,
-                attributes: ['ID_PRODUCTO', 'COD_PRODUCTO','ID_OFERTA', 'NOMBRE_PRODUCTO','DESCRIPCION_PRODUCTO'],
-                where: {[Op.or]: [
-                        { NOMBRE_PRODUCTO: {[Op.like]: termino + '%'} },
-                        { NOMBRE_PRODUCTO: {[Op.like]: '%' + termino} },
-                        { NOMBRE_PRODUCTO: {[Op.like]: '%' + termino + '%'} }
-                    ]},
+                attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'ID_OFERTA', 'NOMBRE_PRODUCTO', 'DESCRIPCION_PRODUCTO'],
+                where: {
+                    [Op.or]: [
+                        {NOMBRE_PRODUCTO: {[Op.like]: termino + '%'}},
+                        {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino}},
+                        {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino + '%'}}
+                    ]
+                },
                 include: [{
                     model: VARIANTE,
                     separate: true,
-                    attributes: ['ID_PRODUCTO','NUM_VARIANTE','PRECIO_UNITARIO'],
+                    attributes: ['ID_PRODUCTO', 'NUM_VARIANTE', 'PRECIO_UNITARIO'],
                     group: ['ID_PRODUCTO', 'COD_PRODUCTO'],
                     order: [['NUM_VARIANTE', 'ASC']],
                     include: {
                         model: IMAGEN_PRODUCTO,
                         separate: true,
-                        attributes: ['NUM_VARIANTE','IMAGEN'],
+                        attributes: ['NUM_VARIANTE', 'IMAGEN'],
                         group: 'NUM_VARIANTE',
+                        where:{
+                            [Op.or]: [
+                                {[Op.not]: {TIPO_IMAGEN: 'video'}},
+                                {[Op.not]: {TIPO_IMAGEN: 'youtube'}}
+                            ]
+                        },
                         order: [['ID_IMAGEN', 'ASC']]
                     }
                 }, {
@@ -713,19 +698,21 @@ async function obtenerFiltroBusquedaTodos(req, res) {
                 }]
             }, {
                 model: TIENDA,
-                attributes: ['NUM_TIENDA','NOMBRE_COMERCIAL']
+                attributes: ['NUM_TIENDA', 'NOMBRE_COMERCIAL']
             }],
             attributes: ['ID_OFERTA'],
             transaction: t
         });
 
         let tiendasObtenidos = await TIENDA.findAll({
-            attributes: ['NUM_TIENDA','NOMBRE_COMERCIAL', 'LOGO'],
-            where: {[Op.or]: [
-                    { NOMBRE_COMERCIAL: {[Op.like]: termino + '%'} },
-                    { NOMBRE_COMERCIAL: {[Op.like]: '%' + termino} },
-                    { NOMBRE_COMERCIAL: {[Op.like]: '%' + termino + '%'} }
-                ]},
+            attributes: ['NUM_TIENDA', 'NOMBRE_COMERCIAL', 'LOGO'],
+            where: {
+                [Op.or]: [
+                    {NOMBRE_COMERCIAL: {[Op.like]: termino + '%'}},
+                    {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino}},
+                    {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino + '%'}}
+                ]
+            },
             limit: 5,
             transaction: t
         });
@@ -736,7 +723,7 @@ async function obtenerFiltroBusquedaTodos(req, res) {
         await t.commit();
         res.status(200).send({
             data: vectorEnviar,
-            message: "La búsqueda ha sido cargada correctamente."
+            message: "Tiendas y productos cargados correctamente"
         });
     } catch (e) {
         await t.rollback();
@@ -752,7 +739,7 @@ async function obtenerTodasTiendas(req, res) {
         if (tiendasObtenidas.length > 0) {
             res.status(200).send({
                 data: tiendasObtenidas,
-                message: "Tiendas cargadas correctamente."
+                message: "Tiendas cargadas correctamente"
             });
         } else {
             res.status(404).send({
@@ -764,7 +751,6 @@ async function obtenerTodasTiendas(req, res) {
             message: 'error:' + err
         });
     }
-
 }
 
 module.exports = {          // para exportar todas las funciones de este modulo
