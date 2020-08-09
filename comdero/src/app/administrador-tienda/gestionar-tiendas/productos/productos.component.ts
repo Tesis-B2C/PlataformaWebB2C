@@ -528,9 +528,9 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
       cancelButtonText: 'Cancelar',
       buttonsStyling: false,
       customClass: {
-        confirmButton: 'btn btn-primary px-5',
+        confirmButton: 'btn btn-primary px-3',
         container: 'my-swal',
-        cancelButton: 'btn btn-secondary px-5 ml-5',
+        cancelButton: 'btn btn-light px-3 ml-5',
       }
     }).then(async (result) => {
       if (result.value) {

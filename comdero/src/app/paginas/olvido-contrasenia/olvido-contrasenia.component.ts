@@ -23,9 +23,10 @@ public response;
     try {
      this.response= await this._agenteServicio.resetearContrasenia(obj).toPromise();
       this.mensageCorrecto(this.response.message);
+      this.loading=false;
       let correoResponse=  await this._correoServicio.correoCambioContrasenia(this.response.data).toPromise();
       //this.mensageCorrecto(correoResponse.message);
-       this.loading=false;
+
     } catch (e) {
       this.loading = false;
       if (JSON.stringify((e).error.message))
