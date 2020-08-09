@@ -39,7 +39,7 @@
 
       <h6>Información</h6>
 
-      <form #FormInformacion id="formInformacion" name="formInformacion" class="mt-3 card card-body validate-form">
+      <form #FormInformacion id="formInformacion" name="formInformacion" class="mt-3 card card-body validate-form" (change)="recargar()">
         <div class="container">
           <div class="form-row ">
             <div class="col-md-6">
@@ -102,7 +102,7 @@
       <hr>
       <h6>Multimedia</h6>
 
-      <form class="card card-body mt-3" name="form"> <!--Multimedia -->
+      <form class="card card-body mt-3" name="form" (change)="recargar()"> <!--Multimedia -->
         <div class="form-group ">
           <a class="ml-2 mt-5">
             <label>Imagenes del producto </label>
@@ -237,7 +237,7 @@
       <hr>
       <h6>Precios</h6>
 
-      <form name="formPrecios" class="mt-3 card card-body ">
+      <form name="formPrecios" class="mt-3 card card-body " (change)="recargar()">
         <div class="container">
           <div class="form-row">
             <div class="col-lg-6">
@@ -286,7 +286,7 @@
       <hr>
       <h6>Inventario</h6>
 
-      <form name="formInventario" class=" mt-3 card card-body ">
+      <form name="formInventario" class=" mt-3 card card-body " (change)="recargar()">
         <div class="container">
 
           <div class="form-group col-lg-10">
@@ -354,7 +354,7 @@
       <hr>
       <h6>Garantia</h6>
 
-      <form name="formGarantia" class="mt-3 card card-body ">
+      <form name="formGarantia" class="mt-3 card card-body " (change)="recargar()">
         <div class="container">
           <label>Seleccione el tipo de garantia ofrecida por este producto</label>
           <br>
@@ -385,7 +385,7 @@
         <hr>
         <h6>Variaciones</h6>
         <div class="card card body container mt-3">
-          <form name="formCheckVariaciones" class="mt-3">
+          <form name="formCheckVariaciones" class="mt-3" (change)="recargar()">
             <div class="form-group ml-2">
               <label>Este producto tiene multiples opciones, asi como clores, marca y materiales?</label>
 
@@ -398,7 +398,7 @@
 
                 <div class="radio-item">
                   <input (change)="opcionVariaciones(false)" name="variaciones" type="radio"
-                         value="No" id="VariacionNo" checked>
+                         value="No" id="VariacionNo" checked >
                   <label for="VariacionNo">&nbsp;&nbsp; No </label>
                 </div>
               </div>
@@ -419,12 +419,12 @@
             <div class="form-group col-md-2 offset-lg-1 justify-content-center">
               <label>Color</label>
 
-              <input (colorPickerChange)="cambiarColor($event,0)" [(colorPicker)]=color[0] [style.background]=color[0]
+              <input (colorPickerChange)="cambiarColor($event,0)" [(colorPicker)]=color[0] [style.background]=color[0] (change)="recargar()"
                      class="form-control input-colores"/>
             </div>
             <div class="form-group  col-md-4">
               <label> Talla </label>
-              <input #Talla0="ngModel" [(ngModel)]="this.Variantes[0].Talla" class="form-control " name="talla0"
+              <input #Talla0="ngModel" [(ngModel)]="this.Variantes[0].Talla" class="form-control " name="talla0" (change)="recargar()"
                      maxlength="2"
                      placeholder="Ej. xl o 34 o etc" type="text">
             </div>
@@ -448,24 +448,24 @@
             <hr class="col-12 mt-0">
             <div class="form-group col-md-2 offset-lg-1 justify-content-center">
               <label>Color</label>
-              <input (colorPickerChange)="cambiarColor($event,i+1)" [(colorPicker)]=color[i+1]
+              <input (colorPickerChange)="cambiarColor($event,i+1)" [(colorPicker)]=color[i+1] (change)="recargar()"
                      [style.background]=color[i+1]
                      class="form-control input-colores"/>
             </div>
             <div class="form-group  col-md-4">
               <label> Talla </label>
-              <input #Talla="ngModel" [(ngModel)]="this.Variantes[i+1].Talla" class="form-control " name="talla{{i+1}}"
+              <input #Talla="ngModel" [(ngModel)]="this.Variantes[i+1].Talla" class="form-control " name="talla{{i+1}}" (change)="recargar()"
                      placeholder="Ej. xl o 34 o etc" type="text" maxlength="2">
             </div>
             <div class="form-group  col-md-4">
               <label>Material</label>
-              <input #Material="ngModel" [(ngModel)]="this.Variantes[i+1].Material" class="form-control  "
+              <input #Material="ngModel" [(ngModel)]="this.Variantes[i+1].Material" class="form-control  " (change)="recargar()"
                      name="material{{i+1}}"
                      placeholder="Ej. Gamusa/algodon" type="text">
             </div>
 
             <div class="form-group col-12 ">
-              <form name="form">
+              <form name="form" (change)="recargar()">
                 <a class=" mt-5">
                   <label>Imagenes de la opcion {{i + 1}} </label>
                   <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imagenes </span></a>
@@ -522,7 +522,7 @@
                 </div>
               </form>
             </div> <!-- form-group end.// -->
-            <form name="formVariaciones" class="container row">
+            <form name="formVariaciones" class="container row" (change)="recargar()">
               <div class="form-group col-lg-7">
                 <label> Stock y unidad de medida del producto</label>
                 <div class="input-group">
@@ -577,7 +577,7 @@
       <hr>
       <h6>Categorias seleccionadas</h6>
 
-      <form class=" mt-3 card card-body ">
+      <form class=" mt-3 card card-body " (change)="recargar()">
         <div class="form-row ">
           <div *ngIf="this.categoriasSeleccionadas.size==0 &&!banderaValidaciones" class="form-group">
             <div class="alert alert-primary col-12" role="alert">
@@ -653,7 +653,7 @@
   </div>
 
   <div class="row justify-content-center">
-    <form class="card card-body  col-md-11 ml-md-4 mt-4">
+    <form class="card card-body  col-md-11 ml-md-4 mt-4" (change)="recargar()">
       <div class=" container">
         <h6>Acciones</h6>
         <hr>

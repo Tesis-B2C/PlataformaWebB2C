@@ -25,7 +25,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import {DescuentoServicio} from "./servicios/descuento.servicio";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
-
+import {ReloadGuard} from "./shared/guards/reload.guard";
 
 @NgModule({
   declarations: [
@@ -58,7 +58,8 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
     MetodoPagoServicio,
     MetodoEnvioServicio,
     TiendaServicio,
-    CorreoServicio],
+    CorreoServicio,
+    ReloadGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {
