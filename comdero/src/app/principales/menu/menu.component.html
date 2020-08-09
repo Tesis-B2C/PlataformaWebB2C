@@ -24,7 +24,7 @@
               </div>
             </div>
 
-            <input (keyup.enter)="buscarPalabra(this.palabraBuscadora)" id="typeahead-format" type="text" class="form-control" (keyup)="buscarDatos()" #buscarTexto
+            <input (keyup.enter)="buscarPalabra(this.palabraBuscadora)" id="typeahead-format" type="text" class="form-control" (keyup)="buscarDatos(this.palabraBuscadora)" #buscarTexto
                    [(ngModel)]="this.palabraBuscadora" [ngbTypeahead]="buscarDatosTerm" />
 
             <div class="input-group-append">
