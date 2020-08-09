@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {TiendaServicio} from "../../servicios/tienda.servicio";
 import {NgbRatingConfig} from "@ng-bootstrap/ng-bootstrap";
@@ -9,7 +9,7 @@ import {NgbRatingConfig} from "@ng-bootstrap/ng-bootstrap";
   styleUrls: ['./busqueda.component.css']
 })
 
-export class BusquedaComponent implements OnInit, OnDestroy {
+export class BusquedaComponent implements OnInit, OnDestroy,OnChanges {
   paginaActual = 1;
   datosXpagina = 3;
   paginaTamano: number = 0;
@@ -36,8 +36,18 @@ export class BusquedaComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.ultimoSerie = this.datosXpagina;
-    this.palabraBuscada = this.route.snapshot.params.palabraBuscada;
-    this.buscarDatos();
+    this.route.params.subscribe(params => {
+      this.palabraBuscada =params['palabraBuscada'];
+      this.buscarDatos();
+    })
+  }
+
+  ngOnChanges()
+  {
+    this.route.params.subscribe(params => {
+      this.palabraBuscada =params['palabraBuscada'];
+      this.buscarDatos();
+    })
   }
 
   ngOnDestroy() {
@@ -70,6 +80,8 @@ export class BusquedaComponent implements OnInit, OnDestroy {
   }
 
   public async buscarDatos() {
+    this.vectorProductos=[];
+    this.vectorTienda=[];
     let response = await this._tiendaServicio.obtenerFiltroBusquedaTodos(this.palabraBuscada).toPromise();
     this.datosObtenidos = response.data;
 

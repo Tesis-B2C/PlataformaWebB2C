@@ -91,10 +91,12 @@ export class MenuComponent implements OnInit, OnDestroy {
   public buscarPalabra(palabraBuscada: string) {
     if (palabraBuscada.trim() == "" || palabraBuscada.trim() == null) {
       console.log(palabraBuscada.trim()+ "ya mismo me voy");
-      location.href = '**';
+      this.router.navigate(['**']);
     } else {
       palabraBuscada = palabraBuscada.trim();
-      location.href = 'principales/menu/busqueda/'+palabraBuscada;
+
+     this.router.navigate(['principales/menu/busqueda/'+palabraBuscada]);
+
     }
   }
 }
