@@ -37,12 +37,12 @@ export class MenuComponent implements OnInit, OnDestroy {
   public async buscarDatos(palabraBuscar) {
     this.objetoDatos = [];
     this.datosObtenidos = '';
-
+    palabraBuscar = palabraBuscar.trim();
     if(palabraBuscar != 0){
       console.log(+palabraBuscar+'XXXXXXXXXXXXXXXXXXX');
       if (this.tipoBuscador == 'Tiendas' && palabraBuscar != '') {
         console.log('================================================== palabraBuscar');
-        let response = await this._tiendaServicio.obtenerFiltroPrincipalTienda(palabraBuscar.trim()).toPromise();
+        let response = await this._tiendaServicio.obtenerFiltroPrincipalTienda(palabraBuscar).toPromise();
         this.datosObtenidos = response.data;
         console.log('hola' + JSON.stringify(this.datosObtenidos));
         this.datosObtenidos.forEach(elemnt => {
@@ -53,7 +53,7 @@ export class MenuComponent implements OnInit, OnDestroy {
 
       if (this.tipoBuscador == 'Productos' && palabraBuscar != '') {
         console.log('==================================================');
-        let response = await this._tiendaServicio.obtenerFiltroPrincipalProductos(palabraBuscar.trim()).toPromise();
+        let response = await this._tiendaServicio.obtenerFiltroPrincipalProductos(palabraBuscar).toPromise();
         this.datosObtenidos = response.data;
         console.log('hola' + JSON.stringify(this.datosObtenidos));
         this.datosObtenidos.forEach(elemnt => {
@@ -64,7 +64,7 @@ export class MenuComponent implements OnInit, OnDestroy {
 
       if (this.tipoBuscador == 'Todos' && palabraBuscar != '') {
         console.log('==================================================');
-        let response = await this._tiendaServicio.obtenerFiltroPrincipalTodos(palabraBuscar.trim()).toPromise();
+        let response = await this._tiendaServicio.obtenerFiltroPrincipalTodos(palabraBuscar).toPromise();
         this.datosObtenidos = response.data;
         console.log('TODOS PALABRA BUSCADORA' + JSON.stringify(this.datosObtenidos));
 
