@@ -1,9 +1,9 @@
 'use stric'
 
 const express = require('express');
-var AgenteController = require('../controllers/agente');
-var md_auth = require('../middleware/authenticated');
-var api = express.Router(); // esto sirve para crear las rutas
+const AgenteController = require('../controllers/agente');
+const md_auth = require('../middleware/authenticated');
+const api = express.Router(); // esto sirve para crear las rutas
 api.post('/autenticarAgente', AgenteController.autenticarAgente);
 api.post('/autenticarActivarAgente',md_auth.ensureAuth, AgenteController.autenticarActivarAgente);
 

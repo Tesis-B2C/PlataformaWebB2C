@@ -212,29 +212,37 @@ async function getMisTiendas(req, res) {
 async function updateEstadoTienda(req, res) {
     const t = await db.sequelize.transaction({ autocommit: false });
     try {
-        let tiendaActualizada = await TIENDA.update({
-            ESTADO_TIENDA: req.body.estado,
-        }, {
-            where: { NUM_TIENDA: req.params.id },
-            transaction: t
-        });
+        let verificar = AGENTE.findOne({ where: { COD_AGENTE: req.user.id } });
 
-        let ofertaActualizada = await OFERTA.update({
-            ESTADO_OFERTA: req.body.estado,
-        }, {
-            where: { NUM_TIENDA: req.params.id, ESTADO_OFERTA: { [Op.or]: [0, 1] } },
-            transaction: t
-        });
-
-        if (tiendaActualizada && ofertaActualizada) {
-            res.status(200).send({
-                message: "La tienda ha sido actualizada correctamente"
+        if (!verificar) {
+            return res.status(500).send({
+                message: "No tienes permisos necesarios"
             });
-            await t.commit();
         } else {
-            res.status(404).send({
-                message: 'Al parecer no se encuentra la tienda registrada en la base de datos'
+            let tiendaActualizada = await TIENDA.update({
+                ESTADO_TIENDA: req.body.estado,
+            }, {
+                where: { NUM_TIENDA: req.params.id },
+                transaction: t
             });
+
+            let ofertaActualizada = await OFERTA.update({
+                ESTADO_OFERTA: req.body.estado,
+            }, {
+                where: { NUM_TIENDA: req.params.id, ESTADO_OFERTA: { [Op.or]: [0, 1] } },
+                transaction: t
+            });
+
+            if (tiendaActualizada && ofertaActualizada) {
+                res.status(200).send({
+                    message: "La tienda ha sido actualizada correctamente"
+                });
+                await t.commit();
+            } else {
+                res.status(404).send({
+                    message: 'Al parecer no se encuentra la tienda registrada en la base de datos'
+                });
+            }
         }
     } catch (err) {
         await t.rollback();
@@ -478,37 +486,37 @@ async function actualizarTiendaSucursal(req, res) {
                 message: "No tienes permisos necesarios"
             });
         } else {
-        let params = req.body;
-        let tiendaId = req.params.id;
+            let params = req.body;
+            let tiendaId = req.params.id;
 
-        let sucursalesObtenidos = await SUCURSAL.findAll({ where: { NUM_TIENDA: tiendaId } });
+            let sucursalesObtenidos = await SUCURSAL.findAll({ where: { NUM_TIENDA: tiendaId } });
 
-        if (sucursalesObtenidos.length > 0) {
-            await SUCURSAL.destroy({
-                where: { NUM_TIENDA: tiendaId },
-                transaction: t
-            });
+            if (sucursalesObtenidos.length > 0) {
+                await SUCURSAL.destroy({
+                    where: { NUM_TIENDA: tiendaId },
+                    transaction: t
+                });
+            }
+
+            for (const s of params) {
+                await SUCURSAL.create(
+                    {
+                        NUM_TIENDA: tiendaId,
+                        COD_DPA: s.Ciudad,
+                        DIRECCION_SUCURSAL: s.Direccion_Sucursal,
+                        TELEFONO_SUCURSAL: s.Telefono_Sucursal,
+                        RUC: s.Ruc,
+                        LATITUD: s.Latitud,
+                        LONGITUD: s.Longitud,
+                        NUM_REFERENCIA: s.Num_Referencia,
+                        NUM_COD_POSTAL_SUCURSAL: s.Num_Cod_Postal_Sucursal,
+                        TIPO_SUCURSAL: s.Tipo_Sucursal
+                    },
+                    { transaction: t });
+            }
+            res.status(200).send({ message: 'Sus datos han sido actualizados' });
+            await t.commit();
         }
-
-        for (const s of params) {
-            await SUCURSAL.create(
-                {
-                    NUM_TIENDA: tiendaId,
-                    COD_DPA: s.Ciudad,
-                    DIRECCION_SUCURSAL: s.Direccion_Sucursal,
-                    TELEFONO_SUCURSAL: s.Telefono_Sucursal,
-                    RUC: s.Ruc,
-                    LATITUD: s.Latitud,
-                    LONGITUD: s.Longitud,
-                    NUM_REFERENCIA: s.Num_Referencia,
-                    NUM_COD_POSTAL_SUCURSAL: s.Num_Cod_Postal_Sucursal,
-                    TIPO_SUCURSAL: s.Tipo_Sucursal
-                },
-                { transaction: t });
-        }
-        res.status(200).send({ message: 'Sus datos han sido actualizados' });
-        await t.commit();
-    }
     } catch (e) {
         await t.rollback();
         res.status(500).send({
