@@ -14,11 +14,11 @@ const multer = require('../librerias/multer');
 
 
 api.post('/registrarTienda', multer.fields([{name: 'logo'}, {name: 'banner'}]), TiendaController.registrarTienda);
-api.get('/getDatosTienda/:id', TiendaController.getDatosTienda);
-api.get('/getMisTiendas/:id', TiendaController.getMisTiendas);
-api.put('/actualizarTiendaGeneral/:id', TiendaController.actualizarTiendaGeneral);
-api.put('/actualizarTiendaSucursal/:id', TiendaController.actualizarTiendaSucursal);
-api.put('/updateEstadoTienda/:id', TiendaController.updateEstadoTienda);
+api.get('/getDatosTienda/:id',  md_auth.ensureAuth, TiendaController.getDatosTienda);
+api.get('/getMisTiendas/:id', md_auth.ensureAuth, TiendaController.getMisTiendas);
+api.put('/actualizarTiendaGeneral/:id', md_auth.ensureAuth, TiendaController.actualizarTiendaGeneral);
+api.put('/actualizarTiendaSucursal/:id', md_auth.ensureAuth, TiendaController.actualizarTiendaSucursal);
+api.put('/updateEstadoTienda/:id', md_auth.ensureAuth, TiendaController.updateEstadoTienda);
 api.put('/updatePersonalizacionTienda/:id', multer.fields([{name: 'logo'}, {name: 'banner'}]), TiendaController.updatePersonalizacionTienda);
 api.get('/getDetalleTiendaProducto/:id',TiendaController.getDetalleTiendaProducto);
 api.get('/obtenerFiltroPrincipalTodos/:termino', TiendaController.obtenerFiltroPrincipalTodos);

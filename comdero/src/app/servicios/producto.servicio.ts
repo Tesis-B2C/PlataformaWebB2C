@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpResponse, HttpHeaders} from '@angular/common/http';
 import {GLOBAL} from "./global";
+import {AgenteServicio} from "./agente.servicio";
 
 //import { Http, Headers } from "@angular/http";
 
@@ -15,7 +16,7 @@ export class ProductoServicio {
   public url: String;
 
 
-  constructor(private _http: HttpClient) {
+  constructor(private _http: HttpClient,private _agenteServicio: AgenteServicio) {
     this.url = GLOBAL.url;
   }
 
@@ -48,12 +49,12 @@ export class ProductoServicio {
   }
 
   getMisProductos(Id_Tienda) {
-    let headers = new HttpHeaders({"Content-type": "application/json"});
+    let headers = new HttpHeaders({"Content-type": "application/json","Authorization": this._agenteServicio.getToken()});
     return this._http.get<objeto>(this.url + "getMisProductos/" + Id_Tienda, {headers: headers});
   }
 
   getProducto(Id_Producto) {
-    let headers = new HttpHeaders({"Content-type": "application/json"});
+    let headers = new HttpHeaders({"Content-type": "application/json","Authorization": this._agenteServicio.getToken()});
     return this._http.get<objeto>(this.url + "getProducto/" + Id_Producto, {headers: headers});
   }
 
@@ -90,14 +91,14 @@ export class ProductoServicio {
       estado: estado_a_cambiar
     }
     let params = JSON.stringify(obj);
-    let headers = new HttpHeaders({"Content-type": "application/json"});
+    let headers = new HttpHeaders({"Content-type": "application/json","Authorization": this._agenteServicio.getToken()});
     return this._http.put<objeto>(this.url + "updateEstadoProducto/" + Id_Oferta, params, {headers: headers});
   }
 
   public updateEstadoProductos(vOfertas, estado_a_cambiar){
   debugger;
     let params = JSON.stringify(vOfertas);
-    let headers = new HttpHeaders({"Content-type": "application/json"});
+    let headers = new HttpHeaders({"Content-type": "application/json","Authorization": this._agenteServicio.getToken()});
     return this._http.put<objeto>(this.url + "updateEstadoProductos/" + estado_a_cambiar, params, {headers: headers});
   }
 
