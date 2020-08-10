@@ -8,19 +8,19 @@
   </div>
 </div>
 
-<body [ngClass]="{'body-con-animacion': loading}">
-
+<body [ngClass]="{'body-con-animacion': loading}" >
+<div class=" container-login100 ">
 <div class="mx-auto mt-md-3 container-registro  p-2 bg-white rounded my-0  ">
   <div *ngIf="agenteRegistrado" class="alert alert-primary mb-0" role="alert">
     <label  style="font-size: small">Si no recibío el correo de activación por favor de click  <button (click)="reEnviar()" class="btn btn-link px-0 pt-0">aquí</button> </label>
   </div>
 
 
-  <article class="  wrap-register100 card-body ">
+  <article class=" shadow-lg   rounded mx-auto wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
     <div id="divImagenLogo">
       <img id="imagenLogo" src="./../assets/images/logoValid2.png">
     </div>
-    <header><h5 class="login100-form-title p-b-49 text-left">Regístrate
+    <header><h5 class="login100-form-title p-b-49 ">Regístrate
     </h5>
     </header>
     <form #FormRegistro id="formRegistro" class="login100-form  validate-form">
@@ -315,10 +315,9 @@
         </div>  <!--form-group end.-->
       </div>
       <div class="form-group">
-        <label class="custom-control custom-checkbox"> <input checked="" class="custom-control-input" type="checkbox">
-          <div class="custom-control-label" style="font-size: smaller"> Estoy de acuerdo con los &nbsp;<a href="#"
-                                                                                                          style="font-size: small">terminos
-            y condiciones</a></div>
+        <label class="custom-control custom-checkbox "> <input checked="" class="custom-control-input" type="checkbox">
+          <p class="custom-control-label " style="font-size: small"> Estoy de acuerdo con los &nbsp;<a  style="font-size: small" href="#">terminos
+            y condiciones</a></p>
         </label>
       </div>
       <div class="container-login100-form-btn">
@@ -332,13 +331,14 @@
           </button>
         </div>
       </div>
+      <p class="text-center mt-4 " style="font-size: small">Tienes una cuenta? <a routerLink="/loguin" style="font-size: small">Inicia
+        sesión</a></p>
     </form>
   </article><!-- card-body.// -->
-  <p class="text-center mt-2 " style="font-size: small">Tienes una cuenta? <a routerLink="/loguin" style="font-size: small">Inicia
-    sesión</a></p>
+
   <br>
 </div> <!-- card .// -->
-
+</div>
 
 </body>
 
