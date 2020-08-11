@@ -2,6 +2,7 @@ import {Component, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {TiendaServicio} from "../../servicios/tienda.servicio";
 import {NgbRatingConfig} from "@ng-bootstrap/ng-bootstrap";
+import { GLOBAL } from 'src/app/servicios/global';
 
 @Component({
   selector: 'app-busqueda',
@@ -61,7 +62,7 @@ export class BusquedaComponent implements OnInit, OnDestroy,OnChanges {
   getImagen(pathImagen) {
     this.noExite = 'assets/images/no-image.png';
     if (pathImagen) {
-      this.noExite = 'http://localhost:3977/' + pathImagen;
+      this.noExite = GLOBAL.urlImagen + pathImagen;
     }
     return this.noExite;
   }

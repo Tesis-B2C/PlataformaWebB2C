@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {NgbCarouselConfig} from "@ng-bootstrap/ng-bootstrap";
 import {OwlOptions} from 'ngx-owl-carousel-o';
 import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';
+import { GLOBAL } from 'src/app/servicios/global';
 
 @Component({
   selector: 'app-principal',
@@ -118,7 +119,7 @@ export class PrincipalComponent implements OnInit {
   getImagen(pathImagen) {
     this.noExite = 'assets/images/no-imagen1.png';
     if (pathImagen) {
-      this.noExite = 'http://localhost:3977/' + pathImagen;
+      this.noExite = GLOBAL.urlImagen + pathImagen;
     }
     return this.noExite;
   }

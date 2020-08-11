@@ -22,7 +22,7 @@ export class TiendasComponent implements OnInit, AfterContentInit {
   getImagen(pathImagen){
     this.noExite = 'assets/images/no-imagen3.jpg';
     if(pathImagen){
-    this.noExite='http://localhost:3977/'+pathImagen;
+    this.noExite= GLOBAL.urlImagen+pathImagen;
     console.log("direccion", this.noExite)
     }
     return this.noExite;

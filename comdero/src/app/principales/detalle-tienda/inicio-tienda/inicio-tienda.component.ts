@@ -3,6 +3,7 @@ import {TiendaServicio} from "../../../servicios/tienda.servicio";
 import {ActivatedRoute, Router} from "@angular/router";
 import Swal from "sweetalert2";
 import {NgbRatingConfig} from "@ng-bootstrap/ng-bootstrap";
+import { GLOBAL } from 'src/app/servicios/global';
 
 @Component({
   selector: 'app-inicio-tienda',
@@ -55,7 +56,7 @@ export class InicioTiendaComponent implements OnInit {
   getImagen(pathImagen) {
     this.noExiste = 'assets/images/no-image.png';
     if (pathImagen) {
-      this.noExiste = 'http://localhost:3977/' + pathImagen;
+      this.noExiste = GLOBAL.urlImagen + pathImagen;
     }
     return this.noExiste;
   }
