@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {CarouselModule} from 'ngx-owl-carousel-o';
 import {HttpClientModule} from '@angular/common/http';
-import {NgModule} from '@angular/core';
+import {NgModule } from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {PaginasModule} from './paginas/paginas.module';
@@ -38,7 +38,6 @@ import {ReloadGuard} from "./shared/guards/reload.guard";
     PaginasModule,
     PrincipalesModule,
     AdministradorTiendaModule,
-
     NgbModule,
     HttpClientModule,
     FormsModule,
@@ -46,8 +45,12 @@ import {ReloadGuard} from "./shared/guards/reload.guard";
     CarouselModule,
     ToastrModule.forRoot({preventDuplicates: true}),
     BsDatepickerModule.forRoot(),
-    TypeaheadModule.forRoot()
+    TypeaheadModule.forRoot(),
+
+
   ],
+
+
   providers: [
     DescuentoServicio,
     DpaServicio,

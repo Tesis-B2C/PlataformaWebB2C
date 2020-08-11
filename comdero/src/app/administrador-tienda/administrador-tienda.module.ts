@@ -6,7 +6,7 @@ import { TiendasComponent } from './tiendas/tiendas.component';
 import { EncabezadoComponent } from './encabezado/encabezado.component';
 import { SidebarModule } from 'ng-sidebar';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-
+import { NgxSpinnerModule } from "ngx-spinner";
 /*import {NgbButtonsModule} from "@ng-bootstrap/ng-bootstrap";*/
 
 @NgModule({
@@ -16,6 +16,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
         AdministradorTiendaRoutingModule,
         SidebarModule,
         NgbModule,
+      NgxSpinnerModule
 
         /* NgbButtonsModule,*/
 
