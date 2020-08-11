@@ -15,7 +15,6 @@ export class TiendasComponent implements OnInit, AfterContentInit {
   public url = GLOBAL.url;
 
   public noExite = 'assets/images/no-imagen1.png';
-
   constructor(private spinner: NgxSpinnerService,private _agenteServicio: AgenteServicio, private _tiendaServicio: TiendaServicio, public router: Router) {
 
   }
@@ -28,8 +27,9 @@ export class TiendasComponent implements OnInit, AfterContentInit {
     return this.noExite;
   }
 
+
   async ngOnInit() {
-// this.spinner.show();
+ //this.spinner.show();
     try {
       debugger;
       let identidad = this._agenteServicio.getIdentity();
@@ -51,12 +51,13 @@ export class TiendasComponent implements OnInit, AfterContentInit {
   }
 
   public async irAdministracionTienda(Id_Tienda) {
-    this.spinner.show();
+  // this.spinner.show();
+
     try{
+
     let identidadTienda = await this._tiendaServicio.getDatosTienda(Id_Tienda).toPromise();
     localStorage.setItem("identityTienda", JSON.stringify(identidadTienda.data));
     this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/inicio-administracion']);
-      this.spinner.hide();
     }catch (e) {
       console.log("error:" + JSON.stringify((e).error.message));
     }
