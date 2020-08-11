@@ -46,8 +46,6 @@ import {ReloadGuard} from "./shared/guards/reload.guard";
     ToastrModule.forRoot({preventDuplicates: true}),
     BsDatepickerModule.forRoot(),
     TypeaheadModule.forRoot(),
-
-
   ],
 
 
