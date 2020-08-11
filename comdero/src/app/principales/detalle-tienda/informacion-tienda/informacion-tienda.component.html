@@ -152,7 +152,7 @@
     <div class="container">
       <div class="row justify-content-center">
 
-        <div class="card col-4" *ngFor="let envio of this.Tienda.OPCION_ENVIOs" >
+        <div class="card col-md-4" *ngFor="let envio of this.Tienda.OPCION_ENVIOs" >
           <div class="card-body" *ngIf="envio.TIPO_ENVIO=='Domicilio'">
             <h5 class="card-title">Entrega a {{envio.TIPO_ENVIO}}</h5>
             <h6 class="card-subtitle mb-2 text-muted" *ngIf="envio.TIPO_UBICACION=='Resto'">Otras provincias <i class="fas fa-map-marker-alt"></i></h6>
