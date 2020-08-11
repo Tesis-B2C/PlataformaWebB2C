@@ -89,3 +89,4 @@ video 94 la biblia de nodejs
 ---spinner 
 npm i ngx-spinner
 https://www.npmjs.com/package/ngx-spinner
+https://napster2210.github.io/ngx-spinner/
