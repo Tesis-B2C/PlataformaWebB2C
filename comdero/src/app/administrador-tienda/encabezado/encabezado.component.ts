@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AgenteServicio} from "../../servicios/agente.servicio";
 
 @Component({
   selector: 'app-encabezado',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EncabezadoComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _agenteServicio:AgenteServicio) { }
 
   ngOnInit() {
   }

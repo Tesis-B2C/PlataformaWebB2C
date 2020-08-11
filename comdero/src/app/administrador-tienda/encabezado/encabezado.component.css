@@ -29,3 +29,23 @@
   }
 }
 
+.celular{
+  display: none;
+}
+
+
+
+@media (max-width:720px) {
+  .celular{
+    display: flex;
+  }
+
+  .computadora{
+    display: none;
+  }
+  .logo{
+    width: 60%;
+  }
+
+}
+
