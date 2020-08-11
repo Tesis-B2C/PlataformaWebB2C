@@ -35,9 +35,9 @@ export class PrincipalComponent implements OnInit {
 
   opcionesCarrouselFilaUno: OwlOptions = {
     loop: true,
-    mouseDrag: false,
-    touchDrag: false,
-    pullDrag: false,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
     dots: true,
     navSpeed: 700,
     autoplay: true,
@@ -65,9 +65,9 @@ export class PrincipalComponent implements OnInit {
 
   opcionesCarrouselTienda: OwlOptions = {
     loop: true,
-    mouseDrag: false,
-    touchDrag: false,
-    pullDrag: false,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
     dots: true,
     navSpeed: 1000,
 
