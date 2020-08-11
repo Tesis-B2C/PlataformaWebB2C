@@ -5,19 +5,22 @@
 
   <div class="row justify-content-center ">
     <div class=" col-12">
-      <div class="card shadow-lg  bg-white text-white">
+
+      <div class="card  bg-white text-white">
+
         <img class="card-img" src="assets/images/fondo-info-valid2.png" height="600px" alt="Card image">
         <div class="card-img-overlay">
+          <div class="jumbotron jumbotron-fluid" style="background-color: rgba(255,255,255,0.8)">
           <h3 class="card-title black text-center">¿ Quienes somos ?</h3>
-          <div class="card-body">
+
 
             <p class="lead black text-center "> {{this.Tienda?.DESCRIPCION_TIENDA}}</p>
 
-          </div>
         </div>
 
       </div>
-    </div>
+      </div>
+      </div>
   </div>
 
   <br><br><br>
@@ -26,27 +29,24 @@
   <div class="row justify-content-center "
        *ngIf="this.objTransferencia.Tipo_Pago!=null || this.objEfectivo.Tipo_Pago!=null || this.objElectronico.Tipo_Pago!=null">
     <div class=" col-12 ">
-      <div class="card shadow-lg text-white color-fondo ">
-        <br><br><br>
-        <img class="mx-auto pt-5 pt-md-0 banner-pago" src="assets/images/banner-pagos.png" width="100%"
-             alt="Card image">
-        <div class="card-img-overlay ">
-          <h3 class="card-title black text-center ">¿ Problemas al pagar tus compras ?</h3>
-          <div class="card-body">
+      <div class="card  text-white py-5  ">
 
-            <p class=" lead black text-center ">Olvidate de ello, nosotros contamos con varios métodos de pago para
-              facilitar la compra de tus productos </p>
 
-          </div>
+          <div class="" >
+          <h3 class="card-title black text-center ">¿ Problemas al pagar ?</h3>
+
+            <h5 class="black text-center font-weight-normal px-1">Olvidate de ello, nosotros contamos con varios métodos de pago para
+              facilitar la compra de tus productos </h5>
+
+
         </div>
-
       </div>
 
     </div>
 
   </div>
 
-  <br><br><br>
+
   <div class="social-box"
        *ngIf="this.objTransferencia.Tipo_Pago!=null || this.objEfectivo.Tipo_Pago!=null || this.objElectronico.Tipo_Pago!=null">
     <div class="container">
@@ -127,16 +127,17 @@
   </div>
   <div class="row justify-content-center ">
     <div class=" col-12 ">
-      <div class="card shadow-lg text-white bg-white ">
+      <div class="card  text-white bg-white ">
         <br><br><br>
         <img class="mx-auto  pt-md-0  banner-envio py-5" src="assets/images/banner-envios.png" width="80%"
              alt="Card image">
         <div class="card-img-overlay ">
-          <h3 class="card-title black text-center ">Opciones de envío</h3>
-          <div class="card-body">
-
+          <div class="jumbotron jumbotron-fluid" style="background-color: rgba(255,255,255,0.8)">
+          <h3 class="card-title black text-center ">Opciones de Entrega</h3>
+          <div class="">
             <p class=" lead black text-center ">Contamos con algunas opciones para facilitar la entrega de
-              nuestros productos</p>
+              nuestros productos, si no encuentras una opción que se ajuste a tus necesidades de seguro llegaremos a un acuerdo </p>
+            </div>
 
           </div>
         </div>
@@ -146,7 +147,7 @@
     </div>
 
   </div>
-  <br><br><br>
+  <br>
   <div class="social-box"
        *ngIf="this.objTransferencia.Tipo_Pago!=null || this.objEfectivo.Tipo_Pago!=null || this.objElectronico.Tipo_Pago!=null">
     <div class="container">
