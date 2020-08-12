@@ -58,7 +58,6 @@ export class BusquedaComponent implements OnInit, OnDestroy {
 
   public onPageChange(pageNum: number): void {
     this.paginaTamano = this.datosXpagina * (pageNum - 1);
-    console.log(this.paginaTamano);
   }
 
   public changePagesize(num: number): void {
@@ -101,7 +100,8 @@ export class BusquedaComponent implements OnInit, OnDestroy {
           TOTAL_COM: Number,
           PRECIO_UNITARIO: Number,
           IMAGEN: String,
-          NUM_TIENDA: String
+          NUM_TIENDA: String,
+          ID_OFERTA: Number
         }
 
         objProducto.NOMBRE_COMERCIAL = elemnt.TIENDA.NOMBRE_COMERCIAL;
@@ -121,10 +121,9 @@ export class BusquedaComponent implements OnInit, OnDestroy {
         objProducto.PRECIO_UNITARIO = elemnt.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO;
         objProducto.IMAGEN = elemnt.PRODUCTO.VARIANTEs[0].IMAGEN_PRODUCTOs[0].IMAGEN;
         objProducto.NUM_TIENDA = elemnt.TIENDA.NUM_TIENDA;
+        objProducto.ID_OFERTA = elemnt.ID_OFERTA;
         this.vectorProductos.push(objProducto);
       })
-
-      console.log("VECTOR OBTENIDO"+ JSON.stringify(this.vectorProductos));
     } else {
       this.banderaNoResultado = true;
     }

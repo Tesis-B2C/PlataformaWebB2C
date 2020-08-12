@@ -10,6 +10,7 @@ api.post('/saveProducto', multer.array('imagenes'), ProductoController.saveProdu
 api.get('/getMisProductos/:id',ProductoController.getMisProductos);
 api.get('/getProducto/:id',ProductoController.getProducto);
 api.get('/obtenerTodosProductos',ProductoController.obtenerTodosProductos);
+api.get('/obtenerProductoDetalle/:id',ProductoController.obtenerProductoDetalle);
 api.put('/updateProducto/:id', multer.array('imagenes'),ProductoController.updateProducto);
 api.put('/updateEstadoProducto/:id',ProductoController.updateEstadoProducto);
 api.put('/updateEstadoProductos/:estado',ProductoController.updateEstadoProductos);

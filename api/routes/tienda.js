@@ -1,4 +1,4 @@
-'use stric'
+'use strict'
 
 const express = require('express');
 var TiendaController = require('../controllers/tienda');

@@ -1566,7 +1566,7 @@ a[class*='card']:hover .title {
 
 /*CALIFICACION PRODUCTO*/
 .star {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: rgba(252, 161, 71, .4);
 }
 
@@ -1579,3 +1579,4 @@ ngb-rating:focus {
 }
 
 /**/
+

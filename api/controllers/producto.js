@@ -40,7 +40,7 @@ async function saveProducto(req, res) {
                 transaction: t
             });
 
-        if (! producto.Cod_Producto) {
+        if (!producto.Cod_Producto) {
             producto.Cod_Producto = '000000';
         }
         let productoGuardado = await Producto.create({
@@ -71,7 +71,6 @@ async function saveProducto(req, res) {
 
         }
 
-
         for (let v of variantes) {
             let variantesGuardadas = await Variante.create({
                 ID_PRODUCTO: productoGuardado.dataValues.ID_PRODUCTO,
@@ -87,7 +86,6 @@ async function saveProducto(req, res) {
                 transaction: t
             });
             vvariantesGuardas.push(variantesGuardadas);
-
         }
 
         for (let i = 0; i < vvariantesGuardas.length; i++) {
@@ -116,7 +114,6 @@ async function saveProducto(req, res) {
             }
         }
 
-
         if (ofertaGuardada && productoGuardado) {
             res.status(200).send({
                 message: "Su producto ha sido registrado exitosamente"
@@ -136,7 +133,6 @@ async function saveProducto(req, res) {
                 await fs.unlink(path.resolve(req.files[h].path));
             }
         }
-
         await t.rollback();
         res.status(500).send({
             message: 'error:' + err
@@ -185,11 +181,8 @@ async function getProducto(req, res) {
                     model: Producto_Categoria,
                     include: {model: Categoria}
                 }],
-
             },
-
         });
-
         if (productoObtenido) {
             res.status(200).send({
                 data: productoObtenido,
@@ -463,7 +456,7 @@ async function updateEstadoProductos(req, res) {
 
 }
 
-/*     //INICIO SECCION PARA PAGINA PRINCIPAL//      */
+/*     //INICIO SECCION PARA PAGINA PRINCIPAL//     */
 async function obtenerTodosProductos(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
     try {
@@ -517,6 +510,62 @@ async function obtenerTodosProductos(req, res) {
     }
 }
 
+async function obtenerProductoDetalle(req, res) {
+    const t = await db.sequelize.transaction({autocommit: false});
+    try {
+        let productoObtenido = await Oferta.findOne({
+            where: {ID_OFERTA: req.params.id},
+            include: [{
+                model: Producto,
+                include: [{
+                    model: Variante,
+                    separate: true,
+                    order: [['NUM_VARIANTE', 'ASC']],
+                    include: {
+                        model: Imagen_Producto,
+                        separate: true,
+                        order: [['ID_IMAGEN', 'ASC']]}
+                }, {
+                    model: Producto_Categoria,
+                    include: {model: Categoria}
+                }, {
+                    model: Calificacion,
+                    separate: true,
+                    attributes: ['ID_PRODUCTO', [Calificacion.sequelize.fn('AVG', Calificacion.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
+                    group: ['ID_PRODUCTO']
+                }, {
+                    model: Comentario,
+                    separate: true
+                }],
+            }, {
+                model: Tienda,
+                attributes: ['NOMBRE_COMERCIAL']
+            }],
+            attributes: ['ID_OFERTA'],
+            transaction: t
+        });
+
+        if (productoObtenido) {
+            await t.commit();
+            res.status(200).send({
+                data: productoObtenido,
+                message: "Producto cargado correctamente"
+            });
+        } else {
+            await t.rollback();
+            res.status(404).send({
+                message: 'Al parecer no se encuentra el producto registrado en la base de datos'
+            });
+        }
+    } catch (e) {
+        await t.rollback();
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+
+
 /*     //FIN SECCION PARA PAGINA PRINCIPAL//      */
 
 module.exports = {          // para exportar todas las funciones de este modulo
@@ -526,5 +575,6 @@ module.exports = {          // para exportar todas las funciones de este modulo
     updateProducto,
     updateEstadoProducto,
     obtenerTodosProductos,
+    obtenerProductoDetalle,
     updateEstadoProductos
 };

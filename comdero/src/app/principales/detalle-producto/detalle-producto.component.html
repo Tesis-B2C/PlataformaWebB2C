@@ -42,3 +42,161 @@
   </nav>
 </section>
 <!-- ========================= SECTION FRANJA AZUL END ========================= -->
+
+<!-- ============================ COMPONENT 1 ================================= -->
+<section class="section-content padding-y-sm">
+  <div class="container">
+    <div class="card">
+      <div class="row no-gutters">
+        <aside class="col-lg-6 col-md-6">
+          <article class="gallery-wrap">
+            <div class="img-big-wrap ">
+              <a href="#"><img src="../../../assets/estilos-principal/images/items/1.jpg"></a>
+            </div> <!-- img-big-wrap.// -->
+            <div class="thumbs-wrap">
+              <a href="#" class="item-thumb"> <img src="../../../assets/estilos-principal/images/items/1.jpg"></a>
+              <a href="#" class="item-thumb"> <img src="../../../assets/estilos-principal/images/items/2.jpg"></a>
+              <a href="#" class="item-thumb"> <img src="../../../assets/estilos-principal/images/items/3.jpg"></a>
+              <a href="#" class="item-thumb"> <img src="../../../assets/estilos-principal/images/items/4.jpg"></a>
+            </div> <!-- thumbs-wrap.// -->
+          </article> <!-- gallery-wrap .end// -->
+        </aside>
+        <main class="col-lg-6 col-md-6 border-left">
+          <article class="content-body px-4">
+            <p class="mb-0">
+              <a href="principales/menu/detalle-tienda/tienda/300000/inicio-tienda"
+                 class="title tituloTienda text-primary p-0"> {{this.productoDetalle.TIENDA.NOMBRE_COMERCIAL}}</a>
+            </p>
+            <h4 class="title m-0">{{this.productoDetalle.PRODUCTO.NOMBRE_PRODUCTO}}</h4>
+
+            <div class="rating-wrap mb-0">
+              <ul class="rating-stars">
+                <ngb-rating
+                            [(rate)]="this.productoDetalle.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL">
+                  <ng-template let-fill="fill">
+                    <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                  </ng-template>
+                </ngb-rating>
+                <ngb-rating *ngIf="this.productoDetalle.PRODUCTO.CALIFICACIONs.length == 0"
+                            [(rate)]="currentRate">
+                  <ng-template let-fill="fill">
+                    <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                  </ng-template>
+                </ngb-rating>
+              </ul>
+              <!--  <span *ngIf="p.TOTAL_COM != null"
+                      class="label-rating text-muted">{{p.TOTAL_COM}} comentarios</span>
+                <span *ngIf="p.TOTAL_COM == null" class="label-rating text-muted">0 Comentarios </span> -->
+              <span class="label-rating text-muted small">0 Comentarios </span>
+            </div> <!-- rating-wrap.// -->
+
+
+            <hr class="mt-2">
+
+            <div>
+              <label class="mb-1 small">NUEVO </label>
+            </div>
+
+            <div class="mb-2">
+              <var class="price h5">$815.00</var>
+              <span class="text-muted fontTamano">/per kg</span>
+            </div>
+
+            <div class="input-group mb-2">
+              <div class="input-group-prepend">
+                <label class="input-group-text fontTamano" for="inputGroupSelect01">Cantidad</label>
+              </div>
+              <select class="custom-select col-sm-4 col " id="inputGroupSelect01">
+                <option selected>Choose...</option>
+                <option value="1">One</option>
+              </select>
+            </div>
+
+            <article class="gallery-wrap">
+              <div class="fontTamano">
+                <dl class="row mb-3">
+                  <dt class="col-sm-3 col-4">Color</dt>
+                  <dd class="col-sm-9 col-8">Brown</dd>
+
+                  <dt class="col-sm-3 col-4">Talla</dt>
+                  <dd class="col-sm-9 col-8">S</dd>
+
+                  <dt class="col-sm-3 col-4">Material</dt>
+                  <dd class="col-sm-9 col-8">Russia, USA, and Europe</dd>
+                </dl>
+              </div>
+              <div class="thumbs-wrap">
+                <a class="item-thumb item-opciones" *ngFor="let v of this.productoDetalle.PRODUCTO.VARIANTEs">
+                  <img [src]="getImagen(v.IMAGEN_PRODUCTOs[0].IMAGEN)">
+                </a>
+              </div> <!-- thumbs-wrap.// -->
+            </article> <!-- gallery-wrap .end// -->
+
+            <div class="form-row">
+              <button class="btn btn-primary col-lg-5 col-md-5 col-sm-4 col-4 mr-1"> Comprar</button>
+              <button class="btn btn-outline-primary col-lg-5 col-md-6 col-sm-7 col-7 ml-1"><span class="text">Agregar al carrito</span>
+                <i
+                  class="fas fa-shopping-cart"></i></button>
+            </div>
+          </article> <!-- product-info-aside .// -->
+        </main> <!-- col.// -->
+      </div> <!-- row.// -->
+    </div> <!-- card.// -->
+  </div> <!-- container.// -->
+</section>
+
+<!-- ============================ COMPONENT 1 END .// ================================= -->
+
+<!-- ============================ COMPONENT 4  ================================= -->
+<section class="section-content padding-y-sm pt-0">
+  <div class="container">
+    <article class="card">
+      <div class="card-body">
+
+        <div class="row">
+          <aside class="col-md-6">
+            <h5>Parameters</h5>
+            <dl class="row">
+              <dt class="col-sm-3 col-4">Display</dt>
+              <dd class="col-sm-9 col-8">13.3-inch LED-backlit display with IPS</dd>
+
+              <dt class="col-sm-3 col-4">Processor</dt>
+              <dd class="col-sm-9 col-8">2.3GHz dual-core Intel Core i5</dd>
+
+              <dt class="col-sm-3 col-4">Camera</dt>
+              <dd class="col-sm-9">720p FaceTime HD camera</dd>
+
+              <dt class="col-sm-3 col-4">Memory</dt>
+              <dd class="col-sm-9 col-8">8 GB RAM or 16 GB RAM</dd>
+
+              <dt class="col-sm-3 col-4">Graphics</dt>
+              <dd class="col-sm-9 col-8">Intel Iris Plus Graphics 640</dd>
+            </dl>
+          </aside>
+          <aside class="col-md-6">
+            <h5>Features</h5>
+            <ul class="list-check">
+              <li>Best performance of battery</li>
+              <li>5 years warranty for this product</li>
+              <li>Amazing features and high quality</li>
+              <li>Best performance of battery</li>
+              <li>5 years warranty for this product</li>
+              <li>Amazing features and high quality</li>
+            </ul>
+          </aside>
+        </div> <!-- row.// -->
+        <hr>
+
+        <h6>Descripción del producto</h6>
+        <p class="small text-justify">
+          {{this.productoDetalle.PRODUCTO.DESCRIPCION_PRODUCTO}}
+        </p>
+        <h6>Detalle del producto</h6>
+        <p class="small text-justify">
+          {{this.productoDetalle.PRODUCTO.DETALLE_PRODUCTO}}
+        </p>
+      </div> <!-- card-body.// -->
+    </article> <!-- card.// -->
+  </div> <!-- container.// -->
+</section>
+<!-- ============================ COMPONENT 4  .//END ================================= -->

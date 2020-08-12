@@ -26,3 +26,9 @@ button{
 tr:hover{
   background-color: #F0F0F0;
 }
+
+#paginacion {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

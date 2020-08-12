@@ -189,10 +189,13 @@
     </table>
 
     <div class="d-flex justify-content-between p-2">
-      <ngb-pagination
+      <ngb-pagination id="paginacion"
         [(page)]="page"
         [pageSize]="pageSize"
-        [collectionSize]="this.result.length "></ngb-pagination>
+        [collectionSize]="this.result.length" [rotate]="true" [ellipses]="true" [boundaryLinks]="false">
+        <ng-template ngbPaginationPrevious>Anterior</ng-template>
+        <ng-template ngbPaginationNext>Siguiente</ng-template>
+      </ngb-pagination>
     </div>
 
 

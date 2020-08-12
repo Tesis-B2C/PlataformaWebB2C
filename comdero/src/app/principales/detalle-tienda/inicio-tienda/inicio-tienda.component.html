@@ -4,7 +4,7 @@
     <h6 class="text-center">ENCUENTRA LO QUE NECESITAS EN {{this.Tienda?.NOMBRE_COMERCIAL}}</h6>
     <div class="input-group   mx-auto  mt-3  ">
 
-      <input type="text" class="form-control " style="border-radius:50px 0px 0px 50px;"  #Busqueda="ngModel" name="busqueda"   [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="filtrar()">
+      <input type="text" class="form-control " style="border-radius:50px 0px 0px 50px;"  #Busqueda="ngModel" name="busqueda" [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="filtrar()">
       <div class="input-group-append ">
         <button class="btn btn-light  px-3 py-1" style="border-radius:0px 50px 50px 0px;" type="submit">
           <i class="fa fa-search"></i>
@@ -23,7 +23,7 @@
 <div class="container">
   <section class="section-name padding-y-sm row ">
     <div class="col-md-3"
-         *ngFor="let producto of  this.result  |slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+         *ngFor="let producto of this.result  |slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
 
       <div class="card  card-product-grid mx-2">
         <a class="img-wrap"><img [src]="getImagen(producto.PRODUCTO.VARIANTEs[0].IMAGEN_PRODUCTOs[0].IMAGEN)"></a>
@@ -57,11 +57,16 @@
 
     </div>
 
+
     <div class=" col-12 d-flex justify-content-center p-2">
-      <ngb-pagination
+      <ngb-pagination id="paginacion"
         [(page)]="page"
         [pageSize]="pageSize"
-        [collectionSize]="this.result.length "></ngb-pagination>
+        [collectionSize]="this.result.length" [rotate]="true" [ellipses]="true"
+                      [boundaryLinks]="false" >
+        <ng-template ngbPaginationPrevious>Anterior</ng-template>
+        <ng-template ngbPaginationNext>Siguiente</ng-template>
+      </ngb-pagination>
     </div>
   </section>
 

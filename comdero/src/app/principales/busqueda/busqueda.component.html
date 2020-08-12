@@ -59,13 +59,13 @@
     <article class="card card-product-list"
              *ngFor="let p of this.vectorProductos | slice: paginaTamano | slice: 0:datosXpagina">
       <div class="row no-gutters">
-        <aside class="col-lg-3 col-md-3 col-sm-3 col-12">
-          <a href="#" class="img-wrap">
+        <aside class="col-lg-3 col-md-3 col-12">
+          <a href="principales/menu/detalle-producto/{{p.ID_OFERTA}}" class="img-wrap">
             <span class="badge badge-danger"> NEW </span>
             <img [src]="getImagen(p.IMAGEN)">
           </a>
         </aside> <!-- col.// -->
-        <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+        <div class="col-lg-6 col-md-6 col-12">
           <div class="info-main">
             <a href="#" class="h5 title"> {{p.NOMBRE_PRODUCTO}} </a>
             <div class="rating-wrap mb-3">
@@ -90,7 +90,7 @@
             </p>
           </div> <!-- info-main.// -->
         </div> <!-- col.// -->
-        <aside class="col-lg-3 col-md-3 col-sm-3 col-12">
+        <aside class="col-lg-3 col-md-3 col-12">
           <div class="info-aside">
             <div class="price-wrap">
               <span class="price h5"> {{p.PRECIO_UNITARIO | currency }} </span>

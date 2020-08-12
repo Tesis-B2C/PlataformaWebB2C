@@ -39,34 +39,25 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.datosObtenidos = '';
     palabraBuscar = palabraBuscar.trim();
     if(palabraBuscar != 0){
-      console.log(+palabraBuscar+'XXXXXXXXXXXXXXXXXXX');
       if (this.tipoBuscador == 'Tiendas' && palabraBuscar != '') {
-        console.log('================================================== palabraBuscar');
         let response = await this._tiendaServicio.obtenerFiltroPrincipalTienda(palabraBuscar).toPromise();
         this.datosObtenidos = response.data;
-        console.log('hola' + JSON.stringify(this.datosObtenidos));
         this.datosObtenidos.forEach(elemnt => {
           this.objetoDatos.push(elemnt.NOMBRE_COMERCIAL)
         })
-        console.log('OBJETO CON TODOS LOS NOMBRES A MOSTRARTIENDA' + JSON.stringify(this.objetoDatos));
       }
 
       if (this.tipoBuscador == 'Productos' && palabraBuscar != '') {
-        console.log('==================================================');
         let response = await this._tiendaServicio.obtenerFiltroPrincipalProductos(palabraBuscar).toPromise();
         this.datosObtenidos = response.data;
-        console.log('hola' + JSON.stringify(this.datosObtenidos));
         this.datosObtenidos.forEach(elemnt => {
           this.objetoDatos.push(elemnt.NOMBRE_PRODUCTO)
         })
-        console.log('OBJETO CON TODOS LOS NOMBRES A MOSTRARPRODUCTOS' + JSON.stringify(this.objetoDatos));
       }
 
       if (this.tipoBuscador == 'Todos' && palabraBuscar != '') {
-        console.log('==================================================');
         let response = await this._tiendaServicio.obtenerFiltroPrincipalTodos(palabraBuscar).toPromise();
         this.datosObtenidos = response.data;
-        console.log('TODOS PALABRA BUSCADORA' + JSON.stringify(this.datosObtenidos));
 
         this.datosObtenidos[0].forEach(elemnt => {
           this.objetoDatos.push(elemnt.NOMBRE_COMERCIAL);
@@ -75,7 +66,6 @@ export class MenuComponent implements OnInit, OnDestroy {
         this.datosObtenidos[1].forEach(elemnt => {
           this.objetoDatos.push(elemnt.NOMBRE_PRODUCTO);
         })
-        console.log('OBJETO CON TODOS LOS NOMBRES A MOSTRARTODOS' + JSON.stringify(this.objetoDatos));
       }
     }
   }
@@ -89,11 +79,10 @@ export class MenuComponent implements OnInit, OnDestroy {
     )
 
   public buscarPalabra(palabraBuscada: string) {
-    if (palabraBuscada.trim() == "" || palabraBuscada.trim() == null) {
-      console.log(palabraBuscada.trim()+ "ya mismo me voy");
+    palabraBuscada = palabraBuscada.trim();
+    if (palabraBuscada == "" || palabraBuscada == null) {
       location.href = '**';
     } else {
-      palabraBuscada = palabraBuscada.trim();
       location.href = 'principales/menu/busqueda/'+palabraBuscada;
     }
   }

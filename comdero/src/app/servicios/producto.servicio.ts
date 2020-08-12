@@ -19,9 +19,7 @@ export class ProductoServicio {
     this.url = GLOBAL.url;
   }
 
-
   saveProducto(ofertas, productos, variantes, imagenes, categorias) {
-
     let oferta = JSON.stringify(ofertas);
     let producto = JSON.stringify(productos);
     let variante = JSON.stringify(variantes);
@@ -43,7 +41,6 @@ export class ProductoServicio {
         }
       }
     }
-
     return this._http.post<objeto>(this.url + "saveProducto", fd,);
   }
 
@@ -56,7 +53,6 @@ export class ProductoServicio {
     let headers = new HttpHeaders({"Content-type": "application/json"});
     return this._http.get<objeto>(this.url + "getProducto/" + Id_Producto, {headers: headers});
   }
-
 
   updateProducto(Id_Oferta, ofertas, productos, variantes, imagenes, categorias) {
 
@@ -101,6 +97,8 @@ export class ProductoServicio {
     return this._http.put<objeto>(this.url + "updateEstadoProductos/" + estado_a_cambiar, params, {headers: headers});
   }
 
-
-
+  obtenerProductoDetalle(Id_Producto) {
+    let headers = new HttpHeaders({"Content-type": "application/json"});
+    return this._http.get<objeto>(this.url + "obtenerProductoDetalle/" + Id_Producto, {headers: headers});
+  }
 }

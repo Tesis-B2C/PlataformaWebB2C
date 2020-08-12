@@ -1,6 +1,4 @@
 <body>
-
-
 <div class=" mt-5" [ngClass]="{'container':misProductos.length==0, 'container-fluid':misProductos.length>0}">
   <div class="row  justify-content-center">
     <h4 class=" col-md-11 text-left">Listado de productos</h4>
@@ -27,13 +25,13 @@
 
         <br> <br>
         <div class="mx-auto text-center">
-          <button class="btn btn-primary  px-5" routerLink="../productos" style="font-size: small"> Crear producto</button>
+          <button class="btn btn-primary  px-5" routerLink="../productos" style="font-size: small"> Crear producto
+          </button>
           <br> <br>
         </div>
         <br>
       </div>
     </div>
-
 
     <div class=" col-md-2   mt-5 mt-md-0   jackInTheBox   animated px-0 ">
       <div class="container card  card-body  shadow  ">
@@ -51,9 +49,7 @@
 </div>
 
 
-<div  *ngIf="misProductos.length>0" class="container-fluid mx-auto px-md-5 ">
-
-
+<div *ngIf="misProductos.length > 0" class="container-fluid mx-auto px-md-5 ">
   <div class="form-row mb-2  ">
     <div class=" input-group col-md-6 mr-md-auto">
       <input class="form-control" style="font-size: small" type="text" #busquedaasd="ngModel"
@@ -62,7 +58,7 @@
       <div class="input-group-append">
         <span class="input-group-text  small"><li class="fas fa-search"></li></span>
       </div>
-      &nbsp;  &nbsp;  &nbsp;
+      &nbsp; &nbsp; &nbsp;
 
     </div>
 
@@ -72,15 +68,17 @@
 
   </div>
   <div *ngIf="loading">
-    <label>Buscando  . . .</label>
-    &nbsp;  &nbsp;  &nbsp;
+    <label>Buscando . . .</label>
+    &nbsp; &nbsp; &nbsp;
     <div class="progress">
-      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
+           aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
     </div>
   </div>
 
 
-  <div class="btn-group mb-2 animated  " [ngClass]="{'fadeOut':vectorProductos.size==0,'fadeIn':vectorProductos.size>0 }" *ngIf="vectorProductos.size>0">
+  <div class="btn-group mb-2 animated  "
+       [ngClass]="{'fadeOut':vectorProductos.size==0,'fadeIn':vectorProductos.size>0 }" *ngIf="vectorProductos.size>0">
     <button class="btn btn-primary mr-1" style="font-size: small; font-weight: normal">
       Seleccionados &nbsp;<span class="badge badge-light">{{vectorProductos.size}}</span>
     </button>
@@ -98,10 +96,8 @@
             class="btn btn-danger   mt-md-0 mt-1"
             style="font-size: x-small"
     ><span class="fa fa-trash"></span></button>
-
-
   </div>
-  <div  *ngIf="this.result.length==0" class="ml-1"><p>No se encontraron resultados.</p></div>
+  <div *ngIf="this.result.length==0" class="ml-1"><p>No se encontraron resultados.</p></div>
   <table class="table table-bordered table-responsive-sm bg-white small w-100 text-center" *ngIf="this.result.length>0">
     <thead>
     <tr>
@@ -120,7 +116,8 @@
     <tbody>
     <tr [ngClass]="{'bg-gray':producto.ESTADO_OFERTA==1}"
         *ngFor="let producto of   this.result  |slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
-      <th scope="row"><input (click)="agregarProducto($event,producto.PRODUCTO.ID_OFERTA )" type="checkbox" [checked]="vectorProductos.has(producto.PRODUCTO.ID_OFERTA)"></th>
+      <th scope="row"><input (click)="agregarProducto($event,producto.PRODUCTO.ID_OFERTA )" type="checkbox"
+                             [checked]="vectorProductos.has(producto.PRODUCTO.ID_OFERTA)"></th>
       <td>
         {{producto.PRODUCTO.ID_PRODUCTO}}
       </td>
@@ -174,16 +171,15 @@
   </table>
 
   <div class="d-flex justify-content-between p-2">
-    <ngb-pagination
+    <ngb-pagination id="paginacion"
       [(page)]="page"
       [pageSize]="pageSize"
-      [collectionSize]="this.result.length "></ngb-pagination>
+      [collectionSize]="this.result.length" [rotate]="true" [ellipses]="true" [boundaryLinks]="false">
+      <ng-template ngbPaginationPrevious>Anterior</ng-template>
+      <ng-template ngbPaginationNext>Siguiente</ng-template>
+    </ngb-pagination>
   </div>
-
-
 </div>
-
-
 <br>
 
 

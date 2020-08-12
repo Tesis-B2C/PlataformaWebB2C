@@ -19,9 +19,10 @@ export class InicioTiendaComponent implements OnInit {
   public pageSize = 15;
   public result = [];
 
-  public loading:boolean=false;
+  public loading: boolean = false;
   public busqueda;
-  constructor( configRating: NgbRatingConfig,private _tiendaServicio: TiendaServicio, private route: ActivatedRoute, private router: Router) {
+
+  constructor(configRating: NgbRatingConfig, private _tiendaServicio: TiendaServicio, private route: ActivatedRoute, private router: Router) {
     configRating.max = 5;
     configRating.readonly = true;
     // customize default values of carousels used by this component tree
@@ -29,10 +30,10 @@ export class InicioTiendaComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.loading=true;
-   await  this.getDetalleTiendaProducto();
-   this.result=this.Tienda.OFERTA;
-   this.loading=false;
+    this.loading = true;
+    await this.getDetalleTiendaProducto();
+    this.result = this.Tienda.OFERTA;
+    this.loading = false;
   }
 
   async getDetalleTiendaProducto() {
@@ -47,11 +48,9 @@ export class InicioTiendaComponent implements OnInit {
         this.mensageError(JSON.stringify((e).error.message));
       else this.mensageError("Error de conexión intentelo mas tarde");
     }
-
-
   }
- public noExiste;
 
+  public noExiste;
   getImagen(pathImagen) {
     this.noExiste = 'assets/images/no-image.png';
     if (pathImagen) {
@@ -62,17 +61,16 @@ export class InicioTiendaComponent implements OnInit {
 
 
   public async filtrar() {
-    this.loading=true;
+    this.busqueda = this.busqueda.trim();
+    this.loading = true;
     this.result = await this.search(this.busqueda);
-    this.loading=false;
-
+    this.loading = false;
   }
 
   public search(text: string): any[] {
     return this.Tienda.OFERTA.filter(producto => {
       const term = text.toLowerCase();
       debugger
-
       return producto.PRODUCTO.NOMBRE_PRODUCTO.toLowerCase().includes(term)  // || siguiente
 
     });

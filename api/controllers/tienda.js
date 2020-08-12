@@ -553,12 +553,17 @@ async function obtenerFiltroPrincipalTienda(req, res) {
         let tiendasObtenidos = await TIENDA.findAll({
             attributes: ['NOMBRE_COMERCIAL'],
             where: {
-                [Op.or]: [
-                    {NOMBRE_COMERCIAL: {[Op.like]: termino + '%'}},
-                    {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino}},
-                    {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino + '%'}}
-                ]
-            },
+            [Op.and]: [
+                {ESTADO_TIENDA: 0},
+                {
+                    [Op.or]: [
+                        {NOMBRE_COMERCIAL: {[Op.like]: termino + '%'}},
+                        {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino}},
+                        {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino + '%'}}
+                    ]
+                }
+            ]
+        },
             limit: 10,
             transaction: t
         });
@@ -614,10 +619,15 @@ async function obtenerFiltroPrincipalTodos(req, res) {
         let tiendasObtenidos = await TIENDA.findAll({
             attributes: ['NOMBRE_COMERCIAL'],
             where: {
-                [Op.or]: [
-                    {NOMBRE_COMERCIAL: {[Op.like]: termino + '%'}},
-                    {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino}},
-                    {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino + '%'}}
+                [Op.and]: [
+                    {ESTADO_TIENDA: 0},
+                    {
+                        [Op.or]: [
+                            {NOMBRE_COMERCIAL: {[Op.like]: termino + '%'}},
+                            {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino}},
+                            {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino + '%'}}
+                        ]
+                    }
                 ]
             },
             limit: 8,
@@ -672,14 +682,14 @@ async function obtenerFiltroBusquedaTodos(req, res) {
                     model: VARIANTE,
                     separate: true,
                     attributes: ['ID_PRODUCTO', 'NUM_VARIANTE', 'PRECIO_UNITARIO'],
-                    group: ['ID_PRODUCTO', 'COD_PRODUCTO'],
+                    group: ['ID_PRODUCTO'],
                     order: [['NUM_VARIANTE', 'ASC']],
                     include: {
                         model: IMAGEN_PRODUCTO,
                         separate: true,
                         attributes: ['NUM_VARIANTE', 'IMAGEN'],
                         group: 'NUM_VARIANTE',
-                        where:{
+                        where: {
                             [Op.or]: [
                                 {[Op.not]: {TIPO_IMAGEN: 'video'}},
                                 {[Op.not]: {TIPO_IMAGEN: 'youtube'}}
@@ -702,18 +712,25 @@ async function obtenerFiltroBusquedaTodos(req, res) {
                 model: TIENDA,
                 attributes: ['NUM_TIENDA', 'NOMBRE_COMERCIAL']
             }],
+            where: {
+                ESTADO_OFERTA: 0
+            },
             attributes: ['ID_OFERTA'],
             transaction: t
         });
 
-
         let tiendasObtenidos = await TIENDA.findAll({
             attributes: ['NUM_TIENDA', 'NOMBRE_COMERCIAL', 'LOGO'],
             where: {
-                [Op.or]: [
-                    {NOMBRE_COMERCIAL: {[Op.like]: termino + '%'}},
-                    {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino}},
-                    {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino + '%'}}
+                [Op.and]: [
+                    {ESTADO_TIENDA: 0},
+                    {
+                        [Op.or]: [
+                            {NOMBRE_COMERCIAL: {[Op.like]: termino + '%'}},
+                            {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino}},
+                            {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino + '%'}}
+                        ]
+                    }
                 ]
             },
             limit: 5,

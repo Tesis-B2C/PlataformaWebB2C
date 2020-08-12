@@ -1,0 +1,39 @@
+.section-pagetop {
+  padding: 12px 0;
+}
+
+.colorNavbar {
+  background-color: #2a4c75;
+}
+
+.nav-link {
+  color: white;
+  font-weight: normal;
+}
+
+.nav-link:hover {
+  color: #fca147;
+  font-weight: bold;
+}
+
+.tituloTienda{
+  font-size: small;
+  padding-top: 10px;
+  text-align: left;
+}
+
+/*PARTE DE DESTALLE PRODUCTO*/
+.fontTamano{
+  font-size: small;
+}
+
+.fontTamano dd{
+  margin-bottom: 0;
+}
+
+.item-opciones img:hover{
+  cursor: pointer;
+}
+.item-opciones img{
+  cursor: pointer;
+}

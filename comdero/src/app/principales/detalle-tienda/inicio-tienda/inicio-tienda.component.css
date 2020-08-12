@@ -8,3 +8,9 @@ input[type="text"]:focus
  /* box-shadow: 0 0 0.0005px;*/
   outline: 0.1px none;
 }
+
+#paginacion {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
