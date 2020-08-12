@@ -622,7 +622,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
           let body = document.getElementById('body') as HTMLElement;
           body.scrollTo(0, 0);
           window.scroll(0, 0);
-          this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
+          this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
             {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
           return false
         }
@@ -633,7 +633,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
       let body = document.getElementById('body') as HTMLElement;
       body.scrollTo(0, 0);
       window.scroll(0, 0);
-      this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
+      this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
         {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
       return false
     }
