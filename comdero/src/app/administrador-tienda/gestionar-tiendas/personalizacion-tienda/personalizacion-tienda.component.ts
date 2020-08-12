@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Tienda} from "../../../modelos/tienda";
 import {TiendaServicio} from "../../../servicios/tienda.servicio";
 import Swal from "sweetalert2";
 import{GLOBAL} from'../../../servicios/global';
-  import { from } from 'rxjs';
+
 @Component({
   selector: 'app-personalizacion-tienda',
   templateUrl: './personalizacion-tienda.component.html',
@@ -81,7 +80,7 @@ export class PersonalizacionTiendaComponent implements OnInit {
     this.urlLogo = "";
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
     if (this.identidadTienda.LOGO) {
-      this.urlLogo =GLOBAL.url + this.identidadTienda.LOGO;
+      this.urlLogo =GLOBAL.urlImagen + this.identidadTienda.LOGO;
     }
     if (this.identidadTienda.BANNER) {
       this.urlBanner = GLOBAL.urlImagen + this.identidadTienda.BANNER;

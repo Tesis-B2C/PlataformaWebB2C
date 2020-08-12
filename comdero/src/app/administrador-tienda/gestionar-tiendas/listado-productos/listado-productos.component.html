@@ -54,13 +54,13 @@
 <div  *ngIf="misProductos.length>0" class="container-fluid mx-auto px-md-5 ">
 
 
-  <div class="form-row mb-2  ">
-    <div class=" input-group col-md-6 mr-md-auto">
-      <input class="form-control" style="font-size: small" type="text" #busquedaasd="ngModel"
+  <div class="row mb-2  ">
+    <div class=" input-group col-lg-6 mr-lg-auto pr-0" >
+      <input class="form-control " style="font-size: small" type="text" #busquedaasd="ngModel"
              [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="filtrar()"/>
 
-      <div class="input-group-append">
-        <span class="input-group-text  small"><li class="fas fa-search"></li></span>
+      <div class="input-group-append ">
+        <span class="input-group-text  "><li class="fas fa-search"></li></span>
       </div>
       &nbsp;  &nbsp;  &nbsp;
 

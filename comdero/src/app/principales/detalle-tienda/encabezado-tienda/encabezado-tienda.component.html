@@ -10,7 +10,7 @@
           <section class="py-0   colorNavbar">
             <nav class="navbar   navbar-expand-xl  justify-content-between px-lg-5 ">
 
-              <button class="navbar-toggler" style=" border: none" type="button" #menu name="menu"
+              <button class="navbar-toggler" style="border: none" type="button" #menu name="menu"
                       data-toggle="collapse" data-target="#main_nav"
                       aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="fa fa-bars " style="color: white"></span>
@@ -22,7 +22,7 @@
                 <div class="collapse navbar-collapse ml-auto" id="main_nav">
                   <ul class="navbar-nav ml-auto ">
                     <li class="nav-item  ">
-                      <a class="nav-link pl-2 pl-lg-2" routerLink="inicio-tienda" routerLinkActive='active'
+                      <a class="nav-link pl-2 pl-lg-2" (click)="menu.click()" routerLink="inicio-tienda" routerLinkActive='active'
                          [routerLinkActiveOptions]="{exact: true} " >Inicio </a>
                     </li>
                     <li class="nav-item dropdown ">
@@ -36,11 +36,11 @@
                     </li>
 
                     <li class="nav-item">
-                      <a class="nav-link pl-2 pl-lg-2" routerLink="informacion-tienda" routerLinkActive='active'
+                      <a class="nav-link pl-2 pl-lg-2" (click)="menu.click()" routerLink="informacion-tienda" routerLinkActive='active'
                          [routerLinkActiveOptions]="{exact: true} ">Información</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link pl-2 pl-lg-2" routerLink="terminos-y-condiciones-tienda" routerLinkActive='active'
+                      <a class="nav-link pl-2 pl-lg-2" (click)="menu.click()" routerLink="terminos-y-condiciones-tienda" routerLinkActive='active'
                          [routerLinkActiveOptions]="{exact: true} "> Terminos y
                         condiciones </a>
                     </li>
