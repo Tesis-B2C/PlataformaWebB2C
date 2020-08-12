@@ -269,6 +269,9 @@ export class ModificarCuponDescuentoComponent implements OnInit {
             this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Elige al menos un producto</p></div>', "Error!",
               {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
             this.loading = false;
+            let body = document.getElementById('body') as HTMLElement;
+            body.scrollTo(0, 0);
+            window.scroll(0, 0);
           }
         } else {
           this.Descuento.Fecha_Inicio = this.obtenerFecha(this.bsRangeValue[0]);

@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {TiendaServicio} from "../../servicios/tienda.servicio";
 import {NgbRatingConfig} from "@ng-bootstrap/ng-bootstrap";
 import { GLOBAL } from 'src/app/servicios/global';
+import {AgenteServicio} from "../../servicios/agente.servicio";
 
 @Component({
   selector: 'app-busqueda',
@@ -29,8 +30,16 @@ export class BusquedaComponent implements OnInit, OnDestroy,OnChanges {
   public banderaNoResultadoTiendas: boolean = false;
 
   currentRate = 1;
-
-  constructor(private router: Router, configRating: NgbRatingConfig, private route: ActivatedRoute, private _tiendaServicio: TiendaServicio) {
+  public categorias;
+  public c1 = [];
+  public c2;
+  public c3;
+  public vectorIconos = ['fa fa-charging-station', 'fa fa-tshirt',
+    'fa fa-ring', 'fa fa-baby-carriage', 'fa fa-home',
+    'fa fa-gem', 'fa fa-palette', 'fa fa-laptop',
+    'fa fa-car', 'fa fa-dumbbell', 'fa fa-book',
+    'fa fa-dog', 'fa fa-gamepad', 'fa fa-grin-stars', 'fa fa-heartbeat', 'fa fa-building', 'fa fa-tractor'];
+  constructor( private _agenteServicio: AgenteServicio,private router: Router, configRating: NgbRatingConfig, private route: ActivatedRoute, private _tiendaServicio: TiendaServicio) {
     configRating.max = 5;
     configRating.readonly = true;
   }
@@ -141,5 +150,19 @@ export class BusquedaComponent implements OnInit, OnDestroy,OnChanges {
     } else {
       this.banderaNoResultado = true;
     }
+  }
+
+  public async vender() {
+    try {
+      let identidad = this._agenteServicio.getIdentity();
+      let response = await this._tiendaServicio.getMisTiendas(identidad.COD_AGENTE).toPromise();
+      if (response.data) {
+        this.router.navigate(['/administrador/administrador-tienda/mis-tiendas']);
+      }
+    } catch (e) {
+      this.router.navigate(['/registro-tienda']);
+      console.log("error:" + JSON.stringify((e).error.message));
+    }
+    // [routerLink]="['/registro-tienda']"
   }
 }
