@@ -4,10 +4,10 @@
     Gestion de tienda
   </p>
 </div>
-<div class="wrapper ">
+<div class="wrapper" id="body" >
   <!-- Sidebar  -->
 
-  <nav id="sidebar" class="scrollbar" [ngClass]="{'active':banderaSideBar}">
+  <nav id="sidebar" class="scrollbar " [ngClass]="{'active':banderaSideBar}">
     <br><br>
     <ul class="list-unstyled  mx-2">
       <li class="mb-2" routerLink="inicio-administracion" routerLinkActive="active"
@@ -24,10 +24,10 @@
           Productos
         </a>
         <ul class="collapse list-unstyled" id="producto">
-          <li routerLink="productos" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <li (click)="cerrarSideBar()" routerLink="productos" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
             <a>Nuevo</a>
           </li>
-          <li routerLink="listado-productos" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <li (click)="cerrarSideBar()" routerLink="listado-productos" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
             <a>Listado</a>
           </li>
 
@@ -64,10 +64,10 @@
           Descuentos
         </a>
         <ul class="collapse list-unstyled" id="descuento">
-          <li routerLink="cupon-descuento" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <li (click)="cerrarSideBar()" routerLink="cupon-descuento" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
             <a>Nuevo</a>
           </li>
-          <li routerLink="listado-cupon-descuento" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <li (click)="cerrarSideBar()" routerLink="listado-cupon-descuento" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
             <a>Listado</a>
           </li>
 
@@ -119,13 +119,13 @@
           Tienda
         </a>
         <ul class="collapse list-unstyled" id="tienda">
-          <li routerLink="general-tienda" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <li (click)="cerrarSideBar()" routerLink="general-tienda" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
             <a>General</a>
           </li>
-          <li routerLink="sucursales-tienda" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <li (click)="cerrarSideBar()" routerLink="sucursales-tienda" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
             <a>Sucursales</a>
           </li>
-          <li routerLink="personalizacion-tienda" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <li (click)="cerrarSideBar()" routerLink="personalizacion-tienda" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
             <a>Personalización</a>
           </li>
 
@@ -133,23 +133,24 @@
         </ul>
       </li>
 
-      <li class="mb-2" routerLink="metodos-pago" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <li (click)="cerrarSideBar()" class="mb-2" routerLink="metodos-pago" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <a>
           <i class="fas fa-credit-card mr-2"></i>
           Métodos de Pago
         </a>
       </li>
-      <li class="mb-2" routerLink="metodos-envio" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <li  (click)="cerrarSideBar()" class="mb-2" routerLink="metodos-envio" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <a>
           <i class="fa fa-truck-moving mr-2"></i>
           Métodos de Envio
         </a>
       </li>
 
-      <li class="mb-2">
+
+      <li class="mb-2" routerLink="/principales/menu/detalle-tienda/tienda/{{identidadTienda.NUM_TIENDA}}/inicio-tienda">
         <a>
-          <i class="fas fa-briefcase mr-2"></i>
-          Puntos de venta
+          <i class="fas fa-store-alt mr-2" ></i>
+          Ver en produccion
         </a>
       </li>
 

@@ -10,19 +10,19 @@
           <section class="py-0   colorNavbar">
             <nav class="navbar   navbar-expand-xl  justify-content-between px-lg-5 ">
 
-              <button class="navbar-toggler" style=" border: none" type="button" #menu name="menu"
+              <button class="navbar-toggler" style="border: none" type="button" #menu name="menu"
                       data-toggle="collapse" data-target="#main_nav"
                       aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="fa fa-bars " style="color: white"></span>
               </button>
              <a class="navbar-brand mr-auto  ml-2 mx-md-0 " href="#">
-                <h4 class="title-page white">{{this.Tienda?.NOMBRE_COMERCIAL }}</h4>
+                <h6 class="title-page white mt-2 ">{{this.Tienda?.NOMBRE_COMERCIAL }}</h6>
               </a>
               <div class="container   mr-0 pr-0 ">
                 <div class="collapse navbar-collapse ml-auto" id="main_nav">
                   <ul class="navbar-nav ml-auto ">
                     <li class="nav-item  ">
-                      <a class="nav-link pl-2 pl-lg-2" routerLink="inicio-tienda" routerLinkActive='active'
+                      <a class="nav-link pl-2 pl-lg-2" (click)="menu.click()" routerLink="inicio-tienda" routerLinkActive='active'
                          [routerLinkActiveOptions]="{exact: true} " >Inicio </a>
                     </li>
                     <li class="nav-item dropdown ">
@@ -36,11 +36,11 @@
                     </li>
 
                     <li class="nav-item">
-                      <a class="nav-link pl-2 pl-lg-2" routerLink="informacion-tienda" routerLinkActive='active'
+                      <a class="nav-link pl-2 pl-lg-2" (click)="menu.click()" routerLink="informacion-tienda" routerLinkActive='active'
                          [routerLinkActiveOptions]="{exact: true} ">Información</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link pl-2 pl-lg-2" routerLink="terminos-y-condiciones-tienda" routerLinkActive='active'
+                      <a class="nav-link pl-2 pl-lg-2" (click)="menu.click()" routerLink="terminos-y-condiciones-tienda" routerLinkActive='active'
                          [routerLinkActiveOptions]="{exact: true} "> Terminos y
                         condiciones </a>
                     </li>
@@ -78,45 +78,50 @@
           </div> <!--banner-->
 
           <div class="  mt-n5  py-3 bg-white border-bottom ">
-            <div class="  mt-5  mt-md-0  text-center ">
 
-              <div class="widget-header form-inline mr-5">
-                <a
-                  href="https://api.whatsapp.com/send?phone={{contactoWhatsapp}}&text=Hola!%20Quiero%20conocer%20acerca%20de%20su%20tienda!"
-                  target="_blank" class="icon icon-sm rounded-circle border border-primary "><i
-                  class="fab fa-whatsapp " aria-hidden="true"></i>
-                  <p class="text-primary  ml-n2  " style="font-size: x-small">Contáctanos</p></a>
+
+
+            <div class="  mt-5  mt-md-0  text-center  d-block">
+
+              <button class='btn btn-lg btn-link ' style='background-color:transparent;'>
+                <div style='text-align:center;'>
+                  <a #contactanos href="https://api.whatsapp.com/send?phone={{contactoWhatsapp}}&text=Hola!%20Quiero%20conocer%20acerca%20de%20su%20tienda!" target="_blank" class="icon icon-sm rounded-circle border border-primary text-center" >
+                    <i class="fab fa-whatsapp"></i></a>
+                </div>
+                <p (click)="contactanos.click()" class="text-primary" style="font-size: small">Contáctanos</p>
+              </button>
+
+              <button class='btn btn-lg btn-link ' style='background-color:transparent;'  routerLink="encuentranos-tienda" routerLinkActive='active-icon'
+                      [routerLinkActiveOptions]="{exact: true} ">
+                <div style='text-align:center;'>
+                  <a class="icon icon-sm rounded-circle border border-primary text-center"  routerLinkActive='active-icon'>
+                    <i class="fa fa-directions"></i></a>
+                </div>
+                <p  class="text-primary " style="font-size: small">Encuentranos</p>
+              </button>
+
+              <button *ngIf="this.vPaginasWeb.length>0 " class='btn btn-lg btn-link ' style='background-color:transparent;' data-toggle="dropdown" >
+                <div style='text-align:center;'>
+                  <a class="icon icon-sm rounded-circle border border-primary text-center" >
+                    <i class="fa fa-globe-americas"></i></a>
+                </div>
+                <p  class="text-primary" style="font-size: small">Sitio Web</p>
+
+              </button>
+              <div class="dropdown-menu ">
+                <div *ngFor="let pagina of vPaginasWeb">
+                  <a class="dropdown-item   link" *ngIf="pagina.tipo=='facebook'" href="{{pagina.direccion}}"
+                     target="_blank"><span
+                    class="fab fa-facebook"></span> &nbsp; Link de facebook</a>
+
+                  <a class="dropdown-item   link" *ngIf="pagina.tipo=='pagina'"
+                     href="{{pagina.direccion}} " target="_blank"><span
+                    class="fas fa-pager "></span> &nbsp;link a página externa</a>
+                </div>
+
               </div>
-              <div class="widget-header mr-5 ml-2 " [ngClass]="{'mr-5':this.vPaginasWeb.length>0 }">
-                <a routerLink="encuentranos-tienda" routerLinkActive='active-icon'
-                   [routerLinkActiveOptions]="{exact: true} " class="icon icon-sm rounded-circle border border-primary"><i
-                  class="fa fa-directions " aria-hidden="true"></i>
-                  <p class="text-primary  ml-n2  " style="font-size: x-small;">Encuentranos</p></a>
 
-              </div>
-              <div class="widget-header " *ngIf="this.vPaginasWeb.length>0 ">
-                <li class="nav-item dropdown">
-                  <a href="#" class="icon icon-sm rounded-circle border border-primary  " data-toggle="dropdown"
-                     href="#"
-                     aria-expanded="false"><i class="fa fa-globe-americas"></i>
-                    <p class="text-primary     " style="font-size: x-small;">Sitio Web</p>
-                  </a>
 
-                  <div class="dropdown-menu ">
-                    <div *ngFor="let pagina of vPaginasWeb">
-                      <a class="dropdown-item   link" *ngIf="pagina.tipo=='facebook'" href="{{pagina.direccion}}"
-                         target="_blank"><span
-                        class="fab fa-facebook"></span> &nbsp; Link de facebook</a>
-
-                      <a class="dropdown-item   link" *ngIf="pagina.tipo=='pagina'"
-                         href="{{pagina.direccion}} " target="_blank"><span
-                        class="fas fa-pager "></span> &nbsp;link a página externa</a>
-                    </div>
-
-                  </div>
-                </li>
-
-              </div>
               <hr>
               <div class="widget-header ">
                 <li class="small">

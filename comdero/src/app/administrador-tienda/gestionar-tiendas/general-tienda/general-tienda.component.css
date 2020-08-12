@@ -29,6 +29,7 @@ body {
 
 .tamanioInputs {
   font-size: small;
+
 }
 
 .tamaniohorario {
@@ -112,4 +113,8 @@ body {
 
 .errorHorario{
   border: dashed  1px red;
+}
+
+button{
+  font-size: small;
 }

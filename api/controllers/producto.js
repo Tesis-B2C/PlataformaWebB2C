@@ -12,6 +12,7 @@ const moment = require('moment');
 const db = require('../database/db');
 const fs = require('fs-extra');
 const path = require('path');
+const Agente= require('../models/agente');
 
 const {Op} = require("sequelize");
 
@@ -19,6 +20,7 @@ async function saveProducto(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
     const vvariantesGuardas = [];
     try {
+        
         let producto = JSON.parse(req.body.producto);
         let oferta = JSON.parse(req.body.oferta);
         let variantes = JSON.parse(req.body.variantes);
@@ -142,6 +144,13 @@ async function saveProducto(req, res) {
 
 async function getMisProductos(req, res) {
     try {
+        let verificar = Agente.findOne({ where: { COD_AGENTE: req.user.id } });
+
+        if (!verificar) {
+            return res.status(500).send({
+                message: "No tienes permisos necesarios"
+            });
+        } else {
         let productosObtenidas = await Oferta.findAll({ //$or: [{ESTADO_OFERTA: 0},{ESTADO_OFERTA: 1}]
             where: {NUM_TIENDA: req.params.id, ESTADO_OFERTA: {[Op.or]: [0, 1]}},
             include: {model: Producto},
@@ -158,6 +167,7 @@ async function getMisProductos(req, res) {
                 message: 'Al parecer no se encuentra productos registrados en la base de datos'
             });
         }
+    }
     } catch (err) {
         res.status(500).send({
             message: 'error:' + err
@@ -168,6 +178,13 @@ async function getMisProductos(req, res) {
 
 async function getProducto(req, res) {
     try {
+        let verificar = Agente.findOne({ where: { COD_AGENTE: req.user.id } });
+
+        if (!verificar) {
+            return res.status(500).send({
+                message: "No tienes permisos necesarios"
+            });
+        } else {
         let productoObtenido = await Oferta.findOne({
             where: {ID_OFERTA: req.params.id},
             include: {
@@ -195,6 +212,7 @@ async function getProducto(req, res) {
 
 
         }
+    }
     } catch (err) {
         res.status(500).send({
             message: 'error:' + err
@@ -410,6 +428,13 @@ async function updateProducto(req, res) {
 
 async function updateEstadoProducto(req, res) {
     try {
+        let verificar = Agente.findOne({ where: { COD_AGENTE: req.user.id } });
+
+        if (!verificar) {
+            return res.status(500).send({
+                message: "No tienes permisos necesarios"
+            });
+        } else {
         let ofertaActualizada = await Oferta.update({
             ESTADO_OFERTA: req.body.estado,
         }, {
@@ -424,6 +449,7 @@ async function updateEstadoProducto(req, res) {
                 message: 'Al parecer no se encuentra el producto registrado en la base de datos'
             });
         }
+    }
     } catch (err) {
         res.status(500).send({
             message: 'error:' + err
@@ -434,6 +460,13 @@ async function updateEstadoProducto(req, res) {
 async function updateEstadoProductos(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
     try {
+        let verificar = Agente.findOne({ where: { COD_AGENTE: req.user.id } });
+
+        if (!verificar) {
+            return res.status(500).send({
+                message: "No tienes permisos necesarios"
+            });
+        } else {
         for (const s of req.body) {
             await Oferta.update({
                 ESTADO_OFERTA: req.params.estado,
@@ -446,6 +479,7 @@ async function updateEstadoProductos(req, res) {
             message: "El producto ha sido actualizado correctamente"
         });
         t.commit();
+    }
     } catch (err) {
         t.rollback();
         res.status(500).send({

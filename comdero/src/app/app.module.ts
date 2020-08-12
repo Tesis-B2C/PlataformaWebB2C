@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {CarouselModule} from 'ngx-owl-carousel-o';
 import {HttpClientModule} from '@angular/common/http';
-import {NgModule} from '@angular/core';
+import {NgModule } from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {PaginasModule} from './paginas/paginas.module';
@@ -25,7 +25,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import {DescuentoServicio} from "./servicios/descuento.servicio";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
-
+import {ReloadGuard} from "./shared/guards/reload.guard";
 
 @NgModule({
   declarations: [
@@ -38,7 +38,6 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
     PaginasModule,
     PrincipalesModule,
     AdministradorTiendaModule,
-
     NgbModule,
     HttpClientModule,
     FormsModule,
@@ -46,8 +45,10 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
     CarouselModule,
     ToastrModule.forRoot({preventDuplicates: true}),
     BsDatepickerModule.forRoot(),
-    TypeaheadModule.forRoot()
+    TypeaheadModule.forRoot(),
   ],
+
+
   providers: [
     DescuentoServicio,
     DpaServicio,
@@ -58,7 +59,8 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
     MetodoPagoServicio,
     MetodoEnvioServicio,
     TiendaServicio,
-    CorreoServicio],
+    CorreoServicio,
+    ReloadGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {

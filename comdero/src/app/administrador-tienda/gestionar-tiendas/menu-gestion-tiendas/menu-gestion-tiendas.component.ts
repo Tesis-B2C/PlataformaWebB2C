@@ -20,6 +20,13 @@ export class MenuGestionTiendasComponent {
     this.banderaSideBar = !this.banderaSideBar;
   }
 
+  cerrarSideBar(){
+    let body=document.getElementById('body') as HTMLElement;
+    console.log("tamanio",body.offsetWidth);
+    if(body.offsetWidth<720){
+      this.banderaSideBar = !this.banderaSideBar;
+    }
+  }
   public async updateEstadoTienda(estado) {
     Swal.fire({
       title: '<header class="login100-form-title-registro mb-o"><h5 class="card-title"><strong>!Estas seguro</strong></h5></header>',

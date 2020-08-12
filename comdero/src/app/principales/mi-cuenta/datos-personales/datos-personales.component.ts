@@ -260,8 +260,8 @@ export class DatosPersonalesComponent implements OnInit {
       }
     } catch (e) {
       this.loading = false;
-      console.log("error:" + JSON.stringify((e).error.message));
-      if (JSON.stringify((e).error.message))
+      console.log("error:" +e);
+      if (JSON.stringify((e).error))
         this.mensageError(JSON.stringify((e).error.message));
       else this.mensageError("Error de conexión intentelo mas tarde");
     }

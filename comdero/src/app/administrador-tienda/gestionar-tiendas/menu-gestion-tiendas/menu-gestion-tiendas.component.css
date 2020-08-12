@@ -22,15 +22,10 @@
 
 }
 
-.wrapper {
-  display: flex;
-  align-items: stretch;
-
-}
-
 #sidebar {
   min-width: 250px;
   max-width: 250px;
+  z-index: 100;
 
 }
 
@@ -64,6 +59,12 @@ a[data-toggle="collapse"] {
   }
   #sidebar.active {
     margin-left: 0;
+  }
+  #content{
+
+    width: 100% !important;
+    position: absolute !important;
+
   }
 }
 
@@ -101,6 +102,7 @@ a, a:hover, a:focus {
   font-weight: bold;
   height: 80vh;
   overflow: auto;
+/*  border-right: 0.5px solid black;*/
 
 
 }
@@ -150,9 +152,10 @@ a,li:focus{
   outline: none;
 }
 
-.content{
+#content{
 
   width: 100% !important;
+
 
 }
 

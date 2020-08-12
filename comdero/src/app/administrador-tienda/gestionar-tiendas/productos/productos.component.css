@@ -176,6 +176,7 @@ input {
 
 select {
   font-size: small;
+  max-height: 32.7px;
 }
 
 select::-ms-expand {

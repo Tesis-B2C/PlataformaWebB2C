@@ -3,6 +3,7 @@ import {TiendaServicio} from "../../servicios/tienda.servicio";
 import {Observable} from 'rxjs';
 import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 import {ActivatedRoute, Router} from "@angular/router";
+import {AgenteServicio} from "../../servicios/agente.servicio";
 
 @Component({
   selector: 'app-menu',
@@ -17,7 +18,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   public objetoDatos = [];
   public datosObtenidos: any;
 
-  constructor(private route: ActivatedRoute, private _tiendaServicio: TiendaServicio, private router: Router) {
+  constructor(private _agenteServicio:AgenteServicio , private route: ActivatedRoute, private _tiendaServicio: TiendaServicio, private router: Router) {
   }
 
   ngOnInit() {
@@ -79,11 +80,14 @@ export class MenuComponent implements OnInit, OnDestroy {
     )
 
   public buscarPalabra(palabraBuscada: string) {
-    palabraBuscada = palabraBuscada.trim();
-    if (palabraBuscada == "" || palabraBuscada == null) {
-      location.href = '**';
+    if (palabraBuscada.trim() == "" || palabraBuscada.trim() == null) {
+      console.log(palabraBuscada.trim()+ "ya mismo me voy");
+      this.router.navigate(['**']);
     } else {
-      location.href = 'principales/menu/busqueda/'+palabraBuscada;
+      palabraBuscada = palabraBuscada.trim();
+
+     this.router.navigate(['principales/menu/busqueda/'+palabraBuscada]);
+
     }
   }
 }

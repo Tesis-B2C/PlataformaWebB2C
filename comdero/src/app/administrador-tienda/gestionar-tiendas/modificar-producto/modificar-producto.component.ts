@@ -13,6 +13,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {CurrencyPipe} from "@angular/common";
 import {Cmyk, ColorPickerService} from "ngx-color-picker";
 import {ToastrService} from "ngx-toastr";
+import { GLOBAL } from 'src/app/servicios/global';
 
 @Component({
   selector: 'app-modificar-producto',
@@ -195,12 +196,12 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
           this.Imagenes_Producto[i].push(new Imagen_Producto(v[i].IMAGEN_PRODUCTOs[j].NOMBRE_IMAGEN, v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN, v[i].IMAGEN_PRODUCTOs[j].IMAGEN, v[i].IMAGEN_PRODUCTOs[j].TAMANIO_IMAGEN));
           this.Imagenes_Producto[i][j].Id_Imagen = v[i].IMAGEN_PRODUCTOs[j].ID_IMAGEN;
           this.Imagenes_Producto[i][j].Estado_Imagen = 0;
-          this.imagenes[i][j] = 'http://localhost:3977/' + v[i].IMAGEN_PRODUCTOs[j].IMAGEN
+          this.imagenes[i][j] = GLOBAL.urlImagen+ v[i].IMAGEN_PRODUCTOs[j].IMAGEN
         } else if (v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN == "video") {
           this.imagenes[i][j] = "video"
           this.auxi = i;
           this.auxj = j;
-          this.data.video = 'http://localhost:3977/' + v[i].IMAGEN_PRODUCTOs[j].IMAGEN;
+          this.data.video = GLOBAL.urlImagen + v[i].IMAGEN_PRODUCTOs[j].IMAGEN;
           this.videoPorGuardar = new Imagen_Producto(v[i].IMAGEN_PRODUCTOs[j].NOMBRE_IMAGEN, v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN, v[i].IMAGEN_PRODUCTOs[j].IMAGEN, v[i].IMAGEN_PRODUCTOs[j].TAMANIO_IMAGEN);
           this.videoPorGuardar.Id_Imagen = v[i].IMAGEN_PRODUCTOs[j].ID_IMAGEN;
           this.videoPorGuardar.Estado_Imagen = 0;
@@ -621,7 +622,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
           let body = document.getElementById('body') as HTMLElement;
           body.scrollTo(0, 0);
           window.scroll(0, 0);
-          this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
+          this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
             {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
           return false
         }
@@ -632,7 +633,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
       let body = document.getElementById('body') as HTMLElement;
       body.scrollTo(0, 0);
       window.scroll(0, 0);
-      this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
+      this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
         {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
       return false
     }

@@ -39,9 +39,6 @@ import { ModificarCuponDescuentoComponent } from './modificar-cupon-descuento/mo
     ColorPickerModule,
     BsDatepickerModule,
 
-
-
-
   ]
 })
 export class GestionarTiendasModule {

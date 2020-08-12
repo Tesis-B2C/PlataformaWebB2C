@@ -1,10 +1,10 @@
 
 <header class="bg-white">
-  <section class="header-main border-bottom ">
-    <div class="container-fluid container-menu">
+  <section class="header-main pb-0 ">
+    <div class="container-fluid container-menu computadora">
       <div class="row ">
         <div class="col-lg-2  col-sm-12 mx-auto">
-          <a class="" href="http://bootstrap-ecommerce.com">
+          <a class="mb-4" href="#">
             <img class="logo" src="../../../assets/images/logoValid4.png">
           </a> <!-- brand-wrap.// -->
         </div>
@@ -47,6 +47,56 @@
 
           </div> <!-- widgets-wrap.// -->
         </div> <!-- col.// -->
+      </div> <!-- row.// -->
+    </div> <!-- container.// -->
+
+    <div class="container-fluid container-menu celular">
+      <div class="row justify-content-between">
+        <div class="col-6  mx-auto mb-2">
+          <a class="" href="#">
+            <img class="logo" src="../../../assets/images/logoValid4.png" width="70%">
+          </a> <!-- brand-wrap.// -->
+        </div>
+        <div class="col-6  mx-auto">
+          <div class="widgets-wrap mx-auto">
+
+            <div class="widget-header icontext">
+              <li class="nav-item dropdown">
+                <a href="#" class="icon icon-xs rounded-circle border" data-toggle="dropdown" href="#"
+                   aria-expanded="false"><i class="fa fa-user"></i>
+                </a>
+
+                <div class="dropdown-menu ">
+                  <a class="dropdown-item" href="#" routerLink="/principales/menu/mi-cuenta/menu-mi-cuenta/vision-general"><span
+                    class="fa fa-user "></span> &nbsp;Mi cuenta</a>
+
+                  <a class="dropdown-item"   href="#" routerLink="/administrador/administrador-tienda/mis-tiendas">
+                    <span class="fas fa-store-alt mr-2"></span>
+                    Mis tiendas
+                  </a>
+
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item col-2" href="#">Ver todas</a>
+
+                </div>
+              </li>
+              <div class="text">
+                <span class="text-muted">Bienvenido!</span>
+                <div>
+                  <a [routerLink]="['/principal']">Principal</a> |
+                  <a  (click)="this._agenteServicio.logout()" > Salir</a>
+                </div>
+              </div>
+            </div>
+
+          </div> <!-- widgets-wrap.// -->
+        </div> <!-- col.// -->
+        <div class="col-12 ">
+          <div class="input-group w-100  mx-auto py-1">
+            <h4>Panel Administrativo</h4>
+          </div>
+        </div> <!-- col.// -->
+
       </div> <!-- row.// -->
     </div> <!-- container.// -->
   </section> <!-- header-main .// -->

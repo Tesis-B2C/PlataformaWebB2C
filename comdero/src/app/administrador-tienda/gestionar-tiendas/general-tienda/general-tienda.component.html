@@ -1,4 +1,4 @@
-<body id="body">
+<body id="body" class="bg">
 <form #FormGeneralTienda id="formGeneralTienda" name="FormGeneralTienda" class="general-tienda" validate-form>
   <div class="container mt-5">
     <div class="row justify-content-center">
@@ -57,12 +57,12 @@
 
             <div class="form-group">
               <label>* Descripción del negocio</label>
-              <textarea [disabled]="banderaEdicionDeshabilitada" rows="3" style="font-size: small; resize: none;"
+              <textarea [disabled]="banderaEdicionDeshabilitada" rows="3"
                         #Descripcion_Tienda="ngModel"
                         [(ngModel)]="this.EditarTienda.Descripcion_Tienda"
                         [ngClass]="{'is-invalid': Descripcion_Tienda.invalid && (Descripcion_Tienda.dirty || Descripcion_Tienda.touched)}"
-                        class="tamanioInputs form-control" name="descripcion_Tienda" placeholder=""
-                        required type="text" aria-label="With textarea"></textarea>
+                        class=" form-control " name="descripcion_Tienda" placeholder=""
+                        required type="text" aria-label="With textarea"  style="font-size: 0.8rem"></textarea >
               <div *ngIf="Descripcion_Tienda.invalid && (Descripcion_Tienda.dirty || Descripcion_Tienda.touched)">
                 <div *ngIf="Descripcion_Tienda.errors.required">
                   <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>

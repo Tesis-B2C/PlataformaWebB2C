@@ -100,13 +100,13 @@ export class AgenteServicio {
   actualizarAgente(agente_actualizar) {
     debugger
     let params = JSON.stringify(agente_actualizar);
-    let headers = new HttpHeaders({"Content-type": "application/json"});
+    let headers = new HttpHeaders({"Content-type": "application/json","Authorization": this.getToken()});
     return this._http.put<objeto>(this.url + "actualizarAgente/" + agente_actualizar.Correo, params, {headers: headers});
   }
 
   verificarExistenciaCorreo(objeto_cambio_correo) {
     let params = JSON.stringify(objeto_cambio_correo);
-    let headers = new HttpHeaders({"Content-type": "application/json"});
+    let headers = new HttpHeaders({"Content-type": "application/json","Authorization": this.getToken()});
     return this._http.post<objeto>(this.url + "verificarExistenciaCorreo", params, {headers: headers});
 
   }
@@ -117,21 +117,20 @@ export class AgenteServicio {
       correo: cambio_correo
     }
     let params = JSON.stringify(obj);
-    let headers = new HttpHeaders({"Content-type": "application/json"});
+    let headers = new HttpHeaders({"Content-type": "application/json" ,"Authorization": this.getToken()});
     return this._http.put<objeto>(this.url + "cambioCorreoAgente/" + correo, params, {headers: headers});
 
   }
 
   actualizarAgenteIdentity(correo) {
-    let headers = new HttpHeaders({"Content-type": "application/json"});
+    let headers = new HttpHeaders({"Content-type": "application/json","Authorization": this.getToken()});
     return this._http.get<objeto>(this.url + "actualizarAgenteIdentity/" + correo, {headers: headers});
   }
 
   actualizarContrasenia(correo,objetoContrasenia) {
     let params = JSON.stringify(objetoContrasenia);
-    let headers = new HttpHeaders({"Content-type": "application/json"});
+    let headers = new HttpHeaders({"Content-type": "application/json","Authorization": this.getToken()});
     return this._http.put<objeto>(this.url + "actualizarContrasenia/" + correo, params, {headers: headers});
-
   }
 
 }

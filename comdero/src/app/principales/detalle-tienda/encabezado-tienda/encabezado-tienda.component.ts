@@ -3,6 +3,7 @@ import {TiendaServicio} from "../../../servicios/tienda.servicio";
 import {ActivatedRoute, Router} from "@angular/router";
 import Swal from "sweetalert2";
 import {esLocale} from "ngx-bootstrap";
+import{GLOBAL} from "../../../servicios/global";
 
 @Component({
   selector: 'app-encabezado-tienda',
@@ -61,7 +62,7 @@ export class EncabezadoTiendaComponent implements OnInit {
     let pathImagen = this.Tienda.LOGO;
 
     if (pathImagen) {
-      this.Logo = 'http://localhost:3977/' + pathImagen;
+      this.Logo =GLOBAL.urlImagen + pathImagen;
       console.log("direccion", this.Logo)
     }
     return this.Logo;
@@ -71,7 +72,7 @@ export class EncabezadoTiendaComponent implements OnInit {
     this.Banner = 'assets/images/no-imagen8.png';
     let pathImagen = this.Tienda.BANNER;
     if (pathImagen) {
-      this.Banner = 'http://localhost:3977/' + pathImagen;
+      this.Banner = GLOBAL.urlImagen+ pathImagen;
       console.log("direccion", this.Banner)
     }
     return this.Banner;

@@ -13,12 +13,12 @@ import {ModificarProductoComponent} from "./modificar-producto/modificar-product
 import {CuponDescuentoComponent} from "./cupon-descuento/cupon-descuento.component";
 import {ListadoCuponDescuentoComponent} from "./listado-cupon-descuento/listado-cupon-descuento.component";
 import {ModificarCuponDescuentoComponent} from "./modificar-cupon-descuento/modificar-cupon-descuento.component";
-
+import {ReloadGuard} from "../../shared/guards/reload.guard";
 const routes: Routes = [
   {
     path: 'menu-gestion-tienda', component: MenuGestionTiendasComponent,
     children: [
-      { path: 'productos', component: ProductosComponent },
+      { path: 'productos', component: ProductosComponent,canDeactivate:[ReloadGuard] },
       { path: 'listado-productos', component: ListadoProductosComponent },
       { path: 'modificar-producto/:id', component: ModificarProductoComponent },
       { path: 'metodos-pago', component: MetodosPagoComponent },

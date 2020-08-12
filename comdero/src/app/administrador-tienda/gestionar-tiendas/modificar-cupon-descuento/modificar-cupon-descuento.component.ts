@@ -19,7 +19,7 @@ export class ModificarCuponDescuentoComponent implements OnInit {
   public identidadDescuento;
   public Descuento;
   public banderaCuponDescuento: boolean = true;
-  public banderaValidaciones: boolean = true;
+  public banderaValidaciones: boolean = false;
   public banderaOpcionAplicarA: boolean;
   public result = [];
   public vectorProductos = new Set();
@@ -74,7 +74,7 @@ export class ModificarCuponDescuentoComponent implements OnInit {
       this.idDescuento = this.route.snapshot.params.id;
       let response = await this._descuentoServicio.getDescuento(this.idDescuento).toPromise();
       this.identidadDescuento = response.data
-
+   console.log("el descuento que trae" , this.identidadDescuento, this.idDescuento);
 
     } catch (e) {
       console.log("error:" + e);
@@ -135,7 +135,7 @@ export class ModificarCuponDescuentoComponent implements OnInit {
     };
     this.loading = false;
     this.banderaCuponDescuento = true;
-    this.banderaValidaciones = true;
+    this.banderaValidaciones = false;
     this.vectorProductos = new Set();
     this.vectorProductosEnviar = [];
     this.page = 1;
@@ -269,6 +269,9 @@ export class ModificarCuponDescuentoComponent implements OnInit {
             this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Elige al menos un producto</p></div>', "Error!",
               {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
             this.loading = false;
+            let body = document.getElementById('body') as HTMLElement;
+            body.scrollTo(0, 0);
+            window.scroll(0, 0);
           }
         } else {
           this.Descuento.Fecha_Inicio = this.obtenerFecha(this.bsRangeValue[0]);
@@ -283,7 +286,7 @@ export class ModificarCuponDescuentoComponent implements OnInit {
           this.iniciarModificarDescuento();
         }
       } else {
-        this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
+        this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
           {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
         let body = document.getElementById('body') as HTMLElement;
         body.scrollTo(0, 0);

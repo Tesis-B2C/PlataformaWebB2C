@@ -2,21 +2,29 @@
 
 //importar el modelo del usuario  o lo que son las clases comunes
 const Opcion_Envio = require('../models/opcion_envio');
+const Agente= require('../models/agente');
 const db = require('../database/db');
 
 async function guardarMetodoEnvio(req, res) {
-    const t = await db.sequelize.transaction({autocommit: false});
-    const params = req.body;
-    console.log(JSON.stringify("HOLA"+params))
+    const t = await db.sequelize.transaction({ autocommit: false });
+
     try {
+        const params = req.body;
+        let verificar = Agente.findOne({ where: { COD_AGENTE: req.user.id } });
 
-        await Opcion_Envio.destroy({
-            where: {NUM_TIENDA: req.params.id},
-            transaction: t
-        });
+        if (!verificar) {
+            return res.status(500).send({
+                message: "No tienes permisos necesarios"
+            });
+        } else {
 
-        for (const me of params) {
-            await Opcion_Envio.create({
+            await Opcion_Envio.destroy({
+                where: { NUM_TIENDA: req.params.id },
+                transaction: t
+            });
+
+            for (const me of params) {
+                await Opcion_Envio.create({
                     NUM_TIENDA: req.params.id,
                     TIPO_ENVIO: me.Tipo_Envio,
                     TIPO_UBICACION: me.Tipo_Ubicacion,
@@ -27,14 +35,15 @@ async function guardarMetodoEnvio(req, res) {
                     MAXIMO: me.Maximo,
                     PRECIO: me.Precio,
                 },
-                {
-                    transaction: t
-                });
+                    {
+                        transaction: t
+                    });
+            }
+            res.status(200).send({
+                message: "Sus metodos de envio se han guardado correctamente"
+            });
+            await t.commit();
         }
-        res.status(200).send({
-            message: "Sus metodos de envio se han guardado correctamente"
-        });
-        await t.commit();
     } catch (err) {
         await t.rollback();
         res.status(500).send({

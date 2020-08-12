@@ -1,4 +1,4 @@
-import {Component, DoCheck, OnChanges, OnDestroy, OnInit, Renderer2} from '@angular/core';
+import {ChangeDetectionStrategy, Component, DoCheck, OnChanges, OnDestroy, OnInit} from '@angular/core';
 import {CategoriaServicio} from "../../../servicios/categoria.servicio";
 import {UnidadMedidaServicio} from "../../../servicios/unidad_medida.servicio";
 import {Cmyk, ColorPickerService} from "ngx-color-picker";
@@ -11,15 +11,15 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {ProductoServicio} from '../../../servicios/producto.servicio';
 import Swal from 'sweetalert2'
 import {ToastrService} from 'ngx-toastr';
-import {CurrencyPipe} from '@angular/common'
-import {Location} from '@angular/common';
+import {CurrencyPipe, Location} from '@angular/common'
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css'],
-  providers: [CurrencyPipe]
+  providers: [CurrencyPipe],
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
 
@@ -101,6 +101,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   public categoriasEnviar = [];
 
   public loading: boolean = false;
+ public permisorecargar:boolean=true;
 
   constructor(public router: Router, private route: ActivatedRoute, private location: Location, private cp: CurrencyPipe, public toastr: ToastrService, private _productoServicio: ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
@@ -108,8 +109,11 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     this.Producto = new Producto("000000", null, null, null, null, 1, 1, "Nuevo", null);
     this.Variantes.push(new Variante(null, null, null, null, null, "unidades", 0));
   }
-
+  public recargar(){
+    this.permisorecargar=false;
+  }
   ngOnInit() {
+
     this.getCategorias();
     this.getUnidadesMedida();
     this.panelUno = document.getElementById('panelUno') as HTMLElement;
@@ -187,7 +191,8 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
 
   ngOnChanges(): void {
     this.panelDos.style.maxHeight = this.panelUno.offsetHeight + 'px';
-    console.log("height |", this.panelUno.offsetHeight + 'px')
+    console.log("height |", this.panelUno.offsetHeight + 'px');
+
   }
 
   ngOnDestroy() {
@@ -523,9 +528,9 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
       cancelButtonText: 'Cancelar',
       buttonsStyling: false,
       customClass: {
-        confirmButton: 'btn btn-primary px-5',
+        confirmButton: 'btn btn-primary px-3',
         container: 'my-swal',
-        cancelButton: 'btn btn-secondary px-5 ml-5',
+        cancelButton: 'btn btn-light px-3 ml-5',
       }
     }).then(async (result) => {
       if (result.value) {
@@ -560,7 +565,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
           let body = document.getElementById('body') as HTMLElement;
           body.scrollTo(0, 0);
           window.scroll(0, 0);
-          this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
+          this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
             {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
           return false
         }
@@ -571,7 +576,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
       let body = document.getElementById('body') as HTMLElement;
       body.scrollTo(0, 0);
       window.scroll(0, 0);
-      this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
+      this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
         {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
       return false
     }

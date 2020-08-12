@@ -78,3 +78,15 @@ https://valor-software.com/ngx-bootstrap/#/datepicker
 -------- Para el Buscador
 ng add ngx-bootstrap  --component typeahead
 https://valor-software.com/ngx-bootstrap/#/typeahead
+
+-----active guards
+ng g guard shared/guards/auth
+
+---cahce servidor
+npm i memory-cache --save
+video 94 la biblia de nodejs
+
+---spinner 
+npm i ngx-spinner
+https://www.npmjs.com/package/ngx-spinner
+https://napster2210.github.io/ngx-spinner/

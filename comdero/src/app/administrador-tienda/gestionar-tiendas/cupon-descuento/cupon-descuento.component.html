@@ -63,7 +63,7 @@
 
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Cerrar</button>
     <button (click)="agregar();modal.close('Close click')" class="btn btn-primary" style="font-size:small">Guardar
       &nbsp; &nbsp; <span
         class="badge badge-light">{{vectorProductos.size}}</span></button>
@@ -73,7 +73,7 @@
 </ng-template>
 
 
-<body id="body">
+<body id="body" class="bg">
 
 <div class="container mt-5 ">
 
@@ -122,7 +122,7 @@
                        name="nombreProducto" required
                        type="text" [ngClass]="{'is-invalid': Codigo.invalid && banderaValidaciones}">
                 <div class="input-group-append">
-                  <button class="btn btn-light" (click)="generarCodigDeswcuento()"
+                  <button class="btn btn-secondary" (click)="generarCodigDeswcuento()"
                           [ngClass]="{'border-red': Codigo.invalid && banderaValidaciones}"> Generar
                   </button>
                 </div>
