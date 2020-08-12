@@ -21,12 +21,12 @@ const CALIFICACION = require("../models/calificacion");
 const COMENTARIO = require("../models/comentario");
 const AGENTE = require("../models/agente");
 
-const { Op } = require("sequelize");
+const {Op} = require("sequelize");
 
 /*const {QueryTypes} = require('sequelize');*/
 
 async function registrarTienda(req, res) {
-    const t = await db.sequelize.transaction({ autocommit: false });
+    const t = await db.sequelize.transaction({autocommit: false});
 
     try {
         let params = JSON.parse(req.body.tienda);
@@ -38,27 +38,27 @@ async function registrarTienda(req, res) {
             var banner = req.files.banner[0].path;
         }
 
-        let tiendaEncontrado = await TIENDA.findOne({ where: { CORREO_TIENDA: params.Tienda.Correo_Tienda } });
+        let tiendaEncontrado = await TIENDA.findOne({where: {CORREO_TIENDA: params.Tienda.Correo_Tienda}});
         if (tiendaEncontrado) {
             res.status(404).send({
-                message: 'Este correo electronico ya esta vinculado a una tienda'
+                message: 'Este correo electrónico ya está vinculado a una tienda'
             });
         } else {
             let tiendaGuardado = await TIENDA.create({
-                COD_AGENTE: params.Tienda.Cod_Agente,
-                RAZON_SOCIAL: params.Tienda.Razon_Social,
-                NOMBRE_COMERCIAL: params.Tienda.Nombre_Comercial,
-                LINK_PAGINA: params.Tienda.Link_Pagina,
-                LINK_FACEBOOK: params.Tienda.Link_Facebook,
-                DESCRIPCION_TIENDA: params.Tienda.Descripcion_Tienda,
-                ESTADO_TIENDA: params.Tienda.Estado_Tienda,
-                TERMINOS_CONDICIONES: params.Tienda.Terminos_Condiciones,
-                CORREO_TIENDA: params.Tienda.Correo_Tienda,
-                HORARIO_ATENCION: params.Tienda.Horario_Atencion,
-                LOGO: logo,
-                BANNER: banner,
-                CONTACTO_WHATSAPP: params.Tienda.Contacto_WhatsApp
-            },
+                    COD_AGENTE: params.Tienda.Cod_Agente,
+                    RAZON_SOCIAL: params.Tienda.Razon_Social,
+                    NOMBRE_COMERCIAL: params.Tienda.Nombre_Comercial,
+                    LINK_PAGINA: params.Tienda.Link_Pagina,
+                    LINK_FACEBOOK: params.Tienda.Link_Facebook,
+                    DESCRIPCION_TIENDA: params.Tienda.Descripcion_Tienda,
+                    ESTADO_TIENDA: params.Tienda.Estado_Tienda,
+                    TERMINOS_CONDICIONES: params.Tienda.Terminos_Condiciones,
+                    CORREO_TIENDA: params.Tienda.Correo_Tienda,
+                    HORARIO_ATENCION: params.Tienda.Horario_Atencion,
+                    LOGO: logo,
+                    BANNER: banner,
+                    CONTACTO_WHATSAPP: params.Tienda.Contacto_WhatsApp
+                },
                 {
                     transaction: t
                 });
@@ -77,8 +77,7 @@ async function registrarTienda(req, res) {
                         NUM_COD_POSTAL_SUCURSAL: s.Num_Cod_Postal_Sucursal,
                         TIPO_SUCURSAL: s.Tipo_Sucursal
                     },
-                    { transaction: t });
-
+                    {transaction: t});
             }
 
             if (tiendaGuardado) {
@@ -90,7 +89,7 @@ async function registrarTienda(req, res) {
                 await t.commit();
             } else {
                 res.status(404).send({
-                    message: "Al parecer hubo problemas con la creación de tu tienda inténtalo nuevamente"
+                    message: "Al parecer hubo problemas con la creación de su tienda, inténtalo nuevamente"
                 });
             }
         }
@@ -139,19 +138,19 @@ async function registrarTienda(req, res) {
 
 async function getDatosTienda(req, res) {
     try {
-        let verificar = AGENTE.findOne({ where: { COD_AGENTE: req.user.id } });
+        let verificar = AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
-                message: "No tienes permisos necesarios"
+                message: "No tiene los permisos necesarios"
             });
         } else {
             let tiendaObtenida = await TIENDA.findOne({
-                where: { NUM_TIENDA: req.params.id },
+                where: {NUM_TIENDA: req.params.id},
                 include: [{
                     model: SUCURSAL,
-                    include: { model: DPA, include: { model: DPA, as: 'DPAP', required: true } }
-                }, { model: HORARIO_ATENCION }, { model: METODO_PAGO }, { model: OPCION_ENVIO }],
+                    include: {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}
+                }, {model: HORARIO_ATENCION}, {model: METODO_PAGO}, {model: OPCION_ENVIO}],
                 order: [[SUCURSAL, 'NUM_SUCURSAL', 'ASC']]
             });
 
@@ -175,17 +174,17 @@ async function getDatosTienda(req, res) {
 
 async function getMisTiendas(req, res) {
     try {
-        let verificar = AGENTE.findOne({ where: { COD_AGENTE: req.user.id } });
+        let verificar = AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
-                message: "No tienes permisos necesarios"
+                message: "No tiene los permisos necesarios"
             });
         } else {
             let tiendasObtenidas = await TIENDA.findAll({
                 where: {
                     COD_AGENTE: req.params.id,
-                    ESTADO_TIENDA: { [Op.or]: [0, 1] }
+                    ESTADO_TIENDA: {[Op.or]: [0, 1]}
                 }
             });
 
@@ -210,26 +209,26 @@ async function getMisTiendas(req, res) {
 }
 
 async function updateEstadoTienda(req, res) {
-    const t = await db.sequelize.transaction({ autocommit: false });
+    const t = await db.sequelize.transaction({autocommit: false});
     try {
-        let verificar = AGENTE.findOne({ where: { COD_AGENTE: req.user.id } });
+        let verificar = AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
-                message: "No tienes permisos necesarios"
+                message: "No tiene los permisos necesarios"
             });
         } else {
             let tiendaActualizada = await TIENDA.update({
                 ESTADO_TIENDA: req.body.estado,
             }, {
-                where: { NUM_TIENDA: req.params.id },
+                where: {NUM_TIENDA: req.params.id},
                 transaction: t
             });
 
             let ofertaActualizada = await OFERTA.update({
                 ESTADO_OFERTA: req.body.estado,
             }, {
-                where: { NUM_TIENDA: req.params.id, ESTADO_OFERTA: { [Op.or]: [0, 1] } },
+                where: {NUM_TIENDA: req.params.id, ESTADO_OFERTA: {[Op.or]: [0, 1]}},
                 transaction: t
             });
 
@@ -257,7 +256,7 @@ async function updatePersonalizacionTienda(req, res) {
     console.log("files ", req.files)
     try {
         let tiendaObtenida = await TIENDA.findOne({
-            where: { NUM_TIENDA: req.params.id }
+            where: {NUM_TIENDA: req.params.id}
         });
 
         if (req.files.logo) {
@@ -271,7 +270,7 @@ async function updatePersonalizacionTienda(req, res) {
             LOGO: logo,
             BANNER: banner
         }, {
-            where: { NUM_TIENDA: req.params.id }
+            where: {NUM_TIENDA: req.params.id}
         });
 
 
@@ -301,7 +300,7 @@ async function updatePersonalizacionTienda(req, res) {
         }
 
     } catch
-    (err) {
+        (err) {
         /*if (fs.exists(path.resolve(req.files.logo[0].path))) {
               console.log('existe');
               await fs.unlink(path.resolve(req.files.logo[0].path));
@@ -409,13 +408,13 @@ async function obtenerImagenTienda(req, res) {
 */
 
 async function actualizarTiendaGeneral(req, res) {
-    const trans = await db.sequelize.transaction({ autocommit: false });
+    const trans = await db.sequelize.transaction({autocommit: false});
     try {
-        let verificar = AGENTE.findOne({ where: { COD_AGENTE: req.user.id } });
+        let verificar = AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
-                message: "No tienes permisos necesarios"
+                message: "No tiene los permisos necesarios"
             });
         } else {
             let params = req.body;
@@ -432,15 +431,15 @@ async function actualizarTiendaGeneral(req, res) {
                 HORARIO_ATENCION: params.EditarTienda.Horario_Atencion,
                 CONTACTO_WHATSAPP: params.EditarTienda.Contacto_WhatsApp,
             }, {
-                where: { NUM_TIENDA: tiendaId },
+                where: {NUM_TIENDA: tiendaId},
                 transaction: trans
             });
 
-            let horariosObtenidos = await HORARIO_ATENCION.findAll({ where: { NUM_TIENDA: tiendaId } });
+            let horariosObtenidos = await HORARIO_ATENCION.findAll({where: {NUM_TIENDA: tiendaId}});
 
             if (horariosObtenidos.length > 0) {
                 await HORARIO_ATENCION.destroy({
-                    where: { NUM_TIENDA: tiendaId },
+                    where: {NUM_TIENDA: tiendaId},
                     transaction: trans
                 });
             }
@@ -457,15 +456,15 @@ async function actualizarTiendaGeneral(req, res) {
                                 INICIO_JORNADA2: h.Inicio_Jornada2,
                                 FIN_JORNADA2: h.Fin_Jornada2
                             },
-                            { transaction: trans });
+                            {transaction: trans});
                     }
                 }
             }
             if (tiendaActualizado) {
-                res.status(200).send({ message: 'Los datos generales de la tienda han sido actualizados' });
+                res.status(200).send({message: 'Los datos generales de la tienda han sido actualizados'});
                 await trans.commit();
             } else {
-                res.status(404).send({ message: 'Los datos generales de la tienda no han sido actualizados' });
+                res.status(404).send({message: 'Los datos generales de la tienda no han sido actualizados'});
             }
         }
     } catch (e) {
@@ -477,23 +476,23 @@ async function actualizarTiendaGeneral(req, res) {
 }
 
 async function actualizarTiendaSucursal(req, res) {
-    const t = await db.sequelize.transaction({ autocommit: false });
+    const t = await db.sequelize.transaction({autocommit: false});
     try {
-        let verificar = AGENTE.findOne({ where: { COD_AGENTE: req.user.id } });
+        let verificar = AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
-                message: "No tienes permisos necesarios"
+                message: "No tiene los permisos necesarios"
             });
         } else {
             let params = req.body;
             let tiendaId = req.params.id;
 
-            let sucursalesObtenidos = await SUCURSAL.findAll({ where: { NUM_TIENDA: tiendaId } });
+            let sucursalesObtenidos = await SUCURSAL.findAll({where: {NUM_TIENDA: tiendaId}});
 
             if (sucursalesObtenidos.length > 0) {
                 await SUCURSAL.destroy({
-                    where: { NUM_TIENDA: tiendaId },
+                    where: {NUM_TIENDA: tiendaId},
                     transaction: t
                 });
             }
@@ -512,9 +511,9 @@ async function actualizarTiendaSucursal(req, res) {
                         NUM_COD_POSTAL_SUCURSAL: s.Num_Cod_Postal_Sucursal,
                         TIPO_SUCURSAL: s.Tipo_Sucursal
                     },
-                    { transaction: t });
+                    {transaction: t});
             }
-            res.status(200).send({ message: 'Sus datos han sido actualizados' });
+            res.status(200).send({message: 'Sus datos han sido actualizados'});
             await t.commit();
         }
     } catch (e) {
@@ -528,17 +527,17 @@ async function actualizarTiendaSucursal(req, res) {
 async function getDetalleTiendaProducto(req, res) {
     try {
         let tiendaObtenida = await TIENDA.findOne({
-            where: { NUM_TIENDA: req.params.id },
-            include: [{ model: OPCION_ENVIO }, { model: METODO_PAGO }, { model: HORARIO_ATENCION }, {
+            where: {NUM_TIENDA: req.params.id},
+            include: [{model: OPCION_ENVIO}, {model: METODO_PAGO}, {model: HORARIO_ATENCION}, {
                 model: SUCURSAL,
-                include: { model: DPA, include: { model: DPA, as: 'DPAP', required: true } }
+                include: {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}
             }, {
                 model: OFERTA, include: [{
                     model: PRODUCTO,
                     attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'NOMBRE_PRODUCTO'],
                     include: [{
                         model: PRODUCTO_CATEGORIA,
-                        include: { model: CATEGORIA }
+                        include: {model: CATEGORIA}
                     }, {
                         model: VARIANTE,
                         separate: true,
@@ -553,17 +552,17 @@ async function getDetalleTiendaProducto(req, res) {
                             order: [['ID_IMAGEN', 'ASC']]
                         }
                     },
-                    {
-                        model: CALIFICACION,
-                        separate: true,
-                        attributes: ['ID_PRODUCTO', [CALIFICACION.sequelize.fn('AVG', CALIFICACION.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
-                        group: ['ID_PRODUCTO']
-                    }, {
-                        model: COMENTARIO,
-                        separate: true,
-                        attributes: ['ID_PRODUCTO', [COMENTARIO.sequelize.fn('COUNT', COMENTARIO.sequelize.col('ID_COMENTARIO')), 'TOTAL_COM']],
-                        group: ['ID_PRODUCTO']
-                    }]
+                        {
+                            model: CALIFICACION,
+                            separate: true,
+                            attributes: ['ID_PRODUCTO', [CALIFICACION.sequelize.fn('AVG', CALIFICACION.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
+                            group: ['ID_PRODUCTO']
+                        }, {
+                            model: COMENTARIO,
+                            separate: true,
+                            attributes: ['ID_PRODUCTO', [COMENTARIO.sequelize.fn('COUNT', COMENTARIO.sequelize.col('ID_COMENTARIO')), 'TOTAL_COM']],
+                            group: ['ID_PRODUCTO']
+                        }]
                 }],
                 order: [[SUCURSAL, 'NUM_SUCURSAL', 'ASC']]
             }]
@@ -587,23 +586,23 @@ async function getDetalleTiendaProducto(req, res) {
 }
 
 async function obtenerFiltroPrincipalTienda(req, res) {
-    const t = await db.sequelize.transaction({ autocommit: false });
+    const t = await db.sequelize.transaction({autocommit: false});
     try {
         let termino = req.params.termino;
         let tiendasObtenidos = await TIENDA.findAll({
             attributes: ['NOMBRE_COMERCIAL'],
             where: {
-            [Op.and]: [
-                {ESTADO_TIENDA: 0},
-                {
-                    [Op.or]: [
-                        {NOMBRE_COMERCIAL: {[Op.like]: termino + '%'}},
-                        {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino}},
-                        {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino + '%'}}
-                    ]
-                }
-            ]
-        },
+                [Op.and]: [
+                    {ESTADO_TIENDA: 0},
+                    {
+                        [Op.or]: [
+                            {NOMBRE_COMERCIAL: {[Op.like]: termino + '%'}},
+                            {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino}},
+                            {NOMBRE_COMERCIAL: {[Op.like]: '%' + termino + '%'}}
+                        ]
+                    }
+                ]
+            },
             limit: 10,
             transaction: t
         });
@@ -622,16 +621,16 @@ async function obtenerFiltroPrincipalTienda(req, res) {
 }
 
 async function obtenerFiltroPrincipalProductos(req, res) {
-    const t = await db.sequelize.transaction({ autocommit: false });
+    const t = await db.sequelize.transaction({autocommit: false});
     try {
         let termino = req.params.termino;
         let productosObtenidos = await PRODUCTO.findAll({
             attributes: ['NOMBRE_PRODUCTO'],
             where: {
                 [Op.or]: [
-                    { NOMBRE_PRODUCTO: { [Op.like]: termino + '%' } },
-                    { NOMBRE_PRODUCTO: { [Op.like]: '%' + termino } },
-                    { NOMBRE_PRODUCTO: { [Op.like]: '%' + termino + '%' } }
+                    {NOMBRE_PRODUCTO: {[Op.like]: termino + '%'}},
+                    {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino}},
+                    {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino + '%'}}
                 ]
             },
             limit: 10,
@@ -652,7 +651,7 @@ async function obtenerFiltroPrincipalProductos(req, res) {
 }
 
 async function obtenerFiltroPrincipalTodos(req, res) {
-    const t = await db.sequelize.transaction({ autocommit: false });
+    const t = await db.sequelize.transaction({autocommit: false});
     try {
         let vectorEnviar = [];
         let termino = req.params.termino;
@@ -678,9 +677,9 @@ async function obtenerFiltroPrincipalTodos(req, res) {
             attributes: ['NOMBRE_PRODUCTO'],
             where: {
                 [Op.or]: [
-                    { NOMBRE_PRODUCTO: { [Op.like]: termino + '%' } },
-                    { NOMBRE_PRODUCTO: { [Op.like]: '%' + termino } },
-                    { NOMBRE_PRODUCTO: { [Op.like]: '%' + termino + '%' } }
+                    {NOMBRE_PRODUCTO: {[Op.like]: termino + '%'}},
+                    {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino}},
+                    {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino + '%'}}
                 ]
             },
             limit: 8,
@@ -693,7 +692,7 @@ async function obtenerFiltroPrincipalTodos(req, res) {
         await t.commit();
         res.status(200).send({
             data: vectorEnviar,
-            message: "Busqueda cargada correctamente"
+            message: "Búsqueda cargada correctamente"
         });
 
     } catch (e) {
@@ -702,7 +701,7 @@ async function obtenerFiltroPrincipalTodos(req, res) {
 }
 
 async function obtenerFiltroBusquedaTodos(req, res) {
-    const t = await db.sequelize.transaction({ autocommit: false });
+    const t = await db.sequelize.transaction({autocommit: false});
     try {
         let vectorEnviar = [];
         let termino = req.params.termino;
@@ -713,9 +712,9 @@ async function obtenerFiltroBusquedaTodos(req, res) {
                 attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'ID_OFERTA', 'NOMBRE_PRODUCTO', 'DESCRIPCION_PRODUCTO'],
                 where: {
                     [Op.or]: [
-                        { NOMBRE_PRODUCTO: { [Op.like]: termino + '%' } },
-                        { NOMBRE_PRODUCTO: { [Op.like]: '%' + termino } },
-                        { NOMBRE_PRODUCTO: { [Op.like]: '%' + termino + '%' } }
+                        {NOMBRE_PRODUCTO: {[Op.like]: termino + '%'}},
+                        {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino}},
+                        {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino + '%'}}
                     ]
                 },
                 include: [{
@@ -730,10 +729,9 @@ async function obtenerFiltroBusquedaTodos(req, res) {
                         attributes: ['NUM_VARIANTE', 'IMAGEN'],
                         group: 'NUM_VARIANTE',
                         where: {
-                            [Op.or]: [
-                                { [Op.not]: { TIPO_IMAGEN: 'video' } },
-                                { [Op.not]: { TIPO_IMAGEN: 'youtube' } }
-                            ]
+                            TIPO_IMAGEN: {
+                                [Op.like]: 'image%'
+                            }
                         },
                         order: [['ID_IMAGEN', 'ASC']]
                     }

@@ -29,7 +29,7 @@
                   </div>
                   <div *ngIf="Razon_Social.errors.pattern">
                     <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
-                      numeros.</p>
+                      números.</p>
                   </div>
                 </div>
               </div> <!-- form-group end.// -->
@@ -49,7 +49,7 @@
                   </div>
                   <div *ngIf="Nombre_Comercial.errors.pattern">
                     <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
-                      numeros.</p>
+                      números.</p>
                   </div>
                 </div>
               </div> <!-- form-group end.// -->
@@ -62,7 +62,7 @@
                         [(ngModel)]="this.EditarTienda.Descripcion_Tienda"
                         [ngClass]="{'is-invalid': Descripcion_Tienda.invalid && (Descripcion_Tienda.dirty || Descripcion_Tienda.touched)}"
                         class=" form-control " name="descripcion_Tienda" placeholder=""
-                        required type="text" aria-label="With textarea"  style="font-size: 0.8rem"></textarea >
+                        required type="text" aria-label="With textarea" style="font-size: 0.8rem"></textarea>
               <div *ngIf="Descripcion_Tienda.invalid && (Descripcion_Tienda.dirty || Descripcion_Tienda.touched)">
                 <div *ngIf="Descripcion_Tienda.errors.required">
                   <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
@@ -81,49 +81,52 @@
           <p></p>
           <div class="card card-body mt-3">
             <div class="form-row">
-            <div class="form-group col-md-6 px-0">
-              <label>* Correo electrónico</label>
-              <input [disabled]="banderaEdicionDeshabilitada" #Correo_Tienda="ngModel"
-                     style="text-transform: lowercase;"
-                     [(ngModel)]="this.EditarTienda.Correo_Tienda"
-                     [ngClass]="{'is-invalid': Correo_Tienda.invalid && (Correo_Tienda.dirty || Correo_Tienda.touched)}"
-                     [pattern]='this.emailPattern'
-                     class="tamanioInputs form-control" name="correo_tienda" placeholder="negocio@comdero.com"
-                     required type="text">
-              <div *ngIf="Correo_Tienda.invalid && (Correo_Tienda.dirty || Correo_Tienda.touched)">
-                <div *ngIf="Correo_Tienda.errors.required">
-                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+              <div class="form-group col-md-6 px-0">
+                <label>* Correo electrónico</label>
+                <input [disabled]="banderaEdicionDeshabilitada" #Correo_Tienda="ngModel"
+                       style="text-transform: lowercase;"
+                       [(ngModel)]="this.EditarTienda.Correo_Tienda"
+                       [ngClass]="{'is-invalid': Correo_Tienda.invalid && (Correo_Tienda.dirty || Correo_Tienda.touched)}"
+                       [pattern]='this.emailPattern'
+                       class="tamanioInputs form-control" name="correo_tienda" placeholder="negocio@comdero.com"
+                       required type="text">
+                <div *ngIf="Correo_Tienda.invalid && (Correo_Tienda.dirty || Correo_Tienda.touched)">
+                  <div *ngIf="Correo_Tienda.errors.required">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+                  </div>
+                  <div *ngIf="Correo_Tienda.errors.pattern">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
+                      números.</p>
+                  </div>
                 </div>
-                <div *ngIf="Correo_Tienda.errors.pattern">
-                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
-                    numeros.</p>
-                </div>
-              </div>
-            </div> <!-- form-group end.// -->
-            <div class="form-group col-md-6">
-              <label>* Contacto de WhatsApp</label>
-              <input [disabled]="banderaEdicionDeshabilitada" #ContactoW="ngModel" style="text-transform: uppercase;"
-                     [(ngModel)]="this.EditarTienda.Contacto_WhatsApp" [ngClass]="{'is-invalid': ContactoW.invalid && (ContactoW.dirty || ContactoW.touched),
+              </div> <!-- form-group end.// -->
+              <div class="form-group col-md-6">
+                <label>* Contacto de WhatsApp</label>
+                <input [disabled]="banderaEdicionDeshabilitada" #ContactoW="ngModel" style="text-transform: uppercase;"
+                       [(ngModel)]="this.EditarTienda.Contacto_WhatsApp" [ngClass]="{'is-invalid': ContactoW.invalid && (ContactoW.dirty || ContactoW.touched),
                  'is-valid': ContactoW.valid && (ContactoW.dirty || ContactoW.touched)}"
-                     [pattern]='this.soloNumerosPattern'
-                     class="tamanioInputs form-control" name="contactoW" placeholder="0999999999"
-                     required type="text" minlength="10" maxlength="10"  >
-              <span style="font-size: x-small">los clientes podran contactarte a través de WhatsApp</span>
-              <div *ngIf="ContactoW.invalid && (ContactoW.dirty || ContactoW.touched)">
-                <div *ngIf="ContactoW.errors.required">
-                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+                       [pattern]='this.soloNumerosPattern'
+                       class="tamanioInputs form-control" name="contactoW" placeholder="0999999999"
+                       required type="text" minlength="10" maxlength="10">
+                <span style="font-size: x-small">Los clientes podrán contactarte a través de WhatsApp</span>
+                <div *ngIf="ContactoW.invalid && (ContactoW.dirty || ContactoW.touched)">
+                  <div *ngIf="ContactoW.errors.required">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+                  </div>
+                  <div *ngIf="ContactoW.errors.pattern">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo números.
+                    </p>
+                  </div>
+                  <div *ngIf="ContactoW.errors.minlength">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Mínimo 10 digitos.
+                    </p>
+                  </div>
+                  <div *ngIf="ContactoW.errors.maxlenght">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Mínimo 10 digitos.
+                    </p>
+                  </div>
                 </div>
-                <div *ngIf="ContactoW.errors.pattern">
-                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo numeros.</p>
-                </div>
-                <div *ngIf="ContactoW.errors.minlength">
-                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Minimo 10 digitos.</p>
-                </div>
-                <div *ngIf="ContactoW.errors.maxlenght">
-                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Minimo 10 digitos.</p>
-                </div>
-              </div>
-            </div> <!-- form-group end.// -->
+              </div> <!-- form-group end.// -->
             </div>
             <div class="form-row">
               <div class="form-group col-sm-6">
@@ -679,19 +682,12 @@
                       class="btn btn-warning text-nowrap mb-4  col-auto">
                 Modificar &nbsp;&nbsp;
                 <span class="fa fa-edit"></span></button>
-
-
             </div>
-
           </div>
         </form>
-
-
         <br>
       </div>
     </div>
-
   </div>
 </form>
 </body>
-

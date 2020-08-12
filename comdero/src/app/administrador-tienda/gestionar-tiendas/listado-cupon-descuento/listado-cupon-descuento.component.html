@@ -3,8 +3,8 @@
 <div class="mt-5 " [ngClass]="{'container':misDescuentos.length==0, 'container-fluid':misDescuentos.length>0}">
 
   <div class="row  justify-content-center" id="top">
-    <h4 class=" col-11  ">Cupones de Descuento</h4>
-    <hr class="col-11  ">
+    <h4 class=" col-11">Cupones de Descuento</h4>
+    <hr class="col-11">
   </div>
 
   <div *ngIf="misDescuentos.length==0" class="row justify-content-center   ">
@@ -54,17 +54,14 @@
   </div>
   <div *ngIf="misDescuentos.length>0 " class="container-fluid mx-auto px-md-5 ">
 
-
     <div class="row mb-2  ">
       <div class=" input-group col-md-6 mr-md-auto pr-0">
         <input class="form-control" style="font-size: small" type="text" #Busquedaasd="ngModel"
                [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="filtrar()"/>
-
         <div class="input-group-append">
           <span class="input-group-text  small"><li class="fas fa-search"></li></span>
         </div>
         &nbsp; &nbsp; &nbsp;
-
       </div>
       <div class="col-md-auto ">
         <button class="btn btn-primary w-100 mt-md-0 mt-2" style="font-size:small" routerLink="../cupon-descuento">Nuevo
@@ -101,10 +98,9 @@
               class="btn btn-danger   mt-md-0 mt-1"
               style="font-size: x-small"
       ><span class="fa fa-trash"></span></button>
-
-
     </div>
-    <div  *ngIf="this.result.length==0" class="ml-1"><p>No se encontraron resultados.</p></div>
+
+    <div  *ngIf="this.result.length == 0" class="ml-1"><p>No se encontraron resultados.</p></div>
     <table class="table table-bordered table-responsive-sm bg-white small w-100 text-center" *ngIf="this.result.length>0">
       <thead>
       <tr>
@@ -117,7 +113,6 @@
         <th scope="col">TIPO</th>
         <th scope="col">ESTADO</th>
         <th scope="col">ACCIÓN</th>
-
       </tr>
       </thead>
       <tbody>
@@ -197,8 +192,6 @@
         <ng-template ngbPaginationNext>Siguiente</ng-template>
       </ngb-pagination>
     </div>
-
-
   </div>
 </div>
 <br><br>

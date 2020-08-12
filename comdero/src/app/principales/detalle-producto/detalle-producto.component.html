@@ -65,19 +65,19 @@
           <article class="content-body px-4">
             <p class="mb-0">
               <a href="principales/menu/detalle-tienda/tienda/300000/inicio-tienda"
-                 class="title tituloTienda text-primary p-0"> {{this.productoDetalle.TIENDA.NOMBRE_COMERCIAL}}</a>
+                 class="title tituloTienda text-primary p-0"> {{this.productoDetalle?.TIENDA.NOMBRE_COMERCIAL}}</a>
             </p>
-            <h4 class="title m-0">{{this.productoDetalle.PRODUCTO.NOMBRE_PRODUCTO}}</h4>
+            <h4 class="title m-0">{{this.productoDetalle?.PRODUCTO.NOMBRE_PRODUCTO}}</h4>
 
             <div class="rating-wrap mb-0">
               <ul class="rating-stars">
-                <ngb-rating
-                            [(rate)]="this.productoDetalle.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL">
+                <ngb-rating *ngIf="this.productoDetalle?.PRODUCTO.CALIFICACIONs.length != 0"
+                            [(rate)]="this.productoDetalle?.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL">
                   <ng-template let-fill="fill">
                     <span class="star" [class.filled]="fill === 100">&#9733;</span>
                   </ng-template>
                 </ngb-rating>
-                <ngb-rating *ngIf="this.productoDetalle.PRODUCTO.CALIFICACIONs.length == 0"
+                <ngb-rating *ngIf="this.productoDetalle?.PRODUCTO.CALIFICACIONs.length == 0"
                             [(rate)]="currentRate">
                   <ng-template let-fill="fill">
                     <span class="star" [class.filled]="fill === 100">&#9733;</span>
@@ -126,7 +126,7 @@
                 </dl>
               </div>
               <div class="thumbs-wrap">
-                <a class="item-thumb item-opciones" *ngFor="let v of this.productoDetalle.PRODUCTO.VARIANTEs">
+                <a class="item-thumb item-opciones" *ngFor="let v of this.productoDetalle?.PRODUCTO.VARIANTEs">
                   <img [src]="getImagen(v.IMAGEN_PRODUCTOs[0].IMAGEN)">
                 </a>
               </div> <!-- thumbs-wrap.// -->
@@ -189,11 +189,11 @@
 
         <h6>Descripción del producto</h6>
         <p class="small text-justify">
-          {{this.productoDetalle.PRODUCTO.DESCRIPCION_PRODUCTO}}
+          {{this.productoDetalle?.PRODUCTO.DESCRIPCION_PRODUCTO}}
         </p>
         <h6>Detalle del producto</h6>
         <p class="small text-justify">
-          {{this.productoDetalle.PRODUCTO.DETALLE_PRODUCTO}}
+          {{this.productoDetalle?.PRODUCTO.DETALLE_PRODUCTO}}
         </p>
       </div> <!-- card-body.// -->
     </article> <!-- card.// -->

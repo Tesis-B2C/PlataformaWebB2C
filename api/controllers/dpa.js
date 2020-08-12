@@ -2,7 +2,6 @@
 
 const DPA = require('../models/dpa'); //importar el modelo del usuario  o lo que son las clases comunes
 
-
 async function getDpaProvincias(req, res) {
     let busqueda = req.params.id;
 
@@ -12,7 +11,7 @@ async function getDpaProvincias(req, res) {
         if (provinciasObtenidas.length>0) {
             res.status(200).send({
                 data: provinciasObtenidas,
-                message: "Dpa cargado correctamente"
+                message: "DPA cargado correctamente"
             });
         } else {
             res.status(404).send({
@@ -37,7 +36,7 @@ async function getDpaCiudades(req, res) {
         if (ciudadesObtenidas.length) {
             res.status(200).send({
                 data: ciudadesObtenidas,
-                message: "Dpa cargado correctamente"
+                message: "DPA cargado correctamente"
             });
         } else {
             res.status(404).send({

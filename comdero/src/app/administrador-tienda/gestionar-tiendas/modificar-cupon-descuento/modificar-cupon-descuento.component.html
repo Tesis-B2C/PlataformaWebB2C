@@ -41,25 +41,24 @@
           <td>
             {{producto.COD_PRODUCTO}}
           </td>
-
           <td>
             {{producto.NOMBRE_PRODUCTO}}
           </td>
-
-
         </tr>
         </tbody>
       </table>
       <div class="d-flex justify-content-between p-2">
-        <ngb-pagination
-          [(page)]="page"
-          [pageSize]="pageSize"
-          [collectionSize]="this.result.length "></ngb-pagination>
+
+        <ngb-pagination class="paginacion"
+                        [(page)]="page"
+                        [pageSize]="pageSize"
+                        [collectionSize]="this.result.length" [maxSize]="4" [rotate]="true" [ellipses]="true"
+                        [boundaryLinks]="false">
+          <ng-template ngbPaginationPrevious>Anterior</ng-template>
+          <ng-template ngbPaginationNext>Siguiente</ng-template>
+        </ngb-pagination>
       </div>
-
-
     </div>
-
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Cerrar</button>
@@ -67,20 +66,13 @@
       &nbsp; &nbsp; <span
         class="badge badge-light">{{vectorProductos.size}}</span></button>
   </div>
-
-
 </ng-template>
-
-
 <body id="body">
-
 <div class="container mt-5 ">
-
   <div class="row  justify-content-center" id="top">
     <h4 class=" col-11  ">Modificar Descuento</h4>
     <hr class="col-11  ">
   </div>
-
 
   <div class="row justify-content-center">
     <div class=" col-md-10  ">
@@ -89,7 +81,7 @@
           <button *ngIf="banderaCuponDescuento"
                   class="btnActivo btn btn-outline-primary px-4 py-3 text-center btn-paso2 w-100"
                   type="submit">
-            <i class="fas fa-tag fa-lg fa-2x"></i> &nbsp; &nbsp;Cupon de descuento
+            <i class="fas fa-tag fa-lg fa-2x"></i> &nbsp; &nbsp;Cupón de descuento
           </button>
         </div>
 
@@ -105,10 +97,8 @@
 
     <br><br><br><br>
     <div class="col-md-10" id="panelUno">
-
       <h6>Código de descuento {{this.Descuento.Motivo_Descuento}}</h6>
       <form #FormInformacion id="formInformacion" name="formInformacion" class="mt-3 card card-body validate-form">
-
         <div class="container">
           <div class="form-row " *ngIf="banderaCuponDescuento">
             <div class="col-md-7 ">
@@ -142,12 +132,12 @@
                      placeholder="Ej: Descuento por el mes de enero"
                      class=" form-control py-3 "
                      name="motivoDescuento" required [disabled]="!this.banderaModificar"
-                     type="text" [ngClass]="{'is-invalid': MotivoDescuento.invalid && banderaValidaciones}" >
+                     type="text" [ngClass]="{'is-invalid': MotivoDescuento.invalid && banderaValidaciones}">
 
               <div *ngIf="MotivoDescuento.errors?.required && banderaValidaciones" class="mt-2">
                 <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
               </div>
-              <p style="font-size: small" class="muted">Los clientes veran este descuento en la
+              <p style="font-size: small" class="muted">Los clientes visualizarán este descuento en la
                 pantalla de pago.</p>
             </div>
           </div>
@@ -195,7 +185,7 @@
               <input (click)="opcionAplicarA(false)" name="garantia" [disabled]="!this.banderaModificar"
                      type="radio" value="espesificos" id="GarantiaFabrica"
                      [checked]="this.Descuento.AplicarA=='espesificos'">
-              <label for="GarantiaFabrica">&nbsp;&nbsp;Productos espesificos </label>
+              <label for="GarantiaFabrica">&nbsp;&nbsp;Productos especificos </label>
             </div>
 
 
@@ -208,7 +198,6 @@
                class="table  table-responsive-sm bg-white small w-100 text-center">
           <thead>
           <tr>
-
             <th scope="col">ID_PRODUCTO</th>
             <th scope="col">COD_PRODUCTO</th>
             <th scope="col">NOMBRE</th>
@@ -219,14 +208,12 @@
           <tbody>
           <tr [ngClass]="{'bg-gray':producto.ESTADO_OFERTA==1}"
               *ngFor="let producto of   this.vectorProductosEnviar  |slice: (page2-1) * pageSize2 : (page-1) * pageSize2 + pageSize2; index as i">
-
             <td>
               {{producto.ID_PRODUCTO}}
             </td>
             <td>
               {{producto.COD_PRODUCTO}}
             </td>
-
             <td>
               {{producto.NOMBRE_PRODUCTO}}
             </td>
@@ -243,10 +230,15 @@
 
         <div *ngIf="vectorProductosEnviar.length>0 && this.Descuento.AplicarA=='espesificos'"
              class="d-flex justify-content-between p-2">
-          <ngb-pagination
-            [(page)]="page2"
-            [pageSize]="pageSize2"
-            [collectionSize]=" this.vectorProductosEnviar.length "></ngb-pagination>
+          <ngb-pagination class="paginacion"
+                          [(page)]="page2"
+                          [pageSize]="pageSize2"
+                          [collectionSize]=" this.vectorProductosEnviar.length" [maxSize]="4" [rotate]="true"
+                          [ellipses]="true"
+                          [boundaryLinks]="false">
+            <ng-template ngbPaginationPrevious>Anterior</ng-template>
+            <ng-template ngbPaginationNext>Siguiente</ng-template>
+          </ngb-pagination>
         </div>
 
         <button *ngIf="this.Descuento.AplicarA=='espesificos'" class="btn btn-primary col-md-3 mx-auto p-1"
@@ -263,15 +255,15 @@
       <form class=" card card-body mt-3" name="formTiempo">
 
         <div class="container">
-          <label>Seleccione el rango de tienpo que el cupón de descuento va a estar activo</label>
+          <label>Seleccione el rango de tiempo que el cupón de descuento va a estar activo</label>
           <br> <br>
           <div class="row">
 
             <div class="col-xs-12 col-12 col-sm-5 col-md-6 col-lg-4 form-group">
-              <label>Rango de duracion</label>
+              <label>Rango de duración</label>
               <div class="input-group ">
 
-                <input  type="text" class="form-control" bsDaterangepicker
+                <input type="text" class="form-control" bsDaterangepicker
                        #Calendario="ngModel"
                        style="border-right: none"
                        [(ngModel)]="bsRangeValue" name="calendario" [disabled]="!this.banderaModificar"
@@ -306,7 +298,7 @@
             </div>
             <div class="col-xs-12 col-12 col-sm-4 col-md-12 col-lg-4 form-group">
 
-              <label>Hora de finalizacion</label>
+              <label>Hora de finalización</label>
               <input class="px-1 tamaniohorario form-control text-center"
                      type="time" name="horaFin"
                      #HoraFin="ngModel" [(ngModel)]="this.Descuento.Hora_Fin" [disabled]="!this.banderaModificar"
@@ -319,7 +311,6 @@
         </div>
       </form>
       <hr>
-
 
       <form class="card card-body  col-md-12  mt-4">
         <div class=" container">
@@ -338,8 +329,6 @@
                     (click)="iniciarModificarDescuento()">
               Cancelar &nbsp;&nbsp;
               <span class="fa fa-close"></span></button>
-
-
             &nbsp;&nbsp;
             <button *ngIf="!banderaModificar &&  this.Descuento.Estado_Descuento ==0"
                     class="btn btn-warning text-nowrap mb-4  col-auto" (click)="iniciarEdicion()">
@@ -360,14 +349,9 @@
                     (click)="cambiarEstadoDescuento(2)">
               Eliminar &nbsp;&nbsp;
               <span class="fa fa-trash"></span></button>
-
-
           </div>
-
         </div>
       </form>
-
-
     </div>
   </div>
 </div>

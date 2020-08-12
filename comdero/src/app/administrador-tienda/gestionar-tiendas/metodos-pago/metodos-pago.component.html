@@ -1,13 +1,13 @@
 <body class="bg">
 <ng-template #contentComoRecivirPagos let-modal>
 
-
   <div class="modal-header">
     <h4 class="modal-title">Como recibir pagos a través de Paypal</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
+
   <div class="modal-body">
     <p>
       <iframe width="100%" height="315" [src]="getVideoIframe('https://www.youtube.com/watch?v=MoBrIn0eQbU')"
@@ -109,7 +109,7 @@
       <div class="form-row mx-2">
         <div class="col-10">
           <h6 class="font-weight-bold">Pagos con transferencia bancaria</h6>
-          <p class="p">Permite a los clientes la opción de a traves de una transferencia bancaria .</p>
+          <p class="p">Permite a los clientes la opción de pago por transferencia bancaria .</p>
         </div>
 
         <div class="col-2 text-right">
@@ -164,7 +164,7 @@
                   </div>
                 </div>
                 <div class="form-group col-md-6">
-                  <p>Porcentaje descuento<span class="text-muted" style="font-size: smaller">(Opcional)</span></p>
+                  <p>Porcentaje de descuento<span class="text-muted" style="font-size: smaller">(Opcional)</span></p>
                   <div class="input-group">
                     <input class="form-control" name="descuentoTransferencia" #DescuentoTransferencia="ngModel"
                            [(ngModel)]="this.Metodo_Pago_Transferencia.Porcentaje_Descuento"
@@ -263,31 +263,29 @@
 
       </form>
 
-
       <form class="card card-body  col-md-12  mt-4">
         <div class=" container">
           <h6>Acciones</h6>
           <hr>
           <div class="text-right">
-            <button *ngIf="banderaModificar" [disabled]="loading" (click)="saveMetodoPago()" class="btn btn-primary text-nowrap mb-4  col-auto"
+            <button *ngIf="banderaModificar" [disabled]="loading" (click)="saveMetodoPago()"
+                    class="btn btn-primary text-nowrap mb-4  col-auto"
                     type="button">
               <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
-              Guardar  &nbsp;&nbsp;
+              Guardar &nbsp;&nbsp;
               <span class="fa fa-save"></span>
             </button>
             &nbsp;&nbsp;
-            <button *ngIf="banderaModificar" (click)="banderaModificar=false;iniciarEdicion();" class="btn btn-light text-nowrap mb-4  col-auto" >
+            <button *ngIf="banderaModificar" (click)="banderaModificar=false;iniciarEdicion();"
+                    class="btn btn-light text-nowrap mb-4  col-auto">
               Cancelar &nbsp;&nbsp;
               <span class="fa fa-close"></span></button>
-
             &nbsp;&nbsp;
-            <button *ngIf="!banderaModificar" (click)="banderaModificar=true" class="btn btn-warning text-nowrap mb-4  col-auto" >
+            <button *ngIf="!banderaModificar" (click)="banderaModificar=true"
+                    class="btn btn-warning text-nowrap mb-4  col-auto">
               Modificar &nbsp;&nbsp;
               <span class="fa fa-edit"></span></button>
-
-
           </div>
-
         </div>
       </form>
 
@@ -300,7 +298,8 @@
 
           <h4 class="alert-heading">Recuerda!</h4>
           <hr class="mb-0">
-          <label>Configurar un método de pago electrónico como Paypal siempre brindará más seguridad a tus clientes y sobre todo es una manera ágil y eficiente de realizar compras por internet</label>
+          <label>Configurar un método de pago electrónico como Paypal siempre brindará más seguridad a tus clientes y
+            sobre todo es una manera ágil y eficiente de realizar compras por internet</label>
           <img class="mx-auto  pt-md-4  mensaje-mascota" src="assets/images/mascota-condero.png" width="80%">
 
         </div>
@@ -312,8 +311,5 @@
       </div>
     </div>
   </div>
-
-
 </div>
 </body>
-

@@ -1,10 +1,10 @@
 <div class=" border-bottom colorNavbar  py-1 p-absolute">
   <p class=" encabezado ">
     <button (click)="abrirSideBar()"><i class=" col-sm-1  fa fa-bars px-3  "></i></button>
-    Gestion de tienda
+    Gestión de tienda
   </p>
 </div>
-<div class="wrapper" id="body" >
+<div class="wrapper" id="body">
   <!-- Sidebar  -->
 
   <nav id="sidebar" class="scrollbar " [ngClass]="{'active':banderaSideBar}">
@@ -24,10 +24,12 @@
           Productos
         </a>
         <ul class="collapse list-unstyled" id="producto">
-          <li (click)="cerrarSideBar()" routerLink="productos" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <li (click)="cerrarSideBar()" routerLink="productos" routerLinkActive="active"
+              [routerLinkActiveOptions]="{exact: true}">
             <a>Nuevo</a>
           </li>
-          <li (click)="cerrarSideBar()" routerLink="listado-productos" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <li (click)="cerrarSideBar()" routerLink="listado-productos" routerLinkActive="active"
+              [routerLinkActiveOptions]="{exact: true}">
             <a>Listado</a>
           </li>
 
@@ -64,10 +66,12 @@
           Descuentos
         </a>
         <ul class="collapse list-unstyled" id="descuento">
-          <li (click)="cerrarSideBar()" routerLink="cupon-descuento" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <li (click)="cerrarSideBar()" routerLink="cupon-descuento" routerLinkActive="active"
+              [routerLinkActiveOptions]="{exact: true}">
             <a>Nuevo</a>
           </li>
-          <li (click)="cerrarSideBar()" routerLink="listado-cupon-descuento" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <li (click)="cerrarSideBar()" routerLink="listado-cupon-descuento" routerLinkActive="active"
+              [routerLinkActiveOptions]="{exact: true}">
             <a>Listado</a>
           </li>
 
@@ -76,7 +80,7 @@
       <li class="mb-3">
         <a href="#estadisticas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle ">
           <i class="fa fa-bar-chart mr-2"></i>
-          Estadisticas
+          Estadísticas
         </a>
         <ul class="collapse list-unstyled" id="estadisticas">
           <li>
@@ -90,27 +94,25 @@
           </li>
         </ul>
       </li>
-
-
     </ul>
     <ul class="mx-2">
       <hr>
       <p>Configuraciones &nbsp;<span class="fa fa-cog mb-4"></span>&nbsp;&nbsp; &nbsp; | &nbsp;
-        <button placement="top" ngbTooltip="Ocultar tienda" *ngIf="this.identidadTienda.ESTADO_TIENDA==0" (click)="updateEstadoTienda(1)"
-                class="p-0   text-right">
+        <button placement="top" ngbTooltip="Ocultar tienda" *ngIf="this.identidadTienda.ESTADO_TIENDA==0"
+                (click)="updateEstadoTienda(1)"
+                class="p-0 text-right">
           <span class="fa fa-eye-slash"></span>
         </button>
-        <button placement="top" ngbTooltip="Reactivar Tienda" *ngIf="this.identidadTienda.ESTADO_TIENDA==1" (click)="updateEstadoTienda(0)"
-                 class="p-0   text-right">
+        <button placement="top" ngbTooltip="Reactivar Tienda" *ngIf="this.identidadTienda.ESTADO_TIENDA==1"
+                (click)="updateEstadoTienda(0)"
+                class="p-0 text-right">
           <span class="fa fa-eye"></span>
         </button>
         &nbsp;&nbsp;
-        <button  placement="top" ngbTooltip="Eliminar Tienda" (click)="updateEstadoTienda(2)"
-                class="p-0  text-right">
+        <button placement="top" ngbTooltip="Eliminar Tienda" (click)="updateEstadoTienda(2)"
+                class="p-0 text-right">
           <span class="fa fa-trash"></span>
         </button>
-
-
       </p>
 
       <li class="mb-2 ">
@@ -119,47 +121,47 @@
           Tienda
         </a>
         <ul class="collapse list-unstyled" id="tienda">
-          <li (click)="cerrarSideBar()" routerLink="general-tienda" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <li (click)="cerrarSideBar()" routerLink="general-tienda" routerLinkActive="active"
+              [routerLinkActiveOptions]="{exact: true}">
             <a>General</a>
           </li>
-          <li (click)="cerrarSideBar()" routerLink="sucursales-tienda" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <li (click)="cerrarSideBar()" routerLink="sucursales-tienda" routerLinkActive="active"
+              [routerLinkActiveOptions]="{exact: true}">
             <a>Sucursales</a>
           </li>
-          <li (click)="cerrarSideBar()" routerLink="personalizacion-tienda" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <li (click)="cerrarSideBar()" routerLink="personalizacion-tienda" routerLinkActive="active"
+              [routerLinkActiveOptions]="{exact: true}">
             <a>Personalización</a>
           </li>
-
-
         </ul>
       </li>
 
-      <li (click)="cerrarSideBar()" class="mb-2" routerLink="metodos-pago" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <li (click)="cerrarSideBar()" class="mb-2" routerLink="metodos-pago" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}">
         <a>
           <i class="fas fa-credit-card mr-2"></i>
           Métodos de Pago
         </a>
       </li>
-      <li  (click)="cerrarSideBar()" class="mb-2" routerLink="metodos-envio" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <li (click)="cerrarSideBar()" class="mb-2" routerLink="metodos-envio" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}">
         <a>
           <i class="fa fa-truck-moving mr-2"></i>
-          Métodos de Envio
+          Métodos de Envío
         </a>
       </li>
 
-
-      <li class="mb-2" routerLink="/principales/menu/detalle-tienda/tienda/{{identidadTienda.NUM_TIENDA}}/inicio-tienda">
+      <li class="mb-2"
+          routerLink="/principales/menu/detalle-tienda/tienda/{{identidadTienda.NUM_TIENDA}}/inicio-tienda">
         <a>
-          <i class="fas fa-store-alt mr-2" ></i>
-          Ver en produccion
+          <i class="fas fa-store-alt mr-2"></i>
+          Ver en producción
         </a>
       </li>
-
     </ul>
-
   </nav>
 
   <!-- Page Content  -->
-
   <div id="content" class="w-100">
     <router-outlet></router-outlet>
   </div>

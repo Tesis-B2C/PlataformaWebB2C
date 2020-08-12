@@ -1,6 +1,4 @@
 <body class="bg">
-
-
 <div class=" mt-5" [ngClass]="{'container':misProductos.length==0, 'container-fluid':misProductos.length>0}">
   <div class="row  justify-content-center">
     <h4 class=" col-md-11 text-left">Listado de productos</h4>
@@ -50,26 +48,19 @@
   </div>
 </div>
 
-
 <div  *ngIf="misProductos.length>0" class="container-fluid mx-auto px-md-5 ">
-
-
   <div class="row mb-2  ">
     <div class=" input-group col-lg-6 mr-lg-auto pr-0" >
       <input class="form-control " style="font-size: small" type="text" #busquedaasd="ngModel"
              [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="filtrar()"/>
-
       <div class="input-group-append ">
         <span class="input-group-text  "><li class="fas fa-search"></li></span>
       </div>
       &nbsp; &nbsp; &nbsp;
-
     </div>
-
     <div class="col-md-auto ">
       <button class="btn btn-primary w-100 mt-md-0 mt-2" style="font-size:small">Nuevo Producto</button>
     </div>
-
   </div>
   <div *ngIf="loading">
     <label>Buscando . . .</label>

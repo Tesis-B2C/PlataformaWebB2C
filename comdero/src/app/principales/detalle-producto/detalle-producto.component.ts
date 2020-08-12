@@ -31,7 +31,6 @@ export class DetalleProductoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.id_Producto = this.route.snapshot.params.idProducto;
     this.obtenerProducto();
   }
 
@@ -40,6 +39,7 @@ export class DetalleProductoComponent implements OnInit {
       this.id_Producto = this.route.snapshot.params.idProducto;
       let response = await this._productoServicio.obtenerProductoDetalle(this.id_Producto).toPromise();
       this.productoDetalle = response.data;
+
       console.log('PROUCTO OBTENIDO BD' + JSON.stringify(this.productoDetalle));
     } catch (e) {
       console.log("error:" + e);

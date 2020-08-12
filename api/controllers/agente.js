@@ -9,15 +9,12 @@ const DPA = require('../models/dpa');
 
 async function registrarAgente(req, res) {
     try {
-
-        let agenteEncontrado = await AGENTE.findOne({ where: { CORREO: req.body.Correo } });
-
+        let agenteEncontrado = await AGENTE.findOne({where: {CORREO: req.body.Correo}});
         if (agenteEncontrado) {
             res.status(404).send({
-                message: 'Este correo electronico ya esta vinculado a una cuenta'
+                message: 'Este correo electrónico ya está vinculado a una cuenta'
             });
         } else {
-
             console.log("params", req.body);
             let agente = AGENTE.build();
             agente.ID_AGENTE = req.body.Id_Agente;
@@ -53,25 +50,21 @@ async function registrarAgente(req, res) {
                 } else {
                     res.status(200).send({
                         message: 'No se ha registrado una dirección aun, esperamos lo puedas hacer pronto,' +
-                            'Porfavor revisa tu correo electrónico: ' + agente.CORREO + '  para activar tu cuenta',
+                            'Por favor revisa tu correo electrónico: ' + agente.CORREO + '  para activar tu cuenta',
                         data: agenteGuardado
                     });
                 }
             } else {
                 res.status(500).send({
-                    message: 'No se han podido registrar tus datos intenta nuevamente'
+                    message: 'No se ha podido registrar sus datos intenta nuevamente'
                 });
             }
         }
-
-
     } catch (err) {
         res.status(500).send({
             message: err.name
         });
     }
-
-
 }
 
 
@@ -81,26 +74,25 @@ async function autenticarAgente(req, res) {
         let correo = params.Correo.trim();
         let contrasenia = params.Contrasenia;
         let agente = await AGENTE.findOne({
-            where: { ESTADO: '0', CORREO: correo },
-            include: { model: DPA, include: { model: DPA, as: 'DPAP', required: true } }
+            where: {ESTADO: '0', CORREO: correo},
+            include: {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}
         });
         if (!agente) {
-            res.status(404).send({ message: 'El Usuario no existe o no esta activado' });
+            res.status(404).send({message: 'El Usuario no existe o no está activado'});
         } else {
             let result = bcrypt.compareSync(contrasenia, agente.dataValues.CONTRASENIA);
             if (result) {
                 if (params.getHash) {
-                    res.status(200).send({ token: jwt.createToken(agente.dataValues) });
+                    res.status(200).send({token: jwt.createToken(agente.dataValues)});
                 } else {
                     res.status(200).send({
                         data: agente
                     });
                 }
             } else {
-                res.status(404).send({ message: 'Error al ingresar, contraseña incorrecta.' });
+                res.status(404).send({message: 'Error al ingresar, contraseña incorrecta.'});
             }
         }
-
     } catch (err) {
         res.status(500).send({
             message: err.name
@@ -108,12 +100,8 @@ async function autenticarAgente(req, res) {
     }
 }
 
-
 async function autenticarActivarAgente(req, res) {
     try {
-
-
-
         let params = req.body;
         let correo = params.Correo.trim();
         let contrasenia = params.Contrasenia;
@@ -123,27 +111,27 @@ async function autenticarActivarAgente(req, res) {
                 message: "token no valido"
             });
         } else {
-            let agente = await AGENTE.findOne({ where: { ESTADO: '1', CORREO: req.user.email.trim() } });
+            let agente = await AGENTE.findOne({where: {ESTADO: '1', CORREO: req.user.email.trim()}});
             if (!agente) {
                 res.status(500).send({
                     message: "Al parecer el usuario no ha sido registrado"
                 });
             } else {
-                let agenteActualizado = agente.update({ ESTADO: "0" });
+                let agenteActualizado = agente.update({ESTADO: "0"});
                 if (!agenteActualizado) {
-                    res.status(404).send({ message: 'El Usuario no ha sido activado' });
+                    res.status(404).send({message: 'El Usuario no ha sido activado'});
                 } else {
                     let result = bcrypt.compareSync(contrasenia, agente.dataValues.CONTRASENIA);
                     if (result) {
                         if (params.getHash) {
-                            res.status(200).send({ token: jwt.createToken(agente.dataValues) });
+                            res.status(200).send({token: jwt.createToken(agente.dataValues)});
                         } else {
                             res.status(200).send({
                                 data: agente
                             });
                         }
                     } else {
-                        res.status(404).send({ message: 'Error, contraseña incorrecta.' });
+                        res.status(404).send({message: 'Error, contraseña incorrecta'});
                     }
                 }
             }
@@ -159,7 +147,7 @@ async function autenticarActivarAgente(req, res) {
 async function resetearContrasenia(req, res) {
     try {
         let params = req.body;
-        let agente = await AGENTE.findOne({ where: { ESTADO: '0', CORREO: params.Correo.trim() } });
+        let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: params.Correo.trim()}});
         if (!agente) {
             res.status(404).send({
                 message: 'Usuario no encontrado'
@@ -169,36 +157,34 @@ async function resetearContrasenia(req, res) {
                 message: 'Por favor revisa tu correo electrónico para cambiar tu contraseña',
                 data: agente.dataValues
             });
-
         }
     } catch (e) {
         res.status(500).send({
             message: err.name
         });
     }
-
 }
 
 async function resetearContrasenia2(req, res) {
 
     try {
-        let agente = await AGENTE.findOne({ where: { ESTADO: '0', CORREO: req.user.email.trim() } });
+        let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: req.user.email.trim()}});
         if (!agente) {
             res.status(500).send({
-                message: "token no valido"
+                message: "Token no valido"
             });
         } else {
 
             await bcrypt.hash(req.body.Contrasenia2, null, null, function (err, hash) {
                 let nuevaContrasenia = hash;//aqui e cambio
-                let agenteActualizado = agente.update({ CONTRASENIA: nuevaContrasenia });
+                let agenteActualizado = agente.update({CONTRASENIA: nuevaContrasenia});
                 if (!agenteActualizado) {
                     res.status(500).send({
-                        message: "La contrasenña no pudo ser actualizada"
+                        message: "La contraseña no pudo ser actualizada"
                     });
                 } else {
                     res.status(200).send({
-                        message: "Tu contraseña ha sido actualizada"
+                        message: "Su contraseña ha sido actualizada"
                     });
                 }
             });
@@ -213,7 +199,7 @@ async function resetearContrasenia2(req, res) {
 async function actualizarAgente(req, res) {
     try {
 
-        let verificar = AGENTE.findOne({ where: { COD_AGENTE: req.user.id } });
+        let verificar = AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
@@ -235,14 +221,13 @@ async function actualizarAgente(req, res) {
                 COD_DPA: req.body.Ciudad
 
             }
-            let agenteActualizado = await AGENTE.update(agente, { where: { ESTADO: '0', CORREO: agenteId } });
+            let agenteActualizado = await AGENTE.update(agente, {where: {ESTADO: '0', CORREO: agenteId}});
             if (!agenteActualizado) {
-                res.status(404).send({ message: 'El Usuario no ha sido actualizado' });
+                res.status(404).send({message: 'El Usuario no ha sido actualizado'});
             } else {
-                res.status(200).send({ message: 'El Usuario ha sido actualizado' });
+                res.status(200).send({message: 'El Usuario ha sido actualizado'});
             }
         }
-
 
 
     } catch (e) {
@@ -256,7 +241,7 @@ async function actualizarAgente(req, res) {
 async function verificarExistenciaCorreo(req, res) {
     try {
 
-        let verificar = AGENTE.findOne({ where: { COD_AGENTE: req.user.id } });
+        let verificar = AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
@@ -264,7 +249,7 @@ async function verificarExistenciaCorreo(req, res) {
             });
         } else {
 
-            let agenteEncontrado = await AGENTE.findOne({ where: { CORREO: req.body.correo.trim() } });
+            let agenteEncontrado = await AGENTE.findOne({where: {CORREO: req.body.correo.trim()}});
 
             if (agenteEncontrado) {
                 res.status(404).send({
@@ -294,7 +279,7 @@ async function verificarExistenciaCorreo(req, res) {
 async function cambioCorreoAgente(req, res) {
     try {
 
-        let verificar = AGENTE.findOne({ where: { COD_AGENTE: req.user.id } });
+        let verificar = AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
@@ -303,12 +288,12 @@ async function cambioCorreoAgente(req, res) {
         } else {
 
             let agenteId = req.params.id;
-            let agente = await AGENTE.findOne({ where: { ESTADO: '0', CORREO: agenteId } });
-            let agenteActualizado = await agente.update({ CORREO: req.body.correo.trim() });
+            let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: agenteId}});
+            let agenteActualizado = await agente.update({CORREO: req.body.correo.trim()});
             if (!agenteActualizado) {
-                res.status(404).send({ message: 'El Usuario no ha sido actualizado' });
+                res.status(404).send({message: 'El Usuario no ha sido actualizado'});
             } else {
-                res.status(200).send({ message: 'El Usuario ha sido actualizado' });
+                res.status(200).send({message: 'El Usuario ha sido actualizado'});
             }
         }
     } catch (e) {
@@ -323,7 +308,7 @@ async function actualizarAgenteIdentity(req, res) {
 
     try {
 
-        let verificar = AGENTE.findOne({ where: { COD_AGENTE: req.user.id } });
+        let verificar = AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
@@ -333,8 +318,8 @@ async function actualizarAgenteIdentity(req, res) {
 
             let busqueda = req.params.id;
             let agente = await AGENTE.findOne({
-                where: { ESTADO: '0', CORREO: busqueda },
-                include: { model: DPA, include: { model: DPA, as: 'DPAP', required: true } }
+                where: {ESTADO: '0', CORREO: busqueda},
+                include: {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}
             });
 
             if (agente) {
@@ -360,27 +345,27 @@ async function actualizarContrasenia(req, res) {
 
     try {
 
-        let verificar = AGENTE.findOne({ where: { COD_AGENTE: req.user.id } });
+        let verificar = AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
-                message: "No tienes permisos necesarios"
+                message: "No tiene los permisos necesarios"
             });
         } else {
 
             let agenteId = req.params.id;
 
             console.log(req.body);
-            let agente = await AGENTE.findOne({ where: { ESTADO: '0', CORREO: agenteId } });
+            let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: agenteId}});
             let result = await bcrypt.compareSync(req.body.contraseniaActual, agente.dataValues.CONTRASENIA);
             if (result) {
 
                 await bcrypt.hash(req.body.contraseniaNueva, null, null, async function (err, hash) {
-                    let agenteActualizado = await agente.update({ CONTRASENIA: hash });
+                    let agenteActualizado = await agente.update({CONTRASENIA: hash});
                     if (!agenteActualizado) {
-                        res.status(404).send({ message: 'No se ha podido actualizar la contraseña' });
+                        res.status(404).send({message: 'No se ha podido actualizar la contraseña'});
                     } else {
-                        res.status(200).send({ message: 'La contraseña ha sido actualizada' });
+                        res.status(200).send({message: 'La contraseña ha sido actualizada'});
                     }
                 });
             } else {
@@ -389,14 +374,12 @@ async function actualizarContrasenia(req, res) {
                 });
             }
         }
-
     } catch (e) {
         res.status(500).send({
             message: err.name
         });
     }
 }
-
 
 module.exports = {          // para exportar todas las funciones de este modulo
     registrarAgente,

@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-exports.EnviarCorreo =  async (correo, asunto, nombre, token) => {
+exports.EnviarCorreo = async (correo, asunto, nombre, token) => {
     var transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
@@ -19,8 +19,6 @@ exports.EnviarCorreo =  async (correo, asunto, nombre, token) => {
                 'href="http://localhost:4200/loguin/' + token + '">http://localhost:4200/loguin/</a>'
         };
     } else if (asunto == 'Cambio de contraseña') {
-
-
         var mailOptions = {
             from: 'doginotificaciones@gmail.com',
             to: correo,
@@ -32,18 +30,13 @@ exports.EnviarCorreo =  async (correo, asunto, nombre, token) => {
                 'http://localhost:4200/olvido-contrasenia-paso2/</a>'
 
         };
-
     } else if (asunto == 'Cambiar Correo') {
-
-
         var mailOptions = {
             from: 'doginotificaciones@gmail.com',
             to: correo,
             subject: asunto,
-            text: 'Tu codigo de verificacion es ' + nombre,
-
+            text: 'Tu código de verificación es ' + nombre,
         };
-
     }
 // Function to send e-mail to the user
 
@@ -58,12 +51,11 @@ exports.EnviarCorreo =  async (correo, asunto, nombre, token) => {
                }
            });*/
 
-    return new Promise(await function(resolve, reject) {
+    return new Promise(await function (resolve, reject) {
         let resp = false;
-
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
-                console.log("error is " + error);
+                console.log("Error is " + error);
                 resolve(false); // or use rejcet(false) but then you will have to handle errors
             } else {
                 console.log('Email sent: ' + JSON.stringify(info));
@@ -72,8 +64,3 @@ exports.EnviarCorreo =  async (correo, asunto, nombre, token) => {
         });
     });
 }
-
-
-
-
-

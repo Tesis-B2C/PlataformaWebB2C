@@ -7,14 +7,13 @@ const db = require('../database/db');
 
 async function guardarMetodoEnvio(req, res) {
     const t = await db.sequelize.transaction({ autocommit: false });
-
     try {
         const params = req.body;
         let verificar = Agente.findOne({ where: { COD_AGENTE: req.user.id } });
 
         if (!verificar) {
             return res.status(500).send({
-                message: "No tienes permisos necesarios"
+                message: "No tiene los permisos necesarios"
             });
         } else {
 
@@ -40,7 +39,7 @@ async function guardarMetodoEnvio(req, res) {
                     });
             }
             res.status(200).send({
-                message: "Sus metodos de envio se han guardado correctamente"
+                message: "Sus métodos de envio se han guardado correctamente"
             });
             await t.commit();
         }

@@ -12,7 +12,7 @@ const moment = require('moment');
 const db = require('../database/db');
 const fs = require('fs-extra');
 const path = require('path');
-const Agente= require('../models/agente');
+const Agente = require('../models/agente');
 
 const {Op} = require("sequelize");
 
@@ -20,7 +20,7 @@ async function saveProducto(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
     const vvariantesGuardas = [];
     try {
-        
+
         let producto = JSON.parse(req.body.producto);
         let oferta = JSON.parse(req.body.oferta);
         let variantes = JSON.parse(req.body.variantes);
@@ -124,10 +124,9 @@ async function saveProducto(req, res) {
             await t.commit();
         } else {
             res.status(404).send({
-                message: "Al parecer hubo probelmas con el registro del producto"
+                message: "Al parecer hubo problemas con el registro del producto"
             });
         }
-
     } catch (err) {
         for (let h = 0; h < req.files.length; h++) {
             if (fs.exists(path.resolve(req.files[h].path))) {
@@ -144,30 +143,30 @@ async function saveProducto(req, res) {
 
 async function getMisProductos(req, res) {
     try {
-        let verificar = Agente.findOne({ where: { COD_AGENTE: req.user.id } });
+        let verificar = Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
-                message: "No tienes permisos necesarios"
+                message: "No tiene los permisos necesarios"
             });
         } else {
-        let productosObtenidas = await Oferta.findAll({ //$or: [{ESTADO_OFERTA: 0},{ESTADO_OFERTA: 1}]
-            where: {NUM_TIENDA: req.params.id, ESTADO_OFERTA: {[Op.or]: [0, 1]}},
-            include: {model: Producto},
-            order: [['ID_OFERTA', 'DESC']]
-        });
+            let productosObtenidas = await Oferta.findAll({ //$or: [{ESTADO_OFERTA: 0},{ESTADO_OFERTA: 1}]
+                where: {NUM_TIENDA: req.params.id, ESTADO_OFERTA: {[Op.or]: [0, 1]}},
+                include: {model: Producto},
+                order: [['ID_OFERTA', 'DESC']]
+            });
 
-        if (productosObtenidas.length > 0) {
-            res.status(200).send({
-                data: productosObtenidas,
-                message: "Productos cargadas correctamente"
-            });
-        } else {
-            res.status(404).send({
-                message: 'Al parecer no se encuentra productos registrados en la base de datos'
-            });
+            if (productosObtenidas.length > 0) {
+                res.status(200).send({
+                    data: productosObtenidas,
+                    message: "Productos cargadas correctamente"
+                });
+            } else {
+                res.status(404).send({
+                    message: 'Al parecer no se encuentra productos registrados en la base de datos'
+                });
+            }
         }
-    }
     } catch (err) {
         res.status(500).send({
             message: 'error:' + err
@@ -178,41 +177,41 @@ async function getMisProductos(req, res) {
 
 async function getProducto(req, res) {
     try {
-        let verificar = Agente.findOne({ where: { COD_AGENTE: req.user.id } });
+        let verificar = Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
-                message: "No tienes permisos necesarios"
+                message: "No tiene los permisos necesarios"
             });
         } else {
-        let productoObtenido = await Oferta.findOne({
-            where: {ID_OFERTA: req.params.id},
-            include: {
-                model: Producto,
-                include: [{
-                    model: Variante,
-                    separate: true,
-                    order: [['NUM_VARIANTE', 'ASC']],
-                    include: {model: Imagen_Producto, separate: true, order: [['ID_IMAGEN', 'ASC']]}
-                }, {
-                    model: Producto_Categoria,
-                    include: {model: Categoria}
-                }],
-            },
-        });
-        if (productoObtenido) {
-            res.status(200).send({
-                data: productoObtenido,
-                message: "Producto cargado correctamente"
+            let productoObtenido = await Oferta.findOne({
+                where: {ID_OFERTA: req.params.id},
+                include: {
+                    model: Producto,
+                    include: [{
+                        model: Variante,
+                        separate: true,
+                        order: [['NUM_VARIANTE', 'ASC']],
+                        include: {model: Imagen_Producto, separate: true, order: [['ID_IMAGEN', 'ASC']]}
+                    }, {
+                        model: Producto_Categoria,
+                        include: {model: Categoria}
+                    }],
+                },
             });
-        } else {
-            res.status(404).send({
-                message: 'Al parecer no se encuentra el producto registrado en la base de datos'
-            });
+            if (productoObtenido) {
+                res.status(200).send({
+                    data: productoObtenido,
+                    message: "Producto cargado correctamente"
+                });
+            } else {
+                res.status(404).send({
+                    message: 'Al parecer no se encuentra el producto registrado en la base de datos'
+                });
 
 
+            }
         }
-    }
     } catch (err) {
         res.status(500).send({
             message: 'error:' + err
@@ -264,12 +263,10 @@ async function updateProducto(req, res) {
             transaction: t
         });
 
-
         await Producto_Categoria.destroy({
             where: {ID_PRODUCTO: producto.Id_Producto},
             transaction: t
         });
-
 
         for (const c of categorias) {
             await Producto_Categoria.create({
@@ -280,7 +277,6 @@ async function updateProducto(req, res) {
                 {
                     transaction: t
                 });
-
         }
 
         for (let v of variantes) {
@@ -401,7 +397,7 @@ async function updateProducto(req, res) {
                 }
             }
             res.status(200).send({
-                message: "Su producto ha sido registrado  exitosamente"
+                message: "Su producto ha sido registrado exitosamente"
             });
 
             await t.commit();
@@ -428,28 +424,28 @@ async function updateProducto(req, res) {
 
 async function updateEstadoProducto(req, res) {
     try {
-        let verificar = Agente.findOne({ where: { COD_AGENTE: req.user.id } });
+        let verificar = Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
-                message: "No tienes permisos necesarios"
+                message: "No tiene los permisos necesarios"
             });
         } else {
-        let ofertaActualizada = await Oferta.update({
-            ESTADO_OFERTA: req.body.estado,
-        }, {
-            where: {ID_OFERTA: req.params.id},
-        });
-        if (ofertaActualizada) {
-            res.status(200).send({
-                message: "El producto ha sido actualizado correctamente"
+            let ofertaActualizada = await Oferta.update({
+                ESTADO_OFERTA: req.body.estado,
+            }, {
+                where: {ID_OFERTA: req.params.id},
             });
-        } else {
-            res.status(404).send({
-                message: 'Al parecer no se encuentra el producto registrado en la base de datos'
-            });
+            if (ofertaActualizada) {
+                res.status(200).send({
+                    message: "El producto ha sido actualizado correctamente"
+                });
+            } else {
+                res.status(404).send({
+                    message: 'Al parecer no se encuentra el producto registrado en la base de datos'
+                });
+            }
         }
-    }
     } catch (err) {
         res.status(500).send({
             message: 'error:' + err
@@ -460,26 +456,26 @@ async function updateEstadoProducto(req, res) {
 async function updateEstadoProductos(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
     try {
-        let verificar = Agente.findOne({ where: { COD_AGENTE: req.user.id } });
+        let verificar = Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
-                message: "No tienes permisos necesarios"
+                message: "No tiene los permisos necesarios"
             });
         } else {
-        for (const s of req.body) {
-            await Oferta.update({
-                ESTADO_OFERTA: req.params.estado,
-            }, {
-                where: {ID_OFERTA: s}, transact: t
-            });
-        }
+            for (const s of req.body) {
+                await Oferta.update({
+                    ESTADO_OFERTA: req.params.estado,
+                }, {
+                    where: {ID_OFERTA: s}, transact: t
+                });
+            }
 
-        res.status(200).send({
-            message: "El producto ha sido actualizado correctamente"
-        });
-        t.commit();
-    }
+            res.status(200).send({
+                message: "El producto ha sido actualizado correctamente"
+            });
+            t.commit();
+        }
     } catch (err) {
         t.rollback();
         res.status(500).send({
@@ -557,8 +553,14 @@ async function obtenerProductoDetalle(req, res) {
                     order: [['NUM_VARIANTE', 'ASC']],
                     include: {
                         model: Imagen_Producto,
+                        where: {
+                            TIPO_IMAGEN: {
+                                [Op.like]: 'image%'
+                            }
+                        },
                         separate: true,
-                        order: [['ID_IMAGEN', 'ASC']]}
+                        order: [['ID_IMAGEN', 'ASC']]
+                    }
                 }, {
                     model: Producto_Categoria,
                     include: {model: Categoria}
