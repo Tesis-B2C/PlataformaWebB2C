@@ -19,7 +19,7 @@ export class ModificarCuponDescuentoComponent implements OnInit {
   public identidadDescuento;
   public Descuento;
   public banderaCuponDescuento: boolean = true;
-  public banderaValidaciones: boolean = true;
+  public banderaValidaciones: boolean = false;
   public banderaOpcionAplicarA: boolean;
   public result = [];
   public vectorProductos = new Set();
@@ -74,7 +74,7 @@ export class ModificarCuponDescuentoComponent implements OnInit {
       this.idDescuento = this.route.snapshot.params.id;
       let response = await this._descuentoServicio.getDescuento(this.idDescuento).toPromise();
       this.identidadDescuento = response.data
-
+   console.log("el descuento que trae" , this.identidadDescuento, this.idDescuento);
 
     } catch (e) {
       console.log("error:" + e);
@@ -135,7 +135,7 @@ export class ModificarCuponDescuentoComponent implements OnInit {
     };
     this.loading = false;
     this.banderaCuponDescuento = true;
-    this.banderaValidaciones = true;
+    this.banderaValidaciones = false;
     this.vectorProductos = new Set();
     this.vectorProductosEnviar = [];
     this.page = 1;
