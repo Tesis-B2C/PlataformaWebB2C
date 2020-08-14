@@ -4,7 +4,8 @@ const express = require('express');
 const UnidadMedidaController = require('../controllers/unidad_medida');
 const md_auth = require('../middleware/authenticated');
 const api = express.Router(); // esto sirve para crear las rutas
-api.get('/getUnidadesMedida', UnidadMedidaController.getUnidadesMedida);
+const cache=require('../middleware/cahce');
+api.get('/getUnidadesMedida',cache(360), UnidadMedidaController.getUnidadesMedida);
 
 
 
