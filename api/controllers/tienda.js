@@ -151,7 +151,7 @@ async function getDatosTienda(req, res) {
                     model: SUCURSAL,
                     include: {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}
                 }, {model: HORARIO_ATENCION}, {model: METODO_PAGO}, {model: OPCION_ENVIO}],
-                order: [[SUCURSAL, 'NUM_SUCURSAL', 'ASC']]
+                order: [[SUCURSAL, 'NUM_SUCURSAL', 'ASC']],
             });
 
             if (tiendaObtenida) {
@@ -185,7 +185,7 @@ async function getMisTiendas(req, res) {
                 where: {
                     COD_AGENTE: req.params.id,
                     ESTADO_TIENDA: {[Op.or]: [0, 1]}
-                }
+                } , order: [['NUM_TIENDA', 'ASC']]
             });
 
             if (tiendasObtenidas.length > 0) {
@@ -525,10 +525,11 @@ async function actualizarTiendaSucursal(req, res) {
 }
 
 async function getDetalleTiendaProducto(req, res) {
+    console.log("detalle tienda");
     try {
         let tiendaObtenida = await TIENDA.findOne({
             where: {NUM_TIENDA: req.params.id},
-            include: [{model: OPCION_ENVIO}, {model: METODO_PAGO}, {model: HORARIO_ATENCION}, {
+            include: [{model: OPCION_ENVIO}, {model: METODO_PAGO}, {model: HORARIO_ATENCION, separate:true,  order: [['ID_HORARIO_ATENCION', 'ASC']]}, {
                 model: SUCURSAL,
                 include: {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}
             }, {
