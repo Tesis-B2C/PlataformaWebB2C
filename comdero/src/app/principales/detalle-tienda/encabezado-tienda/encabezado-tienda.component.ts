@@ -46,7 +46,7 @@ export class EncabezadoTiendaComponent implements OnInit {
       this.idTienda = this.route.snapshot.params.id;
       let response = await this._tiendaServicio.getDetalleTiendaProducto(this.idTienda).toPromise();
       this.Tienda = response.data;
-      console.log("tienda buscada", this.Tienda);
+      console.log("tienda buscada", JSON.stringify(this.Tienda));
     } catch (e) {
       console.log("error:" + e);
       if (JSON.stringify((e).error.message))

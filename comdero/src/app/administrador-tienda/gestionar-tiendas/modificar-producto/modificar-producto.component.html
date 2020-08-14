@@ -469,7 +469,8 @@
 
             <span *ngIf="banderaMensajeMaximoVideo" class=" col-md-5 " style="color: red;font-size: small">* Recuerda Máximo 150MB</span>
 
-            <a (click)="abrirModalVideoYoutube(modalVideoYoutube)" class="agregarVideoYoutube ml-2 col-md-5 mr-auto " [hidden]="!banderaModificar">
+            <a (click)="abrirModalVideoYoutube(modalVideoYoutube)" class="agregarVideoYoutube ml-2 col-md-5 mr-auto "
+               [hidden]="!banderaModificar">
               Agregar video de youtube &nbsp; <span class="fab fa-youtube "></span>
             </a>
 
@@ -526,7 +527,7 @@
                 <p class="link-agregar-imagenes pb-5">Click para subir un video promocional del producto </p>
               </div>
             </div>
-            <a *ngIf="this.videoYoutube" (click)="resetearVideoYoutube()" class="agregarVideoYoutube ml-2 col-md-5 ">
+            <a *ngIf="this.videoYoutube" [hidden]="!banderaModificar" (click)="resetearVideoYoutube()" class="agregarVideoYoutube ml-2 col-md-5 ">
               Agregar video desde el ordenador &nbsp; <span class="fa fa-laptop "></span>
             </a>
           </div>

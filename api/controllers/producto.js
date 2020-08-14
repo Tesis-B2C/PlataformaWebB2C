@@ -523,6 +523,9 @@ async function obtenerTodosProductos(req, res) {
                 attributes: ['NOMBRE_COMERCIAL']
             }],
             attributes: ['ID_OFERTA'],
+            where: {
+                ESTADO_OFERTA: 0
+            },
             order: [['ID_OFERTA', 'ASC']],
             transaction: t
         });

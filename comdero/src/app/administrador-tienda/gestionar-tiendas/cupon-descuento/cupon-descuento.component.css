@@ -193,3 +193,9 @@ body {
 .borderr-red{
   border:solid  1px  #c80000;
 }
+
+.paginacion {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

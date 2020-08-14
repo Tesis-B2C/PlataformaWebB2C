@@ -34,7 +34,7 @@ function correoActivacion(req, res) {
         } else {
 
             res.status(200).send({
-                message: "El correo ha sido enviado porfavor verifiquelo"
+                message: "El correo ha sido enviado porfavor verifíquelo"
             });
         }
     });

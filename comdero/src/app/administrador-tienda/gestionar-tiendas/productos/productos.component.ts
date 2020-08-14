@@ -119,10 +119,10 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     this.panelUno = document.getElementById('panelUno') as HTMLElement;
     this.panelDos = document.getElementById('panelDos') as HTMLElement;
     if (this.identidadTienda.OPCION_ENVIOs.length == 0) {
-      this.mostrarToast("Asegurate de tener configurado tus metodos de envio antes de empezar a vender", "fa fa-truck fa-2x");
+      this.mostrarToast("Asegurate de tener configurado tus métodos de envio antes de empezar a vender", "fa fa-truck fa-2x");
     }
     if (this.identidadTienda.METODO_PAGOs.length == 0) {
-      this.mostrarToast("Asegurate de tener configurado tus metodos de pago antes de empezar a vender", "fas fa-credit-card fa-2x");
+      this.mostrarToast("Asegurate de tener configurado tus métodos de pago antes de empezar a vender", "fas fa-credit-card fa-2x");
     }
   }
 

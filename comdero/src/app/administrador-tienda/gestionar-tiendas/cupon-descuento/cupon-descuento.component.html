@@ -52,10 +52,14 @@
       </table>
 
       <div class="d-flex justify-content-between p-2">
-        <ngb-pagination
-          [(page)]="page"
-          [pageSize]="pageSize"
-          [collectionSize]="this.result.length "></ngb-pagination>
+        <ngb-pagination class="paginacion"
+                        [(page)]="page"
+                        [pageSize]="pageSize"
+                        [collectionSize]="this.result.length" [maxSize]="4" [rotate]="true" [ellipses]="true"
+                        [boundaryLinks]="false">
+          <ng-template ngbPaginationPrevious><small>Anterior</small></ng-template>
+          <ng-template ngbPaginationNext><small>Siguiente</small></ng-template>
+        </ngb-pagination>
       </div>
 
 
@@ -240,10 +244,17 @@
 
         <div *ngIf="vectorProductosEnviar.length>0 && !banderaOpcionAplicarA"
              class="d-flex justify-content-between p-2">
-          <ngb-pagination
-            [(page)]="page2"
-            [pageSize]="pageSize2"
-            [collectionSize]=" this.vectorProductosEnviar.length "></ngb-pagination>
+
+
+          <ngb-pagination class="paginacion"
+                          [(page)]="page2"
+                          [pageSize]="pageSize2"
+                          [collectionSize]=" this.vectorProductosEnviar.length" [maxSize]="4" [rotate]="true"
+                          [ellipses]="true"
+                          [boundaryLinks]="false">
+            <ng-template ngbPaginationPrevious><small>Anterior</small></ng-template>
+            <ng-template ngbPaginationNext><small>Siguiente</small></ng-template>
+          </ngb-pagination>
         </div>
 
         <button *ngIf="!banderaOpcionAplicarA" class="btn btn-primary col-md-3 mx-auto p-1"

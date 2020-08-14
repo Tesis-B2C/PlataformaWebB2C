@@ -41,7 +41,7 @@
 <!-- ========================= SECTION FRANJA AZUL END ========================= -->
 
 <!-- ========================= SECTION PAGETOP ========================= -->
-<section *ngIf="!this.banderaNoResultado" class="section-pagetop bg">
+<section *ngIf="this.vectorProductos.length > 0" class="section-pagetop bg">
   <div class="container">
     <p class="title-page">{{paginaTamano + 1}} - {{this.ultimoSerie}}  de {{this.vectorProductos.length}} resultados
       para "{{this.palabraBuscada}}"</p>
@@ -51,7 +51,16 @@
 
 
 <!-- ========================= SECTION LISTADO DE PRODUCTOS// ========================= -->
-<section *ngIf="!this.banderaNoResultado" class="section-content padding-y-sm">
+<section *ngIf="this.vectorProductos.length == 0 " class="section-content padding-y-sm">
+  <div class="container">
+    <article class="my-4 text-justify">
+      <label class="m-0">Sin resultados para <label class="font-weight-bold mb-0">{{this.palabraBuscada}}</label> en el catálogo de productos </label>
+      <p style="font-size: x-small"> Revisa la ortografía o usa términos más generales. </p><br><br>
+    </article> <!-- card-product .// -->
+  </div> <!-- container .//  -->
+</section>
+
+<section *ngIf="this.vectorProductos.length > 0" class="section-content padding-y-sm">
   <div class="container">
     <article class="card card-product-list"
              *ngFor="let p of this.vectorProductos | slice: paginaTamano | slice: 0:datosXpagina">
@@ -120,14 +129,23 @@
 <!-- ========================= SECTION LISTADO DE PRODUCTOS END// ========================= -->
 
 <!-- ========================= SECTION LISTADO DE TIENDAS  ========================= -->
-<section *ngIf="!this.banderaNoResultadoTiendas" class="section-name bg padding-y-sm">
+<section *ngIf="this.vectorTienda.length == 0" class="section-content padding-y-sm" >
+  <div class="container">
+    <article class="my-4 text-justify">
+      <label class="m-0">Sin resultados para <label class="font-weight-bold mb-0">{{this.palabraBuscada}}</label> en el catálogo de tiendas </label>
+      <p style="font-size: x-small"> Revisa la ortografía o usa términos más generales. </p><br><br>
+    </article> <!-- card-product .// -->
+  </div> <!-- container .//  -->
+</section>
+
+<section *ngIf="this.vectorTienda.length > 0" class="section-name bg padding-y-sm">
   <div class="container">
     <header class="section-heading">
       <h3 class="section-title">Tiendas asociadas</h3>
     </header><!-- sect-heading -->
 
     <div class="container card">
-      <pre><span class="float-md-right mt-3">Página {{ paginaActualTienda }} de {{numPaginaTienda.pageCount }}</span></pre>
+      <p><span class="float-md-right mt-3">Página {{ paginaActualTienda }} de {{numPaginaTienda.pageCount }}</span></p>
       <article class="card-product-list">
         <div class="row no-gutters">
           <div class="col-lg-3 col-md-3 col-sm-3 col-12"

@@ -26,9 +26,6 @@ export class BusquedaComponent implements OnInit, OnDestroy,OnChanges {
   public vectorTienda = [];
   public datosObtenidos: any;
 
-  public banderaNoResultado: boolean = false;
-  public banderaNoResultadoTiendas: boolean = false;
-
   currentRate = 1;
   public categorias;
   public c1 = [];
@@ -95,7 +92,6 @@ export class BusquedaComponent implements OnInit, OnDestroy,OnChanges {
     this.datosObtenidos = response.data;
 
     if (this.datosObtenidos[0].length > 0) {
-      this.banderaNoResultadoTiendas = false;
       this.datosObtenidos[0].forEach(elemnt => {
         let objTienda = {
           NUM_TIENDA: String,
@@ -107,12 +103,9 @@ export class BusquedaComponent implements OnInit, OnDestroy,OnChanges {
         objTienda.LOGO = elemnt.LOGO;
         this.vectorTienda.push(objTienda);
       })
-    } else {
-      this.banderaNoResultadoTiendas = true;
     }
 
     if (this.datosObtenidos[1].length > 0) {
-      this.banderaNoResultado = false;
       this.datosObtenidos[1].forEach((elemnt) => {
         let objProducto = {
           NOMBRE_COMERCIAL: String,
@@ -146,8 +139,6 @@ export class BusquedaComponent implements OnInit, OnDestroy,OnChanges {
         objProducto.ID_OFERTA = elemnt.ID_OFERTA;
         this.vectorProductos.push(objProducto);
       })
-    } else {
-      this.banderaNoResultado = true;
     }
   }
 

@@ -111,7 +111,7 @@ async function autenticarActivarAgente(req, res) {
                 message: "token no valido"
             });
         } else {
-            let agente = await AGENTE.findOne({where: {ESTADO: '1', CORREO: req.user.email.trim()}});
+            let agente = await AGENTE.findOne({where: {ESTADO: '1', CORREO: req.user.email}});
             if (!agente) {
                 res.status(500).send({
                     message: "Al parecer el usuario no ha sido registrado"
