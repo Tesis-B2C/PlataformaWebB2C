@@ -117,7 +117,7 @@
         <ng-container *ngFor="let producto of vectorProductosObtenidos;index as i">
           <ng-template dataHash="one" carouselSlide id="slider+{{i}}">
             <div class="card card-product-grid mx-2">
-              <a class="img-wrap"><img [src]="getImagen(producto.PRODUCTO.VARIANTEs[0].IMAGEN_PRODUCTOs[0].IMAGEN)"></a>
+              <a class=""><img [src]="getImagen(producto.PRODUCTO.VARIANTEs[0].IMAGEN_PRODUCTOs[0].IMAGEN)" width="100%" height="200rem"></a>
               <figcaption class="info-wrap">
                 <a href="#" class="title"> {{producto.PRODUCTO.NOMBRE_PRODUCTO}}</a>
                 <div class="rating-wrap">

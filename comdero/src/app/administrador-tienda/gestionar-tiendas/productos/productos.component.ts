@@ -127,7 +127,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   }
 
   public cancelar() {
-
+this.borrarVideo();
     document.forms["formInformacion"].reset();
     document.forms["formInventario"].reset();
     document.forms["formPrecios"].reset();
@@ -146,6 +146,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     this.banderaMensajeMaximoImagenes = false;
     this.banderaMensajeMaximoVideo = false;
     this.data = [];
+
     this.banderaAnimacionVideo = false;
     // banderas de envios a domicilio
     this.banderaVariaciones = false;
@@ -563,8 +564,9 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
           return true;
         } else {
           let body = document.getElementById('body') as HTMLElement;
+          window.scrollTo(0, 0);
           body.scrollTo(0, 0);
-          window.scroll(0, 0);
+
           this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
             {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
           return false
@@ -575,7 +577,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     } else {
       let body = document.getElementById('body') as HTMLElement;
       body.scrollTo(0, 0);
-      window.scroll(0, 0);
+      window.scrollTo(0, 0);
       this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
         {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
       return false
