@@ -162,7 +162,7 @@ export class PrincipalComponent implements OnInit {
         }*/
       })
     } catch (e) {
-      console.log("error:" + JSON.stringify((e).error.message));
+      console.log("error:" + JSON.stringify((e)));
     }
   }
 

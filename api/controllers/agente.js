@@ -117,24 +117,26 @@ async function autenticarActivarAgente(req, res) {
                     message: "Al parecer el usuario no ha sido registrado"
                 });
             } else {
-                let agenteActualizado = agente.update({ESTADO: "0"});
-                if (!agenteActualizado) {
-                    res.status(404).send({message: 'El Usuario no ha sido activado'});
-                } else {
-                    let result = bcrypt.compareSync(contrasenia, agente.dataValues.CONTRASENIA);
+
+                let result = bcrypt.compareSync(contrasenia, agente.dataValues.CONTRASENIA);
                     if (result) {
                         if (params.getHash) {
                             res.status(200).send({token: jwt.createToken(agente.dataValues)});
                         } else {
-                            res.status(200).send({
-                                data: agente
-                            });
+                            let agenteActualizado = agente.update({ESTADO: "0"});
+                            if (!agenteActualizado) {
+                                res.status(404).send({message: 'El Usuario no ha sido activado'});
+                            } else {
+                                res.status(200).send({
+                                    data: agente
+                                });
+                            }
                         }
                     } else {
                         res.status(404).send({message: 'Error, contraseña incorrecta'});
                     }
                 }
-            }
+
         }
     } catch (err) {
         res.status(500).send({

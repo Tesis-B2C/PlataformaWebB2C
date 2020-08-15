@@ -38,7 +38,11 @@ export class EncuentranosTiendaComponent implements OnInit {
       console.log("error:" + e);
       if (JSON.stringify((e).error.message))
         this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
+      else{
+        this.mensageError("Error de conexión intentelo mas tarde");
+        debugger;
+        this.router.navigate(['/principales/menu/principal'])
+      }
     }
 
   }
