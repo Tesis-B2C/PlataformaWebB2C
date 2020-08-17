@@ -649,10 +649,11 @@
               <label>Términos y Condiciones</label>
               <app-ngx-editor #Terminos_Condiciones="ngModel"
                               [(ngModel)]="this.EditarTienda.Terminos_Condiciones"
-                              [(ngModel)]="this.htmlcomponent" [config]="editorConfig"
-                              [placeholder]="'Inserte el texto aquí...'"
-                              [spellcheck]="true" class="editor_terminos"
+                              [config]="editorConfig"
+                              lass="editor_terminos"
                               name="terminos_Condiciones"></app-ngx-editor>
+
+
             </div> <!-- form-group end.// -->
           </div>
         </div>
