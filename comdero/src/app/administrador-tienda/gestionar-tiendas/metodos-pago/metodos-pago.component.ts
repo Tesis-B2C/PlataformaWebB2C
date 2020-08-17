@@ -170,7 +170,7 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
         if (this.banderaSlidePagoElectronico.checked) this.Metodo_Pago_Enviar.push(this.Metodo_Pago_Electronico);
 
         let response = await this._metodoPagoServicio.saveMetodosPago(this.identidadTienda.NUM_TIENDA, this.Metodo_Pago_Enviar).toPromise();
-        this.mensageCorrecto(response.data);
+        this.mensageCorrecto(response.message);
         let identidadTienda = await this._tiendaServicio.getDatosTienda(this.identidadTienda.NUM_TIENDA).toPromise();
         localStorage.setItem("identityTienda", JSON.stringify(identidadTienda.data));
         this.iniciarEdicion();

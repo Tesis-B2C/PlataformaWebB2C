@@ -38,7 +38,7 @@ async function registrarTienda(req, res) {
             var banner = req.files.banner[0].path;
         }
 
-        let tiendaEncontrado = await TIENDA.findOne({where: {CORREO_TIENDA: params.Tienda.Correo_Tienda}});
+        let tiendaEncontrado = await TIENDA.findOne({where: {CORREO_TIENDA: params.Tienda.Correo_Tienda, ESTADO_TIENDA:0}});
         if (tiendaEncontrado) {
             res.status(404).send({
                 message: 'Este correo electrónico ya está vinculado a una tienda'

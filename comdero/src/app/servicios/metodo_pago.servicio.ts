@@ -6,7 +6,8 @@ import {AgenteServicio} from "./agente.servicio";
 //import { Http, Headers } from "@angular/http";
 
 interface objeto {
-  data: JSON
+  data: JSON,
+  message:JSON
 }
 
 @Injectable()
