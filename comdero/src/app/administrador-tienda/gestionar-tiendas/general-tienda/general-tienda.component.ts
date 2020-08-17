@@ -19,7 +19,6 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
     Editar_Dias_Atencion: []
   }
 
-  public htmlcomponent;
   public editorConfig = {
     "editable": false,
     "spellcheck": true,
@@ -55,7 +54,7 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
 
   constructor(public toastr: ToastrService, private _tiendaServicio: TiendaServicio) {
     this.EditarTienda = new Tienda(null, null, null, null, null,
-      null, null, null, null, null, null, null,null);
+      null, null, null, null, null, null, null, null);
   }
 
 
@@ -429,6 +428,7 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
   }
 
   public iniciarEdicion() {
+    console.log('TERMINOS'+this.identidadTienda.TERMINOS_CONDICIONES);
     this.EditarTienda.Razon_Social = this.identidadTienda.RAZON_SOCIAL;
     this.EditarTienda.Nombre_Comercial = this.identidadTienda.NOMBRE_COMERCIAL;
     this.EditarTienda.Descripcion_Tienda = this.identidadTienda.DESCRIPCION_TIENDA;
@@ -611,7 +611,7 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
           console.log("DIAS DE ATENCION A ENVIAR AL BACKLOCAL " + JSON.stringify(this.Editar_Dia_Atencion));
           if (this.validarFormulario()) {
             this.actualizarGeneral();
-          }else {
+          } else {
             this.errorMensajeToast("Al parecer existe errores en el formulario reviselo nuevamente");
           }
         } else
@@ -624,7 +624,7 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
       debugger
       if (this.validarFormulario()) {
         this.actualizarGeneral();
-      }else {
+      } else {
         this.errorMensajeToast("Al parecer existe errores en el formulario reviselo nuevamente");
       }
     }
@@ -633,8 +633,8 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
 
   public validarFormulario() {
     debugger
-console.log('hola check'+document.forms["FormGeneralTienda"].checkValidity());
-    if ( document.forms["FormGeneralTienda"].checkValidity()) {
+    console.log('hola check' + document.forms["FormGeneralTienda"].checkValidity());
+    if (document.forms["FormGeneralTienda"].checkValidity()) {
       return true;
     } else {
       return false;
@@ -644,7 +644,6 @@ console.log('hola check'+document.forms["FormGeneralTienda"].checkValidity());
   public async actualizarGeneral() {
     try {
       this.loading = true;
-
       this.Tienda_Editar_Enviar.EditarTienda = this.EditarTienda;
       console.log("Esto quiero enviar de la TIENDA-----------" + JSON.stringify(this.Tienda_Editar_Enviar));
       let response = await this._tiendaServicio.actualizarTiendaGeneral(this.Tienda_Editar_Enviar, this.identidadTienda.NUM_TIENDA).toPromise();
