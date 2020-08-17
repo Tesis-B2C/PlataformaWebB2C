@@ -352,11 +352,11 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
         }
         debugger;
         if (this.Imagenes_Producto[0].filter(imagen => (imagen.Tipo_Imagen == 'video' || imagen.Tipo_Imagen == 'youtube')).length > 0) {
-          if (this.Imagenes_Producto[indice].length >= 5 && indice != 0) {
+          if (this.Imagenes_Producto[indice].length > 6 && indice != 0) {
             this.vbanderaMensajeMaximoImagenes[indice] = true;
             this.vectorBanderaHabilitante[indice] = false;
 
-          } else if (this.Imagenes_Producto[indice].length >= 6) {
+          } else if (this.Imagenes_Producto[indice].length > 7) {
             this.vbanderaMensajeMaximoImagenes[indice] = true
             this.vectorBanderaHabilitante[indice] = false;
 
@@ -508,7 +508,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
 
   public agregarOpcionesProducto() {
     this.vectorBanderaAgregarImagen.push(false);
-    this.vectorBanderaHabilitante.push(false);
+    this.vectorBanderaHabilitante.push(true);
     this.Variantes.push(new Variante(null, null, null, null, 1, "unidades", 1));
     this.Imagenes_Producto.push([]);
     this.imagenes.push([]);
@@ -529,11 +529,11 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
 
 
     if (this.Imagenes_Producto[0].filter(imagen => (imagen.Tipo_Imagen == 'video' || imagen.Tipo_Imagen == 'youtube')).length > 0) {
-      if (this.Imagenes_Producto[indice].length >= 5 && indice != 0) {
+      if (this.Imagenes_Producto[indice].length > 6 && indice != 0) {
         this.vbanderaMensajeMaximoImagenes[indice] = true;
         this.vectorBanderaHabilitante[indice] = false;
 
-      } else if (this.Imagenes_Producto[indice].length >= 6) {
+      } else if (this.Imagenes_Producto[indice].length > 7) {
         this.vbanderaMensajeMaximoImagenes[indice] = true;
         this.vectorBanderaHabilitante[indice] = false;
 
@@ -618,8 +618,8 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
     this.banderaValidaciones = true;
     debugger;
     if (this.vectorBanderaHabilitante.filter(v => v == false).length == 0 && this.categoriasSeleccionadas.size > 0 && document.forms["formInformacion"].checkValidity()) {
-      if (document.forms["formVariaciones"] != null) {
-        if (document.forms["formVariaciones"].checkValidity()) {
+      if (document.forms["formVariaciones0"] != null) {
+        if (this.validarFormularios()) {
           return true;
         } else {
           let body = document.getElementById('body') as HTMLElement;
@@ -641,7 +641,18 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
       return false
     }
   }
+  validarFormularios() {
+    let bandera=true;
+    for(let i in this.Variantes){
+      if(document.forms["formVariaciones"+i].checkValidity()){
+        bandera=true;
+      }else {
+        bandera=false;
+      }
+    }
 
+    return bandera;
+  }
 
   categoriasEnviar = [];
 
