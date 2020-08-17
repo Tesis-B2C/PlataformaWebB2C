@@ -23,6 +23,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
 
+
+  public vBanderaAgregarImagenesVariante=[];
   public videoPorGuardar;
   public Imagenes_Producto = [[]];
   public imagenes = [[]];
@@ -128,6 +130,8 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
 
   public cancelar() {
 this.borrarVideo();
+    this.vBanderaAgregarImagenesVariante=[];
+    this.permisorecargar=false;
     document.forms["formInformacion"].reset();
     document.forms["formInventario"].reset();
     document.forms["formPrecios"].reset();
@@ -557,7 +561,7 @@ this.borrarVideo();
   public validar(): boolean {
     this.banderaValidaciones = true;
     debugger;
-    if (this.imagenes.filter(v => v.length > 0).length == this.imagenes.length && this.categoriasSeleccionadas.size > 0 && document.forms["formInformacion"].checkValidity()
+    if (/*this.imagenes.filter(v => v.length > 0).length == this.imagenes.length */this.imagenes[0].length>0 && this.categoriasSeleccionadas.size > 0 && document.forms["formInformacion"].checkValidity()
       && document.forms["formInventario"].checkValidity() && document.forms["formPrecios"].checkValidity()) {
       if (document.forms["formVariaciones"] != null) {
         if (document.forms["formVariaciones"].checkValidity()) {
@@ -625,6 +629,16 @@ this.borrarVideo();
       let valor2 = valor.split("$")
       element.target.value = valor2[1].replace(',', "");
     }
+  }
+
+
+  agregarImagenesVariante(event, i){
+    if (event.target.checked) {
+      this.vBanderaAgregarImagenesVariante[i] =true;
+    } else {
+      this.vBanderaAgregarImagenesVariante[i] =false;
+    }
+
   }
 
 }

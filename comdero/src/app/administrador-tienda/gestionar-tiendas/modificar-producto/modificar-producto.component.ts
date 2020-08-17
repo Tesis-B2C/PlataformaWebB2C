@@ -662,8 +662,19 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
       }
     }).then(async (result) => {
       if (result.value) {
-        this.loading = true;
-        this.publicarProducto();
+        try {
+          console.log("oferta", this.Oferta, "producto", this.Producto, "Variantes", this.Variantes, "Imagen producto", this.Imagenes_Producto, "video producto", this.videoPorGuardar, "categoria", this.categoriasSeleccionadas)
+          let response = await this._productoServicio.updateProducto(this.identidadProducto.ID_OFERTA, this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
+          this.mensageCorrecto(response['message']);
+          this.iniciarModificarProducto();
+          this.loading = false;
+        }catch (e) {
+          this.loading = false;
+          console.log("error:" + e);
+          if (JSON.stringify((e).error.message))
+            this.mensageError(JSON.stringify((e).error.message));
+          else this.mensageError("Error de conexión intentelo mas tarde");
+        }
       }
     })
 
@@ -717,12 +728,10 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
   }
 
   public async publicarProducto() {
-
-
     try {
       debugger;
+      this.loading=true;
       if (this.validar()) {
-
         if (this.auxi == null && this.videoPorGuardar.Tamanio_Imagen != null) {
           this.Imagenes_Producto[0].push(this.videoPorGuardar);
         }
@@ -730,13 +739,10 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
         for (let categorias of this.categoriasSeleccionadas) {
           this.categoriasEnviar.push(categorias['ID_CATEGORIA']);
         }
-        console.log("oferta", this.Oferta, "producto", this.Producto, "Variantes", this.Variantes, "Imagen producto", this.Imagenes_Producto, "video producto", this.videoPorGuardar, "categoria", this.categoriasSeleccionadas)
+        this.guardarProducto();
 
-        let response = await this._productoServicio.updateProducto(this.identidadProducto.ID_OFERTA, this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
-        this.mensageCorrecto(response['message']);
-        this.iniciarModificarProducto();
-        this.loading = false
       }
+      this.loading = false
     } catch
       (e) {
       this.loading = false;

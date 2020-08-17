@@ -451,8 +451,14 @@
                      name="material{{i+1}}"
                      placeholder="Ej. Gamusa/algodon" type="text">
             </div>
+            <div class="form-group  col-12 text-center">
+              <div class="checkbox-item ">
+                <input (click)="agregarImagenesVariante($event,i)" id="agregarImagenesVariante{{i}}" type="checkbox">
+                <label for="agregarImagenesVariante{{i}}">&nbsp;&nbsp;Agregar imágenes a la variante</label>
 
-            <div class="form-group col-12 ">
+              </div>
+            </div>
+            <div *ngIf="vBanderaAgregarImagenesVariante[i]" class="form-group col-12  ">
               <form name="form" (change)="recargar()">
                 <a class=" mt-5">
                   <label>Imágenes de la opción {{i + 1}} </label>
