@@ -83,7 +83,7 @@
           <div class="form-group mt-2">
             <label>Descripción del producto </label>
             <textarea #DescripcionProducto="ngModel" [(ngModel)]="this.Producto.Descripcion_Producto"
-                      class="form-control" name="descripcionProducto" required
+                      class="form-control" name="descripcionProducto"
                       rows="2" type="text"></textarea>
           </div>
 
@@ -413,7 +413,7 @@
             <div class="form-group  col-md-4">
               <label> Talla </label>
               <input #Talla0="ngModel" [(ngModel)]="this.Variantes[0].Talla" class="form-control " name="talla0" (change)="recargar()"
-                     maxlength="2"
+                     maxlength="4"
                      placeholder="Ej. xl o 34 o etc" type="text">
             </div>
             <div class="form-group  col-md-4">
@@ -443,7 +443,7 @@
             <div class="form-group  col-md-4">
               <label> Talla </label>
               <input #Talla="ngModel" [(ngModel)]="this.Variantes[i+1].Talla" class="form-control " name="talla{{i+1}}" (change)="recargar()"
-                     placeholder="Ej. xl o 34 o etc" type="text" maxlength="2">
+                     placeholder="Ej. xl o 34 o etc" type="text" maxlength="4">
             </div>
             <div class="form-group  col-md-4">
               <label>Material</label>
@@ -498,9 +498,9 @@
                       <label class="imagen-agregar">
                         <i class="fa fa-picture-o fa-4x ml-4"></i>
                         <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                        <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file">
+                        <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file" max="6">
                         <br>
-                        <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imágenes </p>
+                        <p class="pt-1 link-agregar-imagenes2">Agregar imágenes </p>
                         <p class=" link-agregar-imagenes2">máximo 6</p>
 
                       </label>
@@ -516,7 +516,7 @@
                 </div>
               </form>
             </div> <!-- form-group end.// -->
-            <form name="formVariaciones" class="container row" (change)="recargar()">
+            <form name="formVariaciones{{i}}" class="container row" (change)="recargar()">
               <div class="form-group col-lg-7">
                 <label> Stock y unidad de medida del producto</label>
                 <div class="input-group">

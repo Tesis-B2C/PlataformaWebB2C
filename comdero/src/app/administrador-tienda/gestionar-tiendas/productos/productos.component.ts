@@ -338,9 +338,11 @@ this.borrarVideo();
 
   public agregarOpcionesProducto() {
     this.vectorOpciones.push(1);
-    this.color.push("");
+    this.color.push(this.Variantes[this.Variantes.length-1].Color);
+
     this.vectorBanderaAgregarImagen.push(false);
-    this.Variantes.push(new Variante(null, null, null, null, null, "unidades", 0));
+    debugger;
+    this.Variantes.push(new Variante( this.color[this.Variantes.length-1],this.Variantes[this.Variantes.length-1].Talla, this.Variantes[this.Variantes.length-1].Material,null, this.Variantes[this.Variantes.length-1].Stock, this.Variantes[this.Variantes.length-1].Cod_Unidad, 0));
     this.Imagenes_Producto.push([]);
     this.imagenes.push([]);
     console.log("asdasd");
@@ -557,14 +559,26 @@ this.borrarVideo();
 
   }
 
+  validarFormularios() {
+    let bandera=true;
+   for(let i in this.vectorOpciones){
+     if(document.forms["formVariaciones"+i].checkValidity()){
+       bandera=true;
+     }else {
+       bandera=false;
+     }
+   }
+
+   return bandera;
+  }
 
   public validar(): boolean {
     this.banderaValidaciones = true;
     debugger;
     if (/*this.imagenes.filter(v => v.length > 0).length == this.imagenes.length */this.imagenes[0].length>0 && this.categoriasSeleccionadas.size > 0 && document.forms["formInformacion"].checkValidity()
       && document.forms["formInventario"].checkValidity() && document.forms["formPrecios"].checkValidity()) {
-      if (document.forms["formVariaciones"] != null) {
-        if (document.forms["formVariaciones"].checkValidity()) {
+      if (document.forms["formVariaciones0"] != null) {
+        if (this.validarFormularios()) {
           return true;
         } else {
           let body = document.getElementById('body') as HTMLElement;
@@ -632,11 +646,15 @@ this.borrarVideo();
   }
 
 
+
+
   agregarImagenesVariante(event, i){
     if (event.target.checked) {
       this.vBanderaAgregarImagenesVariante[i] =true;
     } else {
       this.vBanderaAgregarImagenesVariante[i] =false;
+      this.imagenes[i+1]=[];
+     this.vectorBanderaAgregarImagen[i+1]=false
     }
 
   }
