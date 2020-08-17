@@ -346,10 +346,10 @@
                 <form name="form">
                   <a class=" mt-5">
                     <label>Imágenes de la opción {{i}} </label>
-                    <span *ngIf="banderaMensajeMaximoImagenes"
-                          style="color: red"> *Recuerda máximo 6 imágenes </span></a>
+                    <span *ngIf="vbanderaMensajeMaximoImagenes[i]"
+                          style="color: red"> *Recuerda máximo 6 imágenes {{this.vbanderaMensajeMaximoImagenes[i]}}</span></a>
                   <div
-                    [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[i]==false  ,'borde-imagenes1':vectorBanderaAgregarImagen[i]==true   ,'borde-error':!vectorBanderaHabilitante[0] && i==0}"
+                    [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[i]==false  ,'borde-imagenes1':vectorBanderaAgregarImagen[i]==true   ,'borde-error':(!vectorBanderaHabilitante[0] && i==0) || this.vbanderaMensajeMaximoImagenes[i] }"
                     class="row  mt-3 ">
                     <div *ngFor='let url of imagenes[i]; index as j ' class="ml-1">
 

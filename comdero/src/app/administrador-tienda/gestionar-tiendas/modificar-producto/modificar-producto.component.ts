@@ -72,7 +72,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
   public imagenes = [[]];
   public vectorBanderaAgregarImagen = [];
   public vectorBanderaHabilitante = [];
-  public banderaMensajeMaximoImagenes: boolean = false;
+  public vbanderaMensajeMaximoImagenes=[];
   public banderaMensajeMaximoVideo: boolean = false;
   public data: any = [];
   public banderaAnimacionVideo: boolean = false;
@@ -150,7 +150,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
 
     this.vectorBanderaAgregarImagen = [];
     this.vectorBanderaHabilitante = [];
-    this.banderaMensajeMaximoImagenes = false;
+    this.vbanderaMensajeMaximoImagenes= [];
     this.banderaMensajeMaximoVideo = false;
     this.banderaAnimacionVideo = false;
     this.auxi = null;
@@ -329,11 +329,12 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
       this.imagenes[indice] = [];
     }
     this.vectorBanderaHabilitante[indice] = true;
+   /* this.vbanderaMensajeMaximoImagenes[indice]=true;*/
     if (eventEntrante.target.files && eventEntrante.target.files[0]) {
       var filesAmount = eventEntrante.target.files.length;
       this.vectorBanderaAgregarImagen[indice] = true;
       if (filesAmount > 6) {
-        this.banderaMensajeMaximoImagenes = true;
+        this.vbanderaMensajeMaximoImagenes[indice]= true;
         this.vectorBanderaHabilitante[indice] = true;
       } else {
         for (let i = 0; i < filesAmount; i++) {
@@ -352,17 +353,17 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
         debugger;
         if (this.Imagenes_Producto[0].filter(imagen => (imagen.Tipo_Imagen == 'video' || imagen.Tipo_Imagen == 'youtube')).length > 0) {
           if (this.Imagenes_Producto[indice].length >= 5 && indice != 0) {
-            this.banderaMensajeMaximoImagenes = true;
+            this.vbanderaMensajeMaximoImagenes[indice] = true;
             this.vectorBanderaHabilitante[indice] = false;
 
           } else if (this.Imagenes_Producto[indice].length >= 6) {
-            this.banderaMensajeMaximoImagenes = true
+            this.vbanderaMensajeMaximoImagenes[indice] = true
             this.vectorBanderaHabilitante[indice] = false;
 
           }
         } else {
-          if (this.Imagenes_Producto[indice].length >= 6) {
-            this.banderaMensajeMaximoImagenes = true;
+          if (this.Imagenes_Producto[indice].length > 6) {
+            this.vbanderaMensajeMaximoImagenes[indice] = true;
             this.vectorBanderaHabilitante[indice] = false;
 
           }
@@ -529,23 +530,25 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
 
     if (this.Imagenes_Producto[0].filter(imagen => (imagen.Tipo_Imagen == 'video' || imagen.Tipo_Imagen == 'youtube')).length > 0) {
       if (this.Imagenes_Producto[indice].length >= 5 && indice != 0) {
-        this.banderaMensajeMaximoImagenes = true;
+        this.vbanderaMensajeMaximoImagenes[indice] = true;
         this.vectorBanderaHabilitante[indice] = false;
 
       } else if (this.Imagenes_Producto[indice].length >= 6) {
-        this.banderaMensajeMaximoImagenes = true
+        this.vbanderaMensajeMaximoImagenes[indice] = true;
         this.vectorBanderaHabilitante[indice] = false;
 
       } else {
         this.vectorBanderaHabilitante[indice] = true;
+        this.vbanderaMensajeMaximoImagenes[indice] = false
       }
     } else {
-      if (this.Imagenes_Producto[indice].length >= 6) {
-        this.banderaMensajeMaximoImagenes = true;
+      if (this.Imagenes_Producto[indice].length > 6) {
+        this.vbanderaMensajeMaximoImagenes[indice] = true;
         this.vectorBanderaHabilitante[indice] = false;
 
       } else {
         this.vectorBanderaHabilitante[indice] = true;
+        this.vbanderaMensajeMaximoImagenes[indice] = false
       }
     }
 
