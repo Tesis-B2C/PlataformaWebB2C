@@ -12,7 +12,7 @@
 <div class=" container-login100 ">
 <div class="mx-auto mt-md-3 container-registro  p-2 bg-white rounded my-0  ">
   <div *ngIf="agenteRegistrado" class="alert alert-primary mb-0" role="alert">
-    <label  style="font-size: small">Si no recibío el correo de activación por favor de click  <button (click)="reEnviar()" class="btn btn-link px-0 pt-0">aquí</button> </label>
+    <label  style="font-size: small">Si no recibió el correo de activación por favor de clic  <button (click)="reEnviar()" class="btn btn-link px-0 pt-0">aquí</button> </label>
   </div>
 
 
@@ -57,7 +57,7 @@
         </div> <!-- form-group end.// -->
       </div>
       <div *ngIf="!banderaTipo" class="form-group">
-        <label>* Razon Social</label>
+        <label>* Razón Social</label>
         <input #Razon_Social="ngModel" style="text-transform: uppercase;" [(ngModel)]="this.Agente.Nombre" [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched),
                  'is-valid': Razon_Social.valid && (Razon_Social.dirty || Razon_Social.touched)}"
                [pattern]='this.LetrasNumerosPattern'
@@ -69,7 +69,7 @@
           </div>
           <div *ngIf="Razon_Social.errors.pattern">
             <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
-              numeros.</p>
+              números.</p>
           </div>
         </div>
 
@@ -124,15 +124,15 @@
               </div>
               <div *ngIf="Cedula.errors.minlength">
                 <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Minimo 10 digitos.</p>
+                  Mínimo 10 digitos.</p>
               </div>
               <div *ngIf="Cedula.errors.maxlength">
                 <p class="alert1 alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Maximo 10 digitos.</p>
+                  Máximo 10 digitos.</p>
               </div>
               <div *ngIf="Cedula.errors.pattern">
                 <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Utilice solo numeros. </p>
+                  Utilice solo números. </p>
               </div>
             </div>
           </div><!--form-group end.;-->
@@ -150,16 +150,15 @@
               </div>
               <div *ngIf="Ruc.errors.minlength">
                 <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Minimo 13 digitos.</p>
-
+                  Mínimo 13 digitos.</p>
               </div>
               <div *ngIf="Ruc.errors.maxlength">
                 <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Maximo 13 digitos.</p>
+                  Máximo 13 digitos.</p>
               </div>
               <div *ngIf="Ruc.errors.pattern">
                 <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Use solo numeros.</p>
+                  Use solo números.</p>
               </div>
             </div>
           </div> <!-- form-group end.-->
@@ -178,7 +177,7 @@
 
               <div *ngIf="Telefono.errors.pattern">
                 <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Utilice solo numeros.</p>
+                  Utilice solo números.</p>
               </div>
             </div>
           </div> <!-- form-group end.//-->
@@ -202,7 +201,7 @@
             <div *ngIf="Provincia.invalid && (Provincia.touched||Provincia.dirty)">
               <div *ngIf="Provincia.errors.required">
                 <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Campo equerido</p>
+                  Campo requerido</p>
               </div>
 
             </div>
@@ -269,7 +268,7 @@
           </div>
         </div>
         <div class=" col-lg-6 form-group">
-          <label>Codigo Postal</label>
+          <label>Código Postal</label>
           <input #CodigoPostal="ngModel" [(ngModel)]="this.Agente.Num_Cod_Postal" class="tamanioInputs form-control"
                  name="codigoPostal" type="text">
 
@@ -316,7 +315,7 @@
       </div>
       <div class="form-group">
         <label class="custom-control custom-checkbox "> <input checked="" class="custom-control-input" type="checkbox">
-          <p class="custom-control-label " style="font-size: small"> Estoy de acuerdo con los &nbsp;<a  style="font-size: small" href="#">terminos
+          <p class="custom-control-label " style="font-size: small"> Estoy de acuerdo con los &nbsp;<a  style="font-size: small" href="#">términos
             y condiciones</a></p>
         </label>
       </div>
@@ -324,14 +323,14 @@
         <div class="wrap-login100-form-btn">
           <div class="login100-form-bgbtn"></div>
           <button (click)="registrarAgente('0')" [hidden]="!FormRegistro.checkValidity()" class="login100-form-btn">
-            Crea tu cuenta en condero
+            Crea tu cuenta en COMDERO
           </button>
           <button (click)="registrarAgente('1')" [hidden]="FormRegistro.checkValidity()" class="login100-form-btn">
-            Crea tu cuenta en condero
+            Crea tu cuenta en COMDERO
           </button>
         </div>
       </div>
-      <p class="text-center mt-4 " style="font-size: small">Tienes una cuenta? <a routerLink="/loguin" style="font-size: small">Inicia
+      <p class="text-center mt-4 " style="font-size: small">Tienes una cuenta? <a routerLink="/loguin" style="font-size: small">Iniciar
         sesión</a></p>
     </form>
   </article><!-- card-body.// -->
