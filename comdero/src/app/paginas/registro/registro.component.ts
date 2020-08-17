@@ -95,6 +95,8 @@ export class RegistroComponent implements OnInit, OnDestroy {
         if (this.validarCedula() == true || this.Agente.Tipo == "Empresa") {
           this.banderaToastCedula = false;
           this.registrarAgente1();
+
+
         } else {
           this.banderaToast = false;
           this.banderaToastCedula = true;
@@ -126,9 +128,10 @@ export class RegistroComponent implements OnInit, OnDestroy {
       let response = await this._agenteServicio.registrarAgente(this.Agente).toPromise();
       this.agenteRegistrado = response.data;
       window.scroll(0, 0);
-      this.mensageCorrecto(response.message);
+
       let correoresponse = await this._correoServicio.correoActivacion(this.agenteRegistrado).toPromise();
       //  this.mensageCorrecto(correoresponse.message);
+      this.mensageCorrecto(response.message);
       this.loading = false;
       delete this.Agente;
       this.Agente = new Agente(null, null, null,
@@ -191,7 +194,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
   }
 
   buscadorDirecciones() {
-    if (this.bandera == true) {
+    /*if (this.bandera == true) {
       var placesAutocomplete = places({
         container: document.querySelector('#CallePrincipal'),
         templates: {
@@ -205,6 +208,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
       });
       placesAutocomplete.on('change', (e) => {
         console.log(e.suggestion)
+        this.Agente.Calle_Principal_Agente=e.suggestion.name;
       });
 
       var placesAutocomplete2 = places({
@@ -222,11 +226,12 @@ export class RegistroComponent implements OnInit, OnDestroy {
       });
       placesAutocomplete2.on('change', (e) => {
         console.log(e.suggestion)
+        this.Agente.Calle_Secundaria_Agente=e.suggestion.name;
       });
       this.bandera = false;
 
     }
-    document.getElementById('CallePrincipal').focus();
+    document.getElementById('CallePrincipal').focus();*/
   }
 
   formatear(element) {

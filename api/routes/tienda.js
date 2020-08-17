@@ -15,18 +15,18 @@ const multer = require('../librerias/multer');
 
 
 api.post('/registrarTienda', multer.fields([{name: 'logo'}, {name: 'banner'}]), TiendaController.registrarTienda);
-api.get('/getDatosTienda/:id', [cache(360), md_auth.ensureAuth], TiendaController.getDatosTienda);
-api.get('/getMisTiendas/:id',[cache(360), md_auth.ensureAuth], TiendaController.getMisTiendas);
-api.put('/actualizarTiendaGeneral/:id',[cache(360), md_auth.ensureAuth], TiendaController.actualizarTiendaGeneral);
-api.put('/actualizarTiendaSucursal/:id',[cache(360), md_auth.ensureAuth], TiendaController.actualizarTiendaSucursal);
-api.put('/updateEstadoTienda/:id', [cache(360), md_auth.ensureAuth], TiendaController.updateEstadoTienda);
+api.get('/getDatosTienda/:id', [ md_auth.ensureAuth], TiendaController.getDatosTienda);
+api.get('/getMisTiendas/:id',[ md_auth.ensureAuth], TiendaController.getMisTiendas);
+api.put('/actualizarTiendaGeneral/:id',[ md_auth.ensureAuth], TiendaController.actualizarTiendaGeneral);
+api.put('/actualizarTiendaSucursal/:id',[md_auth.ensureAuth], TiendaController.actualizarTiendaSucursal);
+api.put('/updateEstadoTienda/:id', [md_auth.ensureAuth], TiendaController.updateEstadoTienda);
 api.put('/updatePersonalizacionTienda/:id', multer.fields([{name: 'logo'}, {name: 'banner'}]), TiendaController.updatePersonalizacionTienda);
-api.get('/getDetalleTiendaProducto/:id',cache(360),TiendaController.getDetalleTiendaProducto);
-api.get('/obtenerFiltroPrincipalTodos/:termino',cache(360), TiendaController.obtenerFiltroPrincipalTodos);
-api.get('/obtenerFiltroPrincipalTienda/:termino',cache(360), TiendaController.obtenerFiltroPrincipalTienda);
-api.get('/obtenerFiltroPrincipalProductos/:termino',cache(360), TiendaController.obtenerFiltroPrincipalProductos);
-api.get('/obtenerTodasTiendas',cache(360),TiendaController.obtenerTodasTiendas);
-api.get('/obtenerFiltroBusquedaTodos/:termino',cache(360), TiendaController.obtenerFiltroBusquedaTodos);
+api.get('/getDetalleTiendaProducto/:id',TiendaController.getDetalleTiendaProducto);
+api.get('/obtenerFiltroPrincipalTodos/:termino', TiendaController.obtenerFiltroPrincipalTodos);
+api.get('/obtenerFiltroPrincipalTienda/:termino', TiendaController.obtenerFiltroPrincipalTienda);
+api.get('/obtenerFiltroPrincipalProductos/:termino', TiendaController.obtenerFiltroPrincipalProductos);
+api.get('/obtenerTodasTiendas',TiendaController.obtenerTodasTiendas);
+api.get('/obtenerFiltroBusquedaTodos/:termino', TiendaController.obtenerFiltroBusquedaTodos);
 
 //api.post('/subirImagenesTienda/:id/:tipo',[md_upload],TiendaController.subirImagenesTienda);
 /*api.get('/obtenerImagenTienda/:imageFile', TiendaController.obtenerImagenTienda);*/

@@ -49,9 +49,15 @@ export class EncabezadoTiendaComponent implements OnInit {
       console.log("tienda buscada", JSON.stringify(this.Tienda));
     } catch (e) {
       console.log("error:" + e);
-      if (JSON.stringify((e).error.message))
+      if (JSON.stringify((e).error)){
         this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
+        this.router.navigate(['/principales/menu/principal'])
+      }
+      else{
+        this.mensageError("Error de conexión intentelo mas tarde");
+        debugger;
+        this.router.navigate(['/principales/menu/principal'])
+      }
     }
 
 

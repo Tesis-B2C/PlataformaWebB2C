@@ -346,10 +346,10 @@
                 <form name="form">
                   <a class=" mt-5">
                     <label>Imágenes de la opción {{i}} </label>
-                    <span *ngIf="!vectorBanderaHabilitante[i]"
-                          style="color: red"> *Recuerda máximo 6 imágenes </span></a>
+                    <span *ngIf="vbanderaMensajeMaximoImagenes[i]"
+                          style="color: red"> *Recuerda máximo 6 imágenes {{this.vbanderaMensajeMaximoImagenes[i]}}</span></a>
                   <div
-                    [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[i]==false,'borde-imagenes1':vectorBanderaAgregarImagen[i]==true,'borde-error':!vectorBanderaHabilitante[i]}"
+                    [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[i]==false  ,'borde-imagenes1':vectorBanderaAgregarImagen[i]==true   ,'borde-error':(!vectorBanderaHabilitante[0] && i==0) || this.vbanderaMensajeMaximoImagenes[i] }"
                     class="row  mt-3 ">
                     <div *ngFor='let url of imagenes[i]; index as j ' class="ml-1">
 
@@ -391,7 +391,7 @@
                           <input (change)="subirImagenes($event,i)" accept="image/*" class="file" multiple type="file"
                                  [disabled]="!banderaModificar">
                           <br>
-                          <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imágenes </p>
+                          <p class="pt-1 link-agregar-imagenes2">Agregar imágenes </p>
                           <p class=" link-agregar-imagenes2">Máximo 6</p>
 
                         </label>
@@ -399,13 +399,13 @@
                     </div>
                   </div>
 
-                  <div *ngIf="!vectorBanderaHabilitante[i]">
+                  <div *ngIf="!vectorBanderaHabilitante[0] && i==0">
                     <p class="alert1 alert-info"><i class='fa fa-exclamation-circle'> </i> &nbsp; Debes ingresar al
                       menos una imagen.</p>
                   </div>
                 </form>
               </div> <!-- form-group end.// -->
-              <form name="formVariaciones" class="container row">
+              <form name="formVariaciones{{i}}" class="container row">
                 <div class="form-group col-lg-7">
                   <label> Stock y unidad de medida del producto</label>
                   <div class="input-group">
@@ -540,7 +540,7 @@
           <h6>Acciones</h6>
           <hr>
           <div class="text-md-right text-center">
-            <button *ngIf="banderaModificar" [disabled]="loading" (click)="this.guardarProducto()" class="btn btn-primary text-nowrap mb-4  col-auto"
+            <button *ngIf="banderaModificar" [disabled]="loading" (click)="this.publicarProducto()" class="btn btn-primary text-nowrap mb-4  col-auto"
                     type="button">
               <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
               Guardar Cambios &nbsp;&nbsp;

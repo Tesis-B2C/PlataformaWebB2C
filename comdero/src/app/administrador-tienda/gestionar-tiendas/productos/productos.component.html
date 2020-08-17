@@ -83,7 +83,7 @@
           <div class="form-group mt-2">
             <label>Descripción del producto </label>
             <textarea #DescripcionProducto="ngModel" [(ngModel)]="this.Producto.Descripcion_Producto"
-                      class="form-control" name="descripcionProducto" required
+                      class="form-control" name="descripcionProducto"
                       rows="2" type="text"></textarea>
           </div>
 
@@ -104,9 +104,9 @@
         <div class="form-group ">
           <a class="ml-2 mt-5">
             <label>Imagenes del producto </label>
-            <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imágenes </span></a>
+            <span *ngIf="vbanderaMensajeMaximoImagenes[0]" style="color: red"> *Recuerda máximo 6 imágenes </span></a>
           <div
-            [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[0]==false,'borde-imagenes1':vectorBanderaAgregarImagen[0]==true,'borde-error': (Imagenes_Producto[0].length==0 && banderaValidaciones) }"
+            [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[0]==false,'borde-imagenes1':vectorBanderaAgregarImagen[0]==true,'borde-error': ((Imagenes_Producto[0].length==0 && banderaValidaciones) || vbanderaMensajeMaximoImagenes[0]) }"
             class="row  mt-3 mx-0 ">
             <div *ngFor='let url of imagenes[0]; let i = index ' class="ml-1">
               <div class="col-auto card mt-2 px-0 pb-0">
@@ -141,7 +141,7 @@
                   <i class="fa fa-plus-circle fa-2x ml-1"></i>
                   <input (change)="subirImagenes($event,0)" accept="image/*" class="file" multiple type="file">
                   <br>
-                  <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imágenes </p>
+                  <p class="pt-3 link-agregar-imagenes2 mb-1">Agregar imágenes </p>
                   <p class=" link-agregar-imagenes2">máximo 6</p>
                 </label>
               </div>
@@ -413,7 +413,7 @@
             <div class="form-group  col-md-4">
               <label> Talla </label>
               <input #Talla0="ngModel" [(ngModel)]="this.Variantes[0].Talla" class="form-control " name="talla0" (change)="recargar()"
-                     maxlength="2"
+                     maxlength="4"
                      placeholder="Ej. xl o 34 o etc" type="text">
             </div>
             <div class="form-group  col-md-4">
@@ -443,7 +443,7 @@
             <div class="form-group  col-md-4">
               <label> Talla </label>
               <input #Talla="ngModel" [(ngModel)]="this.Variantes[i+1].Talla" class="form-control " name="talla{{i+1}}" (change)="recargar()"
-                     placeholder="Ej. xl o 34 o etc" type="text" maxlength="2">
+                     placeholder="Ej. xl o 34 o etc" type="text" maxlength="4">
             </div>
             <div class="form-group  col-md-4">
               <label>Material</label>
@@ -451,14 +451,20 @@
                      name="material{{i+1}}"
                      placeholder="Ej. Gamusa/algodon" type="text">
             </div>
+            <div class="form-group  col-12 text-center">
+              <div class="checkbox-item ">
+                <input (click)="agregarImagenesVariante($event,i)" id="agregarImagenesVariante{{i}}" type="checkbox">
+                <label for="agregarImagenesVariante{{i}}">&nbsp;&nbsp;Agregar imágenes a la variante</label>
 
-            <div class="form-group col-12 ">
+              </div>
+            </div>
+            <div *ngIf="vBanderaAgregarImagenesVariante[i]" class="form-group col-12  ">
               <form name="form" (change)="recargar()">
                 <a class=" mt-5">
                   <label>Imágenes de la opción {{i + 1}} </label>
-                  <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imágenes </span></a>
+                  <span *ngIf="vbanderaMensajeMaximoImagenes[i+1]" style="color: red"> *Recuerda máximo 6 imágenes </span></a>
                 <div
-                  [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[i+1]==false,'borde-imagenes1':vectorBanderaAgregarImagen[i+1]==true,'borde-error': (Imagenes_Producto[i+1].length==0 && banderaValidaciones)  }"
+                  [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[i+1]==false,'borde-imagenes1':vectorBanderaAgregarImagen[i+1]==true,'borde-error': ((Imagenes_Producto[i+1].length==0 && banderaValidaciones) ||  vbanderaMensajeMaximoImagenes[i+1] )  }"
                   class="row  mt-3 ">
                   <div *ngFor='let url of imagenes[i+1]; index as j ' class="ml-1">
                     <div class="col-auto card mt-2 px-0 pb-0">
@@ -492,9 +498,9 @@
                       <label class="imagen-agregar">
                         <i class="fa fa-picture-o fa-4x ml-4"></i>
                         <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                        <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file">
+                        <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file" max="6">
                         <br>
-                        <p class="pb-1 pt-3 link-agregar-imagenes2">Agregar imágenes </p>
+                        <p class="pt-1 link-agregar-imagenes2">Agregar imágenes </p>
                         <p class=" link-agregar-imagenes2">máximo 6</p>
 
                       </label>
@@ -510,7 +516,7 @@
                 </div>
               </form>
             </div> <!-- form-group end.// -->
-            <form name="formVariaciones" class="container row" (change)="recargar()">
+            <form name="formVariaciones{{i}}" class="container row" (change)="recargar()">
               <div class="form-group col-lg-7">
                 <label> Stock y unidad de medida del producto</label>
                 <div class="input-group">

@@ -23,13 +23,15 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
 
+
+  public vBanderaAgregarImagenesVariante=[];
   public videoPorGuardar;
   public Imagenes_Producto = [[]];
   public imagenes = [[]];
   public unidades: any;
   public vectorBanderaAgregarImagen = [false];
   public banderaMaximoImagenes: boolean = true;
-  public banderaMensajeMaximoImagenes: boolean = false;
+  public vbanderaMensajeMaximoImagenes=[];
   public banderaMensajeMaximoVideo: boolean = false;
   public data: any = [];
   public banderaAnimacionVideo: boolean = false;
@@ -127,7 +129,9 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   }
 
   public cancelar() {
-
+this.borrarVideo();
+    this.vBanderaAgregarImagenesVariante=[];
+    this.permisorecargar=false;
     document.forms["formInformacion"].reset();
     document.forms["formInventario"].reset();
     document.forms["formPrecios"].reset();
@@ -143,9 +147,10 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
 
     this.vectorBanderaAgregarImagen = [false];
     this.banderaMaximoImagenes = true;
-    this.banderaMensajeMaximoImagenes = false;
+    this.vbanderaMensajeMaximoImagenes = [];
     this.banderaMensajeMaximoVideo = false;
     this.data = [];
+
     this.banderaAnimacionVideo = false;
     // banderas de envios a domicilio
     this.banderaVariaciones = false;
@@ -216,7 +221,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
       var filesAmount = eventEntrante.target.files.length;
 
       if (filesAmount > 6) {
-        this.banderaMensajeMaximoImagenes = true;
+        this.vbanderaMensajeMaximoImagenes[indice] = true;
       } else {
         this.vectorBanderaAgregarImagen[indice] = true;
         for (let i = 0; i < filesAmount; i++) {
@@ -238,12 +243,12 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
           // document.forms["formVariaciones"].reset();
 
           this.vectorBanderaAgregarImagen[indice] = false;
-          this.banderaMensajeMaximoImagenes = true;
+          this.vbanderaMensajeMaximoImagenes[indice] = true;
         } else if (this.Imagenes_Producto[indice].length == 6) {
-          this.banderaMensajeMaximoImagenes = false
+          this.vbanderaMensajeMaximoImagenes[indice] = false
           this.banderaMaximoImagenes = false;
         } else if (this.Imagenes_Producto[indice].length == 0) {
-          this.banderaMensajeMaximoImagenes = false
+          this.vbanderaMensajeMaximoImagenes[indice] = false
           this.banderaMaximoImagenes = false;
         }
       }
@@ -333,9 +338,11 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
 
   public agregarOpcionesProducto() {
     this.vectorOpciones.push(1);
-    this.color.push("");
+    this.color.push(this.Variantes[this.Variantes.length-1].Color);
+
     this.vectorBanderaAgregarImagen.push(false);
-    this.Variantes.push(new Variante(null, null, null, null, null, "unidades", 0));
+    debugger;
+    this.Variantes.push(new Variante( this.color[this.Variantes.length-1],this.Variantes[this.Variantes.length-1].Talla, this.Variantes[this.Variantes.length-1].Material,null, this.Variantes[this.Variantes.length-1].Stock, this.Variantes[this.Variantes.length-1].Cod_Unidad, 0));
     this.Imagenes_Producto.push([]);
     this.imagenes.push([]);
     console.log("asdasd");
@@ -552,19 +559,32 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
 
   }
 
+  validarFormularios() {
+    let bandera=true;
+   for(let i in this.vectorOpciones){
+     if(document.forms["formVariaciones"+i].checkValidity()){
+       bandera=true;
+     }else {
+       bandera=false;
+     }
+   }
+
+   return bandera;
+  }
 
   public validar(): boolean {
     this.banderaValidaciones = true;
     debugger;
-    if (this.imagenes.filter(v => v.length > 0).length == this.imagenes.length && this.categoriasSeleccionadas.size > 0 && document.forms["formInformacion"].checkValidity()
+    if (/*this.imagenes.filter(v => v.length > 0).length == this.imagenes.length */this.imagenes[0].length>0 && this.categoriasSeleccionadas.size > 0 && document.forms["formInformacion"].checkValidity()
       && document.forms["formInventario"].checkValidity() && document.forms["formPrecios"].checkValidity()) {
-      if (document.forms["formVariaciones"] != null) {
-        if (document.forms["formVariaciones"].checkValidity()) {
+      if (document.forms["formVariaciones0"] != null) {
+        if (this.validarFormularios()) {
           return true;
         } else {
           let body = document.getElementById('body') as HTMLElement;
+          window.scrollTo(0, 0);
           body.scrollTo(0, 0);
-          window.scroll(0, 0);
+
           this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
             {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
           return false
@@ -575,7 +595,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     } else {
       let body = document.getElementById('body') as HTMLElement;
       body.scrollTo(0, 0);
-      window.scroll(0, 0);
+      window.scrollTo(0, 0);
       this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
         {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
       return false
@@ -623,6 +643,20 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
       let valor2 = valor.split("$")
       element.target.value = valor2[1].replace(',', "");
     }
+  }
+
+
+
+
+  agregarImagenesVariante(event, i){
+    if (event.target.checked) {
+      this.vBanderaAgregarImagenesVariante[i] =true;
+    } else {
+      this.vBanderaAgregarImagenesVariante[i] =false;
+      this.imagenes[i+1]=[];
+     this.vectorBanderaAgregarImagen[i+1]=false
+    }
+
   }
 
 }

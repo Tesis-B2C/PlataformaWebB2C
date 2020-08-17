@@ -11,12 +11,12 @@
 <body [ngClass]="{'body-con-animacion': loading}" >
 <div class=" container-login100 ">
 <div class="mx-auto mt-md-3 container-registro  p-2 bg-white rounded my-0  ">
-  <div *ngIf="agenteRegistrado" class="alert alert-primary mb-0" role="alert">
-    <label  style="font-size: small">Si no recibió el correo de activación por favor de clic  <button (click)="reEnviar()" class="btn btn-link px-0 pt-0">aquí</button> </label>
-  </div>
 
+  <article class=" shadow-lg   rounded mx-auto w-100 p-l-55 p-r-55 p-t-65 p-b-54 ">
+    <div *ngIf="agenteRegistrado" class="alert alert-primary   animated bounceInRight" role="alert">
+      <label  style="font-size: small">Si no recibío el correo de activación por favor de click  <button (click)="reEnviar()" class="btn btn-link px-0 pt-0 " style="font-size: small">aquí</button> </label>
+    </div>
 
-  <article class=" shadow-lg   rounded mx-auto w-100 p-l-55 p-r-55 p-t-65 p-b-54">
     <div id="divImagenLogo">
       <img id="imagenLogo" src="./../assets/images/logoValid2.png">
     </div>
@@ -232,8 +232,8 @@
         <input (keyup)="buscadorDirecciones()" #CallePrincipal="ngModel"
                [(ngModel)]="this.Agente.Calle_Principal_Agente"
                [ngClass]="{
-          'errorSelect': CallePrincipal.invalid && (CallePrincipal.dirty || CallePrincipal.touched),
-          'satisfactorioSelect': CallePrincipal.valid && (CallePrincipal.dirty || CallePrincipal.touched)}"
+          'is-invalid': CallePrincipal.invalid && (CallePrincipal.dirty || CallePrincipal.touched),
+          'is-valid': CallePrincipal.valid && (CallePrincipal.dirty || CallePrincipal.touched)}"
                class="tamanioInputs form-control"
                name="callePrincipal" placeholder="" required id="CallePrincipal">
         <div *ngIf="CallePrincipal.invalid && (CallePrincipal.touched||CallePrincipal.dirty)">
@@ -247,8 +247,8 @@
         <label>* Calle Secundaria</label>
         <input #CalleSecundaria="ngModel" [(ngModel)]="this.Agente.Calle_Secundaria_Agente"
                [ngClass]="{
-          'errorSelect': CalleSecundaria.invalid && (CalleSecundaria.dirty || CalleSecundaria.touched),
-          'satisfactorioSelect': CalleSecundaria.valid && (CalleSecundaria.dirty || CalleSecundaria.touched)}"
+          'is-invalid': CalleSecundaria.invalid && (CalleSecundaria.dirty || CalleSecundaria.touched),
+          'is-valid': CalleSecundaria.valid && (CalleSecundaria.dirty || CalleSecundaria.touched)}"
                class="tamanioInputs form-control"
                name="calleSecundaria" placeholder="" required id="calleSecundaria">
         <div *ngIf="CalleSecundaria.invalid && (CalleSecundaria.touched||CalleSecundaria.dirty)">

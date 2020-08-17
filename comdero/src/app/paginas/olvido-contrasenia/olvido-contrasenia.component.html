@@ -19,14 +19,23 @@
 <body style="height:100%;">
 
 <div class="limiter">
+
   <div class="container-login100 pt-5">
-    <div class=" shadow-lg   rounded mx-auto wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54 ">
+
+    <div class=" shadow-lg   rounded mx-auto wrap-login100 p-l-55 p-r-55 pt-2 p-b-54 ">
+      <div class="row  justify-content-md-end justify-content-center">
+        <div class="col-auto mt-2">
+          <a style="font-size: small" [routerLink]="['/loguin']">Loguin</a> |
+          <a style="font-size: small"  [routerLink]="['/registro']"> Registro</a>
+        </div>
+      </div>
       <form class=" login100-form  validate-form">
-        <span class="login100-form-title p-b-49 ">
+
+        <span class="login100-form-title p-b-49 mt-2 ">
 						Recuperar contraseña
 					</span>
 
-        <br>
+
         <div class="wrap-input100 validate-input m-b-23" data-validate="Username is required">
           <span class="label-input100">Ingrese su correo electronico registrado </span>
           <input #CorreoA="ngModel" [(ngModel)]="this.Correo" class="input100" name="correoA"

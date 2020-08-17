@@ -72,7 +72,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
   public imagenes = [[]];
   public vectorBanderaAgregarImagen = [];
   public vectorBanderaHabilitante = [];
-  public banderaMensajeMaximoImagenes: boolean = false;
+  public vbanderaMensajeMaximoImagenes=[];
   public banderaMensajeMaximoVideo: boolean = false;
   public data: any = [];
   public banderaAnimacionVideo: boolean = false;
@@ -150,7 +150,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
 
     this.vectorBanderaAgregarImagen = [];
     this.vectorBanderaHabilitante = [];
-    this.banderaMensajeMaximoImagenes = false;
+    this.vbanderaMensajeMaximoImagenes= [];
     this.banderaMensajeMaximoVideo = false;
     this.banderaAnimacionVideo = false;
     this.auxi = null;
@@ -329,11 +329,12 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
       this.imagenes[indice] = [];
     }
     this.vectorBanderaHabilitante[indice] = true;
+   /* this.vbanderaMensajeMaximoImagenes[indice]=true;*/
     if (eventEntrante.target.files && eventEntrante.target.files[0]) {
       var filesAmount = eventEntrante.target.files.length;
       this.vectorBanderaAgregarImagen[indice] = true;
       if (filesAmount > 6) {
-        this.banderaMensajeMaximoImagenes = true;
+        this.vbanderaMensajeMaximoImagenes[indice]= true;
         this.vectorBanderaHabilitante[indice] = true;
       } else {
         for (let i = 0; i < filesAmount; i++) {
@@ -351,18 +352,18 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
         }
         debugger;
         if (this.Imagenes_Producto[0].filter(imagen => (imagen.Tipo_Imagen == 'video' || imagen.Tipo_Imagen == 'youtube')).length > 0) {
-          if (this.Imagenes_Producto[indice].length >= 5 && indice != 0) {
-            this.banderaMensajeMaximoImagenes = true;
+          if (this.Imagenes_Producto[indice].length > 6 && indice != 0) {
+            this.vbanderaMensajeMaximoImagenes[indice] = true;
             this.vectorBanderaHabilitante[indice] = false;
 
-          } else if (this.Imagenes_Producto[indice].length >= 6) {
-            this.banderaMensajeMaximoImagenes = true
+          } else if (this.Imagenes_Producto[indice].length > 7) {
+            this.vbanderaMensajeMaximoImagenes[indice] = true
             this.vectorBanderaHabilitante[indice] = false;
 
           }
         } else {
-          if (this.Imagenes_Producto[indice].length >= 6) {
-            this.banderaMensajeMaximoImagenes = true;
+          if (this.Imagenes_Producto[indice].length > 6) {
+            this.vbanderaMensajeMaximoImagenes[indice] = true;
             this.vectorBanderaHabilitante[indice] = false;
 
           }
@@ -507,7 +508,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
 
   public agregarOpcionesProducto() {
     this.vectorBanderaAgregarImagen.push(false);
-    this.vectorBanderaHabilitante.push(false);
+    this.vectorBanderaHabilitante.push(true);
     this.Variantes.push(new Variante(null, null, null, null, 1, "unidades", 1));
     this.Imagenes_Producto.push([]);
     this.imagenes.push([]);
@@ -528,24 +529,26 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
 
 
     if (this.Imagenes_Producto[0].filter(imagen => (imagen.Tipo_Imagen == 'video' || imagen.Tipo_Imagen == 'youtube')).length > 0) {
-      if (this.Imagenes_Producto[indice].length >= 5 && indice != 0) {
-        this.banderaMensajeMaximoImagenes = true;
+      if (this.Imagenes_Producto[indice].length > 6 && indice != 0) {
+        this.vbanderaMensajeMaximoImagenes[indice] = true;
         this.vectorBanderaHabilitante[indice] = false;
 
-      } else if (this.Imagenes_Producto[indice].length >= 6) {
-        this.banderaMensajeMaximoImagenes = true
+      } else if (this.Imagenes_Producto[indice].length > 7) {
+        this.vbanderaMensajeMaximoImagenes[indice] = true;
         this.vectorBanderaHabilitante[indice] = false;
 
       } else {
         this.vectorBanderaHabilitante[indice] = true;
+        this.vbanderaMensajeMaximoImagenes[indice] = false
       }
     } else {
-      if (this.Imagenes_Producto[indice].length >= 6) {
-        this.banderaMensajeMaximoImagenes = true;
+      if (this.Imagenes_Producto[indice].length > 6) {
+        this.vbanderaMensajeMaximoImagenes[indice] = true;
         this.vectorBanderaHabilitante[indice] = false;
 
       } else {
         this.vectorBanderaHabilitante[indice] = true;
+        this.vbanderaMensajeMaximoImagenes[indice] = false
       }
     }
 
@@ -615,8 +618,8 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
     this.banderaValidaciones = true;
     debugger;
     if (this.vectorBanderaHabilitante.filter(v => v == false).length == 0 && this.categoriasSeleccionadas.size > 0 && document.forms["formInformacion"].checkValidity()) {
-      if (document.forms["formVariaciones"] != null) {
-        if (document.forms["formVariaciones"].checkValidity()) {
+      if (document.forms["formVariaciones0"] != null) {
+        if (this.validarFormularios()) {
           return true;
         } else {
           let body = document.getElementById('body') as HTMLElement;
@@ -638,7 +641,18 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
       return false
     }
   }
+  validarFormularios() {
+    let bandera=true;
+    for(let i in this.Variantes){
+      if(document.forms["formVariaciones"+i].checkValidity()){
+        bandera=true;
+      }else {
+        bandera=false;
+      }
+    }
 
+    return bandera;
+  }
 
   categoriasEnviar = [];
 
@@ -662,8 +676,19 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
       }
     }).then(async (result) => {
       if (result.value) {
-        this.loading = true;
-        this.publicarProducto();
+        try {
+          console.log("oferta", this.Oferta, "producto", this.Producto, "Variantes", this.Variantes, "Imagen producto", this.Imagenes_Producto, "video producto", this.videoPorGuardar, "categoria", this.categoriasSeleccionadas)
+          let response = await this._productoServicio.updateProducto(this.identidadProducto.ID_OFERTA, this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
+          this.mensageCorrecto(response['message']);
+          this.iniciarModificarProducto();
+          this.loading = false;
+        }catch (e) {
+          this.loading = false;
+          console.log("error:" + e);
+          if (JSON.stringify((e).error.message))
+            this.mensageError(JSON.stringify((e).error.message));
+          else this.mensageError("Error de conexión intentelo mas tarde");
+        }
       }
     })
 
@@ -717,12 +742,10 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
   }
 
   public async publicarProducto() {
-
-
     try {
       debugger;
+      this.loading=true;
       if (this.validar()) {
-
         if (this.auxi == null && this.videoPorGuardar.Tamanio_Imagen != null) {
           this.Imagenes_Producto[0].push(this.videoPorGuardar);
         }
@@ -730,13 +753,10 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
         for (let categorias of this.categoriasSeleccionadas) {
           this.categoriasEnviar.push(categorias['ID_CATEGORIA']);
         }
-        console.log("oferta", this.Oferta, "producto", this.Producto, "Variantes", this.Variantes, "Imagen producto", this.Imagenes_Producto, "video producto", this.videoPorGuardar, "categoria", this.categoriasSeleccionadas)
+        this.guardarProducto();
 
-        let response = await this._productoServicio.updateProducto(this.identidadProducto.ID_OFERTA, this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
-        this.mensageCorrecto(response['message']);
-        this.iniciarModificarProducto();
-        this.loading = false
       }
+      this.loading = false
     } catch
       (e) {
       this.loading = false;

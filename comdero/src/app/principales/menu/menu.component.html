@@ -53,7 +53,9 @@
                    aria-expanded="false"><i class="fa fa-user"></i>
                 </a>
 
-                <div class="dropdown-menu ">
+                <div class="dropdown-menu " *ngIf="this._agenteServicio.getIdentity()">
+                  <small class="dropdown-item">{{this._agenteServicio.getIdentity().NOMBRE}}</small>
+                  <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="#" routerLink="mi-cuenta/menu-mi-cuenta/vision-general"><span
                     class="fa fa-user "></span> &nbsp;Mi cuenta</a>
 
@@ -71,7 +73,7 @@
 
               <div class="text" *ngIf="!this._agenteServicio.getIdentity()">
                 <span class="text-muted">Bienvenido!</span>
-                <div>
+                <div *ngIf="!this._agenteServicio.getToken()">
                   <a [routerLink]="['/loguin']">Loguin</a> |
                   <a [routerLink]="['/registro']"> Registro</a>
                 </div>
@@ -110,7 +112,8 @@
                  aria-expanded="false"><i class="fa fa-user"></i>
               </a>
 
-              <div class="dropdown-menu ">
+              <div class="dropdown-menu "  *ngIf="this._agenteServicio.getIdentity()">
+                <small class="dropdown-item">{{this._agenteServicio.getIdentity().NOMBRE}}</small>
                 <a class="dropdown-item" href="#" routerLink="mi-cuenta/menu-mi-cuenta/vision-general"><span
                   class="fa fa-user "></span> &nbsp;Mi cuenta</a>
 
