@@ -76,7 +76,7 @@
       </div>
       <div class="form-group">
         <label>* Correo electrónico</label>
-        <input #Email="ngModel"   [(ngModel)]="this.Agente.Correo" style="text-transform: lowercase" [ngClass]="{
+        <input #Email="ngModel" [(ngModel)]="this.Agente.Correo" (keyup)="minusCorreo()" style="text-transform: lowercase" [ngClass]="{
           'is-invalid': Email.invalid && (Email.dirty || Email.touched),
           'is-valid': Email.valid && (Email.touched || Email.dirty )}" [pattern]='this.emailPattern'
                class="form-control tamanioInputs"
