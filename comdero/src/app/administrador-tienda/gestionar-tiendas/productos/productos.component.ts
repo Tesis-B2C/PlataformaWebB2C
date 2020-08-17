@@ -31,7 +31,7 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   public unidades: any;
   public vectorBanderaAgregarImagen = [false];
   public banderaMaximoImagenes: boolean = true;
-  public banderaMensajeMaximoImagenes: boolean = false;
+  public vbanderaMensajeMaximoImagenes=[];
   public banderaMensajeMaximoVideo: boolean = false;
   public data: any = [];
   public banderaAnimacionVideo: boolean = false;
@@ -147,7 +147,7 @@ this.borrarVideo();
 
     this.vectorBanderaAgregarImagen = [false];
     this.banderaMaximoImagenes = true;
-    this.banderaMensajeMaximoImagenes = false;
+    this.vbanderaMensajeMaximoImagenes = [];
     this.banderaMensajeMaximoVideo = false;
     this.data = [];
 
@@ -221,7 +221,7 @@ this.borrarVideo();
       var filesAmount = eventEntrante.target.files.length;
 
       if (filesAmount > 6) {
-        this.banderaMensajeMaximoImagenes = true;
+        this.vbanderaMensajeMaximoImagenes[indice] = true;
       } else {
         this.vectorBanderaAgregarImagen[indice] = true;
         for (let i = 0; i < filesAmount; i++) {
@@ -243,12 +243,12 @@ this.borrarVideo();
           // document.forms["formVariaciones"].reset();
 
           this.vectorBanderaAgregarImagen[indice] = false;
-          this.banderaMensajeMaximoImagenes = true;
+          this.vbanderaMensajeMaximoImagenes[indice] = true;
         } else if (this.Imagenes_Producto[indice].length == 6) {
-          this.banderaMensajeMaximoImagenes = false
+          this.vbanderaMensajeMaximoImagenes[indice] = false
           this.banderaMaximoImagenes = false;
         } else if (this.Imagenes_Producto[indice].length == 0) {
-          this.banderaMensajeMaximoImagenes = false
+          this.vbanderaMensajeMaximoImagenes[indice] = false
           this.banderaMaximoImagenes = false;
         }
       }

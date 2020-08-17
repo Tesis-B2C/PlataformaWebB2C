@@ -104,9 +104,9 @@
         <div class="form-group ">
           <a class="ml-2 mt-5">
             <label>Imagenes del producto </label>
-            <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imágenes </span></a>
+            <span *ngIf="vbanderaMensajeMaximoImagenes[0]" style="color: red"> *Recuerda máximo 6 imágenes </span></a>
           <div
-            [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[0]==false,'borde-imagenes1':vectorBanderaAgregarImagen[0]==true,'borde-error': (Imagenes_Producto[0].length==0 && banderaValidaciones) }"
+            [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[0]==false,'borde-imagenes1':vectorBanderaAgregarImagen[0]==true,'borde-error': ((Imagenes_Producto[0].length==0 && banderaValidaciones) || vbanderaMensajeMaximoImagenes[0]) }"
             class="row  mt-3 mx-0 ">
             <div *ngFor='let url of imagenes[0]; let i = index ' class="ml-1">
               <div class="col-auto card mt-2 px-0 pb-0">
@@ -462,9 +462,9 @@
               <form name="form" (change)="recargar()">
                 <a class=" mt-5">
                   <label>Imágenes de la opción {{i + 1}} </label>
-                  <span *ngIf="banderaMensajeMaximoImagenes" style="color: red"> *Recuerda máximo 6 imágenes </span></a>
+                  <span *ngIf="vbanderaMensajeMaximoImagenes[i+1]" style="color: red"> *Recuerda máximo 6 imágenes </span></a>
                 <div
-                  [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[i+1]==false,'borde-imagenes1':vectorBanderaAgregarImagen[i+1]==true,'borde-error': (Imagenes_Producto[i+1].length==0 && banderaValidaciones)  }"
+                  [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[i+1]==false,'borde-imagenes1':vectorBanderaAgregarImagen[i+1]==true,'borde-error': ((Imagenes_Producto[i+1].length==0 && banderaValidaciones) ||  vbanderaMensajeMaximoImagenes[i+1] )  }"
                   class="row  mt-3 ">
                   <div *ngFor='let url of imagenes[i+1]; index as j ' class="ml-1">
                     <div class="col-auto card mt-2 px-0 pb-0">
