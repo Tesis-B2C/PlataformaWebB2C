@@ -91,13 +91,10 @@ export class RegistroComponent implements OnInit, OnDestroy {
     this.loading = true;
     if (validador == "0") {
       this.banderaToast = false;
-
-
       if (this.banderaDirecciones) {
         if (this.validarCedula() == true || this.Agente.Tipo == "Empresa") {
           this.banderaToastCedula = false;
           this.registrarAgente1();
-
         } else {
           this.banderaToast = false;
           this.banderaToastCedula = true;
@@ -106,16 +103,12 @@ export class RegistroComponent implements OnInit, OnDestroy {
         }
       } else {
         this.registrarAgente1();
-
       }
-
-
     } else {
       this.banderaToastCedula = false;
       this.banderaToast = true;
       window.scroll(0, 0);
       this.loading = false;
-
     }
     if (this.banderaToast && !document.forms["formRegistro"].checkValidity()) {
       this.mostrarToast("Asegurate de llenar todos los campos obligatorios marcados con *", "");
@@ -124,13 +117,11 @@ export class RegistroComponent implements OnInit, OnDestroy {
     if (this.banderaToastCedula) {
       this.mostrarToast("Al parecer no ingreso una cédula válida", "");
     }
-
   }
 
   public agenteRegistrado;
 
   async registrarAgente1() {
-
     try {
       let response = await this._agenteServicio.registrarAgente(this.Agente).toPromise();
       this.agenteRegistrado = response.data;
@@ -164,10 +155,9 @@ export class RegistroComponent implements OnInit, OnDestroy {
       else this.mensageError("Error de conexión intentelo mas tarde");
       this.loading = false;
     }
-
   }
 
- async getDpaProvincias(buscar) {
+  async getDpaProvincias(buscar) {
     try {
       let response = await this._dpaServicio.getDpaProvincias(buscar).toPromise();
       this.provincias = response.data;
@@ -175,7 +165,6 @@ export class RegistroComponent implements OnInit, OnDestroy {
       console.log("error:" + JSON.stringify((e).error.message));
     }
   }
-
 
 
   async getDpaCiudades(buscar) {
@@ -245,6 +234,12 @@ export class RegistroComponent implements OnInit, OnDestroy {
     element.target.value = valor;
 
   }
+
+  public minusCorreo() {
+    if (this.Agente.Correo != '' || this.Agente.Correo != null)
+      this.Agente.Correo = this.Agente.Correo.toLowerCase();
+  }
+
   mensageError(mensaje) {
     Swal.fire({
       icon: 'error',
