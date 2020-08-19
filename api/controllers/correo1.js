@@ -19,10 +19,10 @@ function correoActivacion(req, res) {
         from: 'doginotificaciones@gmail.com',
         to: req.body.CORREO,
         subject: 'Activación de cuenta',
-        text: 'Hola' + req.body.NOMBRE + ', Gracias por registrarte en "COMDERO". ' + 'Porfavor da click en el siguiente link para completar la activacion: http://localhost:4200/loguin/',
+        text: 'Hola' + req.body.NOMBRE + ', Gracias por registrarte en "COMDERO". ' + 'Porfavor da click en el siguiente link para completar la activacion: http://192.168.0.104:4200/loguin/',
         html: 'Hola<strong> ' + req.body.NOMBRE + '</strong>,<br><br>Gracias por registrarte en ' +
             '"COMDERO". Porfavor da click en el siguiente link para completar la activacion:<br><br><a ' +
-            'href="http://localhost:4200/loguin/' + token + '">http://localhost:4200/loguin/</a>'
+            'href="http://192.168.0.104:4200/loguin/' + token + '">http://192.168.0.104:4200/loguin/</a>'
     };
 
     transporter.sendMail(mailOptions, function (error) {
@@ -51,11 +51,11 @@ function correoCambioContrasenia(req, res) {
         from: 'doginotificaciones@gmail.com',
         to: req.body.CORREO,
         subject: 'Cambio de contraseña',
-        text: 'Hola' + req.body.NOMBRE + ', Gracias por registrarte en "COMDERO". Porfavor da click en el siguiente link para poder cambiar su contraseña: http://localhost:4200/olvido-contrasenia-paso2/' + token,
+        text: 'Hola' + req.body.NOMBRE + ', Gracias por registrarte en "COMDERO". Porfavor da click en el siguiente link para poder cambiar su contraseña: http://192.168.0.104:4200/olvido-contrasenia-paso2/' + token,
         html: 'Hola<strong> ' + req.body.NOMBRE + '</strong>,<br><br>Gracias por registrarte en "COMDERO". ' +
             'Porfavor da click en el siguiente link para poder cambiar su contraseña:<br><br>' +
-            '<a href="http://localhost:4200/olvido-contrasenia-paso2/' + token + '">' +
-            'http://localhost:4200/olvido-contrasenia-paso2/</a>'
+            '<a href="http://192.168.0.104:4200/olvido-contrasenia-paso2/' + token + '">' +
+            'http://192.168.0.104:4200/olvido-contrasenia-paso2/</a>'
 
     };
 

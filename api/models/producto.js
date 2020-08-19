@@ -47,7 +47,7 @@ const Producto = db.sequelize.define('PRODUCTO', {
         MARCA:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull: true
             },
         LLEVAR_STOCK: {
             type: Sequelize.INTEGER,
