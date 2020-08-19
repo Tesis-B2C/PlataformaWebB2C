@@ -498,13 +498,18 @@ async function obtenerTodosProductos(req, res) {
                     model: Variante,
                     separate: true,
                     attributes: ['PRECIO_UNITARIO'],
-                    group: ['ID_PRODUCTO', 'COD_PRODUCTO'],
+                    limit: 1,
                     order: [['NUM_VARIANTE', 'ASC']],
                     include: {
                         model: Imagen_Producto,
+                        where: {
+                            TIPO_IMAGEN: {
+                                [Op.like]: 'image%'
+                            }
+                        },
                         separate: true,
                         attributes: ['IMAGEN'],
-                        group: 'NUM_VARIANTE',
+                        limit: 1,
                         order: [['ID_IMAGEN', 'ASC']]
                     }
                 }, {

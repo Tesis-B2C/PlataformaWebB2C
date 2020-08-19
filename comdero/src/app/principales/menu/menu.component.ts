@@ -18,7 +18,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   public objetoDatos = [];
   public datosObtenidos: any;
 
-  constructor(private _agenteServicio:AgenteServicio , private route: ActivatedRoute, private _tiendaServicio: TiendaServicio, private router: Router) {
+  constructor(private _agenteServicio: AgenteServicio, private route: ActivatedRoute, private _tiendaServicio: TiendaServicio, private router: Router) {
   }
 
   ngOnInit() {
@@ -39,7 +39,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.objetoDatos = [];
     this.datosObtenidos = '';
     palabraBuscar = palabraBuscar.trim();
-    if(palabraBuscar != 0){
+    if (palabraBuscar != 0) {
       if (this.tipoBuscador == 'Tiendas' && palabraBuscar != '') {
         let response = await this._tiendaServicio.obtenerFiltroPrincipalTienda(palabraBuscar).toPromise();
         this.datosObtenidos = response.data;
@@ -52,20 +52,20 @@ export class MenuComponent implements OnInit, OnDestroy {
         let response = await this._tiendaServicio.obtenerFiltroPrincipalProductos(palabraBuscar).toPromise();
         this.datosObtenidos = response.data;
         this.datosObtenidos.forEach(elemnt => {
-          this.objetoDatos.push(elemnt.NOMBRE_PRODUCTO)
+          this.objetoDatos.push(elemnt.PRODUCTO.NOMBRE_PRODUCTO);
         })
       }
 
       if (this.tipoBuscador == 'Todos' && palabraBuscar != '') {
         let response = await this._tiendaServicio.obtenerFiltroPrincipalTodos(palabraBuscar).toPromise();
         this.datosObtenidos = response.data;
-
+        console.log('DATOS' + JSON.stringify(this.datosObtenidos))
         this.datosObtenidos[0].forEach(elemnt => {
           this.objetoDatos.push(elemnt.NOMBRE_COMERCIAL);
         })
 
         this.datosObtenidos[1].forEach(elemnt => {
-          this.objetoDatos.push(elemnt.NOMBRE_PRODUCTO);
+          this.objetoDatos.push(elemnt.PRODUCTO.NOMBRE_PRODUCTO);
         })
       }
     }
@@ -81,12 +81,12 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   public buscarPalabra(palabraBuscada: string) {
     if (palabraBuscada.trim() == "" || palabraBuscada.trim() == null) {
-      console.log(palabraBuscada.trim()+ "ya mismo me voy");
+      console.log(palabraBuscada.trim() + "ya mismo me voy");
       this.router.navigate(['**']);
     } else {
       palabraBuscada = palabraBuscada.trim();
 
-     this.router.navigate(['principales/menu/busqueda/'+palabraBuscada]);
+      this.router.navigate(['principales/menu/busqueda/' + palabraBuscada]);
 
     }
   }

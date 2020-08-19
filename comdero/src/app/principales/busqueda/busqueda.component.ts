@@ -2,7 +2,7 @@ import {Component, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {TiendaServicio} from "../../servicios/tienda.servicio";
 import {NgbRatingConfig} from "@ng-bootstrap/ng-bootstrap";
-import { GLOBAL } from 'src/app/servicios/global';
+import {GLOBAL} from 'src/app/servicios/global';
 import {AgenteServicio} from "../../servicios/agente.servicio";
 
 @Component({
@@ -11,7 +11,7 @@ import {AgenteServicio} from "../../servicios/agente.servicio";
   styleUrls: ['./busqueda.component.css']
 })
 
-export class BusquedaComponent implements OnInit, OnDestroy,OnChanges {
+export class BusquedaComponent implements OnInit, OnDestroy, OnChanges {
   paginaActual = 1;
   datosXpagina = 3;
   paginaTamano: number = 0;
@@ -36,7 +36,8 @@ export class BusquedaComponent implements OnInit, OnDestroy,OnChanges {
     'fa fa-gem', 'fa fa-palette', 'fa fa-laptop',
     'fa fa-car', 'fa fa-dumbbell', 'fa fa-book',
     'fa fa-dog', 'fa fa-gamepad', 'fa fa-grin-stars', 'fa fa-heartbeat', 'fa fa-building', 'fa fa-tractor'];
-  constructor( private _agenteServicio: AgenteServicio,private router: Router, configRating: NgbRatingConfig, private route: ActivatedRoute, private _tiendaServicio: TiendaServicio) {
+
+  constructor(private _agenteServicio: AgenteServicio, private router: Router, configRating: NgbRatingConfig, private route: ActivatedRoute, private _tiendaServicio: TiendaServicio) {
     configRating.max = 5;
     configRating.readonly = true;
   }
@@ -44,15 +45,14 @@ export class BusquedaComponent implements OnInit, OnDestroy,OnChanges {
   ngOnInit() {
     this.ultimoSerie = this.datosXpagina;
     this.route.params.subscribe(params => {
-      this.palabraBuscada =params['palabraBuscada'];
+      this.palabraBuscada = params['palabraBuscada'];
       this.buscarDatos();
     })
   }
 
-  ngOnChanges()
-  {
+  ngOnChanges() {
     this.route.params.subscribe(params => {
-      this.palabraBuscada =params['palabraBuscada'];
+      this.palabraBuscada = params['palabraBuscada'];
       this.buscarDatos();
     })
   }
@@ -65,6 +65,7 @@ export class BusquedaComponent implements OnInit, OnDestroy,OnChanges {
   }
 
   public noExite = 'assets/images/no-image.png';
+
   getImagen(pathImagen) {
     this.noExite = 'assets/images/no-image.png';
     if (pathImagen) {
@@ -86,11 +87,11 @@ export class BusquedaComponent implements OnInit, OnDestroy,OnChanges {
   }
 
   public async buscarDatos() {
-    this.vectorProductos=[];
-    this.vectorTienda=[];
+    this.vectorProductos = [];
+    this.vectorTienda = [];
     let response = await this._tiendaServicio.obtenerFiltroBusquedaTodos(this.palabraBuscada).toPromise();
     this.datosObtenidos = response.data;
-
+    console.log('DATITOS OBETNIDOS' + JSON.stringify(this.datosObtenidos))
     if (this.datosObtenidos[0].length > 0) {
       this.datosObtenidos[0].forEach(elemnt => {
         let objTienda = {
@@ -113,7 +114,7 @@ export class BusquedaComponent implements OnInit, OnDestroy,OnChanges {
           DESCRIPCION_PRODUCTO: String,
           PROMEDIO_CAL: Number,
           TOTAL_COM: Number,
-          PRECIO_UNITARIO: Number,
+          PRECIO_CON_IVA: Number,
           IMAGEN: String,
           NUM_TIENDA: String,
           ID_OFERTA: Number
@@ -133,7 +134,7 @@ export class BusquedaComponent implements OnInit, OnDestroy,OnChanges {
         else
           objProducto.TOTAL_COM = null;
 
-        objProducto.PRECIO_UNITARIO = elemnt.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO;
+        objProducto.PRECIO_CON_IVA = ((elemnt.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO * elemnt.IVA) / 100) + elemnt.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO;
         objProducto.IMAGEN = elemnt.PRODUCTO.VARIANTEs[0].IMAGEN_PRODUCTOs[0].IMAGEN;
         objProducto.NUM_TIENDA = elemnt.TIENDA.NUM_TIENDA;
         objProducto.ID_OFERTA = elemnt.ID_OFERTA;

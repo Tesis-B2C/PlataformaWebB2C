@@ -126,7 +126,7 @@ export class PrincipalComponent implements OnInit {
 
   public async obtenerTodosProductos() {
     let response = await this._tiendaServicio.obtenerTodosProductos().toPromise();
-    //console.log("PRODUCTOS" + JSON.stringify(response));
+    console.log("PRODUCTOS" + JSON.stringify(response));
     this.productosObtenidos = response.data;
     this.productosObtenidos.forEach(elemnt => {
       this.vectorProductosObtenidos.push(elemnt);
@@ -144,8 +144,6 @@ export class PrincipalComponent implements OnInit {
     for (let element of this.tiendasObtenidas) {
       this.vectorTiendasObtenidas.push(element);
     }
-    ;
-
   }
 
   public async getCategorias() {

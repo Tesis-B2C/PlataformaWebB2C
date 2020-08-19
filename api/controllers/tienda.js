@@ -38,7 +38,12 @@ async function registrarTienda(req, res) {
             var banner = req.files.banner[0].path;
         }
 
-        let tiendaEncontrado = await TIENDA.findOne({where: {CORREO_TIENDA: params.Tienda.Correo_Tienda, ESTADO_TIENDA:0}});
+        let tiendaEncontrado = await TIENDA.findOne({
+            where: {
+                CORREO_TIENDA: params.Tienda.Correo_Tienda,
+                ESTADO_TIENDA: 0
+            }
+        });
         if (tiendaEncontrado) {
             res.status(404).send({
                 message: 'Este correo electrónico ya está vinculado a una tienda'
@@ -185,7 +190,7 @@ async function getMisTiendas(req, res) {
                 where: {
                     COD_AGENTE: req.params.id,
                     ESTADO_TIENDA: {[Op.or]: [0, 1]}
-                } , order: [['NUM_TIENDA', 'ASC']]
+                }, order: [['NUM_TIENDA', 'ASC']]
             });
 
             if (tiendasObtenidas.length > 0) {
@@ -529,7 +534,11 @@ async function getDetalleTiendaProducto(req, res) {
     try {
         let tiendaObtenida = await TIENDA.findOne({
             where: {NUM_TIENDA: req.params.id},
-            include: [{model: OPCION_ENVIO}, {model: METODO_PAGO}, {model: HORARIO_ATENCION, separate:true,  order: [['ID_HORARIO_ATENCION', 'ASC']]}, {
+            include: [{model: OPCION_ENVIO}, {model: METODO_PAGO}, {
+                model: HORARIO_ATENCION,
+                separate: true,
+                order: [['ID_HORARIO_ATENCION', 'ASC']]
+            }, {
                 model: SUCURSAL,
                 include: {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}
             }, {
@@ -625,14 +634,22 @@ async function obtenerFiltroPrincipalProductos(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
     try {
         let termino = req.params.termino;
-        let productosObtenidos = await PRODUCTO.findAll({
-            attributes: ['NOMBRE_PRODUCTO'],
+
+        let productosObtenidos = await OFERTA.findAll({
+            include: [{
+                model: PRODUCTO,
+                attributes: ['NOMBRE_PRODUCTO'],
+                where: {
+                    [Op.or]: [
+                        {NOMBRE_PRODUCTO: {[Op.like]: termino + '%'}},
+                        {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino}},
+                        {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino + '%'}}
+                    ]
+                }
+            }],
+            attributes: ['ID_OFERTA'],
             where: {
-                [Op.or]: [
-                    {NOMBRE_PRODUCTO: {[Op.like]: termino + '%'}},
-                    {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino}},
-                    {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino + '%'}}
-                ]
+                ESTADO_OFERTA: 0
             },
             limit: 10,
             transaction: t
@@ -674,14 +691,21 @@ async function obtenerFiltroPrincipalTodos(req, res) {
             transaction: t
         });
 
-        let productosObtenidos = await PRODUCTO.findAll({
-            attributes: ['NOMBRE_PRODUCTO'],
+        let productosObtenidos = await OFERTA.findAll({
+            include: [{
+                model: PRODUCTO,
+                attributes: ['NOMBRE_PRODUCTO'],
+                where: {
+                    [Op.or]: [
+                        {NOMBRE_PRODUCTO: {[Op.like]: termino + '%'}},
+                        {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino}},
+                        {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino + '%'}}
+                    ]
+                }
+            }],
+            attributes: ['ID_OFERTA'],
             where: {
-                [Op.or]: [
-                    {NOMBRE_PRODUCTO: {[Op.like]: termino + '%'}},
-                    {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino}},
-                    {NOMBRE_PRODUCTO: {[Op.like]: '%' + termino + '%'}}
-                ]
+                ESTADO_OFERTA: 0
             },
             limit: 8,
             transaction: t
@@ -722,13 +746,13 @@ async function obtenerFiltroBusquedaTodos(req, res) {
                     model: VARIANTE,
                     separate: true,
                     attributes: ['ID_PRODUCTO', 'NUM_VARIANTE', 'PRECIO_UNITARIO'],
-                    group: ['ID_PRODUCTO'],
+                    limit: 1,
                     order: [['NUM_VARIANTE', 'ASC']],
                     include: {
                         model: IMAGEN_PRODUCTO,
                         separate: true,
                         attributes: ['NUM_VARIANTE', 'IMAGEN'],
-                        group: 'NUM_VARIANTE',
+                        limit: 1,
                         where: {
                             TIPO_IMAGEN: {
                                 [Op.like]: 'image%'
@@ -754,7 +778,7 @@ async function obtenerFiltroBusquedaTodos(req, res) {
             where: {
                 ESTADO_OFERTA: 0
             },
-            attributes: ['ID_OFERTA'],
+            attributes: ['ID_OFERTA','IVA'],
             transaction: t
         });
 

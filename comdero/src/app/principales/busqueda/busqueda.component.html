@@ -66,14 +66,14 @@
              *ngFor="let p of this.vectorProductos | slice: paginaTamano | slice: 0:datosXpagina">
       <div class="row no-gutters">
         <aside class="col-lg-3 col-md-3 col-12">
-          <a href="principales/menu/detalle-producto/{{p.ID_OFERTA}}" class="img-wrap">
+          <a href="principales/menu/detalle-producto/{{p.ID_OFERTA}}" class="">
             <span class="badge badge-danger"> NEW </span>
-            <img [src]="getImagen(p.IMAGEN)" width="100%" height="200rem">
+            <img [src]="getImagen(p.IMAGEN)" width="100%" height="218rem">
           </a>
         </aside> <!-- col.// -->
         <div class="col-lg-6 col-md-6 col-12">
           <div class="info-main">
-            <a href="#" class="h5 title"> {{p.NOMBRE_PRODUCTO}} </a>
+            <a href="principales/menu/detalle-producto/{{p.ID_OFERTA}}" class="h5 title"> {{p.NOMBRE_PRODUCTO}} </a>
             <div class="rating-wrap mb-3">
               <ul class="rating-stars">
                 <ngb-rating *ngIf="p.PROMEDIO_CAL != null"
@@ -99,13 +99,13 @@
         <aside class="col-lg-3 col-md-3 col-12">
           <div class="info-aside">
             <div class="price-wrap">
-              <span class="price h5"> {{p.PRECIO_UNITARIO | currency }} </span>
+              <span class="price h5"> {{p.PRECIO_CON_IVA | currency }} </span>
               <del class="price-old"> $198</del>
             </div> <!-- info-price-detail // -->
             <p class="text-success">Free shipping</p>
             <br>
             <p>
-              <a href="#" class="btn btn-primary btn-block"> Detalles </a>
+              <a href="principales/menu/detalle-producto/{{p.ID_OFERTA}}" class="btn btn-primary btn-block"> Detalles </a>
               <a href="#" class="btn btn-light btn-block"><i class="fa fa-heart"></i>
                 <span class="text">Lista de deseos</span>
               </a>

@@ -117,10 +117,11 @@
         <ng-container *ngFor="let producto of vectorProductosObtenidos;index as i">
           <ng-template dataHash="one" carouselSlide id="slider+{{i}}">
             <div class="card card-product-grid mx-2">
-              <a class=""><img [src]="getImagen(producto.PRODUCTO.VARIANTEs[0].IMAGEN_PRODUCTOs[0].IMAGEN)" width="100%"
+              <a class="" >
+                <img [src]="getImagen(producto.PRODUCTO.VARIANTEs[0].IMAGEN_PRODUCTOs[0].IMAGEN)" width="100%"
                                height="200rem"></a>
               <figcaption class="info-wrap">
-                <a href="#" class="title"> {{producto.PRODUCTO.NOMBRE_PRODUCTO}}</a>
+                <a href="principales/menu/detalle-producto/{{producto.ID_OFERTA}}" class="title"> {{producto.PRODUCTO.NOMBRE_PRODUCTO}}</a>
                 <div class="rating-wrap">
                   <ul class="rating-stars">
 
@@ -428,7 +429,7 @@
 <!-- ========================= SECTION CONTENT END// ========================= -->
 
 <!-- ========================= SECTION  ========================= -->
-<section *ngIf="vectorTiendasObtenidas.length>0" class="section-name bg padding-y-sm">
+<section *ngIf="vectorTiendasObtenidas.length > 0" class="section-name bg padding-y-sm">
   <div class="container">
     <header class="section-heading">
       <h3 class="section-title">Tiendas asociadas</h3>
@@ -439,7 +440,7 @@
         class='fa fa-chevron-left'></i></button>
 
       <owl-carousel-o [options]="opcionesCarrouselTienda" #carrouselTiendas>
-        <ng-container *ngFor="let tienda of vectorTiendasObtenidas;index as i">
+        <ng-container *ngFor="let tienda of vectorTiendasObtenidas; index as i">
 
           <ng-template carouselSlide id="sliderTiendas{{i}}">
 
