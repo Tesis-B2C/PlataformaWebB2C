@@ -53,7 +53,8 @@
 <section *ngIf="this.vectorProductos.length == 0 " class="section-content padding-y-sm">
   <div class="container">
     <article class="my-4 text-justify">
-      <label class="m-0">Sin resultados para <label class="font-weight-bold mb-0">{{this.palabraBuscada}}</label> en el catálogo de productos </label>
+      <label class="m-0">Sin resultados para <label class="font-weight-bold mb-0">{{this.palabraBuscada}}</label> en el
+        catálogo de productos </label>
       <p style="font-size: x-small"> Revisa la ortografía o usa términos más generales. </p><br><br>
     </article> <!-- card-product .// -->
   </div> <!-- container .//  -->
@@ -104,7 +105,8 @@
             <p class="text-success">Free shipping</p>
             <br>
             <p>
-              <a href="principales/menu/detalle-producto/{{p.ID_OFERTA}}" class="btn btn-primary btn-block"> Detalles </a>
+              <a href="principales/menu/detalle-producto/{{p.ID_OFERTA}}" class="btn btn-primary btn-block">
+                Detalles </a>
               <a href="#" class="btn btn-light btn-block"><i class="fa fa-heart"></i>
                 <span class="text">Lista de deseos</span>
               </a>
@@ -128,10 +130,11 @@
 <!-- ========================= SECTION LISTADO DE PRODUCTOS END// ========================= -->
 
 <!-- ========================= SECTION LISTADO DE TIENDAS  ========================= -->
-<section *ngIf="this.vectorTienda.length == 0" class="section-content padding-y-sm" >
+<section *ngIf="this.vectorTienda.length == 0" class="section-content padding-y-sm">
   <div class="container">
     <article class="my-4 text-justify">
-      <label class="m-0">Sin resultados para <label class="font-weight-bold mb-0">{{this.palabraBuscada}}</label> en el catálogo de tiendas </label>
+      <label class="m-0">Sin resultados para <label class="font-weight-bold mb-0">{{this.palabraBuscada}}</label> en el
+        catálogo de tiendas </label>
       <p style="font-size: x-small"> Revisa la ortografía o usa términos más generales. </p><br><br>
     </article> <!-- card-product .// -->
   </div> <!-- container .//  -->
@@ -140,7 +143,9 @@
 <section *ngIf="this.vectorTienda.length > 0" class="section-content padding-y-sm">
   <div class="container">
     <header class="section-heading">
-      <h3 class="section-title">Tiendas asociadas</h3>
+      <h3 class="section-title">
+        Tiendas asociadas
+      </h3>
     </header><!-- sect-heading -->
 
     <div class="container card">
