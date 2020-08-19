@@ -159,13 +159,130 @@
 <!-- ========================= SECTION CONTENT COMDERO END// ========================= -->
 
 
-<!-- ========================= SECTION CONTENT ========================= -->
-<section class="section-content">
+
+<!-- ========================= SECTION CONTENT PRUEBA 1 ========================= -->
+<section class="section-content" *ngIf="this.vectorProductosObtenidos.length > 0">
   <div class="container">
 
     <header class="section-heading">
       <h3 class="section-title">Popular products</h3>
     </header><!-- sect-heading -->
+
+    <div style="position: relative">
+      <button (click)="carrouselFilaUno.prev()" style="display: block;" class="btn-atras-carrousel"><i
+        class='fa fa-chevron-left'></i></button>
+
+      <owl-carousel-o [options]="opcionesCarrouselFilaUno" #carrouselFilaUno>
+        <ng-container *ngFor="let producto of vectorProductosObtenidos;index as i">
+          <ng-template dataHash="one" carouselSlide id="slider1+{{i}}">
+            <div class="card card-product-grid mx-2">
+              <a class="" >
+                <img [src]="getImagen(producto.PRODUCTO.VARIANTEs[0].IMAGEN_PRODUCTOs[0].IMAGEN)" width="100%"
+                     height="200rem"></a>
+              <figcaption class="info-wrap">
+                <a href="principales/menu/detalle-producto/{{producto.ID_OFERTA}}" class="title"> {{producto.PRODUCTO.NOMBRE_PRODUCTO}}</a>
+                <div class="rating-wrap">
+                  <ul class="rating-stars">
+
+                    <ngb-rating *ngIf="producto.PRODUCTO.CALIFICACIONs[0]"
+                                [(rate)]="producto.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL">
+                      <ng-template let-fill="fill">
+                        <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                      </ng-template>
+                    </ngb-rating>
+                    <ngb-rating *ngIf="!producto.PRODUCTO.CALIFICACIONs[0]" [(rate)]="currentRate">
+                      <ng-template let-fill="fill">
+                        <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                      </ng-template>
+                    </ngb-rating>
+
+                  </ul>
+                  <span *ngIf="producto.PRODUCTO.COMENTARIOs[0]"
+                        class="label-rating text-muted">{{producto.PRODUCTO.COMENTARIOs[0].TOTAL_COM}}
+                    comentarios</span>
+                  <span *ngIf="!producto.PRODUCTO.COMENTARIOs[0]" class="label-rating text-muted">0 Comentarios </span>
+                </div>
+                <div class="price mt-1">{{producto.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO | currency }}</div>
+                <!-- price-wrap.// -->
+                <a href="#" class="title tituloTienda"> {{producto.TIENDA.NOMBRE_COMERCIAL}}</a>
+              </figcaption>
+            </div>
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
+      <button (click)="carrouselFilaUno.next()" style="display: block;" class="btn-adelante-carrousel"><i
+        class='fa fa-chevron-right'></i></button>
+    </div>
+  </div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT PRUEBA 1 END// ========================= -->
+
+
+<!-- ========================= SECTION CONTENT PRUEBA 2 PRODUCTOS ========================= -->
+<section class="section-content" *ngIf="this.vectorProductosObtenidos.length > 0">
+  <div class="container">
+
+    <header class="section-heading">
+      <h3 class="section-title">New arrived</h3>
+    </header><!-- sect-heading -->
+
+    <div style="position: relative">
+      <button (click)="carrouselFilaUno.prev()" style="display: block;" class="btn-atras-carrousel"><i
+        class='fa fa-chevron-left'></i></button>
+
+      <owl-carousel-o [options]="opcionesCarrouselFilaUno" #carrouselFilaUno>
+        <ng-container *ngFor="let producto of vectorProductosObtenidos;index as i">
+          <ng-template dataHash="one" carouselSlide id="slider2+{{i}}">
+            <div class="card card-product-grid mx-2">
+              <a class="" >
+                <img [src]="getImagen(producto.PRODUCTO.VARIANTEs[0].IMAGEN_PRODUCTOs[0].IMAGEN)" width="100%"
+                     height="200rem"></a>
+              <figcaption class="info-wrap">
+                <a href="principales/menu/detalle-producto/{{producto.ID_OFERTA}}" class="title"> {{producto.PRODUCTO.NOMBRE_PRODUCTO}}</a>
+                <div class="rating-wrap">
+                  <ul class="rating-stars">
+
+                    <ngb-rating *ngIf="producto.PRODUCTO.CALIFICACIONs[0]"
+                                [(rate)]="producto.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL">
+                      <ng-template let-fill="fill">
+                        <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                      </ng-template>
+                    </ngb-rating>
+                    <ngb-rating *ngIf="!producto.PRODUCTO.CALIFICACIONs[0]" [(rate)]="currentRate">
+                      <ng-template let-fill="fill">
+                        <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                      </ng-template>
+                    </ngb-rating>
+
+                  </ul>
+                  <span *ngIf="producto.PRODUCTO.COMENTARIOs[0]"
+                        class="label-rating text-muted">{{producto.PRODUCTO.COMENTARIOs[0].TOTAL_COM}}
+                    comentarios</span>
+                  <span *ngIf="!producto.PRODUCTO.COMENTARIOs[0]" class="label-rating text-muted">0 Comentarios </span>
+                </div>
+                <div class="price mt-1">{{producto.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO | currency }}</div>
+                <!-- price-wrap.// -->
+                <a href="#" class="title tituloTienda"> {{producto.TIENDA.NOMBRE_COMERCIAL}}</a>
+              </figcaption>
+            </div>
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
+      <button (click)="carrouselFilaUno.next()" style="display: block;" class="btn-adelante-carrousel"><i
+        class='fa fa-chevron-right'></i></button>
+    </div>
+  </div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT PRUEBA 2 END// ========================= -->
+
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<!--<section class="section-content">
+  <div class="container">
+
+    <header class="section-heading">
+      <h3 class="section-title">Popular products</h3>
+    </header>&lt;!&ndash; sect-heading &ndash;&gt;
 
 
     <div class="row">
@@ -188,10 +305,10 @@
               </ul>
               <span class="label-rating text-muted"> 34 reviws</span>
             </div>
-            <div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
+            <div class="price mt-1">$179.00</div> &lt;!&ndash; price-wrap.// &ndash;&gt;
           </figcaption>
         </div>
-      </div> <!-- col.// -->
+      </div> &lt;!&ndash; col.// &ndash;&gt;
       <div class="col-md-3">
         <div href="#" class="card card-product-grid">
           <a href="#" class="img-wrap"> <img src="images/items/2.jpg"> </a>
@@ -211,10 +328,10 @@
               </ul>
               <span class="label-rating text-muted"> 34 reviws</span>
             </div>
-            <div class="price mt-1">$280.00</div> <!-- price-wrap.// -->
+            <div class="price mt-1">$280.00</div> &lt;!&ndash; price-wrap.// &ndash;&gt;
           </figcaption>
         </div>
-      </div> <!-- col.// -->
+      </div> &lt;!&ndash; col.// &ndash;&gt;
       <div class="col-md-3">
         <div href="#" class="card card-product-grid">
           <a href="#" class="img-wrap"> <img src="images/items/3.jpg"> </a>
@@ -234,10 +351,10 @@
               </ul>
               <span class="label-rating text-muted"> 34 reviws</span>
             </div>
-            <div class="price mt-1">$56.00</div> <!-- price-wrap.// -->
+            <div class="price mt-1">$56.00</div> &lt;!&ndash; price-wrap.// &ndash;&gt;
           </figcaption>
         </div>
-      </div> <!-- col.// -->
+      </div> &lt;!&ndash; col.// &ndash;&gt;
       <div class="col-md-3">
         <div href="#" class="card card-product-grid">
           <a href="#" class="img-wrap"> <img src="images/items/4.jpg"> </a>
@@ -257,24 +374,24 @@
               </ul>
               <span class="label-rating text-muted"> 34 reviws</span>
             </div>
-            <div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
+            <div class="price mt-1">$179.00</div> &lt;!&ndash; price-wrap.// &ndash;&gt;
           </figcaption>
         </div>
-      </div> <!-- col.// -->
-    </div> <!-- row.// -->
+      </div> &lt;!&ndash; col.// &ndash;&gt;
+    </div> &lt;!&ndash; row.// &ndash;&gt;
 
-  </div> <!-- container .//  -->
-</section>
+  </div> &lt;!&ndash; container .//  &ndash;&gt;
+</section>-->
 <!-- ========================= SECTION CONTENT END// ========================= -->
 
 
 <!-- ========================= SECTION CONTENT ========================= -->
-<section class="section-content">
+<!--<section class="section-content">
   <div class="container">
 
     <header class="section-heading">
       <h3 class="section-title">New arrived</h3>
-    </header><!-- sect-heading -->
+    </header>&lt;!&ndash; sect-heading &ndash;&gt;
 
     <div class="row">
       <div class="col-md-3">
@@ -296,10 +413,10 @@
               </ul>
               <span class="label-rating text-muted"> 34 reviws</span>
             </div>
-            <div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
+            <div class="price mt-1">$179.00</div> &lt;!&ndash; price-wrap.// &ndash;&gt;
           </figcaption>
         </div>
-      </div> <!-- col.// -->
+      </div> &lt;!&ndash; col.// &ndash;&gt;
       <div class="col-md-3">
         <div href="#" class="card card-product-grid">
           <a href="#" class="img-wrap"> <img src="images/items/6.jpg"> </a>
@@ -319,10 +436,10 @@
               </ul>
               <span class="label-rating text-muted"> 34 reviws</span>
             </div>
-            <div class="price mt-1">$280.00</div> <!-- price-wrap.// -->
+            <div class="price mt-1">$280.00</div> &lt;!&ndash; price-wrap.// &ndash;&gt;
           </figcaption>
         </div>
-      </div> <!-- col.// -->
+      </div> &lt;!&ndash; col.// &ndash;&gt;
       <div class="col-md-3">
         <div href="#" class="card card-product-grid">
           <a href="#" class="img-wrap"> <img src="images/items/7.jpg"> </a>
@@ -342,10 +459,10 @@
               </ul>
               <span class="label-rating text-muted"> 34 reviws</span>
             </div>
-            <div class="price mt-1">$56.00</div> <!-- price-wrap.// -->
+            <div class="price mt-1">$56.00</div> &lt;!&ndash; price-wrap.// &ndash;&gt;
           </figcaption>
         </div>
-      </div> <!-- col.// -->
+      </div> &lt;!&ndash; col.// &ndash;&gt;
       <div class="col-md-3">
         <div href="#" class="card card-product-grid">
           <a href="#" class="img-wrap"> <img src="images/items/9.jpg"> </a>
@@ -365,18 +482,18 @@
               </ul>
               <span class="label-rating text-muted"> 34 reviws</span>
             </div>
-            <div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
+            <div class="price mt-1">$179.00</div> &lt;!&ndash; price-wrap.// &ndash;&gt;
           </figcaption>
         </div>
-      </div> <!-- col.// -->
-    </div> <!-- row.// -->
+      </div> &lt;!&ndash; col.// &ndash;&gt;
+    </div> &lt;!&ndash; row.// &ndash;&gt;
 
-  </div> <!-- container .//  -->
-</section>
+  </div> &lt;!&ndash; container .//  &ndash;&gt;
+</section>-->
 <!-- ========================= SECTION CONTENT END// ========================= -->
 
 
-<!-- ========================= SECTION CONTENT ========================= -->
+<!-- ========================= SECTION CONTENT  PRUEBA 3========================= -->
 <section class="section-content padding-bottom-sm">
   <div class="container">
 
@@ -385,48 +502,56 @@
       <h3 class="section-title">Recommended</h3>
     </header><!-- sect-heading -->
 
-    <div class="row">
-      <div class="col-md-3">
-        <div href="#" class="card card-product-grid">
-          <a href="#" class="img-wrap"> <img src="images/items/1.jpg"> </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">Just another product name</a>
-            <div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div> <!-- col.// -->
-      <div class="col-md-3">
-        <div href="#" class="card card-product-grid">
-          <a href="#" class="img-wrap"> <img src="images/items/2.jpg"> </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">Some item name here</a>
-            <div class="price mt-1">$280.00</div> <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div> <!-- col.// -->
-      <div class="col-md-3">
-        <div href="#" class="card card-product-grid">
-          <a href="#" class="img-wrap"> <img src="images/items/3.jpg"> </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">Great product name here</a>
-            <div class="price mt-1">$56.00</div> <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div> <!-- col.// -->
-      <div class="col-md-3">
-        <div href="#" class="card card-product-grid">
-          <a href="#" class="img-wrap"> <img src="images/items/4.jpg"> </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">Just another product name</a>
-            <div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div> <!-- col.// -->
-    </div> <!-- row.// -->
+    <div style="position: relative">
+      <button (click)="carrouselFilaUno.prev()" style="display: block;" class="btn-atras-carrousel"><i
+        class='fa fa-chevron-left'></i></button>
+
+      <owl-carousel-o [options]="opcionesCarrouselFilaUno" #carrouselFilaUno>
+        <ng-container *ngFor="let producto of vectorProductosObtenidos;index as i">
+          <ng-template dataHash="one" carouselSlide id="slider3+{{i}}">
+            <div class="card card-product-grid mx-2">
+              <a class="" >
+                <img [src]="getImagen(producto.PRODUCTO.VARIANTEs[0].IMAGEN_PRODUCTOs[0].IMAGEN)" width="100%"
+                     height="200rem"></a>
+              <figcaption class="info-wrap">
+                <a href="principales/menu/detalle-producto/{{producto.ID_OFERTA}}" class="title"> {{producto.PRODUCTO.NOMBRE_PRODUCTO}}</a>
+                <div class="rating-wrap">
+                  <ul class="rating-stars">
+
+                    <ngb-rating *ngIf="producto.PRODUCTO.CALIFICACIONs[0]"
+                                [(rate)]="producto.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL">
+                      <ng-template let-fill="fill">
+                        <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                      </ng-template>
+                    </ngb-rating>
+                    <ngb-rating *ngIf="!producto.PRODUCTO.CALIFICACIONs[0]" [(rate)]="currentRate">
+                      <ng-template let-fill="fill">
+                        <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                      </ng-template>
+                    </ngb-rating>
+
+                  </ul>
+                  <span *ngIf="producto.PRODUCTO.COMENTARIOs[0]"
+                        class="label-rating text-muted">{{producto.PRODUCTO.COMENTARIOs[0].TOTAL_COM}}
+                    comentarios</span>
+                  <span *ngIf="!producto.PRODUCTO.COMENTARIOs[0]" class="label-rating text-muted">0 Comentarios </span>
+                </div>
+                <div class="price mt-1">{{producto.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO | currency }}</div>
+                <!-- price-wrap.// -->
+                <a href="#" class="title tituloTienda"> {{producto.TIENDA.NOMBRE_COMERCIAL}}</a>
+              </figcaption>
+            </div>
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
+      <button (click)="carrouselFilaUno.next()" style="display: block;" class="btn-adelante-carrousel"><i
+        class='fa fa-chevron-right'></i></button>
+    </div>
+
 
   </div> <!-- container .//  -->
 </section>
-<!-- ========================= SECTION CONTENT END// ========================= -->
+<!-- ========================= SECTION CONTENT PRUEBA 3 END// ========================= -->
 
 <!-- ========================= SECTION  ========================= -->
 <section *ngIf="vectorTiendasObtenidas.length > 0" class="section-name bg padding-y-sm">
