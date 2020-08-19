@@ -145,7 +145,7 @@
                 </div>
                 <div class="price mt-1">{{producto.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO | currency }}</div>
                 <!-- price-wrap.// -->
-                <a href="#" class="title tituloTienda"> {{producto.TIENDA.NOMBRE_COMERCIAL}}</a>
+                <a routerLink="../detalle-tienda/tienda/{{producto.TIENDA.NUM_TIENDA}}/inicio-tienda" class="title tituloTienda"> {{producto.TIENDA.NOMBRE_COMERCIAL}}</a>
               </figcaption>
             </div>
           </ng-template>

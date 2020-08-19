@@ -125,24 +125,31 @@ export class PrincipalComponent implements OnInit {
   }
 
   public async obtenerTodosProductos() {
+    try{
     let response = await this._tiendaServicio.obtenerTodosProductos().toPromise();
     console.log("PRODUCTOS" + JSON.stringify(response));
     this.productosObtenidos = response.data;
     this.productosObtenidos.forEach(elemnt => {
       this.vectorProductosObtenidos.push(elemnt);
     })
-
+    }catch (e) {
+      console.log("error:" + JSON.stringify((e)));
+    }
   }
 
   public tiendasObtenidas;
   public vectorTiendasObtenidas = [];
 
   public async obtenerTodasTiendas() {
+    try {
     let response = await this._tiendaServicio.obtenerTodasTiendas().toPromise();
     console.log("tiendas" + response.data);
     this.tiendasObtenidas = response.data;
     for (let element of this.tiendasObtenidas) {
       this.vectorTiendasObtenidas.push(element);
+    }
+    }catch (e) {
+      console.log("error:" + JSON.stringify((e)));
     }
   }
 

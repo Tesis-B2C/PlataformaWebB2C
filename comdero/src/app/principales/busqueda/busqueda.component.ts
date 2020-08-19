@@ -4,6 +4,7 @@ import {TiendaServicio} from "../../servicios/tienda.servicio";
 import {NgbRatingConfig} from "@ng-bootstrap/ng-bootstrap";
 import {GLOBAL} from 'src/app/servicios/global';
 import {AgenteServicio} from "../../servicios/agente.servicio";
+import {CategoriaServicio} from "../../servicios/categoria.servicio";
 
 @Component({
   selector: 'app-busqueda',
@@ -37,7 +38,7 @@ export class BusquedaComponent implements OnInit, OnDestroy, OnChanges {
     'fa fa-car', 'fa fa-dumbbell', 'fa fa-book',
     'fa fa-dog', 'fa fa-gamepad', 'fa fa-grin-stars', 'fa fa-heartbeat', 'fa fa-building', 'fa fa-tractor'];
 
-  constructor(private _agenteServicio: AgenteServicio, private router: Router, configRating: NgbRatingConfig, private route: ActivatedRoute, private _tiendaServicio: TiendaServicio) {
+  constructor(private _categoriaServicio:CategoriaServicio, private _agenteServicio: AgenteServicio, private router: Router, configRating: NgbRatingConfig, private route: ActivatedRoute, private _tiendaServicio: TiendaServicio) {
     configRating.max = 5;
     configRating.readonly = true;
   }
@@ -47,7 +48,9 @@ export class BusquedaComponent implements OnInit, OnDestroy, OnChanges {
     this.route.params.subscribe(params => {
       this.palabraBuscada = params['palabraBuscada'];
       this.buscarDatos();
-    })
+    });
+    this.getCategorias();
+
   }
 
   ngOnChanges() {
@@ -64,6 +67,23 @@ export class BusquedaComponent implements OnInit, OnDestroy, OnChanges {
     delete this.vectorTienda;
   }
 
+  public async getCategorias() {
+    try {
+      let response = await this._categoriaServicio.getCategorias().toPromise();
+      this.categorias = response.data;
+      this.categorias.forEach(elemnt => {
+        if (elemnt.TIPO == 'C1') {
+          this.c1.push(elemnt)
+        } /*else if (elemnt.TIPO == 'C2') {
+          this.c2.push(elemnt)
+        } else if (elemnt.TIPO == 'C3') {
+          this.c3.push(elemnt)
+        }*/
+      })
+    } catch (e) {
+      console.log("error:" + JSON.stringify((e)));
+    }
+  }
   public noExite = 'assets/images/no-image.png';
 
   getImagen(pathImagen) {
