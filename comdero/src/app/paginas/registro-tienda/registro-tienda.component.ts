@@ -68,7 +68,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
   constructor(public toastr: ToastrService, private _agenteServicio: AgenteServicio, private _dpaServicio: DpaServicio, private _tiendaServicio: TiendaServicio) {
     let identidad = this._agenteServicio.getIdentity();
     this.Tienda = new Tienda(identidad.COD_AGENTE, null, null, null, null,
-      null, null, null, null, 0, null, 'No disponible',null);
+      null, null, null, null, 0, null, 'No disponible', null);
     this.Sucursales.push(new Sucursal(null, null, null, null, null, null, null, null, 'Negocio'));
   }
 
@@ -177,7 +177,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
           this.wizard.goToNextStep();
         } else
           this.banderaToastRuc = true;
-      }else{
+      } else {
         this.mostrarToast("Asegurate de ingresar la provincia y ciudad", "");
       }
     } else {
