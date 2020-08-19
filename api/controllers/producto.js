@@ -525,7 +525,7 @@ async function obtenerTodosProductos(req, res) {
                 }]
             }, {
                 model: Tienda,
-                attributes: ['NOMBRE_COMERCIAL']
+                attributes: ['NOMBRE_COMERCIAL','NUM_TIENDA']
             }],
             attributes: ['ID_OFERTA'],
             where: {
