@@ -552,13 +552,18 @@ async function getDetalleTiendaProducto(req, res) {
                         model: VARIANTE,
                         separate: true,
                         attributes: ['PRECIO_UNITARIO'],
-                        group: ['ID_PRODUCTO', 'COD_PRODUCTO'],
+                        limit:1,
                         order: [['NUM_VARIANTE', 'ASC']],
                         include: {
                             model: IMAGEN_PRODUCTO,
+                            where: {
+                                TIPO_IMAGEN: {
+                                    [Op.like]: 'image%'
+                                }
+                            },
                             separate: true,
                             attributes: ['IMAGEN'],
-                            group: 'NUM_VARIANTE',
+                            limit:1,
                             order: [['ID_IMAGEN', 'ASC']]
                         }
                     },
