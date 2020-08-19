@@ -74,7 +74,4 @@ export class DetalleProductoComponent implements OnInit {
       }
     });
   }
-
-
-
 }

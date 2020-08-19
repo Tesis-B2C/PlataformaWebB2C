@@ -27,7 +27,7 @@
         </div>
 
       </div>
-      <div  *ngIf=" this.tiendaRegistrada"  class="col-4 col-md-4 pt-5  ">
+      <div *ngIf=" this.tiendaRegistrada" class="col-4 col-md-4 pt-5  ">
 
         <div class="container-login100-form-btn">
           <div class="wrap-login100-form-btn">
@@ -52,16 +52,10 @@
 
     <header>
       <h3 class="font-weight-bold p-b-10 text-center">Cuéntanos sobre tu empresa o negocio</h3>
-
-
-
-
     </header>
 
     <form #FormRegistroTienda id="formRegistroTienda" class="login100-form validate-form px-md-5">
-
       <aw-wizard [navBarLayout]="'large-empty-symbols'">
-
         <aw-wizard-step [stepTitle]="'Paso 1'">
           <div class="bacground-info mx-auto"></div>
           <form #FormPaso1 id="formPaso1" class="datosregistro" validate-form>
@@ -70,42 +64,42 @@
             <h6 class="font-weight-bold">Datos generales</h6>
             <br>
             <div class="form-row">
-            <div class="form-group col-md-6">
-              <label>* Razón Social</label>
-              <input #Razon_Social="ngModel" style="text-transform: uppercase;" [(ngModel)]="this.Tienda.Razon_Social"
-                     [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched),
+              <div class="form-group col-md-6">
+                <label>* Razón Social</label>
+                <input #Razon_Social="ngModel" style="text-transform: uppercase;" [(ngModel)]="this.Tienda.Razon_Social"
+                       [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched),
                  'is-valid': Razon_Social.valid && (Razon_Social.dirty || Razon_Social.touched)}"
-                     [pattern]='this.LetrasNumerosPattern'
-                     class="tamanioInputs form-control" name="razon_Social" placeholder=""
-                     required type="text">
-              <div *ngIf="Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched)">
-                <div *ngIf="Razon_Social.errors.required">
-                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+                       [pattern]='this.LetrasNumerosPattern'
+                       class="tamanioInputs form-control" name="razon_Social" placeholder=""
+                       required type="text">
+                <div *ngIf="Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched)">
+                  <div *ngIf="Razon_Social.errors.required">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+                  </div>
+                  <div *ngIf="Razon_Social.errors.pattern">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
+                      numeros.</p>
+                  </div>
                 </div>
-                <div *ngIf="Razon_Social.errors.pattern">
-                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
-                    numeros.</p>
-                </div>
-              </div>
-            </div> <!-- form-group end.// -->
-            <div class="form-group col-md-6">
-              <label>* Nombre comercial de su empresa o negocio</label>
-              <input #Nombre_Comercial="ngModel" style="text-transform: uppercase;"
-                     [(ngModel)]="this.Tienda.Nombre_Comercial" [ngClass]="{'is-invalid': Nombre_Comercial.invalid && (Nombre_Comercial.dirty || Nombre_Comercial.touched),
+              </div> <!-- form-group end.// -->
+              <div class="form-group col-md-6">
+                <label>* Nombre comercial de su empresa o negocio</label>
+                <input #Nombre_Comercial="ngModel" style="text-transform: uppercase;"
+                       [(ngModel)]="this.Tienda.Nombre_Comercial" [ngClass]="{'is-invalid': Nombre_Comercial.invalid && (Nombre_Comercial.dirty || Nombre_Comercial.touched),
                  'is-valid': Nombre_Comercial.valid && (Nombre_Comercial.dirty || Nombre_Comercial.touched)}"
-                     [pattern]='this.LetrasNumerosPattern'
-                     class="tamanioInputs form-control" name="nombre_Comercial" placeholder=""
-                     required type="text">
-              <div *ngIf="Nombre_Comercial.invalid && (Nombre_Comercial.dirty || Nombre_Comercial.touched)">
-                <div *ngIf="Nombre_Comercial.errors.required">
-                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
-                </div>
-                <div *ngIf="Nombre_Comercial.errors.pattern">
-                  <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
-                    numeros.</p>
+                       [pattern]='this.LetrasNumerosPattern'
+                       class="tamanioInputs form-control" name="nombre_Comercial" placeholder=""
+                       required type="text">
+                <div *ngIf="Nombre_Comercial.invalid && (Nombre_Comercial.dirty || Nombre_Comercial.touched)">
+                  <div *ngIf="Nombre_Comercial.errors.required">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+                  </div>
+                  <div *ngIf="Nombre_Comercial.errors.pattern">
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
+                      numeros.</p>
+                  </div>
                 </div>
               </div>
-            </div>
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">
@@ -115,20 +109,23 @@
                  'is-valid': ContactoW.valid && (ContactoW.dirty || ContactoW.touched)}"
                        [pattern]='this.soloNumerosPattern'
                        class="tamanioInputs form-control" name="contactoW" placeholder="0999999999"
-                       required type="text" minlength="10" maxlength="10"  >
+                       required type="text" minlength="10" maxlength="10">
                 <span style="font-size: x-small">los clientes podran contactarte a través de  WhatsApp</span>
                 <div *ngIf="ContactoW.invalid && (ContactoW.dirty || ContactoW.touched)">
                   <div *ngIf="ContactoW.errors.required">
                     <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
                   </div>
                   <div *ngIf="ContactoW.errors.pattern">
-                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo numeros.</p>
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo numeros.
+                    </p>
                   </div>
                   <div *ngIf="ContactoW.errors.minlength">
-                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Minimo 10 digitos.</p>
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Minimo 10 digitos.
+                    </p>
                   </div>
                   <div *ngIf="ContactoW.errors.maxlenght">
-                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Minimo 10 digitos.</p>
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Minimo 10 digitos.
+                    </p>
                   </div>
                 </div>
               </div> <!-- form-group end.// -->
@@ -146,7 +143,8 @@
                     <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
                   </div>
                   <div *ngIf="Correo_Tienda.errors.pattern">
-                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; No cumple con el formato.</p>
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; No cumple con el
+                      formato.</p>
                   </div>
                 </div>
               </div> <!-- form-group end.// -->
@@ -356,7 +354,7 @@
                     </button>
                   </div>
                 </div> <!--Fin form-row -->
-                <hr *ngIf="i!=0" class="pt-0 mt-0 mb-3">
+                <hr *ngIf="i != 0" class="pt-0 mt-0 mb-3">
 
                 <div class="form-row">
                   <div class="form-group col-sm-6">
@@ -524,7 +522,8 @@
 
                     <div class="form-group centered-content m-0">  <!-- F1 LOGO-->
                       <a class="ml-0 mt-5 text-center">
-                        <label class="mb-0 pt-3 pb-2">Agregue el logo de su tienda</label>
+                        <label class="mb-0 pt-3 ">Agregue el logo de su tienda</label>
+                        <p class="p-0 pb-2 m-0">(960x960px)</p>
                       </a>
 
                       <div class="form-group">
@@ -545,7 +544,6 @@
                                 <i class="fa fa-store fa-3x color-fa"></i>
                                 <i class="fa fa-upload fa-2x ml-1 color-fa"></i>
 
-
                                 <input (change)="subirLogo($event)" accept="image/*" class="file" type="file"
                                        name="logoImagen">
                               </label>
@@ -557,13 +555,14 @@
 
                     <div class="form-group centered-content m-0">  <!-- F2 BANNER-->
                       <a class="ml-0 mt-5 text-center">
-                        <label class="mb-0 pt-3 pb-3">Agregue una imagen de portada para su tienda</label>
+                        <label class="mb-0 pt-3">Agregue una imagen de portada para su tienda</label>
+                        <p class="p-0 pb-3 m-0">(850x315px)</p>
                       </a>
 
                       <div class="form-group px-2">
                         <div
                           [ngClass]="{'borde-imagenesB':!urlBanner,'borde-imagenes1B':urlBanner }"
-                          class="row mx-0 ">
+                          class="row mx-0">
 
                           <div *ngIf="urlBanner">
                             <label style="border: none;">
