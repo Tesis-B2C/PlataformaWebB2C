@@ -767,12 +767,12 @@ async function obtenerFiltroBusquedaTodos(req, res) {
                     }
                 }, {
                     model: CALIFICACION,
-                    separate: true,
+                   /* separate: true,*/
                     attributes: ['ID_PRODUCTO', [CALIFICACION.sequelize.fn('AVG', CALIFICACION.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
                     group: ['ID_PRODUCTO']
                 }, {
                     model: COMENTARIO,
-                    separate: true,
+                   /* separate: true,*/
                     attributes: ['ID_PRODUCTO', [COMENTARIO.sequelize.fn('COUNT', COMENTARIO.sequelize.col('ID_COMENTARIO')), 'TOTAL_COM']],
                     group: ['ID_PRODUCTO']
                 }]
@@ -807,13 +807,12 @@ async function obtenerFiltroBusquedaTodos(req, res) {
 
         vectorEnviar.push(tiendasObtenidos);
         vectorEnviar.push(productosObtenidos);
-
         await t.commit();
         res.status(200).send({
             data: vectorEnviar,
             message: "Tiendas y productos cargados correctamente"
         });
-    } catch (e) {
+    } catch (err) {
         await t.rollback();
         res.status(500).send({
             message: 'error:' + err
