@@ -767,12 +767,12 @@ async function obtenerFiltroBusquedaTodos(req, res) {
                     }
                 }, {
                     model: CALIFICACION,
-                   /* separate: true,*/
+                   separate: true,
                     attributes: ['ID_PRODUCTO', [CALIFICACION.sequelize.fn('AVG', CALIFICACION.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
                     group: ['ID_PRODUCTO']
                 }, {
                     model: COMENTARIO,
-                   /* separate: true,*/
+                    separate: true,
                     attributes: ['ID_PRODUCTO', [COMENTARIO.sequelize.fn('COUNT', COMENTARIO.sequelize.col('ID_COMENTARIO')), 'TOTAL_COM']],
                     group: ['ID_PRODUCTO']
                 }]
