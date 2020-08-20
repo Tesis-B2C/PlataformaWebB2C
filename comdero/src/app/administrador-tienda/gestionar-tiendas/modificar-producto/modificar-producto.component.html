@@ -478,7 +478,7 @@
             </a>
 
             <div class="form-group  col-1 mb-0 text-right" *ngIf="videoYoutube || data.video">
-              <button (click)="borrarVideo()" class="form-control " style=" border: none; color: red" [disabled]="!banderaModificar">
+              <button (click)="borrarVideo()" class="form-control " style=" border: none; color: red"  [hidden]="!banderaModificar">
                 <span class="fa fa-trash "></span>
               </button>
             </div>
