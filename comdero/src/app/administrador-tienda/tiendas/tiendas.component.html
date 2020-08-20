@@ -65,7 +65,7 @@
               <!--  <img class=" mx-auto " [src]="this.url + 'obtenerImagenTienda/'+tienda.LOGO" width="100%" height="190px">-->
 
             </a>
-            <p class="text-center link  my-3 " style="font-size: small" (click)="irAdministracionTienda(tienda.NUM_TIENDA)">
+            <p class="text-center link  my-3 " style="font-size: small" (click)="tienda.Estado=true;irAdministracionTienda(tienda.NUM_TIENDA)">
             {{tienda.RAZON_SOCIAL}} &nbsp; <i class="fas fa-external-link-alt"></i></p>
           </div>
           </div>

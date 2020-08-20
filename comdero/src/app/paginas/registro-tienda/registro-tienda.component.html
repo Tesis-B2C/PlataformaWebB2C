@@ -69,7 +69,7 @@
                 <input #Razon_Social="ngModel" style="text-transform: uppercase;" [(ngModel)]="this.Tienda.Razon_Social"
                        [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched),
                  'is-valid': Razon_Social.valid && (Razon_Social.dirty || Razon_Social.touched)}"
-                       [pattern]='this.LetrasNumerosPattern'
+
                        class="tamanioInputs form-control" name="razon_Social" placeholder=""
                        required type="text">
                 <div *ngIf="Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched)">
@@ -87,7 +87,7 @@
                 <input #Nombre_Comercial="ngModel" style="text-transform: uppercase;"
                        [(ngModel)]="this.Tienda.Nombre_Comercial" [ngClass]="{'is-invalid': Nombre_Comercial.invalid && (Nombre_Comercial.dirty || Nombre_Comercial.touched),
                  'is-valid': Nombre_Comercial.valid && (Nombre_Comercial.dirty || Nombre_Comercial.touched)}"
-                       [pattern]='this.LetrasNumerosPattern'
+
                        class="tamanioInputs form-control" name="nombre_Comercial" placeholder=""
                        required type="text">
                 <div *ngIf="Nombre_Comercial.invalid && (Nombre_Comercial.dirty || Nombre_Comercial.touched)">
