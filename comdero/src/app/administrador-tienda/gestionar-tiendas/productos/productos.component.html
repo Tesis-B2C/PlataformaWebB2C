@@ -174,9 +174,9 @@
                 <button ngbDropdownItem (click)="abrirModalVideoYoutube(modalVideoYoutube)"  class="text-primary">
                   Agregar video youtube &nbsp; <span class="fab fa-youtube "></span>
                 </button>
-                <a *ngIf="this.videoYoutube" (click)="resetearVideoYoutube()" class="agregarVideoYoutube ml-2 col-md-5 ">
+                <button ngbDropdownItem *ngIf="this.videoYoutube" (click)="resetearVideoYoutube()" class="text-dark">
                   Agregar video desde el ordenador &nbsp; <span class="fa fa-laptop "></span>
-                </a>
+                </button>
 
                 <button  ngbDropdownItem *ngIf="videoYoutube || data.video" (click)="borrarVideo()"  style=" border: none; color: red">
                   Eliminar
