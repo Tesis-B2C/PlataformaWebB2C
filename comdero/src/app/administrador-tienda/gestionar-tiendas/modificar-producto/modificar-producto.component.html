@@ -75,7 +75,7 @@
   </div>
 </ng-template>
 
-<body id="body">
+<body id="body" class="bg">
 <div class="container mt-5 ">
   <div class="row  justify-content-center" id="top">
     <h4 class=" col-11">Modificar Producto</h4>
@@ -265,7 +265,7 @@
           <h6>Categorías seleccionadas </h6>
 
           <div ngbDropdown class="d-inline-block justify-content-end text-right mr-3">
-            <button id="btnCategorias" ngbDropdownToggle><i class="fa fa-ellipsis-h"></i>
+            <button id="btnCategorias" ngbDropdownToggle   [disabled]="!banderaModificar"><i class="fa fa-ellipsis-h" ></i>
             </button>
             <div ngbDropdownMenu aria-labelledby="btnCategorias">
               <button ngbDropdownItem class="btnOpcTarifaLocal" (click)="abrirModalCategorias(modalCategorias)"
@@ -463,7 +463,26 @@
         </div>
       </div>
       <hr>
-      <h6>Video promocional</h6>
+      <div class="form-row justify-content-between mx-1">
+      <h6 >Video promocional</h6>
+      <div ngbDropdown class="d-inline-block justify-content-end text-right mr-3">
+        <button id="btnVideo" ngbDropdownToggle  ><i class="fa fa-ellipsis-h" ></i>
+        </button>
+        <div ngbDropdownMenu aria-labelledby="btnVideo">
+          <button ngbDropdownItem (click)="abrirModalVideoYoutube(modalVideoYoutube)"  class="text-primary">
+            Agregar video youtube &nbsp; <span class="fab fa-youtube "></span>
+          </button>
+          <button ngbDropdownItem  *ngIf="this.videoYoutube" (click)="resetearVideoYoutube()" class="text-dark">
+            Agregar desde ordenador &nbsp; <span class="fa fa-laptop "></span>
+          </button>
+
+          <button  ngbDropdownItem *ngIf="videoYoutube || data.video" (click)="borrarVideo()"  style=" border: none; color: red">
+            Eliminar
+          </button>
+
+        </div>
+      </div>
+      </div>
       <form class=" card card-body mt-3 ">
 
 
@@ -472,16 +491,6 @@
 
             <span *ngIf="banderaMensajeMaximoVideo" class=" col-md-5 " style="color: red;font-size: small">* Recuerda Máximo 150MB</span>
 
-            <a (click)="abrirModalVideoYoutube(modalVideoYoutube)" class="agregarVideoYoutube ml-2 col-md-5 mr-auto "
-               [hidden]="!banderaModificar">
-              Agregar video de youtube &nbsp; <span class="fab fa-youtube "></span>
-            </a>
-
-            <div class="form-group  col-1 mb-0 text-right" *ngIf="videoYoutube || data.video">
-              <button (click)="borrarVideo()" class="form-control " style=" border: none; color: red"  [hidden]="!banderaModificar">
-                <span class="fa fa-trash "></span>
-              </button>
-            </div>
 
           </div>
 
