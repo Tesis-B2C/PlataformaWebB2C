@@ -87,13 +87,13 @@
           </a>
 
         </div>
-<div class="w-25 justify-content-center text-center dis-inline-block ">
-        <ngx-paypal [config]="payPalConfig"></ngx-paypal>
-</div>
+
         <button (click)="this.initConfig()">reiniciar</button>
       </form>
     </div>
   </div>
+
+    <ngx-paypal [config]="payPalConfig" ></ngx-paypal>
 
 
 </body>

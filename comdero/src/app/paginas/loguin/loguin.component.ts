@@ -27,26 +27,44 @@ export class LoguinComponent {
   }
   initConfig() {
     this.payPalConfig = {
-      currency: 'MXN',
+      currency: 'USD',
       clientId: 'Ae5SlhhgQC33YtMTKt0VJV-DlqFVJvWXGSzJNWRDGJLMolNPW_ppiGCy30nSyNlzv521TGmcXTeCuqiW',
-
       createOrderOnClient: (data) => <ICreateOrderRequest>{
         intent: 'CAPTURE',
+
+        payer:{
+          name:{
+            given_name:'stteffano',
+            surname:"Aguayo"
+          },
+          address: {
+            address_line_1: '123 ABC Street',
+            address_line_2: 'Apt 2',
+            postal_code: '95121',
+            country_code: 'EC',
+            admin_area_2: 'Riobamba',
+          },
+          email_address: "tefo.aguayo@gmail.com",
+
+        },
 
         purchase_units: [
           {
             amount: {
-              currency_code: 'MXN',
+              currency_code: 'USD',
               value: '0.02',
-              breakdown: {
+            /*  breakdown: {
                 item_total: {
-                  currency_code: 'MXN',
+                  currency_code: 'USD',
                   value: '0.02'
                 }
-              }
+              }*/
             },
+
+
           }
-        ]
+        ],
+
       },
       advanced: {
         commit: 'true'
@@ -58,8 +76,8 @@ export class LoguinComponent {
         size:'responsive',
         shape:'pill',
 
-
       },
+
       onApprove: (data, actions) => {
         console.log('onApprove - transaction was approved, but not authorized', data, actions);
         actions.order.get().then(details => {
