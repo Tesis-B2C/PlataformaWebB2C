@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./carrito-compras.component.css']
 })
 export class CarritoComprasComponent implements OnInit {
-
+ public cont:Number;
   constructor() { }
 
   ngOnInit() {
+    this.cont=1;
   }
 
 }
