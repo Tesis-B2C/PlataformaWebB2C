@@ -10,6 +10,7 @@ import {FormsModule} from "@angular/forms";
 import {BusquedaComponent} from './busqueda/busqueda.component';
 import {TypeaheadModule} from "ngx-bootstrap";
 import { DetalleProductoComponent } from './detalle-producto/detalle-producto.component';
+import { CarritoComprasComponent } from './carrito-compras/carrito-compras.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { DetalleProductoComponent } from './detalle-producto/detalle-producto.co
     MenuComponent,
     CategoriasComponent,
     BusquedaComponent,
-    DetalleProductoComponent
+    DetalleProductoComponent,
+    CarritoComprasComponent
   ],
   imports: [
     CommonModule,
