@@ -41,7 +41,7 @@
               <span class="badge badge-pill badge-danger notify">0</span>
             </div>
             <div class="widget-header  mr-3" *ngIf="this._agenteServicio.getIdentity()">
-              <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
+              <a routerLink="carrito-compras/{{this._agenteServicio.getIdentity().COD_AGENTE}}" class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
               <span class="badge badge-pill badge-danger notify">0</span>
             </div>
             <div class="widget-header icontext"  >

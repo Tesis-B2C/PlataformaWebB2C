@@ -176,4 +176,10 @@ export class BusquedaComponent implements OnInit, OnDestroy, OnChanges {
     }
     // [routerLink]="['/registro-tienda']"
   }
+
+
+  public async agregarCarrito(){
+
+  }
+
 }

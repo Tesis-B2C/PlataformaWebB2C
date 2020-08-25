@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 var Carrito_Producto = require("./carrito_producto");
 
-const Carrito = db.sequelize.define('Carrito', {
+const Carrito = db.sequelize.define('CARRITO', {
 
         ID_CARRITO:
             {
@@ -11,7 +11,7 @@ const Carrito = db.sequelize.define('Carrito', {
                 allowNull: false,
                 autoIncrement:true
             },
-        ID_AGENTE:
+        COD_AGENTE:
             {
                 type: Sequelize.INTEGER,
                 allowNull: false

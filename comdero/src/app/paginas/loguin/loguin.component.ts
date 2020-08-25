@@ -128,8 +128,9 @@ export class LoguinComponent {
       }
     } catch (e) {
       this.loading = false;
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
+      console.log("error", e);
+      if (JSON.stringify((e).err.message))
+        this.mensageError(JSON.stringify((e).err.message));
       else this.mensageError("Error de conexión intentelo mas tarde");
     }
     this.loading = false;

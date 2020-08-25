@@ -22,6 +22,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log("user", JSON.stringify(this._agenteServicio.getIdentity()))
   }
 
   ngOnDestroy() {

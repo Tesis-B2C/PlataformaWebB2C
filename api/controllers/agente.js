@@ -6,7 +6,8 @@ const AGENTE = require('../models/agente'); //importar el modelo del usuario  o 
 const jwt = require('../services/jwt');
 const correo = require('./correo');
 const DPA = require('../models/dpa');
-
+const CARRITO=require('../models/carrito');
+const db = require('../database/db');
 async function registrarAgente(req, res) {
     try {
         let agenteEncontrado = await AGENTE.findOne({where: {CORREO: req.body.Correo}});
@@ -85,6 +86,7 @@ async function autenticarAgente(req, res) {
                 if (params.getHash) {
                     res.status(200).send({token: jwt.createToken(agente.dataValues)});
                 } else {
+
                     res.status(200).send({
                         data: agente
                     });
@@ -101,7 +103,9 @@ async function autenticarAgente(req, res) {
 }
 
 async function autenticarActivarAgente(req, res) {
+    const t = await db.sequelize.transaction({autocommit: false});
     try {
+
         let params = req.body;
         let correo = params.Correo.trim();
         let contrasenia = params.Contrasenia;
@@ -123,13 +127,16 @@ async function autenticarActivarAgente(req, res) {
                         if (params.getHash) {
                             res.status(200).send({token: jwt.createToken(agente.dataValues)});
                         } else {
-                            let agenteActualizado = agente.update({ESTADO: "0"});
+                            let agenteActualizado = agente.update({ESTADO: "0"},{transaction: t});
+
                             if (!agenteActualizado) {
                                 res.status(404).send({message: 'El Usuario no ha sido activado'});
                             } else {
-                                res.status(200).send({
-                                    data: agente
-                                });
+                               let crearTienda=await CARRITO.create({COD_AGENTE:agente.dataValues.COD_AGENTE,CANTIDAD_TOTAL_PRODUCTOS:0 },{transaction: t});
+                                    res.status(200).send({
+                                        data: agente
+                                    });
+                                await t.commit();
                             }
                         }
                     } else {
@@ -139,6 +146,7 @@ async function autenticarActivarAgente(req, res) {
 
         }
     } catch (err) {
+        await  t.rollback();
         res.status(500).send({
             message: err.name
         });
