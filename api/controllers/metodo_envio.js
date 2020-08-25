@@ -9,7 +9,7 @@ async function guardarMetodoEnvio(req, res) {
     const t = await db.sequelize.transaction({ autocommit: false });
     try {
         const params = req.body;
-        let verificar = Agente.findOne({ where: { COD_AGENTE: req.user.id } });
+        let verificar = await Agente.findOne({ where: { COD_AGENTE: req.user.id } });
 
         if (!verificar) {
             return res.status(500).send({

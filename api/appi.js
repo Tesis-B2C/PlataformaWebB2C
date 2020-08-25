@@ -19,7 +19,7 @@ var tienda_rutas = require('./routes/tienda');
 var metodo_envio_rutas=require('./routes/metodo_envio');
 var descuento_rutas=require('./routes/descuento');
 var correo_rutas=require('./routes/correo');
-var carrito_rutas=require('./routes/correo');
+var carrito_rutas=require('./routes/carrito');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); //convertir a json als peticiones
 

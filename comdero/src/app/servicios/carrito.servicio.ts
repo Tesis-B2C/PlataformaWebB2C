@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpResponse, HttpHeaders} from '@angular/common/http';
 import {GLOBAL} from "./global";
+import {AgenteServicio} from "./agente.servicio";
 
 //import { Http, Headers } from "@angular/http";
 
@@ -11,17 +12,19 @@ interface objeto {
 
 @Injectable()
 
-export class CategoriaServicio {
+export class CarritoServicio {
   public url: String;
 
 
-  constructor(private _http: HttpClient) {
+  constructor(private _http: HttpClient,private _agenteServicio: AgenteServicio) {
     this.url = GLOBAL.url;
   }
 
   getCarrito(Id_Agente) {
-    let headers = new HttpHeaders({"Content-type": "application/json"});
+    debugger;
+    let headers = new HttpHeaders({"Content-type": "application/json","Authorization": this._agenteServicio.getToken()});
     return this._http.get<objeto>(this.url + "getCarrito/" + Id_Agente, {headers: headers});
+
   }
 
   saveCarrito(Id_Agente, producto) {

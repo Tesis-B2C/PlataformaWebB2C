@@ -216,7 +216,7 @@ async function getMisTiendas(req, res) {
 async function updateEstadoTienda(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
     try {
-        let verificar = AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
+        let verificar = await AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
@@ -415,7 +415,7 @@ async function obtenerImagenTienda(req, res) {
 async function actualizarTiendaGeneral(req, res) {
     const trans = await db.sequelize.transaction({autocommit: false});
     try {
-        let verificar = AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
+        let verificar = await AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
@@ -483,7 +483,7 @@ async function actualizarTiendaGeneral(req, res) {
 async function actualizarTiendaSucursal(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
     try {
-        let verificar = AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
+        let verificar = await AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
