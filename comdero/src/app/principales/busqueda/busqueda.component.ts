@@ -5,6 +5,7 @@ import {NgbRatingConfig} from "@ng-bootstrap/ng-bootstrap";
 import {GLOBAL} from 'src/app/servicios/global';
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import {CategoriaServicio} from "../../servicios/categoria.servicio";
+import {CarritoServicio} from "../../servicios/carrito.servicio";
 
 @Component({
   selector: 'app-busqueda',
@@ -38,7 +39,7 @@ export class BusquedaComponent implements OnInit, OnDestroy, OnChanges {
     'fa fa-car', 'fa fa-dumbbell', 'fa fa-book',
     'fa fa-dog', 'fa fa-gamepad', 'fa fa-grin-stars', 'fa fa-heartbeat', 'fa fa-building', 'fa fa-tractor'];
 
-  constructor(private _categoriaServicio:CategoriaServicio, private _agenteServicio: AgenteServicio, private router: Router, configRating: NgbRatingConfig, private route: ActivatedRoute, private _tiendaServicio: TiendaServicio) {
+  constructor(private _carritoServicio:CarritoServicio,private _categoriaServicio:CategoriaServicio, private _agenteServicio: AgenteServicio, private router: Router, configRating: NgbRatingConfig, private route: ActivatedRoute, private _tiendaServicio: TiendaServicio) {
     configRating.max = 5;
     configRating.readonly = true;
   }
@@ -137,11 +138,16 @@ export class BusquedaComponent implements OnInit, OnDestroy, OnChanges {
           PRECIO_CON_IVA: Number,
           IMAGEN: String,
           NUM_TIENDA: String,
-          ID_OFERTA: Number
+          ID_OFERTA: Number,
+          ID_PRODUCTO:String,
+          COD_PRODUCTO:String,
+
         }
 
         objProducto.NOMBRE_COMERCIAL = elemnt.TIENDA.NOMBRE_COMERCIAL;
         objProducto.NOMBRE_PRODUCTO = elemnt.PRODUCTO.NOMBRE_PRODUCTO;
+        objProducto.ID_PRODUCTO = elemnt.PRODUCTO.ID_PRODUCTO;
+        objProducto.COD_PRODUCTO = elemnt.PRODUCTO.COD_PRODUCTO;
         objProducto.DESCRIPCION_PRODUCTO = elemnt.PRODUCTO.DESCRIPCION_PRODUCTO;
 
         if (elemnt.PRODUCTO.CALIFICACIONs.length > 0)
@@ -178,8 +184,14 @@ export class BusquedaComponent implements OnInit, OnDestroy, OnChanges {
   }
 
 
-  public async agregarCarrito(){
+  public async agregarCarrito(Id_Producto,Cod_Producto){
+    try {
+      let identidad = this._agenteServicio.getIdentity();
+      let response = await this._carritoServicio.saveCarrito(identidad.COD_AGENTE,Id_Producto,Cod_Producto,0).toPromise();
 
+    } catch (e) {
+      console.log("error:" + JSON.stringify((e)));
+    }
   }
 
 }

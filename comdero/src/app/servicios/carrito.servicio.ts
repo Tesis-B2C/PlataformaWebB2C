@@ -30,14 +30,15 @@ export class CarritoServicio {
 
   }
 
-  saveCarrito(Id_Agente, Id_Producto, Cod_Producto) {
+  saveCarrito(Id_Agente, Id_Producto, Cod_Producto,cont) {
     let obj = {
       Id_Agente: Id_Agente,
       Id_Producto: Id_Producto,
-      Cod_Producto
+      Cod_Producto:Cod_Producto,
+      cont:cont
     }
     let params = JSON.stringify(obj)
-    let headers = new HttpHeaders({"Content-type": "application/json"});
+    let headers = new HttpHeaders({"Content-type": "application/json", "Authorization": this._agenteServicio.getToken()});
     return this._http.post<objeto>(this.url + "saveCarrito/", params, {headers: headers});
   }
 
