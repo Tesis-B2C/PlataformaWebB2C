@@ -72,7 +72,7 @@ async function getCarrito(req, res) {
 
 async function saveCarrito(req, res) {
 
-    let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id, include: {model: Carrito}}});
+    let verificar = await Agente.findOne({where: {COD_AGENTE: req.body.Id_Agente, include: {model: Carrito}}});
     try {
         if (!verificar) {
             return res.status(500).send({
@@ -80,9 +80,9 @@ async function saveCarrito(req, res) {
             });
         } else {
             let carritoGuardado = await Carrito_Producto.create({
-                ID_PRODUCTO: req.body.ID_PRODUCTO,
-                COD_PRODUCTO: req.body.COD_PRODUCTO,
-                ID_CARRITO: verificar.CARRITO.ID_cARRITO
+                ID_PRODUCTO: req.body.Id_Producto,
+                COD_PRODUCTO: req.body.Cod_Producto,
+                ID_CARRITO: verificar.CARRITO.ID_CARRITO
             });
 
             if (carritoGuardado) {
