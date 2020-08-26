@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import {CarritoServicio} from "../../servicios/carrito.servicio";
-import {element} from "protractor";
-import objectContaining = jasmine.objectContaining;
+
 
 @Component({
   selector: 'app-carrito-compras',
@@ -49,7 +48,7 @@ export class CarritoComprasComponent implements OnInit {
           })
 
         });
-     
+
 
         console.log("por tienda", this.vTiendas);
 
