@@ -8,6 +8,7 @@ const Producto = require("../models/producto");
 const Variante = require("../models/variante");
 const Imagen_Producto = require("../models/imagen_producto");
 const Producto_Descuento = require("../models/producto_descuento");
+const Oferta = require("../models/oferta");
 const Descuento = require("../models/descuento");
 
 async function getCarrito(req, res) {
@@ -26,7 +27,7 @@ async function getCarrito(req, res) {
                     model: Carrito_Producto,
                     include: {
                         model: Producto,
-                        include: [{model: Variante, include: {model: Imagen_Producto}}, {
+                        include: [{model: Oferta}, {model: Variante, include: {model: Imagen_Producto}}, {
                             model: Producto_Descuento,
                             include: {model: Descuento}
                         }]
@@ -72,7 +73,7 @@ async function getCarrito(req, res) {
 
 async function saveCarrito(req, res) {
 
-    let verificar = await Agente.findOne({where: {COD_AGENTE: req.body.Id_Agente},include: {model: Carrito}});
+    let verificar = await Agente.findOne({where: {COD_AGENTE: req.body.Id_Agente}, include: {model: Carrito}});
     try {
         if (!verificar) {
             return res.status(500).send({
@@ -82,8 +83,19 @@ async function saveCarrito(req, res) {
             let carritoGuardado = await Carrito_Producto.create({
                 ID_PRODUCTO: req.body.Id_Producto,
                 COD_PRODUCTO: req.body.Cod_Producto,
-                ID_CARRITO: verificar.CARRITO.ID_CARRITO,
-                CANTIDAD_PRODUCTO_CARRITO:req.body.cont
+                ID_CARRITO: verificar.dataValues.CARRITO.ID_CARRITO,
+                CANTIDAD_PRODUCTO_CARRITO: req.body.cont
+            });
+            let cont = await Carrito_Producto.findOne({
+                where: {
+                    ID_CARRITO: verificar.dataValues.CARRITO.ID_CARRITO,
+                },
+                attributes: ['ID_CARRITO', [Carrito_Producto.sequelize.fn('COUNT', Carrito_Producto.sequelize.col('ID_CARRITO')), 'TOTAL_COM']],
+            });
+            console.log("conmt", cont.dataValues.TOTAL_COM);
+
+            let carritoActualizado = await Carrito.update({CANTIDAD_TOTAL_PRODUCTOS: cont.dataValues.TOTAL_COM}, {
+                where: {COD_AGENTE: req.body.Id_Agente}
             });
 
             if (carritoGuardado) {

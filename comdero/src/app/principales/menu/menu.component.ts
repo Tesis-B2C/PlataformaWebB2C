@@ -29,7 +29,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     try {
       if(identidad){
       this.carritoIdentidad = await this._carritoServicio.getCarrito(identidad.COD_AGENTE).toPromise();
-      console.log("carrito", this.carritoIdentidad.data);
+      console.log("OBTENIENDO carrito", this.carritoIdentidad.data);
       }
     }catch (e) {
       console.log(e);

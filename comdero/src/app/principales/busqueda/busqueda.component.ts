@@ -6,7 +6,7 @@ import {GLOBAL} from 'src/app/servicios/global';
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import {CategoriaServicio} from "../../servicios/categoria.servicio";
 import {CarritoServicio} from "../../servicios/carrito.servicio";
-
+import {MenuComponent} from "../menu/menu.component";
 @Component({
   selector: 'app-busqueda',
   templateUrl: './busqueda.component.html',
@@ -39,7 +39,7 @@ export class BusquedaComponent implements OnInit, OnDestroy, OnChanges {
     'fa fa-car', 'fa fa-dumbbell', 'fa fa-book',
     'fa fa-dog', 'fa fa-gamepad', 'fa fa-grin-stars', 'fa fa-heartbeat', 'fa fa-building', 'fa fa-tractor'];
 
-  constructor(private _carritoServicio:CarritoServicio,private _categoriaServicio:CategoriaServicio, private _agenteServicio: AgenteServicio, private router: Router, configRating: NgbRatingConfig, private route: ActivatedRoute, private _tiendaServicio: TiendaServicio) {
+  constructor(private menu:MenuComponent, private _carritoServicio:CarritoServicio,private _categoriaServicio:CategoriaServicio, private _agenteServicio: AgenteServicio, private router: Router, configRating: NgbRatingConfig, private route: ActivatedRoute, private _tiendaServicio: TiendaServicio) {
     configRating.max = 5;
     configRating.readonly = true;
   }
@@ -188,7 +188,7 @@ export class BusquedaComponent implements OnInit, OnDestroy, OnChanges {
     try {
       let identidad = this._agenteServicio.getIdentity();
       let response = await this._carritoServicio.saveCarrito(identidad.COD_AGENTE,Id_Producto,Cod_Producto,0).toPromise();
-
+       this.menu.ngOnInit();
     } catch (e) {
       console.log("error:" + JSON.stringify((e)));
     }
