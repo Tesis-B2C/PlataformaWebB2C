@@ -25,13 +25,17 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     console.log("user", JSON.stringify(this._agenteServicio.getIdentity()));
+   this.conteoProductosCarrito();
+  }
+
+  public async conteoProductosCarrito() {
     let identidad = this._agenteServicio.getIdentity();
     try {
-      if(identidad){
-      this.carritoIdentidad = await this._carritoServicio.getCarrito(identidad.COD_AGENTE).toPromise();
-      console.log("OBTENIENDO carrito", this.carritoIdentidad.data);
+      if (identidad) {
+        this.carritoIdentidad = await this._carritoServicio.getCarrito(identidad.COD_AGENTE).toPromise();
+        console.log("OBTENIENDO carrito", this.carritoIdentidad.data);
       }
-    }catch (e) {
+    } catch (e) {
       console.log(e);
     }
   }

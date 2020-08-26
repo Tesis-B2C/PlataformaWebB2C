@@ -188,7 +188,7 @@ export class BusquedaComponent implements OnInit, OnDestroy, OnChanges {
     try {
       let identidad = this._agenteServicio.getIdentity();
       let response = await this._carritoServicio.saveCarrito(identidad.COD_AGENTE,Id_Producto,Cod_Producto,0).toPromise();
-       this.menu.ngOnInit();
+       this.menu.conteoProductosCarrito();
     } catch (e) {
       console.log("error:" + JSON.stringify((e)));
     }

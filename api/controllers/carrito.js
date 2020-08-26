@@ -1,6 +1,8 @@
 'use strict'
 
 
+
+
 const Carrito = require('../models/carrito'); //importar el modelo del usuario  o lo que son las clases comunes
 const Carrito_Producto = require('../models/carrito_producto'); //importar el modelo del usuario  o lo que son las clases comunes
 const Agente = require("../models/Agente");
@@ -10,7 +12,7 @@ const Imagen_Producto = require("../models/imagen_producto");
 const Producto_Descuento = require("../models/producto_descuento");
 const Oferta = require("../models/oferta");
 const Descuento = require("../models/descuento");
-
+const Tienda = require("../models/tienda");
 async function getCarrito(req, res) {
     let busqueda = req.params.id;
     let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
@@ -27,7 +29,7 @@ async function getCarrito(req, res) {
                     model: Carrito_Producto,
                     include: {
                         model: Producto,
-                        include: [{model: Oferta}, {model: Variante, include: {model: Imagen_Producto}}, {
+                        include: [{model: Oferta, include:{model:Tienda}}, {model: Variante, include: {model: Imagen_Producto}}, {
                             model: Producto_Descuento,
                             include: {model: Descuento}
                         }]
@@ -42,19 +44,6 @@ async function getCarrito(req, res) {
                 });
             } else {
                 let crearCarrito = await Carrito.create({COD_AGENTE: busqueda, CANTIDAD_TOTAL_PRODUCTOS: 0});
-                let carritoObtenido = await Carrito.findOne({
-                    where: {COD_AGENTE: busqueda},
-                    include: {
-                        model: Carrito_Producto,
-                        include: {
-                            model: Producto,
-                            include: [{model: Variante, include: {model: Imagen_Producto}}, {
-                                model: Producto_Descuento,
-                                include: {model: Descuento}
-                            }]
-                        }
-                    }
-                });
 
                 res.status(200).send({
                     data: carritoObtenido,
