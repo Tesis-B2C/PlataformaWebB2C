@@ -2,7 +2,10 @@ import {Component} from '@angular/core';
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import Swal from "sweetalert2";
 import {ActivatedRoute, Router} from "@angular/router";
-
+import {
+  IPayPalConfig,
+  ICreateOrderRequest
+} from 'ngx-paypal';
 @Component({
   selector: 'app-loguin',
   templateUrl: './loguin.component.html',
@@ -18,9 +21,82 @@ export class LoguinComponent {
   public loading: boolean = false;
   public tokenTemporal;
   public response;
-
+  public payPalConfig: IPayPalConfig;
   constructor(private route: ActivatedRoute, private _agenteServicio: AgenteServicio, public router: Router) {
+    this.initConfig();
+  }
+  initConfig() {
+    this.payPalConfig = {
+      currency: 'USD',
+      clientId: 'Ae5SlhhgQC33YtMTKt0VJV-DlqFVJvWXGSzJNWRDGJLMolNPW_ppiGCy30nSyNlzv521TGmcXTeCuqiW',
+      createOrderOnClient: (data) => <ICreateOrderRequest>{
+        intent: 'CAPTURE',
 
+        payer:{
+          name:{
+            given_name:'stteffano',
+            surname:"Aguayo"
+          },
+          address: {
+            address_line_1: '123 ABC Street',
+            address_line_2: 'Apt 2',
+            postal_code: '95121',
+            country_code: 'EC',
+            admin_area_2: 'Riobamba',
+          },
+          email_address: "tefo.aguayo@gmail.com",
+
+        },
+
+        purchase_units: [
+          {
+            amount: {
+              currency_code: 'USD',
+              value: '0.02',
+            /*  breakdown: {
+                item_total: {
+                  currency_code: 'USD',
+                  value: '0.02'
+                }
+              }*/
+            },
+
+
+          }
+        ],
+
+      },
+      advanced: {
+        commit: 'true'
+      },
+      style: {
+        label: 'paypal',
+        layout: 'vertical',
+        color:'blue',
+        size:'responsive',
+        shape:'pill',
+
+      },
+
+      onApprove: (data, actions) => {
+        console.log('onApprove - transaction was approved, but not authorized', data, actions);
+        actions.order.get().then(details => {
+          console.log('onApprove - you can get full order details inside onApprove: ', details);
+        });
+      },
+      onClientAuthorization: (data) => {
+        console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+      },
+      onCancel: (data, actions) => {
+        console.log('OnCancel', data, actions);
+      },
+      onError: err => {
+        console.log('OnError', err);
+      },
+      onClick: (data, actions) => {
+        console.log('onClick', data, actions);
+      },
+    };
   }
 
   public async loguin() {
@@ -52,8 +128,9 @@ export class LoguinComponent {
       }
     } catch (e) {
       this.loading = false;
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
+      console.log("error", e);
+      if (JSON.stringify((e).err.message))
+        this.mensageError(JSON.stringify((e).err.message));
       else this.mensageError("Error de conexión intentelo mas tarde");
     }
     this.loading = false;

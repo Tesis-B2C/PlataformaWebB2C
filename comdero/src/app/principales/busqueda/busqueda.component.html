@@ -104,11 +104,13 @@
             </div> <!-- info-price-detail // -->
             <p class="text-success">Free shipping</p>
             <br>
+
             <p>
+
               <a href="principales/menu/detalle-producto/{{p.ID_OFERTA}}" class="btn btn-primary btn-block">
                 Detalles </a>
-              <a href="#" class="btn btn-light btn-block"><i class="fa fa-heart"></i>
-                <span class="text">Lista de deseos</span>
+              <a *ngIf="p" (click)="agregarCarrito(p.ID_PRODUCTO, p.COD_PRODUCTO)"  class="btn btn-outline-primary btn-block">
+                <span class="text">Agregar al carrito</span><i class="fa fa-shopping-cart"></i>
               </a>
               <a href="principales/menu/detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda"
                  class="title tituloTienda text-primary"> {{p.NOMBRE_COMERCIAL}}</a>

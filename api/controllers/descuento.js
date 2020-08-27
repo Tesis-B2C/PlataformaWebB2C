@@ -12,7 +12,7 @@ async function saveDescuento(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
     try {
         const params = req.body;
-        let verificar = Agente.findOne({where: {COD_AGENTE: req.user.id}});
+        let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
         if (!verificar) {
             return res.status(500).send({
                 message: "No tiene los permisos necesarios"
@@ -61,7 +61,7 @@ async function saveDescuento(req, res) {
 
 async function getMisDescuentos(req, res) {
     try {
-        let verificar = Agente.findOne({where: {COD_AGENTE: req.user.id}});
+        let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
         if (!verificar) {
             return res.status(500).send({
                 message: "No tiene los permisos necesarios"
@@ -93,7 +93,7 @@ async function getMisDescuentos(req, res) {
 
 async function updateEstadoDescuento(req, res) {
     try {
-        let verificar = Agente.findOne({where: {COD_AGENTE: req.user.id}});
+        let verificar = await  Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
@@ -126,7 +126,7 @@ async function updateEstadoDescuento(req, res) {
 async function getDescuento(req, res) {
     try {
 
-        let verificar = Agente.findOne({where: {COD_AGENTE: req.user.id}});
+        let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
@@ -168,7 +168,7 @@ async function updateDescuento(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
     try {
         const params = req.body;
-        let verificar = Agente.findOne({where: {COD_AGENTE: req.user.id}});
+        let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
@@ -226,7 +226,7 @@ async function updateEstadoDescuentos(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
     try {
 
-        let verificar = Agente.findOne({where: {COD_AGENTE: req.user.id}});
+        let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({

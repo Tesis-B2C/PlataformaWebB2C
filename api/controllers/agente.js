@@ -7,6 +7,7 @@ const jwt = require('../services/jwt');
 const correo = require('./correo');
 const DPA = require('../models/dpa');
 
+
 async function registrarAgente(req, res) {
     try {
         let agenteEncontrado = await AGENTE.findOne({where: {CORREO: req.body.Correo}});
@@ -33,16 +34,7 @@ async function registrarAgente(req, res) {
             });
             let agenteGuardado = await agente.save();
             if (agenteGuardado) {
-                /*  let TOKENTEMPORAL = jwt.createToken24h(agente);
-                  let respuestaCorreo = await correo.EnviarCorreo(agente.CORREO, 'Activación de cuenta', agente.NOMBRE, TOKENTEMPORAL);
-
-                  if (respuestaCorreo == false) {
-                     // agente.destroy({where: {CORREO: agente.CORREO}});
-                      res.status(500).send({
-                          message: 'Parece que hay un error en el correo electrónico intentalo más tarde'
-                      });
-                  } else*/
-                if (req.body.Num_Cod_Postal) {
+                if (req.body.Calle_Principal_Agente) {
                     res.status(200).send({
                         message: 'Por favor revisa tu correo electrónico ' + agente.CORREO + 'para activar tu cuenta',
                         data: agenteGuardado
@@ -85,6 +77,7 @@ async function autenticarAgente(req, res) {
                 if (params.getHash) {
                     res.status(200).send({token: jwt.createToken(agente.dataValues)});
                 } else {
+
                     res.status(200).send({
                         data: agente
                     });
@@ -101,7 +94,9 @@ async function autenticarAgente(req, res) {
 }
 
 async function autenticarActivarAgente(req, res) {
+
     try {
+
         let params = req.body;
         let correo = params.Correo.trim();
         let contrasenia = params.Contrasenia;
@@ -119,23 +114,25 @@ async function autenticarActivarAgente(req, res) {
             } else {
 
                 let result = bcrypt.compareSync(contrasenia, agente.dataValues.CONTRASENIA);
-                    if (result) {
-                        if (params.getHash) {
-                            res.status(200).send({token: jwt.createToken(agente.dataValues)});
-                        } else {
-                            let agenteActualizado = agente.update({ESTADO: "0"});
-                            if (!agenteActualizado) {
-                                res.status(404).send({message: 'El Usuario no ha sido activado'});
-                            } else {
-                                res.status(200).send({
-                                    data: agente
-                                });
-                            }
-                        }
+                if (result) {
+                    if (params.getHash) {
+                        res.status(200).send({token: jwt.createToken(agente.dataValues)});
                     } else {
-                        res.status(404).send({message: 'Error, contraseña incorrecta'});
+                        let agenteActualizado = agente.update({ESTADO: "0"});
+
+                        if (!agenteActualizado) {
+                            res.status(404).send({message: 'El Usuario no ha sido activado'});
+                        } else {
+                            res.status(200).send({
+                                data: agente
+                            });
+
+                        }
                     }
+                } else {
+                    res.status(404).send({message: 'Error, contraseña incorrecta'});
                 }
+            }
 
         }
     } catch (err) {
@@ -201,7 +198,7 @@ async function resetearContrasenia2(req, res) {
 async function actualizarAgente(req, res) {
     try {
 
-        let verificar = AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
+        let verificar = await AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
@@ -243,7 +240,7 @@ async function actualizarAgente(req, res) {
 async function verificarExistenciaCorreo(req, res) {
     try {
 
-        let verificar = AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
+        let verificar = await AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
@@ -281,7 +278,7 @@ async function verificarExistenciaCorreo(req, res) {
 async function cambioCorreoAgente(req, res) {
     try {
 
-        let verificar = AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
+        let verificar = await AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
@@ -310,7 +307,7 @@ async function actualizarAgenteIdentity(req, res) {
 
     try {
 
-        let verificar = AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
+        let verificar = await AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
@@ -347,7 +344,7 @@ async function actualizarContrasenia(req, res) {
 
     try {
 
-        let verificar = AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
+        let verificar = await AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
