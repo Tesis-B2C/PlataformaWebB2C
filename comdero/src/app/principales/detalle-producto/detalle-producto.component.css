@@ -113,3 +113,17 @@
 .input-spinner input.form-control {
   max-width: 36px;
 }
+
+.gallery-wrap .img-big-wrap {
+  height: 400px;
+  width: 100%;
+  display: inline-block;
+  cursor: zoom-in;
+}
+
+.gallery-wrap .img-big-wrap img {
+  height: 400px;
+  width: auto;
+  display: inline-block;
+  cursor: zoom-in;
+}

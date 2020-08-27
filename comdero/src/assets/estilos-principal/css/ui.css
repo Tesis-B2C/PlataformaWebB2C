@@ -1478,7 +1478,6 @@ a[class*='card']:hover .title {
   height: 450px;
   width: auto;
   display: inline-block;
-  cursor: -webkit-zoom-in;
   cursor: zoom-in;
 }
 
