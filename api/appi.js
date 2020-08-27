@@ -1,4 +1,4 @@
-'Use strcit'
+'Use strict'
 
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -53,7 +53,6 @@ app.use('/uploads/productos',express.static(path.resolve('uploads/productos')));
 app.use('/api', nuevaOferta_routes);
 app.use('/api', administrador_rutes);
 app.use('/api',email);*/
-
 
 //app.use('/api',paypal);
 

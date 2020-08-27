@@ -45,10 +45,8 @@ import {ReloadGuard} from "./shared/guards/reload.guard";
     CarouselModule,
     ToastrModule.forRoot({preventDuplicates: true}),
     BsDatepickerModule.forRoot(),
-    TypeaheadModule.forRoot(),
+    TypeaheadModule.forRoot()
   ],
-
-
   providers: [
     DescuentoServicio,
     DpaServicio,

@@ -19,7 +19,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link"  style="color: white; cursor: pointer">Vende con nosotros</a>
+            <a class="nav-link" style="color: white; cursor: pointer">Vende con nosotros</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Ayuda</a>
@@ -44,22 +44,44 @@
     <div class="card">
       <div class="row no-gutters">
         <aside class="col-lg-6 col-md-6">
+
+
           <article class="gallery-wrap">
             <div class="img-big-wrap ">
-              <a href="#"><img src="../../../assets/estilos-principal/images/items/1.jpg"></a>
+              <a>
+                <img *ngIf="this.imagenPrincipal!=null" [src]="this.imagenPrincipal">
+                <iframe *ngIf="this.imagenPrincipal==null" width="100%" height="380"
+                        [src]="this.videoYoutube" frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                <video *ngIf="this.imagenPrincipal==null && this.videoYoutube == null" class="video-carga" controls
+                       height="auto" width="auto">
+                  <source [src]="data.video" type="{{ data.type }}">
+                </video>
+              </a>
+
             </div> <!-- img-big-wrap.// -->
             <div class="thumbs-wrap">
-              <a href="#" class="item-thumb"> <img src="../../../assets/estilos-principal/images/items/1.jpg"></a>
-              <a href="#" class="item-thumb"> <img src="../../../assets/estilos-principal/images/items/2.jpg"></a>
-              <a href="#" class="item-thumb"> <img src="../../../assets/estilos-principal/images/items/3.jpg"></a>
-              <a href="#" class="item-thumb"> <img src="../../../assets/estilos-principal/images/items/4.jpg"></a>
+              <a *ngFor="let imagen of this.varianteActiva.IMAGENES">
+                <div class="item-thumb" *ngIf="imagen.TIPO_IMAGEN != 'youtube' && imagen.TIPO_IMAGEN != 'video'">
+                  <img (click)="asignarImgPrincipal(imagen.IMAGEN)" [src]="getImagen(imagen.IMAGEN)">
+                </div>
+                <div class="item-thumb" *ngIf="imagen.TIPO_IMAGEN == 'youtube'">
+                  <button (click)="this.imagenPrincipal = null" class="clvideo"><i class="fab fa-youtube fa-3x"
+                                                                                   aria-hidden="true"></i></button>
+                </div>
+                <div class="item-thumb" *ngIf="imagen.TIPO_IMAGEN == 'video'">
+                  <button (click)="this.imagenPrincipal = null" class="clvideo"><i class="fab fa-video fa-3x"
+                                                                                   aria-hidden="true"></i></button>
+                </div>
+              </a>
             </div> <!-- thumbs-wrap.// -->
           </article> <!-- gallery-wrap .end// -->
         </aside>
         <main class="col-lg-6 col-md-6 border-left">
           <article class="content-body px-4">
             <p class="mb-0">
-              <a href="principales/menu/detalle-tienda/tienda/300000/inicio-tienda"
+              <a href="principales/menu/detalle-tienda/tienda/2/inicio-tienda"
                  class="title tituloTienda text-primary p-0"> {{this.productoDetalle?.TIENDA.NOMBRE_COMERCIAL}}</a>
             </p>
             <h4 class="title m-0">{{this.productoDetalle?.PRODUCTO.NOMBRE_PRODUCTO}}</h4>
@@ -89,7 +111,7 @@
             <hr class="mt-2">
 
             <div>
-              <label class="mb-1 small">NUEVO </label>
+              <label class="mb-1 small">{{this.productoDetalle?.PRODUCTO.CONDICION}}</label>
             </div>
 
             <div class="mb-2">
@@ -97,42 +119,111 @@
               <span class="text-muted fontTamano">/per kg</span>
             </div>
 
-            <div class="input-group mb-2">
-              <div class="input-group-prepend">
-                <label class="input-group-text fontTamano" for="inputGroupSelect01">Cantidad</label>
-              </div>
-              <select class="custom-select col-sm-4 col " id="inputGroupSelect01">
-                <option selected>Choose...</option>
-                <option value="1">One</option>
-              </select>
-            </div>
-
             <article class="gallery-wrap">
+
+              <div class="thumbs-wrap">
+                <div class="item-thumbDetalle" *ngFor="let color of this.arrayColor"
+                     [ngClass]="{'item-Activo':color==this.varianteActiva.COLOR}">
+                  <button id="btnValueColor" (click)="asignarColor(color)" class="item-opciones"
+                          [style.background-color]="color"></button>
+                </div>
+              </div> <!-- thumbs-wrap.// -->
+
               <div class="fontTamano">
                 <dl class="row mb-3">
-                  <dt class="col-sm-3 col-4">Color</dt>
-                  <dd class="col-sm-9 col-8">Brown</dd>
+                  <dt class="col-sm-3 col-4">Marca</dt>
+                  <dd class="col-sm-9 col-8">{{this.productoDetalle?.PRODUCTO.MARCA}}</dd>
 
-                  <dt class="col-sm-3 col-4">Talla</dt>
-                  <dd class="col-sm-9 col-8">S</dd>
+                  <dt class="col-sm-3 col-4 mt-2">Talla</dt>
+                  <dd class="col-sm-9 col-8">
 
-                  <dt class="col-sm-3 col-4">Material</dt>
-                  <dd class="col-sm-9 col-8">Russia, USA, and Europe</dd>
+                    <div class="form-group col-lg-6 col-md-6 col-10 my-2 p-0">
+                      <select (change)="verificarVariante()" class=" tamanioInputs form-control" data-size="4"
+                              name="tallaSelect" id="tallaSelect">
+                        <option selecteddisabled="true" value="null">Seleccione..</option>
+                        <option *ngFor="let talla of this.arrayTalla" [selected]="talla == this.varianteActiva.TALLA"
+                                value="{{talla}}">{{talla}}</option>
+                      </select>
+                    </div>
+
+                  </dd>
+
+                  <dt class="col-sm-3 col-4 mt-2">Material</dt>
+                  <dd class="col-sm-9 col-8">
+
+                    <div class="form-group col-lg-6 col-md-6 col-10 my-2 p-0">
+                      <select (change)="verificarVariante()" class="tamanioInputs form-control" data-size="4"
+                              name="materialSelect" id="materialSelect">
+                        <option selecteddisabled="true" value="null">Seleccione..</option>
+                        <option *ngFor="let material of this.arrayMaterial"
+                                [selected]="material == this.varianteActiva.MATERIAL"
+                                value="{{material}}">{{material}}</option>
+                      </select>
+                    </div>
+                  </dd>
+
                 </dl>
               </div>
-              <div class="thumbs-wrap">
-                <a class="item-thumb item-opciones" *ngFor="let v of this.productoDetalle?.PRODUCTO.VARIANTEs">
-                  <img [src]="getImagen(v.IMAGEN_PRODUCTOs[0].IMAGEN)">
-                </a>
-              </div> <!-- thumbs-wrap.// -->
+
             </article> <!-- gallery-wrap .end// -->
 
+            <label class="m-0 p-0" style="font-size: 13px;">Cantidad:</label>
+            <div class="form-row mb-0">
+              <div class="form-group col-lg-5  col-12">
+                <div class="form-row">
+                  <div class=" input-spinner">
+                    <div class="input-group-prepend">
+                      <button (click)="decrementar()" class="btn btn-light tamanioInputs m-0 px-1"
+                              style="border-color: darkgray" type="button"
+                              id="button-plus"> -
+                      </button>
+                    </div>
+                    <input type="number" disabled [(ngModel)]="this.contador" class="form-control tamanioInputs m-0"
+                           style="border-color: darkgray; background-color: white" value="1">
+                    <div class="input-group-append">
+                      <button (click)="incrementar()" class="btn btn-light tamanioInputs m-0 px-1"
+                              style="border-color: darkgray" type="button"
+                              id="button-minus"> +
+                      </button>
+                    </div>
+                    <p class="m-0 pt-3 mx-1" style="font-size: 11px">(unidades)</p>
+                  </div> <!-- input-group.// -->
+                </div>
+              </div><!--form-group end.-->
+
+              <div class="form-group col-lg-7  col-12 ">
+
+                <div class="form-row">
+                  <div class="form-group col-2 mb-0">
+                    <button class="btn btn-primary"><i class="fas fa-heart"></i></button>
+                  </div> <!--form-group end.-->
+
+                  <div class="form-group col-10 mb-0">
+                    <button class="btn btn-outline-primary col-12">
+                      <span class="text">Agregar al carrito</span>
+                      <i class="fas fa-shopping-cart"></i>
+                    </button>
+                  </div><!--form-group end.-->
+                </div><!--form-row.-->
+
+              </div><!--form-group end.-->
+            </div><!--form-row.-->
+
             <div class="form-row">
-              <button class="btn btn-primary col-lg-5 col-md-5 col-sm-4 col-4 mr-1"> Comprar</button>
-              <button class="btn btn-outline-primary col-lg-5 col-md-6 col-sm-7 col-7 ml-1"><span class="text">Agregar al carrito</span>
-                <i
-                  class="fas fa-shopping-cart"></i></button>
+              <button class="btn btn-primary col-12"> Comprar</button>
             </div>
+
+            <div class="form-row mt-3">
+              <div class="form-group m-0">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Introducir el cupón">
+                  <span class="input-group-append">
+                    <button class="btn btn-primary">Aplicar</button>
+                  </span>
+                </div>
+              </div>
+            </div>
+
           </article> <!-- product-info-aside .// -->
         </main> <!-- col.// -->
       </div> <!-- row.// -->
@@ -143,55 +234,81 @@
 <!-- ============================ COMPONENT 1 END .// ================================= -->
 
 <!-- ============================ COMPONENT 4  ================================= -->
+
 <section class="section-content padding-y-sm pt-0">
   <div class="container">
-    <article class="card">
-      <div class="card-body">
 
-        <div class="row">
-          <aside class="col-md-6">
-            <h5>Parameters</h5>
-            <dl class="row">
-              <dt class="col-sm-3 col-4">Display</dt>
-              <dd class="col-sm-9 col-8">13.3-inch LED-backlit display with IPS</dd>
+    <ngb-tabset [destroyOnHide]="false">
+      <ngb-tab title="Información">
+        <ng-template ngbTabContent>
+          <article class="card">
+            <div class="card-body">
+              <h5>Descripción del producto</h5>
+              <p class="small text-justify">
+                {{this.productoDetalle?.PRODUCTO.DESCRIPCION_PRODUCTO}}
+              </p>
+              <hr>
+              <div class="row">
+                <aside class="col">
+                  <h5>Información adicional</h5>
+                  <dl class="row">
+                    <dt class="col-sm-3 col-4">Código:</dt>
+                    <dd class="col-sm-9 col-8"> {{this.productoDetalle?.PRODUCTO.COD_PRODUCTO}}</dd>
 
-              <dt class="col-sm-3 col-4">Processor</dt>
-              <dd class="col-sm-9 col-8">2.3GHz dual-core Intel Core i5</dd>
+                    <dt class="col-sm-3 col-4">Peso:</dt>
+                    <dd class="col-sm-9 col-8"> {{this.productoDetalle?.PRODUCTO.PESO_PRODUCTO}}</dd>
 
-              <dt class="col-sm-3 col-4">Camera</dt>
-              <dd class="col-sm-9">720p FaceTime HD camera</dd>
+                    <dt class="col-sm-3 col-4">Garantía:</dt>
+                    <dd class="col-sm-9 col-8"> {{this.productoDetalle?.GARANTIA}}</dd>
+                  </dl>
+                </aside>
+              </div> <!-- row.// -->
+              <hr>
 
-              <dt class="col-sm-3 col-4">Memory</dt>
-              <dd class="col-sm-9 col-8">8 GB RAM or 16 GB RAM</dd>
+              <h5>Detalle del producto</h5>
+              <div [innerHTML]=this.productoDetalle?.PRODUCTO.DETALLE_PRODUCTO></div>
 
-              <dt class="col-sm-3 col-4">Graphics</dt>
-              <dd class="col-sm-9 col-8">Intel Iris Plus Graphics 640</dd>
-            </dl>
-          </aside>
-          <aside class="col-md-6">
-            <h5>Features</h5>
-            <ul class="list-check">
-              <li>Best performance of battery</li>
-              <li>5 years warranty for this product</li>
-              <li>Amazing features and high quality</li>
-              <li>Best performance of battery</li>
-              <li>5 years warranty for this product</li>
-              <li>Amazing features and high quality</li>
-            </ul>
-          </aside>
-        </div> <!-- row.// -->
-        <hr>
+            </div> <!-- card-body.// -->
+          </article> <!-- card.// -->
+        </ng-template>
+      </ngb-tab>
 
-        <h6>Descripción del producto</h6>
-        <p class="small text-justify">
-          {{this.productoDetalle?.PRODUCTO.DESCRIPCION_PRODUCTO}}
-        </p>
-        <h6>Detalle del producto</h6>
-        <p class="small text-justify">
-          {{this.productoDetalle?.PRODUCTO.DETALLE_PRODUCTO}}
-        </p>
-      </div> <!-- card-body.// -->
-    </article> <!-- card.// -->
+      <ngb-tab>
+        <ng-template ngbTabTitle>Envíos y pagos</ng-template>
+        <ng-template ngbTabContent>
+
+          <article class="card">
+            <div class="card-body">
+              <h5>Descripción del producto</h5>
+              <p class="small text-justify">
+                {{this.productoDetalle?.PRODUCTO.DESCRIPCION_PRODUCTO}}
+              </p>
+              <h5>Detalle del producto</h5>
+              <div class="small text-justify">
+                {{this.productoDetalle?.PRODUCTO.DETALLE_PRODUCTO}}
+              </div>
+              <hr>
+              <div class="row">
+                <aside class="col-md-6">
+                  <h5>Información adicional</h5>
+                  <dl class="row">
+                    <dt class="col-sm-3 col-4">Código:</dt>
+                    <dd class="col-sm-9 col-8"> {{this.productoDetalle?.PRODUCTO.COD_PRODUCTO}}</dd>
+
+                    <dt class="col-sm-3 col-4">Peso:</dt>
+                    <dd class="col-sm-9 col-8"> {{this.productoDetalle?.PRODUCTO.PESO_PRODUCTO}}</dd>
+
+                  </dl>
+                </aside>
+              </div> <!-- row.// -->
+
+            </div> <!-- card-body.// -->
+          </article> <!-- card.// -->
+
+        </ng-template>
+      </ngb-tab>
+    </ngb-tabset>
+
   </div> <!-- container.// -->
 </section>
 <!-- ============================ COMPONENT 4  .//END ================================= -->

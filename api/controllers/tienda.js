@@ -552,7 +552,7 @@ async function getDetalleTiendaProducto(req, res) {
                         model: VARIANTE,
                         separate: true,
                         attributes: ['PRECIO_UNITARIO'],
-                        limit:1,
+                        limit: 1,
                         order: [['NUM_VARIANTE', 'ASC']],
                         include: {
                             model: IMAGEN_PRODUCTO,
@@ -563,7 +563,7 @@ async function getDetalleTiendaProducto(req, res) {
                             },
                             separate: true,
                             attributes: ['IMAGEN'],
-                            limit:1,
+                            limit: 1,
                             order: [['ID_IMAGEN', 'ASC']]
                         }
                     },
@@ -767,14 +767,14 @@ async function obtenerFiltroBusquedaTodos(req, res) {
                     }
                 }, {
                     model: CALIFICACION,
-                   /* separate: true,*/
-                    attributes: ['ID_PRODUCTO', [CALIFICACION.sequelize.fn('AVG', CALIFICACION.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
-                    group: ['ID_PRODUCTO']
+                    separate: true,
+                    attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', [CALIFICACION.sequelize.fn('AVG', CALIFICACION.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
+                    group: ['ID_PRODUCTO', 'COD_PRODUCTO']
                 }, {
                     model: COMENTARIO,
-                   /* separate: true,*/
-                    attributes: ['ID_PRODUCTO', [COMENTARIO.sequelize.fn('COUNT', COMENTARIO.sequelize.col('ID_COMENTARIO')), 'TOTAL_COM']],
-                    group: ['ID_PRODUCTO']
+                    separate: true,
+                    attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', [COMENTARIO.sequelize.fn('COUNT', COMENTARIO.sequelize.col('ID_COMENTARIO')), 'TOTAL_COM']],
+                    group: ['ID_PRODUCTO', 'COD_PRODUCTO']
                 }]
             }, {
                 model: TIENDA,
@@ -783,7 +783,8 @@ async function obtenerFiltroBusquedaTodos(req, res) {
             where: {
                 ESTADO_OFERTA: 0
             },
-            attributes: ['ID_OFERTA','IVA'],
+            attributes: ['ID_OFERTA', 'IVA'],
+            // limit: 5,
             transaction: t
         });
 
@@ -804,6 +805,7 @@ async function obtenerFiltroBusquedaTodos(req, res) {
             limit: 5,
             transaction: t
         });
+console.log('TIENDAS OBTENDAD'+tiendasObtenidos);
 
         vectorEnviar.push(tiendasObtenidos);
         vectorEnviar.push(productosObtenidos);

@@ -20,8 +20,6 @@ const routes: Routes = [
   {path: 'olvido-contrasenia', component: OlvidoContraseniaComponent},
   {path: 'olvido-contrasenia-paso2/:token', component: OlvidoContraseniaPaso2Component},
   {path: '**', redirectTo: 'principales/menu/principal'},
-
-
 ];
 
 @NgModule({

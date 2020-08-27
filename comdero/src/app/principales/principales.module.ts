@@ -10,7 +10,7 @@ import {FormsModule} from "@angular/forms";
 import {BusquedaComponent} from './busqueda/busqueda.component';
 import {TypeaheadModule} from "ngx-bootstrap";
 import { DetalleProductoComponent } from './detalle-producto/detalle-producto.component';
-
+import { HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -21,6 +21,7 @@ import { DetalleProductoComponent } from './detalle-producto/detalle-producto.co
     DetalleProductoComponent
   ],
   imports: [
+    HttpClientModule,
     CommonModule,
     PrincipalesRoutingModule,
     NgbModule,

@@ -304,7 +304,6 @@ this.borrarVideo();
 
   public opcionCondicionProducto(condicion) {
     this.Producto.Condicion = condicion;
-
   }
 
   public opcionRastrearStock(event) {

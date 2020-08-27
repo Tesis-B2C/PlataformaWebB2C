@@ -525,7 +525,7 @@ async function obtenerTodosProductos(req, res) {
                 }]
             }, {
                 model: Tienda,
-                attributes: ['NOMBRE_COMERCIAL','NUM_TIENDA']
+                attributes: ['NOMBRE_COMERCIAL', 'NUM_TIENDA']
             }],
             attributes: ['ID_OFERTA'],
             where: {
@@ -558,14 +558,10 @@ async function obtenerProductoDetalle(req, res) {
                 include: [{
                     model: Variante,
                     separate: true,
+                    where: {ESTADO_VARIANTE: 0},
                     order: [['NUM_VARIANTE', 'ASC']],
                     include: {
                         model: Imagen_Producto,
-                        where: {
-                            TIPO_IMAGEN: {
-                                [Op.like]: 'image%'
-                            }
-                        },
                         separate: true,
                         order: [['ID_IMAGEN', 'ASC']]
                     }
@@ -575,7 +571,7 @@ async function obtenerProductoDetalle(req, res) {
                 }, {
                     model: Calificacion,
                     separate: true,
-                    attributes: ['ID_PRODUCTO', [Calificacion.sequelize.fn('AVG', Calificacion.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
+                    attributes: ['ID_PRODUCTO','COD_PRODUCTO', [Calificacion.sequelize.fn('AVG', Calificacion.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
                     group: ['ID_PRODUCTO']
                 }, {
                     model: Comentario,
@@ -583,9 +579,9 @@ async function obtenerProductoDetalle(req, res) {
                 }],
             }, {
                 model: Tienda,
-                attributes: ['NOMBRE_COMERCIAL']
+                attributes: ['NUM_TIENDA', 'NOMBRE_COMERCIAL']
             }],
-            attributes: ['ID_OFERTA'],
+            attributes: ['ID_OFERTA', 'NUM_TIENDA', 'IVA', 'GARANTIA'],
             transaction: t
         });
 
@@ -601,7 +597,7 @@ async function obtenerProductoDetalle(req, res) {
                 message: 'Al parecer no se encuentra el producto registrado en la base de datos'
             });
         }
-    } catch (e) {
+    } catch (err) {
         await t.rollback();
         res.status(500).send({
             message: 'error:' + err
