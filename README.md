@@ -90,3 +90,8 @@ video 94 la biblia de nodejs
 npm i ngx-spinner
 https://www.npmjs.com/package/ngx-spinner
 https://napster2210.github.io/ngx-spinner/
+
+---paypal cliente 
+En el cliente osea en angular instalar para agregar el pago online
+npm i ngx-paypal --save
+modificar en la libreria nodemoudles/lib/componentes/paypal.component quitar el set

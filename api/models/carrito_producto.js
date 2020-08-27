@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 
 
-const Carrito_Producto = db.sequelize.define('Carrito_Producto', {
+const Carrito_Producto = db.sequelize.define('CARRITO_PRODUCTO', {
 
         ID_PRODUCTO:
             {

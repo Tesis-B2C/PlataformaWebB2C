@@ -561,10 +561,12 @@ this.borrarVideo();
   validarFormularios() {
     let bandera=true;
    for(let i in this.vectorOpciones){
-     if(document.forms["formVariaciones"+i].checkValidity()){
-       bandera=true;
-     }else {
-       bandera=false;
+     if(document.forms["formVariaciones" + i]!=null) {
+       if (document.forms["formVariaciones" + i].checkValidity()) {
+         bandera = true;
+       } else {
+         bandera = false;
+       }
      }
    }
 

@@ -11,6 +11,8 @@ import {BusquedaComponent} from './busqueda/busqueda.component';
 import {TypeaheadModule} from "ngx-bootstrap";
 import { DetalleProductoComponent } from './detalle-producto/detalle-producto.component';
 import { HttpClientModule} from '@angular/common/http';
+import { CarritoComprasComponent } from './carrito-compras/carrito-compras.component';
+
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import { HttpClientModule} from '@angular/common/http';
     MenuComponent,
     CategoriasComponent,
     BusquedaComponent,
-    DetalleProductoComponent
+    DetalleProductoComponent,
+    CarritoComprasComponent
   ],
   imports: [
     HttpClientModule,

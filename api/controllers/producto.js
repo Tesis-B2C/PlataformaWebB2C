@@ -143,7 +143,7 @@ async function saveProducto(req, res) {
 
 async function getMisProductos(req, res) {
     try {
-        let verificar = Agente.findOne({where: {COD_AGENTE: req.user.id}});
+        let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
@@ -177,7 +177,7 @@ async function getMisProductos(req, res) {
 
 async function getProducto(req, res) {
     try {
-        let verificar = Agente.findOne({where: {COD_AGENTE: req.user.id}});
+        let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
@@ -424,7 +424,7 @@ async function updateProducto(req, res) {
 
 async function updateEstadoProducto(req, res) {
     try {
-        let verificar = Agente.findOne({where: {COD_AGENTE: req.user.id}});
+        let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
@@ -456,7 +456,7 @@ async function updateEstadoProducto(req, res) {
 async function updateEstadoProductos(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
     try {
-        let verificar = Agente.findOne({where: {COD_AGENTE: req.user.id}});
+        let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({

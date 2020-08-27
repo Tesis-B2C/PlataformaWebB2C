@@ -422,3 +422,7 @@ body {
   height: 100vh !important;
   overflow: auto;
 }
+
+.dropdown-toggle::after {
+  display: none;
+}

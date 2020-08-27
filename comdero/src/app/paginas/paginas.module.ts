@@ -11,7 +11,7 @@ import { OlvidoContraseniaPaso2Component } from './olvido-contrasenia-paso2/olvi
 import { ArchwizardModule } from 'angular-archwizard';
 import { NgxEditorModule } from 'ngx-editor';
 import {RouterModule} from "@angular/router";
-
+import { NgxPayPalModule } from 'ngx-paypal';
 @NgModule({
   declarations: [
     LoguinComponent,
@@ -26,7 +26,10 @@ import {RouterModule} from "@angular/router";
         CommonModule,
         NgbModule,
         FormsModule,
-        RouterModule
+        RouterModule,
+       NgxPayPalModule
+
+
     ],
   exports: [RegistroTiendaComponent]
 })

@@ -643,12 +643,14 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
   }
   validarFormularios() {
     let bandera=true;
-    for(let i in this.Variantes){
-      if(document.forms["formVariaciones"+i].checkValidity()){
-        bandera=true;
-      }else {
-        bandera=false;
+    for(let i in this.Variantes) {
+if(document.forms["formVariaciones" + i]!=null){
+      if (document.forms["formVariaciones" + i].checkValidity()) {
+        bandera = true;
+      } else {
+        bandera = false;
       }
+    }
     }
 
     return bandera;
