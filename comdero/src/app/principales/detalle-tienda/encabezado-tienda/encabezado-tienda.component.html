@@ -77,12 +77,8 @@
 
           </div> <!--banner-->
 
-          <div class="  mt-n5  py-3 bg-white border-bottom ">
-
-
-
-            <div class="  mt-5  mt-md-0  text-center  d-block">
-
+          <div class="bg-white border-bottom mt-n5 ">
+            <div class="  text-center  d-block">
               <button class='btn btn-lg btn-link ' style='background-color:transparent;'>
                 <div style='text-align:center;'>
                   <a #contactanos href="https://api.whatsapp.com/send?phone={{contactoWhatsapp}}&text=Hola!%20Quiero%20conocer%20acerca%20de%20su%20tienda!" target="_blank" class="icon icon-sm rounded-circle border border-primary text-center" >
@@ -134,13 +130,13 @@
                                                                                    class=" dropdown-toggle "
                                                                                    class="fa fa-caret-down"></span></p>
 
-                  <ul class="collapse list-unstyled ml-2" id="producto">
+                  <ul class="collapse list-unstyled ml-2 w-100" id="producto">
                     <hr class="mb-0">
                     <p class="mb-1"><strong>Horarios</strong></p>
                     <div *ngFor="let jornada of vJornadas " class="text-left">
                       <p class="row">
-                        <a class="col-4"> <strong>{{jornada.dia}}:</strong> </a>
-                        <a class="col-8">   {{jornada.jornada}}</a>
+                        <a class="col-4 "> <strong>{{jornada.dia}}:</strong> </a>
+                        <a class="col-8 ">   {{jornada.jornada}}</a>
                       </p>
 
 
