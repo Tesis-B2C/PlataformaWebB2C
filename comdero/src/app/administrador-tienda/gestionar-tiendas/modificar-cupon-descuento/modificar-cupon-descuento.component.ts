@@ -46,7 +46,7 @@ export class ModificarCuponDescuentoComponent implements OnInit {
   public loading: boolean = false;
   public minDate = new Date();
 
-  constructor(public toastr: ToastrService, private datePipe: DatePipe, private _productoServicio: ProductoServicio, private modalService: NgbModal, private _descuentoServicio: DescuentoServicio, private route: ActivatedRoute) {
+  constructor(public toastr: ToastrService, public datePipe: DatePipe, public _productoServicio: ProductoServicio, public modalService: NgbModal, public _descuentoServicio: DescuentoServicio, public route: ActivatedRoute) {
     this.Descuento = new Descuento(null, null, null, null, null, null, null, null, null);
 
   }

@@ -42,7 +42,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
 
   currentRate = 1;
 
-  constructor(private _sanitizer: DomSanitizer, configRating: NgbRatingConfig, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
+  constructor(public _sanitizer: DomSanitizer, configRating: NgbRatingConfig, public route: ActivatedRoute, public _productoServicio: ProductoServicio) {
     configRating.max = 5;
     configRating.readonly = true;
   }

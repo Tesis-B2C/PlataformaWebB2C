@@ -8,7 +8,7 @@ import {AgenteServicio} from "../../../servicios/agente.servicio";
 })
 export class VisionGeneralComponent implements OnInit {
  public identidad;
-  constructor(private _agenteServicio:AgenteServicio) { }
+  constructor(public _agenteServicio:AgenteServicio) { }
 
   ngOnInit() {
     this.identidad = this._agenteServicio.getIdentity();

@@ -22,7 +22,7 @@ export class LoguinComponent {
   public tokenTemporal;
   public response;
   public payPalConfig: IPayPalConfig;
-  constructor(private route: ActivatedRoute, private _agenteServicio: AgenteServicio, public router: Router) {
+  constructor(public route: ActivatedRoute, public _agenteServicio: AgenteServicio, public router: Router) {
     this.initConfig();
   }
   initConfig() {

@@ -29,7 +29,7 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
   public banderaSlidePagoEfectivo;
   public loading:boolean=false;
 
-  constructor(private _tiendaServicio: TiendaServicio, public toastr: ToastrService, private _metodoPagoServicio: MetodoPagoServicio, private modalService: NgbModal, private _sanitizer: DomSanitizer) {
+  constructor(public _tiendaServicio: TiendaServicio, public toastr: ToastrService, public _metodoPagoServicio: MetodoPagoServicio, public modalService: NgbModal, public _sanitizer: DomSanitizer) {
 
 
   }

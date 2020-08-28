@@ -8,7 +8,7 @@ import {AgenteServicio} from "../../servicios/agente.servicio";
 })
 export class EncabezadoComponent implements OnInit {
 
-  constructor(private _agenteServicio:AgenteServicio) { }
+  constructor(public _agenteServicio:AgenteServicio) { }
 
   ngOnInit() {
   }

@@ -16,7 +16,7 @@ export class CategoriasComponent implements OnInit {
     'fa fa-gem', 'fa fa-palette', 'fa fa-laptop',
     'fa fa-car', 'fa fa-dumbbell', 'fa fa-book',
     'fa fa-dog', 'fa fa-gamepad', 'fa fa-grin-stars', 'fa fa-heartbeat', 'fa fa-building', 'fa fa-tractor'];
-  constructor(private _categoriaServicio: CategoriaServicio) { }
+  constructor(public _categoriaServicio: CategoriaServicio) { }
 
   ngOnInit() {
     this.getCategorias();

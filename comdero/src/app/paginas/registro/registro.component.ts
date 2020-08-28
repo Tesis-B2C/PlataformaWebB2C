@@ -18,10 +18,10 @@ const places = require("../../../../node_modules/places.js/dist/cdn/places.js");
 })
 
 export class RegistroComponent implements OnInit, OnDestroy {
-  private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
+  public emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
   public soloLetrasPattern: any = "[ a-zA-ZÑñáéíóúÁÉÍÓÚ ][ a-zA-ZÑñáéíóúÁÉÍÓÚ ]*$[0-9]{0}";
-  private LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
-  private soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
+  public LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
+  public soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
   public provincias;
   public ciudades;
   public ComprarContrasenia;
@@ -35,7 +35,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
   public loading: boolean = false;
   public banderaTipo: boolean = true;
 
-  constructor(private _correoServicio: CorreoServicio, public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio) {
+  constructor(public _correoServicio: CorreoServicio, public toastr: ToastrService, public _dpaServicio: DpaServicio, public _agenteServicio: AgenteServicio) {
     this.Agente = new Agente(null, null, null,
       null, null, "Persona", 1, null, null,
       null, null, null, null);

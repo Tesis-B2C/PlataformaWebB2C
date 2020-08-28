@@ -44,10 +44,10 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
     ]
   }
 
-  private LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
-  private soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
-  private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
-  private urlPattern: any = "(https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9]+\\.[^\\s]{2,}|www\\.[a-zA-Z0-9]+\\.[^\\s]{2,})";
+  public LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
+  public soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
+  public emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
+  public urlPattern: any = "(https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9]+\\.[^\\s]{2,}|www\\.[a-zA-Z0-9]+\\.[^\\s]{2,})";
   public provincias;
   public ciudades = [];
 
@@ -65,7 +65,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
 
   @ViewChild(WizardComponent, null) wizard: WizardComponent
 
-  constructor(public toastr: ToastrService, private _agenteServicio: AgenteServicio, private _dpaServicio: DpaServicio, private _tiendaServicio: TiendaServicio) {
+  constructor(public toastr: ToastrService, public _agenteServicio: AgenteServicio, public _dpaServicio: DpaServicio, public _tiendaServicio: TiendaServicio) {
     let identidad = this._agenteServicio.getIdentity();
     this.Tienda = new Tienda(identidad.COD_AGENTE, null, null, null, null,
       null, null, null, null, 0, null, 'No disponible', null);

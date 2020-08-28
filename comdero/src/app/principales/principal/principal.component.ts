@@ -100,7 +100,7 @@ export class PrincipalComponent implements OnInit {
   public vectorProductosObtenidos = [];
   currentRate = 1;
 
-  constructor(configRating: NgbRatingConfig, private route: ActivatedRoute, private router: Router, private _agenteServicio: AgenteServicio, private _tiendaServicio: TiendaServicio, private _categoriaServicio: CategoriaServicio, config: NgbCarouselConfig) {
+  constructor(configRating: NgbRatingConfig, public route: ActivatedRoute, public router: Router, public _agenteServicio: AgenteServicio, public _tiendaServicio: TiendaServicio, public _categoriaServicio: CategoriaServicio, config: NgbCarouselConfig) {
     configRating.max = 5;
     configRating.readonly = true;
     // customize default values of carousels used by this component tree

@@ -12,7 +12,7 @@ export class MenuGestionTiendasComponent {
   public banderaSideBar: boolean = false;
   public identidadTienda;
 
-  constructor(private _tiendaServicio: TiendaServicio, private router: Router) {
+  constructor(public _tiendaServicio: TiendaServicio, public router: Router) {
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
   }
 

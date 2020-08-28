@@ -25,7 +25,7 @@ export class ListadoProductosComponent implements OnInit {
   public loading: boolean = false;
   public ofertasPorBorrar = [];
 
-  constructor(private modalService: NgbModal, private _productoServicio: ProductoServicio) {
+  constructor(public modalService: NgbModal, public _productoServicio: ProductoServicio) {
 
   }
 

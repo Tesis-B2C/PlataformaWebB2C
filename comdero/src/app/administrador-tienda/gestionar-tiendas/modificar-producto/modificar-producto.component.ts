@@ -94,7 +94,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
   public banderaModificar: boolean = false;
   public loading: boolean = false;
 
-  constructor(  private router: Router,public toastr: ToastrService, private cpService: ColorPickerService, private cp: CurrencyPipe, private _sanitizer: DomSanitizer, private _unidadesMedidaServicio: UnidadMedidaServicio, private _categoriaServicio: CategoriaServicio, private modalService: NgbModal, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
+  constructor(  public router: Router,public toastr: ToastrService, public cpService: ColorPickerService, public cp: CurrencyPipe, public _sanitizer: DomSanitizer, public _unidadesMedidaServicio: UnidadMedidaServicio, public _categoriaServicio: CategoriaServicio, public modalService: NgbModal, public route: ActivatedRoute, public _productoServicio: ProductoServicio) {
     this.Oferta = new Oferta(null, null, null, null);
     this.Producto = new Producto(null, null, null, null, null, null, null, null, null);
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));

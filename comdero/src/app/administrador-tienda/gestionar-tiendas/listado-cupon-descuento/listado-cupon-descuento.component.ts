@@ -25,7 +25,7 @@ export class ListadoCuponDescuentoComponent implements OnInit {
   public loading: boolean = false;
 
 
-  constructor(private datePipe: DatePipe, private _descuentoServicio: DescuentoServicio) {
+  constructor(public datePipe: DatePipe, public _descuentoServicio: DescuentoServicio) {
   }
 
   async ngOnInit() {

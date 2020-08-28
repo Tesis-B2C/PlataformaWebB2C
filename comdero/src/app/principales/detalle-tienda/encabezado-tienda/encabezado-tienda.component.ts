@@ -18,7 +18,7 @@ export class EncabezadoTiendaComponent implements OnInit {
   public vPaginasWeb = [];
   public contactoWhatsapp;
 
-  constructor(private _tiendaServicio: TiendaServicio, private route: ActivatedRoute, private router: Router) {
+  constructor(public _tiendaServicio: TiendaServicio, public route: ActivatedRoute, public router: Router) {
 
   }
 

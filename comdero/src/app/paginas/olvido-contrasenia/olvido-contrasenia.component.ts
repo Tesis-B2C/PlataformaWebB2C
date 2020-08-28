@@ -11,7 +11,7 @@ export class OlvidoContraseniaComponent implements OnInit {
 
   public Correo;
   public  loading:boolean=false;
-  constructor(private _correoServicio:CorreoServicio, private _agenteServicio: AgenteServicio) { }
+  constructor(public _correoServicio:CorreoServicio, public _agenteServicio: AgenteServicio) { }
 
   ngOnInit() {
 

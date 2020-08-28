@@ -12,7 +12,7 @@ export class OlvidoContraseniaPaso2Component implements OnInit {
   public obj={Contrasenia:null,Contrasenia2:null}
   public tokenTemporal;
   public loading=false;
-  constructor(private route: ActivatedRoute,private _agenteServicio: AgenteServicio,public router: Router) { }
+  constructor(public route: ActivatedRoute,public _agenteServicio: AgenteServicio,public router: Router) { }
 
 
   ngOnInit() {

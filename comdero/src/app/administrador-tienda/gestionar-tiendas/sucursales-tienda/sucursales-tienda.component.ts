@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
   styleUrls: ['./sucursales-tienda.component.css']
 })
 export class SucursalesTiendaComponent implements OnInit, OnDestroy {
-  private soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
+  public soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
 
   /*Variables Input*/
   public provinciaCasa = "";
@@ -42,7 +42,7 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
   public btnEspacioFisico: boolean = false;
   public btnCasa: boolean = false;
 
-  constructor(private _dpaServicio: DpaServicio, public toastr: ToastrService, private _tiendaServicio: TiendaServicio) {
+  constructor(public _dpaServicio: DpaServicio, public toastr: ToastrService, public _tiendaServicio: TiendaServicio) {
   }
 
   ngOnInit() {
