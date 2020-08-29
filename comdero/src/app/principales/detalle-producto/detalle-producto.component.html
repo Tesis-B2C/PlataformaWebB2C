@@ -1,314 +1,482 @@
-<!-- ========================= SECTION FRANJA AZUL ========================= -->
-<section>
-  <nav class="navbar navbar-main navbar-expand-md  border-bottom colorNavbar mx-0">
-    <div class="mx-lg-auto">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav"
-              aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="fa fa-bars" style="color: white"></span>
-      </button>
 
-      <div class="collapse navbar-collapse" id="main_nav">
-        <ul class="navbar-nav">
-          <li class="nav-item dropdown">
-            <a class="nav-link pl-0" data-toggle="dropdown" href="#" aria-expanded="false"> &nbsp;Categorías <span
-              class="fa fa-caret-down"></span></a>
-            <div class="dropdown-menu ">
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item col-2" [routerLink]="['/principales/menu/categorias']">Ver todas</a>
-            </div>
-          </li>
+  <!-- ========================= SECTION FRANJA AZUL ========================= -->
+  <section>
+    <nav class="navbar navbar-main navbar-expand-md  border-bottom colorNavbar mx-0">
+      <div class="mx-lg-auto">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav"
+                aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="fa fa-bars" style="color: white"></span>
+        </button>
 
-          <li class="nav-item">
-            <a class="nav-link" style="color: white; cursor: pointer">Vende con nosotros</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Ayuda</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Historial</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Quienes somos</a>
-          </li>
+        <div class="collapse navbar-collapse" id="main_nav">
+          <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+              <a class="nav-link pl-0" data-toggle="dropdown" href="#" aria-expanded="false"> &nbsp;Categorías <span
+                class="fa fa-caret-down"></span></a>
+              <div class="dropdown-menu ">
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item col-2" [routerLink]="['/principales/menu/categorias']">Ver todas</a>
+              </div>
+            </li>
 
-        </ul>
-      </div> <!-- collapse .// -->
-    </div> <!-- container .// -->
-  </nav>
-</section>
-<!-- ========================= SECTION FRANJA AZUL END ========================= -->
+            <li class="nav-item">
+              <a class="nav-link" style="color: white; cursor: pointer">Vende con nosotros</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Ayuda</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Historial</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Quienes somos</a>
+            </li>
 
-<!-- ============================ COMPONENT 1 ================================= -->
-<section class="section-content padding-y-sm">
-  <div class="container">
-    <div class="card">
-      <div class="row no-gutters">
-        <aside class="col-lg-6 col-md-6">
+          </ul>
+        </div> <!-- collapse .// -->
+      </div> <!-- container .// -->
+    </nav>
+  </section>
+  <!-- ========================= SECTION FRANJA AZUL END ========================= -->
 
+  <!-- ============================ COMPONENT 1 ================================= -->
+  <section class="section-content padding-y-sm">
+    <div class="container">
+      <div class="card">
+        <div class="row no-gutters">
+          <aside class="col-lg-6 col-md-6">
 
-          <article class="gallery-wrap">
-            <div class="img-big-wrap ">
-              <a>
-                <img *ngIf="this.imagenPrincipal!=null" [src]="this.imagenPrincipal">
-                <iframe *ngIf="this.imagenPrincipal==null" width="100%" height="380"
-                        [src]="this.videoYoutube" frameborder="0"
-                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen></iframe>
-                <video *ngIf="this.imagenPrincipal==null && this.videoYoutube == null" class="video-carga" controls
-                       height="auto" width="auto">
-                  <source [src]="data.video" type="{{ data.type }}">
-                </video>
-              </a>
-
-            </div> <!-- img-big-wrap.// -->
-            <div class="thumbs-wrap">
-              <a *ngFor="let imagen of this.varianteActiva.IMAGENES">
-                <div class="item-thumb" *ngIf="imagen.TIPO_IMAGEN != 'youtube' && imagen.TIPO_IMAGEN != 'video'">
-                  <img (click)="asignarImgPrincipal(imagen.IMAGEN)" [src]="getImagen(imagen.IMAGEN)">
-                </div>
-                <div class="item-thumb" *ngIf="imagen.TIPO_IMAGEN == 'youtube'">
-                  <button (click)="this.imagenPrincipal = null" class="clvideo"><i class="fab fa-youtube fa-3x"
-                                                                                   aria-hidden="true"></i></button>
-                </div>
-                <div class="item-thumb" *ngIf="imagen.TIPO_IMAGEN == 'video'">
-                  <button (click)="this.imagenPrincipal = null" class="clvideo"><i class="fab fa-video fa-3x"
-                                                                                   aria-hidden="true"></i></button>
-                </div>
-              </a>
-            </div> <!-- thumbs-wrap.// -->
-          </article> <!-- gallery-wrap .end// -->
-        </aside>
-        <main class="col-lg-6 col-md-6 border-left">
-          <article class="content-body px-4">
-            <p class="mb-0">
-              <a href="principales/menu/detalle-tienda/tienda/2/inicio-tienda"
-                 class="title tituloTienda text-primary p-0"> {{this.productoDetalle?.TIENDA.NOMBRE_COMERCIAL}}</a>
-            </p>
-            <h4 class="title m-0">{{this.productoDetalle?.PRODUCTO.NOMBRE_PRODUCTO}}</h4>
-
-            <div class="rating-wrap mb-0">
-              <ul class="rating-stars">
-                <ngb-rating *ngIf="this.productoDetalle?.PRODUCTO.CALIFICACIONs.length != 0"
-                            [(rate)]="this.productoDetalle?.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL">
-                  <ng-template let-fill="fill">
-                    <span class="star" [class.filled]="fill === 100">&#9733;</span>
-                  </ng-template>
-                </ngb-rating>
-                <ngb-rating *ngIf="this.productoDetalle?.PRODUCTO.CALIFICACIONs.length == 0"
-                            [(rate)]="currentRate">
-                  <ng-template let-fill="fill">
-                    <span class="star" [class.filled]="fill === 100">&#9733;</span>
-                  </ng-template>
-                </ngb-rating>
-              </ul>
-              <!--  <span *ngIf="p.TOTAL_COM != null"
-                      class="label-rating text-muted">{{p.TOTAL_COM}} comentarios</span>
-                <span *ngIf="p.TOTAL_COM == null" class="label-rating text-muted">0 Comentarios </span> -->
-              <span class="label-rating text-muted small">0 Comentarios </span>
-            </div> <!-- rating-wrap.// -->
-
-
-            <hr class="mt-2">
-
-            <div>
-              <label class="mb-1 small">{{this.productoDetalle?.PRODUCTO.CONDICION}}</label>
-            </div>
-
-            <div class="mb-2">
-              <var class="price h5">$815.00</var>
-              <span class="text-muted fontTamano">/per kg</span>
-            </div>
 
             <article class="gallery-wrap">
+              <div class="img-big-wrap ">
+                <a>
+                  <img *ngIf="this.imagenPrincipal != null" [src]="this.imagenPrincipal">
+                  <iframe *ngIf="this.imagenPrincipal == null" width="100%" height="380"
+                          [src]="this.videoYoutube" frameborder="0"
+                          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                          allowfullscreen></iframe>
+                  <video *ngIf="this.imagenPrincipal==null && this.videoYoutube == null" class="video-carga" controls
+                         height="auto" width="auto">
+                    <source [src]="data.video" type="{{ data.type }}">
+                  </video>
+                </a>
 
+              </div> <!-- img-big-wrap.// -->
               <div class="thumbs-wrap">
-                <div class="item-thumbDetalle" *ngFor="let color of this.arrayColor"
-                     [ngClass]="{'item-Activo':color==this.varianteActiva.COLOR}">
-                  <button id="btnValueColor" (click)="asignarColor(color)" class="item-opciones"
-                          [style.background-color]="color"></button>
-                </div>
+                <a *ngFor="let imagen of this.varianteActiva.IMAGENES">
+                  <div class="item-thumb" *ngIf="imagen.TIPO_IMAGEN != 'youtube' && imagen.TIPO_IMAGEN != 'video'">
+                    <img (click)="asignarImgPrincipal(imagen.IMAGEN)" [src]="getImagen(imagen.IMAGEN)">
+                  </div>
+                  <div class="item-thumb" *ngIf="imagen.TIPO_IMAGEN == 'youtube'">
+                    <button (click)="this.imagenPrincipal = null" class="clvideo"><i class="fab fa-youtube fa-3x"
+                                                                                     aria-hidden="true"></i></button>
+                  </div>
+                  <div class="item-thumb" *ngIf="imagen.TIPO_IMAGEN == 'video'">
+                    <button (click)="this.imagenPrincipal = null" class="clvideo"><i class="fab fa-video fa-3x"
+                                                                                     aria-hidden="true"></i></button>
+                  </div>
+                </a>
               </div> <!-- thumbs-wrap.// -->
+            </article> <!-- gallery-wrap .end// -->
+          </aside>
+          <main class="col-lg-6 col-md-6 border-left">
+            <article class="content-body px-4">
+              <p class="mb-0">
+                <a
+                  href="principales/menu/detalle-tienda/tienda/{{this.productoDetalle?.TIENDA.NUM_TIENDA}}/inicio-tienda"
+                  class="title tituloTienda text-primary p-0"> {{this.productoDetalle?.TIENDA.NOMBRE_COMERCIAL}}</a>
+              </p>
+              <h4 class="title m-0">{{this.productoDetalle?.PRODUCTO.NOMBRE_PRODUCTO}}</h4>
 
-              <div class="fontTamano">
-                <dl class="row mb-3">
-                  <dt class="col-sm-3 col-4">Marca</dt>
-                  <dd class="col-sm-9 col-8">{{this.productoDetalle?.PRODUCTO.MARCA}}</dd>
+              <div class="rating-wrap mb-0">
+                <ul class="rating-stars">
+                  <ngb-rating *ngIf="this.productoDetalle?.PRODUCTO.CALIFICACIONs.length != 0"
+                              [(rate)]="this.productoDetalle?.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL">
+                    <ng-template let-fill="fill">
+                      <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                    </ng-template>
+                  </ngb-rating>
+                  <ngb-rating *ngIf="this.productoDetalle?.PRODUCTO.CALIFICACIONs.length == 0"
+                              [(rate)]="currentRate">
+                    <ng-template let-fill="fill">
+                      <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                    </ng-template>
+                  </ngb-rating>
+                </ul>
+                <span *ngIf="this.productoDetalle?.PRODUCTO.COMENTARIOs.length > 0"
+                      class="label-rating text-muted">{{this.productoDetalle?.PRODUCTO.COMENTARIOs.length}}
+                  comentarios</span>
+                <span *ngIf="this.productoDetalle?.PRODUCTO.COMENTARIOs.length == 0" class="label-rating text-muted">0 Comentarios </span>
+              </div> <!-- rating-wrap.// -->
 
-                  <dt class="col-sm-3 col-4 mt-2">Talla</dt>
-                  <dd class="col-sm-9 col-8">
+              <hr class="mt-2">
 
-                    <div class="form-group col-lg-6 col-md-6 col-10 my-2 p-0">
-                      <select (change)="verificarVariante()" class=" tamanioInputs form-control" data-size="4"
-                              name="tallaSelect" id="tallaSelect">
-                        <option selecteddisabled="true" value="null">Seleccione..</option>
-                        <option *ngFor="let talla of this.arrayTalla" [selected]="talla == this.varianteActiva.TALLA"
-                                value="{{talla}}">{{talla}}</option>
-                      </select>
-                    </div>
-
-                  </dd>
-
-                  <dt class="col-sm-3 col-4 mt-2">Material</dt>
-                  <dd class="col-sm-9 col-8">
-
-                    <div class="form-group col-lg-6 col-md-6 col-10 my-2 p-0">
-                      <select (change)="verificarVariante()" class="tamanioInputs form-control" data-size="4"
-                              name="materialSelect" id="materialSelect">
-                        <option selecteddisabled="true" value="null">Seleccione..</option>
-                        <option *ngFor="let material of this.arrayMaterial"
-                                [selected]="material == this.varianteActiva.MATERIAL"
-                                value="{{material}}">{{material}}</option>
-                      </select>
-                    </div>
-                  </dd>
-
-                </dl>
+              <div>
+                <label class="mb-1 small">{{this.productoDetalle?.PRODUCTO.CONDICION}}</label>
               </div>
 
-            </article> <!-- gallery-wrap .end// -->
+              <div class="mb-2">
+                <var *ngIf="this.banderaNoDisponible == false && this.varianteActiva.STOCK != 0"
+                     class="price h5">{{this.ej | currency}}</var>
+                <var *ngIf="this.banderaNoDisponible == true" class="text-danger h5">No disponible</var>
+                <var *ngIf="this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0"
+                     class="text-success h5">Agotado</var>
+              </div>
 
-            <label class="m-0 p-0" style="font-size: 13px;">Cantidad:</label>
-            <div class="form-row mb-0">
-              <div class="form-group col-lg-5  col-12">
-                <div class="form-row">
-                  <div class=" input-spinner">
-                    <div class="input-group-prepend">
-                      <button (click)="decrementar()" class="btn btn-light tamanioInputs m-0 px-1"
-                              style="border-color: darkgray" type="button"
-                              id="button-plus"> -
-                      </button>
+              <article class="gallery-wrap">
+                <div *ngIf="this.existeColor == true">
+                  <div class="thumbs-wrap">
+                    <div class="item-thumbDetalle" *ngFor="let color of this.arrayColor"
+                         [ngClass]="{'item-Activo':color==this.varianteActiva.COLOR}">
+                      <button id="btnValueColor" (click)="this.asignarColor(color)" class="item-opciones"
+                              [style.background-color]="color"></button>
                     </div>
-                    <input type="number" disabled [(ngModel)]="this.contador" class="form-control tamanioInputs m-0"
-                           style="border-color: darkgray; background-color: white" value="1">
-                    <div class="input-group-append">
-                      <button (click)="incrementar()" class="btn btn-light tamanioInputs m-0 px-1"
-                              style="border-color: darkgray" type="button"
-                              id="button-minus"> +
-                      </button>
-                    </div>
-                    <p class="m-0 pt-3 mx-1" style="font-size: 11px">(unidades)</p>
-                  </div> <!-- input-group.// -->
+                  </div> <!-- thumbs-wrap.// -->
                 </div>
-              </div><!--form-group end.-->
+                <div class="fontTamano">
+                  <dl class="row mb-3">
+                    <dt class="col-sm-3 col-4">Marca</dt>
+                    <dd class="col-sm-9 col-8">{{this.productoDetalle?.PRODUCTO.MARCA}}</dd>
 
-              <div class="form-group col-lg-7  col-12 ">
+                    <dt *ngIf="this.existeTalla == true" class="col-sm-3 col-4 mt-2">Talla</dt>
+                    <dd *ngIf="this.existeTalla == true" class="col-sm-9 col-8">
 
-                <div class="form-row">
-                  <div class="form-group col-2 mb-0">
-                    <button class="btn btn-primary"><i class="fas fa-heart"></i></button>
-                  </div> <!--form-group end.-->
+                      <div class="form-group col-lg-6 col-md-6 col-10 my-2 p-0">
+                        <select (change)="this.verificarVariante()" class=" tamanioInputs form-control" data-size="4"
+                                name="tallaSelect" id="tallaSelect">
+                          <option *ngFor="let talla of this.arrayTalla"
+                                  [selected]="talla == this.varianteActiva.TALLA"
+                                  value="{{talla}}">{{talla}}</option>
+                        </select>
+                      </div>
 
-                  <div class="form-group col-10 mb-0">
-                    <button class="btn btn-outline-primary col-12">
-                      <span class="text">Agregar al carrito</span>
-                      <i class="fas fa-shopping-cart"></i>
-                    </button>
-                  </div><!--form-group end.-->
-                </div><!--form-row.-->
+                    </dd>
 
-              </div><!--form-group end.-->
-            </div><!--form-row.-->
+                    <dt *ngIf="this.existeMaterial == true" class="col-sm-3 col-4 mt-2">Material</dt>
+                    <dd *ngIf="this.existeMaterial == true" class="col-sm-9 col-8">
 
-            <div class="form-row">
-              <button class="btn btn-primary col-12"> Comprar</button>
-            </div>
+                      <div class="form-group col-lg-6 col-md-6 col-10 my-2 p-0">
+                        <select (change)="this.verificarVariante()" class="tamanioInputs form-control" data-size="4"
+                                name="materialSelect" id="materialSelect">
+                          <option *ngFor="let material of this.arrayMaterial"
+                                  [selected]="material == this.varianteActiva.MATERIAL"
+                                  value="{{material}}">{{material}}</option>
+                        </select>
+                      </div>
+                    </dd>
 
-            <div class="form-row mt-3">
-              <div class="form-group m-0">
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Introducir el cupón">
-                  <span class="input-group-append">
+                  </dl>
+                </div>
+
+              </article> <!-- gallery-wrap .end// -->
+
+              <label class="m-0 p-0" style="font-size: 13px;">Cantidad:</label>
+              <div class="form-row mb-0">
+                <div class="form-group col-lg-5  col-12">
+                  <div class="form-row">
+                    <div class=" input-spinner">
+                      <div class="input-group-prepend">
+                        <button (click)="this.decrementar()" class="btn btn-light tamanioInputs m-0 px-1"
+                                style="border-color: darkgray" type="button"
+                                id="button-plus"> -
+                        </button>
+                      </div>
+                      <input type="number" disabled [(ngModel)]="this.varianteActiva.CANTIDAD" class="form-control tamanioInputs m-0"
+                             style="border-color: darkgray; background-color: white" value="1">
+                      <div class="input-group-append">
+                        <button (click)="this.incrementar()" class="btn btn-light tamanioInputs m-0 px-1"
+                                style="border-color: darkgray" type="button"
+                                id="button-minus"> +
+                        </button>
+                      </div>
+                      <p class="m-0 pt-3" style="font-size: 11px">({{this.varianteActiva.MEDIDA}})</p>
+                    </div> <!-- input-group.// -->
+                  </div>
+                </div><!--form-group end.-->
+
+                <div class="form-group col-lg-7  col-12 ">
+
+                  <div class="form-row">
+                    <div class="form-group col-2 mb-0">
+                      <button [disabled]="this.banderaNoDisponible" class="btn btn-primary"><i class="fas fa-heart"></i>
+                      </button>
+                    </div> <!--form-group end.-->
+
+                    <div class="form-group col-10 mb-0">
+                      <button [disabled]="this.banderaNoDisponible" class="btn btn-outline-primary col-12">
+                        <span class="text">Agregar al carrito</span>
+                        <i class="fas fa-shopping-cart"></i>
+                      </button>
+                    </div><!--form-group end.-->
+                  </div><!--form-row.-->
+
+                </div><!--form-group end.-->
+              </div><!--form-row.-->
+
+              <div class="form-row">
+                <button (click)="this.abrirModalFinalizarPedido(contentPedido)" [disabled]="this.banderaNoDisponible"
+                        class="btn btn-primary col-12"> Comprar
+                </button>
+              </div>
+
+              <div class="form-row mt-3">
+                <div class="form-group m-0">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Introducir el cupón">
+                    <span class="input-group-append">
                     <button class="btn btn-primary">Aplicar</button>
                   </span>
+                  </div>
                 </div>
               </div>
+
+            </article> <!-- product-info-aside .// -->
+          </main> <!-- col.// -->
+        </div> <!-- row.// -->
+      </div> <!-- card.// -->
+    </div> <!-- container.// -->
+  </section>
+
+  <!-- ============================ COMPONENT 1 END .// ================================= -->
+
+  <!-- ============================ COMPONENT SECCION INFORMACION  ================================= -->
+
+  <section class="section-content padding-y-sm pt-0">
+    <div class="container">
+
+      <ngb-tabset [destroyOnHide]="false">
+        <ngb-tab title="Información">
+          <ng-template ngbTabContent>
+            <article class="card">
+              <div class="card-body">
+                <h5>Descripción del producto</h5>
+                <p class="small text-justify">
+                  {{this.productoDetalle?.PRODUCTO.DESCRIPCION_PRODUCTO}}
+                </p>
+                <hr>
+                <div class="row">
+                  <aside class="col">
+                    <h5>Información adicional</h5>
+                    <dl class="row">
+                      <dt class="col-sm-3 col-4">Código:</dt>
+                      <dd class="col-sm-9 col-8"> {{this.productoDetalle?.PRODUCTO.COD_PRODUCTO}}</dd>
+
+                      <dt class="col-sm-3 col-4">Peso:</dt>
+                      <dd class="col-sm-9 col-8"> {{this.productoDetalle?.PRODUCTO.PESO_PRODUCTO}}</dd>
+
+                      <dt class="col-sm-3 col-4">Garantía:</dt>
+                      <dd class="col-sm-9 col-8"> {{this.productoDetalle?.GARANTIA}}</dd>
+                    </dl>
+                  </aside>
+                </div> <!-- row.// -->
+                <hr>
+
+                <h5>Detalle del producto</h5>
+                <div [innerHTML]=this.productoDetalle?.PRODUCTO.DETALLE_PRODUCTO></div>
+
+              </div> <!-- card-body.// -->
+            </article> <!-- card.// -->
+          </ng-template>
+        </ngb-tab>
+
+        <ngb-tab>
+          <ng-template ngbTabTitle>Envíos y pagos</ng-template>
+          <ng-template ngbTabContent>
+
+            <article class="card">
+              <div class="card-body">
+                <h5 class="text-center">Opciones de envío disponibles</h5>
+                <p class="small text-justify">
+                  {{this.productoDetalle?.PRODUCTO.DESCRIPCION_PRODUCTO}}
+                </p>
+
+
+                <h5>Detalle del producto</h5>
+                <div class="small text-justify">
+
+                </div>
+                <hr>
+                <div class="row">
+                  <aside class="col-md-6">
+                    <h5>Información adicional</h5>
+                    <dl class="row">
+                      <dt class="col-sm-3 col-4">Código:</dt>
+                      <dd class="col-sm-9 col-8"> {{this.productoDetalle?.PRODUCTO.COD_PRODUCTO}}</dd>
+
+                      <dt class="col-sm-3 col-4">Peso:</dt>
+                      <dd class="col-sm-9 col-8"> {{this.productoDetalle?.PRODUCTO.PESO_PRODUCTO}}</dd>
+
+                    </dl>
+                  </aside>
+                </div> <!-- row.// -->
+
+              </div> <!-- card-body.// -->
+            </article> <!-- card.// -->
+
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
+
+    </div> <!-- container.// -->
+  </section>
+  <!-- ============================ COMPONENT 4  .//END ================================= -->
+
+  <!-- ============================ COMPONENT MODAL ================================= -->
+
+  <ng-template #contentPedido let-modal>
+    <div class="modal-header py-1">
+      <p class="modal-title font-weight-bold">Finalice su compra en COMDERO</p>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body px-0">
+
+      <div>
+        <div class="form-row px-3">
+          <div class="form-group col-lg-3 col-12 text-center">
+            <img [src]="getImagen(this.varianteActiva.IMAGENES[0].IMAGEN)" alt="..." class="img-modal">
+          </div>
+          <div class="form-group col-lg-9 col-12">
+            <p class="modal-title text-justify"><strong>{{this.productoDetalle?.PRODUCTO.NOMBRE_PRODUCTO}}</strong></p>
+            <p class="mb-0 text-justify">Cantidad: {{this.varianteActiva.CANTIDAD}}</p>
+            <p class="mb-0 text-justify">Tienda: <a
+              class="title tituloTienda text-primary p-0"> {{this.productoDetalle?.TIENDA.NOMBRE_COMERCIAL}}</a></p>
+            <div class="row mt-1">
+              <div class="col-sm-3 col-4">
+                <article *ngIf="this.existeColor == true" class="gallery-wrap">
+                  <div class="thumbs-wrap m-0">
+                    <div class="item-thumbCompra">
+                      <p id="btnValueColor1" class="item-opciones1"
+                         [style.background-color]="this.varianteActiva.COLOR"></p>
+                    </div>
+                  </div> <!-- thumbs-wrap.// -->
+                </article>
+              </div>
+              <div class="col-sm-9 col-8">
+                <p *ngIf="this.existeTalla == true" class="mb-0"><strong>Talla: </strong> {{this.varianteActiva.TALLA}}
+                </p>
+                <p *ngIf="this.existeMaterial== true" class="mb-0">
+                  <strong>Material: </strong> {{this.varianteActiva.MATERIAL}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-body pb-0">
+          <div class="form-row">
+            <div class="form-group col-sm-3 col-4 mb-0">
+              <label class="font-weight-bold">Método de envío</label>
             </div>
 
-          </article> <!-- product-info-aside .// -->
-        </main> <!-- col.// -->
-      </div> <!-- row.// -->
-    </div> <!-- card.// -->
-  </div> <!-- container.// -->
-</section>
-
-<!-- ============================ COMPONENT 1 END .// ================================= -->
-
-<!-- ============================ COMPONENT 4  ================================= -->
-
-<section class="section-content padding-y-sm pt-0">
-  <div class="container">
-
-    <ngb-tabset [destroyOnHide]="false">
-      <ngb-tab title="Información">
-        <ng-template ngbTabContent>
-          <article class="card">
-            <div class="card-body">
-              <h5>Descripción del producto</h5>
-              <p class="small text-justify">
-                {{this.productoDetalle?.PRODUCTO.DESCRIPCION_PRODUCTO}}
-              </p>
-              <hr>
-              <div class="row">
-                <aside class="col">
-                  <h5>Información adicional</h5>
-                  <dl class="row">
-                    <dt class="col-sm-3 col-4">Código:</dt>
-                    <dd class="col-sm-9 col-8"> {{this.productoDetalle?.PRODUCTO.COD_PRODUCTO}}</dd>
-
-                    <dt class="col-sm-3 col-4">Peso:</dt>
-                    <dd class="col-sm-9 col-8"> {{this.productoDetalle?.PRODUCTO.PESO_PRODUCTO}}</dd>
-
-                    <dt class="col-sm-3 col-4">Garantía:</dt>
-                    <dd class="col-sm-9 col-8"> {{this.productoDetalle?.GARANTIA}}</dd>
-                  </dl>
-                </aside>
-              </div> <!-- row.// -->
-              <hr>
-
-              <h5>Detalle del producto</h5>
-              <div [innerHTML]=this.productoDetalle?.PRODUCTO.DETALLE_PRODUCTO></div>
-
-            </div> <!-- card-body.// -->
-          </article> <!-- card.// -->
-        </ng-template>
-      </ngb-tab>
-
-      <ngb-tab>
-        <ng-template ngbTabTitle>Envíos y pagos</ng-template>
-        <ng-template ngbTabContent>
-
-          <article class="card">
-            <div class="card-body">
-              <h5>Descripción del producto</h5>
-              <p class="small text-justify">
-                {{this.productoDetalle?.PRODUCTO.DESCRIPCION_PRODUCTO}}
-              </p>
-              <h5>Detalle del producto</h5>
-              <div class="small text-justify">
-                {{this.productoDetalle?.PRODUCTO.DETALLE_PRODUCTO}}
+            <div class="form-group col-sm-9 col-8">
+              <div class="radio-item">
+                <input type="radio" name="metodoEnvio" id="acordarVendedor">
+                <label for="acordarVendedor">&nbsp;&nbsp;Acordar con el vendedor</label>
               </div>
-              <hr>
-              <div class="row">
-                <aside class="col-md-6">
-                  <h5>Información adicional</h5>
-                  <dl class="row">
-                    <dt class="col-sm-3 col-4">Código:</dt>
-                    <dd class="col-sm-9 col-8"> {{this.productoDetalle?.PRODUCTO.COD_PRODUCTO}}</dd>
+              <div class="radio-item">
+                <input type="radio" name="metodoEnvio" id="retiroNegocio">
+                <label for="retiroNegocio">&nbsp;&nbsp;Retirar en la tienda</label>
+              </div>
+              <div class="radio-item">
+                <input type="radio" name="metodoEnvio" id="envioDomicilio">
+                <label for="envioDomicilio">&nbsp;&nbsp;Envío a domicilio</label>
+              </div>
+            </div>
+          </div>
+        </div>
 
-                    <dt class="col-sm-3 col-4">Peso:</dt>
-                    <dd class="col-sm-9 col-8"> {{this.productoDetalle?.PRODUCTO.PESO_PRODUCTO}}</dd>
+        <div class="card card-body pb-0">
+          <div class="form-row">
+            <div class="form-group col-sm-3 col-4 mb-0">
+              <label class="font-weight-bold">Método de pago</label>
+            </div>
 
-                  </dl>
-                </aside>
-              </div> <!-- row.// -->
+            <div class="form-group col-sm-9 col-8">
+              <div class="radio-item">
+                <input type="radio" name="metodoPago" id="pagoEfectivo">
+                <label for="pagoEfectivo">&nbsp;&nbsp;Efectivo</label>
+              </div>
+              <div class="radio-item">
+                <input type="radio" name="metodoPago" id="pagotransferencia">
+                <label for="pagotransferencia">&nbsp;&nbsp;Transferencia bancaria</label>
+              </div>
+              <div class="radio-item">
+                <input type="radio" name="metodoPago" id="pagoPayPal">
+                <label for="pagoPayPal">&nbsp;&nbsp;Pago electrónico PayPal</label>
+              </div>
+            </div>
+          </div>
+        </div>
 
-            </div> <!-- card-body.// -->
-          </article> <!-- card.// -->
+        <div class="card card-body">
+          <div class="form-row">
+            <div class="form-group col-sm-3 col-4 mb-0">
+              <label class="font-weight-bold">Dirección de envío</label>
+            </div>
 
-        </ng-template>
-      </ngb-tab>
-    </ngb-tabset>
+            <div class="form-group col-sm-9 col-8">
+              <label class="text-justify"></label>
+            </div>
+          </div>
+        </div>
 
-  </div> <!-- container.// -->
-</section>
-<!-- ============================ COMPONENT 4  .//END ================================= -->
+        <div class="card card-body">
+          <div class="form-row">
+            <div class="form-group col-sm-3 col-4 mb-0">
+              <label class="font-weight-bold">Datos de facturación</label>
+            </div>
+
+            <div class="form-group col-sm-9 col-8">
+
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-body">
+          <div class="form-row">
+            <div class="form-group col-sm-3 col-4 mb-0">
+              <label class="font-weight-bold">Total</label>
+            </div>
+
+            <div class="form-group col-sm-9 col-8">
+
+              <div class="form-row">
+                <div class="form-group col-6 mb-0"><label class="my-0">Productos (4):</label></div>
+                <div class="form-group col-6 my-0 text-center"><label class="my-0">$10.00</label></div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-6 mb-0"><label class="my-0">Costo de envío:</label></div>
+                <div class="form-group col-6 my-0 text-center"><label class="my-0">$5.99</label></div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-6 mb-0"><label class="my-0">Total antes de impuestos:</label></div>
+                <div class="form-group col-6 my-0 text-center"><label class="my-0">$5.99</label></div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-6 mb-0"><label class="my-0">Cálculo de impuestos por cobrar (12%):</label>
+                </div>
+                <div class="form-group col-6 my-0 text-center"><label class="my-0">$1.25</label></div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-6 mb-0"><label class="my-0">Total del pedido:</label></div>
+                <div class="form-group col-6 my-0 text-center"><label class="my-0">$1.25</label></div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <div class="text-right mb-3 mr-3">
+      <button type="button" class="btn btn-outline-primary">Finalizar compra</button>
+    </div>
+  </ng-template>
+  <!-- ============================ COMPONENT MODAL  .//END ========================= -->
+

@@ -28,8 +28,6 @@ export class InformacionTiendaComponent implements OnInit {
       let response = await this._tiendaServicio.getDetalleTiendaProducto(this.idTienda).toPromise();
       this.Tienda = response.data;
       console.log("tienda buscada INFORMACION ", this.Tienda);
-
-
     } catch (e) {
       console.log("error:" + e);
       if (JSON.stringify((e).error.message))
