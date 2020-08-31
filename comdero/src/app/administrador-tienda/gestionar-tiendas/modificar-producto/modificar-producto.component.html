@@ -352,7 +352,7 @@
                     <span *ngIf="vbanderaMensajeMaximoImagenes[i]"
                           style="color: red"> *Recuerda máximo 6 imágenes {{this.vbanderaMensajeMaximoImagenes[i]}}</span></a>
                   <div
-                    [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[i]==false  ,'borde-imagenes1':vectorBanderaAgregarImagen[i]==true   ,'borde-error':(!vectorBanderaHabilitante[0] && i==0) || this.vbanderaMensajeMaximoImagenes[i] }"
+                    [ngClass]="{'borde-imagenes1':vectorBanderaAgregarImagen[i]==true||vectorBanderaAgregarImagen[i]==false     ,'borde-error':(!vectorBanderaHabilitante[0] && i==0) || this.vbanderaMensajeMaximoImagenes[i] }"
                     class="row  mt-3 ">
                     <div *ngFor='let url of imagenes[i]; index as j ' class="ml-1">
 
@@ -372,20 +372,9 @@
                         </div>
                       </div>
                     </div>
-                    <div *ngIf="vectorBanderaAgregarImagen[i]==false" class="mx-auto ">
-                      <div class="col-auto pt-4">
-                        <label class="imagen-agregar ">
-                          <i class="fa fa-cloud-upload-alt fa-4x"></i>
-                          <!--   <i class="fa fa-plus-circle fa-2x ml-1"></i>-->
-                          <input (change)="subirImagenes($event,i)" accept="image/*" class="file" multiple type="file">
-                        </label>
-                      </div>
-                    </div>
-                    <div *ngIf="vectorBanderaAgregarImagen[i]==false" class=" col-12 pb-5 mx-auto ">
-                      <p class="link-agregar-imagenes ">Click para Agregar imágenes</p>
-                    </div>
 
-                    <div *ngIf="(vectorBanderaAgregarImagen[i]==true && vectorBanderaHabilitante[i]==true)"
+
+                    <div *ngIf="(vectorBanderaAgregarImagen[i]==true && vectorBanderaHabilitante[i]==true) || vectorBanderaAgregarImagen[i]==false"
                          class="py-2">
                       <div class=" px-2 py-4  card  ml-2 ">
                         <label class="imagen-agregar">
