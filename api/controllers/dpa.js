@@ -6,9 +6,9 @@ async function getDpaProvincias(req, res) {
     let busqueda = req.params.id;
 
     try {
-        let provinciasObtenidas = await DPA.findAll({where: {TIPO: req.params.id},order:[['NOMBRE','ASC']]});
+        let provinciasObtenidas = await DPA.findAll({where: {TIPO: req.params.id}, order: [['NOMBRE', 'ASC']]});
 
-        if (provinciasObtenidas.length>0) {
+        if (provinciasObtenidas.length > 0) {
             res.status(200).send({
                 data: provinciasObtenidas,
                 message: "DPA cargado correctamente"
@@ -31,7 +31,7 @@ async function getDpaCiudades(req, res) {
     let busqueda = req.params.id;
     console.log(busqueda);
     try {
-        let ciudadesObtenidas = await DPA.findAll({where: {DPA_COD_DPA: req.params.id},order:[['NOMBRE','ASC']]});
+        let ciudadesObtenidas = await DPA.findAll({where: {DPA_COD_DPA: req.params.id}, order: [['NOMBRE', 'ASC']]});
 
         if (ciudadesObtenidas.length) {
             res.status(200).send({

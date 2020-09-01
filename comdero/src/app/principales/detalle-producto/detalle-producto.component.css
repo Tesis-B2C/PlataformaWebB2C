@@ -32,6 +32,27 @@
   font-size: small;
 }
 
+.alert {
+  font-size: smaller;
+  padding: 0;
+  background-color: white;
+  border: none;
+  color: #bd2130;
+  margin-left: 4px;
+}
+
+.errorSelect {
+  border: 1px solid red;
+}
+
+.satisfactorioSelect {
+  border: 1px solid limegreen;
+}
+
+.select_ciudad{
+  border: solid  1px red;
+}
+
 .fontTamano {
   font-size: small;
 }
@@ -40,7 +61,7 @@
   margin-bottom: 0;
 }
 
-.gallery-wrap .thumbs-wrap .item-thumbCompra{
+.gallery-wrap .thumbs-wrap .item-thumbCompra {
   width: 2em;
   height: 2em;
   border: 1px solid #ddd;
@@ -145,4 +166,13 @@
   width: auto;
   display: inline-block;
   cursor: zoom-in;
+}
+
+.nuevaDireccionEnvio:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.nuevaDireccionEnvio {
+  text-align: right;
 }

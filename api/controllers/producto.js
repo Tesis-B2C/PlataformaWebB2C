@@ -5,6 +5,8 @@ const Oferta = require("../models/oferta");
 const Producto = require("../models/producto");
 const Producto_Categoria = require("../models/producto_categoria");
 const Variante = require("../models/variante");
+const Opcion_Envio = require("../models/opcion_envio");
+const Metodo_Pago = require("../models/metodo_pago");
 const Calificacion = require("../models/calificacion");
 const Comentario = require("../models/comentario");
 const Categoria = require("../models/categoria");
@@ -579,7 +581,16 @@ async function obtenerProductoDetalle(req, res) {
                 }],
             }, {
                 model: Tienda,
-                attributes: ['NUM_TIENDA', 'NOMBRE_COMERCIAL']
+                attributes: ['NUM_TIENDA', 'NOMBRE_COMERCIAL'],
+                include: [{
+                    model: Opcion_Envio,
+                    separate: true,
+                    order: [['ID_OPCION_ENVIO', 'ASC']]
+                },{
+                    model: Metodo_Pago,
+                    separate: true,
+                    order: [['ID_METODO_PAGO', 'ASC']]
+                }]
             }],
             attributes: ['ID_OFERTA', 'NUM_TIENDA', 'IVA', 'GARANTIA'],
             transaction: t

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ProductoServicio} from "../../servicios/producto.servicio";
 import {ActivatedRoute} from "@angular/router";
 import Swal from "sweetalert2";
@@ -7,6 +7,9 @@ import {GLOBAL} from "../../servicios/global";
 import {DomSanitizer} from "@angular/platform-browser";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AgenteServicio} from "../../servicios/agente.servicio";
+import {DpaServicio} from "../../servicios/dpa.servicio";
+import {Agente} from "../../modelos/agente";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-detalle-producto',
@@ -15,6 +18,11 @@ import {AgenteServicio} from "../../servicios/agente.servicio";
 })
 
 export class DetalleProductoComponent implements OnInit {
+  private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
+  public soloLetrasPattern: any = "[ a-zA-ZÑñáéíóúÁÉÍÓÚ ][ a-zA-ZÑñáéíóúÁÉÍÓÚ ]*$[0-9]{0}";
+  private LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
+  private soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
+
   public identidadComprador;
   @Input() id_Producto: any;
   public productoDetalle: any;
@@ -23,42 +31,109 @@ export class DetalleProductoComponent implements OnInit {
   public existeTalla: boolean = true;
   public existeMaterial: boolean = true;
   public banderaNoDisponible: boolean = false;
+  public banderaDireccionEnvio: boolean = false;
+  public direccionEnvioDiferente: boolean = false;
+  public datosfacturacionDiferente: boolean = false;
 
   public varianteActiva = {
     COLOR: String,
     TALLA: String,
     MATERIAL: String,
-    PRECIO_UNITARIO: Number,
+    PRECIO_UNITARIO: null,
     STOCK: Number,
     MEDIDA: String,
     IMAGENES: [],
-    CANTIDAD: Number = 1
+    CANTIDAD: Number = 1,
+    ID_PRODUCTO: Number,
+    COD_PRODUCTO: String,
+    NUM_VARIANTE: String,
+    OPCION_ENVIO: [],
+    METODO_PAGO: []
   };
 
-  public ej = 87;
+  public informacionCompra = {
+    COD_AGENTE: Number,
+    ID_AGENTE: Number,
+    ID_PRODUCTO: Number,
+    COD_PRODUCTO: String,
+    FECHA_COMPRA: Date,
+    DATOS_ENTREGA: {
+      CALLE_PRINCIPAL_ENTREGA: String,
+      CALLE_SECUNDARIA_ENTREGA: String,
+      NUM_CASA_ENTREGA: String,
+      COD_DPA_ENTREGA: String,
+      NOMBRE_PERSONA_ENVIO_ENTREGA: String,
+      NUM_COD_POSTAL_ENTREGA: String,
+      TELEFONO_ENTREGA: String,
+    },
+    DATOS_FACTURA: {
+      TIPO_IDENTIFICACION_FACTURA: String,
+      NOMBRE_FACTURA: String,
+      CORREO: String,
+      IDENTIFICACION_FACTURA: String,
+      TELEFONO_FACTURA: String,
+      DIRECCION_FACTURA: String,
+    },
+    CANTIDAD: Number,
+    NUM_VARIANTE: String,
+    METODO_PAGO_COMPRA: String,
+    METODO_ENVIO_COMPRA: String,
+  };
 
   currentRate = 1;
-  public arrayColor = new Set();
-  public arrayTalla = new Set();
-  public arrayMaterial = new Set();
-  public data = {
-    video: null,
-    type: null
-  };
 
-  public valueColor: any = null;
-  public valueMaterial: any = null;
-  public valueTalla: any = null;
-  public valueAuxMaterial: any;
-  public valueAuxTalla: any;
+  public provinciasDireccion;
+  public ciudadesDireccion;
+  public ciudadDireccion;
+  public provinciaDireccion;
+  public select_ciudad: boolean = false;
 
-  constructor(private _agenteServicio: AgenteServicio, private modalService: NgbModal, private _sanitizer: DomSanitizer, configRating: NgbRatingConfig, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
+  constructor(public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal, private _sanitizer: DomSanitizer, configRating: NgbRatingConfig, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
     configRating.max = 5;
     configRating.readonly = true;
   }
 
   ngOnInit() {
+    this.getDpaProvincias("P");
     this.obtenerProducto();
+  }
+
+  async getDpaProvincias(buscar) {
+    try {
+      let response = await this._dpaServicio.getDpaProvincias(buscar).toPromise();
+      this.provinciasDireccion = response.data;
+    } catch (e) {
+      console.log("error:" + JSON.stringify((e).error.message));
+    }
+  }
+
+  public activarSelectDireccion: boolean = false;
+
+  async getDpaCiudades(buscar) {
+    try {
+      this.activarSelectDireccion = true;
+      this.ciudadDireccion = null;
+      let response = await this._dpaServicio.getDpaCiudades(buscar).toPromise();
+      this.ciudadesDireccion = response.data;
+    } catch (e) {
+      console.log("error:" + JSON.stringify((e).error.message));
+    }
+  }
+
+  async seleccionarCiudad(event) {
+    this.select_ciudad = false;
+    this.DatosDireccion.Ciudad = event;
+  }
+
+  public banderaTipo: boolean;
+
+  public cambiarTipo(value) {
+    this.DatosFactura.Tipo = value;
+    if (value == 'Persona') {
+      this.banderaTipo = true;
+    } else if (value == 'Empresa') {
+      this.banderaTipo = false;
+    }
   }
 
   public async obtenerProducto() {
@@ -83,14 +158,18 @@ export class DetalleProductoComponent implements OnInit {
     let totalTalla = 0;
 
     this.productoDetalle.PRODUCTO.VARIANTEs.forEach(variante => {
-      if (variante.COLOR == '' || variante.COLOR == null)
+      if (variante.COLOR == '' || variante.COLOR == null) {
         totalColor = totalColor + 1;
+      }
 
-      if (variante.MATERIAL == '' || variante.MATERIAL == null)
+      if (variante.MATERIAL == '' || variante.MATERIAL == null) {
         totalMaterial = totalMaterial + 1;
+      }
 
-      if (variante.TALLA == '' || variante.TALLA == null)
+
+      if (variante.TALLA == '' || variante.TALLA == null) {
         totalTalla = totalTalla + 1;
+      }
     })
 
     if (totalColor == this.productoDetalle.PRODUCTO.VARIANTEs.length)
@@ -103,7 +182,18 @@ export class DetalleProductoComponent implements OnInit {
       this.existeTalla = false;
   }
 
+  public valueColor: any = null;
+  public valueMaterial: any = null;
+  public valueTalla: any = null;
+  public valueAuxMaterial: any = null;
+  public valueAuxTalla: any = null;
+  public data = {
+    video: null,
+    type: null
+  };
+
   public asignarVariblePrimero() {
+
     if (this.existeColor == true) {
       this.varianteActiva.COLOR = this.productoDetalle.PRODUCTO.VARIANTEs[0].COLOR;
       this.valueColor = this.varianteActiva.COLOR;
@@ -133,9 +223,20 @@ export class DetalleProductoComponent implements OnInit {
         this.data.type = imagen.TIPO_IMAGEN;
       }
     })
+
+    this.varianteActiva.ID_PRODUCTO = this.productoDetalle.PRODUCTO.ID_PRODUCTO;
+    this.varianteActiva.COD_PRODUCTO = this.productoDetalle.PRODUCTO.COD_PRODUCTO;
+    this.varianteActiva.NUM_VARIANTE = this.productoDetalle.PRODUCTO.VARIANTEs[0].NUM_VARIANTE;
+    this.varianteActiva.OPCION_ENVIO = this.productoDetalle.TIENDA.OPCION_ENVIOs;
+    this.varianteActiva.METODO_PAGO = this.productoDetalle.TIENDA.METODO_PAGOs;
+
     console.log('VARIANTE ACTIVA' + JSON.stringify(this.varianteActiva));
     this.selectVariables();
   }
+
+  public arrayColor = new Set();
+  public arrayTalla = new Set();
+  public arrayMaterial = new Set();
 
   public selectVariables() {
     this.productoDetalle.PRODUCTO.VARIANTEs.forEach(variante => {
@@ -197,7 +298,12 @@ export class DetalleProductoComponent implements OnInit {
         })
         console.log('VARIANTE SEGUNDA VEZ' + JSON.stringify(this.varianteActiva));
       }
-      console.log('NUMERO DE IMAGENES' + JSON.stringify(this.varianteActiva));
+
+      this.varianteActiva.ID_PRODUCTO = this.productoDetalle.PRODUCTO.ID_PRODUCTO;
+      this.varianteActiva.COD_PRODUCTO = this.productoDetalle.PRODUCTO.COD_PRODUCTO;
+      this.varianteActiva.NUM_VARIANTE = this.resultadoProductoFiltro[0].NUM_VARIANTE;
+
+      console.log('VARIANTE NUEVA' + JSON.stringify(this.resultadoProductoFiltro));
     } else {
       this.banderaNoDisponible = true;
     }
@@ -219,7 +325,7 @@ export class DetalleProductoComponent implements OnInit {
   }
 
   public noExite = 'assets/images/no-imagen1.png';
-public holatefo = '';
+
   getImagen(pathImagen) {
     this.noExite = 'assets/images/no-imagen1.png';
     if (pathImagen) {
@@ -229,6 +335,7 @@ public holatefo = '';
   }
 
   public videoYoutube;
+
   public getVideoIframeInicio(direccionVideoYoutube) {
     let url = direccionVideoYoutube;
     var video, results;
@@ -242,19 +349,17 @@ public holatefo = '';
   }
 
   public incrementar() {
-    if (this.varianteActiva.CANTIDAD  >= this.varianteActiva.STOCK)
-      this.varianteActiva.CANTIDAD  = this.varianteActiva.STOCK;
-    else {
-      this.varianteActiva.CANTIDAD  = this.varianteActiva.CANTIDAD  + 1;
-    }
+    if (this.varianteActiva.CANTIDAD >= this.varianteActiva.STOCK)
+      this.varianteActiva.CANTIDAD = this.varianteActiva.STOCK;
+    else
+      this.varianteActiva.CANTIDAD = this.varianteActiva.CANTIDAD + 1;
   }
 
   public decrementar() {
-    if (this.varianteActiva.CANTIDAD  <= 1)
-      this.varianteActiva.CANTIDAD  = 1;
-    else {
-      this.varianteActiva.CANTIDAD  = this.varianteActiva.CANTIDAD  - 1;
-    }
+    if (this.varianteActiva.CANTIDAD <= 1)
+      this.varianteActiva.CANTIDAD = 1;
+    else
+      this.varianteActiva.CANTIDAD = this.varianteActiva.CANTIDAD - 1;
   }
 
   mensageError(mensaje) {
@@ -273,10 +378,215 @@ public holatefo = '';
     });
   }
 
+  public DatosDireccion;
+  public DatosFactura;
+  public ciudadDireccionNombre;
+  public provinciaDireccionNombre;
+
   public abrirModalFinalizarPedido(content) {
+    this.verificarMetodosTienda();
     this.identidadComprador = this._agenteServicio.getIdentity();
+    this.DatosDireccion = new Agente(null, this.identidadComprador.NUM_COD_POSTAL, this.identidadComprador.NOMBRE,
+      this.identidadComprador.TELEFONO, null, null, 0, this.identidadComprador.CALLE_PRINCIPAL_AGENTE,
+      this.identidadComprador.CALLE_SECUNDARIA_AGENTE, this.identidadComprador.NUM_CASA_AGENTE, null, null,
+      this.identidadComprador.COD_DPA);
+    console.log('DATOS DIRECCION NUEVA' + this.DatosDireccion);
+
+    this.DatosFactura = new Agente(this.identidadComprador.ID_AGENTE, null, this.identidadComprador.NOMBRE,
+      this.identidadComprador.TELEFONO, this.identidadComprador.CORREO, this.identidadComprador.TIPO, 0,
+      this.identidadComprador.CALLE_PRINCIPAL_AGENTE + ' ' + this.identidadComprador.CALLE_SECUNDARIA_AGENTE + ',' + this.identidadComprador.DPA.NOMBRE + ',' + this.identidadComprador.DPA.DPAP.NOMBRE,
+      null, null, null, null, null);
+
+    //DATOS DE COMPRA
+    this.informacionCompra.COD_AGENTE = this.identidadComprador.COD_AGENTE;
+    this.informacionCompra.ID_AGENTE = this.identidadComprador.ID_AGENTE;
+    this.informacionCompra.ID_PRODUCTO = this.varianteActiva.ID_PRODUCTO;
+    this.informacionCompra.COD_PRODUCTO = this.varianteActiva.COD_PRODUCTO;
+    this.informacionCompra.CANTIDAD = this.varianteActiva.CANTIDAD;
+    this.informacionCompra.NUM_VARIANTE = this.varianteActiva.NUM_VARIANTE;
+    //this.informacionCompra.FECHA_COMPRA = this.varianteActiva.COD_PRODUCTO;
+
+    this.informacionCompra.METODO_PAGO_COMPRA = '';
+    this.informacionCompra.METODO_ENVIO_COMPRA = '';
+
+    this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA = this.identidadComprador.CALLE_PRINCIPAL_AGENTE;
+    this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA = this.identidadComprador.CALLE_SECUNDARIA_AGENTE;
+    this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA = this.identidadComprador.NUM_CASA_AGENTE;
+    this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA = this.identidadComprador.COD_DPA;
+    this.ciudadDireccionNombre = this.identidadComprador.DPA.NOMBRE;
+    this.provinciaDireccionNombre = this.identidadComprador.DPA.DPAP.NOMBRE;
+    this.informacionCompra.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA = this.identidadComprador.NOMBRE;
+    this.informacionCompra.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA = this.identidadComprador.NUM_COD_POSTAL;
+    this.informacionCompra.DATOS_ENTREGA.TELEFONO_ENTREGA = this.identidadComprador.TELEFONO;
+
+    this.informacionCompra.DATOS_FACTURA.IDENTIFICACION_FACTURA = this.identidadComprador.ID_AGENTE;
+    this.informacionCompra.DATOS_FACTURA.NOMBRE_FACTURA = this.identidadComprador.NOMBRE;
+    this.informacionCompra.DATOS_FACTURA.TIPO_IDENTIFICACION_FACTURA = this.identidadComprador.TIPO;
+    this.informacionCompra.DATOS_FACTURA.TELEFONO_FACTURA = this.identidadComprador.TELEFONO;
+    this.informacionCompra.DATOS_FACTURA.DIRECCION_FACTURA = this.identidadComprador.CALLE_PRINCIPAL_AGENTE + ' ' + this.identidadComprador.CALLE_SECUNDARIA_AGENTE + ',' + this.identidadComprador.DPA.NOMBRE + ',' + this.identidadComprador.DPA.DPAP.NOMBRE;
+    this.informacionCompra.DATOS_FACTURA.CORREO = this.identidadComprador.CORREO;
+
+    //FIN DATOS DE COMPRA
+
     console.log('AGENTE' + JSON.stringify(this.identidadComprador));
-    this.modalService.open(content, {centered: true, size: 'lg'});
+    this.modalService.open(content, {centered: true, size: 'lg', backdrop: "static"});
+  }
+
+  public opcion_envio: String = null;
+  public mostrarTiendaEnvioRetiro: boolean = false;
+  public mostrarTiendaEnvioDomicilio: boolean = false;
+  public mostrarTiendaPagoEfectivo: boolean = false;
+  public mostrarTiendaPagoTransferencia: boolean = false;
+  public mostrarTiendaPagoElectronico: boolean = false;
+
+  public verificarMetodosTienda() {
+    this.varianteActiva.OPCION_ENVIO.forEach(envio => {
+      if (envio.TIPO_ENVIO == 'Retiro') {
+        this.mostrarTiendaEnvioRetiro = true;
+      }
+      if (envio.TIPO_ENVIO == 'Domicilio') {
+        this.mostrarTiendaEnvioDomicilio = true;
+      }
+    })
+
+    this.varianteActiva.METODO_PAGO.forEach(pago => {
+      if (pago.TIPO_PAGO == 'Efectivo') {
+        this.mostrarTiendaPagoEfectivo = true;
+      }
+      if (pago.TIPO_PAGO == 'Transferencia') {
+        this.mostrarTiendaPagoTransferencia = true;
+      }
+      if (pago.TIPO_PAGO == 'Electrónico') {
+        this.mostrarTiendaPagoElectronico = true;
+      }
+    })
+  }
+
+  selectMetodoEnvio(event) {
+    this.banderaDireccionEnvio = false;
+    this.informacionCompra.METODO_ENVIO_COMPRA = event.target.value;
+    if (event.target.value == 'Acordar') {
+    }
+
+    if (event.target.value == 'Retiro') {
+
+    }
+
+    if (event.target.value == 'Domicilio') {
+      this.banderaDireccionEnvio = true;
+    }
+  }
+
+  selectMetodoPago(event) {
+    this.informacionCompra.METODO_PAGO_COMPRA = event.target.value;
+  }
+
+  public habilitarDireccionDiferente(proceso) {
+    if (proceso == 'Envio') {
+      this.activarSelectDireccion = false;
+      this.direccionEnvioDiferente = !this.direccionEnvioDiferente;
+      this.ciudadDireccion = "";
+      this.provinciaDireccion = "";
+
+      this.DatosDireccion.Num_Cod_Postal = this.informacionCompra.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA;
+      this.DatosDireccion.Nombre = this.informacionCompra.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA;
+      this.DatosDireccion.Telefono = this.informacionCompra.DATOS_ENTREGA.TELEFONO_ENTREGA;
+      this.DatosDireccion.Calle_Principal_Agente = this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA;
+      this.DatosDireccion.Calle_Secundaria_Agente = this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA;
+      this.DatosDireccion.Num_Casa_Agente = this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA;
+      this.DatosDireccion.Provincia = this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA;
+    }
+    if (proceso == 'Factura') {
+      this.datosfacturacionDiferente = !this.datosfacturacionDiferente;
+
+      this.DatosFactura.Id_Agente = this.informacionCompra.DATOS_FACTURA.IDENTIFICACION_FACTURA;
+      this.DatosFactura.Nombre = this.informacionCompra.DATOS_FACTURA.NOMBRE_FACTURA;
+      this.DatosFactura.Tipo = this.informacionCompra.DATOS_FACTURA.TIPO_IDENTIFICACION_FACTURA;
+      this.DatosFactura.Telefono = this.informacionCompra.DATOS_FACTURA.TELEFONO_FACTURA;
+      this.DatosFactura.Calle_Principal_Agente = this.informacionCompra.DATOS_FACTURA.DIRECCION_FACTURA;
+      this.DatosFactura.Correo = this.informacionCompra.DATOS_FACTURA.CORREO;
+
+      if (this.DatosFactura.Tipo == 'Persona') {
+        this.banderaTipo = true;
+      } else if (this.DatosFactura.Tipo == 'Empresa') {
+        this.banderaTipo = false;
+      }
+
+    }
+  }
+
+  public guardarDireccionNueva() {
+    if (document.forms['formActualizarDireccionEnvio'].checkValidity()) {
+      try {
+        this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA = this.DatosDireccion.Calle_Principal_Agente;
+        this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA = this.DatosDireccion.Calle_Secundaria_Agente;
+        this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA = this.DatosDireccion.Num_Casa_Agente;
+        this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA = this.DatosDireccion.Ciudad;
+
+        this.provinciasDireccion.forEach(provincia => {
+          if (provincia.COD_DPA.trim() == this.provinciaDireccion.trim())
+            this.provinciaDireccionNombre = provincia.NOMBRE;
+        })
+        console.log(JSON.stringify(this.provinciasDireccion));
+        this.ciudadesDireccion.forEach(ciudad => {
+          if (ciudad.COD_DPA.trim() == this.DatosDireccion.Ciudad.trim()) {
+            this.ciudadDireccionNombre = ciudad.NOMBRE;
+            console.log('JDBSJCNSAKFJS');
+          }
+        })
+        console.log(JSON.stringify(this.ciudadesDireccion) + this.ciudadDireccion + this.DatosDireccion.Ciudad);
+        this.informacionCompra.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA = this.DatosDireccion.Nombre;
+        this.informacionCompra.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA = this.DatosDireccion.Num_Cod_Postal;
+        this.informacionCompra.DATOS_ENTREGA.TELEFONO_ENTREGA = this.DatosDireccion.Telefono;
+
+        this.direccionEnvioDiferente = !this.direccionEnvioDiferente;
+      } catch (e) {
+      }
+    } else {
+      this.mostrarToast("Al parecer existe errores en su formulario por favor revise nuevamente, debe llenar todos los campos obligatorios (*)", "");
+    }
+  }
+
+  validarCedula() {
+    var cad: any = this.DatosFactura.Id_Agente;
+    var i;
+    var total = 0;
+    var longitud;
+    if (this.DatosFactura.Tipo == 'Persona')
+      longitud = cad.length;
+    else
+      longitud = cad.length - 3;
+
+    var longcheck = longitud - 1;
+    if (cad !== "" && longitud === 10) {
+      for (i = 0; i < longcheck; i++) {
+        if (i % 2 === 0) {
+          var aux = cad.charAt(i) * 2;
+          if (aux > 9) aux -= 9;
+          total += aux;
+        } else {
+          total += parseInt(cad.charAt(i)); // parseInt o concatenará en lugar de sumar
+        }
+      }
+      total = total % 10 ? 10 - total % 10 : 0;
+
+      if (cad.charAt(longitud - 1) == total) {
+        return true;
+      } else {
+        this.DatosFactura.Id_Agente = "";
+        return false;
+      }
+    }
+  }
+
+  mostrarToast(mensaje, icono) {
+    this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo"><strong>!Error</strong><br>' + mensaje + '</p> </div>', "",
+      {positionClass: 'toast-top-right', enableHtml: true, closeButton: true});
+  }
+
+  cerrar() {
+    this.direccionEnvioDiferente = false;
+    this.datosfacturacionDiferente = false;
   }
 
 }
