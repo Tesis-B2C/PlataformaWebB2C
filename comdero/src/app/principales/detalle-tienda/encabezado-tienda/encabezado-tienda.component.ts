@@ -90,7 +90,6 @@ export class EncabezadoTiendaComponent implements OnInit {
   }
 
   getSitiosWeb() {
-
     this.obj = {
       tipo: null,
       direccion: null
@@ -109,7 +108,6 @@ export class EncabezadoTiendaComponent implements OnInit {
       this.obj.direccion = this.Tienda.LINK_PAGINA;
       this.vPaginasWeb.push(this.obj);
     }
-
   }
 
   categorias = new Set();

@@ -4,6 +4,8 @@ const Tienda = require("../models/tienda");
 const Oferta = require("../models/oferta");
 const Producto = require("../models/producto");
 const Producto_Categoria = require("../models/producto_categoria");
+const Producto_Descuento = require("../models/producto_descuento");
+const Descuento = require("../models/descuento");
 const Variante = require("../models/variante");
 const Opcion_Envio = require("../models/opcion_envio");
 const Metodo_Pago = require("../models/metodo_pago");
@@ -553,6 +555,8 @@ async function obtenerTodosProductos(req, res) {
 async function obtenerProductoDetalle(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
     try {
+        let fechaHoy = moment().format("YYYY-MM-DD");
+       // console.log('FECHA HOY'+fechaHoy);
         let productoObtenido = await Oferta.findOne({
             where: {ID_OFERTA: req.params.id},
             include: [{
@@ -567,6 +571,20 @@ async function obtenerProductoDetalle(req, res) {
                         separate: true,
                         order: [['ID_IMAGEN', 'ASC']]
                     }
+                },{
+                    model: Producto_Descuento,
+                    include: {
+                        model: Descuento,
+                        where: {
+                            ESTADO_DESCUENTO: 0,
+                            FECHA_INICIO: {
+                                [Op.lte]: fechaHoy
+                            },
+                            FECHA_FIN: {
+                                [Op.gte]: fechaHoy
+                            }
+                        }
+                        }
                 }, {
                     model: Producto_Categoria,
                     include: {model: Categoria}
@@ -581,7 +599,7 @@ async function obtenerProductoDetalle(req, res) {
                 }],
             }, {
                 model: Tienda,
-                attributes: ['NUM_TIENDA', 'NOMBRE_COMERCIAL'],
+                attributes: ['NUM_TIENDA', 'NOMBRE_COMERCIAL','CONTACTO_WHATSAPP','LINK_PAGINA','LINK_FACEBOOK'],
                 include: [{
                     model: Opcion_Envio,
                     separate: true,

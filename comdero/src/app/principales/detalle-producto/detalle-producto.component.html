@@ -117,7 +117,7 @@
 
               <div class="mb-2">
                 <var *ngIf="this.banderaNoDisponible == false && this.varianteActiva?.STOCK != 0"
-                     class="price h5">{{this.varianteActiva?.PRECIO_UNITARIO }}</var>
+                     class="price h5">{{this.varianteActiva?.PRECIO_UNITARIO_CON_IVA }}</var>
                 <var *ngIf="this.banderaNoDisponible == true" class="text-danger h5">No disponible</var>
                 <var *ngIf="this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0"
                      class="text-success h5">Agotado</var>
@@ -229,17 +229,6 @@
                 </button>
               </div>
 
-              <div class="form-row mt-3">
-                <div class="form-group m-0">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Introducir el cupón">
-                    <span class="input-group-append">
-                    <button class="btn btn-primary">Aplicar</button>
-                  </span>
-                  </div>
-                </div>
-              </div>
-
             </article> <!-- product-info-aside .// -->
           </main> <!-- col.// -->
         </div> <!-- row.// -->
@@ -338,7 +327,8 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <div *ngIf="(!this.direccionEnvioDiferente && !this.datosfacturacionDiferente)" class="modal-body px-0">
+    <div *ngIf="(!this.direccionEnvioDiferente && !this.datosfacturacionDiferente && !this.siguienteDetallePedido)"
+         class="modal-body px-0">
       <div class="form-row px-3">
         <div class="form-group col-lg-3 col-12 text-center">
           <img [src]="getImagen(this.varianteActiva.IMAGENES[0].IMAGEN)" alt="..." class="img-modal">
@@ -377,17 +367,20 @@
 
           <div class="form-group col-sm-9 col-8">
             <div class="radio-item">
-              <input (change)="selectMetodoEnvio($event)" type="radio" name="metodoEnvio" id="acordarVendedor"
+              <input [checked]="this.informacionCompra.METODO_ENVIO_COMPRA == 'Acordar'"
+                     (change)="selectMetodoEnvio($event)" type="radio" name="metodoEnvio" id="acordarVendedor"
                      value="Acordar">
               <label for="acordarVendedor">&nbsp;&nbsp;Acordar con el vendedor</label>
             </div>
             <div *ngIf="this.mostrarTiendaEnvioRetiro" class="radio-item">
-              <input (change)="selectMetodoEnvio($event)" type="radio" name="metodoEnvio" id="retiroNegocio"
+              <input [checked]="this.informacionCompra.METODO_ENVIO_COMPRA == 'Retiro'"
+                     (change)="selectMetodoEnvio($event)" type="radio" name="metodoEnvio" id="retiroNegocio"
                      value="Retiro">
               <label for="retiroNegocio">&nbsp;&nbsp;Retirar en la tienda</label>
             </div>
             <div *ngIf="this.mostrarTiendaEnvioDomicilio" class="radio-item">
-              <input (change)="selectMetodoEnvio($event)" type="radio" name="metodoEnvio" id="envioDomicilio"
+              <input [checked]="this.informacionCompra.METODO_ENVIO_COMPRA == 'Domicilio'"
+                     (change)="selectMetodoEnvio($event)" type="radio" name="metodoEnvio" id="envioDomicilio"
                      value="Domicilio">
               <label for="envioDomicilio">&nbsp;&nbsp;Envío a domicilio</label>
             </div>
@@ -427,17 +420,20 @@
 
           <div class="form-group col-sm-9 col-8">
             <div *ngIf="this.mostrarTiendaPagoEfectivo && !this.banderaDireccionEnvio" class="radio-item">
-              <input (change)="selectMetodoPago($event)" type="radio"
+              <input [checked]="this.informacionCompra.METODO_PAGO_COMPRA == 'Efectivo'"
+                     (change)="selectMetodoPago($event)" type="radio"
                      name="metodoPago" id="pagoEfectivo" value="Efectivo">
               <label for="pagoEfectivo">&nbsp;&nbsp;Efectivo</label>
             </div>
             <div *ngIf="this.mostrarTiendaPagoTransferencia" class="radio-item">
-              <input (change)="selectMetodoPago($event)" type="radio" name="metodoPago" id="pagotransferencia"
+              <input [checked]="this.informacionCompra.METODO_PAGO_COMPRA == 'Transferencia'"
+                     (change)="selectMetodoPago($event)" type="radio" name="metodoPago" id="pagotransferencia"
                      value="Transferencia">
               <label for="pagotransferencia">&nbsp;&nbsp;Transferencia bancaria</label>
             </div>
             <div *ngIf="this.mostrarTiendaPagoElectronico" class="radio-item">
-              <input (change)="selectMetodoPago($event)" type="radio" name="metodoPago" id="pagoPayPal"
+              <input [checked]="this.informacionCompra.METODO_PAGO_COMPRA == 'Electrónico'"
+                     (change)="selectMetodoPago($event)" type="radio" name="metodoPago" id="pagoPayPal"
                      value="Electrónico">
               <label for="pagoPayPal">&nbsp;&nbsp;Pago electrónico PayPal</label>
             </div>
@@ -472,25 +468,52 @@
           <div class="form-group col-sm-9 col-8">
 
             <div class="form-row">
-              <div class="form-group col-6 mb-0"><label class="my-0">Productos ({{this.varianteActiva.CANTIDAD}}
-                ):</label></div>
-              <div class="form-group col-6 my-0 text-center"><label class="my-0"></label></div>
+              <div class="form-group col-6 mb-0"><label class="my-0">Productos ({{this.informacionCompra.CANTIDAD}}
+                )</label></div>
+              <div class="form-group col-6 my-0 text-center"><label
+                class="my-0">{{this.informacionCompra?.COSTOS.TOTAL_PRODUCTOS}}</label></div>
             </div>
 
             <div class="form-row">
-              <div class="form-group col-6 mb-0"><label class="my-0">Costo de envío:</label></div>
-              <div class="form-group col-6 my-0 text-center"><label class="my-0">$5.99</label></div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group col-6 mb-0"><label class="my-0">Total antes de impuestos:</label></div>
-              <div class="form-group col-6 my-0 text-center"><label class="my-0">$5.99</label></div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group col-6 mb-0"><label class="my-0">Cálculo de impuestos por cobrar (12%):</label>
+              <div class="form-group col-6 mb-0">
+                <label class="my-0">
+                  Cálculo de impuestos por cobrar ({{this.informacionCompra.COSTOS.PORCENTAJE_IMPUESTO}}%)
+                </label></div>
+              <div class="form-group col-6 my-0 text-center"><label class="my-0">{{this.informacionCompra.COSTOS.IMPUESTOS}}</label>
+                <div class="px-sm-1 px-lg-5 px-md-3">
+                  <hr class="my-1">
+                </div>
               </div>
-              <div class="form-group col-6 my-0 text-center"><label class="my-0">$1.25</label></div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-6 mb-0"><label class="my-0">Subtotal</label></div>
+              <div class="form-group col-6 my-0 text-center"><label class="my-0">{{this.informacionCompra.COSTOS.SUBTOTAL}}</label></div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-6 mb-0"><label class="my-0">Descuento (-)</label></div>
+              <div class="form-group col-6 my-0 text-center"><label class="my-0">$5.99</label></div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-6 mb-0"><label class="my-0">Descuento Cupón (-)</label></div>
+              <div class="form-group col-6 my-0 text-center"><label class="my-0">$5.99</label></div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-6 mb-0"><label class="my-0">Recargo por PayPal (+)</label></div>
+              <div class="form-group col-6 my-0 text-center"><label class="my-0">$1.25</label>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-6 mb-0"><label class="my-0">Costo de envío (+)</label></div>
+              <div class="form-group col-6 my-0 text-center"><label class="my-0">$1.25</label>
+                <div class="px-sm-1 px-lg-5 px-md-3">
+                  <hr class="my-1">
+                </div>
+              </div>
             </div>
 
             <div class="form-row">
@@ -498,6 +521,16 @@
               <div class="form-group col-6 my-0 text-center"><label class="my-0">$1.25</label></div>
             </div>
 
+            <div class="form-row mt-4">
+              <div class="form-group col-6 my-0">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Introducir el cupón">
+                  <span class="input-group-append">
+                    <button class="btn btn-primary">Aplicar</button>
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -686,7 +719,7 @@
       </div>
 
       <form #FormActualizarDatosFacturacion id="formActualizarDatosFacturacion" name="formActualizarDatosFacturacion"
-            class="validate-form px-5">
+            class="validate-form px-5" validate-form>
         <br>
         <label class="font-weight-bold">Datos para facturación</label>
         <div class="form-row ">
@@ -856,20 +889,185 @@
         </div>
 
         <div class="text-right mb-3">
-          <button type="button" class="btn btn-outline-primary">Guardar</button>
+          <button (click)="guardarFacturacionNueva()" type="button" class="btn btn-outline-primary">Guardar</button>
         </div>
       </form>
 
-
     </div>
 
-    <div *ngIf="(!this.direccionEnvioDiferente && !this.datosfacturacionDiferente)" class="text-right mb-3 mr-3">
+    <div *ngIf="(!this.direccionEnvioDiferente && !this.datosfacturacionDiferente && !this.siguienteDetallePedido)"
+         class="text-right mb-3 mr-3">
       <button type="button" class="btn btn-primary mr-1" aria-label="Close"
               (click)="modal.dismiss('Cross click'); cerrar()">
         Cancelar
       </button>
-      <button type="button" class="btn btn-outline-primary ml-1">Finalizar compra</button>
+      <button (click)="this.habilitarDireccionDiferente('Siguiente')" type="button"
+              class="btn btn-outline-primary ml-1">Siguiente
+      </button>
     </div>
+
+    <div *ngIf="this.siguienteDetallePedido" class="modal-body px-0 pt-2">
+      <form #FormDetalleCompra id="formDetalleCompra" name="formDetalleCompra"
+            class="validate-form px-5" validate-form>
+        <h5 class="text-center">Información del pedido</h5>
+        <div class="card card-body">
+
+          <div *ngIf="this.informacionCompra.METODO_ENVIO_COMPRA == 'Acordar'" class="form-row">
+            <div class="form-group col-sm-3 col-4 mb-0">
+              <label class="font-weight-bold">Método de Envío</label>
+            </div>
+            <div class="form-group col-sm-9 col-8">
+              <div class="form-row">
+                <div class="form-group col-12 mb-0">
+                  <label class="my-0 text-justify">Usted podrá acordar con el vendedor sobre el proceso de compra,
+                    de acuerdo a su necesidad a través de WhatsApp.</label>
+                  <div class="form-row">
+                    <div class="form-group col-12 mb-0">
+                      <div class="template-demo">
+                        <button type="button" class="btn btn-social-icon btn-whatsapp btn-rounded">
+                          <i class="fab fa-whatsapp fa-1x"></i>
+                        </button>
+                        <label> {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="this.informacionCompra.METODO_ENVIO_COMPRA == 'Retiro'" class="form-row">
+            <div class="form-group col-sm-3 col-4 mb-0">
+              <label class="font-weight-bold">Método de Envío</label>
+            </div>
+            <div class="form-group col-sm-9 col-8">
+              <div class="form-row">
+                <div class="form-group col-12 mb-0">
+                  <label class="mb-3 text-justify">Recuerde la siguiente información al momento de retirar su compra en
+                    la tienda.</label>
+                  <div class="card card-body">
+                    <p class=" text-justify" *ngIf="this.hora_estimada_retiro == '1hora'">Su pedido estará listo
+                      aproximadamente en 1 hora.</p>
+                    <p class=" text-justify" *ngIf="this.hora_estimada_retiro == '4horas'">Su pedido estará listo
+                      aproximadamente en 4 horas.</p>
+                    <p class=" text-justify" *ngIf="this.hora_estimada_retiro == '24horas'">Su pedido estará listo
+                      aproximadamente en 24 horas.</p>
+                    <p class=" text-justify" *ngIf="this.hora_estimada_retiro == '4dias'">Su pedido estará listo
+                      aproximadamente en 4 días.</p>
+                    <p class=" text-justify" *ngIf="this.hora_estimada_retiro == '5dias'">Su pedido estará listo de 5 o
+                      más días.</p>
+                    <p class=" text-justify">{{this.instruccion_retiro}}</p>
+                  </div>
+                  <label class=" mt-3 text-justify">Puede contactarnos a través de nuestro WhatsApp para información
+                    sobre su pedido.</label>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-12 mb-0">
+                  <div class="template-demo">
+                    <button type="button" class="btn btn-social-icon btn-whatsapp btn-rounded">
+                      <i class="fab fa-whatsapp fa-1x"></i>
+                    </button>
+                    <label> {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="this.informacionCompra.METODO_ENVIO_COMPRA == 'Domicilio'" class="form-row">
+            <div class="form-group col-sm-3 col-4 mb-0">
+              <label class="font-weight-bold">Método de Envío</label>
+            </div>
+            <div class="form-group col-sm-9 col-8">
+              <div class="form-row">
+                <div class="form-group col-12 mb-0">
+                  <label class="my-0 text-justify">Usted a seleccionado el envío a domicilio, el costo de envío se ha
+                    recargado a su pedido.
+                    para información contactanos a través de WhatsApp.</label>
+                  <div class="form-row">
+                    <div class="form-group col-12 mb-0">
+                      <div class="template-demo">
+                        <button type="button" class="btn btn-social-icon btn-whatsapp btn-rounded">
+                          <i class="fab fa-whatsapp fa-1x"></i>
+                        </button>
+                        <label> {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="this.informacionCompra.METODO_PAGO_COMPRA == 'Efectivo'" class="form-row">
+            <div class="form-group col-sm-3 col-4 mb-0">
+              <label class="font-weight-bold">Método de Pago</label>
+            </div>
+            <div class="form-group col-sm-9 col-8">
+              <div class="form-row">
+                <div class="form-group col-12 mb-0">
+                  <label class="my-0 text-justify">Al momento de la entrega se deberá realizar la cancelación total del
+                    pedido.</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="this.informacionCompra.METODO_PAGO_COMPRA == 'Transferencia'" class="form-row">
+            <div class="form-group col-sm-3 col-4 mb-0">
+              <label class="font-weight-bold">Método de Pago</label>
+            </div>
+            <div class="form-group col-sm-9 col-8">
+              <div class="form-row">
+                <div class="form-group col-12 mb-0">
+                  <div class="box">
+
+                    <div class="box-title mb-1 text-center">
+                      <label class="my-0 text-center">Datos para la transferencia bancaria</label>
+                    </div>
+                    <p class=" iconos-pagos "><img src="assets/images/icon-transferencia.png"
+                                                   alt="..."></p>
+                    <div class="box-text">
+                      <div class="row justify-content-center mx-auto">
+                        <p class="card-text col-5 mb-0">Banco:</p>
+                        <p class="col-6 mb-0">{{this.Banco_Pertenece}}</p>
+                        <p class="card-text col-5 mb-0 ">Tipo:</p>
+                        <p class="col-6 mb-0">{{this.Tipo_Cuenta}}</p>
+                        <p class="card-text col-5  mb-0">#Cuenta:</p>
+                        <p class="col-6 mb-0">{{this.Numero_cuenta}}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="this.informacionCompra.METODO_PAGO_COMPRA == 'Electrónico'" class="form-row">
+            <div class="form-group col-sm-3 col-4 mb-0">
+              <label class="font-weight-bold">Método de Pago</label>
+            </div>
+            <div class="form-group col-sm-9 col-8">
+              <div class="form-row">
+                <div class="form-group col-12 mb-0">
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </form>
+    </div>
+
+    <div *ngIf="this.siguienteDetallePedido" class="text-right mb-3 mr-3">
+      <button type="button" class="btn btn-primary mr-1" (click)="atras()">Atras</button>
+      <button type="button" class="btn btn-outline-primary ml-1">Realizar Compra</button>
+    </div>
+
   </ng-template>
   <!-- ============================ COMPONENT MODAL  .//END ========================= -->
 

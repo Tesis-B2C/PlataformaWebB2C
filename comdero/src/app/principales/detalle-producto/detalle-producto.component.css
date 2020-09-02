@@ -176,3 +176,107 @@
 .nuevaDireccionEnvio {
   text-align: right;
 }
+
+
+
+
+
+.btn.btn-social-icon {
+  width: 35px;
+  height: 35px;
+  padding: 0
+}
+
+.template-demo>.btn {
+  margin-right: 0.5rem !important
+}
+
+.template-demo {
+  margin-top: 0.5rem !important
+}
+
+.btn.btn-rounded {
+  border-radius: 50px
+}
+
+.btn-facebook {
+  background: #3b579d;
+  color: #ffffff
+}
+
+.btn-facebook:hover,
+.btn-facebook:focus {
+  background: #2d4278;
+  color: #ffffff
+}
+
+.btn-whatsapp {
+  background: #4AC959;
+  color: #ffffff
+}
+
+.btn-whatsapp:hover,
+.btn-whatsapp:focus {
+  background: #46E011;
+  color: #ffffff
+}
+
+.btn-web {
+  background: #000000;
+  color: #ffffff;
+}
+
+.btn-web:hover,
+.btn-web:focus {
+  background: #000000;
+  color: #ffffff;
+}
+
+
+.iconos-pagos {
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  background: #f1f3f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin:0px auto;
+  padding:3%
+}
+
+button{
+  font-size: small;
+}
+
+
+h3{
+  font-family: 'Poppins', sans-serif;
+}
+
+.social-box .box{
+  background: #FFF;
+  border-radius: 10px;
+  padding: 40px 10px;
+  margin: 20px 0px;
+  cursor: pointer;
+  transition: all 0.5s ease-out;
+}
+
+.social-box .box:hover{
+  box-shadow: 0 0 6px #4fb867;
+}
+
+.social-box .box .box-text{
+  margin:20px 0px;
+  font-size: 15px;
+  line-height: 30px;
+}
+
+.social-box .box .box-btn a{
+  text-decoration: none;
+  font-size: 16px;
+}
+
+
