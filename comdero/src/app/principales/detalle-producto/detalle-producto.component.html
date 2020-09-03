@@ -165,70 +165,59 @@
                       </div>
                     </dd>
 
+                    <dt class="col-sm-3 col-4 mt-2">Cantidad</dt>
+                    <dd class="col-sm-9 col-8">
+                      <div class="form-group col-lg-6 col-md-6 col-10 my-2 p-0">
+
+                        <div class=" input-spinner">
+                          <div class="input-group-prepend">
+                            <button
+                              [disabled]="this.banderaNoDisponible || (this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0)"
+                              (click)="this.decrementar()" class="btn btn-light tamanioInputs m-0 px-1"
+                              style="border-color: darkgray" type="button"
+                              id="button-plus"> -
+                            </button>
+                          </div>
+                          <input type="number" disabled [(ngModel)]="this.varianteActiva.CANTIDAD"
+                                 class="form-control tamanioInputs m-0"
+                                 style="border-color: darkgray; background-color: white" value="1"
+                                 name="cantidadProducto">
+                          <div class="input-group-append">
+                            <button
+                              [disabled]="this.banderaNoDisponible || (this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0)"
+                              (click)="this.incrementar()" class="btn btn-light tamanioInputs m-0 px-1"
+                              style="border-color: darkgray" type="button"
+                              id="button-minus"> +
+                            </button>
+                          </div>
+                          <p class="m-0 pt-3" style="font-size: 11px">({{this.varianteActiva.MEDIDA}})</p>
+                        </div> <!-- input-group.// -->
+
+                      </div>
+                    </dd>
                   </dl>
                 </div>
-
               </article> <!-- gallery-wrap .end// -->
 
-              <label class="m-0 p-0" style="font-size: 13px;">Cantidad:</label>
-              <div class="form-row mb-0">
-                <div class="form-group col-lg-5  col-12">
-                  <div class="form-row">
-                    <div class=" input-spinner">
-                      <div class="input-group-prepend">
-                        <button
-                          [disabled]="this.banderaNoDisponible || (this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0)"
-                          (click)="this.decrementar()" class="btn btn-light tamanioInputs m-0 px-1"
-                          style="border-color: darkgray" type="button"
-                          id="button-plus"> -
-                        </button>
-                      </div>
-                      <input type="number" disabled [(ngModel)]="this.varianteActiva.CANTIDAD"
-                             class="form-control tamanioInputs m-0"
-                             style="border-color: darkgray; background-color: white" value="1" name="cantidadProducto">
-                      <div class="input-group-append">
-                        <button
-                          [disabled]="this.banderaNoDisponible || (this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0)"
-                          (click)="this.incrementar()" class="btn btn-light tamanioInputs m-0 px-1"
-                          style="border-color: darkgray" type="button"
-                          id="button-minus"> +
-                        </button>
-                      </div>
-                      <p class="m-0 pt-3" style="font-size: 11px">({{this.varianteActiva.MEDIDA}})</p>
-                    </div> <!-- input-group.// -->
-                  </div>
-                </div><!--form-group end.-->
-
-                <div class="form-group col-lg-7  col-12 ">
-
-                  <div class="form-row">
-                    <div class="form-group col-2 mb-0">
-                      <button
-                        [disabled]="this.banderaNoDisponible || (this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0)"
-                        class="btn btn-primary"><i class="fas fa-heart"></i>
-                      </button>
-                    </div> <!--form-group end.-->
-
-                    <div class="form-group col-10 mb-0">
-                      <button
-                        [disabled]="this.banderaNoDisponible || (this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0)"
-                        class="btn btn-outline-primary col-12">
-                        <span class="text">Agregar al carrito</span>
-                        <i class="fas fa-shopping-cart"></i>
-                      </button>
-                    </div><!--form-group end.-->
-                  </div><!--form-row.-->
-
-                </div><!--form-group end.-->
-              </div><!--form-row.-->
 
               <div class="form-row">
-                <button (click)="this.abrirModalFinalizarPedido(contentPedido)"
-                        [disabled]="this.banderaNoDisponible || (this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0)"
-                        class="btn btn-primary col-12"> Comprar
-                </button>
-              </div>
+                <div class="form-group col-md-6 col-12 mb-0">
+                  <button (click)="agregarCarrito()"
+                          [disabled]="this.banderaNoDisponible || (this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0)"
+                          class="btn btn-outline-primary col-12">
+                    <span class="text">Agregar al carrito</span>
+                    <i class="fas fa-shopping-cart"></i>
+                  </button>
+                </div><!--form-group end.-->
 
+                <div class="form-group col-md-6 col-12 mb-0">
+                  <button (click)="this.abrirModalFinalizarPedido(contentPedido)"
+                          [disabled]="this.banderaNoDisponible || (this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0)"
+                          class="btn btn-primary col-12 mt-md-0 mt-2"> Comprar
+                  </button>
+                </div><!--form-group end.-->
+
+              </div><!--form-row.-->
             </article> <!-- product-info-aside .// -->
           </main> <!-- col.// -->
         </div> <!-- row.// -->
@@ -479,7 +468,8 @@
                 <label class="my-0">
                   Cálculo de impuestos por cobrar ({{this.informacionCompra.COSTOS.PORCENTAJE_IMPUESTO}}%)
                 </label></div>
-              <div class="form-group col-6 my-0 text-center"><label class="my-0">{{this.informacionCompra.COSTOS.IMPUESTOS}}</label>
+              <div class="form-group col-6 my-0 text-center"><label
+                class="my-0">{{this.informacionCompra.COSTOS.IMPUESTOS}}</label>
                 <div class="px-sm-1 px-lg-5 px-md-3">
                   <hr class="my-1">
                 </div>
@@ -488,7 +478,8 @@
 
             <div class="form-row">
               <div class="form-group col-6 mb-0"><label class="my-0">Subtotal</label></div>
-              <div class="form-group col-6 my-0 text-center"><label class="my-0">{{this.informacionCompra.COSTOS.SUBTOTAL}}</label></div>
+              <div class="form-group col-6 my-0 text-center"><label
+                class="my-0">{{this.informacionCompra.COSTOS.SUBTOTAL}}</label></div>
             </div>
 
             <div class="form-row">

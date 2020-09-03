@@ -10,6 +10,7 @@ import {AgenteServicio} from "../../servicios/agente.servicio";
 import {DpaServicio} from "../../servicios/dpa.servicio";
 import {Agente} from "../../modelos/agente";
 import {ToastrService} from "ngx-toastr";
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-detalle-producto',
@@ -246,6 +247,7 @@ export class DetalleProductoComponent implements OnInit {
 
     console.log('VARIANTE ACTIVA' + JSON.stringify(this.varianteActiva));
     this.selectVariables();
+    this.buscarDescuentoAutomatico();
   }
 
   public arrayColor = new Set();
@@ -259,6 +261,48 @@ export class DetalleProductoComponent implements OnInit {
       this.arrayMaterial.add(variante.MATERIAL);
     })
     console.log(JSON.stringify(this.arrayColor.size) + "COLOR" + "TALLA" + "MATERIAL");
+  }
+
+  public banderaActivarDescuentoAutomatico: boolean = false;
+
+  public buscarDescuentoAutomatico() {
+    let fechaHoy = moment().format("YYYY-MM-DD");
+    let horaActual = moment().format("HH:mm:ss");
+    console.log('horaHoy' + horaActual + fechaHoy)
+    if (this.productoDetalle.PRODUCTO.PRODUCTO_DESCUENTOs.length > 0) {
+      this.productoDetalle.PRODUCTO.PRODUCTO_DESCUENTOs.forEach(descuentoAut => {
+        if (descuentoAut.DESCUENTO.TIPO_DESCUENTO == 'Automático') {
+          if (descuentoAut.DESCUENTO.FECHA_INICIO == fechaHoy) {
+            if ((this.obtenerMinutos(horaActual) >= this.obtenerMinutos(descuentoAut.DESCUENTO.HORA_INICIO))) {
+              //CUPON VALIDO
+              console.log('1' + horaActual + fechaHoy)
+            }
+          } else {
+            if (descuentoAut.DESCUENTO.FECHA_FIN == fechaHoy) {
+              if ((this.obtenerMinutos(horaActual) <= this.obtenerMinutos(descuentoAut.DESCUENTO.HORA_FIN))) {
+                //CUPON VALIDO
+                console.log('2' + horaActual + fechaHoy)
+              } else {
+                this.banderaActivarDescuentoAutomatico = false;
+              }
+            } else {
+              //CUPON VALIDO
+              console.log('3' + horaActual + fechaHoy)
+            }
+          }
+        }
+      })
+    } else {
+      this.banderaActivarDescuentoAutomatico = false;
+    }
+  }
+
+
+  public obtenerMinutos(hora) {
+    if (hora) {
+      var spl = hora.split(":");
+      return parseInt(spl[0]) * 60 + parseInt(spl[1]);
+    }
   }
 
   public verificarVariante() {
@@ -419,7 +463,7 @@ export class DetalleProductoComponent implements OnInit {
     this.informacionCompra.CANTIDAD = this.varianteActiva.CANTIDAD;
     this.informacionCompra.NUM_VARIANTE = this.varianteActiva.NUM_VARIANTE;
     //this.informacionCompra.FECHA_COMPRA = this.varianteActiva.COD_PRODUCTO;
-
+    console.log('VARIANTE' + this.informacionCompra.NUM_VARIANTE);
     this.informacionCompra.METODO_PAGO_COMPRA = '';
     this.informacionCompra.METODO_ENVIO_COMPRA = '';
 
@@ -688,5 +732,16 @@ export class DetalleProductoComponent implements OnInit {
 
   public atras() {
     this.siguienteDetallePedido = false;
+  }
+
+  public carritoCompras = {
+    NUM_VARIANTE: String,
+    CANTIDAD: Number
+  }
+
+  public agregarCarrito() {
+    this.carritoCompras.NUM_VARIANTE = this.varianteActiva.NUM_VARIANTE;
+    this.carritoCompras.CANTIDAD = this.varianteActiva.CANTIDAD;
+    console.log('CARRITO COMPRAS' + JSON.stringify(this.carritoCompras));
   }
 }

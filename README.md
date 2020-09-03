@@ -95,3 +95,7 @@ https://napster2210.github.io/ngx-spinner/
 En el cliente osea en angular instalar para agregar el pago online
 npm i ngx-paypal --save
 modificar en la libreria nodemoudles/lib/componentes/paypal.component quitar el set
+
+
+== PARA LAS HORASB Y FECHAS
+npm install moment --save

@@ -556,7 +556,7 @@ async function obtenerProductoDetalle(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
     try {
         let fechaHoy = moment().format("YYYY-MM-DD");
-       // console.log('FECHA HOY'+fechaHoy);
+
         let productoObtenido = await Oferta.findOne({
             where: {ID_OFERTA: req.params.id},
             include: [{
