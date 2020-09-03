@@ -47,7 +47,7 @@ export class CuponDescuentoComponent implements OnInit , OnDestroy{
   public misProductos;
   public result = [];
 
-  constructor(private datePipe: DatePipe, private router: Router, public toastr: ToastrService, private _descuentoServicio: DescuentoServicio, private modalService: NgbModal, private _productoServicio: ProductoServicio) {
+  constructor(public datePipe: DatePipe, public router: Router, public toastr: ToastrService, public _descuentoServicio: DescuentoServicio, public modalService: NgbModal, public _productoServicio: ProductoServicio) {
     this.Descuento = new Descuento(null, null, null, null, 'Cupón', null, null, 0, 'todos');
 
 
@@ -109,7 +109,7 @@ export class CuponDescuentoComponent implements OnInit , OnDestroy{
       }
 
     } else {
-      this.Descuento.AplicarA = 'espesificos';
+      this.Descuento.AplicarA = 'especificos';
       this.vectorProductos = new Set();
       this.vectorProductosEnviar = [];
     }

@@ -13,7 +13,7 @@ export class PersonalizacionTiendaComponent implements OnInit {
   public identidadTienda;
   public loading: boolean = false;
 
-  constructor(private _tiendaServicio: TiendaServicio) {
+  constructor(public _tiendaServicio: TiendaServicio) {
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
   }
 

@@ -22,7 +22,7 @@ export class LoguinComponent {
   public tokenTemporal;
   public response;
   public payPalConfig: IPayPalConfig;
-  constructor(private route: ActivatedRoute, private _agenteServicio: AgenteServicio, public router: Router) {
+  constructor(public route: ActivatedRoute, public _agenteServicio: AgenteServicio, public router: Router) {
     this.initConfig();
   }
   initConfig() {
@@ -129,8 +129,8 @@ export class LoguinComponent {
     } catch (e) {
       this.loading = false;
       console.log("error", e);
-      if (JSON.stringify((e).err.message))
-        this.mensageError(JSON.stringify((e).err.message));
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
       else this.mensageError("Error de conexión intentelo mas tarde");
     }
     this.loading = false;

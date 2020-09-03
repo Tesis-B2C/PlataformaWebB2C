@@ -23,7 +23,7 @@ export class InicioTiendaComponent implements OnInit {
   public loading: boolean = false;
   public busqueda;
 
-  constructor(configRating: NgbRatingConfig, private _tiendaServicio: TiendaServicio, private route: ActivatedRoute, private router: Router) {
+  constructor(configRating: NgbRatingConfig, public _tiendaServicio: TiendaServicio, public route: ActivatedRoute, public router: Router) {
     configRating.max = 5;
     configRating.readonly = true;
     // customize default values of carousels used by this component tree

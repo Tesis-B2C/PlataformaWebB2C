@@ -20,7 +20,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   public datosObtenidos: any;
   public carritoIdentidad;
 
-  constructor(private _carritoServicio: CarritoServicio, private _agenteServicio: AgenteServicio, private route: ActivatedRoute, private _tiendaServicio: TiendaServicio, private router: Router) {
+  constructor(public _carritoServicio: CarritoServicio, public _agenteServicio: AgenteServicio, public route: ActivatedRoute, public _tiendaServicio: TiendaServicio, public router: Router) {
   }
 
   async ngOnInit() {

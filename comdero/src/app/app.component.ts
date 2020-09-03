@@ -10,7 +10,7 @@ export class AppComponent implements OnInit{
 
   public token;
   public identity;
-  constructor(private _agenteService: AgenteServicio) {
+  constructor(public _agenteService: AgenteServicio) {
   }
 
   ngOnInit() {

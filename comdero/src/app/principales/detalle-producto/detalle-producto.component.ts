@@ -11,6 +11,7 @@ import {DpaServicio} from "../../servicios/dpa.servicio";
 import {Agente} from "../../modelos/agente";
 import {ToastrService} from "ngx-toastr";
 import * as moment from 'moment';
+import { formatNumber } from '@angular/common';
 
 @Component({
   selector: 'app-detalle-producto',
@@ -36,62 +37,62 @@ export class DetalleProductoComponent implements OnInit {
   public direccionEnvioDiferente: boolean = false;
   public datosfacturacionDiferente: boolean = false;
   public siguienteDetallePedido: boolean = false;
-
+  
   public varianteActiva = {
-    COLOR: String,
-    TALLA: String,
-    MATERIAL: String,
+    COLOR: null,
+    TALLA: null,
+    MATERIAL: null,
     PRECIO_UNITARIO_CON_IVA: null,
-    PRECIO_UNITARIO: Number,
-    STOCK: Number,
-    MEDIDA: String,
+    PRECIO_UNITARIO: null,
+    STOCK: null,
+    MEDIDA: null,
     IMAGENES: [],
-    CANTIDAD: Number = 1,
-    ID_PRODUCTO: Number,
-    COD_PRODUCTO: String,
-    NUM_VARIANTE: String,
+    CANTIDAD: null,
+    ID_PRODUCTO: null,
+    COD_PRODUCTO: null,
+    NUM_VARIANTE: null,
     OPCION_ENVIO: [],
     METODO_PAGO: [],
-    PORCENTAJE_IMPUESTO: Number,
+    PORCENTAJE_IMPUESTO: null,
   };
 
   public informacionCompra = {
-    COD_AGENTE: Number,
-    ID_AGENTE: Number,
-    ID_PRODUCTO: Number,
-    COD_PRODUCTO: String,
-    FECHA_COMPRA: Date,
+    COD_AGENTE: null,
+    ID_AGENTE: null,
+    ID_PRODUCTO: null,
+    COD_PRODUCTO: null,
+    FECHA_COMPRA: null,
     DATOS_ENTREGA: {
-      CALLE_PRINCIPAL_ENTREGA: String,
-      CALLE_SECUNDARIA_ENTREGA: String,
-      NUM_CASA_ENTREGA: String,
-      COD_DPA_ENTREGA: String,
-      NOMBRE_PERSONA_ENVIO_ENTREGA: String,
-      NUM_COD_POSTAL_ENTREGA: String,
-      TELEFONO_ENTREGA: String,
+      CALLE_PRINCIPAL_ENTREGA: null,
+      CALLE_SECUNDARIA_ENTREGA: null,
+      NUM_CASA_ENTREGA: null,
+      COD_DPA_ENTREGA: null,
+      NOMBRE_PERSONA_ENVIO_ENTREGA: null,
+      NUM_COD_POSTAL_ENTREGA: null,
+      TELEFONO_ENTREGA: null,
     },
     DATOS_FACTURA: {
-      TIPO_IDENTIFICACION_FACTURA: String,
-      NOMBRE_FACTURA: String,
-      CORREO: String,
-      IDENTIFICACION_FACTURA: String,
-      TELEFONO_FACTURA: String,
-      DIRECCION_FACTURA: String,
+      TIPO_IDENTIFICACION_FACTURA: null,
+      NOMBRE_FACTURA: null,
+      CORREO: null,
+      IDENTIFICACION_FACTURA: null,
+      TELEFONO_FACTURA: null,
+      DIRECCION_FACTURA: null,
     },
-    CANTIDAD: Number,
-    NUM_VARIANTE: String,
-    METODO_PAGO_COMPRA: String,
-    METODO_ENVIO_COMPRA: String,
+    CANTIDAD: null,
+    NUM_VARIANTE: null,
+    METODO_PAGO_COMPRA: null,
+    METODO_ENVIO_COMPRA: null,
     COSTOS: {
-      PRECIO_UNITARIO_PRODUCTO: Number,
-      TOTAL_PRODUCTOS: Number,
-      IMPUESTOS: Number,
-      PORCENTAJE_IMPUESTO: Number,
-      SUBTOTAL: Number,
-      DESCUENTOS: Number,
-      RECARGO_PAYPAL: Number,
-      PORCENTAJE_RECARGO_PAYPAL: Number,
-      TOTAL_PEDIDO: Number,
+      PRECIO_UNITARIO_PRODUCTO: null,
+      TOTAL_PRODUCTOS: null,
+      IMPUESTOS: null,
+      PORCENTAJE_IMPUESTO: null,
+      SUBTOTAL: null,
+      DESCUENTOS: null,
+      RECARGO_PAYPAL: null,
+      PORCENTAJE_RECARGO_PAYPAL: null,
+      TOTAL_PEDIDO: null,
     }
   };
 

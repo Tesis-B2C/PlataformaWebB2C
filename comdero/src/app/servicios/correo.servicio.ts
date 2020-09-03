@@ -16,7 +16,7 @@ export class CorreoServicio {
   public url: String;
 
 
-  constructor(private _http: HttpClient) {
+  constructor(public _http: HttpClient) {
     this.url = GLOBAL.url;
   }
 

@@ -15,7 +15,7 @@ export class TiendasComponent implements OnInit, AfterContentInit {
   public url = GLOBAL.url;
 
   public noExite = 'assets/images/no-imagen1.png';
-  constructor(private spinner: NgxSpinnerService,private _agenteServicio: AgenteServicio, private _tiendaServicio: TiendaServicio, public router: Router) {
+  constructor(public spinner: NgxSpinnerService,public _agenteServicio: AgenteServicio, public _tiendaServicio: TiendaServicio, public router: Router) {
 
   }
   getImagen(pathImagen){

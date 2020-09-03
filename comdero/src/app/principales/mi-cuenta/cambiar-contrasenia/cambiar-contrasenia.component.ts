@@ -17,7 +17,7 @@ export class CambiarContraseniaComponent implements OnInit {
 
   public loading: boolean = false;
 
-  constructor(private _agenteServicio: AgenteServicio) {
+  constructor(public _agenteServicio: AgenteServicio) {
   }
 
   ngOnInit() {

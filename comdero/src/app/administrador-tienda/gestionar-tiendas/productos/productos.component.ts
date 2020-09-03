@@ -121,10 +121,10 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     this.panelUno = document.getElementById('panelUno') as HTMLElement;
     this.panelDos = document.getElementById('panelDos') as HTMLElement;
     if (this.identidadTienda.OPCION_ENVIOs.length == 0) {
-      this.mostrarToast("Asegurate de tener configurado tus métodos de envio antes de empezar a vender", "fa fa-truck fa-2x");
+      this.mostrarToast("Asegurate de tener configurado tus métodos de envio antes de empezar a publicar tus productos", "fa fa-truck fa-2x");
     }
     if (this.identidadTienda.METODO_PAGOs.length == 0) {
-      this.mostrarToast("Asegurate de tener configurado tus métodos de pago antes de empezar a vender", "fas fa-credit-card fa-2x");
+      this.mostrarToast("Asegurate de tener configurado tus métodos de pago antes de empezar a publicar tus productos", "fas fa-credit-card fa-2x");
     }
   }
 
@@ -184,7 +184,7 @@ this.borrarVideo();
   }
 
   public mostrarToast(mensaje, icono) {
-    this.toastr.info('<div class="row no-gutters"><p class="col-10 LetrasToastInfo"><strong>!Importante</strong><br>' + mensaje + '</p> <a class="d-flex align-items-center col-2"><span class="' + icono + '"></span></a></div>', "",
+    this.toastr.info('<div class="row no-gutters"><p class="col-10 white mb-0"><strong style="font-size: xx-large">!Importante</strong><br>' + mensaje + '</p> <a class="d-flex align-items-center col-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="' + icono + '"></span></a></div>', "",
       {positionClass: 'toast-bottom-right', enableHtml: true, closeButton: true, disableTimeOut: true});
   }
 
@@ -386,8 +386,8 @@ this.borrarVideo();
   public busquedaCategoria3(busqueda, event, c22, i) {
 
     let elemento = document.getElementById('labelcheckCategoria2' + i) as HTMLElement;
-    let banderaSeleccionarCategoria = false;
-    this.c3.forEach(c33 => {
+    let banderaSeleccionarCategoria:boolean = false;
+    this.c3.forEach( c33 => {
       if (c33.CAT_ID_CATEGORIA == busqueda) {
         this.categoriaEncontrada.add(c33);
         banderaSeleccionarCategoria = true;
@@ -492,8 +492,18 @@ this.borrarVideo();
 
 
   public async publicarProducto() {
+    let banderaConfiguracion:boolean=true;
     try {
+      if (this.identidadTienda.OPCION_ENVIOs.length == 0) {
+        banderaConfiguracion=false;
+        this.mostrarToast("Asegurate de tener configurado tus métodos de envio antes de empezar a publicar tus productos", "fa fa-truck fa-2x");
+      }
+      if (this.identidadTienda.METODO_PAGOs.length == 0) {
+        banderaConfiguracion=false;
+        this.mostrarToast("Asegurate de tener configurado tus métodos de pago antes de empezar a publicar tus productos", "fas fa-credit-card fa-2x");
+      }
       this.loading = true;
+      if(banderaConfiguracion){
       if (this.validar()) {
         if (this.videoYoutube) {
           this.videoYoutubeGuardar = new Imagen_Producto('Video', 'youtube', this.direccionVideoYoutube, 0);
@@ -509,6 +519,7 @@ this.borrarVideo();
         }
         this.guardarProducto();
 
+      }
       }
       this.loading = false;
     } catch

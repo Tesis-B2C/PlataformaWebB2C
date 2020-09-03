@@ -13,7 +13,7 @@ export class MetodoEnvioServicio {
   public url: String;
 
 
-  constructor(private _http: HttpClient, private _agenteServicio:AgenteServicio) {
+  constructor(public _http: HttpClient, public _agenteServicio:AgenteServicio) {
     this.url = GLOBAL.url;
   }
 

@@ -15,7 +15,7 @@ export class EncuentranosTiendaComponent implements OnInit {
   public idTienda;
   public Sucursales = [];
 
-  constructor(public toastr: ToastrService, private _tiendaServicio: TiendaServicio, private route: ActivatedRoute, private router: Router) {
+  constructor(public toastr: ToastrService, public _tiendaServicio: TiendaServicio, public route: ActivatedRoute, public router: Router) {
   }
 
   async ngOnInit() {

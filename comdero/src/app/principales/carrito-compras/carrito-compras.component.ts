@@ -9,11 +9,11 @@ import {CarritoServicio} from "../../servicios/carrito.servicio";
   styleUrls: ['./carrito-compras.component.css']
 })
 export class CarritoComprasComponent implements OnInit {
-  public cont: Number;
+  public cont: number;
   public carritoIdentidad;
   public vTiendas = new Set();
 
-  constructor(private  _agenteServicio: AgenteServicio, private _carritoServicio: CarritoServicio) {
+  constructor(public  _agenteServicio: AgenteServicio, public _carritoServicio: CarritoServicio) {
   }
 
   async ngOnInit() {

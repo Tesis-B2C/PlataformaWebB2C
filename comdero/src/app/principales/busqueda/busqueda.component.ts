@@ -39,7 +39,7 @@ export class BusquedaComponent implements OnInit, OnDestroy, OnChanges {
     'fa fa-car', 'fa fa-dumbbell', 'fa fa-book',
     'fa fa-dog', 'fa fa-gamepad', 'fa fa-grin-stars', 'fa fa-heartbeat', 'fa fa-building', 'fa fa-tractor'];
 
-  constructor(private menu:MenuComponent, private _carritoServicio:CarritoServicio,private _categoriaServicio:CategoriaServicio, private _agenteServicio: AgenteServicio, private router: Router, configRating: NgbRatingConfig, private route: ActivatedRoute, private _tiendaServicio: TiendaServicio) {
+  constructor(public menu:MenuComponent, public _carritoServicio:CarritoServicio,public _categoriaServicio:CategoriaServicio, public _agenteServicio: AgenteServicio, public router: Router, configRating: NgbRatingConfig, public route: ActivatedRoute, public _tiendaServicio: TiendaServicio) {
     configRating.max = 5;
     configRating.readonly = true;
   }
