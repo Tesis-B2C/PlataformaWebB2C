@@ -107,6 +107,7 @@ export class DetalleProductoComponent implements OnInit {
   constructor(public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal, private _sanitizer: DomSanitizer, configRating: NgbRatingConfig, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
     configRating.max = 5;
     configRating.readonly = true;
+    this.varianteActiva.CANTIDAD=1;
   }
 
   ngOnInit() {
