@@ -21,38 +21,42 @@ export class CarritoComprasComponent implements OnInit {
     this.iniciarCarritoCompras();
   }
 
-  obj = {
+  public obj = {
     idTienda: null,
-    producto: null
+    producto_carrito: null
   }
 
   public async iniciarCarritoCompras() {
-    let identidad = this._agenteServicio.getIdentity();
+
     try {
-      if (identidad) {
-        this.carritoIdentidad = await this._carritoServicio.getCarrito(identidad.COD_AGENTE).toPromise();
+      let tiendas = new Set();
+      this.carritoIdentidad = await this._carritoServicio.getCarrito().toPromise();
 
+      this.carritoIdentidad.data.CARRITO_PRODUCTOs.forEach(element => {
+
+        this.obj.idTienda = element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA;
+        tiendas.add(element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA)
+      });
+      console.log("tiendas", tiendas);
+      tiendas.forEach(element2 => {
+        this.obj = {
+          idTienda: null,
+          producto_carrito: []
+        }
         this.carritoIdentidad.data.CARRITO_PRODUCTOs.forEach(element => {
-          this.obj = {
-            idTienda: null,
-            producto: []
+          console.log("tiendas", element2);
+          if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == element2) {
+            this.obj.idTienda = element2;
+            this.obj.producto_carrito.push(element);
           }
-          this.obj.idTienda = element.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA;
-          this.vTiendas.add(this.obj)
-        });
-        this.carritoIdentidad.data.CARRITO_PRODUCTOs.forEach(element => {
-          this.vTiendas.forEach(element2 => {
-            if (element.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == element2['idTienda']) {
-              element2['producto'].push(element);
-            }
-          })
-
-        });
+        })
+        this.vTiendas.add(this.obj);
+      });
 
 
-        console.log("por tienda", this.vTiendas);
+      console.log("por tienda", this.vTiendas);
 
-      }
+
     } catch (e) {
       console.log(e);
     }

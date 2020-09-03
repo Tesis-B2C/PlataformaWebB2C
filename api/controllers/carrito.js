@@ -11,7 +11,7 @@ const Oferta = require("../models/oferta");
 const Descuento = require("../models/descuento");
 const Tienda = require("../models/tienda");
 async function getCarrito(req, res) {
-    let busqueda = req.params.id;
+
     let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
     try {
         if (!verificar) {
@@ -21,15 +21,12 @@ async function getCarrito(req, res) {
         } else {
 
             let carritoObtenido = await Carrito.findOne({
-                where: {COD_AGENTE: busqueda},
+                where: {COD_AGENTE: req.user.id},
                 include: {
                     model: Carrito_Producto,
                     include: {
-                        model: Producto,
-                        include: [{model: Oferta, include:{model:Tienda}}, {model: Variante, include: {model: Imagen_Producto}}, {
-                            model: Producto_Descuento,
-                            include: {model: Descuento}
-                        }]
+                        model: Variante,
+                        include: [{model: Producto, include:[{model:Oferta, include:{model:Tienda}},{model:Producto_Descuento, include:{model:Descuento}}]},{model:Imagen_Producto}]
                     }
                 }
             });
@@ -40,7 +37,7 @@ async function getCarrito(req, res) {
                     message: "Carrito de compras cargado correctamente"
                 });
             } else {
-                let crearCarrito = await Carrito.create({COD_AGENTE: busqueda, CANTIDAD_TOTAL_PRODUCTOS: 0});
+                let crearCarrito = await Carrito.create({COD_AGENTE: req.user.id, CANTIDAD_TOTAL_PRODUCTOS: 0});
 
                 res.status(200).send({
                     data: carritoObtenido,
@@ -58,8 +55,8 @@ async function getCarrito(req, res) {
 }
 
 async function saveCarrito(req, res) {
-
-    let verificar = await Agente.findOne({where: {COD_AGENTE: req.body.Id_Agente}, include: {model: Carrito}});
+console.log(" cod agente ", req.user);
+    let verificar = await Agente.findOne({where: {COD_AGENTE:req.user.id}, include: {model: Carrito}});
     try {
         if (!verificar) {
             return res.status(500).send({
@@ -67,10 +64,9 @@ async function saveCarrito(req, res) {
             });
         } else {
             let carritoGuardado = await Carrito_Producto.create({
-                ID_PRODUCTO: req.body.Id_Producto,
-                COD_PRODUCTO: req.body.Cod_Producto,
+                NUM_VARIANTE:req.body.Num_Variante,
                 ID_CARRITO: verificar.dataValues.CARRITO.ID_CARRITO,
-                CANTIDAD_PRODUCTO_CARRITO: req.body.cont
+                CANTIDAD_PRODUCTO_CARRITO: req.body.Cantidad_Producto_Carrito
             });
             let cont = await Carrito_Producto.findOne({
                 where: {
@@ -81,7 +77,7 @@ async function saveCarrito(req, res) {
             console.log("conmt", cont.dataValues.TOTAL_COM);
 
             let carritoActualizado = await Carrito.update({CANTIDAD_TOTAL_PRODUCTOS: cont.dataValues.TOTAL_COM}, {
-                where: {COD_AGENTE: req.body.Id_Agente}
+                where: {COD_AGENTE: req.user.id}
             });
 
             if (carritoGuardado) {

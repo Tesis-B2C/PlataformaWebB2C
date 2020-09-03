@@ -6,17 +6,18 @@
 </section>
 
 <section class="section-content  ">
-  <div class="container" *ngFor="let tienda of vTiendas">
+  <div class="container" *ngFor="let tienda of vTiendas; let i = index">
     <div class="media">
       <img class="mr-3" src="..." alt="Generic placeholder image">
       <div class="media-body">
-        <h5 class="mt-0">Tienda</h5>
+        <h5 class="mt-0">{{tienda.idTienda}}</h5>
        Descipcion tienda.
       </div>
-      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2"><i class="fa fa-shopping-cart"></i> &nbsp;<i class="fa fa-chevron-down"></i></button>
+
+      <button class="btn btn-primary" type="button" data-toggle="collapse" [attr.data-target]="'#multiCollapseExample'+i" aria-expanded="false" ><i class="fa fa-shopping-cart"></i> &nbsp;<i class="fa fa-chevron-down"></i></button>
 
     </div>
-    <div class="row collapse " id="multiCollapseExample2">
+    <div class="row collapse " id="multiCollapseExample{{i}}">
       <aside class="col-lg-9">
         <div class="card">
           <table class="table table-borderless table-shopping-cart">
@@ -29,7 +30,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let producto of tienda.producto">
+            <tr *ngFor="let producto of tienda.producto_carrito">
               <td>
                 <figure class="itemside align-items-center">
                   <div class="aside"><img src="../images/items/11.jpg" class="img-sm"></div>

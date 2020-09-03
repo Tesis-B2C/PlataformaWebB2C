@@ -4,7 +4,7 @@ const express = require('express');
 const CarritoController = require('../controllers/carrito');
 const md_auth = require('../middleware/authenticated');
 const api = express.Router(); // esto sirve para crear las rutas
-api.get('/getCarrito/:id', md_auth.ensureAuth, CarritoController.getCarrito);
+api.get('/getCarrito', md_auth.ensureAuth, CarritoController.getCarrito);
 api.post('/saveCarrito',md_auth.ensureAuth, CarritoController.saveCarrito);
 
 

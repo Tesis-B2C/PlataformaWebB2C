@@ -11,7 +11,10 @@ import {DpaServicio} from "../../servicios/dpa.servicio";
 import {Agente} from "../../modelos/agente";
 import {ToastrService} from "ngx-toastr";
 import * as moment from 'moment';
-import { formatNumber } from '@angular/common';
+import {formatNumber} from '@angular/common';
+import {CarritoServicio} from "../../servicios/carrito.servicio";
+import {MenuComponent} from "../menu/menu.component";
+import {Carrito_Producto} from "../../modelos/carrito_producto";
 
 @Component({
   selector: 'app-detalle-producto',
@@ -103,11 +106,12 @@ export class DetalleProductoComponent implements OnInit {
   public ciudadDireccion;
   public provinciaDireccion;
   public select_ciudad: boolean = false;
+  public Carrito_Producto;
 
-  constructor(public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal, private _sanitizer: DomSanitizer, configRating: NgbRatingConfig, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
+  constructor(public menu: MenuComponent, public _carritoServicio: CarritoServicio, public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal, private _sanitizer: DomSanitizer, configRating: NgbRatingConfig, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
     configRating.max = 5;
     configRating.readonly = true;
-    this.varianteActiva.CANTIDAD=1;
+    this.varianteActiva.CANTIDAD = 1;
   }
 
   ngOnInit() {
@@ -736,14 +740,15 @@ export class DetalleProductoComponent implements OnInit {
     this.siguienteDetallePedido = false;
   }
 
-  public carritoCompras = {
-    NUM_VARIANTE: null,
-    CANTIDAD: null
-  }
 
-  public agregarCarrito() {
-    this.carritoCompras.NUM_VARIANTE = this.varianteActiva.NUM_VARIANTE;
-    this.carritoCompras.CANTIDAD = this.varianteActiva.CANTIDAD;
-    console.log('CARRITO COMPRAS' + JSON.stringify(this.carritoCompras));
+  public async agregarCarrito() {
+    try {
+      let idCarrito = this.route.snapshot.params.id;
+      this.Carrito_Producto = new Carrito_Producto(this.varianteActiva.NUM_VARIANTE, this.varianteActiva.CANTIDAD);
+      let response = await this._carritoServicio.saveCarrito(this.Carrito_Producto).toPromise();
+      this.menu.conteoProductosCarrito();
+    } catch (e) {
+      console.log("error:" + JSON.stringify((e)));
+    }
   }
 }

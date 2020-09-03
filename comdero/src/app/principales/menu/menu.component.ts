@@ -29,12 +29,9 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   public async conteoProductosCarrito() {
-    let identidad = this._agenteServicio.getIdentity();
     try {
-      if (identidad) {
-        this.carritoIdentidad = await this._carritoServicio.getCarrito(identidad.COD_AGENTE).toPromise();
+        this.carritoIdentidad = await this._carritoServicio.getCarrito().toPromise();
         console.log("OBTENIENDO carrito", this.carritoIdentidad.data);
-      }
     } catch (e) {
       console.log(e);
     }

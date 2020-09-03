@@ -20,24 +20,19 @@ export class CarritoServicio {
     this.url = GLOBAL.url;
   }
 
-  getCarrito(Id_Agente) {
-    debugger;
+  getCarrito() {
+
     let headers = new HttpHeaders({
       "Content-type": "application/json",
       "Authorization": this._agenteServicio.getToken()
     });
-    return this._http.get<objeto>(this.url + "getCarrito/" + Id_Agente, {headers: headers});
+    return this._http.get<objeto>(this.url + "getCarrito", {headers: headers});
 
   }
 
-  saveCarrito(Id_Agente, Id_Producto, Cod_Producto,cont) {
-    let obj = {
-      Id_Agente: Id_Agente,
-      Id_Producto: Id_Producto,
-      Cod_Producto:Cod_Producto,
-      cont:cont
-    }
-    let params = JSON.stringify(obj)
+  saveCarrito(Carrito_Producto) {
+
+    let params = JSON.stringify(Carrito_Producto)
     let headers = new HttpHeaders({"Content-type": "application/json", "Authorization": this._agenteServicio.getToken()});
     return this._http.post<objeto>(this.url + "saveCarrito/", params, {headers: headers});
   }
