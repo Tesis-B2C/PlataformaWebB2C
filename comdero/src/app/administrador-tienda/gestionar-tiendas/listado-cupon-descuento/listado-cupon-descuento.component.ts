@@ -37,6 +37,7 @@ export class ListadoCuponDescuentoComponent implements OnInit {
     for (let i in this.misDescuentos) {
       if (this.misDescuentos[i].ESTADO_DESCUENTO == 0) {
         if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") < this.misDescuentos[i].FECHA_INICIO) {
+
           this.misDescuentos[i].ESTADO_FECHA = "Programado"
         }
         if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") > this.misDescuentos[i].FECHA_FIN) {
@@ -46,18 +47,37 @@ export class ListadoCuponDescuentoComponent implements OnInit {
         if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") >= this.misDescuentos[i].FECHA_INICIO && this.datePipe.transform(this.hoy, "yyyy-MM-dd") <= this.misDescuentos[i].FECHA_FIN) {
           this.misDescuentos[i].ESTADO_FECHA = "Activo"
         }
+
+        if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") == this.misDescuentos[i].FECHA_INICIO) {
+          debugger;
+          let horaActual = this.hoy.getHours() + ':' + this.hoy.getMinutes() + ':' + this.hoy.getSeconds();
+          if (this.obtenerMinutos(horaActual) < this.obtenerMinutos(this.misDescuentos[i].HORA_INICIO)) {
+            this.misDescuentos[i].ESTADO_FECHA = "Programado";
+          }
+        }
+        if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") == this.misDescuentos[i].FECHA_FIN) {
+          let horaActual = this.hoy.getHours() + ':' + this.hoy.getMinutes() + ':' + this.hoy.getSeconds();
+          if (this.obtenerMinutos(horaActual) > this.obtenerMinutos(this.misDescuentos[i].HORA_FIN)) {
+            this.misDescuentos[i].ESTADO_FECHA = "Vencido";
+          }
+        }
       } else {
         this.misDescuentos[i].ESTADO_FECHA = "Desactivado"
       }
     }
 
-    debugger;
     this.result = this.misDescuentos;
     console.log("mis productos", this.vectorDescuentos);
     this.loading = false;
-
-
   }
+
+  obtenerMinutos(hora) {
+    if (hora) {
+      var spl = hora.split(":");
+      return parseInt(spl[0]) * 60 + parseInt(spl[1]);
+    }
+  }
+
 
   public async filtrar() {
     this.loading = true;

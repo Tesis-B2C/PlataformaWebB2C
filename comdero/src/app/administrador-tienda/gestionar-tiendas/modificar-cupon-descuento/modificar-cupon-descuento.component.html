@@ -186,8 +186,8 @@
             <br>
             <div class="radio-item">
               <input (click)="opcionAplicarA(false)" name="garantia" [disabled]="!this.banderaModificar"
-                     type="radio" value="espesificos" id="GarantiaFabrica"
-                     [checked]="this.Descuento.AplicarA=='espesificos'">
+                     type="radio" value="especificos" id="GarantiaFabrica"
+                     [checked]="this.Descuento.AplicarA=='especificos'">
               <label for="GarantiaFabrica">&nbsp;&nbsp;Productos especificos </label>
             </div>
 
@@ -197,7 +197,7 @@
         </div>
 
 
-        <table *ngIf="vectorProductosEnviar.length>0 && this.Descuento.AplicarA=='espesificos'"
+        <table *ngIf="vectorProductosEnviar.length>0 && this.Descuento.AplicarA=='especificos'"
                class="table  table-responsive-sm bg-white small w-100 text-center">
           <thead>
           <tr>
@@ -231,7 +231,7 @@
           </tbody>
         </table>
 
-        <div *ngIf="vectorProductosEnviar.length>0 && this.Descuento.AplicarA=='espesificos'"
+        <div *ngIf="vectorProductosEnviar.length>0 && this.Descuento.AplicarA=='especificos'"
              class="d-flex justify-content-between p-2">
           <ngb-pagination class="paginacion"
                           [(page)]="page2"
@@ -244,7 +244,7 @@
           </ngb-pagination>
         </div>
 
-        <button *ngIf="this.Descuento.AplicarA=='espesificos'" class="btn btn-primary col-md-3 mx-auto p-1"
+        <button *ngIf="this.Descuento.AplicarA=='especificos'" class="btn btn-primary col-md-3 mx-auto p-1"
                 [disabled]="!banderaModificar"
                 (click)="abrirModalProductos(modalProductos)">Agregar Producto &nbsp; <span
           class="fa fa-plus "></span></button>

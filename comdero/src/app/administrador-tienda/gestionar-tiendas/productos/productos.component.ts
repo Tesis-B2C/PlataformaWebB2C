@@ -387,7 +387,7 @@ this.borrarVideo();
 
     let elemento = document.getElementById('labelcheckCategoria2' + i) as HTMLElement;
     let banderaSeleccionarCategoria:boolean = false;
-    this.c3.forEach(c33 => {
+    this.c3.forEach( c33 => {
       if (c33.CAT_ID_CATEGORIA == busqueda) {
         this.categoriaEncontrada.add(c33);
         banderaSeleccionarCategoria = true;

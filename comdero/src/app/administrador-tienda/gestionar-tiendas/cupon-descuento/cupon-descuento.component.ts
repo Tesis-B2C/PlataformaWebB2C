@@ -109,7 +109,7 @@ export class CuponDescuentoComponent implements OnInit , OnDestroy{
       }
 
     } else {
-      this.Descuento.AplicarA = 'espesificos';
+      this.Descuento.AplicarA = 'especificos';
       this.vectorProductos = new Set();
       this.vectorProductosEnviar = [];
     }

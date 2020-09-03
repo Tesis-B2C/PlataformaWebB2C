@@ -59,7 +59,7 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
     this.banderaSlidePagoTransferencia = document.getElementById('slidePagoTransferencia') as HTMLInputElement;
     this.banderaSlidePagoEfectivo = document.getElementById('slidePagoEfectivo') as HTMLInputElement;
     this.Metodo_Pago_Efectivo = new Metodo_Pago(0, 0, "", "", "", 0, "Efectivo");
-    this.Metodo_Pago_Transferencia = new Metodo_Pago(0, 0, "", "", "", 0, "Transferencia");
+    this.Metodo_Pago_Transferencia = new Metodo_Pago(0, 0, "Ahorros", "", "", 0, "Transferencia");
     this.Metodo_Pago_Electronico = new Metodo_Pago(0, 0, "", "", "", 0, "Electrónico");
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
 
@@ -132,7 +132,7 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
   }
 
   public opcionTipoCuenta(value) {
-    this.Metodo_Pago_Transferencia.Tipo_Cuenta = value;
+   this.Metodo_Pago_Transferencia.Tipo_Cuenta = value;
   }
 
   public opcionPagoElectronico(event) {
@@ -163,6 +163,7 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
 
   public async saveMetodoPago() {
     try {
+      debugger;
       this.loading=true;
       if (document.forms["formMetodoPagoEfectivo"].checkValidity() && document.forms["formMetodoPagoTransferenciaBancaria"].checkValidity() && document.forms["formMetodoPagoElectronico"].checkValidity()) {
         if (this.banderaSlidePagoEfectivo.checked) this.Metodo_Pago_Enviar.push(this.Metodo_Pago_Efectivo);

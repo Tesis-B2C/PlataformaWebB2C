@@ -176,7 +176,7 @@ export class ModificarCuponDescuentoComponent implements OnInit {
       }
 
     } else {
-      this.Descuento.AplicarA = 'espesificos';
+      this.Descuento.AplicarA = 'especificos';
       this.vectorProductos = new Set();
       this.vectorProductosEnviar = [];
     }
