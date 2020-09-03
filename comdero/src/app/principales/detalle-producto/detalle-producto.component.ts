@@ -37,7 +37,7 @@ export class DetalleProductoComponent implements OnInit {
   public direccionEnvioDiferente: boolean = false;
   public datosfacturacionDiferente: boolean = false;
   public siguienteDetallePedido: boolean = false;
-  
+
   public varianteActiva = {
     COLOR: null,
     TALLA: null,
@@ -737,8 +737,8 @@ export class DetalleProductoComponent implements OnInit {
   }
 
   public carritoCompras = {
-    NUM_VARIANTE: String,
-    CANTIDAD: Number
+    NUM_VARIANTE: null,
+    CANTIDAD: null
   }
 
   public agregarCarrito() {

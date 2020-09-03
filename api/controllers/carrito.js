@@ -1,8 +1,5 @@
 'use strict'
 
-
-
-
 const Carrito = require('../models/carrito'); //importar el modelo del usuario  o lo que son las clases comunes
 const Carrito_Producto = require('../models/carrito_producto'); //importar el modelo del usuario  o lo que son las clases comunes
 const Agente = require("../models/Agente");

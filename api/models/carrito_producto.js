@@ -4,20 +4,14 @@ var db = require("../database/db.js");
 
 const Carrito_Producto = db.sequelize.define('CARRITO_PRODUCTO', {
 
-        ID_PRODUCTO:
+        NUM_VARIANTE:
             {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
                 allowNull: false,
 
             },
-        COD_PRODUCTO:
-            {
-                type: Sequelize.INTEGER,
-                primaryKey: true,
-                allowNull: false,
 
-            },
         ID_CARRITO:
             {
                 type: Sequelize.INTEGER,
@@ -34,9 +28,8 @@ const Carrito_Producto = db.sequelize.define('CARRITO_PRODUCTO', {
     },
     {
         timestamps: false,
-        id:false
+        id: false
     })
-
 
 
 module.exports = Carrito_Producto;
