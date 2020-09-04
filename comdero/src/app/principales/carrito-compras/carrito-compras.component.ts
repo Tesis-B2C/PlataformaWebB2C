@@ -132,4 +132,13 @@ export class CarritoComprasComponent implements OnInit {
     }
   }
 
+  async deleteProductoCarrito(num_variante) {
+    try {
+      let response = await this._carritoServicio.deleteProductoCarrito(num_variante).toPromise();
+      this.iniciarCarritoCompras();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
 }

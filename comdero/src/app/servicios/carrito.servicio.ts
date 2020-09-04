@@ -52,5 +52,15 @@ export class CarritoServicio {
     });
     return this._http.put<objeto>(this.url + "updateCantidadProducto/" + num_variante,params, {headers: headers});
   }
+  deleteProductoCarrito(variante) {
+
+    let headers = new HttpHeaders({
+      "Content-type": "application/json",
+      "Authorization": this._agenteServicio.getToken()
+    });
+    return this._http.delete<objeto>(this.url + "deleteProductoCarrito/" + variante, {headers: headers});
+  }
+
+
 
 }

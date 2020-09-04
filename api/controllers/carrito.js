@@ -146,14 +146,14 @@ async function updateCantidadProducto(req, res) {
                 });
                 if (cantidadActualizada) {
                     res.status(200).send({
-                        message: "se actualizó la cantidad correctamente",
-                        data:req.body.cantidad
+                        message: "Se actualizó la cantidad correctamente",
+                        data: req.body.cantidad
 
                     });
                 } else {
                     res.status(404).send({
                         message: 'Al parecer no se actualizó la cantidad del producto',
-                        data:1
+                        data: 1
 
                     });
                 }
@@ -165,7 +165,7 @@ async function updateCantidadProducto(req, res) {
                 });
                 res.status(404).send({
                     message: 'Estock no disponible',
-                    data:verificarCantidad.dataValues.STOCK
+                    data: verificarCantidad.dataValues.STOCK
 
                 });
             }
@@ -178,10 +178,43 @@ async function updateCantidadProducto(req, res) {
     }
 }
 
+async function deleteProductoCarrito(req, res) {
+    try {
+        let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
+
+        if (!verificar) {
+            return res.status(500).send({
+                message: "No tiene los permisos necesarios"
+            });
+        } else {
+            let carritoEncontrado = await Carrito.findOne({where: {COD_AGENTE: req.user.id}});
+            if (carritoEncontrado) {
+                let productoBorrado = await Carrito_Producto.destroy({
+                    where: {
+                        ID_CARRITO: carritoEncontrado.dataValues.ID_CARRITO,
+                        NUM_VARIANTE: req.params.num_variante
+                    }
+                });
+                if (productoBorrado) {
+                    res.status(200).send({
+                        message: "Se quito el producto de tu carrito de compras",
+
+                    });
+                }
+            }
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+
 
 module.exports = {
     getCarrito,
     saveCarrito,
-    updateCantidadProducto
+    updateCantidadProducto,
+    deleteProductoCarrito
 
 };
