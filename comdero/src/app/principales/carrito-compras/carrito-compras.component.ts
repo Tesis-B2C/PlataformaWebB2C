@@ -54,8 +54,8 @@ export class CarritoComprasComponent implements OnInit {
           console.log("tienda", element2);
           if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == element2) {
             this.obj.idTienda = element2;
-            element.precio_productos = element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO;
-            this.obj.producto_carrito.push(element);
+            element.precio_productos = (element.VARIANTE.PRECIO_UNITARIO* element.CANTIDAD_PRODUCTO_CARRITO)+(element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO)*(element.VARIANTE.PRODUCTO.OFERTum.IVA/100);
+             this.obj.producto_carrito.push(element);
 
           }
         })
@@ -90,7 +90,7 @@ export class CarritoComprasComponent implements OnInit {
     this.carritoIdentidad.data.CARRITO_PRODUCTOs.forEach(element => {
       if (num_variante == element.NUM_VARIANTE) {
         element.CANTIDAD_PRODUCTO_CARRITO = response;
-
+        element.precio_productos = (element.VARIANTE.PRECIO_UNITARIO* element.CANTIDAD_PRODUCTO_CARRITO)+(element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO)*(element.VARIANTE.PRODUCTO.OFERTum.IVA/100);
       }
     });
 
@@ -99,8 +99,10 @@ export class CarritoComprasComponent implements OnInit {
   public async verificarStockInicio() {
     this.carritoIdentidad.data.CARRITO_PRODUCTOs.forEach(async element => {
       element.CANTIDAD_PRODUCTO_CARRITO = await this.actualizarCantidad(element.NUM_VARIANTE, this.carritoIdentidad.data.ID_CARRITO, element.CANTIDAD_PRODUCTO_CARRITO);
-      if (element.CANTIDAD_PRODUCTO_CARRITO == 0) {
+      element.precio_productos = (element.VARIANTE.PRECIO_UNITARIO* element.CANTIDAD_PRODUCTO_CARRITO)+(element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO)*(element.VARIANTE.PRODUCTO.OFERTum.IVA/100);
+        if (element.CANTIDAD_PRODUCTO_CARRITO == 0) {
         element.CANTIDAD_PRODUCTO_CARRITO = await this.actualizarCantidad(element.NUM_VARIANTE, this.carritoIdentidad.data.ID_CARRITO, 1);
+        element.precio_productos = (element.VARIANTE.PRECIO_UNITARIO* element.CANTIDAD_PRODUCTO_CARRITO)+(element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO)*(element.VARIANTE.PRODUCTO.OFERTum.IVA/100);
       }
     });
   }
@@ -118,7 +120,7 @@ export class CarritoComprasComponent implements OnInit {
     this.carritoIdentidad.data.CARRITO_PRODUCTOs.forEach(element => {
       if (num_variante == element.NUM_VARIANTE) {
         element.CANTIDAD_PRODUCTO_CARRITO = response;
-
+        element.precio_productos = (element.VARIANTE.PRECIO_UNITARIO* element.CANTIDAD_PRODUCTO_CARRITO)+(element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO)*(element.VARIANTE.PRODUCTO.OFERTum.IVA/100);
       }
     });
 

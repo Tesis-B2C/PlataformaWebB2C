@@ -82,7 +82,7 @@
                 <p class="text-uppercase mb-0 mb-md-3">Precio</p>
                 <div class="price-wrap">
                   <var class="price">{{producto.precio_productos | currency}} </var>
-                  <small class="text-muted"> {{producto.VARIANTE.PRECIO_UNITARIO | currency}} c/u </small>
+                  <small class="text-muted">  {{producto.VARIANTE.PRECIO_UNITARIO + producto.VARIANTE.PRECIO_UNITARIO*producto.VARIANTE.PRODUCTO.OFERTum.IVA/100 | currency}} c/u </small>
                 </div> <!-- price-wrap .// -->
               </div>
               <div class="col-6 col-md-1 text-center text-md-left   ">
