@@ -196,6 +196,17 @@ async function deleteProductoCarrito(req, res) {
                     }
                 });
                 if (productoBorrado) {
+                    let cont = await Carrito_Producto.findOne({
+                        where: {
+                            ID_CARRITO: carritoEncontrado.dataValues.ID_CARRITO,
+                        },
+                        attributes: ['ID_CARRITO', [Carrito_Producto.sequelize.fn('COUNT', Carrito_Producto.sequelize.col('ID_CARRITO')), 'TOTAL_COM']],
+                    });
+                    console.log("conmt", cont.dataValues.TOTAL_COM);
+
+                    let carritoActualizado = await Carrito.update({CANTIDAD_TOTAL_PRODUCTOS: cont.dataValues.TOTAL_COM}, {
+                        where: {COD_AGENTE: req.user.id}
+                    });
                     res.status(200).send({
                         message: "Se quito el producto de tu carrito de compras",
 

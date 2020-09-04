@@ -3,6 +3,7 @@ import {AgenteServicio} from "../../servicios/agente.servicio";
 import {CarritoServicio} from "../../servicios/carrito.servicio";
 import {GLOBAL} from 'src/app/servicios/global';
 import {ToastrService} from "ngx-toastr";
+import {MenuComponent} from "../menu/menu.component";
 
 @Component({
   selector: 'app-carrito-compras',
@@ -14,7 +15,7 @@ export class CarritoComprasComponent implements OnInit {
   public carritoIdentidad;
   public vTiendas = new Set();
 
-  constructor(public toastr: ToastrService, public  _agenteServicio: AgenteServicio, public _carritoServicio: CarritoServicio) {
+  constructor(public menu: MenuComponent,public toastr: ToastrService, public  _agenteServicio: AgenteServicio, public _carritoServicio: CarritoServicio) {
   }
 
   async ngOnInit() {
@@ -136,6 +137,7 @@ export class CarritoComprasComponent implements OnInit {
     try {
       let response = await this._carritoServicio.deleteProductoCarrito(num_variante).toPromise();
       this.iniciarCarritoCompras();
+      this.menu.conteoProductosCarrito();
     } catch (e) {
       console.log(e);
     }
