@@ -58,6 +58,7 @@
                             (click)="decrementar(producto.CANTIDAD_PRODUCTO_CARRITO,producto.VARIANTE.STOCK,producto.NUM_VARIANTE,producto.ID_CARRITO);">
                       −
                     </button>
+
                   </div>
                   <input type="text" class="form-control" style="border-color: darkgray" ngModel="piker"
                          [(ngModel)]="producto.CANTIDAD_PRODUCTO_CARRITO">
@@ -69,7 +70,7 @@
                     </button>
                   </div>
                 </div> <!-- input-group.// -->
-                <p style="font-size: x-small;color: red" *ngIf="producto.CANTIDAD_PRODUCTO_CARRITO>producto.VARIANTE.STOCK">Cantidad no disponible </p>
+
 
               </div>
               <div class="col-12 col-md-3  text-center text-md-left   ">

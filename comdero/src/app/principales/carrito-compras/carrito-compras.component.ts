@@ -19,7 +19,8 @@ export class CarritoComprasComponent implements OnInit {
 
   async ngOnInit() {
 
-    this.iniciarCarritoCompras();
+    await this.iniciarCarritoCompras();
+    await this.verificarStockInicio();
   }
 
   public obj = {
@@ -94,6 +95,13 @@ export class CarritoComprasComponent implements OnInit {
 
   }
 
+  public async verificarStockInicio() {
+    this.carritoIdentidad.data.CARRITO_PRODUCTOs.forEach(async element => {
+      element.CANTIDAD_PRODUCTO_CARRITO = await this.actualizarCantidad(element.NUM_VARIANTE, this.carritoIdentidad.data.ID_CARRITO, element.CANTIDAD_PRODUCTO_CARRITO);
+    });
+  }
+
+
   public async decrementar(cantidad, stock, num_variante, id_carrito) {
 
     if (cantidad <= 1)
@@ -119,7 +127,7 @@ export class CarritoComprasComponent implements OnInit {
       return response.data
     } catch (e) {
       console.log(JSON.stringify(e.error.data));
-      this.toastr.error(JSON.stringify(e.error.message));
+      //this.toastr.error(JSON.stringify(e.error.message));
       return e.error.data
     }
   }
