@@ -158,11 +158,14 @@ async function updateCantidadProducto(req, res) {
                     });
                 }
             } else {
+
                 let cantidadActualizada = await Carrito_Producto.update({
                     CANTIDAD_PRODUCTO_CARRITO: verificarCantidad.dataValues.STOCK,
                 }, {
                     where: {NUM_VARIANTE: req.params.num_variante, ID_CARRITO: req.body.id_carrito},
                 });
+
+
                 res.status(404).send({
                     message: 'Estock no disponible',
                     data: verificarCantidad.dataValues.STOCK

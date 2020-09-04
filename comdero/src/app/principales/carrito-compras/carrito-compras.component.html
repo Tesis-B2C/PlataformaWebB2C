@@ -1,13 +1,16 @@
-<body class="bg">
+<body class="">
 <section class="section-pagetop bg">
-  <div class="container">
+  <div class="container bg">
     <h2 class="title-page">Carrito de compras</h2>
   </div> <!-- container //  -->
 </section>
-<hr>
-<section class="section-content  ">
 
-  <div class="container mt-4" *ngFor="let tienda of vTiendas; let i = index">
+<section class="section-content ">
+  <div *ngIf="vTiendas.size==0" class="container mt-5">
+    <p>No tienes productos agregados</p>
+  </div>
+
+  <div class="container bg p-4  mt-4" *ngFor="let tienda of vTiendas; let i = index">
     <div class="media">
       <img class="mr-3 rounded-circle"
            [src]="getImagen(tienda.producto_carrito[0].VARIANTE.PRODUCTO.OFERTum.TIENDA.LOGO)" alt="logo tienda"
@@ -23,12 +26,13 @@
         class="fa fa-chevron-down"></i></button>
 
     </div>
-    <br>
-    <div class="row collapse show" id="multiCollapseExample{{i}}">
-      <aside class="col-lg-9 ">
-        <div class="card ">
-          <div class="card-body">
 
+    <br>
+
+    <div class="row  collapse show" id="multiCollapseExample{{i}}">
+      <aside class="col-lg-9 ">
+        <div class="card">
+          <div class="card-body ">
 
             <div class="row justify-content-center mb-5 " *ngFor="let producto of tienda.producto_carrito">
               <div class="col-12 col-md-5 text-center text-md-left  mb-md-0 mb-4">
@@ -52,7 +56,8 @@
               </div>
               <div class="col-12 col-md-3  mb-3 mb-md-0 text-center text-md-left   ">
                 <p class="text-uppercase mb-0 mb-md-3">Cantidad</p>
-                <div class="input-group input-spinner justify-content-center justify-content-md-start">
+                <div *ngIf="producto.VARIANTE.STOCK!=0"
+                     class="input-group input-spinner justify-content-center justify-content-md-start">
                   <div class="input-group-prepend">
                     <button class="btn btn-light " style="border-color: darkgray" type="button" id="button-minus"
                             (click)="decrementar(producto.CANTIDAD_PRODUCTO_CARRITO,producto.VARIANTE.STOCK,producto.NUM_VARIANTE,producto.ID_CARRITO);">
@@ -70,7 +75,7 @@
                     </button>
                   </div>
                 </div> <!-- input-group.// -->
-
+                <p *ngIf="producto.VARIANTE.STOCK==0" class="text-danger"> No disponible </p>
 
               </div>
               <div class="col-12 col-md-3  text-center text-md-left   ">
@@ -82,7 +87,8 @@
               </div>
               <div class="col-6 col-md-1 text-center text-md-left   ">
                 <p class="text-uppercase  white"></p>
-                <a  style="color: red" (click)="deleteProductoCarrito(producto.VARIANTE.NUM_VARIANTE)"> <i class="fa fa-close"></i></a>
+                <a style="color: red" (click)="deleteProductoCarrito(producto.VARIANTE.NUM_VARIANTE)"> <i
+                  class="fa fa-close"></i></a>
               </div>
             </div>
           </div>
@@ -139,7 +145,7 @@
 
 
     </div> <!-- row.// -->
-    <hr>
+
   </div>
 
 </section>

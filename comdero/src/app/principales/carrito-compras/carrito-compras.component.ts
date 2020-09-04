@@ -15,7 +15,7 @@ export class CarritoComprasComponent implements OnInit {
   public carritoIdentidad;
   public vTiendas = new Set();
 
-  constructor(public menu: MenuComponent,public toastr: ToastrService, public  _agenteServicio: AgenteServicio, public _carritoServicio: CarritoServicio) {
+  constructor(public menu: MenuComponent, public toastr: ToastrService, public  _agenteServicio: AgenteServicio, public _carritoServicio: CarritoServicio) {
   }
 
   async ngOnInit() {
@@ -99,6 +99,9 @@ export class CarritoComprasComponent implements OnInit {
   public async verificarStockInicio() {
     this.carritoIdentidad.data.CARRITO_PRODUCTOs.forEach(async element => {
       element.CANTIDAD_PRODUCTO_CARRITO = await this.actualizarCantidad(element.NUM_VARIANTE, this.carritoIdentidad.data.ID_CARRITO, element.CANTIDAD_PRODUCTO_CARRITO);
+      if (element.CANTIDAD_PRODUCTO_CARRITO == 0) {
+        element.CANTIDAD_PRODUCTO_CARRITO = await this.actualizarCantidad(element.NUM_VARIANTE, this.carritoIdentidad.data.ID_CARRITO, 1);
+      }
     });
   }
 
