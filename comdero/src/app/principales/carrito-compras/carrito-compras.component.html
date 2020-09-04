@@ -30,28 +30,29 @@
           <div class="card-body">
 
 
-            <div class="row justify-content-center" *ngFor="let producto of tienda.producto_carrito">
-              <div class="col-10 col-md-4  mb-5">
+            <div class="row justify-content-center mb-5 " *ngFor="let producto of tienda.producto_carrito">
+              <div class="col-12 col-md-5 text-center text-md-left  mb-md-0 mb-4">
                 <p class="text-uppercase ">Producto</p>
                 <div class="itemside">
-                  <div class="aside"><img [src]="getImagen(producto.IMAGEN_MOSTRAR)" height="100px" width="100px">
+                  <div class="aside"><img [src]="getImagen(producto.IMAGEN_MOSTRAR)" height="125px" width="125px">
                   </div>
-                  <figcaption class="info">
+                  <figcaption class="info text-left">
 
                     <a href="#" class=" price">{{producto.VARIANTE.PRODUCTO.NOMBRE_PRODUCTO}}</a>
-                    <p class="text-muted small "><a
-                      *ngIf="producto.VARIANTE.MATERIAL">Material:&nbsp;&nbsp; {{producto.VARIANTE.MATERIAL}}</a>
+                    <p class="text-muted small "
+                       *ngIf="producto.VARIANTE.MATERIAL">Material:&nbsp;&nbsp; {{producto.VARIANTE.MATERIAL}}
                     </p>
-                    <p class="text-muted small"><a *ngIf="producto.VARIANTE.COLOR">Color:<span
-                      class="px-2 py-0 ml-2" [style.background-color]="producto.VARIANTE.COLOR"></span></a></p>
-                    <p class="text-muted small"><a
-                      *ngIf="producto.VARIANTE.TALLA">Talla:&nbsp;&nbsp;&nbsp;{{producto.VARIANTE.TALLA}}</a></p>
+                    <p class="text-muted small" *ngIf="producto.VARIANTE.COLOR">Color:<span
+                      class="px-2 py-0 ml-2 border border-dark"
+                      [style.background-color]="producto.VARIANTE.COLOR"></span></p>
+                    <p class=" small"
+                       *ngIf="producto.VARIANTE.TALLA">Talla:&nbsp;&nbsp;&nbsp;{{producto.VARIANTE.TALLA}}</p>
                   </figcaption>
                 </div>
               </div>
-              <div class="col-7 col-md-3 ">
-                <p class="text-uppercase ">Cantidad</p>
-                <div class="input-group input-spinner">
+              <div class="col-12 col-md-3  mb-3 mb-md-0 text-center text-md-left   ">
+                <p class="text-uppercase mb-0 mb-md-3">Cantidad</p>
+                <div class="input-group input-spinner justify-content-center justify-content-md-start">
                   <div class="input-group-prepend">
                     <button class="btn btn-light " style="border-color: darkgray" type="button" id="button-minus"
                             (click)="producto.CANTIDAD_PRODUCTO_CARRITO=producto.CANTIDAD_PRODUCTO_CARRITO-1"> −
@@ -69,16 +70,16 @@
 
 
               </div>
-              <div class="col-6 col-md-3 ">
-                <p class="text-uppercase ">Precio</p>
+              <div class="col-12 col-md-3  text-center text-md-left   ">
+                <p class="text-uppercase mb-0 mb-md-3">Precio</p>
                 <div class="price-wrap">
                   <var class="price">{{producto.precio_productos | currency}} </var>
                   <small class="text-muted"> {{producto.VARIANTE.PRECIO_UNITARIO | currency}} c/u </small>
                 </div> <!-- price-wrap .// -->
               </div>
-              <div class="col-6 col-md-1 ">
-                <p class="text-uppercase "></p>
-                <a href="" class="btn btn-light"> <i class="fa fa-trash"></i></a>
+              <div class="col-6 col-md-1 text-center text-md-left   ">
+                <p class="text-uppercase  white"></p>
+                <a href="" style="color: red"> <i class="fa fa-close"></i></a>
               </div>
             </div>
           </div>
