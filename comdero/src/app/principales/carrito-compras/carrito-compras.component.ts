@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import {CarritoServicio} from "../../servicios/carrito.servicio";
-
+import {GLOBAL} from 'src/app/servicios/global';
 
 @Component({
   selector: 'app-carrito-compras',
@@ -23,8 +23,11 @@ export class CarritoComprasComponent implements OnInit {
 
   public obj = {
     idTienda: null,
-    producto_carrito: null
+    producto_carrito: null,
+
   }
+
+
 
   public async iniciarCarritoCompras() {
 
@@ -37,17 +40,20 @@ export class CarritoComprasComponent implements OnInit {
         this.obj.idTienda = element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA;
         tiendas.add(element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA)
       });
-      console.log("tiendas", tiendas);
+      console.log("tiendas", this.carritoIdentidad);
       tiendas.forEach(element2 => {
         this.obj = {
           idTienda: null,
-          producto_carrito: []
+          producto_carrito: [],
+
         }
         this.carritoIdentidad.data.CARRITO_PRODUCTOs.forEach(element => {
-          console.log("tiendas", element2);
+          console.log("tienda", element2);
           if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == element2) {
             this.obj.idTienda = element2;
+            element.precio_productos=element.VARIANTE.PRECIO_UNITARIO*element.CANTIDAD_PRODUCTO_CARRITO;
             this.obj.producto_carrito.push(element);
+
           }
         })
         this.vTiendas.add(this.obj);
@@ -60,5 +66,16 @@ export class CarritoComprasComponent implements OnInit {
     } catch (e) {
       console.log(e);
     }
+  }
+
+
+  public noExite;
+
+  getImagen(pathImagen) {
+    this.noExite = 'assets/images/no-image.png';
+    if (pathImagen) {
+      this.noExite = GLOBAL.urlImagen + pathImagen;
+    }
+    return this.noExite;
   }
 }

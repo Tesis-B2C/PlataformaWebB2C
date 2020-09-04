@@ -10,6 +10,8 @@ const Producto_Descuento = require("../models/producto_descuento");
 const Oferta = require("../models/oferta");
 const Descuento = require("../models/descuento");
 const Tienda = require("../models/tienda");
+const {Op} = require("sequelize");
+const moment = require('moment');
 async function getCarrito(req, res) {
 
     let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
@@ -24,9 +26,18 @@ async function getCarrito(req, res) {
                 where: {COD_AGENTE: req.user.id},
                 include: {
                     model: Carrito_Producto,
+                    separate:true,
+                    order:[['FECHA_CREACION_CARRITO','DESC']],
                     include: {
                         model: Variante,
-                        include: [{model: Producto, include:[{model:Oferta, include:{model:Tienda}},{model:Producto_Descuento, include:{model:Descuento}}]},{model:Imagen_Producto}]
+
+                        include: [{
+                            model: Producto,
+                            include: [{model: Oferta, include: {model: Tienda}}, {
+                                model: Producto_Descuento,
+                                include: {model: Descuento}
+                            }]
+                        }]
                     }
                 }
             });
@@ -54,9 +65,11 @@ async function getCarrito(req, res) {
     }
 }
 
+
+
 async function saveCarrito(req, res) {
-console.log(" cod agente ", req.user);
-    let verificar = await Agente.findOne({where: {COD_AGENTE:req.user.id}, include: {model: Carrito}});
+    console.log(" cod agente ", req.body);
+    let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}, include: {model: Carrito}});
     try {
         if (!verificar) {
             return res.status(500).send({
@@ -64,9 +77,11 @@ console.log(" cod agente ", req.user);
             });
         } else {
             let carritoGuardado = await Carrito_Producto.create({
-                NUM_VARIANTE:req.body.Num_Variante,
+                NUM_VARIANTE: req.body.Num_Variante,
                 ID_CARRITO: verificar.dataValues.CARRITO.ID_CARRITO,
-                CANTIDAD_PRODUCTO_CARRITO: req.body.Cantidad_Producto_Carrito
+                CANTIDAD_PRODUCTO_CARRITO: req.body.Cantidad_Producto_Carrito,
+                FECHA_CREACION_CARRITO:moment(),
+                IMAGEN_MOSTRAR:req.body.Imagen_Mostrar
             });
             let cont = await Carrito_Producto.findOne({
                 where: {
@@ -102,5 +117,6 @@ console.log(" cod agente ", req.user);
 
 module.exports = {
     getCarrito,
-    saveCarrito
+    saveCarrito,
+
 };

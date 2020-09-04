@@ -24,7 +24,16 @@ const Carrito_Producto = db.sequelize.define('CARRITO_PRODUCTO', {
             {
                 type: Sequelize.INTEGER,
                 allowNull: false
-            }
+            },
+
+        FECHA_CREACION_CARRITO: {
+            type: Sequelize.DATE,
+            allowNull: false
+        },
+        IMAGEN_MOSTRAR: {
+            type: Sequelize.STRING,
+            allowNull: false
+        }
     },
     {
         timestamps: false,
