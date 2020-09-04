@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import {CarritoServicio} from "../../servicios/carrito.servicio";
 import {GLOBAL} from 'src/app/servicios/global';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-carrito-compras',
@@ -9,15 +10,15 @@ import {GLOBAL} from 'src/app/servicios/global';
   styleUrls: ['./carrito-compras.component.css']
 })
 export class CarritoComprasComponent implements OnInit {
-  public cont: number;
+
   public carritoIdentidad;
   public vTiendas = new Set();
 
-  constructor(public  _agenteServicio: AgenteServicio, public _carritoServicio: CarritoServicio) {
+  constructor(public toastr: ToastrService, public  _agenteServicio: AgenteServicio, public _carritoServicio: CarritoServicio) {
   }
 
   async ngOnInit() {
-    this.cont = 1;
+
     this.iniciarCarritoCompras();
   }
 
@@ -28,10 +29,10 @@ export class CarritoComprasComponent implements OnInit {
   }
 
 
-
   public async iniciarCarritoCompras() {
 
     try {
+      this.vTiendas = new Set();
       let tiendas = new Set();
       this.carritoIdentidad = await this._carritoServicio.getCarrito().toPromise();
 
@@ -51,7 +52,7 @@ export class CarritoComprasComponent implements OnInit {
           console.log("tienda", element2);
           if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == element2) {
             this.obj.idTienda = element2;
-            element.precio_productos=element.VARIANTE.PRECIO_UNITARIO*element.CANTIDAD_PRODUCTO_CARRITO;
+            element.precio_productos = element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO;
             this.obj.producto_carrito.push(element);
 
           }
@@ -64,7 +65,7 @@ export class CarritoComprasComponent implements OnInit {
 
 
     } catch (e) {
-      console.log(e);
+      this.toastr.error(JSON.stringify(e.error.message));
     }
   }
 
@@ -78,4 +79,49 @@ export class CarritoComprasComponent implements OnInit {
     }
     return this.noExite;
   }
+
+  public async incrementar(cantidad, stock, num_variante, id_carrito) {
+    debugger;
+    cantidad = cantidad + 1;
+    let response = await this.actualizarCantidad(num_variante, id_carrito, cantidad);
+    console.log("response incrementar", response)
+    this.carritoIdentidad.data.CARRITO_PRODUCTOs.forEach(element => {
+      if (num_variante == element.NUM_VARIANTE) {
+        element.CANTIDAD_PRODUCTO_CARRITO = response;
+
+      }
+    });
+
+  }
+
+  public async decrementar(cantidad, stock, num_variante, id_carrito) {
+
+    if (cantidad <= 1)
+      cantidad = 1;
+    else
+      cantidad = cantidad - 1;
+
+    let response = await this.actualizarCantidad(num_variante, id_carrito, cantidad);
+    console.log("response incrementar", response)
+    this.carritoIdentidad.data.CARRITO_PRODUCTOs.forEach(element => {
+      if (num_variante == element.NUM_VARIANTE) {
+        element.CANTIDAD_PRODUCTO_CARRITO = response;
+
+      }
+    });
+
+  }
+
+
+  async actualizarCantidad(num_variante, id_carrito, cantidad) {
+    try {
+      let response = await this._carritoServicio.updateCantidadProducto(num_variante, id_carrito, cantidad).toPromise();
+      return response.data
+    } catch (e) {
+      console.log(JSON.stringify(e.error.data));
+      this.toastr.error(JSON.stringify(e.error.message));
+      return e.error.data
+    }
+  }
+
 }

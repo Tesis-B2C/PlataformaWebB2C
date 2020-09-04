@@ -12,6 +12,7 @@ const Descuento = require("../models/descuento");
 const Tienda = require("../models/tienda");
 const {Op} = require("sequelize");
 const moment = require('moment');
+
 async function getCarrito(req, res) {
 
     let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
@@ -26,8 +27,8 @@ async function getCarrito(req, res) {
                 where: {COD_AGENTE: req.user.id},
                 include: {
                     model: Carrito_Producto,
-                    separate:true,
-                    order:[['FECHA_CREACION_CARRITO','DESC']],
+                    separate: true,
+                    order: [['FECHA_CREACION_CARRITO', 'DESC']],
                     include: {
                         model: Variante,
 
@@ -66,7 +67,6 @@ async function getCarrito(req, res) {
 }
 
 
-
 async function saveCarrito(req, res) {
     console.log(" cod agente ", req.body);
     let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}, include: {model: Carrito}});
@@ -76,36 +76,48 @@ async function saveCarrito(req, res) {
                 message: "No tiene los permisos necesarios"
             });
         } else {
-            let carritoGuardado = await Carrito_Producto.create({
-                NUM_VARIANTE: req.body.Num_Variante,
-                ID_CARRITO: verificar.dataValues.CARRITO.ID_CARRITO,
-                CANTIDAD_PRODUCTO_CARRITO: req.body.Cantidad_Producto_Carrito,
-                FECHA_CREACION_CARRITO:moment(),
-                IMAGEN_MOSTRAR:req.body.Imagen_Mostrar
-            });
-            let cont = await Carrito_Producto.findOne({
+            let busquedaCarrito = await Carrito_Producto.findOne({
                 where: {
-                    ID_CARRITO: verificar.dataValues.CARRITO.ID_CARRITO,
-                },
-                attributes: ['ID_CARRITO', [Carrito_Producto.sequelize.fn('COUNT', Carrito_Producto.sequelize.col('ID_CARRITO')), 'TOTAL_COM']],
+                    NUM_VARIANTE: req.body.Num_Variante,
+                    ID_CARRITO: verificar.dataValues.CARRITO.ID_CARRITO
+                }
             });
-            console.log("conmt", cont.dataValues.TOTAL_COM);
-
-            let carritoActualizado = await Carrito.update({CANTIDAD_TOTAL_PRODUCTOS: cont.dataValues.TOTAL_COM}, {
-                where: {COD_AGENTE: req.user.id}
-            });
-
-            if (carritoGuardado) {
-                res.status(200).send({
-                    data: carritoGuardado,
-                    message: "Carrito de compras actualizado correctamente"
+            if (busquedaCarrito) {
+                res.status(404).send({
+                    message: 'Este producto ya se encuentra en el carrito de compras'
                 });
             } else {
-                res.status(404).send({
-                    message: 'No se pudo agregar producto al carrito de comrpas'
+                let carritoGuardado = await Carrito_Producto.create({
+                    NUM_VARIANTE: req.body.Num_Variante,
+                    ID_CARRITO: verificar.dataValues.CARRITO.ID_CARRITO,
+                    CANTIDAD_PRODUCTO_CARRITO: req.body.Cantidad_Producto_Carrito,
+                    FECHA_CREACION_CARRITO: moment(),
+                    IMAGEN_MOSTRAR: req.body.Imagen_Mostrar
+                });
+                let cont = await Carrito_Producto.findOne({
+                    where: {
+                        ID_CARRITO: verificar.dataValues.CARRITO.ID_CARRITO,
+                    },
+                    attributes: ['ID_CARRITO', [Carrito_Producto.sequelize.fn('COUNT', Carrito_Producto.sequelize.col('ID_CARRITO')), 'TOTAL_COM']],
+                });
+                console.log("conmt", cont.dataValues.TOTAL_COM);
+
+                let carritoActualizado = await Carrito.update({CANTIDAD_TOTAL_PRODUCTOS: cont.dataValues.TOTAL_COM}, {
+                    where: {COD_AGENTE: req.user.id}
                 });
 
+                if (carritoGuardado) {
+                    res.status(200).send({
+                        data: carritoGuardado,
+                        message: "Carrito de compras actualizado correctamente"
+                    });
+                } else {
+                    res.status(404).send({
+                        message: 'No se pudo agregar producto al carrito de comrpas'
+                    });
 
+
+                }
             }
         }
     } catch (err) {
@@ -115,8 +127,56 @@ async function saveCarrito(req, res) {
     }
 }
 
+async function updateCantidadProducto(req, res) {
+    try {
+        let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
+
+        if (!verificar) {
+            return res.status(500).send({
+                message: "No tiene los permisos necesarios"
+            });
+        } else {
+            let verificarCantidad = await Variante.findOne({where: {NUM_VARIANTE: req.params.num_variante}});
+            console.log("asd", req.params.num_variante, "cantidad", req.body.cantidad)
+            if (verificarCantidad.dataValues.STOCK >= req.body.cantidad) {
+                let cantidadActualizada = await Carrito_Producto.update({
+                    CANTIDAD_PRODUCTO_CARRITO: req.body.cantidad,
+                }, {
+                    where: {NUM_VARIANTE: req.params.num_variante, ID_CARRITO: req.body.id_carrito},
+                });
+                if (cantidadActualizada) {
+                    res.status(200).send({
+                        message: "se actualizó la cantidad correctamente",
+                        data:req.body.cantidad
+
+                    });
+                } else {
+                    res.status(404).send({
+                        message: 'Al parecer no se actualizó la cantidad del producto',
+                        data:1
+
+                    });
+                }
+            } else {
+                res.status(404).send({
+                    message: 'No hay más productos disponibles',
+                    data:verificarCantidad.dataValues.STOCK
+
+                });
+            }
+
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+
+
 module.exports = {
     getCarrito,
     saveCarrito,
+    updateCantidadProducto
 
 };

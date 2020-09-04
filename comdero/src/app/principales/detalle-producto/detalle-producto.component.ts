@@ -750,6 +750,7 @@ export class DetalleProductoComponent implements OnInit {
       this.menu.conteoProductosCarrito();
     } catch (e) {
       console.log("error:" + JSON.stringify((e)));
+      this.toastr.error(JSON.stringify((e.error.message)))
     }
   }
 }

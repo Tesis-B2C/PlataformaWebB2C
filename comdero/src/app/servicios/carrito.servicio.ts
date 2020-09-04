@@ -33,8 +33,24 @@ export class CarritoServicio {
   saveCarrito(Carrito_Producto) {
 
     let params = JSON.stringify(Carrito_Producto)
-    let headers = new HttpHeaders({"Content-type": "application/json", "Authorization": this._agenteServicio.getToken()});
+    let headers = new HttpHeaders({
+      "Content-type": "application/json",
+      "Authorization": this._agenteServicio.getToken()
+    });
     return this._http.post<objeto>(this.url + "saveCarrito/", params, {headers: headers});
+  }
+
+  updateCantidadProducto(num_variante, id_carrito, cantidad) {
+    let obj={
+      id_carrito:id_carrito,
+      cantidad:cantidad
+    }
+    let params = JSON.stringify(obj);
+    let headers = new HttpHeaders({
+      "Content-type": "application/json",
+      "Authorization": this._agenteServicio.getToken()
+    });
+    return this._http.put<objeto>(this.url + "updateCantidadProducto/" + num_variante,params, {headers: headers});
   }
 
 }
