@@ -29,7 +29,7 @@
 
     <br>
 
-    <div class="row  collapse show" id="multiCollapseExample{{i}}">
+    <div class="row  collapse " id="multiCollapseExample{{i}}">
       <aside class="col-lg-9 ">
         <div class="card">
           <div class="card-body ">
@@ -82,7 +82,9 @@
                 <p class="text-uppercase mb-0 mb-md-3">Precio</p>
                 <div class="price-wrap">
                   <var class="price">{{producto.precio_productos | currency}} </var>
-                  <small class="text-muted">  {{producto.VARIANTE.PRECIO_UNITARIO + producto.VARIANTE.PRECIO_UNITARIO*producto.VARIANTE.PRODUCTO.OFERTum.IVA/100 | currency}} c/u </small>
+                  <small
+                    class="text-muted">  {{producto.VARIANTE.PRECIO_UNITARIO + producto.VARIANTE.PRECIO_UNITARIO * producto.VARIANTE.PRODUCTO.OFERTum.IVA / 100 | currency}}
+                    c/u </small>
                 </div> <!-- price-wrap .// -->
               </div>
               <div class="col-6 col-md-1 text-center text-md-left   ">
@@ -108,9 +110,10 @@
               <div class="form-group">
                 <label>Tienes un cupon?</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" name="" placeholder="Código">
+                  <input type="text" class="form-control text-uppercase" placeholder="Código" name="cupon"
+                         #Cupon="ngModel" [(ngModel)]="this.cupon">
                   <span class="input-group-append">
-				<button class="btn btn-primary">Aplicar</button>
+				<button (click)="verificarCupon(tienda.idTienda)" class="btn btn-primary">Aplicar</button>
 			</span>
                 </div>
               </div>
@@ -131,6 +134,11 @@
             <dl class="dlist-align">
               <dt>Total con Iva:</dt>
               <dd class="text-right text-dark b"><strong>{{tienda.cuentas.totalConIva | currency}}</strong></dd>
+            </dl>
+
+            <dl class="dlist-align">
+              <dt>Descuentos:</dt>
+              <dd class="text-right text-dark b"><strong>{{tienda.cuentas.descuentoCupon | currency}}</strong></dd>
             </dl>
             <hr>
             <p class="text-center mb-3">

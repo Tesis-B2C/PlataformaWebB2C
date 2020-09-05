@@ -22,11 +22,7 @@ export class CarritoComprasComponent implements OnInit {
 
     await this.iniciarCarritoCompras();
     await this.verificarStockInicio();
-
-    for (let elemente2 of this.vTiendas) {
-      console.log("tienda antes de mandar", elemente2['idTienda']);
-      this.calcularPrecios(elemente2['idTienda']);
-    }
+    await this.calcular();
 
 
   }
@@ -37,9 +33,10 @@ export class CarritoComprasComponent implements OnInit {
     cuentas: {
       subTotal: null,
       iva: null,
-      totalConIva: null
-
+      totalConIva: null,
+      descuentoCupon: null
     },
+    cupones: new Set()
 
   }
 
@@ -64,8 +61,10 @@ export class CarritoComprasComponent implements OnInit {
           cuentas: {
             subTotal: null,
             iva: null,
-            totalConIva: null
-          }
+            totalConIva: null,
+            descuentoCupon: null
+          },
+          cupones: new Set()
 
         }
         this.carritoIdentidad.data.CARRITO_PRODUCTOs.forEach(element => {
@@ -189,9 +188,54 @@ export class CarritoComprasComponent implements OnInit {
         elemnt2['cuentas'].totalConIva = this.totalConIva;
         elemnt2['cuentas'].iva = this.totalConIva - this.subTotal;
       }
-      console.log("element2",elemnt2);
+      console.log("element2", elemnt2);
     }
 
+  }
+
+  public calcular() {
+    for (let elemente2 of this.vTiendas) {
+      console.log("tienda antes de mandar", elemente2['idTienda']);
+      this.calcularPrecios(elemente2['idTienda']);
+    }
+
+  }
+
+  public cupon;
+
+  verificarCupon(tienda) {
+    debugger;
+    let d = 0;
+    for (let element of this.carritoIdentidad.data.CARRITO_PRODUCTOs) {
+      if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == tienda) {
+        for (let descuento of element.VARIANTE.PRODUCTO.PRODUCTO_DESCUENTOs) {
+          if (descuento.DESCUENTO.TIPO_DESCUENTO == 'Cupón') {
+            if (descuento.DESCUENTO.MOTIVO_DESCUENTO == this.cupon) {
+
+              let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
+              d = d + (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100));
+              console.log("descuento", d);
+            }
+          }
+        }
+      }
+    }
+
+    debugger;
+    let bandera: boolean = true;
+    for (let elemnt2 of this.vTiendas) {
+      if (elemnt2['idTienda'] == tienda) {
+        for (let element3 of elemnt2['cupones']) {
+          if (element3 == this.cupon) {
+            bandera = false;
+          }
+        }
+        if (bandera) {
+          elemnt2['cupones'].add(this.cupon);
+          elemnt2['cuentas'].descuentoCupon = elemnt2['cuentas'].descuentoCupon + d;
+        }
+      }
+    }
   }
 
 
