@@ -22,11 +22,24 @@ export class CarritoComprasComponent implements OnInit {
 
     await this.iniciarCarritoCompras();
     await this.verificarStockInicio();
+
+    for (let elemente2 of this.vTiendas) {
+      console.log("tienda antes de mandar", elemente2['idTienda']);
+      this.calcularPrecios(elemente2['idTienda']);
+    }
+
+
   }
 
-  public obj = {
+  public obj: any = {
     idTienda: null,
     producto_carrito: null,
+    cuentas: {
+      subTotal: null,
+      iva: null,
+      totalConIva: null
+
+    },
 
   }
 
@@ -48,23 +61,27 @@ export class CarritoComprasComponent implements OnInit {
         this.obj = {
           idTienda: null,
           producto_carrito: [],
+          cuentas: {
+            subTotal: null,
+            iva: null,
+            totalConIva: null
+          }
 
         }
         this.carritoIdentidad.data.CARRITO_PRODUCTOs.forEach(element => {
           console.log("tienda", element2);
           if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == element2) {
             this.obj.idTienda = element2;
-            element.precio_productos = (element.VARIANTE.PRECIO_UNITARIO* element.CANTIDAD_PRODUCTO_CARRITO)+(element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO)*(element.VARIANTE.PRODUCTO.OFERTum.IVA/100);
-             this.obj.producto_carrito.push(element);
+            element.precio_productos_sin_iva = element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO;
+            element.precio_productos = (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) + (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100);
+            this.obj.producto_carrito.push(element);
 
           }
         })
         this.vTiendas.add(this.obj);
       });
 
-
       console.log("por tienda", this.vTiendas);
-
 
     } catch (e) {
       this.toastr.error(JSON.stringify(e.error.message));
@@ -90,7 +107,8 @@ export class CarritoComprasComponent implements OnInit {
     this.carritoIdentidad.data.CARRITO_PRODUCTOs.forEach(element => {
       if (num_variante == element.NUM_VARIANTE) {
         element.CANTIDAD_PRODUCTO_CARRITO = response;
-        element.precio_productos = (element.VARIANTE.PRECIO_UNITARIO* element.CANTIDAD_PRODUCTO_CARRITO)+(element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO)*(element.VARIANTE.PRODUCTO.OFERTum.IVA/100);
+        element.precio_productos_sin_iva = element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO;
+        element.precio_productos = (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) + (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100);
       }
     });
 
@@ -99,10 +117,13 @@ export class CarritoComprasComponent implements OnInit {
   public async verificarStockInicio() {
     this.carritoIdentidad.data.CARRITO_PRODUCTOs.forEach(async element => {
       element.CANTIDAD_PRODUCTO_CARRITO = await this.actualizarCantidad(element.NUM_VARIANTE, this.carritoIdentidad.data.ID_CARRITO, element.CANTIDAD_PRODUCTO_CARRITO);
-      element.precio_productos = (element.VARIANTE.PRECIO_UNITARIO* element.CANTIDAD_PRODUCTO_CARRITO)+(element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO)*(element.VARIANTE.PRODUCTO.OFERTum.IVA/100);
-        if (element.CANTIDAD_PRODUCTO_CARRITO == 0) {
+      element.precio_productos_sin_iva = element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO;
+      element.precio_productos = (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) + (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100);
+      if (element.CANTIDAD_PRODUCTO_CARRITO == 0) {
+
         element.CANTIDAD_PRODUCTO_CARRITO = await this.actualizarCantidad(element.NUM_VARIANTE, this.carritoIdentidad.data.ID_CARRITO, 1);
-        element.precio_productos = (element.VARIANTE.PRECIO_UNITARIO* element.CANTIDAD_PRODUCTO_CARRITO)+(element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO)*(element.VARIANTE.PRODUCTO.OFERTum.IVA/100);
+        element.precio_productos_sin_iva = element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO;
+        element.precio_productos = (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) + (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100);
       }
     });
   }
@@ -120,7 +141,8 @@ export class CarritoComprasComponent implements OnInit {
     this.carritoIdentidad.data.CARRITO_PRODUCTOs.forEach(element => {
       if (num_variante == element.NUM_VARIANTE) {
         element.CANTIDAD_PRODUCTO_CARRITO = response;
-        element.precio_productos = (element.VARIANTE.PRECIO_UNITARIO* element.CANTIDAD_PRODUCTO_CARRITO)+(element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO)*(element.VARIANTE.PRODUCTO.OFERTum.IVA/100);
+        element.precio_productos_sin_iva = element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO;
+        element.precio_productos = (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) + (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100);
       }
     });
 
@@ -147,5 +169,30 @@ export class CarritoComprasComponent implements OnInit {
       console.log(e);
     }
   }
+
+  public subTotal: number = 0;
+  public totalConIva: number = 0;
+
+  calcularPrecios(tienda) {
+    this.subTotal = 0;
+    this.totalConIva = 0;
+    for (let element of this.carritoIdentidad.data.CARRITO_PRODUCTOs) {
+      if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == tienda) {
+        this.subTotal = this.subTotal + element.precio_productos_sin_iva;
+        this.totalConIva = this.totalConIva + element.precio_productos;
+      }
+    }
+    for (let elemnt2 of this.vTiendas) {
+      console.log("tienda numero", elemnt2['idTienda']);
+      if (elemnt2['idTienda'] == tienda) {
+        elemnt2['cuentas'].subTotal = this.subTotal;
+        elemnt2['cuentas'].totalConIva = this.totalConIva;
+        elemnt2['cuentas'].iva = this.totalConIva - this.subTotal;
+      }
+      console.log("element2",elemnt2);
+    }
+
+  }
+
 
 }
