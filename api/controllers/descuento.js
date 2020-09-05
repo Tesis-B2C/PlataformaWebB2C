@@ -36,7 +36,7 @@ async function saveDescuento(req, res) {
             for (const p of params.vProductos) {
                 await Producto_Descuento.create({
                         ID_DESCUENTO: descuentoCreado.dataValues.ID_DESCUENTO,
-                        ID_PRODUCTO: p.ID_OFERTA,
+                        ID_PRODUCTO: p.PRODUCTO.ID_PRODUCTO,
                         COD_PRODUCTO: p.PRODUCTO.COD_PRODUCTO,
                         FECHA_ASIGNACION_DESCUENTO: moment(),
                         ESTADO_ASIGNACION_DESCUENTO: descuentoCreado.dataValues.ESTADO_DESCUENTO,
