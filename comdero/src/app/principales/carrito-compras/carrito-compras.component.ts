@@ -45,7 +45,7 @@ export class CarritoComprasComponent implements OnInit {
 
     await this.iniciarCarritoCompras();
     await this.verificarStockInicio();
-   await  this.calcularPrecios();
+    await this.calcularPrecios();
     await this.verificarDescuentoAutomatico();
 
 
@@ -148,7 +148,7 @@ export class CarritoComprasComponent implements OnInit {
       }
     });
 
-    await  this.calcularPrecios();
+    await this.calcularPrecios();
     await this.verificarDescuentoAutomatico();
     await this.verificarNuevamenteCupon(idTienda);
   }
@@ -184,7 +184,7 @@ export class CarritoComprasComponent implements OnInit {
         element.precio_productos = (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) + (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100);
       }
     });
-    await  this.calcularPrecios();
+    await this.calcularPrecios();
     await this.verificarDescuentoAutomatico();
     await this.verificarNuevamenteCupon(idTienda);
   }
@@ -207,7 +207,7 @@ export class CarritoComprasComponent implements OnInit {
       this.reiniciar();
       tienda.producto_carrito.splice(i, 1);
       //  await this.iniciarCarritoCompras();
-      await  this.calcularPrecios();
+      await this.calcularPrecios();
       await this.verificarDescuentoAutomatico();
       this.verificarNuevamenteCupon(tienda.idTienda);
       await this.menu.conteoProductosCarrito();
@@ -221,10 +221,9 @@ export class CarritoComprasComponent implements OnInit {
 
   calcularPrecios() {
     debugger;
-    this.subTotal = 0;
-    this.totalConIva = 0;
-
     for (let element of this.vTiendas) {
+      this.subTotal = 0;
+      this.totalConIva = 0;
       console.log("ver tienda para calcular", element['producto_carrito']);
       for (let element2 of element['producto_carrito']) {
         if (element2.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == element['idTienda']) {
@@ -232,26 +231,22 @@ export class CarritoComprasComponent implements OnInit {
           this.totalConIva = this.totalConIva + element2.precio_productos;
         }
       }
-      for (let elemnt2 of this.vTiendas) {
-        console.log("tienda numero", elemnt2['idTienda']);
-        if (elemnt2['idTienda'] == element['idTienda']) {
-          elemnt2['cuentas'].subTotal = this.subTotal;
-          elemnt2['cuentas'].totalConIva = this.totalConIva;
-          elemnt2['cuentas'].iva = this.totalConIva - this.subTotal;
-        }
-        console.log("element2", elemnt2);
-      }
+
+      element['cuentas'].subTotal = this.subTotal;
+      element['cuentas'].totalConIva = this.totalConIva;
+      element['cuentas'].iva = this.totalConIva - this.subTotal;
+
     }
 
 
   }
 
 
-
-  verificarCupon(tienda) {
+  verificarCupon() {
     this.hoy = new Date();
-    let d = 0;
+
     for (let element2 of this.vTiendas) {
+      let d = 0;
       for (let element of element2['producto_carrito']) {
         if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == element2['idTienda']) {
           for (let descuento of element.VARIANTE.PRODUCTO.PRODUCTO_DESCUENTOs) {
@@ -304,23 +299,21 @@ export class CarritoComprasComponent implements OnInit {
           }
         }
       }
-    }
-
-    let bandera: boolean = true;
-    for (let elemnt2 of this.vTiendas) {
-      if (elemnt2['idTienda'] == tienda) {
-        for (let element3 of elemnt2['cupones']) {
-          if (element3 == this.cupon) {
-            bandera = false;
-          }
-        }
-        if (bandera) {
-          elemnt2['cupones'].add(this.cupon);
-          elemnt2['cuentas'].descuentoCupon = elemnt2['cuentas'].descuentoCupon + d;
+      let bandera: boolean = true;
+      for (let element3 of element2['cupones']) {
+        if (element3 == this.cupon) {
+          bandera = false;
         }
       }
+      if (bandera) {
+        element2['cupones'].add(this.cupon);
+        element2['cuentas'].descuentoCupon = element2['cuentas'].descuentoCupon + d;
+      }
     }
+
     this.cupon = "";
+
+
   }
 
   verificarNuevamenteCupon(tienda) {
@@ -351,7 +344,6 @@ export class CarritoComprasComponent implements OnInit {
 
 
   }
-
 
 
   verificarDescuentoAutomatico() {
@@ -397,12 +389,12 @@ export class CarritoComprasComponent implements OnInit {
           }
         }
       }
-      for (let elemnt2 of this.vTiendas) {
-        elemnt2['cuentas'].descuentoAutomatico = 0;
-        if (elemnt2['idTienda'] == element2['idTienda']) {
-          elemnt2['cuentas'].descuentoAutomatico = elemnt2['cuentas'].descuentoAutomatico + d;
-        }
-      }
+
+      element2['cuentas'].descuentoAutomatico = 0;
+
+      element2['cuentas'].descuentoAutomatico = element2['cuentas'].descuentoAutomatico + d;
+
+
     }
 
 
