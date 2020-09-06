@@ -150,7 +150,7 @@ export class CarritoComprasComponent implements OnInit {
 
     await this.calcular();
     await this.calcularDescuentoAutomatico();
-   await this.verificarNuevamenteCupon(idTienda);
+    await this.verificarNuevamenteCupon(idTienda);
   }
 
   public async verificarStockInicio() {
@@ -209,6 +209,7 @@ export class CarritoComprasComponent implements OnInit {
       await this.iniciarCarritoCompras();
       await this.calcular();
       await this.calcularDescuentoAutomatico();
+      this.verificarNuevamenteCupon(tienda.idTienda);
       await this.menu.conteoProductosCarrito();
       console.log("despues de borrar", this.vTiendas);
 
@@ -334,7 +335,7 @@ export class CarritoComprasComponent implements OnInit {
                   let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
                   d = d + ((precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100) * element.CANTIDAD_PRODUCTO_CARRITO));
                   console.log("descuento", d);
-                  elemnt2['cuentas'].descuentoCupon=0;
+                  elemnt2['cuentas'].descuentoCupon = 0;
                   elemnt2['cuentas'].descuentoCupon = elemnt2['cuentas'].descuentoCupon + d;
                 }
               }
@@ -390,11 +391,8 @@ export class CarritoComprasComponent implements OnInit {
                     console.log("descuento automatico", d);
                   }
                 }
-
               }
             }
-
-
           }
         }
       }
@@ -415,6 +413,5 @@ export class CarritoComprasComponent implements OnInit {
       return parseInt(spl[0]) * 60 + parseInt(spl[1]);
     }
   }
-
-
+  
 }
