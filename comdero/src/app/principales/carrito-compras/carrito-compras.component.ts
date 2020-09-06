@@ -45,8 +45,8 @@ export class CarritoComprasComponent implements OnInit {
 
     await this.iniciarCarritoCompras();
     await this.verificarStockInicio();
-    await this.calcular();
-    await this.calcularDescuentoAutomatico();
+   await  this.calcularPrecios();
+    await this.verificarDescuentoAutomatico();
 
 
   }
@@ -148,8 +148,8 @@ export class CarritoComprasComponent implements OnInit {
       }
     });
 
-    await this.calcular();
-    await this.calcularDescuentoAutomatico();
+    await  this.calcularPrecios();
+    await this.verificarDescuentoAutomatico();
     await this.verificarNuevamenteCupon(idTienda);
   }
 
@@ -184,8 +184,8 @@ export class CarritoComprasComponent implements OnInit {
         element.precio_productos = (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) + (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100);
       }
     });
-    await this.calcular();
-    await this.calcularDescuentoAutomatico();
+    await  this.calcularPrecios();
+    await this.verificarDescuentoAutomatico();
     await this.verificarNuevamenteCupon(idTienda);
   }
 
@@ -206,9 +206,9 @@ export class CarritoComprasComponent implements OnInit {
       let response = await this._carritoServicio.deleteProductoCarrito(num_variante).toPromise();
       this.reiniciar();
       tienda.producto_carrito.splice(i, 1);
-      await this.iniciarCarritoCompras();
-      await this.calcular();
-      await this.calcularDescuentoAutomatico();
+      //  await this.iniciarCarritoCompras();
+      await  this.calcularPrecios();
+      await this.verificarDescuentoAutomatico();
       this.verificarNuevamenteCupon(tienda.idTienda);
       await this.menu.conteoProductosCarrito();
       console.log("despues de borrar", this.vTiendas);
@@ -219,65 +219,53 @@ export class CarritoComprasComponent implements OnInit {
   }
 
 
-  calcularPrecios(tienda) {
+  calcularPrecios() {
+    debugger;
     this.subTotal = 0;
     this.totalConIva = 0;
-    for (let element of this.carritoIdentidad.data.CARRITO_PRODUCTOs) {
-      if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == tienda) {
-        this.subTotal = this.subTotal + element.precio_productos_sin_iva;
-        this.totalConIva = this.totalConIva + element.precio_productos;
+
+    for (let element of this.vTiendas) {
+      console.log("ver tienda para calcular", element['producto_carrito']);
+      for (let element2 of element['producto_carrito']) {
+        if (element2.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == element['idTienda']) {
+          this.subTotal = this.subTotal + element2.precio_productos_sin_iva;
+          this.totalConIva = this.totalConIva + element2.precio_productos;
+        }
+      }
+      for (let elemnt2 of this.vTiendas) {
+        console.log("tienda numero", elemnt2['idTienda']);
+        if (elemnt2['idTienda'] == element['idTienda']) {
+          elemnt2['cuentas'].subTotal = this.subTotal;
+          elemnt2['cuentas'].totalConIva = this.totalConIva;
+          elemnt2['cuentas'].iva = this.totalConIva - this.subTotal;
+        }
+        console.log("element2", elemnt2);
       }
     }
-    for (let elemnt2 of this.vTiendas) {
-      console.log("tienda numero", elemnt2['idTienda']);
-      if (elemnt2['idTienda'] == tienda) {
-        elemnt2['cuentas'].subTotal = this.subTotal;
-        elemnt2['cuentas'].totalConIva = this.totalConIva;
-        elemnt2['cuentas'].iva = this.totalConIva - this.subTotal;
-      }
-      console.log("element2", elemnt2);
-    }
+
 
   }
 
-  public calcular() {
-    for (let elemente2 of this.vTiendas) {
-      console.log("tienda antes de mandar", elemente2['idTienda']);
-      this.calcularPrecios(elemente2['idTienda']);
-    }
-
-  }
 
 
   verificarCupon(tienda) {
     this.hoy = new Date();
     let d = 0;
-    for (let element of this.carritoIdentidad.data.CARRITO_PRODUCTOs) {
-      if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == tienda) {
-        for (let descuento of element.VARIANTE.PRODUCTO.PRODUCTO_DESCUENTOs) {
-          if (descuento.DESCUENTO.TIPO_DESCUENTO == 'Cupón') {
+    for (let element2 of this.vTiendas) {
+      for (let element of element2['producto_carrito']) {
+        if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == element2['idTienda']) {
+          for (let descuento of element.VARIANTE.PRODUCTO.PRODUCTO_DESCUENTOs) {
+            if (descuento.DESCUENTO.TIPO_DESCUENTO == 'Cupón') {
 
-            if (descuento.DESCUENTO.ESTADO_DESCUENTO == 0) {
+              if (descuento.DESCUENTO.ESTADO_DESCUENTO == 0) {
 
-              if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") >= descuento.DESCUENTO.FECHA_INICIO && this.datePipe.transform(this.hoy, "yyyy-MM-dd") <= descuento.DESCUENTO.FECHA_FIN) {
+                if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") >= descuento.DESCUENTO.FECHA_INICIO && this.datePipe.transform(this.hoy, "yyyy-MM-dd") <= descuento.DESCUENTO.FECHA_FIN) {
 
 
-                if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") == descuento.DESCUENTO.FECHA_INICIO) {
+                  if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") == descuento.DESCUENTO.FECHA_INICIO) {
 
-                  let horaActual = this.hoy.getHours() + ':' + this.hoy.getMinutes() + ':' + this.hoy.getSeconds();
-                  if (this.obtenerMinutos(horaActual) >= this.obtenerMinutos(descuento.DESCUENTO.HORA_INICIO)) {
-                    if (descuento.DESCUENTO.MOTIVO_DESCUENTO == this.cupon) {
-
-                      let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
-                      d = d + ((precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100) * element.CANTIDAD_PRODUCTO_CARRITO));
-                      console.log("descuento", d);
-                    }
-                  }
-
-                } else {
-                  if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") == descuento.DESCUENTO.FECHA_FIN) {
                     let horaActual = this.hoy.getHours() + ':' + this.hoy.getMinutes() + ':' + this.hoy.getSeconds();
-                    if (this.obtenerMinutos(horaActual) <= this.obtenerMinutos(descuento.DESCUENTO.HORA_FIN)) {
+                    if (this.obtenerMinutos(horaActual) >= this.obtenerMinutos(descuento.DESCUENTO.HORA_INICIO)) {
                       if (descuento.DESCUENTO.MOTIVO_DESCUENTO == this.cupon) {
 
                         let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
@@ -285,21 +273,34 @@ export class CarritoComprasComponent implements OnInit {
                         console.log("descuento", d);
                       }
                     }
-                  } else {
-                    if (descuento.DESCUENTO.MOTIVO_DESCUENTO == this.cupon) {
 
-                      let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
-                      d = d + ((precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100) * element.CANTIDAD_PRODUCTO_CARRITO));
-                      console.log("descuento", d);
+                  } else {
+                    if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") == descuento.DESCUENTO.FECHA_FIN) {
+                      let horaActual = this.hoy.getHours() + ':' + this.hoy.getMinutes() + ':' + this.hoy.getSeconds();
+                      if (this.obtenerMinutos(horaActual) <= this.obtenerMinutos(descuento.DESCUENTO.HORA_FIN)) {
+                        if (descuento.DESCUENTO.MOTIVO_DESCUENTO == this.cupon) {
+
+                          let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
+                          d = d + ((precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100) * element.CANTIDAD_PRODUCTO_CARRITO));
+                          console.log("descuento", d);
+                        }
+                      }
+                    } else {
+                      if (descuento.DESCUENTO.MOTIVO_DESCUENTO == this.cupon) {
+
+                        let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
+                        d = d + ((precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100) * element.CANTIDAD_PRODUCTO_CARRITO));
+                        console.log("descuento", d);
+                      }
                     }
                   }
+
+
                 }
-
-
               }
+
+
             }
-
-
           }
         }
       }
@@ -325,70 +326,70 @@ export class CarritoComprasComponent implements OnInit {
   verificarNuevamenteCupon(tienda) {
 
     let d = 0;
-    for (let element of this.carritoIdentidad.data.CARRITO_PRODUCTOs) {
-      if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == tienda) {
-        for (let descuento of element.VARIANTE.PRODUCTO.PRODUCTO_DESCUENTOs) {
-          for (let elemnt2 of this.vTiendas) {
-            if (elemnt2['idTienda'] == tienda) {
-              for (let element3 of elemnt2['cupones']) {
-                if (element3 == descuento.DESCUENTO.MOTIVO_DESCUENTO) {
-                  let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
-                  d = d + ((precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100) * element.CANTIDAD_PRODUCTO_CARRITO));
-                  console.log("descuento", d);
-                  elemnt2['cuentas'].descuentoCupon = 0;
-                  elemnt2['cuentas'].descuentoCupon = elemnt2['cuentas'].descuentoCupon + d;
+    for (let element2 of this.vTiendas) {
+      for (let element of element2['producto_carrito']) {
+        if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == element2['idTienda']) {
+          for (let descuento of element.VARIANTE.PRODUCTO.PRODUCTO_DESCUENTOs) {
+            for (let elemnt2 of this.vTiendas) {
+              if (elemnt2['idTienda'] == tienda) {
+                for (let element3 of elemnt2['cupones']) {
+                  if (element3 == descuento.DESCUENTO.MOTIVO_DESCUENTO) {
+                    let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
+                    d = d + ((precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100) * element.CANTIDAD_PRODUCTO_CARRITO));
+                    console.log("descuento", d);
+                    elemnt2['cuentas'].descuentoCupon = 0;
+                    elemnt2['cuentas'].descuentoCupon = elemnt2['cuentas'].descuentoCupon + d;
+                  }
                 }
               }
             }
           }
-        }
 
+        }
       }
     }
 
 
   }
 
-  calcularDescuentoAutomatico() {
-    for (let elemnt2 of this.vTiendas) {
-      this.verificarDescuentoAutomatico(elemnt2['idTienda'])
-    }
-  }
 
-  verificarDescuentoAutomatico(tienda) {
+
+  verificarDescuentoAutomatico() {
     this.hoy = new Date();
     debugger;
     let d = 0;
-    for (let element of this.carritoIdentidad.data.CARRITO_PRODUCTOs) {
-      if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == tienda) {
-        for (let descuento of element.VARIANTE.PRODUCTO.PRODUCTO_DESCUENTOs) {
-          if (descuento.DESCUENTO.TIPO_DESCUENTO == 'Automático') {
+    for (let element2 of this.vTiendas) {
+      for (let element of element2['producto_carrito']) {
+        if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == element2['idTienda']) {
+          for (let descuento of element.VARIANTE.PRODUCTO.PRODUCTO_DESCUENTOs) {
+            if (descuento.DESCUENTO.TIPO_DESCUENTO == 'Automático') {
 
-            if (descuento.DESCUENTO.ESTADO_DESCUENTO == 0) {
+              if (descuento.DESCUENTO.ESTADO_DESCUENTO == 0) {
 
-              if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") >= descuento.DESCUENTO.FECHA_INICIO && this.datePipe.transform(this.hoy, "yyyy-MM-dd") <= descuento.DESCUENTO.FECHA_FIN) {
+                if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") >= descuento.DESCUENTO.FECHA_INICIO && this.datePipe.transform(this.hoy, "yyyy-MM-dd") <= descuento.DESCUENTO.FECHA_FIN) {
 
 
-                if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") == descuento.DESCUENTO.FECHA_INICIO) {
+                  if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") == descuento.DESCUENTO.FECHA_INICIO) {
 
-                  let horaActual = this.hoy.getHours() + ':' + this.hoy.getMinutes() + ':' + this.hoy.getSeconds();
-                  if (this.obtenerMinutos(horaActual) >= this.obtenerMinutos(descuento.DESCUENTO.HORA_INICIO)) {
-                    let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
-                    d = d + (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
-                    console.log("descuento automatico", d);
-                  }
-                } else {
-                  if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") == descuento.DESCUENTO.FECHA_FIN) {
                     let horaActual = this.hoy.getHours() + ':' + this.hoy.getMinutes() + ':' + this.hoy.getSeconds();
-                    if (this.obtenerMinutos(horaActual) <= this.obtenerMinutos(descuento.DESCUENTO.HORA_FIN)) {
+                    if (this.obtenerMinutos(horaActual) >= this.obtenerMinutos(descuento.DESCUENTO.HORA_INICIO)) {
                       let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
                       d = d + (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
                       console.log("descuento automatico", d);
                     }
                   } else {
-                    let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
-                    d = d + (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
-                    console.log("descuento automatico", d);
+                    if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") == descuento.DESCUENTO.FECHA_FIN) {
+                      let horaActual = this.hoy.getHours() + ':' + this.hoy.getMinutes() + ':' + this.hoy.getSeconds();
+                      if (this.obtenerMinutos(horaActual) <= this.obtenerMinutos(descuento.DESCUENTO.HORA_FIN)) {
+                        let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
+                        d = d + (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
+                        console.log("descuento automatico", d);
+                      }
+                    } else {
+                      let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
+                      d = d + (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
+                      console.log("descuento automatico", d);
+                    }
                   }
                 }
               }
@@ -396,14 +397,15 @@ export class CarritoComprasComponent implements OnInit {
           }
         }
       }
-    }
-
-    for (let elemnt2 of this.vTiendas) {
-      elemnt2['cuentas'].descuentoAutomatico = 0;
-      if (elemnt2['idTienda'] == tienda) {
-        elemnt2['cuentas'].descuentoAutomatico = elemnt2['cuentas'].descuentoAutomatico + d;
+      for (let elemnt2 of this.vTiendas) {
+        elemnt2['cuentas'].descuentoAutomatico = 0;
+        if (elemnt2['idTienda'] == element2['idTienda']) {
+          elemnt2['cuentas'].descuentoAutomatico = elemnt2['cuentas'].descuentoAutomatico + d;
+        }
       }
     }
+
+
   }
 
 
@@ -413,5 +415,5 @@ export class CarritoComprasComponent implements OnInit {
       return parseInt(spl[0]) * 60 + parseInt(spl[1]);
     }
   }
-  
+
 }
