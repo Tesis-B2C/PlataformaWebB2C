@@ -136,7 +136,6 @@ export class CarritoComprasComponent implements OnInit {
   }
 
   public async incrementar(cantidad, stock, num_variante, id_carrito, idTienda) {
-    debugger;
     cantidad = cantidad + 1;
     let response = await this.actualizarCantidad(num_variante, id_carrito, cantidad);
     console.log("response incrementar", response)
@@ -220,7 +219,6 @@ export class CarritoComprasComponent implements OnInit {
 
 
   calcularPrecios() {
-    debugger;
     for (let element of this.vTiendas) {
       this.subTotal = 0;
       this.totalConIva = 0;
@@ -242,13 +240,14 @@ export class CarritoComprasComponent implements OnInit {
   }
 
 
-  verificarCupon() {
+  verificarCupon(tienda) {
     this.hoy = new Date();
-
+    debugger;
     for (let element2 of this.vTiendas) {
       let d = 0;
+      let bandera: boolean = true;
       for (let element of element2['producto_carrito']) {
-        if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == element2['idTienda']) {
+        if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == tienda) {
           for (let descuento of element.VARIANTE.PRODUCTO.PRODUCTO_DESCUENTOs) {
             if (descuento.DESCUENTO.TIPO_DESCUENTO == 'Cupón') {
 
@@ -266,6 +265,15 @@ export class CarritoComprasComponent implements OnInit {
                         let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
                         d = d + ((precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100) * element.CANTIDAD_PRODUCTO_CARRITO));
                         console.log("descuento", d);
+                        for (let element3 of element2['cupones']) {
+                          if (element3 == this.cupon) {
+                            bandera = false;
+                          }
+                        }
+                        if (bandera) {
+                          element2['cupones'].add(this.cupon);
+                          element2['cuentas'].descuentoCupon = element2['cuentas'].descuentoCupon + d;
+                        }
                       }
                     }
 
@@ -278,6 +286,15 @@ export class CarritoComprasComponent implements OnInit {
                           let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
                           d = d + ((precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100) * element.CANTIDAD_PRODUCTO_CARRITO));
                           console.log("descuento", d);
+                          for (let element3 of element2['cupones']) {
+                            if (element3 == this.cupon) {
+                              bandera = false;
+                            }
+                          }
+                          if (bandera) {
+                            element2['cupones'].add(this.cupon);
+                            element2['cuentas'].descuentoCupon = element2['cuentas'].descuentoCupon + d;
+                          }
                         }
                       }
                     } else {
@@ -286,6 +303,15 @@ export class CarritoComprasComponent implements OnInit {
                         let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
                         d = d + ((precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100) * element.CANTIDAD_PRODUCTO_CARRITO));
                         console.log("descuento", d);
+                        for (let element3 of element2['cupones']) {
+                          if (element3 == this.cupon) {
+                            bandera = false;
+                          }
+                        }
+                        if (bandera) {
+                          element2['cupones'].add(this.cupon);
+                          element2['cuentas'].descuentoCupon = element2['cuentas'].descuentoCupon + d;
+                        }
                       }
                     }
                   }
@@ -299,16 +325,8 @@ export class CarritoComprasComponent implements OnInit {
           }
         }
       }
-      let bandera: boolean = true;
-      for (let element3 of element2['cupones']) {
-        if (element3 == this.cupon) {
-          bandera = false;
-        }
-      }
-      if (bandera) {
-        element2['cupones'].add(this.cupon);
-        element2['cuentas'].descuentoCupon = element2['cuentas'].descuentoCupon + d;
-      }
+
+
     }
 
     this.cupon = "";
@@ -348,7 +366,6 @@ export class CarritoComprasComponent implements OnInit {
 
   verificarDescuentoAutomatico() {
     this.hoy = new Date();
-    debugger;
     let d = 0;
     for (let element2 of this.vTiendas) {
       for (let element of element2['producto_carrito']) {
