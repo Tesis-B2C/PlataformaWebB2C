@@ -29,12 +29,13 @@
 
     <br>
 
-    <div class="row  collapse " id="multiCollapseExample{{i}}">
+    <div class="row  collapse show" id="multiCollapseExample{{i}}">
       <aside class="col-lg-9 ">
         <div class="card">
           <div class="card-body ">
 
-            <div class="row justify-content-center mb-5 " *ngFor="let producto of tienda.producto_carrito">
+            <div class="row justify-content-center mb-5 "
+                 *ngFor="let producto of tienda.producto_carrito; let i= index">
               <div class="col-12 col-md-5 text-center text-md-left  mb-md-0 mb-4">
                 <p class="text-uppercase ">Producto</p>
                 <div class="itemside">
@@ -60,7 +61,7 @@
                      class="input-group input-spinner justify-content-center justify-content-md-start">
                   <div class="input-group-prepend">
                     <button class="btn btn-light " style="border-color: darkgray" type="button" id="button-minus"
-                            (click)="decrementar(producto.CANTIDAD_PRODUCTO_CARRITO,producto.VARIANTE.STOCK,producto.NUM_VARIANTE,producto.ID_CARRITO);">
+                            (click)="decrementar(producto.CANTIDAD_PRODUCTO_CARRITO,producto.VARIANTE.STOCK,producto.NUM_VARIANTE,producto.ID_CARRITO,tienda.idTienda);">
                       −
                     </button>
 
@@ -70,7 +71,7 @@
                   <div class="input-group-append">
 
                     <button class="btn btn-light" style="border-color: darkgray" type="button" id="button-plus"
-                            (click)="incrementar(producto.CANTIDAD_PRODUCTO_CARRITO, producto.VARIANTE.STOCK,producto.NUM_VARIANTE,producto.ID_CARRITO)">
+                            (click)="incrementar(producto.CANTIDAD_PRODUCTO_CARRITO, producto.VARIANTE.STOCK,producto.NUM_VARIANTE,producto.ID_CARRITO, tienda.idTienda)">
                       +
                     </button>
                   </div>
@@ -89,7 +90,7 @@
               </div>
               <div class="col-6 col-md-1 text-center text-md-left   ">
                 <p class="text-uppercase  white"></p>
-                <a style="color: red" (click)="deleteProductoCarrito(producto.VARIANTE.NUM_VARIANTE)"> <i
+                <a style="color: red" (click)="deleteProductoCarrito(producto.VARIANTE.NUM_VARIANTE,tienda,i)"> <i
                   class="fa fa-close"></i></a>
               </div>
             </div>
@@ -141,7 +142,7 @@
               <dd class="text-right text-dark b"><strong>{{tienda.cuentas.descuentoCupon | currency}}</strong></dd>
             </dl>
             <dl class="dlist-align">
-              <dt>Descuentos  automaticos:</dt>
+              <dt>Descuentos automaticos:</dt>
               <dd class="text-right text-dark b"><strong>{{tienda.cuentas.descuentoAutomatico | currency}}</strong></dd>
             </dl>
             <hr>

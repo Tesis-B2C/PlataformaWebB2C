@@ -39,7 +39,6 @@ async function saveDescuento(req, res) {
                         ID_PRODUCTO: p.PRODUCTO.ID_PRODUCTO,
                         COD_PRODUCTO: p.PRODUCTO.COD_PRODUCTO,
                         FECHA_ASIGNACION_DESCUENTO: moment(),
-                        ESTADO_ASIGNACION_DESCUENTO: descuentoCreado.dataValues.ESTADO_DESCUENTO,
                     },
                     {
                         transaction: t
@@ -202,7 +201,7 @@ async function updateDescuento(req, res) {
                         ID_PRODUCTO: p.ID_PRODUCTO,
                         COD_PRODUCTO: p.COD_PRODUCTO,
                         FECHA_ASIGNACION_DESCUENTO: moment(),
-                        ESTADO_ASIGNACION_DESCUENTO: params.Descuento.Estado_Descuento,
+
                     },
                     {
                         transaction: t

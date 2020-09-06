@@ -164,6 +164,8 @@ export class ModificarCuponDescuentoComponent implements OnInit {
 
   public opcionAplicarA(value) {
     debugger;
+    //this.vectorProductos=new Set();
+    this.vectorProductosEnviar=[];
     this.banderaOpcionAplicarA = value;
     if (this.banderaOpcionAplicarA) {
 
