@@ -9,7 +9,7 @@ const Carrito = db.sequelize.define('CARRITO', {
                 type: Sequelize.BIGINT,
                 primaryKey: true,
                 allowNull: false,
-                autoIncrement:true
+                autoIncrement: true
             },
         COD_AGENTE:
             {
@@ -24,7 +24,7 @@ const Carrito = db.sequelize.define('CARRITO', {
     },
     {
         timestamps: false,
-        id:false
+        id: false
     })
 
 Carrito.hasMany(Carrito_Producto, {foreignKey: 'ID_CARRITO', sourceKey: 'ID_CARRITO'});

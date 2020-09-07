@@ -20,26 +20,47 @@ export class CarritoServicio {
     this.url = GLOBAL.url;
   }
 
-  getCarrito(Id_Agente) {
-    debugger;
+  getCarrito() {
+
     let headers = new HttpHeaders({
       "Content-type": "application/json",
       "Authorization": this._agenteServicio.getToken()
     });
-    return this._http.get<objeto>(this.url + "getCarrito/" + Id_Agente, {headers: headers});
+    return this._http.get<objeto>(this.url + "getCarrito", {headers: headers});
 
   }
 
-  saveCarrito(Id_Agente, Id_Producto, Cod_Producto,cont) {
-    let obj = {
-      Id_Agente: Id_Agente,
-      Id_Producto: Id_Producto,
-      Cod_Producto:Cod_Producto,
-      cont:cont
-    }
-    let params = JSON.stringify(obj)
-    let headers = new HttpHeaders({"Content-type": "application/json", "Authorization": this._agenteServicio.getToken()});
+  saveCarrito(Carrito_Producto) {
+
+    let params = JSON.stringify(Carrito_Producto)
+    let headers = new HttpHeaders({
+      "Content-type": "application/json",
+      "Authorization": this._agenteServicio.getToken()
+    });
     return this._http.post<objeto>(this.url + "saveCarrito/", params, {headers: headers});
   }
+
+  updateCantidadProducto(num_variante, id_carrito, cantidad) {
+    let obj={
+      id_carrito:id_carrito,
+      cantidad:cantidad
+    }
+    let params = JSON.stringify(obj);
+    let headers = new HttpHeaders({
+      "Content-type": "application/json",
+      "Authorization": this._agenteServicio.getToken()
+    });
+    return this._http.put<objeto>(this.url + "updateCantidadProducto/" + num_variante,params, {headers: headers});
+  }
+  deleteProductoCarrito(variante) {
+
+    let headers = new HttpHeaders({
+      "Content-type": "application/json",
+      "Authorization": this._agenteServicio.getToken()
+    });
+    return this._http.delete<objeto>(this.url + "deleteProductoCarrito/" + variante, {headers: headers});
+  }
+
+
 
 }

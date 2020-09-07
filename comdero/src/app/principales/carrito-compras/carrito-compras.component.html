@@ -1,70 +1,100 @@
-<body class="bg">
+<body class="">
 <section class="section-pagetop bg">
-  <div class="container">
+  <div class="container bg">
     <h2 class="title-page">Carrito de compras</h2>
   </div> <!-- container //  -->
 </section>
 
-<section class="section-content  ">
-  <div class="container" *ngFor="let tienda of vTiendas">
+<section class="section-content ">
+  <div *ngIf="vTiendas.size==0" class="container mt-5">
+    <p>No tienes productos agregados</p>
+  </div>
+
+  <div class="container bg p-4  mt-4" *ngFor="let tienda of vTiendas; let i = index">
     <div class="media">
-      <img class="mr-3" src="..." alt="Generic placeholder image">
+      <img class="mr-3 rounded-circle"
+           [src]="getImagen(tienda.producto_carrito[0].VARIANTE.PRODUCTO.OFERTum.TIENDA.LOGO)" alt="logo tienda"
+           width="50px">
+
       <div class="media-body">
-        <h5 class="mt-0">Tienda</h5>
-       Descipcion tienda.
+        <h5 class="mt-3">{{tienda.producto_carrito[0].VARIANTE.PRODUCTO.OFERTum.TIENDA.NOMBRE_COMERCIAL}}</h5>
+
       </div>
-      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2"><i class="fa fa-shopping-cart"></i> &nbsp;<i class="fa fa-chevron-down"></i></button>
+
+      <button class="btn btn-primary" type="button" data-toggle="collapse"
+              [attr.data-target]="'#multiCollapseExample'+i"><i class="fa fa-shopping-cart"></i> &nbsp;<i
+        class="fa fa-chevron-right "></i></button>
 
     </div>
-    <div class="row collapse " id="multiCollapseExample2">
-      <aside class="col-lg-9">
+
+    <br>
+
+    <div class="row  collapse  " id="multiCollapseExample{{i}}">
+      <aside class="col-lg-9 ">
         <div class="card">
-          <table class="table table-borderless table-shopping-cart">
-            <thead class="text-muted">
-            <tr class="small text-uppercase">
-              <th scope="col">Producto</th>
-              <th scope="col ">Cantidad</th>
-              <th scope="col">Precio</th>
-              <th scope="col" class="text-center"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let producto of tienda.producto">
-              <td>
-                <figure class="itemside align-items-center">
-                  <div class="aside"><img src="../images/items/11.jpg" class="img-sm"></div>
-                  <figcaption class="info">
-                    <a href="#" class="title text-dark">Camera Canon EOS M50 Kit</a>
-                    <p class="text-muted small">Matrix: 25 Mpx <br> Brand: Canon</p>
-                  </figcaption>
-                </figure>
-              </td>
-              <td>
-                <div class="input-group input-spinner">
-                  <div class="input-group-prepend">
-                    <button class="btn btn-light" style="border-color: darkgray" type="button" id="button-plus" (click)="cont=cont+1"> +</button>
+          <div class="card-body ">
+
+            <div class="row justify-content-center mb-5 "
+                 *ngFor="let producto of tienda.producto_carrito; let i= index">
+              <div class="col-12 col-md-5 text-center text-md-left  mb-md-0 mb-4">
+                <p class="text-uppercase ">Producto</p>
+                <div class="itemside">
+                  <div class="aside"><img [src]="getImagen(producto.IMAGEN_MOSTRAR)" height="125px" width="125px">
                   </div>
-                  <input type="text" class="form-control" style="border-color: darkgray"  ngModel="piker" [(ngModel)]="cont" >
+                  <figcaption class="info text-left">
+
+                    <a href="#" class=" price">{{producto.VARIANTE.PRODUCTO.NOMBRE_PRODUCTO}}</a>
+                    <p class="text-muted small "
+                       *ngIf="producto.VARIANTE.MATERIAL">Material:&nbsp;&nbsp; {{producto.VARIANTE.MATERIAL}}
+                    </p>
+                    <p class="text-muted small" *ngIf="producto.VARIANTE.COLOR">Color:<span
+                      class="px-2 py-0 ml-2 border border-dark"
+                      [style.background-color]="producto.VARIANTE.COLOR"></span></p>
+                    <p class=" small"
+                       *ngIf="producto.VARIANTE.TALLA">Talla:&nbsp;&nbsp;&nbsp;{{producto.VARIANTE.TALLA}}</p>
+                  </figcaption>
+                </div>
+              </div>
+              <div class="col-12 col-md-3  mb-3 mb-md-0 text-center text-md-left   ">
+                <p class="text-uppercase mb-0 mb-md-3">Cantidad</p>
+                <div *ngIf="producto.VARIANTE.STOCK!=0"
+                     class="input-group input-spinner justify-content-center justify-content-md-start">
+                  <div class="input-group-prepend">
+                    <button class="btn btn-light " style="border-color: darkgray" type="button" id="button-minus"
+                            (click)="decrementar(producto.CANTIDAD_PRODUCTO_CARRITO,producto.VARIANTE.STOCK,producto.NUM_VARIANTE,producto.ID_CARRITO,tienda.idTienda);">
+                      −
+                    </button>
+
+                  </div>
+                  <input type="text" class="form-control" style="border-color: darkgray" ngModel="piker" disabled
+                         [(ngModel)]="producto.CANTIDAD_PRODUCTO_CARRITO">
                   <div class="input-group-append">
-                    <button class="btn btn-light " style="border-color: darkgray"  type="button" id="button-minus" (click)="cont=cont-1"> −</button>
+
+                    <button class="btn btn-light" style="border-color: darkgray" type="button" id="button-plus"
+                            (click)="incrementar(producto.CANTIDAD_PRODUCTO_CARRITO, producto.VARIANTE.STOCK,producto.NUM_VARIANTE,producto.ID_CARRITO, tienda.idTienda)">
+                      +
+                    </button>
                   </div>
                 </div> <!-- input-group.// -->
+                <p *ngIf="producto.VARIANTE.STOCK==0" class="text-danger"> No disponible </p>
 
-
-              </td>
-              <td>
+              </div>
+              <div class="col-12 col-md-3  text-center text-md-left   ">
+                <p class="text-uppercase mb-0 mb-md-3">Precio</p>
                 <div class="price-wrap">
-                  <var class="price">$1156.00</var>
-                  <small class="text-muted"> $315.20 each </small>
+                  <var class="price">{{producto.precio_productos | currency}} </var>
+                  <small
+                    class="text-muted">  {{producto.VARIANTE.PRECIO_UNITARIO + producto.VARIANTE.PRECIO_UNITARIO * producto.VARIANTE.PRODUCTO.OFERTum.IVA / 100 | currency}}
+                    c/u </small>
                 </div> <!-- price-wrap .// -->
-              </td>
-              <td>
-                <a href="" class="btn btn-light"> <i class="fa fa-trash"></i></a>
-              </td>
-            </tr>
-
-            </tbody>
-          </table>
+              </div>
+              <div class="col-6 col-md-1 text-center text-md-left   ">
+                <p class="text-uppercase  white"></p>
+                <a style="color: red" (click)="deleteProductoCarrito(producto.VARIANTE.NUM_VARIANTE,tienda,i)"> <i
+                  class="fa fa-close"></i></a>
+              </div>
+            </div>
+          </div>
 
           <div class="card-body border-top">
             <p class="icontext"><i class="icon text-success fa fa-truck"></i> Free Delivery within 1-2 weeks</p>
@@ -81,9 +111,10 @@
               <div class="form-group">
                 <label>Tienes un cupon?</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" name="" placeholder="Código">
+                  <input type="text" class="form-control text-uppercase" placeholder="Código" name="cupon"
+                         #Cupon="ngModel" [(ngModel)]="this.cupon">
                   <span class="input-group-append">
-				<button class="btn btn-primary">Aplicar</button>
+				<button (click)="verificarCupon(tienda.idTienda)" class="btn btn-primary">Aplicar</button>
 			</span>
                 </div>
               </div>
@@ -92,24 +123,33 @@
         </div> <!-- card.// -->
 
         <div class="card">
-          <div class="card-body">
+          <div class="card-body small">
             <dl class="dlist-align">
-              <dt>Precio total:</dt>
-              <dd class="text-right">$69.97</dd>
+              <dt>Sub total:</dt>
+              <dd class="text-right">{{tienda.cuentas.subTotal | currency}}</dd>
             </dl>
             <dl class="dlist-align">
-              <dt>Descuento:</dt>
-              <dd class="text-right text-danger">- $10.00</dd>
+              <dt>Iva:</dt>
+              <dd class="text-right text-danger">{{tienda.cuentas.iva | currency}}</dd>
             </dl>
             <dl class="dlist-align">
-              <dt>Total:</dt>
-              <dd class="text-right text-dark b"><strong>$59.97</strong></dd>
+              <dt>Total con Iva:</dt>
+              <dd class="text-right text-dark b"><strong>{{tienda.cuentas.totalConIva | currency}}</strong></dd>
+            </dl>
+
+            <dl class="dlist-align">
+              <dt>Cupón descuento:</dt>
+              <dd class="text-right text-dark b"><strong>{{tienda.cuentas.descuentoCupon | currency}}</strong></dd>
+            </dl>
+            <dl class="dlist-align">
+              <dt>Descuentos:</dt>
+              <dd class="text-right text-dark b"><strong>{{tienda.cuentas.descuentoAutomatico | currency}}</strong></dd>
             </dl>
             <hr>
-            <p class="text-center mb-3">
-              <img src="../images/misc/payments.png" height="26">
-            </p>
-            <a href="#" class="btn btn-primary btn-block"> Comprar</a>
+
+
+
+            <a (click)="calcularPrecios()" class="btn btn-primary btn-block"> Comprar</a>
             <a href="#" class="btn btn-light btn-block">Continuar comprando</a>
           </div> <!-- card-body.// -->
         </div> <!-- card.// -->
@@ -118,6 +158,8 @@
 
 
     </div> <!-- row.// -->
+
   </div>
+
 </section>
 </body>

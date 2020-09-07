@@ -1,6 +1,8 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 var Imagen_Producto = require("./imagen_producto");
+var Carrito_Producto = require("./carrito_producto");
+var Compra_Producto = require("./compra_producto");
 const Variante = db.sequelize.define('VARIANTE', {
         NUM_VARIANTE:
             {
@@ -64,3 +66,11 @@ module.exports = Variante;
 Variante.hasMany(Imagen_Producto, {foreignKey: 'NUM_VARIANTE', sourceKey: 'NUM_VARIANTE'});
 Imagen_Producto.belongsTo(Variante, {foreignKey: 'NUM_VARIANTE', sourceKey: 'NUM_VARIANTE'});
 
+//PRODUCTO-CARRITO_PRODUCTO
+Variante.hasMany(Carrito_Producto, {foreignKey: 'NUM_VARIANTE', sourceKey: 'NUM_VARIANTE'});
+Carrito_Producto.belongsTo(Variante, {foreignKey: 'NUM_VARIANTE', sourceKey: 'NUM_VARIANTE'});
+
+
+//PRODUCTO - COMPRA_PRODUCTO
+Variante.hasMany(Compra_Producto, {foreignKey: 'NUM_VARIANTE', sourceKey: 'NUM_VARIANTE'});
+Compra_Producto.belongsTo(Variante, {foreignKey: 'NUM_VARIANTE', sourceKey: 'NUM_VARIANTE'});

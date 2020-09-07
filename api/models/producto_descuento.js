@@ -25,11 +25,7 @@ const Producto_Descuento = db.sequelize.define('PRODUCTO_DESCUENTO', {
                 type: Sequelize.DATEONLY,
                 allowNull: false
             },
-        ESTADO_ASIGNACION_DESCUENTO:
-            {
-                type: Sequelize.INTEGER,
-                allowNull: false
-            }
+
     },
     {
         timestamps:false,

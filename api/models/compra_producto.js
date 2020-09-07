@@ -1,20 +1,15 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 
-const Compra_Producto= db.sequelize.define('Compra_Producto', {
-        ID_PRODUCTO: {
+const Compra_Producto = db.sequelize.define('Compra_Producto', {
+        NUM_VARIANTE: {
             type: Sequelize.INTEGER,
-            primaryKey:true,
-            allowNull: false
-        },
-        COD_PRODUCTO: {
-            type: Sequelize.STRING,
-            primaryKey:true,
+            primaryKey: true,
             allowNull: false
         },
         NUM_COMPRA:
             {
-                primaryKey:true,
+                primaryKey: true,
                 type: Sequelize.INTEGER,
                 allowNull: false
             },
@@ -27,15 +22,15 @@ const Compra_Producto= db.sequelize.define('Compra_Producto', {
 
         SUB_TOTAL:
             {
-                type: Sequelize.FLOAT(8,2),
+                type: Sequelize.FLOAT(8, 2),
                 allowNull: false
             },
         SUB_TOTAL_ENVIO:
             {
-                type: Sequelize.FLOAT(8,2),
+                type: Sequelize.FLOAT(8, 2),
                 allowNull: false
             },
-       FECHA_ENTREGAS:
+        FECHA_ENTREGAS:
             {
                 type: Sequelize.DATEONLY,
                 allowNull: false
@@ -54,8 +49,8 @@ const Compra_Producto= db.sequelize.define('Compra_Producto', {
     },
 
     {
-        timestamps:false,
-        id:false
+        timestamps: false,
+        id: false
     })
 
 module.exports = Compra_Producto;
