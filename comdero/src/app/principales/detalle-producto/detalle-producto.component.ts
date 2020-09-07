@@ -11,7 +11,6 @@ import {DpaServicio} from "../../servicios/dpa.servicio";
 import {Agente} from "../../modelos/agente";
 import {ToastrService} from "ngx-toastr";
 import * as moment from 'moment';
-import { formatNumber } from '@angular/common';
 
 @Component({
   selector: 'app-detalle-producto',
@@ -37,23 +36,24 @@ export class DetalleProductoComponent implements OnInit {
   public direccionEnvioDiferente: boolean = false;
   public datosfacturacionDiferente: boolean = false;
   public siguienteDetallePedido: boolean = false;
-  
+
   public varianteActiva = {
     COLOR: null,
     TALLA: null,
     MATERIAL: null,
     PRECIO_UNITARIO_CON_IVA: null,
+    PRECIO_UNITARIO_CON_IVA_DESCUENTO: null,
     PRECIO_UNITARIO: null,
     STOCK: null,
     MEDIDA: null,
     IMAGENES: [],
-    CANTIDAD: null,
+    CANTIDAD: 1,
     ID_PRODUCTO: null,
     COD_PRODUCTO: null,
     NUM_VARIANTE: null,
     OPCION_ENVIO: [],
     METODO_PAGO: [],
-    PORCENTAJE_IMPUESTO: null,
+    PORCENTAJE_IMPUESTO: null
   };
 
   public informacionCompra = {
@@ -90,13 +90,17 @@ export class DetalleProductoComponent implements OnInit {
       PORCENTAJE_IMPUESTO: null,
       SUBTOTAL: null,
       DESCUENTOS: null,
+      PORCENTAJE_AUTOMATICO: null,
+      CUPON: null,
+      PORCENTAJE_CUPON: null,
       RECARGO_PAYPAL: null,
       PORCENTAJE_RECARGO_PAYPAL: null,
-      TOTAL_PEDIDO: null,
+      COSTOS_ENVIO: null,
+      TOTAL_PEDIDO: null
     }
   };
 
-  currentRate = 1;
+  public currentRate = 1;
 
   public provinciasDireccion;
   public ciudadesDireccion;
@@ -160,6 +164,7 @@ export class DetalleProductoComponent implements OnInit {
       console.log('PROUCTO OBTENIDO BD' + JSON.stringify(this.productoDetalle));
       this.existeColorMaterialTalla();
       this.asignarVariblePrimero();
+      this.informacionPagoEnvio();
     } catch (e) {
       console.log("error:" + e);
       if (JSON.stringify((e).error.message))
@@ -265,8 +270,12 @@ export class DetalleProductoComponent implements OnInit {
   }
 
   public banderaActivarDescuentoAutomatico: boolean = false;
+  public porcentajeDescuento = 0;
 
   public buscarDescuentoAutomatico() {
+    this.banderaActivarDescuentoAutomatico = false;
+    this.porcentajeDescuento = 0;
+    this.varianteActiva.PRECIO_UNITARIO_CON_IVA_DESCUENTO = 0;
     let fechaHoy = moment().format("YYYY-MM-DD");
     let horaActual = moment().format("HH:mm:ss");
     console.log('horaHoy' + horaActual + fechaHoy)
@@ -276,28 +285,38 @@ export class DetalleProductoComponent implements OnInit {
           if (descuentoAut.DESCUENTO.FECHA_INICIO == fechaHoy) {
             if ((this.obtenerMinutos(horaActual) >= this.obtenerMinutos(descuentoAut.DESCUENTO.HORA_INICIO))) {
               //CUPON VALIDO
-              console.log('1' + horaActual + fechaHoy)
+              this.porcentajeDescuento = this.porcentajeDescuento + descuentoAut.DESCUENTO.PORCENTAJE_DESCUENTO;
+              this.banderaActivarDescuentoAutomatico = true;
+              console.log('1XX' + horaActual + fechaHoy)
             }
           } else {
             if (descuentoAut.DESCUENTO.FECHA_FIN == fechaHoy) {
               if ((this.obtenerMinutos(horaActual) <= this.obtenerMinutos(descuentoAut.DESCUENTO.HORA_FIN))) {
                 //CUPON VALIDO
-                console.log('2' + horaActual + fechaHoy)
+                this.porcentajeDescuento = this.porcentajeDescuento + descuentoAut.DESCUENTO.PORCENTAJE_DESCUENTO;
+                this.banderaActivarDescuentoAutomatico = true;
+                console.log('2XX' + horaActual + fechaHoy);
               } else {
+                this.porcentajeDescuento = this.porcentajeDescuento + 0;
                 this.banderaActivarDescuentoAutomatico = false;
               }
             } else {
               //CUPON VALIDO
-              console.log('3' + horaActual + fechaHoy)
+              this.porcentajeDescuento = this.porcentajeDescuento + descuentoAut.DESCUENTO.PORCENTAJE_DESCUENTO;
+              this.banderaActivarDescuentoAutomatico = true;
+              console.log('3XX' + horaActual + fechaHoy);
             }
           }
         }
       })
     } else {
+      this.porcentajeDescuento = null;
+      this.varianteActiva.PRECIO_UNITARIO_CON_IVA_DESCUENTO = null;
       this.banderaActivarDescuentoAutomatico = false;
     }
+    this.varianteActiva.PRECIO_UNITARIO_CON_IVA_DESCUENTO = this.varianteActiva.PRECIO_UNITARIO_CON_IVA - ((this.varianteActiva.PRECIO_UNITARIO_CON_IVA * this.porcentajeDescuento) / 100);
+    console.log(this.varianteActiva.PRECIO_UNITARIO_CON_IVA_DESCUENTO + 'PRECIO DESCUENTO' + this.porcentajeDescuento + 'DESCUENTO');
   }
-
 
   public obtenerMinutos(hora) {
     if (hora) {
@@ -332,14 +351,15 @@ export class DetalleProductoComponent implements OnInit {
   public asignarVariableCambio() {
     if (this.resultadoProductoFiltro.length > 0) {
       this.banderaNoDisponible = false;
-      this.varianteActiva.CANTIDAD = 1;
       this.varianteActiva.COLOR = this.valueColor;
       this.varianteActiva.TALLA = this.valueTalla;
       this.varianteActiva.MATERIAL = this.valueMaterial;
 
       let IVA = (this.resultadoProductoFiltro[0].PRECIO_UNITARIO * this.productoDetalle.IVA) / 100;
       this.varianteActiva.PRECIO_UNITARIO_CON_IVA = this.resultadoProductoFiltro[0].PRECIO_UNITARIO + IVA;
-      this.varianteActiva.PRECIO_UNITARIO = this.productoDetalle.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO;
+      this.varianteActiva.PRECIO_UNITARIO = this.resultadoProductoFiltro[0].PRECIO_UNITARIO;
+      this.buscarDescuentoAutomatico();
+
       this.varianteActiva.STOCK = this.resultadoProductoFiltro[0].STOCK;
       this.varianteActiva.MEDIDA = this.resultadoProductoFiltro[0].MEDIDA;
 
@@ -358,10 +378,10 @@ export class DetalleProductoComponent implements OnInit {
         console.log('VARIANTE SEGUNDA VEZ' + JSON.stringify(this.varianteActiva));
       }
 
+      this.varianteActiva.CANTIDAD = 1;
       this.varianteActiva.ID_PRODUCTO = this.productoDetalle.PRODUCTO.ID_PRODUCTO;
       this.varianteActiva.COD_PRODUCTO = this.productoDetalle.PRODUCTO.COD_PRODUCTO;
       this.varianteActiva.NUM_VARIANTE = this.resultadoProductoFiltro[0].NUM_VARIANTE;
-
       console.log('VARIANTE NUEVA' + JSON.stringify(this.resultadoProductoFiltro));
     } else {
       this.banderaNoDisponible = true;
@@ -445,66 +465,113 @@ export class DetalleProductoComponent implements OnInit {
   public abrirModalFinalizarPedido(content) {
     this.verificarMetodosTienda();
     this.identidadComprador = this._agenteServicio.getIdentity();
-    this.DatosDireccion = new Agente(null, this.identidadComprador.NUM_COD_POSTAL, this.identidadComprador.NOMBRE,
-      this.identidadComprador.TELEFONO, null, null, 0, this.identidadComprador.CALLE_PRINCIPAL_AGENTE,
-      this.identidadComprador.CALLE_SECUNDARIA_AGENTE, this.identidadComprador.NUM_CASA_AGENTE, null, null,
-      this.identidadComprador.COD_DPA);
-    console.log('DATOS DIRECCION NUEVA' + this.DatosDireccion);
+    console.log('AGENTE' + JSON.stringify(this.identidadComprador));
 
-    this.DatosFactura = new Agente(this.identidadComprador.ID_AGENTE, null, this.identidadComprador.NOMBRE,
-      this.identidadComprador.TELEFONO, this.identidadComprador.CORREO, this.identidadComprador.TIPO, 0,
-      this.identidadComprador.CALLE_PRINCIPAL_AGENTE + ' ' + this.identidadComprador.CALLE_SECUNDARIA_AGENTE + ',' + this.identidadComprador.DPA.NOMBRE + ',' + this.identidadComprador.DPA.DPAP.NOMBRE,
-      null, null, null, null, null);
+    //DATOS DE COMPRA QUE PUEDEN NO ESTAR
+    if (this.identidadComprador.ID_AGENTE != null) {
+      console.log('SI HAY DIRECCION');
+      this.DatosDireccion = new Agente(null, this.identidadComprador.NUM_COD_POSTAL, this.identidadComprador.NOMBRE,
+        this.identidadComprador.TELEFONO, null, null, 0, this.identidadComprador.CALLE_PRINCIPAL_AGENTE,
+        this.identidadComprador.CALLE_SECUNDARIA_AGENTE, this.identidadComprador.NUM_CASA_AGENTE, null, this.identidadComprador.COD_DPA,
+        null);
 
-    //DATOS DE COMPRA
+      this.DatosFactura = new Agente(this.identidadComprador.ID_AGENTE, null, this.identidadComprador.NOMBRE,
+        this.identidadComprador.TELEFONO, this.identidadComprador.CORREO, this.identidadComprador.TIPO, 0,
+        this.identidadComprador.CALLE_PRINCIPAL_AGENTE + ' ' + this.identidadComprador.CALLE_SECUNDARIA_AGENTE + ',' + this.identidadComprador.DPA.NOMBRE + ',' + this.identidadComprador.DPA.DPAP.NOMBRE,
+        null, null, null, null, null);
+
+      this.informacionCompra.ID_AGENTE = this.identidadComprador.ID_AGENTE;
+
+      this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA = this.identidadComprador.CALLE_PRINCIPAL_AGENTE;
+      this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA = this.identidadComprador.CALLE_SECUNDARIA_AGENTE;
+      this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA = this.identidadComprador.NUM_CASA_AGENTE;
+      this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA = this.identidadComprador.COD_DPA;
+      this.informacionCompra.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA = this.identidadComprador.NOMBRE;
+      this.informacionCompra.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA = this.identidadComprador.NUM_COD_POSTAL;
+      this.informacionCompra.DATOS_ENTREGA.TELEFONO_ENTREGA = this.identidadComprador.TELEFONO;
+      this.ciudadDireccionNombre = this.identidadComprador.DPA.NOMBRE;
+      this.provinciaDireccionNombre = this.identidadComprador.DPA.DPAP.NOMBRE;
+
+      this.informacionCompra.DATOS_FACTURA.TIPO_IDENTIFICACION_FACTURA = this.identidadComprador.TIPO;
+      this.informacionCompra.DATOS_FACTURA.NOMBRE_FACTURA = this.identidadComprador.NOMBRE;
+      this.informacionCompra.DATOS_FACTURA.CORREO = this.identidadComprador.CORREO;
+      this.informacionCompra.DATOS_FACTURA.IDENTIFICACION_FACTURA = this.identidadComprador.ID_AGENTE;
+      this.informacionCompra.DATOS_FACTURA.TELEFONO_FACTURA = this.identidadComprador.TELEFONO;
+      this.informacionCompra.DATOS_FACTURA.DIRECCION_FACTURA = this.identidadComprador.CALLE_PRINCIPAL_AGENTE + ' ' + this.identidadComprador.CALLE_SECUNDARIA_AGENTE + ',' + this.identidadComprador.DPA.NOMBRE + ',' + this.identidadComprador.DPA.DPAP.NOMBRE;
+
+    } else {
+      //NO TIENE AGREGADA LA DIRECCION
+      this.DatosDireccion = new Agente(null, null, this.identidadComprador.NOMBRE,
+        null, null, null, 0, null,
+        null, null, null, null,
+        null);
+
+      this.DatosFactura = new Agente(null, null, this.identidadComprador.NOMBRE,
+        null, this.identidadComprador.CORREO, this.identidadComprador.TIPO, 0,
+        null, null, null, null, null, null);
+
+      this.informacionCompra.ID_AGENTE = null;
+      this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA = null;
+      this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA = null;
+      this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA = null;
+      this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA = null;
+      this.informacionCompra.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA = this.identidadComprador.NOMBRE;
+      this.informacionCompra.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA = null;
+      this.informacionCompra.DATOS_ENTREGA.TELEFONO_ENTREGA = null;
+      this.ciudadDireccionNombre = null;
+      this.provinciaDireccionNombre = null;
+
+      this.informacionCompra.DATOS_FACTURA.TIPO_IDENTIFICACION_FACTURA = this.identidadComprador.TIPO;
+      this.informacionCompra.DATOS_FACTURA.NOMBRE_FACTURA = this.identidadComprador.NOMBRE;
+      this.informacionCompra.DATOS_FACTURA.CORREO = this.identidadComprador.CORREO;
+      this.informacionCompra.DATOS_FACTURA.IDENTIFICACION_FACTURA = null;
+      this.informacionCompra.DATOS_FACTURA.TELEFONO_FACTURA = null;
+      this.informacionCompra.DATOS_FACTURA.DIRECCION_FACTURA = null;
+
+    }
+
+    //DATOS DE COMPRA QUE SIEMPRE HABRA
     this.informacionCompra.COD_AGENTE = this.identidadComprador.COD_AGENTE;
-    this.informacionCompra.ID_AGENTE = this.identidadComprador.ID_AGENTE;
     this.informacionCompra.ID_PRODUCTO = this.varianteActiva.ID_PRODUCTO;
     this.informacionCompra.COD_PRODUCTO = this.varianteActiva.COD_PRODUCTO;
+    this.informacionCompra.FECHA_COMPRA = moment().format("YYYY-MM-DD");
+
     this.informacionCompra.CANTIDAD = this.varianteActiva.CANTIDAD;
     this.informacionCompra.NUM_VARIANTE = this.varianteActiva.NUM_VARIANTE;
-    //this.informacionCompra.FECHA_COMPRA = this.varianteActiva.COD_PRODUCTO;
     console.log('VARIANTE' + this.informacionCompra.NUM_VARIANTE);
-    this.informacionCompra.METODO_PAGO_COMPRA = '';
-    this.informacionCompra.METODO_ENVIO_COMPRA = '';
-
-    this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA = this.identidadComprador.CALLE_PRINCIPAL_AGENTE;
-    this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA = this.identidadComprador.CALLE_SECUNDARIA_AGENTE;
-    this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA = this.identidadComprador.NUM_CASA_AGENTE;
-    this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA = this.identidadComprador.COD_DPA;
-    this.ciudadDireccionNombre = this.identidadComprador.DPA.NOMBRE;
-    this.provinciaDireccionNombre = this.identidadComprador.DPA.DPAP.NOMBRE;
-    this.informacionCompra.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA = this.identidadComprador.NOMBRE;
-    this.informacionCompra.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA = this.identidadComprador.NUM_COD_POSTAL;
-    this.informacionCompra.DATOS_ENTREGA.TELEFONO_ENTREGA = this.identidadComprador.TELEFONO;
-
-    this.informacionCompra.DATOS_FACTURA.IDENTIFICACION_FACTURA = this.identidadComprador.ID_AGENTE;
-    this.informacionCompra.DATOS_FACTURA.NOMBRE_FACTURA = this.identidadComprador.NOMBRE;
-    this.informacionCompra.DATOS_FACTURA.TIPO_IDENTIFICACION_FACTURA = this.identidadComprador.TIPO;
-    this.informacionCompra.DATOS_FACTURA.TELEFONO_FACTURA = this.identidadComprador.TELEFONO;
-    this.informacionCompra.DATOS_FACTURA.DIRECCION_FACTURA = this.identidadComprador.CALLE_PRINCIPAL_AGENTE + ' ' + this.identidadComprador.CALLE_SECUNDARIA_AGENTE + ',' + this.identidadComprador.DPA.NOMBRE + ',' + this.identidadComprador.DPA.DPAP.NOMBRE;
-    this.informacionCompra.DATOS_FACTURA.CORREO = this.identidadComprador.CORREO;
+    this.informacionCompra.METODO_PAGO_COMPRA = null;
+    this.informacionCompra.METODO_ENVIO_COMPRA = null;
 
     this.informacionCompra.COSTOS.PRECIO_UNITARIO_PRODUCTO = this.varianteActiva.PRECIO_UNITARIO;
     this.informacionCompra.COSTOS.TOTAL_PRODUCTOS = (this.varianteActiva.CANTIDAD * this.varianteActiva.PRECIO_UNITARIO); //Buscar descuento y menorar
+    this.informacionCompra.COSTOS.IMPUESTOS = (this.informacionCompra.COSTOS.TOTAL_PRODUCTOS * this.varianteActiva.PORCENTAJE_IMPUESTO) / 100;
     this.informacionCompra.COSTOS.PORCENTAJE_IMPUESTO = this.varianteActiva.PORCENTAJE_IMPUESTO;
-    this.informacionCompra.COSTOS.IMPUESTOS = (this.informacionCompra.COSTOS.TOTAL_PRODUCTOS * this.informacionCompra.COSTOS.PORCENTAJE_IMPUESTO) / 100;
     this.informacionCompra.COSTOS.SUBTOTAL = this.informacionCompra.COSTOS.TOTAL_PRODUCTOS + this.informacionCompra.COSTOS.IMPUESTOS;
+
+    if (this.banderaActivarDescuentoAutomatico == true) {
+      this.informacionCompra.COSTOS.DESCUENTOS = ((this.informacionCompra.COSTOS.SUBTOTAL * this.porcentajeDescuento) / 100);
+      this.informacionCompra.COSTOS.PORCENTAJE_AUTOMATICO = this.porcentajeDescuento;
+    } else {
+      this.informacionCompra.COSTOS.DESCUENTOS = 0;
+      this.informacionCompra.COSTOS.PORCENTAJE_AUTOMATICO = 0;
+    }
+    //cupones
+    this.informacionCompra.COSTOS.CUPON = 0;
+    this.informacionCompra.COSTOS.PORCENTAJE_CUPON = 0;
 
     this.varianteActiva.METODO_PAGO.forEach(pago => {
       if (pago.TIPO_PAGO == 'Electrónico') {
         this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL = pago.PORCENTAJE_RECARGO;
-        this.informacionCompra.COSTOS.RECARGO_PAYPAL = pago.PORCENTAJE_RECARGO; //Preguntar a que le hago el porcentaje de recargo
       }
-    })
+    });
 
+    this.informacionCompra.COSTOS.COSTOS_ENVIO = 0;
+    this.informacionCompra.COSTOS.TOTAL_PEDIDO = (this.informacionCompra.COSTOS.SUBTOTAL + this.informacionCompra.COSTOS.RECARGO_PAYPAL + this.informacionCompra.COSTOS.COSTOS_ENVIO) - (this.informacionCompra.COSTOS.DESCUENTOS + this.informacionCompra.COSTOS.CUPON);
+    console.log('VARIANTE COMPRAS' + JSON.stringify(this.informacionCompra));
     //FIN DATOS DE COMPRA
-
-    console.log('AGENTE' + JSON.stringify(this.identidadComprador));
     this.modalService.open(content, {centered: true, size: 'lg', backdrop: "static"});
   }
 
-  public opcion_envio: String = null;
   public mostrarTiendaEnvioRetiro: boolean = false;
   public mostrarTiendaEnvioDomicilio: boolean = false;
   public mostrarTiendaPagoEfectivo: boolean = false;
@@ -545,31 +612,44 @@ export class DetalleProductoComponent implements OnInit {
     })
   }
 
-  selectMetodoEnvio(event) {
+  public selectMetodoEnvio(event) {
     this.banderaDireccionEnvio = false;
+    this.noExisteEnvioEstaArea = false;
     this.informacionCompra.METODO_ENVIO_COMPRA = event.target.value;
+    this.informacionCompra.COSTOS.COSTOS_ENVIO = 0;
     if (event.target.value == 'Domicilio') {
       this.banderaDireccionEnvio = true;
+      this.calcularCostosEnvioDomicilio();
     }
+    this.informacionCompra.COSTOS.TOTAL_PEDIDO = (this.informacionCompra.COSTOS.SUBTOTAL + this.informacionCompra.COSTOS.RECARGO_PAYPAL + this.informacionCompra.COSTOS.COSTOS_ENVIO) - (this.informacionCompra.COSTOS.DESCUENTOS + this.informacionCompra.COSTOS.CUPON);
   }
 
-  selectMetodoPago(event) {
+  public banderaRecargoPaypal: boolean = false;
+
+  public selectMetodoPago(event) {
+    this.banderaRecargoPaypal = false;
+    this.informacionCompra.COSTOS.RECARGO_PAYPAL = 0;
     this.informacionCompra.METODO_PAGO_COMPRA = event.target.value;
+    if (event.target.value == 'Electrónico') {
+      this.banderaRecargoPaypal = true;
+      this.informacionCompra.COSTOS.RECARGO_PAYPAL = (this.informacionCompra.COSTOS.SUBTOTAL * this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL) / 100;
+    }
+    this.informacionCompra.COSTOS.TOTAL_PEDIDO = (this.informacionCompra.COSTOS.SUBTOTAL + this.informacionCompra.COSTOS.RECARGO_PAYPAL + this.informacionCompra.COSTOS.COSTOS_ENVIO) - (this.informacionCompra.COSTOS.DESCUENTOS + this.informacionCompra.COSTOS.CUPON);
   }
 
   public habilitarDireccionDiferente(proceso) {
     if (proceso == 'Envio') {
       this.activarSelectDireccion = false;
       this.direccionEnvioDiferente = !this.direccionEnvioDiferente;
-      this.ciudadDireccion = "";
-      this.provinciaDireccion = "";
+      this.ciudadDireccion = null;
+      this.provinciaDireccion = null;
       this.DatosDireccion.Num_Cod_Postal = this.informacionCompra.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA;
       this.DatosDireccion.Nombre = this.informacionCompra.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA;
       this.DatosDireccion.Telefono = this.informacionCompra.DATOS_ENTREGA.TELEFONO_ENTREGA;
       this.DatosDireccion.Calle_Principal_Agente = this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA;
       this.DatosDireccion.Calle_Secundaria_Agente = this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA;
       this.DatosDireccion.Num_Casa_Agente = this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA;
-      this.DatosDireccion.Provincia = this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA;
+      this.DatosDireccion.Ciudad = this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA;
     }
     if (proceso == 'Factura') {
       this.datosfacturacionDiferente = !this.datosfacturacionDiferente;
@@ -587,36 +667,56 @@ export class DetalleProductoComponent implements OnInit {
         this.banderaTipo = false;
       }
     }
+  }
 
-    if (proceso == 'Siguiente') {
-      console.log('COMPRA' + JSON.stringify(this.informacionCompra))
-      this.siguienteDetallePedido = !this.siguienteDetallePedido;
+  public siguienteProcesoCompra() {
+    console.log('COMPRA' + JSON.stringify(this.informacionCompra));
+    if (this.informacionCompra.METODO_ENVIO_COMPRA != null && this.informacionCompra.METODO_PAGO_COMPRA != null) {
+      if (!this.noExisteEnvioEstaArea) {
+        if (this.banderaDireccionEnvio && this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA == null && !this.noExisteEnvioEstaArea) {
+          this.mostrarToast("Ingrese la dirección de envío, para continuar con la compra.", "");
+        }else{
+          if(this.informacionCompra.DATOS_FACTURA.IDENTIFICACION_FACTURA != null){
+            console.log('DATOS DE COMPRA A ENVIO'+ JSON.stringify(this.informacionCompra));
+            this.siguienteDetallePedido = !this.siguienteDetallePedido;
+          }else{
+            this.mostrarToast("Ingrese los datos de facturación para continuar con la compra.", "");
+          }
+        }
+      } else {
+        this.mostrarToast("Usted puede seleccionar 'Acordar con el vendedor' para continuar con su compra a esta zona.", "");
+      }
+    } else {
+      this.mostrarToast("Es importante que seleccione el método de envío y pago antes de continuar con la compra.", "");
     }
   }
 
   public guardarDireccionNueva() {
     if (document.forms['formActualizarDireccionEnvio'].checkValidity()) {
-
       this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA = this.DatosDireccion.Calle_Principal_Agente;
       this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA = this.DatosDireccion.Calle_Secundaria_Agente;
       this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA = this.DatosDireccion.Num_Casa_Agente;
-      this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA = this.DatosDireccion.Ciudad;
+      this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA = this.DatosDireccion.Ciudad.toString().trim();
 
       this.provinciasDireccion.forEach(provincia => {
-        if (provincia.COD_DPA.trim() == this.provinciaDireccion.trim())
+        if (provincia.COD_DPA == this.provinciaDireccion)
           this.provinciaDireccionNombre = provincia.NOMBRE;
       })
       console.log(JSON.stringify(this.provinciasDireccion));
       this.ciudadesDireccion.forEach(ciudad => {
-        if (ciudad.COD_DPA.trim() == this.DatosDireccion.Ciudad.trim()) {
+        if (ciudad.COD_DPA == this.DatosDireccion.Ciudad.toString().trim()) {
           this.ciudadDireccionNombre = ciudad.NOMBRE;
-          console.log('JDBSJCNSAKFJS');
         }
       })
       console.log(JSON.stringify(this.ciudadesDireccion) + this.ciudadDireccion + this.DatosDireccion.Ciudad);
       this.informacionCompra.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA = this.DatosDireccion.Nombre;
       this.informacionCompra.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA = this.DatosDireccion.Num_Cod_Postal;
       this.informacionCompra.DATOS_ENTREGA.TELEFONO_ENTREGA = this.DatosDireccion.Telefono;
+
+      console.log('DDDDDDDDDDDDDDDDD' + this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA + 'DDDDDDDDDDDD');
+
+      this.banderaDireccionEnvio = true;
+      this.calcularCostosEnvioDomicilio();
       this.direccionEnvioDiferente = !this.direccionEnvioDiferente;
     } else {
       this.mostrarToast("Al parecer existe errores en su formulario por favor revise nuevamente, debe llenar todos los campos obligatorios (*)", "");
@@ -645,7 +745,7 @@ export class DetalleProductoComponent implements OnInit {
     }
   }
 
-  validarCedula() {
+  public validarCedula() {
     var cad: any = this.DatosFactura.Id_Agente;
     var i;
     var total = 0;
@@ -671,24 +771,47 @@ export class DetalleProductoComponent implements OnInit {
       if (cad.charAt(longitud - 1) == total) {
         return true;
       } else {
-        this.DatosFactura.Id_Agente = "";
+        this.DatosFactura.Id_Agente = null;
         return false;
       }
     }
   }
 
-  mostrarToast(mensaje, icono) {
+  public mostrarToast(mensaje, icono) {
     this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo"><strong>!Error</strong><br>' + mensaje + '</p> </div>', "",
       {positionClass: 'toast-top-right', enableHtml: true, closeButton: true});
   }
 
   public cerrar() {
+    this.mostrarTiendaEnvioRetiro = false;
+    this.mostrarTiendaEnvioDomicilio = false;
+    this.mostrarTiendaPagoEfectivo = false;
+    this.mostrarTiendaPagoTransferencia = false;
+    this.mostrarTiendaPagoElectronico = false;
+
+    this.instruccion_retiro = null;
+    this.hora_estimada_retiro = null;
+    this.Banco_Pertenece = null;
+    this.Tipo_Cuenta = null;
+    this.Numero_cuenta = null;
+
+    this.DatosDireccion = null;
+    this.DatosFactura = null;
+    this.ciudadDireccionNombre = null;
+    this.provinciaDireccionNombre = null;
+
+    this.identidadComprador = null;
+    this.DatosDireccion = null;
+    this.DatosFactura = null;
+
+    this.banderaRecargoPaypal = false;
+    this.bandCuponActivado = false;
+    this.noExisteEnvioEstaArea = false;
     this.direccionEnvioDiferente = false;
     this.datosfacturacionDiferente = false;
     this.siguienteDetallePedido = false;
+    this.banderaDireccionEnvio = false;
 
-    this.DatosDireccion = "";
-    this.DatosFactura = "";
     this.informacionCompra = {
       COD_AGENTE: null,
       ID_AGENTE: null,
@@ -702,7 +825,7 @@ export class DetalleProductoComponent implements OnInit {
         COD_DPA_ENTREGA: null,
         NOMBRE_PERSONA_ENVIO_ENTREGA: null,
         NUM_COD_POSTAL_ENTREGA: null,
-        TELEFONO_ENTREGA: null,
+        TELEFONO_ENTREGA: null
       },
       DATOS_FACTURA: {
         TIPO_IDENTIFICACION_FACTURA: null,
@@ -710,7 +833,7 @@ export class DetalleProductoComponent implements OnInit {
         CORREO: null,
         IDENTIFICACION_FACTURA: null,
         TELEFONO_FACTURA: null,
-        DIRECCION_FACTURA: null,
+        DIRECCION_FACTURA: null
       },
       CANTIDAD: null,
       NUM_VARIANTE: null,
@@ -723,26 +846,265 @@ export class DetalleProductoComponent implements OnInit {
         PORCENTAJE_IMPUESTO: null,
         SUBTOTAL: null,
         DESCUENTOS: null,
+        PORCENTAJE_AUTOMATICO: null,
+        CUPON: null,
+        PORCENTAJE_CUPON: null,
         RECARGO_PAYPAL: null,
         PORCENTAJE_RECARGO_PAYPAL: null,
-        TOTAL_PEDIDO: null,
+        COSTOS_ENVIO: null,
+        TOTAL_PEDIDO: null
       }
     };
-    console.log(this.DatosDireccion + this.DatosFactura + JSON.stringify(this.informacionCompra))
+    console.log(this.DatosDireccion + this.DatosFactura + JSON.stringify(this.informacionCompra));
   }
 
   public atras() {
-    this.siguienteDetallePedido = false;
+    this.siguienteDetallePedido = !this.siguienteDetallePedido;
+  }
+
+  public objEfectivo = {
+    Tipo_Pago: null,
+    Descuento: null
+  };
+  public objElectronico = {
+    Tipo_Pago: null,
+    Recargo: null
+  };
+  public objTransferencia = {
+    Tipo_Pago: null,
+    Descuento: null,
+    Tipo_Cuenta: null,
+    Banco_Pertenece: null,
+    Numero_cuenta: null
+  };
+
+  public informacionPagoEnvio() {
+    this.objEfectivo = {
+      Tipo_Pago: null,
+      Descuento: 0
+    };
+    this.objElectronico = {
+      Tipo_Pago: null,
+      Recargo: 0
+    };
+    this.objTransferencia = {
+      Tipo_Pago: null,
+      Descuento: 0,
+      Tipo_Cuenta: null,
+      Banco_Pertenece: null,
+      Numero_cuenta: null
+    };
+
+    this.productoDetalle.TIENDA.METODO_PAGOs.forEach(pago => {
+      if (pago.TIPO_PAGO == 'Efectivo') {
+        this.objEfectivo.Tipo_Pago = pago.TIPO_PAGO;
+        this.objEfectivo.Descuento = pago.PORCENTAJE_DESCUENTO
+      }
+
+      if (pago.TIPO_PAGO == 'Transferencia') {
+        this.objTransferencia.Tipo_Pago = pago.TIPO_PAGO;
+        this.objTransferencia.Descuento = pago.PORCENTAJE_DESCUENTO;
+        this.objTransferencia.Tipo_Cuenta = pago.TIPO_CUENTA;
+        this.objTransferencia.Banco_Pertenece = pago.BANCO_PERTENECE;
+        this.objTransferencia.Numero_cuenta = pago.NUMERO_CUENTA;
+      }
+
+      if (pago.TIPO_PAGO == 'Electrónico') {
+        this.objElectronico.Tipo_Pago = pago.TIPO_PAGO;
+        this.objElectronico.Recargo = pago.PORCENTAJE_RECARGO;
+      }
+    })
   }
 
   public carritoCompras = {
-    NUM_VARIANTE: String,
-    CANTIDAD: Number
-  }
+    NUM_VARIANTE: null,
+    CANTIDAD: null
+  };
 
   public agregarCarrito() {
     this.carritoCompras.NUM_VARIANTE = this.varianteActiva.NUM_VARIANTE;
     this.carritoCompras.CANTIDAD = this.varianteActiva.CANTIDAD;
     console.log('CARRITO COMPRAS' + JSON.stringify(this.carritoCompras));
+  }
+
+  public cuponDescuentoNombre = null;
+  public arrayCuponNombres = new Set();
+  public bandCuponActivado: boolean = false;
+
+  public aplicarCuponDescuento() {
+    this.bandCuponActivado = false;
+
+    if (this.arrayCuponNombres.size > 0) {
+      for (var nombresCupon of this.arrayCuponNombres) {
+        if (nombresCupon == this.cuponDescuentoNombre)
+          this.bandCuponActivado = true;
+      }
+    }
+
+    let fechaHoyCupon = moment().format("YYYY-MM-DD");
+    let horaActualCupon = moment().format("HH:mm:ss");
+    let contadorCupones = 0;
+    if (this.productoDetalle.PRODUCTO.PRODUCTO_DESCUENTOs.length > 0) {
+      if (this.bandCuponActivado == false) {
+        this.productoDetalle.PRODUCTO.PRODUCTO_DESCUENTOs.forEach(descuentoCupon => {
+          if (descuentoCupon.DESCUENTO.TIPO_DESCUENTO == 'Cupón' && descuentoCupon.DESCUENTO.MOTIVO_DESCUENTO == this.cuponDescuentoNombre) {
+            if (descuentoCupon.DESCUENTO.FECHA_INICIO == fechaHoyCupon) {
+              if ((this.obtenerMinutos(horaActualCupon) >= this.obtenerMinutos(descuentoCupon.DESCUENTO.HORA_INICIO))) {
+                //CUPON VALIDO
+                this.bandCuponActivado = false;
+                this.informacionCompra.COSTOS.PORCENTAJE_CUPON = this.informacionCompra.COSTOS.PORCENTAJE_CUPON + descuentoCupon.DESCUENTO.PORCENTAJE_DESCUENTO;
+                this.arrayCuponNombres.add(this.cuponDescuentoNombre);
+                console.log('1CUPON' + horaActualCupon + fechaHoyCupon);
+              }
+            } else {
+              if (descuentoCupon.DESCUENTO.FECHA_FIN == fechaHoyCupon) {
+                if ((this.obtenerMinutos(horaActualCupon) <= this.obtenerMinutos(descuentoCupon.DESCUENTO.HORA_FIN))) {
+                  //CUPON VALIDO
+                  this.bandCuponActivado = false;
+                  this.arrayCuponNombres.add(this.cuponDescuentoNombre);
+                  this.informacionCompra.COSTOS.PORCENTAJE_CUPON = this.informacionCompra.COSTOS.PORCENTAJE_CUPON + descuentoCupon.DESCUENTO.PORCENTAJE_DESCUENTO;
+                  console.log('2CUPON' + horaActualCupon + fechaHoyCupon);
+                } else {
+                  contadorCupones += 1;
+                  this.informacionCompra.COSTOS.PORCENTAJE_CUPON = this.informacionCompra.COSTOS.PORCENTAJE_CUPON + 0;
+                  console.log('1NO VALIDO' + horaActualCupon + fechaHoyCupon);
+                }
+              } else {
+                //CUPON VALIDO
+                this.bandCuponActivado = false;
+                this.arrayCuponNombres.add(this.cuponDescuentoNombre);
+                this.informacionCompra.COSTOS.PORCENTAJE_CUPON = this.informacionCompra.COSTOS.PORCENTAJE_CUPON + descuentoCupon.DESCUENTO.PORCENTAJE_DESCUENTO;
+                console.log('3CUPON' + horaActualCupon + fechaHoyCupon);
+              }
+            }
+          } else {
+            contadorCupones += 1;
+          }
+        })
+      }
+      if (contadorCupones == this.productoDetalle.PRODUCTO.PRODUCTO_DESCUENTOs.length) {
+        this.bandCuponActivado = true;
+      }
+      this.informacionCompra.COSTOS.CUPON = ((this.informacionCompra.COSTOS.SUBTOTAL * this.informacionCompra.COSTOS.PORCENTAJE_CUPON) / 100);
+      this.cuponDescuentoNombre = null;
+    } else {
+      //NO EXISTEN CUPONES
+      this.bandCuponActivado = true;
+      this.informacionCompra.COSTOS.CUPON = 0;
+      this.informacionCompra.COSTOS.PORCENTAJE_CUPON = 0;
+    }
+
+    this.informacionCompra.COSTOS.TOTAL_PEDIDO = (this.informacionCompra.COSTOS.SUBTOTAL + this.informacionCompra.COSTOS.RECARGO_PAYPAL + this.informacionCompra.COSTOS.COSTOS_ENVIO) - (this.informacionCompra.COSTOS.DESCUENTOS + this.informacionCompra.COSTOS.CUPON);
+
+  }
+
+  public arrayPreciosEnvioAux = [];
+  public pesoPedidoTotalKg = 0;
+  public noExisteEnvioEstaArea: boolean = false;
+
+  public calcularCostosEnvioDomicilio() {
+    let localExisteUno = 'No Existe Local';
+    let restoExisteUno = 'No Existe Resto';
+    this.arrayPreciosEnvioAux = [];
+    this.pesoPedidoTotalKg = this.productoDetalle.PRODUCTO.PESO_PRODUCTO * this.informacionCompra.CANTIDAD;
+
+    if (this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA != null) {
+      let banderaEncontroDireccion: boolean = false;
+      for (let opSucursales of this.productoDetalle.TIENDA.SUCURSALs) {
+        if (opSucursales.DPA.COD_DPA == this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA && banderaEncontroDireccion == false) {
+          //ENCONTRE UN DIRECCION QUE COINCIDE ES LOCAL
+          console.log('//ENCONTRE UN DIRECCION QUE COINCIDE ES LOCAL');
+          banderaEncontroDireccion = true;
+        }
+      }
+
+      if (banderaEncontroDireccion == true) {
+        //ENVIO LOCAL
+
+        this.varianteActiva.OPCION_ENVIO.forEach(envioDomicilio => {
+          if (envioDomicilio.TIPO_UBICACION == 'Local') {
+            localExisteUno = 'Existe Local';
+
+
+            if (envioDomicilio.TIPO_MEDIDA == 'Precio') {
+              //DE ACUERDO AL PRECIO DEL PEDIDO
+              console.log('//DE ACUERDO AL PRECIO DEL PEDIDO');
+              if (this.informacionCompra.COSTOS.SUBTOTAL >= envioDomicilio.MINIMO && this.informacionCompra.COSTOS.SUBTOTAL <= envioDomicilio.MAXIMO) {
+                this.arrayPreciosEnvioAux.push(envioDomicilio.PRECIO);
+              }
+            }
+            if (envioDomicilio.TIPO_MEDIDA == 'Peso') {
+              //DE ACUERDO AL PESO DEL PEDIDO
+              console.log('//DE ACUERDO AL PESO DEL PEDIDO');
+              if (this.pesoPedidoTotalKg >= envioDomicilio.MINIMO && this.pesoPedidoTotalKg <= envioDomicilio.MAXIMO) {
+                this.arrayPreciosEnvioAux.push(envioDomicilio.PRECIO);
+              }
+            }
+
+
+          }
+        })
+
+        console.log('/ENVIO LOCAL');
+      } else {
+        //FUERA DE LA CIUDAD
+        this.varianteActiva.OPCION_ENVIO.forEach(envioDomicilio => {
+          if (envioDomicilio.TIPO_UBICACION == 'Resto') {
+
+            restoExisteUno = 'Existe Resto';
+
+            if (envioDomicilio.TIPO_MEDIDA == 'Precio') {
+              //DE ACUERDO AL PRECIO DEL PEDIDO
+              console.log('//DE ACUERDO AL PRECIO DEL PEDIDO');
+              if (this.informacionCompra.COSTOS.SUBTOTAL >= envioDomicilio.MINIMO && this.informacionCompra.COSTOS.SUBTOTAL <= envioDomicilio.MAXIMO) {
+                this.arrayPreciosEnvioAux.push(envioDomicilio.PRECIO);
+              }
+            }
+
+            if (envioDomicilio.TIPO_MEDIDA == 'Peso') {
+              //DE ACUERDO AL PESO DEL PEDIDO
+              console.log('//DE ACUERDO AL PESO DEL PEDIDO');
+              if (this.pesoPedidoTotalKg >= envioDomicilio.MINIMO && this.pesoPedidoTotalKg <= envioDomicilio.MAXIMO) {
+                this.arrayPreciosEnvioAux.push(envioDomicilio.PRECIO);
+              }
+            }
+          }
+        })
+        console.log('//FUERA DE LA CIUDAD');
+      }
+
+      let precioFinalEntregaMenor = 0;
+      if (this.arrayPreciosEnvioAux.length > 0) {
+        //HAY COINCIDENCIAS DE COSTOS DE ENVIO
+
+        precioFinalEntregaMenor = this.arrayPreciosEnvioAux[0]; //Así empezamos a comparar
+        for (let i = 0; i < this.arrayPreciosEnvioAux.length; i++) {
+          if (this.arrayPreciosEnvioAux[i] < precioFinalEntregaMenor) {
+            precioFinalEntregaMenor = this.arrayPreciosEnvioAux[i];
+          }
+        }
+        this.noExisteEnvioEstaArea = false;
+        console.log('PRECIO MENOR' + precioFinalEntregaMenor);
+      } else {
+        if (localExisteUno == 'No Existe Local' && restoExisteUno == 'No Existe Resto') {
+          //MANDAR MENSAJE DE NO EXISTE EL ENVIO A ESA ZONA.
+          this.noExisteEnvioEstaArea = true;
+          console.log('//MANDAR MENSAJE DE NO EXISTE EL ENVIO A ESA ZONA.');
+        } else {
+          //NO HAY COINCIDENCIAS DE COSTOS DE ENVIO
+          console.log('//NO HAY COINCIDENCIAS DE COSTOS DE ENVIO');
+          this.noExisteEnvioEstaArea = false;
+          precioFinalEntregaMenor = 0;
+        }
+      }
+
+      this.informacionCompra.COSTOS.COSTOS_ENVIO = precioFinalEntregaMenor;
+      console.log('=======================' + precioFinalEntregaMenor);
+      console.log('+++++++++++++++++++++++' + this.arrayPreciosEnvioAux);
+      console.log('COMPRA A ENVIAR COSOTOS DOMICILIO' + this.informacionCompra.COSTOS.COSTOS_ENVIO);
+    } else {
+      //DIRECCION DE ENTREGA ESTA VACIO.
+    }
+    this.informacionCompra.COSTOS.TOTAL_PEDIDO = (this.informacionCompra.COSTOS.SUBTOTAL + this.informacionCompra.COSTOS.RECARGO_PAYPAL + this.informacionCompra.COSTOS.COSTOS_ENVIO) - (this.informacionCompra.COSTOS.DESCUENTOS + this.informacionCompra.COSTOS.CUPON);
   }
 }

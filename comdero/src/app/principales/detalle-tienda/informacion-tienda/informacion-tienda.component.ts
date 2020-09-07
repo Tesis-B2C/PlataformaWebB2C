@@ -55,7 +55,6 @@ export class InformacionTiendaComponent implements OnInit {
     Tipo_Cuenta: null,
     Banco_Pertenece: null,
     Numero_cuenta: null
-
   };
 
   iniciar() {

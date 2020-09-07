@@ -1,6 +1,8 @@
 'use strict'
 const Imagen_Producto = require("../models/imagen_producto");
 const Tienda = require("../models/tienda");
+const Sucursal = require("../models/sucursal");
+const Dpa = require("../models/dpa");
 const Oferta = require("../models/oferta");
 const Producto = require("../models/producto");
 const Producto_Categoria = require("../models/producto_categoria");
@@ -571,7 +573,7 @@ async function obtenerProductoDetalle(req, res) {
                         separate: true,
                         order: [['ID_IMAGEN', 'ASC']]
                     }
-                },{
+                }, {
                     model: Producto_Descuento,
                     include: {
                         model: Descuento,
@@ -584,14 +586,14 @@ async function obtenerProductoDetalle(req, res) {
                                 [Op.gte]: fechaHoy
                             }
                         }
-                        }
+                    }
                 }, {
                     model: Producto_Categoria,
                     include: {model: Categoria}
                 }, {
                     model: Calificacion,
                     separate: true,
-                    attributes: ['ID_PRODUCTO','COD_PRODUCTO', [Calificacion.sequelize.fn('AVG', Calificacion.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
+                    attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', [Calificacion.sequelize.fn('AVG', Calificacion.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
                     group: ['ID_PRODUCTO']
                 }, {
                     model: Comentario,
@@ -599,15 +601,22 @@ async function obtenerProductoDetalle(req, res) {
                 }],
             }, {
                 model: Tienda,
-                attributes: ['NUM_TIENDA', 'NOMBRE_COMERCIAL','CONTACTO_WHATSAPP','LINK_PAGINA','LINK_FACEBOOK'],
+                attributes: ['NUM_TIENDA', 'NOMBRE_COMERCIAL', 'CONTACTO_WHATSAPP', 'LINK_PAGINA', 'LINK_FACEBOOK'],
                 include: [{
                     model: Opcion_Envio,
                     separate: true,
                     order: [['ID_OPCION_ENVIO', 'ASC']]
-                },{
+                }, {
                     model: Metodo_Pago,
                     separate: true,
                     order: [['ID_METODO_PAGO', 'ASC']]
+                }, {
+                    model: Sucursal,
+                    separate: true,
+                    order: [['NUM_SUCURSAL', 'ASC']],
+                    include: {
+                        model: Dpa
+                    }
                 }]
             }],
             attributes: ['ID_OFERTA', 'NUM_TIENDA', 'IVA', 'GARANTIA'],

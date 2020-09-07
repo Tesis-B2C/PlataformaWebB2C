@@ -53,6 +53,7 @@ body{
 .LetrasToastInfo{
   color: white;
   font-size: small;
+  text-align: justify;
 }
 
 select {

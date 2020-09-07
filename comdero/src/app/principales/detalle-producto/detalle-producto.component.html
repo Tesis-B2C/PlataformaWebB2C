@@ -46,7 +46,6 @@
         <div class="row no-gutters">
           <aside class="col-lg-6 col-md-6">
 
-
             <article class="gallery-wrap">
               <div class="img-big-wrap ">
                 <a>
@@ -116,11 +115,22 @@
               </div>
 
               <div class="mb-2">
-                <var *ngIf="this.banderaNoDisponible == false && this.varianteActiva?.STOCK != 0"
-                     class="price h5">{{this.varianteActiva?.PRECIO_UNITARIO_CON_IVA }}</var>
+                <var
+                  *ngIf="this.banderaNoDisponible == false && this.varianteActiva?.STOCK != 0 && !this.banderaActivarDescuentoAutomatico"
+                  class="price h5">{{this.varianteActiva?.PRECIO_UNITARIO_CON_IVA | currency}}</var>
+
+                <var *ngIf="this.banderaActivarDescuentoAutomatico" class="price h5">
+                  {{this.varianteActiva.PRECIO_UNITARIO_CON_IVA_DESCUENTO | currency}}
+                </var>
+                <del *ngIf="this.banderaActivarDescuentoAutomatico" class="price-old">
+                  {{this.varianteActiva?.PRECIO_UNITARIO_CON_IVA | currency}}
+                </del>
+
                 <var *ngIf="this.banderaNoDisponible == true" class="text-danger h5">No disponible</var>
                 <var *ngIf="this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0"
-                     class="text-success h5">Agotado</var>
+                     class="text-success h5">
+                  Agotado
+                </var>
               </div>
 
               <article class="gallery-wrap">
@@ -128,7 +138,7 @@
                   <div class="thumbs-wrap">
                     <div class="item-thumbDetalle" *ngFor="let color of this.arrayColor"
                          [ngClass]="{'item-Activo':color==this.varianteActiva.COLOR}">
-                      <button id="btnValueColor" (click)="this.asignarColor(color)" class="item-opciones"
+                      <button id="btnValueColor+{{color}}" (click)="this.asignarColor(color)" class="item-opciones"
                               [style.background-color]="color"></button>
                     </div>
                   </div> <!-- thumbs-wrap.// -->
@@ -270,33 +280,118 @@
           <ng-template ngbTabContent>
 
             <article class="card">
-              <div class="card-body">
-                <h5 class="text-center">Opciones de envío disponibles</h5>
-                <p class="small text-justify">
-                  {{this.productoDetalle?.PRODUCTO.DESCRIPCION_PRODUCTO}}
-                </p>
-
-
-                <h5>Detalle del producto</h5>
-                <div class="small text-justify">
-
+              <div id="cardMetodosEnvioInformacion">
+                <div class="row justify-content-center ">
+                  <h4 class="card-title text-center ">Opciones de Pago</h4>
+                  <p class=" text-center">Contamos con varios métodos de pago para facilitar la compra de tus productos,
+                    al momento de realizar la
+                    transacción.</p>
                 </div>
-                <hr>
-                <div class="row">
-                  <aside class="col-md-6">
-                    <h5>Información adicional</h5>
-                    <dl class="row">
-                      <dt class="col-sm-3 col-4">Código:</dt>
-                      <dd class="col-sm-9 col-8"> {{this.productoDetalle?.PRODUCTO.COD_PRODUCTO}}</dd>
 
-                      <dt class="col-sm-3 col-4">Peso:</dt>
-                      <dd class="col-sm-9 col-8"> {{this.productoDetalle?.PRODUCTO.PESO_PRODUCTO}}</dd>
+                <div class="social-box"
+                     *ngIf="this.objTransferencia.Tipo_Pago!=null || this.objEfectivo.Tipo_Pago!=null || this.objElectronico.Tipo_Pago!=null">
+                  <div class="container">
+                    <div class="row justify-content-center">
 
-                    </dl>
-                  </aside>
-                </div> <!-- row.// -->
+                      <div class="col-lg-4 col-xs-12  text-center" *ngIf="this.objEfectivo.Tipo_Pago!=null">
+                        <div class="box py-2">
+                          <div class="box-title mb-2">
+                            <h3>Efectivo</h3>
+                          </div>
+                          <p class=" iconos-pagos "><img src="assets/images/icon-efectivo.png" alt="..."></p>
+                          <div class="box-text">
+                            <span>Usted puede pagar con efectivo en nuestra tienda, realiza la compra en la plataforma y puedes pagarlo al momento de la entrega.</span>
+                          </div>
+                        </div>
+                      </div>
 
-              </div> <!-- card-body.// -->
+                      <div class="col-lg-4 col-xs-12  text-center" *ngIf="this.objTransferencia.Tipo_Pago!=null">
+                        <div class="box py-2">
+                          <div class="box-title mb-2">
+                            <h3>Transferencia bancaria</h3>
+                          </div>
+                          <p class=" iconos-pagos "><img src="assets/images/icon-transferencia.png" alt="..."></p>
+                          <div class="box-text">
+                            <span>Usted puede pagar con transferencia bancaria luego de realizar la compra en la plataforma.</span>
+                            <hr>
+                            <div class="row justify-content-center mx-auto">
+                              <p class="card-text col-5 ">Banco:</p>
+                              <p class="col-6 ">{{this.objTransferencia.Banco_Pertenece}}</p>
+                              <p class="card-text col-5 ">Tipo:</p>
+                              <p class="col-6 ">{{this.objTransferencia.Tipo_Cuenta}}</p>
+                              <p class="card-text col-5  ">#Cuenta:</p>
+                              <p class="col-6 ">{{this.objTransferencia.Numero_cuenta}}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-4 col-xs-12  text-center" *ngIf="this.objElectronico.Tipo_Pago!=null">
+                        <div class="box py-2">
+                          <div class="box-title mb-2">
+                            <h3>Electrónico</h3>
+                          </div>
+                          <p class=" iconos-pagos "><img src="assets/images/icon-electronico.png" alt="..."></p>
+                          <div class="box-text">
+                            <span>Usted puede pagar todas sus compras a traves de la plataforma Paypal de manera rápida y segura.</span>
+                          </div>
+                          <div class="box-btn text-primary">
+                            <a>Porcentaje de recargo:  {{objElectronico.Recargo}}%</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr>
+
+              <div id="cardMetodosPagoInformacion">
+
+                <div class="row justify-content-center ">
+                  <h4 class="card-title text-center ">Opciones de Entrega</h4>
+                  <p class=" text-center">Contamos con algunas opciones para facilitar la entrega de
+                    nuestros productos, si no encuentras una opción que se ajuste a tus necesidades de seguro llegaremos
+                    a un acuerdo </p>
+                </div>
+
+                <div class="social-box"
+                     *ngIf="this.objTransferencia.Tipo_Pago!=null || this.objEfectivo.Tipo_Pago!=null || this.objElectronico.Tipo_Pago!=null">
+                  <div class="container">
+                    <div class="row justify-content-center">
+
+                      <div class="card col-md-4" *ngFor="let envio of this.productoDetalle.TIENDA.OPCION_ENVIOs">
+                        <div class="card-body" *ngIf="envio.TIPO_ENVIO=='Domicilio'">
+                          <h5 class="card-title">Entrega a {{envio.TIPO_ENVIO}}</h5>
+                          <h6 class="card-subtitle mb-2 text-muted" *ngIf="envio.TIPO_UBICACION=='Resto'">Otras
+                            provincias <i class="fas fa-map-marker-alt"></i></h6>
+                          <h6 class="card-subtitle mb-2 text-muted"
+                              *ngIf="envio.TIPO_UBICACION!='Resto'">{{envio.TIPO_UBICACION}}   <i
+                            class="fas fa-map-marker-alt"></i></h6>
+                          <p class="card-text">{{envio.TIPO_MEDIDA}}   Mínimo del pedido: {{envio.MINIMO}}<a
+                            *ngIf="envio.TIPO_MEDIDA=='Peso'">Kg</a> <a *ngIf="envio.TIPO_MEDIDA=='Precio'">$</a></p>
+                          <p>{{envio.TIPO_MEDIDA}} Máximo: {{envio.MAXIMO}}<a *ngIf="envio.TIPO_MEDIDA=='Peso'">Kg</a>
+                            <a *ngIf="envio.TIPO_MEDIDA=='Precio'">$</a></p>
+                          <p style="font-weight: bold" class="text-primary">Costo de envío: <a
+                            *ngIf="envio.PRECIO!=0"> {{envio.PRECIO}}$</a> <span *ngIf="envio.PRECIO==0"
+                                                                                 class="badge badge-pill badge-primary">Gratis</span>
+                          </p>
+                          <p *ngIf="envio.INSTRUCCION_RETIRO">Instrucciones de envío {{envio.INSTRUCCION_RETIRO}} </p>
+
+                        </div>
+
+                        <div class="card-body" *ngIf="envio.TIPO_ENVIO=='Retiro'">
+                          <h5 class="card-title"> {{envio.TIPO_ENVIO}} en el local</h5>
+                          <p *ngIf="envio.INSTRUCCION_RETIRO">Instrucciones de envío:  {{envio.INSTRUCCION_RETIRO}} </p>
+
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
             </article> <!-- card.// -->
 
           </ng-template>
@@ -372,6 +467,12 @@
                      (change)="selectMetodoEnvio($event)" type="radio" name="metodoEnvio" id="envioDomicilio"
                      value="Domicilio">
               <label for="envioDomicilio">&nbsp;&nbsp;Envío a domicilio</label>
+              <br class="m-0">
+              <span *ngIf="this.noExisteEnvioEstaArea" class="text-danger small">Por el momento no se puede calcular el envío a esta zona, pero usted
+              puede acordar con el vendedor y realizar su compra.</span>
+              <span
+                *ngIf="this.banderaDireccionEnvio && this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA == null && !this.noExisteEnvioEstaArea"
+                class="text-danger small">Es importante que ingrese la direccion de envío para continuar con su compra.</span>
             </div>
           </div>
         </div>
@@ -384,16 +485,18 @@
           </div>
 
           <div class="form-group col-sm-9 col-8 mb-0">
-            <label
-              class="text-justify mb-0">{{this.informacionCompra?.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA}}</label>
-            <p class="text-justify mb-0">{{this.informacionCompra?.DATOS_ENTREGA.TELEFONO_ENTREGA}}</p>
-            <p class="text-justify mb-1">{{this.informacionCompra?.DATOS_ENTREGA.NUM_CASA_ENTREGA}}
-              {{this.informacionCompra?.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA}}
-              {{this.informacionCompra?.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA}},
-              {{this.ciudadDireccionNombre}},
-              {{this.provinciaDireccionNombre}},
-              {{this.informacionCompra?.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA}}
-            </p>
+            <div *ngIf="this.informacionCompra?.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA != null">
+              <label
+                class="text-justify mb-0">{{this.informacionCompra?.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA}}</label>
+              <p class="text-justify mb-0">{{this.informacionCompra?.DATOS_ENTREGA.TELEFONO_ENTREGA}}</p>
+              <p class="text-justify mb-1">{{this.informacionCompra?.DATOS_ENTREGA.NUM_CASA_ENTREGA}}
+                {{this.informacionCompra?.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA}}
+                {{this.informacionCompra?.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA}},
+                {{this.ciudadDireccionNombre}},
+                {{this.provinciaDireccionNombre}},
+                {{this.informacionCompra?.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA}}
+              </p>
+            </div>
             <button (click)="habilitarDireccionDiferente('Envio')"><label class="nuevaDireccionEnvio"> <a
               class="text-primary p-0">Enviar a una dirección diferente {{this.direccionEnvioDiferente}}</a></label>
             </button>
@@ -437,13 +540,16 @@
           </div>
 
           <div class="form-group col-sm-9 col-8 mb-0">
-            <label class="text-justify mb-0">{{this.informacionCompra?.DATOS_FACTURA.NOMBRE_FACTURA }}
-              ({{this.informacionCompra?.DATOS_FACTURA.IDENTIFICACION_FACTURA}})</label>
-            <p class="text-justify mb-0">{{this.informacionCompra?.DATOS_FACTURA.CORREO}}</p>
-            <p class="text-justify mb-0">{{this.informacionCompra?.DATOS_FACTURA.TELEFONO_FACTURA}}</p>
-            <p class="text-justify mb-1">{{this.informacionCompra?.DATOS_FACTURA.DIRECCION_FACTURA}}</p>
-            <button (click)="habilitarDireccionDiferente('Factura')"><label class="nuevaDireccionEnvio"> <a
-              class="text-primary p-0">Factura con otros datos {{this.datosfacturacionDiferente}}</a></label></button>
+            <div *ngIf="this.informacionCompra?.DATOS_FACTURA.IDENTIFICACION_FACTURA != null">
+              <label class="text-justify mb-0">{{this.informacionCompra?.DATOS_FACTURA.NOMBRE_FACTURA }}
+                ({{this.informacionCompra?.DATOS_FACTURA.IDENTIFICACION_FACTURA}})</label>
+              <p class="text-justify mb-0">{{this.informacionCompra?.DATOS_FACTURA.CORREO}}</p>
+              <p class="text-justify mb-0">{{this.informacionCompra?.DATOS_FACTURA.TELEFONO_FACTURA}}</p>
+              <p class="text-justify mb-1">{{this.informacionCompra?.DATOS_FACTURA.DIRECCION_FACTURA}}</p>
+            </div>
+            <button (click)="habilitarDireccionDiferente('Factura')"><label class="nuevaDireccionEnvio">
+              <a class="text-primary p-0">Factura con otros datos {{this.datosfacturacionDiferente}}</a></label>
+            </button>
           </div>
         </div>
       </div>
@@ -459,17 +565,18 @@
             <div class="form-row">
               <div class="form-group col-6 mb-0"><label class="my-0">Productos ({{this.informacionCompra.CANTIDAD}}
                 )</label></div>
-              <div class="form-group col-6 my-0 text-center"><label
-                class="my-0">{{this.informacionCompra?.COSTOS.TOTAL_PRODUCTOS}}</label></div>
+              <div class="form-group col-1 my-0 text-right"><label class="my-0"></label></div>
+              <div class="form-group col-5 my-0 text-center"><label
+                class="my-0">{{this.informacionCompra.COSTOS.TOTAL_PRODUCTOS | currency}}</label></div>
             </div>
 
             <div class="form-row">
               <div class="form-group col-6 mb-0">
-                <label class="my-0">
-                  Cálculo de impuestos por cobrar ({{this.informacionCompra.COSTOS.PORCENTAJE_IMPUESTO}}%)
-                </label></div>
-              <div class="form-group col-6 my-0 text-center"><label
-                class="my-0">{{this.informacionCompra.COSTOS.IMPUESTOS}}</label>
+                <label class="my-0">Cálculo de impuestos por cobrar
+                  ({{this.informacionCompra.COSTOS.PORCENTAJE_IMPUESTO}}%)</label></div>
+              <div class="form-group col-1 my-0 text-right"><label class="my-0"></label></div>
+              <div class="form-group col-5 my-0 text-center"><label
+                class="my-0">{{this.informacionCompra.COSTOS.IMPUESTOS | currency}}</label>
                 <div class="px-sm-1 px-lg-5 px-md-3">
                   <hr class="my-1">
                 </div>
@@ -478,29 +585,41 @@
 
             <div class="form-row">
               <div class="form-group col-6 mb-0"><label class="my-0">Subtotal</label></div>
-              <div class="form-group col-6 my-0 text-center"><label
-                class="my-0">{{this.informacionCompra.COSTOS.SUBTOTAL}}</label></div>
+              <div class="form-group col-1 my-0 text-right"><label class="my-0"></label></div>
+              <div class="form-group col-5 my-0 text-center"><label
+                class="my-0">{{this.informacionCompra?.COSTOS.SUBTOTAL | currency}}</label></div>
             </div>
 
             <div class="form-row">
-              <div class="form-group col-6 mb-0"><label class="my-0">Descuento (-)</label></div>
-              <div class="form-group col-6 my-0 text-center"><label class="my-0">$5.99</label></div>
+              <div class="form-group col-6 mb-0"><label class="my-0">Descuento
+                ({{this.informacionCompra?.COSTOS.PORCENTAJE_AUTOMATICO}}%)</label></div>
+              <div class="form-group col-1 my-0 text-right"><label class="my-0">(-)</label></div>
+              <div class="form-group col-5 my-0 text-center"><label
+                class="my-0">{{this.informacionCompra?.COSTOS.DESCUENTOS | currency}}</label></div>
             </div>
 
             <div class="form-row">
-              <div class="form-group col-6 mb-0"><label class="my-0">Descuento Cupón (-)</label></div>
-              <div class="form-group col-6 my-0 text-center"><label class="my-0">$5.99</label></div>
+              <div class="form-group col-6 mb-0"><label class="my-0">Descuento Cupón
+                ({{this.informacionCompra.COSTOS.PORCENTAJE_CUPON}}%)</label></div>
+              <div class="form-group col-1 my-0 text-right"><label class="my-0">(-)</label></div>
+              <div class="form-group col-5 my-0 text-center"><label
+                class="my-0">{{this.informacionCompra.COSTOS.CUPON | currency}}</label></div>
             </div>
 
-            <div class="form-row">
-              <div class="form-group col-6 mb-0"><label class="my-0">Recargo por PayPal (+)</label></div>
-              <div class="form-group col-6 my-0 text-center"><label class="my-0">$1.25</label>
+            <div *ngIf="this.banderaRecargoPaypal" class="form-row">
+              <div class="form-group col-6 mb-0"><label class="my-0">Recargo por PayPal
+                ({{this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL}}%)</label></div>
+              <div class="form-group col-1 my-0 text-right"><label class="my-0">(+)</label></div>
+              <div class="form-group col-5 my-0 text-center"><label
+                class="my-0">{{this.informacionCompra.COSTOS.RECARGO_PAYPAL | currency}}</label>
               </div>
             </div>
 
             <div class="form-row">
-              <div class="form-group col-6 mb-0"><label class="my-0">Costo de envío (+)</label></div>
-              <div class="form-group col-6 my-0 text-center"><label class="my-0">$1.25</label>
+              <div class="form-group col-6 mb-0"><label class="my-0">Costo de envío</label></div>
+              <div class="form-group col-1 my-0 text-right"><label class="my-0">(+)</label></div>
+              <div class="form-group col-5 my-0 text-center"><label
+                class="my-0">{{this.informacionCompra.COSTOS.COSTOS_ENVIO | currency}}</label>
                 <div class="px-sm-1 px-lg-5 px-md-3">
                   <hr class="my-1">
                 </div>
@@ -509,19 +628,24 @@
 
             <div class="form-row">
               <div class="form-group col-6 mb-0"><label class="my-0">Total del pedido:</label></div>
-              <div class="form-group col-6 my-0 text-center"><label class="my-0">$1.25</label></div>
+              <div class="form-group col-1 my-0 text-right"><label class="my-0"></label></div>
+              <div class="form-group col-5 my-0 text-center"><label
+                class="my-0">{{this.informacionCompra.COSTOS.TOTAL_PEDIDO | currency}}</label></div>
             </div>
 
             <div class="form-row mt-4">
-              <div class="form-group col-6 my-0">
+              <div class="form-group col-md-6 col-md-6 col-12 my-0">
                 <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Introducir el cupón">
+                  <input #CuponDescuentoNombre="ngModel" [(ngModel)]="this.cuponDescuentoNombre" type="text"
+                         class="tamanioInputs form-control"
+                         placeholder="Introducir el cupón" name="CuponDescuentoNombre">
                   <span class="input-group-append">
-                    <button class="btn btn-primary">Aplicar</button>
+                    <button (click)="aplicarCuponDescuento()" class="btn btn-primary">Aplicar</button>
                   </span>
                 </div>
               </div>
             </div>
+            <p *ngIf="this.bandCuponActivado" class="text-danger">Cupón no válido</p>
           </div>
         </div>
       </div>
@@ -530,7 +654,7 @@
     <div *ngIf="this.direccionEnvioDiferente" class="modal-body px-0 pt-2">
       <button class="px-3" (click)="habilitarDireccionDiferente('Envio')"><label class="nuevaDireccionEnvio"> <a
         class="text-primary p-0"><i class="fas fa-chevron-left"></i>&nbsp;&nbsp;Regresar</a></label></button>
-      <div class="form-row px-5">
+      <div class="form-row px-5" *ngIf="this.informacionCompra?.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA != null">
         <div class="form-group col-1 mb-0">
           <div>
             <label class="text-center">Actual</label>
@@ -564,7 +688,7 @@
                      [ngClass]="{'is-invalid': NombreA.invalid && (NombreA.dirty || NombreA.touched)}"
                      [pattern]='this.soloLetrasPattern'
                      class="tamanioInputs form-control " name="nombreA" placeholder="" required
-                     type="text"> <!--form-control-sm-->
+                     type="text">
               <div *ngIf="NombreA.invalid && (NombreA.dirty || NombreA.touched)">
                 <div *ngIf="NombreA.errors.required">
                   <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
@@ -693,7 +817,7 @@
       <button class="px-3" (click)="habilitarDireccionDiferente('Factura')"><label class="nuevaDireccionFactura"> <a
         class="text-primary p-0"><i class="fas fa-chevron-left"></i>&nbsp;&nbsp;Regresar</a></label></button>
 
-      <div class="form-row px-5">
+      <div class="form-row px-5" *ngIf="this.informacionCompra?.DATOS_FACTURA.IDENTIFICACION_FACTURA != null">
         <div class="form-group col-1 mb-0">
           <div>
             <label class="text-center">Actual</label>
@@ -764,11 +888,10 @@
           <label>* Correo electrónico</label>
 
           <input #EmailFactura="ngModel" [(ngModel)]="this.DatosFactura.Correo" style="text-transform: lowercase"
-                 [ngClass]="{
-          'is-invalid': EmailFactura.invalid && (EmailFactura.dirty || EmailFactura.touched)}"
+                 [ngClass]="{'is-invalid': EmailFactura.invalid && (EmailFactura.dirty || EmailFactura.touched)}"
                  [pattern]='this.emailPattern'
                  class="form-control tamanioInputs"
-                 name="emailFactura" placeholder="" required type="email">
+                 name="emailFactura" placeholder="" type="email" required>
           <div *ngIf="EmailFactura.invalid && (EmailFactura.touched||EmailFactura.dirty)">
             <div *ngIf="EmailFactura.errors.required">
               <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
@@ -792,7 +915,7 @@
                      [pattern]='this.soloNumerosPattern'
                      class="tamanioInputs form-control" maxlength="10"
                      minlength="10" name="cedulaFactura" placeholder=""
-                     type="text">
+                     type="text" required>
               <div *ngIf="CedulaFactura.invalid && (CedulaFactura.dirty || CedulaFactura.touched)">
                 <div *ngIf="CedulaFactura.errors.required">
                   <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo
@@ -820,7 +943,7 @@
                      [ngClass]="{'is-invalid': RucFactura.invalid && (RucFactura.dirty || RucFactura.touched)}"
                      [pattern]='this.soloNumerosPattern'
                      class="tamanioInputs form-control" maxlength="13"
-                     minlength="13" name="rucFactura" placeholder="" type="text">
+                     minlength="13" name="rucFactura" placeholder="" type="text" required>
               <div *ngIf="RucFactura.invalid && (RucFactura.dirty || RucFactura.touched)">
                 <div *ngIf="RucFactura.errors.required">
                   <p class="alert alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
@@ -841,13 +964,14 @@
                 </div>
               </div>
             </div>
+
             <div class="col-lg-6 form-group col-lg-6">
               <label>* Celular / Convencional</label>
               <input #TelefonoFactura="ngModel"
                      [(ngModel)]="this.DatosFactura.Telefono"
                      [ngClass]="{'is-invalid': TelefonoFactura.invalid && (TelefonoFactura.dirty || TelefonoFactura.touched)}"
                      [pattern]='this.soloNumerosPattern' class="tamanioInputs form-control" name="telefonoFactura"
-                     type="tel">
+                     type="tel" required>
               <div *ngIf="TelefonoFactura.invalid && (TelefonoFactura.dirty|| TelefonoFactura.touched) ">
                 <div *ngIf="TelefonoFactura.errors.required">
                   <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
@@ -866,10 +990,9 @@
             <label>* Dirección</label>
             <input #CallePrincipalFactura="ngModel"
                    [(ngModel)]="this.DatosFactura.Calle_Principal_Agente"
-                   [ngClass]="{
-          'errorSelect': CallePrincipalFactura.invalid && (CallePrincipalFactura.dirty || CallePrincipalFactura.touched)}"
+                   [ngClass]="{'is-invalid': CallePrincipalFactura.invalid && (CallePrincipalFactura.dirty || CallePrincipalFactura.touched)}"
                    class="tamanioInputs form-control"
-                   name="callePrincipalFactura" placeholder="" id="callePrincipalFactura">
+                   name="callePrincipalFactura" placeholder="" id="callePrincipalFactura" required>
             <div *ngIf="CallePrincipalFactura.invalid && (CallePrincipalFactura.touched||CallePrincipalFactura.dirty)">
               <div *ngIf="CallePrincipalFactura.errors.required">
                 <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
@@ -892,7 +1015,7 @@
               (click)="modal.dismiss('Cross click'); cerrar()">
         Cancelar
       </button>
-      <button (click)="this.habilitarDireccionDiferente('Siguiente')" type="button"
+      <button (click)="this.siguienteProcesoCompra()" type="button"
               class="btn btn-outline-primary ml-1">Siguiente
       </button>
     </div>
