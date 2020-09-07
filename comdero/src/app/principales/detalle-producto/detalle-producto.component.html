@@ -200,9 +200,8 @@
                               id="button-minus"> +
                             </button>
                           </div>
-                          <p class="m-0 pt-3" style="font-size: 11px">({{this.varianteActiva.MEDIDA}})</p>
                         </div> <!-- input-group.// -->
-
+                        <p class="m-0 pt-0 text-center" style="font-size: 11px">({{this.varianteActiva.MEDIDA}})</p>
                       </div>
                     </dd>
                   </dl>
@@ -445,11 +444,11 @@
 
       <div class="card card-body pb-0">
         <div class="form-row">
-          <div class="form-group col-sm-3 col-4 mb-0">
+          <div class="form-group col-sm-3 col-12 mb-0">
             <label class="font-weight-bold">Método de envío</label>
           </div>
 
-          <div class="form-group col-sm-9 col-8">
+          <div class="form-group col-sm-9 col-12">
             <div class="radio-item">
               <input [checked]="this.informacionCompra.METODO_ENVIO_COMPRA == 'Acordar'"
                      (change)="selectMetodoEnvio($event)" type="radio" name="metodoEnvio" id="acordarVendedor"
@@ -480,11 +479,11 @@
 
       <div class="card card-body" *ngIf="this.banderaDireccionEnvio">
         <div class="form-row">
-          <div class="form-group col-sm-3 col-4 mb-0">
+          <div class="form-group col-sm-3 col-12 mb-0">
             <label class="font-weight-bold">Dirección de envío</label>
           </div>
 
-          <div class="form-group col-sm-9 col-8 mb-0">
+          <div class="form-group col-sm-9 col-12 mb-0">
             <div *ngIf="this.informacionCompra?.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA != null">
               <label
                 class="text-justify mb-0">{{this.informacionCompra?.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA}}</label>
@@ -498,7 +497,7 @@
               </p>
             </div>
             <button (click)="habilitarDireccionDiferente('Envio')"><label class="nuevaDireccionEnvio"> <a
-              class="text-primary p-0">Enviar a una dirección diferente {{this.direccionEnvioDiferente}}</a></label>
+              class="text-primary p-0">Enviar a una dirección diferente</a></label>
             </button>
           </div>
         </div>
@@ -506,11 +505,11 @@
 
       <div class="card card-body pb-0">
         <div class="form-row">
-          <div class="form-group col-sm-3 col-4 mb-0">
+          <div class="form-group col-sm-3 col-12 mb-0">
             <label class="font-weight-bold">Método de pago</label>
           </div>
 
-          <div class="form-group col-sm-9 col-8">
+          <div class="form-group col-sm-9 col-12">
             <div *ngIf="this.mostrarTiendaPagoEfectivo && !this.banderaDireccionEnvio" class="radio-item">
               <input [checked]="this.informacionCompra.METODO_PAGO_COMPRA == 'Efectivo'"
                      (change)="selectMetodoPago($event)" type="radio"
@@ -535,11 +534,11 @@
 
       <div class="card card-body">
         <div class="form-row">
-          <div class="form-group col-sm-3 col-4 mb-0">
+          <div class="form-group col-sm-3 col-12 mb-0">
             <label class="font-weight-bold">Datos de facturación</label>
           </div>
 
-          <div class="form-group col-sm-9 col-8 mb-0">
+          <div class="form-group col-sm-9 col-12 mb-0">
             <div *ngIf="this.informacionCompra?.DATOS_FACTURA.IDENTIFICACION_FACTURA != null">
               <label class="text-justify mb-0">{{this.informacionCompra?.DATOS_FACTURA.NOMBRE_FACTURA }}
                 ({{this.informacionCompra?.DATOS_FACTURA.IDENTIFICACION_FACTURA}})</label>
@@ -548,7 +547,7 @@
               <p class="text-justify mb-1">{{this.informacionCompra?.DATOS_FACTURA.DIRECCION_FACTURA}}</p>
             </div>
             <button (click)="habilitarDireccionDiferente('Factura')"><label class="nuevaDireccionEnvio">
-              <a class="text-primary p-0">Factura con otros datos {{this.datosfacturacionDiferente}}</a></label>
+              <a class="text-primary p-0">Factura con otros datos</a></label>
             </button>
           </div>
         </div>
@@ -556,11 +555,11 @@
 
       <div class="card card-body">
         <div class="form-row">
-          <div class="form-group col-sm-3 col-4 mb-0">
+          <div class="form-group col-sm-3 col-12 mb-0">
             <label class="font-weight-bold">Total</label>
           </div>
 
-          <div class="form-group col-sm-9 col-8">
+          <div class="form-group col-sm-9 col-12">
 
             <div class="form-row">
               <div class="form-group col-6 mb-0"><label class="my-0">Productos ({{this.informacionCompra.CANTIDAD}}

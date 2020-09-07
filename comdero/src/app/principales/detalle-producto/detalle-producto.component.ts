@@ -616,6 +616,8 @@ export class DetalleProductoComponent implements OnInit {
     this.banderaDireccionEnvio = false;
     this.noExisteEnvioEstaArea = false;
     this.informacionCompra.METODO_ENVIO_COMPRA = event.target.value;
+    this.informacionCompra.METODO_PAGO_COMPRA = null;
+    this.banderaRecargoPaypal = false;
     this.informacionCompra.COSTOS.COSTOS_ENVIO = 0;
     if (event.target.value == 'Domicilio') {
       this.banderaDireccionEnvio = true;
@@ -675,11 +677,11 @@ export class DetalleProductoComponent implements OnInit {
       if (!this.noExisteEnvioEstaArea) {
         if (this.banderaDireccionEnvio && this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA == null && !this.noExisteEnvioEstaArea) {
           this.mostrarToast("Ingrese la dirección de envío, para continuar con la compra.", "");
-        }else{
-          if(this.informacionCompra.DATOS_FACTURA.IDENTIFICACION_FACTURA != null){
-            console.log('DATOS DE COMPRA A ENVIO'+ JSON.stringify(this.informacionCompra));
+        } else {
+          if (this.informacionCompra.DATOS_FACTURA.IDENTIFICACION_FACTURA != null) {
+            console.log('DATOS DE COMPRA A ENVIO' + JSON.stringify(this.informacionCompra));
             this.siguienteDetallePedido = !this.siguienteDetallePedido;
-          }else{
+          } else {
             this.mostrarToast("Ingrese los datos de facturación para continuar con la compra.", "");
           }
         }
