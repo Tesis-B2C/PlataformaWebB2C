@@ -23,13 +23,13 @@
 
       <button class="btn btn-primary" type="button" data-toggle="collapse"
               [attr.data-target]="'#multiCollapseExample'+i"><i class="fa fa-shopping-cart"></i> &nbsp;<i
-        class="fa fa-chevron-down"></i></button>
+        class="fa fa-chevron-right "></i></button>
 
     </div>
 
     <br>
 
-    <div class="row  collapse show" id="multiCollapseExample{{i}}">
+    <div class="row  collapse  " id="multiCollapseExample{{i}}">
       <aside class="col-lg-9 ">
         <div class="card">
           <div class="card-body ">
@@ -66,7 +66,7 @@
                     </button>
 
                   </div>
-                  <input type="text" class="form-control" style="border-color: darkgray" ngModel="piker"
+                  <input type="text" class="form-control" style="border-color: darkgray" ngModel="piker" disabled
                          [(ngModel)]="producto.CANTIDAD_PRODUCTO_CARRITO">
                   <div class="input-group-append">
 
@@ -123,7 +123,7 @@
         </div> <!-- card.// -->
 
         <div class="card">
-          <div class="card-body">
+          <div class="card-body small">
             <dl class="dlist-align">
               <dt>Sub total:</dt>
               <dd class="text-right">{{tienda.cuentas.subTotal | currency}}</dd>
@@ -138,18 +138,18 @@
             </dl>
 
             <dl class="dlist-align">
-              <dt>Descuentos por cupón:</dt>
+              <dt>Cupón descuento:</dt>
               <dd class="text-right text-dark b"><strong>{{tienda.cuentas.descuentoCupon | currency}}</strong></dd>
             </dl>
             <dl class="dlist-align">
-              <dt>Descuentos automaticos:</dt>
+              <dt>Descuentos:</dt>
               <dd class="text-right text-dark b"><strong>{{tienda.cuentas.descuentoAutomatico | currency}}</strong></dd>
             </dl>
             <hr>
-            <p class="text-center mb-3">
-              <img src="../images/misc/payments.png" height="26">
-            </p>
-            <a (click)="calcularPrecios(2)" class="btn btn-primary btn-block"> Comprar</a>
+
+
+            
+            <a (click)="calcularPrecios()" class="btn btn-primary btn-block"> Comprar</a>
             <a href="#" class="btn btn-light btn-block">Continuar comprando</a>
           </div> <!-- card-body.// -->
         </div> <!-- card.// -->

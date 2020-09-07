@@ -747,7 +747,7 @@ export class DetalleProductoComponent implements OnInit {
 
       this.Carrito_Producto = new Carrito_Producto(this.varianteActiva.NUM_VARIANTE, this.varianteActiva.CANTIDAD, this.varianteActiva.IMAGENES[0].IMAGEN);
       let response = await this._carritoServicio.saveCarrito(this.Carrito_Producto).toPromise();
-      this.menu.conteoProductosCarrito();
+      this.menu.conteoProductosCarrito(true);
     } catch (e) {
       console.log("error:" + JSON.stringify((e)));
       this.toastr.error(JSON.stringify((e.error.message)))
