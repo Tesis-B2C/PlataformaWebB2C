@@ -571,7 +571,7 @@
 
           </div>
           <br>
-          <div *ngIf="banderaVariaciones" class="form-group col-md-12">
+          <div *ngIf="banderaVariaciones &&(this.Variantes[0].Talla!=null || this.Variantes[0].color!=null || this.Variantes[0].Material!=null  ) " class="form-group col-md-12">
             <p (click)="agregarOpcionesProducto()" class="agregar">
               <span class="fa fa-plus "></span> &nbsp;Agregar opción
             </p>
