@@ -1,3 +1,743 @@
+
+<ng-template #contentPedido let-modal>
+  <div class="modal-header py-1">
+    <p class="modal-title font-weight-bold">Finalice su compra en COMDERO</p>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div  *ngIf="(!this.direccionEnvioDiferente && !this.datosfacturacionDiferente && !this.siguienteDetallePedido)"
+       class="modal-body px-0">
+
+
+    <div class="card card-body pb-0">
+      <div class="form-row">
+        <div class="form-group col-sm-3 col-12 mb-0">
+          <label class="font-weight-bold">Método de envío</label>
+        </div>
+
+        <div class="form-group col-sm-9 col-12">
+          <div class="radio-item">
+            <input [checked]="this.informacionCompra.METODO_ENVIO_COMPRA == 'Acordar'"
+                   (change)="selectMetodoEnvio($event)" type="radio" name="metodoEnvio" id="acordarVendedor"
+                   value="Acordar">
+            <label for="acordarVendedor">&nbsp;&nbsp;Acordar con el vendedor</label>
+          </div>
+          <div *ngIf="this.mostrarTiendaEnvioRetiro" class="radio-item">
+            <input [checked]="this.informacionCompra.METODO_ENVIO_COMPRA == 'Retiro'"
+                   (change)="selectMetodoEnvio($event)" type="radio" name="metodoEnvio" id="retiroNegocio"
+                   value="Retiro">
+            <label for="retiroNegocio">&nbsp;&nbsp;Retirar en la tienda</label>
+          </div>
+          <div *ngIf="this.mostrarTiendaEnvioDomicilio" class="radio-item">
+            <input [checked]="this.informacionCompra.METODO_ENVIO_COMPRA == 'Domicilio'"
+                   (change)="selectMetodoEnvio($event)" type="radio" name="metodoEnvio" id="envioDomicilio"
+                   value="Domicilio">
+            <label for="envioDomicilio">&nbsp;&nbsp;Envío a domicilio</label>
+            <br class="m-0">
+            <span *ngIf="this.noExisteEnvioEstaArea" class="text-danger small">Por el momento no se puede calcular el envío a esta zona, pero usted
+              puede acordar con el vendedor y realizar su compra.</span>
+            <span
+              *ngIf="this.banderaDireccionEnvio && this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA == null && !this.noExisteEnvioEstaArea"
+              class="text-danger small">Es importante que ingrese la direccion de envío para continuar con su compra.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-body" *ngIf="this.banderaDireccionEnvio">
+      <div class="form-row">
+        <div class="form-group col-sm-3 col-12 mb-0">
+          <label class="font-weight-bold">Dirección de envío</label>
+        </div>
+
+        <div class="form-group col-sm-9 col-12 mb-0">
+          <div *ngIf="this.informacionCompra?.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA != null">
+            <label
+              class="text-justify mb-0">{{this.informacionCompra?.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA}}</label>
+            <p class="text-justify mb-0">{{this.informacionCompra?.DATOS_ENTREGA.TELEFONO_ENTREGA}}</p>
+            <p class="text-justify mb-1">{{this.informacionCompra?.DATOS_ENTREGA.NUM_CASA_ENTREGA}}
+              {{this.informacionCompra?.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA}}
+              {{this.informacionCompra?.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA}},
+              {{this.ciudadDireccionNombre}},
+              {{this.provinciaDireccionNombre}},
+              {{this.informacionCompra?.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA}}
+            </p>
+          </div>
+          <button (click)="habilitarDireccionDiferente('Envio')"><label class="nuevaDireccionEnvio"> <a
+            class="text-primary p-0">Enviar a una dirección diferente</a></label>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-body pb-0">
+      <div class="form-row">
+        <div class="form-group col-sm-3 col-12 mb-0">
+          <label class="font-weight-bold">Método de pago</label>
+        </div>
+
+        <div class="form-group col-sm-9 col-12">
+          <div *ngIf="this.mostrarTiendaPagoEfectivo && !this.banderaDireccionEnvio" class="radio-item">
+            <input [checked]="this.informacionCompra.METODO_PAGO_COMPRA == 'Efectivo'"
+                   (change)="selectMetodoPago($event)" type="radio"
+                   name="metodoPago" id="pagoEfectivo" value="Efectivo">
+            <label for="pagoEfectivo">&nbsp;&nbsp;Efectivo</label>
+          </div>
+          <div *ngIf="this.mostrarTiendaPagoTransferencia" class="radio-item">
+            <input [checked]="this.informacionCompra.METODO_PAGO_COMPRA == 'Transferencia'"
+                   (change)="selectMetodoPago($event)" type="radio" name="metodoPago" id="pagotransferencia"
+                   value="Transferencia">
+            <label for="pagotransferencia">&nbsp;&nbsp;Transferencia bancaria</label>
+          </div>
+          <div *ngIf="this.mostrarTiendaPagoElectronico" class="radio-item">
+            <input [checked]="this.informacionCompra.METODO_PAGO_COMPRA == 'Electrónico'"
+                   (change)="selectMetodoPago($event)" type="radio" name="metodoPago" id="pagoPayPal"
+                   value="Electrónico">
+            <label for="pagoPayPal">&nbsp;&nbsp;Pago electrónico PayPal</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-body">
+      <div class="form-row">
+        <div class="form-group col-sm-3 col-12 mb-0">
+          <label class="font-weight-bold">Datos de facturación</label>
+        </div>
+
+        <div class="form-group col-sm-9 col-12 mb-0">
+          <div *ngIf="this.informacionCompra?.DATOS_FACTURA.IDENTIFICACION_FACTURA != null">
+            <label class="text-justify mb-0">{{this.informacionCompra?.DATOS_FACTURA.NOMBRE_FACTURA }}
+              ({{this.informacionCompra?.DATOS_FACTURA.IDENTIFICACION_FACTURA}})</label>
+            <p class="text-justify mb-0">{{this.informacionCompra?.DATOS_FACTURA.CORREO}}</p>
+            <p class="text-justify mb-0">{{this.informacionCompra?.DATOS_FACTURA.TELEFONO_FACTURA}}</p>
+            <p class="text-justify mb-1">{{this.informacionCompra?.DATOS_FACTURA.DIRECCION_FACTURA}}</p>
+          </div>
+          <button (click)="habilitarDireccionDiferente('Factura')"><label class="nuevaDireccionEnvio">
+            <a class="text-primary p-0">Factura con otros datos</a></label>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-body">
+      <div class="form-row">
+        <div class="form-group col-sm-3 col-12 mb-0">
+          <label class="font-weight-bold">Total</label>
+        </div>
+
+        <div class="form-group col-sm-9 col-12">
+
+          <div class="form-row">
+            <div class="form-group col-6 mb-0"><label class="my-0">Productos</label></div>
+            <div class="form-group col-1 my-0 text-right"><label class="my-0"></label></div>
+            <div class="form-group col-5 my-0 text-center"><label
+              class="my-0">{{this.informacionCompra.COSTOS.TOTAL_PRODUCTOS | currency}}</label></div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-6 mb-0">
+              <label class="my-0">Cálculo de impuestos por cobrar</label></div>
+            <div class="form-group col-1 my-0 text-right"><label class="my-0"></label></div>
+            <div class="form-group col-5 my-0 text-center"><label
+              class="my-0">{{this.informacionCompra.COSTOS.IMPUESTOS | currency}}</label>
+              <div class="px-sm-1 px-lg-5 px-md-3">
+                <hr class="my-1">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-6 mb-0"><label class="my-0">Subtotal</label></div>
+            <div class="form-group col-1 my-0 text-right"><label class="my-0"></label></div>
+            <div class="form-group col-5 my-0 text-center"><label
+              class="my-0">{{this.informacionCompra?.COSTOS.SUBTOTAL | currency}}</label></div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-6 mb-0"><label class="my-0">Descuento
+              ({{this.informacionCompra?.COSTOS.PORCENTAJE_AUTOMATICO}}%)</label></div>
+            <div class="form-group col-1 my-0 text-right"><label class="my-0">(-)</label></div>
+            <div class="form-group col-5 my-0 text-center"><label
+              class="my-0">{{this.informacionCompra?.COSTOS.DESCUENTOS | currency}}</label></div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-6 mb-0"><label class="my-0">Descuento Cupón
+              ({{this.informacionCompra.COSTOS.PORCENTAJE_CUPON}}%)</label></div>
+            <div class="form-group col-1 my-0 text-right"><label class="my-0">(-)</label></div>
+            <div class="form-group col-5 my-0 text-center"><label
+              class="my-0">{{this.informacionCompra.COSTOS.CUPON | currency}}</label></div>
+          </div>
+
+          <div *ngIf="this.banderaRecargoPaypal" class="form-row">
+            <div class="form-group col-6 mb-0"><label class="my-0">Recargo por PayPal
+              ({{this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL}}%)</label></div>
+            <div class="form-group col-1 my-0 text-right"><label class="my-0">(+)</label></div>
+            <div class="form-group col-5 my-0 text-center"><label
+              class="my-0">{{this.informacionCompra.COSTOS.RECARGO_PAYPAL | currency}}</label>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-6 mb-0"><label class="my-0">Costo de envío</label></div>
+            <div class="form-group col-1 my-0 text-right"><label class="my-0">(+)</label></div>
+            <div class="form-group col-5 my-0 text-center"><label
+              class="my-0">{{this.informacionCompra.COSTOS.COSTOS_ENVIO | currency}}</label>
+              <div class="px-sm-1 px-lg-5 px-md-3">
+                <hr class="my-1">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-6 mb-0"><label class="my-0">Total del pedido:</label></div>
+            <div class="form-group col-1 my-0 text-right"><label class="my-0"></label></div>
+            <div class="form-group col-5 my-0 text-center"><label
+              class="my-0">{{this.informacionCompra.COSTOS.TOTAL_PEDIDO | currency}}</label></div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="this.direccionEnvioDiferente" class="modal-body px-0 pt-2">
+    <button class="px-3" (click)="habilitarDireccionDiferente('Envio')"><label class="nuevaDireccionEnvio"> <a
+      class="text-primary p-0"><i class="fas fa-chevron-left"></i>&nbsp;&nbsp;Regresar</a></label></button>
+    <div class="form-row px-5" *ngIf="this.informacionCompra?.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA != null">
+      <div class="form-group col-1 mb-0">
+        <div>
+          <label class="text-center">Actual</label>
+        </div>
+      </div>
+      <div class="form-group col-11 mb-0">
+        <label
+          class="text-justify mb-0">{{this.informacionCompra?.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA}}</label>
+        <p class="text-justify mb-0">{{this.informacionCompra?.DATOS_ENTREGA.TELEFONO_ENTREGA}}</p>
+        <p class="text-justify mb-1">{{this.informacionCompra?.DATOS_ENTREGA.NUM_CASA_ENTREGA}}
+          {{this.informacionCompra?.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA}}
+          {{this.informacionCompra?.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA}},
+          {{this.ciudadDireccionNombre}},
+          {{this.provinciaDireccionNombre}},
+          {{this.informacionCompra?.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA}}
+        </p>
+      </div>
+    </div>
+
+    <form #FormActualizarDireccionEnvio id="formActualizarDireccionEnvio" name="formActualizarDireccionEnvio"
+          class="validate-form px-5" validate-form>
+      <br>
+      <label class="font-weight-bold">Dirección de envío nueva</label>
+
+      <div class="form-group">
+        <div class="form-row">
+          <div class="col-lg-6 form-group">
+            <label>* Nombres y Apellidos</label>
+            <input #NombreA="ngModel" style="text-transform: uppercase;"
+                   [(ngModel)]="this.DatosDireccion.Nombre"
+                   [ngClass]="{'is-invalid': NombreA.invalid && (NombreA.dirty || NombreA.touched)}"
+                   [pattern]='this.soloLetrasPattern'
+                   class="tamanioInputs form-control " name="nombreA" placeholder="" required
+                   type="text">
+            <div *ngIf="NombreA.invalid && (NombreA.dirty || NombreA.touched)">
+              <div *ngIf="NombreA.errors.required">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+              </div>
+              <div *ngIf="NombreA.errors.pattern">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                  Utilice solo letras.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 form-group">
+            <label>* Celular / Convencional</label>
+            <input #Telefono="ngModel"
+                   [(ngModel)]="this.DatosDireccion.Telefono"
+                   [ngClass]="{'is-invalid': Telefono.invalid && (Telefono.dirty || Telefono.touched)}"
+                   [pattern]='this.soloNumerosPattern' class="tamanioInputs form-control" name="telefono"
+                   type="tel" required>
+            <div *ngIf="Telefono.invalid && (Telefono.dirty|| Telefono.touched) ">
+              <div *ngIf="Telefono.errors.required">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                  Campo requerido.</p>
+              </div>
+              <div *ngIf="Telefono.errors.pattern">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                  Utilice solo números.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label>* Provincia</label>
+          <select #Provincia="ngModel"
+                  (change)="getDpaCiudades($event.target.value)"
+                  [(ngModel)]="this.provinciaDireccion"
+                  [ngClass]="{'errorSelect': Provincia.invalid && (Provincia.dirty || Provincia.touched)}"
+                  class="tamanioInputs form-control" data-size="4" name="provincia" required>
+            <option *ngFor="let provincia of this.provinciasDireccion"
+                    value="{{provincia.COD_DPA}}"> {{provincia.NOMBRE }}</option>
+          </select>
+          <div *ngIf="Provincia.invalid && (Provincia.touched||Provincia.dirty)">
+            <div *ngIf="Provincia.errors.required">
+              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                Campo requerido</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label>* Ciudad</label>
+          <select [disabled]="!this.activarSelectDireccion" [ngClass]="{'select_ciudad': select_ciudad}"
+                  (change)="seleccionarCiudad($event.target.value)"
+                  #Ciudad="ngModel" [(ngModel)]="this.ciudadDireccion"
+                  [ngClass]="{
+          'errorSelect': Ciudad.invalid && (Ciudad.dirty || Ciudad.touched)}"
+                  class="tamanioInputs form-control" name="ciudad" required>
+            <option selected value="">Seleccione ..</option>
+            <option *ngFor="let ciudad of this.ciudadesDireccion"
+                    value="{{ciudad.COD_DPA}} "> {{ciudad.NOMBRE }}</option>
+          </select>
+          <div *ngIf="Ciudad.invalid && (Ciudad.touched||Ciudad.dirty)">
+            <div *ngIf="Ciudad.errors.required">
+              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                Campo requerido.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="form-group">
+        <label>* Calle Principal</label>
+        <input #CallePrincipal="ngModel"
+               [(ngModel)]="this.DatosDireccion.Calle_Principal_Agente"
+               [ngClass]="{'is-invalid': CallePrincipal.invalid && (CallePrincipal.dirty || CallePrincipal.touched)}"
+               class="tamanioInputs form-control"
+               name="callePrincipal" placeholder="" id="CallePrincipal" required>
+        <div *ngIf="CallePrincipal.invalid && (CallePrincipal.touched||CallePrincipal.dirty)">
+          <div *ngIf="CallePrincipal.errors.required">
+            <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+              Campo requerido.</p>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>* Calle Secundaria</label>
+        <input #CalleSecundaria="ngModel"
+               [(ngModel)]="this.DatosDireccion.Calle_Secundaria_Agente"
+               [ngClass]="{'is-invalid': CalleSecundaria.invalid && (CalleSecundaria.dirty || CalleSecundaria.touched)}"
+               class="tamanioInputs form-control"
+               name="calleSecundaria" placeholder="" id="calleSecundaria" required>
+        <div *ngIf="CalleSecundaria.invalid && (CalleSecundaria.touched||CalleSecundaria.dirty)">
+          <div *ngIf="CalleSecundaria.errors.required">
+            <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+              Campo requerido.</p>
+          </div>
+
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-lg-6 form-group">
+          <label>Número de referencia</label>
+          <input #NumCasaAgente="ngModel"
+                 [(ngModel)]="this.DatosDireccion.Num_Casa_Agente" class="tamanioInputs form-control"
+                 name="numCasaAgente" placeholder="" type="text">
+          <div>
+          </div>
+        </div>
+        <div class=" col-lg-6 form-group">
+          <label>Código Postal</label>
+          <input #CodigoPostal="ngModel"
+                 [(ngModel)]="this.DatosDireccion.Num_Cod_Postal" class="tamanioInputs form-control"
+                 name="codigoPostal" type="text">
+        </div>
+      </div>
+      <div class="text-right mb-3">
+        <button (click)="guardarDireccionNueva()" type="button" class="btn btn-outline-primary">Guardar</button>
+      </div>
+    </form>
+  </div>
+
+  <div *ngIf="this.datosfacturacionDiferente" class="modal-body px-0 pt-2">
+    <button class="px-3" (click)="habilitarDireccionDiferente('Factura')"><label class="nuevaDireccionFactura"> <a
+      class="text-primary p-0"><i class="fas fa-chevron-left"></i>&nbsp;&nbsp;Regresar</a></label></button>
+
+    <div class="form-row px-5" *ngIf="this.informacionCompra?.DATOS_FACTURA.IDENTIFICACION_FACTURA != null">
+      <div class="form-group col-1 mb-0">
+        <div>
+          <label class="text-center">Actual</label>
+        </div>
+      </div>
+
+      <div class="form-group col-11 mb-0">
+        <label class="text-justify mb-0">{{this.informacionCompra?.DATOS_FACTURA.NOMBRE_FACTURA }}
+          ({{this.informacionCompra?.DATOS_FACTURA.IDENTIFICACION_FACTURA}})</label>
+        <p class="text-justify mb-0">{{this.informacionCompra?.DATOS_FACTURA.CORREO}}</p>
+        <p class="text-justify mb-0">{{this.informacionCompra?.DATOS_FACTURA.TELEFONO_FACTURA}}</p>
+        <p class="text-justify mb-1">{{this.informacionCompra?.DATOS_FACTURA.DIRECCION_FACTURA}}</p>
+      </div>
+    </div>
+
+    <form #FormActualizarDatosFacturacion id="formActualizarDatosFacturacion" name="formActualizarDatosFacturacion"
+          class="validate-form px-5" validate-form>
+      <br>
+      <label class="font-weight-bold">Datos para facturación</label>
+      <div class="form-row ">
+        <div class=" col-md-6 form-group">
+          <label>Tipo de persona</label>
+          <select (change)="cambiarTipo($event.target.value)" type="text" class="form-control tamanioInputs">
+            <option [selected]="banderaTipo" value="Persona">Persona Natural</option>
+            <option [selected]="!banderaTipo" value="Empresa">Empresa</option>
+          </select>
+        </div>
+        <div *ngIf="banderaTipo" class="col-md-6 form-group">
+          <label>* Nombres y Apellidos</label>
+          <input #NombreAFactura="ngModel" style="text-transform: uppercase;"
+                 [(ngModel)]="this.DatosFactura.Nombre"
+                 [ngClass]="{'is-invalid': (NombreAFactura.invalid && (NombreAFactura.dirty || NombreAFactura.touched))}"
+                 [pattern]='this.soloLetrasPattern'
+                 class="tamanioInputs form-control " name="nombreAFactura" placeholder="" required
+                 type="text"> <!--form-control-sm-->
+          <div *ngIf="NombreAFactura.invalid && (NombreAFactura.dirty || NombreAFactura.touched)">
+            <div *ngIf="NombreAFactura.errors.required">
+              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+            </div>
+            <div *ngIf="NombreAFactura.errors.pattern">
+              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                Utilice solo letras.</p>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="!banderaTipo" class=" col form-group">
+          <label>* Razon Social</label>
+          <input #Razon_Social_Factura="ngModel" style="text-transform: uppercase;"
+                 [(ngModel)]="this.DatosFactura.Nombre"
+                 [ngClass]="{'is-invalid': Razon_Social_Factura.invalid && (Razon_Social_Factura.dirty || Razon_Social_Factura.touched)}"
+                 [pattern]='this.LetrasNumerosPattern'
+                 class="tamanioInputs form-control" name="razon_Social_Factura" placeholder=""
+                 required type="text">
+          <div *ngIf="Razon_Social_Factura.invalid && (Razon_Social_Factura.dirty || Razon_Social_Factura.touched)">
+            <div *ngIf="Razon_Social_Factura.errors.required">
+              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
+            </div>
+            <div *ngIf="Razon_Social_Factura.errors.pattern">
+              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
+                numeros.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="form-group">
+        <label>* Correo electrónico</label>
+
+        <input #EmailFactura="ngModel" [(ngModel)]="this.DatosFactura.Correo" style="text-transform: lowercase"
+               [ngClass]="{'is-invalid': EmailFactura.invalid && (EmailFactura.dirty || EmailFactura.touched)}"
+               [pattern]='this.emailPattern'
+               class="form-control tamanioInputs"
+               name="emailFactura" placeholder="" type="email" required>
+        <div *ngIf="EmailFactura.invalid && (EmailFactura.touched||EmailFactura.dirty)">
+          <div *ngIf="EmailFactura.errors.required">
+            <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+              Campo requerido.</p>
+          </div>
+          <div *ngIf="EmailFactura.errors.pattern">
+            <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+              Debe cumplir con el formato</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+
+        <div class="form-row">
+          <div *ngIf="banderaTipo" class="form-group col-lg-6">
+            <label>* Cédula</label>
+            <input #CedulaFactura="ngModel"
+                   [(ngModel)]="this.DatosFactura.Id_Agente"
+                   [ngClass]="{'is-invalid': CedulaFactura.invalid && (CedulaFactura.dirty || CedulaFactura.touched)}"
+                   [pattern]='this.soloNumerosPattern'
+                   class="tamanioInputs form-control" maxlength="10"
+                   minlength="10" name="cedulaFactura" placeholder=""
+                   type="text" required>
+            <div *ngIf="CedulaFactura.invalid && (CedulaFactura.dirty || CedulaFactura.touched)">
+              <div *ngIf="CedulaFactura.errors.required">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo
+                  requerido.</p>
+              </div>
+              <div *ngIf="CedulaFactura.errors.minlength">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                  Minimo 10 digitos.</p>
+              </div>
+              <div *ngIf="CedulaFactura.errors.maxlength">
+                <p class="alert alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
+                  Maximo 10 digitos.</p>
+              </div>
+              <div *ngIf="CedulaFactura.errors.pattern">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                  Utilice solo numeros. </p>
+
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="!banderaTipo" class="form-group col-lg-6">
+            <label>* RUC</label>
+            <input #RucFactura="ngModel" [(ngModel)]="this.DatosFactura.Id_Agente"
+                   [ngClass]="{'is-invalid': RucFactura.invalid && (RucFactura.dirty || RucFactura.touched)}"
+                   [pattern]='this.soloNumerosPattern'
+                   class="tamanioInputs form-control" maxlength="13"
+                   minlength="13" name="rucFactura" placeholder="" type="text" required>
+            <div *ngIf="RucFactura.invalid && (RucFactura.dirty || RucFactura.touched)">
+              <div *ngIf="RucFactura.errors.required">
+                <p class="alert alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
+                  Campo requerido.</p>
+              </div>
+              <div *ngIf="RucFactura.errors.minlength">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                  Mínimo 13 digitos.</p>
+
+              </div>
+              <div *ngIf="RucFactura.errors.maxlength">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                  Máximo 13 digitos.</p>
+              </div>
+              <div *ngIf="RucFactura.errors.pattern">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                  Use solo números.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 form-group col-lg-6">
+            <label>* Celular / Convencional</label>
+            <input #TelefonoFactura="ngModel"
+                   [(ngModel)]="this.DatosFactura.Telefono"
+                   [ngClass]="{'is-invalid': TelefonoFactura.invalid && (TelefonoFactura.dirty || TelefonoFactura.touched)}"
+                   [pattern]='this.soloNumerosPattern' class="tamanioInputs form-control" name="telefonoFactura"
+                   type="tel" required>
+            <div *ngIf="TelefonoFactura.invalid && (TelefonoFactura.dirty|| TelefonoFactura.touched) ">
+              <div *ngIf="TelefonoFactura.errors.required">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                  Campo requerido.</p>
+              </div>
+
+              <div *ngIf="TelefonoFactura.errors.pattern">
+                <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                  Utilice solo números.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="form-group">
+          <label>* Dirección</label>
+          <input #CallePrincipalFactura="ngModel"
+                 [(ngModel)]="this.DatosFactura.Calle_Principal_Agente"
+                 [ngClass]="{'is-invalid': CallePrincipalFactura.invalid && (CallePrincipalFactura.dirty || CallePrincipalFactura.touched)}"
+                 class="tamanioInputs form-control"
+                 name="callePrincipalFactura" placeholder="" id="callePrincipalFactura" required>
+          <div *ngIf="CallePrincipalFactura.invalid && (CallePrincipalFactura.touched||CallePrincipalFactura.dirty)">
+            <div *ngIf="CallePrincipalFactura.errors.required">
+              <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                Campo requerido.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-right mb-3">
+        <button (click)="guardarFacturacionNueva()" type="button" class="btn btn-outline-primary">Guardar</button>
+      </div>
+    </form>
+
+  </div>
+
+  <div *ngIf="(!this.direccionEnvioDiferente && !this.datosfacturacionDiferente && !this.siguienteDetallePedido)"
+       class="text-right mb-3 mr-3">
+    <button type="button" class="btn btn-primary mr-1" aria-label="Close"
+            (click)="modal.dismiss('Cross click'); cerrar()">
+      Cancelar
+    </button>
+    <button (click)="this.siguienteProcesoCompra()" type="button"
+            class="btn btn-outline-primary ml-1">Siguiente
+    </button>
+  </div>
+
+  <div *ngIf="this.siguienteDetallePedido" class="modal-body px-0 pt-2">
+    <form #FormDetalleCompra id="formDetalleCompra" name="formDetalleCompra"
+          class="validate-form px-5" validate-form>
+      <h5 class="text-center">Información del pedido</h5>
+      <div class="card card-body">
+
+        <div *ngIf="this.informacionCompra.METODO_ENVIO_COMPRA == 'Acordar'" class="form-row">
+          <div class="form-group col-sm-3 col-4 mb-0">
+            <label class="font-weight-bold">Método de Envío</label>
+          </div>
+          <div class="form-group col-sm-9 col-8">
+            <div class="form-row">
+              <div class="form-group col-12 mb-0">
+                <label class="my-0 text-justify">Usted podrá acordar con el vendedor sobre el proceso de compra,
+                  de acuerdo a su necesidad a través de WhatsApp.</label>
+                <div class="form-row">
+                  <div class="form-group col-12 mb-0">
+                    <div class="template-demo">
+                      <button type="button" class="btn btn-social-icon btn-whatsapp btn-rounded">
+                        <i class="fab fa-whatsapp fa-1x"></i>
+                      </button>
+                      <label> {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="this.informacionCompra.METODO_ENVIO_COMPRA == 'Retiro'" class="form-row">
+          <div class="form-group col-sm-3 col-4 mb-0">
+            <label class="font-weight-bold">Método de Envío</label>
+          </div>
+          <div class="form-group col-sm-9 col-8">
+            <div class="form-row">
+              <div class="form-group col-12 mb-0">
+                <label class="mb-3 text-justify">Recuerde la siguiente información al momento de retirar su compra en
+                  la tienda.</label>
+                <div class="card card-body">
+                  <p class=" text-justify" *ngIf="this.hora_estimada_retiro == '1hora'">Su pedido estará listo
+                    aproximadamente en 1 hora.</p>
+                  <p class=" text-justify" *ngIf="this.hora_estimada_retiro == '4horas'">Su pedido estará listo
+                    aproximadamente en 4 horas.</p>
+                  <p class=" text-justify" *ngIf="this.hora_estimada_retiro == '24horas'">Su pedido estará listo
+                    aproximadamente en 24 horas.</p>
+                  <p class=" text-justify" *ngIf="this.hora_estimada_retiro == '4dias'">Su pedido estará listo
+                    aproximadamente en 4 días.</p>
+                  <p class=" text-justify" *ngIf="this.hora_estimada_retiro == '5dias'">Su pedido estará listo de 5 o
+                    más días.</p>
+                  <p class=" text-justify">{{this.instruccion_retiro}}</p>
+                </div>
+                <label class=" mt-3 text-justify">Puede contactarnos a través de nuestro WhatsApp para información
+                  sobre su pedido.</label>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-12 mb-0">
+                <div class="template-demo">
+                  <button type="button" class="btn btn-social-icon btn-whatsapp btn-rounded">
+                    <i class="fab fa-whatsapp fa-1x"></i>
+                  </button>
+                  <label> {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="this.informacionCompra.METODO_ENVIO_COMPRA == 'Domicilio'" class="form-row">
+          <div class="form-group col-sm-3 col-4 mb-0">
+            <label class="font-weight-bold">Método de Envío</label>
+          </div>
+          <div class="form-group col-sm-9 col-8">
+            <div class="form-row">
+              <div class="form-group col-12 mb-0">
+                <label class="my-0 text-justify">Usted a seleccionado el envío a domicilio, el costo de envío se ha
+                  recargado a su pedido.
+                  para información contactanos a través de WhatsApp.</label>
+                <div class="form-row">
+                  <div class="form-group col-12 mb-0">
+                    <div class="template-demo">
+                      <button type="button" class="btn btn-social-icon btn-whatsapp btn-rounded">
+                        <i class="fab fa-whatsapp fa-1x"></i>
+                      </button>
+                      <label> {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="this.informacionCompra.METODO_PAGO_COMPRA == 'Efectivo'" class="form-row">
+          <div class="form-group col-sm-3 col-4 mb-0">
+            <label class="font-weight-bold">Método de Pago</label>
+          </div>
+          <div class="form-group col-sm-9 col-8">
+            <div class="form-row">
+              <div class="form-group col-12 mb-0">
+                <label class="my-0 text-justify">Al momento de la entrega se deberá realizar la cancelación total del
+                  pedido.</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="this.informacionCompra.METODO_PAGO_COMPRA == 'Transferencia'" class="form-row">
+          <div class="form-group col-sm-3 col-4 mb-0">
+            <label class="font-weight-bold">Método de Pago</label>
+          </div>
+          <div class="form-group col-sm-9 col-8">
+            <div class="form-row">
+              <div class="form-group col-12 mb-0">
+                <div class="box">
+
+                  <div class="box-title mb-1 text-center">
+                    <label class="my-0 text-center">Datos para la transferencia bancaria</label>
+                  </div>
+                  <p class=" iconos-pagos "><img src="assets/images/icon-transferencia.png"
+                                                 alt="..."></p>
+                  <div class="box-text">
+                    <div class="row justify-content-center mx-auto">
+                      <p class="card-text col-5 mb-0">Banco:</p>
+                      <p class="col-6 mb-0">{{this.Banco_Pertenece}}</p>
+                      <p class="card-text col-5 mb-0 ">Tipo:</p>
+                      <p class="col-6 mb-0">{{this.Tipo_Cuenta}}</p>
+                      <p class="card-text col-5  mb-0">#Cuenta:</p>
+                      <p class="col-6 mb-0">{{this.Numero_cuenta}}</p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="this.informacionCompra.METODO_PAGO_COMPRA == 'Electrónico'" class="form-row">
+          <div class="form-group col-sm-3 col-4 mb-0">
+            <label class="font-weight-bold">Método de Pago</label>
+          </div>
+          <div class="form-group col-sm-9 col-8">
+            <div class="form-row">
+              <div class="form-group col-12 mb-0">
+                <label class="my-0 text-justify">PAYPAL AQUI ESTA</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </form>
+  </div>
+
+  <div *ngIf="this.siguienteDetallePedido" class="text-right mb-3 mr-3">
+    <button type="button" class="btn btn-primary mr-1" (click)="atras()">Atras</button>
+    <button type="button" class="btn btn-outline-primary ml-1">Realizar Compra</button>
+  </div>
+
+</ng-template>
+
 <body class="">
 <section class="section-pagetop bg">
   <div class="container bg">
@@ -125,31 +865,42 @@
         <div class="card">
           <div class="card-body small">
             <dl class="dlist-align">
-              <dt>Sub total:</dt>
+              <dt>Productos:</dt>
               <dd class="text-right">{{tienda.cuentas.subTotal | currency}}</dd>
             </dl>
             <dl class="dlist-align">
-              <dt>Iva:</dt>
+              <dt>Impuestos </dt>
               <dd class="text-right text-danger">{{tienda.cuentas.iva | currency}}</dd>
             </dl>
             <dl class="dlist-align">
-              <dt>Total con Iva:</dt>
+              <dt>Subtotal:</dt>
               <dd class="text-right text-dark b"><strong>{{tienda.cuentas.totalConIva | currency}}</strong></dd>
             </dl>
 
             <dl class="dlist-align">
-              <dt>Cupón descuento:</dt>
+              <dt>Descuento </dt>
+              <dd class="text-center">(-)</dd>
+              <dd class="text-right text-dark b"><strong>{{tienda.cuentas.descuentoAutomatico | currency}}</strong></dd>
+            </dl>
+            <dl class="dlist-align">
+              <dt>Descuento Cupón </dt>
+              <dd class="text-center">(-)</dd>
               <dd class="text-right text-dark b"><strong>{{tienda.cuentas.descuentoCupon | currency}}</strong></dd>
             </dl>
             <dl class="dlist-align">
-              <dt>Descuentos:</dt>
-              <dd class="text-right text-dark b"><strong>{{tienda.cuentas.descuentoAutomatico | currency}}</strong></dd>
+              <dt>Costo de envío:</dt>
+              <dd class="text-center">(+)</dd>
+              <dd class="text-right text-dark b"><strong>{{tienda.cuentas.descuentoCupon | currency}}</strong></dd>
+            </dl>
+            <dl class="dlist-align">
+              <dt>Total del pedido:</dt>
+              <dd class="text-right text-dark b"><strong>{{tienda.cuentas.descuentoCupon | currency}}</strong></dd>
             </dl>
             <hr>
 
 
 
-            <a (click)="calcularPrecios()" class="btn btn-primary btn-block"> Comprar</a>
+            <a (click)="abrirModalFinalizarPedido(contentPedido,tienda)" class="btn btn-primary btn-block"> Comprar</a>
             <a href="#" class="btn btn-light btn-block">Continuar comprando</a>
           </div> <!-- card-body.// -->
         </div> <!-- card.// -->
