@@ -4,7 +4,8 @@
     <h6 class="text-center">ENCUENTRA LO QUE NECESITAS EN {{this.Tienda?.NOMBRE_COMERCIAL}}</h6>
     <div class="input-group   mx-auto  mt-3  ">
 
-      <input type="text" class="form-control " style="border-radius:50px 0px 0px 50px;"  #Busqueda="ngModel" name="busqueda" [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="filtrar()">
+      <input type="text" class="form-control " style="border-radius:50px 0px 0px 50px;" #Busqueda="ngModel"
+             name="busqueda" [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="filtrar()">
       <div class="input-group-append ">
         <button class="btn btn-secondary  px-3 py-1" style="border-radius:0px 50px 50px 0px;" type="submit">
           <i class="fa fa-search"></i>
@@ -15,7 +16,8 @@
 
     <div class="progress" *ngIf="this.loading">
 
-      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
+           aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
     </div>
   </article>
   <p *ngIf="this.result.length==0">No se encontraron resultados.</p>
@@ -23,34 +25,44 @@
 <div class="container">
   <section class="section-name padding-y-sm row ">
     <div class="col-md-3"
-         *ngFor="let producto of this.result  |slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+         *ngFor="let producto of this.vectorProductosObtenidos | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
 
       <div class="card  card-product-grid mx-2">
-        <a class=""><img [src]="getImagen(producto.PRODUCTO.VARIANTEs[0].IMAGEN_PRODUCTOs[0].IMAGEN)" width="100%" height="200rem"></a>
+        <a routerLink="../../../../detalle-producto/{{producto.ID_OFERTA}}">
+          <img [src]="getImagen(producto.IMAGEN)" width="100%" height="200rem">
+        </a>
         <figcaption class="info-wrap">
-          <a href="#" class="title"> {{producto.PRODUCTO.NOMBRE_PRODUCTO}}</a>
+          <a class="title" routerLink="../../../../detalle-producto/{{producto.ID_OFERTA}}" class="title"
+             style="overflow:hidden; white-space: nowrap; text-overflow: ellipsis; text-align: justify"> {{producto.NOMBRE_PRODUCTO}}</a>
+
+
           <div class="rating-wrap">
             <ul class="rating-stars">
-              <ngb-rating *ngIf="producto.PRODUCTO.CALIFICACIONs[0]"
-                          [(rate)]="producto.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL">
+              <ngb-rating *ngIf="producto.PROMEDIO_CAL != null"
+                          [(rate)]="producto.PROMEDIO_CAL">
                 <ng-template let-fill="fill">
                   <span class="star" [class.filled]="fill === 100">&#9733;</span>
                 </ng-template>
               </ngb-rating>
-              <ngb-rating *ngIf="!producto.PRODUCTO.CALIFICACIONs[0]" [(rate)]="currentRate">
+              <ngb-rating *ngIf="producto.PROMEDIO_CAL == null" [(rate)]="currentRate">
                 <ng-template let-fill="fill">
                   <span class="star" [class.filled]="fill === 100">&#9733;</span>
                 </ng-template>
               </ngb-rating>
-
             </ul>
-            <span *ngIf="producto.PRODUCTO.COMENTARIOs[0]"
-                  class="label-rating text-muted">{{producto.PRODUCTO.COMENTARIOs[0].TOTAL_COM}}
-              comentarios</span>
-            <span *ngIf="!producto.PRODUCTO.COMENTARIOs[0]" class="label-rating text-muted">0 Comentarios </span>
-          </div>
-          <div class="price mt-1">{{producto.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO | currency }}</div>
-          <!-- price-wrap.// -->
+            <span *ngIf="producto.TOTAL_COM != null"
+                  class="label-rating text-muted">{{producto.TOTAL_COM}} comentarios</span>
+            <span *ngIf="producto.TOTAL_COM == null" class="label-rating text-muted">0 Comentarios </span>
+          </div> <!-- rating-wrap.// -->
+
+          <div class="price-wrap" *ngIf="producto.DESCUENTO_AUTOMATICO == null">
+            <span class="price h5"> {{producto.PRECIO_CON_IVA | currency }} </span>
+          </div> <!-- info-price-detail // -->
+
+          <div class="price-wrap" *ngIf="producto.DESCUENTO_AUTOMATICO != null">
+            <span class="price h5"> {{producto.DESCUENTO_AUTOMATICO | currency }} </span>
+            <del class="price-old"> {{producto.PRECIO_CON_IVA | currency }} </del>
+          </div> <!-- info-price-detail // -->
 
         </figcaption>
       </div>
@@ -60,10 +72,10 @@
 
     <div *ngIf="this.result.length > 0" class=" col-12 d-flex justify-content-center p-2">
       <ngb-pagination id="paginacion"
-        [(page)]="page"
-        [pageSize]="pageSize"
-        [collectionSize]="this.result.length" [rotate]="true" [ellipses]="true"
-                      [boundaryLinks]="false" >
+                      [(page)]="page"
+                      [pageSize]="pageSize"
+                      [collectionSize]="this.result.length" [rotate]="true" [ellipses]="true"
+                      [boundaryLinks]="false">
         <ng-template ngbPaginationPrevious>Anterior</ng-template>
         <ng-template ngbPaginationNext>Siguiente</ng-template>
       </ngb-pagination>

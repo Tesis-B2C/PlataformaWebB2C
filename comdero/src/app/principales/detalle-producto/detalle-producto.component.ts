@@ -11,7 +11,6 @@ import {DpaServicio} from "../../servicios/dpa.servicio";
 import {Agente} from "../../modelos/agente";
 import {ToastrService} from "ngx-toastr";
 import * as moment from 'moment';
-import {formatNumber} from '@angular/common';
 import {CarritoServicio} from "../../servicios/carrito.servicio";
 import {MenuComponent} from "../menu/menu.component";
 import {Carrito_Producto} from "../../modelos/carrito_producto";
@@ -622,7 +621,8 @@ export class DetalleProductoComponent implements OnInit {
     this.banderaDireccionEnvio = false;
     this.noExisteEnvioEstaArea = false;
     this.informacionCompra.METODO_ENVIO_COMPRA = event.target.value;
-    this.informacionCompra.METODO_PAGO_COMPRA = null;
+    this.informacionCompra.METODO_PAGO_COMPRA = null
+    this.informacionCompra.COSTOS.RECARGO_PAYPAL = 0;
     this.banderaRecargoPaypal = false;
     this.informacionCompra.COSTOS.COSTOS_ENVIO = 0;
     if (event.target.value == 'Domicilio') {
@@ -641,6 +641,9 @@ export class DetalleProductoComponent implements OnInit {
     if (event.target.value == 'Electrónico') {
       this.banderaRecargoPaypal = true;
       this.informacionCompra.COSTOS.RECARGO_PAYPAL = (this.informacionCompra.COSTOS.SUBTOTAL * this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL) / 100;
+      if (this.informacionCompra.METODO_ENVIO_COMPRA == 'Domicilio') {
+        this.calcularCostosEnvioDomicilio();
+      }
     }
     this.informacionCompra.COSTOS.TOTAL_PEDIDO = (this.informacionCompra.COSTOS.SUBTOTAL + this.informacionCompra.COSTOS.RECARGO_PAYPAL + this.informacionCompra.COSTOS.COSTOS_ENVIO) - (this.informacionCompra.COSTOS.DESCUENTOS + this.informacionCompra.COSTOS.CUPON);
   }
@@ -932,8 +935,6 @@ export class DetalleProductoComponent implements OnInit {
 
   public async agregarCarrito() {
     try {
-
-
       this.Carrito_Producto = new Carrito_Producto(this.varianteActiva.NUM_VARIANTE, this.varianteActiva.CANTIDAD, this.varianteActiva.IMAGENES[0].IMAGEN);
       let response = await this._carritoServicio.saveCarrito(this.Carrito_Producto).toPromise();
       this.menu.conteoProductosCarrito(true);
@@ -1019,6 +1020,8 @@ export class DetalleProductoComponent implements OnInit {
   public noExisteEnvioEstaArea: boolean = false;
 
   public calcularCostosEnvioDomicilio() {
+    let Costo_Comparativo = ((this.informacionCompra.COSTOS.SUBTOTAL + this.informacionCompra.COSTOS.RECARGO_PAYPAL) - (this.informacionCompra.COSTOS.DESCUENTOS + this.informacionCompra.COSTOS.CUPON))
+    console.log('VALOR A COMPRAR CON TODO ' + Costo_Comparativo);
     let localExisteUno = 'No Existe Local';
     let restoExisteUno = 'No Existe Resto';
     this.arrayPreciosEnvioAux = [];
@@ -1045,7 +1048,7 @@ export class DetalleProductoComponent implements OnInit {
             if (envioDomicilio.TIPO_MEDIDA == 'Precio') {
               //DE ACUERDO AL PRECIO DEL PEDIDO
               console.log('//DE ACUERDO AL PRECIO DEL PEDIDO');
-              if (this.informacionCompra.COSTOS.SUBTOTAL >= envioDomicilio.MINIMO && this.informacionCompra.COSTOS.SUBTOTAL <= envioDomicilio.MAXIMO) {
+              if (Costo_Comparativo >= envioDomicilio.MINIMO && Costo_Comparativo <= envioDomicilio.MAXIMO) {
                 this.arrayPreciosEnvioAux.push(envioDomicilio.PRECIO);
               }
             }
@@ -1072,7 +1075,7 @@ export class DetalleProductoComponent implements OnInit {
             if (envioDomicilio.TIPO_MEDIDA == 'Precio') {
               //DE ACUERDO AL PRECIO DEL PEDIDO
               console.log('//DE ACUERDO AL PRECIO DEL PEDIDO');
-              if (this.informacionCompra.COSTOS.SUBTOTAL >= envioDomicilio.MINIMO && this.informacionCompra.COSTOS.SUBTOTAL <= envioDomicilio.MAXIMO) {
+              if (Costo_Comparativo >= envioDomicilio.MINIMO && Costo_Comparativo <= envioDomicilio.MAXIMO) {
                 this.arrayPreciosEnvioAux.push(envioDomicilio.PRECIO);
               }
             }

@@ -200,6 +200,7 @@ export class PrincipalComponent implements OnInit {
                 this.porcentajeDescuento = this.porcentajeDescuento + descuentoAut.DESCUENTO.PORCENTAJE_DESCUENTO;
                 console.log('2XX' + horaActual + fechaHoy);
               } else {
+                //CUPON FUERA DE LA HORA
                 this.porcentajeDescuento = this.porcentajeDescuento + 0;
               }
             } else {
@@ -210,7 +211,12 @@ export class PrincipalComponent implements OnInit {
           }
         }
       })
-      this.PRECIO_UNITARIO_CON_IVA_DESCUENTO = PRECIO_CON_IVA - ((PRECIO_CON_IVA * this.porcentajeDescuento) / 100);
+
+      if(this.porcentajeDescuento > 0){
+        this.PRECIO_UNITARIO_CON_IVA_DESCUENTO = PRECIO_CON_IVA - ((PRECIO_CON_IVA * this.porcentajeDescuento) / 100);
+      }else{
+        this.PRECIO_UNITARIO_CON_IVA_DESCUENTO = null;
+      }
     } else {
       this.porcentajeDescuento = null;
       this.PRECIO_UNITARIO_CON_IVA_DESCUENTO = null;

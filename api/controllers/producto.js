@@ -476,7 +476,6 @@ async function updateEstadoProductos(req, res) {
                     where: {ID_OFERTA: s}, transact: t
                 });
             }
-
             res.status(200).send({
                 message: "El producto ha sido actualizado correctamente"
             });
@@ -487,9 +486,7 @@ async function updateEstadoProductos(req, res) {
         res.status(500).send({
             message: 'error:' + err
         });
-
     }
-
 }
 
 /*     //INICIO SECCION PARA PAGINA PRINCIPAL//     */
@@ -544,6 +541,9 @@ async function obtenerTodosProductos(req, res) {
                 }]
             }, {
                 model: Tienda,
+                where: {
+                    ESTADO_TIENDA: 0
+                },
                 attributes: ['NOMBRE_COMERCIAL', 'NUM_TIENDA']
             }],
             attributes: ['ID_OFERTA', 'IVA'],

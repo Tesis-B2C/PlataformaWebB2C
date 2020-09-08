@@ -534,9 +534,14 @@ async function actualizarTiendaSucursal(req, res) {
 async function getDetalleTiendaProducto(req, res) {
     console.log("detalle tienda");
     try {
+        let fechaHoy = moment().format("YYYY-MM-DD");
         let tiendaObtenida = await TIENDA.findOne({
             where: {NUM_TIENDA: req.params.id},
-            include: [{model: OPCION_ENVIO}, {model: METODO_PAGO}, {
+            include: [{
+                model: OPCION_ENVIO
+            }, {
+                model: METODO_PAGO
+            }, {
                 model: HORARIO_ATENCION,
                 separate: true,
                 order: [['ID_HORARIO_ATENCION', 'ASC']]
@@ -544,9 +549,10 @@ async function getDetalleTiendaProducto(req, res) {
                 model: SUCURSAL,
                 include: {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}
             }, {
-                model: OFERTA, include: [{
+                model: OFERTA,
+                include: [{
                     model: PRODUCTO,
-                    attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'NOMBRE_PRODUCTO'],
+                    attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'ID_OFERTA', 'NOMBRE_PRODUCTO',],
                     include: [{
                         model: PRODUCTO_CATEGORIA,
                         include: {model: CATEGORIA}
@@ -568,8 +574,21 @@ async function getDetalleTiendaProducto(req, res) {
                             limit: 1,
                             order: [['ID_IMAGEN', 'ASC']]
                         }
-                    },
-                        {
+                    }, {
+                            model: PRODUCTO_DESCUENTO,
+                            include: {
+                                model: DESCUENTO,
+                                where: {
+                                    ESTADO_DESCUENTO: 0,
+                                    FECHA_INICIO: {
+                                        [Op.lte]: fechaHoy
+                                    },
+                                    FECHA_FIN: {
+                                        [Op.gte]: fechaHoy
+                                    }
+                                }
+                            }
+                        }, {
                             model: CALIFICACION,
                             separate: true,
                             attributes: ['ID_PRODUCTO', [CALIFICACION.sequelize.fn('AVG', CALIFICACION.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
@@ -742,7 +761,7 @@ async function obtenerFiltroBusquedaTodos(req, res) {
         let productosObtenidos = await OFERTA.findAll({
             include: [{
                 model: PRODUCTO,
-                attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'ID_OFERTA', 'NOMBRE_PRODUCTO', 'DESCRIPCION_PRODUCTO','CONDICION'],
+                attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'ID_OFERTA', 'NOMBRE_PRODUCTO', 'DESCRIPCION_PRODUCTO', 'CONDICION'],
                 where: {
                     [Op.or]: [
                         {NOMBRE_PRODUCTO: {[Op.like]: termino + '%'}},
@@ -793,6 +812,9 @@ async function obtenerFiltroBusquedaTodos(req, res) {
                 }]
             }, {
                 model: TIENDA,
+                where: {
+                    ESTADO_TIENDA: 0
+                },
                 attributes: ['NUM_TIENDA', 'NOMBRE_COMERCIAL']
             }],
             where: {
@@ -818,7 +840,7 @@ async function obtenerFiltroBusquedaTodos(req, res) {
             },
             transaction: t
         });
-console.log('TIENDAS OBTENDAD'+tiendasObtenidos);
+        console.log('TIENDAS OBTENDAD' + tiendasObtenidos);
 
         vectorEnviar.push(tiendasObtenidos);
         vectorEnviar.push(productosObtenidos);

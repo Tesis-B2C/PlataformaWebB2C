@@ -3,7 +3,8 @@ import {TiendaServicio} from "../../../servicios/tienda.servicio";
 import {ActivatedRoute, Router} from "@angular/router";
 import Swal from "sweetalert2";
 import {NgbRatingConfig} from "@ng-bootstrap/ng-bootstrap";
-import { GLOBAL } from 'src/app/servicios/global';
+import {GLOBAL} from 'src/app/servicios/global';
+import * as moment from "moment";
 
 @Component({
   selector: 'app-inicio-tienda',
@@ -34,6 +35,8 @@ export class InicioTiendaComponent implements OnInit {
     this.loading = true;
     await this.getDetalleTiendaProducto();
     this.result = this.Tienda.OFERTA;
+    this.asignarVariables();
+    console.log(JSON.stringify(this.result) + 'JJJ');
     this.loading = false;
   }
 
@@ -47,15 +50,132 @@ export class InicioTiendaComponent implements OnInit {
       console.log("error:" + e);
       if (JSON.stringify((e).error.message))
         this.mensageError(JSON.stringify((e).error.message));
-      else{
+      else {
         this.mensageError("Error de conexión intentelo mas tarde");
         debugger;
         this.router.navigate(['/principales/menu/principal'])
       }
     }
+
   }
 
+
+
+
+  public vectorProductosObtenidos = [];
+  public asignarVariables() {
+    try {
+      this.result.forEach(elemnt => {
+        let objProducto = {
+          NOMBRE_PRODUCTO: null,
+          PROMEDIO_CAL: null,
+          TOTAL_COM: null,
+          PRECIO_CON_IVA: null,
+          IMAGEN: null,
+          ID_OFERTA: null,
+          ID_PRODUCTO: null,
+          COD_PRODUCTO: null,
+          DESCUENTO_AUTOMATICO: null
+        }
+
+        objProducto.NOMBRE_PRODUCTO = elemnt.PRODUCTO.NOMBRE_PRODUCTO;
+        objProducto.ID_PRODUCTO = elemnt.PRODUCTO.ID_PRODUCTO;
+        objProducto.COD_PRODUCTO = elemnt.PRODUCTO.COD_PRODUCTO;
+
+        if (elemnt.PRODUCTO.CALIFICACIONs.length > 0)
+          objProducto.PROMEDIO_CAL = elemnt.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL;
+        else
+          objProducto.PROMEDIO_CAL = null;
+
+        if (elemnt.PRODUCTO.COMENTARIOs.length > 0)
+          objProducto.TOTAL_COM = elemnt.PRODUCTO.COMENTARIOs[0].TOTAL_COM;
+        else
+          objProducto.TOTAL_COM = null;
+
+        objProducto.PRECIO_CON_IVA = ((elemnt.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO * elemnt.IVA) / 100) + elemnt.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO;
+        objProducto.IMAGEN = elemnt.PRODUCTO.VARIANTEs[0].IMAGEN_PRODUCTOs[0].IMAGEN;
+        objProducto.ID_OFERTA = elemnt.ID_OFERTA;
+        objProducto.DESCUENTO_AUTOMATICO = this.buscarDescuentoAutomatico(elemnt.PRODUCTO.PRODUCTO_DESCUENTOs, objProducto.PRECIO_CON_IVA);
+        this.vectorProductosObtenidos.push(objProducto);
+      })
+      console.log(JSON.stringify(this.vectorProductosObtenidos)+'hola');
+    } catch (e) {
+      console.log("error:" + JSON.stringify((e)));
+    }
+  }
+
+  public porcentajeDescuento = null;
+  public PRECIO_UNITARIO_CON_IVA_DESCUENTO = null;
+
+  public buscarDescuentoAutomatico(PRODUCTO_DESCUENTOs, PRECIO_CON_IVA) {
+    let fechaHoy = moment().format("YYYY-MM-DD");
+    let horaActual = moment().format("HH:mm:ss");
+    console.log('horaHoy' + horaActual + fechaHoy)
+    if (PRODUCTO_DESCUENTOs.length > 0) {
+      this.porcentajeDescuento = 0;
+      this.PRECIO_UNITARIO_CON_IVA_DESCUENTO = 0;
+      PRODUCTO_DESCUENTOs.forEach(descuentoAut => {
+        if (descuentoAut.DESCUENTO.TIPO_DESCUENTO == 'Automático') {
+          if (descuentoAut.DESCUENTO.FECHA_INICIO == fechaHoy) {
+            if ((this.obtenerMinutos(horaActual) >= this.obtenerMinutos(descuentoAut.DESCUENTO.HORA_INICIO))) {
+              //CUPON VALIDO
+              this.porcentajeDescuento = this.porcentajeDescuento + descuentoAut.DESCUENTO.PORCENTAJE_DESCUENTO;
+              console.log('1XX' + horaActual + fechaHoy)
+            }
+          } else {
+            if (descuentoAut.DESCUENTO.FECHA_FIN == fechaHoy) {
+              if ((this.obtenerMinutos(horaActual) <= this.obtenerMinutos(descuentoAut.DESCUENTO.HORA_FIN))) {
+                //CUPON VALIDO
+                this.porcentajeDescuento = this.porcentajeDescuento + descuentoAut.DESCUENTO.PORCENTAJE_DESCUENTO;
+                console.log('2XX' + horaActual + fechaHoy);
+              } else {
+                //CUPON FUERA DE LA HORA
+                this.porcentajeDescuento = this.porcentajeDescuento + 0;
+              }
+            } else {
+              //CUPON VALIDO
+              this.porcentajeDescuento = this.porcentajeDescuento + descuentoAut.DESCUENTO.PORCENTAJE_DESCUENTO;
+              console.log('3XX' + horaActual + fechaHoy);
+            }
+          }
+        }
+      })
+
+      if(this.porcentajeDescuento > 0){
+        this.PRECIO_UNITARIO_CON_IVA_DESCUENTO = PRECIO_CON_IVA - ((PRECIO_CON_IVA * this.porcentajeDescuento) / 100);
+      }else{
+        this.PRECIO_UNITARIO_CON_IVA_DESCUENTO = null;
+      }
+    } else {
+      this.porcentajeDescuento = null;
+      this.PRECIO_UNITARIO_CON_IVA_DESCUENTO = null;
+    }
+
+    return this.PRECIO_UNITARIO_CON_IVA_DESCUENTO;
+    console.log(this.PRECIO_UNITARIO_CON_IVA_DESCUENTO + 'PRECIO DESCUENTO' + this.porcentajeDescuento + 'DESCUENTO');
+  }
+
+  public obtenerMinutos(hora) {
+    if (hora) {
+      var spl = hora.split(":");
+      return parseInt(spl[0]) * 60 + parseInt(spl[1]);
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
   public noExiste;
+
   getImagen(pathImagen) {
     this.noExiste = 'assets/images/no-image.png';
     if (pathImagen) {
