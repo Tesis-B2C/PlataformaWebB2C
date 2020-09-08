@@ -674,6 +674,7 @@ export class CarritoComprasComponent implements OnInit {
     let localExisteUno = 'No Existe Local';
     let restoExisteUno = 'No Existe Resto';
     this.arrayPreciosEnvioAux = [];
+    this.pesoPedidoTotalKg=0;
 
     this.varianteActiva.variantes.forEach(element=>{
       this.pesoPedidoTotalKg =this.pesoPedidoTotalKg +  element.VARIANTE.PRODUCTO.PESO_PRODUCTO * element.CANTIDAD_PRODUCTO_CARRITO;
@@ -706,13 +707,11 @@ export class CarritoComprasComponent implements OnInit {
             }
             if (envioDomicilio.TIPO_MEDIDA == 'Peso') {
               //DE ACUERDO AL PESO DEL PEDIDO
-              console.log('//DE ACUERDO AL PESO DEL PEDIDO');
+              console.log('//DE ACUERDO AL PESO DEL PEDIDO',this.pesoPedidoTotalKg);
               if (this.pesoPedidoTotalKg >= envioDomicilio.MINIMO && this.pesoPedidoTotalKg <= envioDomicilio.MAXIMO) {
                 this.arrayPreciosEnvioAux.push(envioDomicilio.PRECIO);
               }
             }
-
-
           }
         })
 
