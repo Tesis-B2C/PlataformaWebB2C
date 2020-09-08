@@ -101,9 +101,7 @@ public banderaCarrito:boolean;
       this.router.navigate(['**']);
     } else {
       palabraBuscada = palabraBuscada.trim();
-
       this.router.navigate(['principales/menu/busqueda/' + palabraBuscada]);
-
     }
   }
 }

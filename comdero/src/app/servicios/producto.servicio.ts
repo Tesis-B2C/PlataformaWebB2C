@@ -98,8 +98,14 @@ export class ProductoServicio {
     return this._http.put<objeto>(this.url + "updateEstadoProductos/" + estado_a_cambiar, params, {headers: headers});
   }
 
+  obtenerTodosProductos() {
+    let headers = new HttpHeaders({"Content-type": "application/json"});
+    return this._http.get<objeto>(this.url + "obtenerTodosProductos", {headers: headers});
+  }
+
   obtenerProductoDetalle(Id_Producto) {
     let headers = new HttpHeaders({"Content-type": "application/json"});
     return this._http.get<objeto>(this.url + "obtenerProductoDetalle/" + Id_Producto, {headers: headers});
   }
+
 }

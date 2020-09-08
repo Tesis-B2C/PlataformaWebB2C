@@ -114,38 +114,45 @@
         class='fa fa-chevron-left'></i></button>
 
       <owl-carousel-o [options]="opcionesCarrouselFilaUno" #carrouselFilaUno>
-        <ng-container *ngFor="let producto of vectorProductosObtenidos;index as i">
+        <ng-container *ngFor="let p of this.vectorProductosObtenidos;index as i">
           <ng-template dataHash="one" carouselSlide id="slider+{{i}}">
             <div class="card card-product-grid mx-2">
               <a class="" >
-                <img [src]="getImagen(producto.PRODUCTO.VARIANTEs[0].IMAGEN_PRODUCTOs[0].IMAGEN)" width="100%"
+                <img [src]="getImagen(p.IMAGEN)" width="100%"
                                height="200rem"></a>
               <figcaption class="info-wrap">
-                <a href="principales/menu/detalle-producto/{{producto.ID_OFERTA}}" class="title"> {{producto.PRODUCTO.NOMBRE_PRODUCTO}}</a>
+                <a href="principales/menu/detalle-producto/{{p.ID_OFERTA}}" class="title">{{p.NOMBRE_PRODUCTO}}</a>
                 <div class="rating-wrap">
                   <ul class="rating-stars">
-
-                    <ngb-rating *ngIf="producto.PRODUCTO.CALIFICACIONs[0]"
-                                [(rate)]="producto.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL">
+                    <ngb-rating *ngIf="p.PROMEDIO_CAL != null"
+                                [(rate)]="p.PROMEDIO_CAL">
                       <ng-template let-fill="fill">
                         <span class="star" [class.filled]="fill === 100">&#9733;</span>
                       </ng-template>
                     </ngb-rating>
-                    <ngb-rating *ngIf="!producto.PRODUCTO.CALIFICACIONs[0]" [(rate)]="currentRate">
+                    <ngb-rating *ngIf="p.PROMEDIO_CAL == null" [(rate)]="currentRate">
                       <ng-template let-fill="fill">
                         <span class="star" [class.filled]="fill === 100">&#9733;</span>
                       </ng-template>
                     </ngb-rating>
-
                   </ul>
-                  <span *ngIf="producto.PRODUCTO.COMENTARIOs[0]"
-                        class="label-rating text-muted">{{producto.PRODUCTO.COMENTARIOs[0].TOTAL_COM}}
-                    comentarios</span>
-                  <span *ngIf="!producto.PRODUCTO.COMENTARIOs[0]" class="label-rating text-muted">0 Comentarios </span>
-                </div>
-                <div class="price mt-1">{{producto.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO | currency }}</div>
+                  <span *ngIf="p.TOTAL_COM != null"
+                        class="label-rating text-muted">{{p.TOTAL_COM}} comentarios</span>
+                  <span *ngIf="p.TOTAL_COM == null" class="label-rating text-muted">0 Comentarios </span>
+                </div> <!-- rating-wrap.// -->
+<!--                <div class="price mt-1">{{producto.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO | currency }}</div>-->
+
+                <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO==null">
+                  <span class="price h5"> {{p.PRECIO_CON_IVA | currency }} </span>
+                </div> <!-- info-price-detail // -->
+
+                <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO!=null">
+                  <span class="price h5"> {{p.DESCUENTO_AUTOMATICO | currency }} </span>
+                  <del class="price-old"> {{p.PRECIO_CON_IVA | currency }} </del>
+                </div> <!-- info-price-detail // -->
+
                 <!-- price-wrap.// -->
-                <a routerLink="../detalle-tienda/tienda/{{producto.TIENDA.NUM_TIENDA}}/inicio-tienda" class="title tituloTienda"> {{producto.TIENDA.NOMBRE_COMERCIAL}}</a>
+                <a routerLink="../detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda" class="title tituloTienda">{{p.NOMBRE_COMERCIAL}}</a>
               </figcaption>
             </div>
           </ng-template>
@@ -165,7 +172,7 @@
   <div class="container">
 
     <header class="section-heading">
-      <h3 class="section-title">Popular products</h3>
+      <h3 class="section-title">Productos</h3>
     </header><!-- sect-heading -->
 
     <div style="position: relative">
@@ -173,38 +180,45 @@
         class='fa fa-chevron-left'></i></button>
 
       <owl-carousel-o [options]="opcionesCarrouselFilaUno" #carrouselFilaUno>
-        <ng-container *ngFor="let producto of vectorProductosObtenidos;index as i">
+        <ng-container *ngFor="let p of this.vectorProductosObtenidos;index as i">
           <ng-template dataHash="one" carouselSlide id="slider1+{{i}}">
             <div class="card card-product-grid mx-2">
               <a class="" >
-                <img [src]="getImagen(producto.PRODUCTO.VARIANTEs[0].IMAGEN_PRODUCTOs[0].IMAGEN)" width="100%"
+                <img [src]="getImagen(p.IMAGEN)" width="100%"
                      height="200rem"></a>
               <figcaption class="info-wrap">
-                <a href="principales/menu/detalle-producto/{{producto.ID_OFERTA}}" class="title"> {{producto.PRODUCTO.NOMBRE_PRODUCTO}}</a>
+                <a href="principales/menu/detalle-producto/{{p.ID_OFERTA}}" class="title">{{p.NOMBRE_PRODUCTO}}</a>
                 <div class="rating-wrap">
                   <ul class="rating-stars">
-
-                    <ngb-rating *ngIf="producto.PRODUCTO.CALIFICACIONs[0]"
-                                [(rate)]="producto.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL">
+                    <ngb-rating *ngIf="p.PROMEDIO_CAL != null"
+                                [(rate)]="p.PROMEDIO_CAL">
                       <ng-template let-fill="fill">
                         <span class="star" [class.filled]="fill === 100">&#9733;</span>
                       </ng-template>
                     </ngb-rating>
-                    <ngb-rating *ngIf="!producto.PRODUCTO.CALIFICACIONs[0]" [(rate)]="currentRate">
+                    <ngb-rating *ngIf="p.PROMEDIO_CAL == null" [(rate)]="currentRate">
                       <ng-template let-fill="fill">
                         <span class="star" [class.filled]="fill === 100">&#9733;</span>
                       </ng-template>
                     </ngb-rating>
-
                   </ul>
-                  <span *ngIf="producto.PRODUCTO.COMENTARIOs[0]"
-                        class="label-rating text-muted">{{producto.PRODUCTO.COMENTARIOs[0].TOTAL_COM}}
-                    comentarios</span>
-                  <span *ngIf="!producto.PRODUCTO.COMENTARIOs[0]" class="label-rating text-muted">0 Comentarios </span>
-                </div>
-                <div class="price mt-1">{{producto.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO | currency }}</div>
+                  <span *ngIf="p.TOTAL_COM != null"
+                        class="label-rating text-muted">{{p.TOTAL_COM}} comentarios</span>
+                  <span *ngIf="p.TOTAL_COM == null" class="label-rating text-muted">0 Comentarios </span>
+                </div> <!-- rating-wrap.// -->
+                <!--                <div class="price mt-1">{{producto.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO | currency }}</div>-->
+
+                <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO==null">
+                  <span class="price h5"> {{p.PRECIO_CON_IVA | currency }} </span>
+                </div> <!-- info-price-detail // -->
+
+                <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO!=null">
+                  <span class="price h5"> {{p.DESCUENTO_AUTOMATICO | currency }} </span>
+                  <del class="price-old"> {{p.PRECIO_CON_IVA | currency }} </del>
+                </div> <!-- info-price-detail // -->
+
                 <!-- price-wrap.// -->
-                <a href="#" class="title tituloTienda"> {{producto.TIENDA.NOMBRE_COMERCIAL}}</a>
+                <a routerLink="../detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda" class="title tituloTienda">{{p.NOMBRE_COMERCIAL}}</a>
               </figcaption>
             </div>
           </ng-template>
@@ -223,7 +237,7 @@
   <div class="container">
 
     <header class="section-heading">
-      <h3 class="section-title">New arrived</h3>
+      <h3 class="section-title">Productos</h3>
     </header><!-- sect-heading -->
 
     <div style="position: relative">
@@ -231,38 +245,45 @@
         class='fa fa-chevron-left'></i></button>
 
       <owl-carousel-o [options]="opcionesCarrouselFilaUno" #carrouselFilaUno>
-        <ng-container *ngFor="let producto of vectorProductosObtenidos;index as i">
+        <ng-container *ngFor="let p of this.vectorProductosObtenidos;index as i">
           <ng-template dataHash="one" carouselSlide id="slider2+{{i}}">
             <div class="card card-product-grid mx-2">
               <a class="" >
-                <img [src]="getImagen(producto.PRODUCTO.VARIANTEs[0].IMAGEN_PRODUCTOs[0].IMAGEN)" width="100%"
+                <img [src]="getImagen(p.IMAGEN)" width="100%"
                      height="200rem"></a>
               <figcaption class="info-wrap">
-                <a href="principales/menu/detalle-producto/{{producto.ID_OFERTA}}" class="title"> {{producto.PRODUCTO.NOMBRE_PRODUCTO}}</a>
+                <a href="principales/menu/detalle-producto/{{p.ID_OFERTA}}" class="title">{{p.NOMBRE_PRODUCTO}}</a>
                 <div class="rating-wrap">
                   <ul class="rating-stars">
-
-                    <ngb-rating *ngIf="producto.PRODUCTO.CALIFICACIONs[0]"
-                                [(rate)]="producto.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL">
+                    <ngb-rating *ngIf="p.PROMEDIO_CAL != null"
+                                [(rate)]="p.PROMEDIO_CAL">
                       <ng-template let-fill="fill">
                         <span class="star" [class.filled]="fill === 100">&#9733;</span>
                       </ng-template>
                     </ngb-rating>
-                    <ngb-rating *ngIf="!producto.PRODUCTO.CALIFICACIONs[0]" [(rate)]="currentRate">
+                    <ngb-rating *ngIf="p.PROMEDIO_CAL == null" [(rate)]="currentRate">
                       <ng-template let-fill="fill">
                         <span class="star" [class.filled]="fill === 100">&#9733;</span>
                       </ng-template>
                     </ngb-rating>
-
                   </ul>
-                  <span *ngIf="producto.PRODUCTO.COMENTARIOs[0]"
-                        class="label-rating text-muted">{{producto.PRODUCTO.COMENTARIOs[0].TOTAL_COM}}
-                    comentarios</span>
-                  <span *ngIf="!producto.PRODUCTO.COMENTARIOs[0]" class="label-rating text-muted">0 Comentarios </span>
-                </div>
-                <div class="price mt-1">{{producto.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO | currency }}</div>
+                  <span *ngIf="p.TOTAL_COM != null"
+                        class="label-rating text-muted">{{p.TOTAL_COM}} comentarios</span>
+                  <span *ngIf="p.TOTAL_COM == null" class="label-rating text-muted">0 Comentarios </span>
+                </div> <!-- rating-wrap.// -->
+                <!--                <div class="price mt-1">{{producto.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO | currency }}</div>-->
+
+                <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO==null">
+                  <span class="price h5"> {{p.PRECIO_CON_IVA | currency }} </span>
+                </div> <!-- info-price-detail // -->
+
+                <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO!=null">
+                  <span class="price h5"> {{p.DESCUENTO_AUTOMATICO | currency }} </span>
+                  <del class="price-old"> {{p.PRECIO_CON_IVA | currency }} </del>
+                </div> <!-- info-price-detail // -->
+
                 <!-- price-wrap.// -->
-                <a href="#" class="title tituloTienda"> {{producto.TIENDA.NOMBRE_COMERCIAL}}</a>
+                <a routerLink="../detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda" class="title tituloTienda">{{p.NOMBRE_COMERCIAL}}</a>
               </figcaption>
             </div>
           </ng-template>
@@ -494,12 +515,11 @@
 
 
 <!-- ========================= SECTION CONTENT  PRUEBA 3========================= -->
-<section class="section-content padding-bottom-sm">
+<section class="section-content" *ngIf="this.vectorProductosObtenidos.length > 0">
   <div class="container">
 
     <header class="section-heading">
-      <a href="#" class="btn btn-outline-primary float-right">See all</a>
-      <h3 class="section-title">Recommended</h3>
+      <h3 class="section-title">Productos</h3>
     </header><!-- sect-heading -->
 
     <div style="position: relative">
@@ -507,38 +527,45 @@
         class='fa fa-chevron-left'></i></button>
 
       <owl-carousel-o [options]="opcionesCarrouselFilaUno" #carrouselFilaUno>
-        <ng-container *ngFor="let producto of vectorProductosObtenidos;index as i">
+        <ng-container *ngFor="let p of this.vectorProductosObtenidos;index as i">
           <ng-template dataHash="one" carouselSlide id="slider3+{{i}}">
             <div class="card card-product-grid mx-2">
               <a class="" >
-                <img [src]="getImagen(producto.PRODUCTO.VARIANTEs[0].IMAGEN_PRODUCTOs[0].IMAGEN)" width="100%"
+                <img [src]="getImagen(p.IMAGEN)" width="100%"
                      height="200rem"></a>
               <figcaption class="info-wrap">
-                <a href="principales/menu/detalle-producto/{{producto.ID_OFERTA}}" class="title"> {{producto.PRODUCTO.NOMBRE_PRODUCTO}}</a>
+                <a href="principales/menu/detalle-producto/{{p.ID_OFERTA}}" class="title">{{p.NOMBRE_PRODUCTO}}</a>
                 <div class="rating-wrap">
                   <ul class="rating-stars">
-
-                    <ngb-rating *ngIf="producto.PRODUCTO.CALIFICACIONs[0]"
-                                [(rate)]="producto.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL">
+                    <ngb-rating *ngIf="p.PROMEDIO_CAL != null"
+                                [(rate)]="p.PROMEDIO_CAL">
                       <ng-template let-fill="fill">
                         <span class="star" [class.filled]="fill === 100">&#9733;</span>
                       </ng-template>
                     </ngb-rating>
-                    <ngb-rating *ngIf="!producto.PRODUCTO.CALIFICACIONs[0]" [(rate)]="currentRate">
+                    <ngb-rating *ngIf="p.PROMEDIO_CAL == null" [(rate)]="currentRate">
                       <ng-template let-fill="fill">
                         <span class="star" [class.filled]="fill === 100">&#9733;</span>
                       </ng-template>
                     </ngb-rating>
-
                   </ul>
-                  <span *ngIf="producto.PRODUCTO.COMENTARIOs[0]"
-                        class="label-rating text-muted">{{producto.PRODUCTO.COMENTARIOs[0].TOTAL_COM}}
-                    comentarios</span>
-                  <span *ngIf="!producto.PRODUCTO.COMENTARIOs[0]" class="label-rating text-muted">0 Comentarios </span>
-                </div>
-                <div class="price mt-1">{{producto.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO | currency }}</div>
+                  <span *ngIf="p.TOTAL_COM != null"
+                        class="label-rating text-muted">{{p.TOTAL_COM}} comentarios</span>
+                  <span *ngIf="p.TOTAL_COM == null" class="label-rating text-muted">0 Comentarios </span>
+                </div> <!-- rating-wrap.// -->
+                <!--                <div class="price mt-1">{{producto.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO | currency }}</div>-->
+
+                <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO==null">
+                  <span class="price h5"> {{p.PRECIO_CON_IVA | currency }} </span>
+                </div> <!-- info-price-detail // -->
+
+                <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO!=null">
+                  <span class="price h5"> {{p.DESCUENTO_AUTOMATICO | currency }} </span>
+                  <del class="price-old"> {{p.PRECIO_CON_IVA | currency }} </del>
+                </div> <!-- info-price-detail // -->
+
                 <!-- price-wrap.// -->
-                <a href="#" class="title tituloTienda"> {{producto.TIENDA.NOMBRE_COMERCIAL}}</a>
+                <a routerLink="../detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda" class="title tituloTienda">{{p.NOMBRE_COMERCIAL}}</a>
               </figcaption>
             </div>
           </ng-template>
@@ -547,8 +574,6 @@
       <button (click)="carrouselFilaUno.next()" style="display: block;" class="btn-adelante-carrousel"><i
         class='fa fa-chevron-right'></i></button>
     </div>
-
-
   </div> <!-- container .//  -->
 </section>
 <!-- ========================= SECTION CONTENT PRUEBA 3 END// ========================= -->

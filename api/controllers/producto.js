@@ -495,16 +495,16 @@ async function updateEstadoProductos(req, res) {
 /*     //INICIO SECCION PARA PAGINA PRINCIPAL//     */
 async function obtenerTodosProductos(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
+    let fechaHoy = moment().format("YYYY-MM-DD");
     try {
         let productosObtenidos = await Oferta.findAll({
             include: [{
                 model: Producto,
-                attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'NOMBRE_PRODUCTO'],
+                attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'ID_OFERTA', 'NOMBRE_PRODUCTO',],
                 include: [{
                     model: Variante,
                     separate: true,
-                    attributes: ['PRECIO_UNITARIO'],
-                    limit: 1,
+                    attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'NUM_VARIANTE', 'PRECIO_UNITARIO'],
                     order: [['NUM_VARIANTE', 'ASC']],
                     include: {
                         model: Imagen_Producto,
@@ -514,26 +514,39 @@ async function obtenerTodosProductos(req, res) {
                             }
                         },
                         separate: true,
-                        attributes: ['IMAGEN'],
-                        limit: 1,
+                        attributes: ['NUM_VARIANTE', 'IMAGEN'],
                         order: [['ID_IMAGEN', 'ASC']]
                     }
                 }, {
+                    model: Producto_Descuento,
+                    include: {
+                        model: Descuento,
+                        where: {
+                            ESTADO_DESCUENTO: 0,
+                            FECHA_INICIO: {
+                                [Op.lte]: fechaHoy
+                            },
+                            FECHA_FIN: {
+                                [Op.gte]: fechaHoy
+                            }
+                        }
+                    }
+                },{
                     model: Calificacion,
                     separate: true,
-                    attributes: ['ID_PRODUCTO', [Calificacion.sequelize.fn('AVG', Calificacion.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
-                    group: ['ID_PRODUCTO']
+                    attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', [Calificacion.sequelize.fn('AVG', Calificacion.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
+                    group: ['ID_PRODUCTO', 'COD_PRODUCTO']
                 }, {
                     model: Comentario,
                     separate: true,
-                    attributes: ['ID_PRODUCTO', [Comentario.sequelize.fn('COUNT', Comentario.sequelize.col('ID_COMENTARIO')), 'TOTAL_COM']],
-                    group: ['ID_PRODUCTO']
+                    attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', [Comentario.sequelize.fn('COUNT', Comentario.sequelize.col('ID_COMENTARIO')), 'TOTAL_COM']],
+                    group: ['ID_PRODUCTO', 'COD_PRODUCTO']
                 }]
             }, {
                 model: Tienda,
                 attributes: ['NOMBRE_COMERCIAL', 'NUM_TIENDA']
             }],
-            attributes: ['ID_OFERTA'],
+            attributes: ['ID_OFERTA', 'IVA'],
             where: {
                 ESTADO_OFERTA: 0
             },
@@ -549,7 +562,7 @@ async function obtenerTodosProductos(req, res) {
     } catch (e) {
         await t.rollback();
         res.status(500).send({
-            message: 'error:' + err
+            message: 'error:' + e
         });
     }
 }
@@ -642,8 +655,6 @@ async function obtenerProductoDetalle(req, res) {
         });
     }
 }
-
-
 /*     //FIN SECCION PARA PAGINA PRINCIPAL//      */
 
 module.exports = {          // para exportar todas las funciones de este modulo

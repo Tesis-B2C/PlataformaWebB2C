@@ -6,7 +6,9 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {NgbCarouselConfig} from "@ng-bootstrap/ng-bootstrap";
 import {OwlOptions} from 'ngx-owl-carousel-o';
 import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';
-import { GLOBAL } from 'src/app/servicios/global';
+import {GLOBAL} from 'src/app/servicios/global';
+import * as moment from "moment";
+import {ProductoServicio} from "../../servicios/producto.servicio";
 
 @Component({
   selector: 'app-principal',
@@ -72,7 +74,7 @@ export class PrincipalComponent implements OnInit {
     navSpeed: 1000,
 
     autoplay: true,
-    autoplayTimeout:2000,
+    autoplayTimeout: 2000,
     autoplaySpeed: 1000,
     fluidSpeed: true,
 
@@ -100,7 +102,7 @@ export class PrincipalComponent implements OnInit {
   public vectorProductosObtenidos = [];
   currentRate = 1;
 
-  constructor(configRating: NgbRatingConfig, public route: ActivatedRoute, public router: Router, public _agenteServicio: AgenteServicio, public _tiendaServicio: TiendaServicio, public _categoriaServicio: CategoriaServicio, config: NgbCarouselConfig) {
+  constructor(configRating: NgbRatingConfig, public route: ActivatedRoute, public router: Router, public _agenteServicio: AgenteServicio, public _tiendaServicio: TiendaServicio, public _productoServicio:ProductoServicio , public _categoriaServicio: CategoriaServicio, config: NgbCarouselConfig) {
     configRating.max = 5;
     configRating.readonly = true;
     // customize default values of carousels used by this component tree
@@ -125,30 +127,119 @@ export class PrincipalComponent implements OnInit {
   }
 
   public async obtenerTodosProductos() {
-    try{
-    let response = await this._tiendaServicio.obtenerTodosProductos().toPromise();
-    console.log("PRODUCTOS" + JSON.stringify(response));
-    this.productosObtenidos = response.data;
-    this.productosObtenidos.forEach(elemnt => {
-      this.vectorProductosObtenidos.push(elemnt);
-    })
-    }catch (e) {
+    try {
+      let response = await this._productoServicio.obtenerTodosProductos().toPromise();
+      console.log("PRODUCTOS" + JSON.stringify(response));
+      this.productosObtenidos = response.data;
+      this.productosObtenidos.forEach(elemnt => {
+        let objProducto = {
+          NOMBRE_COMERCIAL: null,
+          NOMBRE_PRODUCTO: null,
+          PROMEDIO_CAL: null,
+          TOTAL_COM: null,
+          PRECIO_CON_IVA: null,
+          IMAGEN: null,
+          NUM_TIENDA: null,
+          ID_OFERTA: null,
+          ID_PRODUCTO: null,
+          COD_PRODUCTO: null,
+          DESCUENTO_AUTOMATICO: null
+        }
+
+        objProducto.NOMBRE_COMERCIAL = elemnt.TIENDA.NOMBRE_COMERCIAL;
+        objProducto.NOMBRE_PRODUCTO = elemnt.PRODUCTO.NOMBRE_PRODUCTO;
+        objProducto.ID_PRODUCTO = elemnt.PRODUCTO.ID_PRODUCTO;
+        objProducto.COD_PRODUCTO = elemnt.PRODUCTO.COD_PRODUCTO;
+
+        if (elemnt.PRODUCTO.CALIFICACIONs.length > 0)
+          objProducto.PROMEDIO_CAL = elemnt.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL;
+        else
+          objProducto.PROMEDIO_CAL = null;
+
+        if (elemnt.PRODUCTO.COMENTARIOs.length > 0)
+          objProducto.TOTAL_COM = elemnt.PRODUCTO.COMENTARIOs[0].TOTAL_COM;
+        else
+          objProducto.TOTAL_COM = null;
+
+        objProducto.PRECIO_CON_IVA = ((elemnt.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO * elemnt.IVA) / 100) + elemnt.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO;
+        objProducto.IMAGEN = elemnt.PRODUCTO.VARIANTEs[0].IMAGEN_PRODUCTOs[0].IMAGEN;
+        objProducto.NUM_TIENDA = elemnt.TIENDA.NUM_TIENDA;
+        objProducto.ID_OFERTA = elemnt.ID_OFERTA;
+        objProducto.DESCUENTO_AUTOMATICO = this.buscarDescuentoAutomatico(elemnt.PRODUCTO.PRODUCTO_DESCUENTOs, objProducto.PRECIO_CON_IVA);
+
+        this.vectorProductosObtenidos.push(objProducto);
+      })
+      console.log(JSON.stringify(this.vectorProductosObtenidos)+'hola');
+    } catch (e) {
       console.log("error:" + JSON.stringify((e)));
     }
   }
+
+  public porcentajeDescuento = null;
+  public PRECIO_UNITARIO_CON_IVA_DESCUENTO = null;
+
+  public buscarDescuentoAutomatico(PRODUCTO_DESCUENTOs, PRECIO_CON_IVA) {
+    let fechaHoy = moment().format("YYYY-MM-DD");
+    let horaActual = moment().format("HH:mm:ss");
+    console.log('horaHoy' + horaActual + fechaHoy)
+    if (PRODUCTO_DESCUENTOs.length > 0) {
+      this.porcentajeDescuento = 0;
+      this.PRECIO_UNITARIO_CON_IVA_DESCUENTO = 0;
+      PRODUCTO_DESCUENTOs.forEach(descuentoAut => {
+        if (descuentoAut.DESCUENTO.TIPO_DESCUENTO == 'Automático') {
+          if (descuentoAut.DESCUENTO.FECHA_INICIO == fechaHoy) {
+            if ((this.obtenerMinutos(horaActual) >= this.obtenerMinutos(descuentoAut.DESCUENTO.HORA_INICIO))) {
+              //CUPON VALIDO
+              this.porcentajeDescuento = this.porcentajeDescuento + descuentoAut.DESCUENTO.PORCENTAJE_DESCUENTO;
+              console.log('1XX' + horaActual + fechaHoy)
+            }
+          } else {
+            if (descuentoAut.DESCUENTO.FECHA_FIN == fechaHoy) {
+              if ((this.obtenerMinutos(horaActual) <= this.obtenerMinutos(descuentoAut.DESCUENTO.HORA_FIN))) {
+                //CUPON VALIDO
+                this.porcentajeDescuento = this.porcentajeDescuento + descuentoAut.DESCUENTO.PORCENTAJE_DESCUENTO;
+                console.log('2XX' + horaActual + fechaHoy);
+              } else {
+                this.porcentajeDescuento = this.porcentajeDescuento + 0;
+              }
+            } else {
+              //CUPON VALIDO
+              this.porcentajeDescuento = this.porcentajeDescuento + descuentoAut.DESCUENTO.PORCENTAJE_DESCUENTO;
+              console.log('3XX' + horaActual + fechaHoy);
+            }
+          }
+        }
+      })
+      this.PRECIO_UNITARIO_CON_IVA_DESCUENTO = PRECIO_CON_IVA - ((PRECIO_CON_IVA * this.porcentajeDescuento) / 100);
+    } else {
+      this.porcentajeDescuento = null;
+      this.PRECIO_UNITARIO_CON_IVA_DESCUENTO = null;
+    }
+
+    return this.PRECIO_UNITARIO_CON_IVA_DESCUENTO;
+    console.log(this.PRECIO_UNITARIO_CON_IVA_DESCUENTO + 'PRECIO DESCUENTO' + this.porcentajeDescuento + 'DESCUENTO');
+  }
+
+  public obtenerMinutos(hora) {
+    if (hora) {
+      var spl = hora.split(":");
+      return parseInt(spl[0]) * 60 + parseInt(spl[1]);
+    }
+  }
+
 
   public tiendasObtenidas;
   public vectorTiendasObtenidas = [];
 
   public async obtenerTodasTiendas() {
     try {
-    let response = await this._tiendaServicio.obtenerTodasTiendas().toPromise();
-    console.log("tiendas" + response.data);
-    this.tiendasObtenidas = response.data;
-    for (let element of this.tiendasObtenidas) {
-      this.vectorTiendasObtenidas.push(element);
-    }
-    }catch (e) {
+      let response = await this._tiendaServicio.obtenerTodasTiendas().toPromise();
+      console.log("tiendas" + response.data);
+      this.tiendasObtenidas = response.data;
+      for (let element of this.tiendasObtenidas) {
+        this.vectorTiendasObtenidas.push(element);
+      }
+    } catch (e) {
       console.log("error:" + JSON.stringify((e)));
     }
   }

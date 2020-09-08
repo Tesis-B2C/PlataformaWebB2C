@@ -15,7 +15,7 @@ export class TiendaServicio {
   public url: String;
   public identity;
 
-  constructor(public _http: HttpClient, public  _agenteServicio:AgenteServicio) {
+  constructor(public _http: HttpClient, public  _agenteServicio: AgenteServicio) {
     this.url = GLOBAL.url;
   }
 
@@ -37,12 +37,18 @@ export class TiendaServicio {
     }*/
 
   getDatosTienda(Id_Tienda) {
-    let headers = new HttpHeaders({"Content-type": "application/json","Authorization": this._agenteServicio.getToken()});
+    let headers = new HttpHeaders({
+      "Content-type": "application/json",
+      "Authorization": this._agenteServicio.getToken()
+    });
     return this._http.get<objeto>(this.url + "getDatosTienda/" + Id_Tienda, {headers: headers});
   }
 
   getMisTiendas(Id_Agente) {
-    let headers = new HttpHeaders({"Content-type": "application/json", "Authorization": this._agenteServicio.getToken()});
+    let headers = new HttpHeaders({
+      "Content-type": "application/json",
+      "Authorization": this._agenteServicio.getToken()
+    });
     return this._http.get<objeto>(this.url + "getMisTiendas/" + Id_Agente, {headers: headers});
   }
 
@@ -51,7 +57,10 @@ export class TiendaServicio {
       estado: estado_a_cambiar
     }
     let params = JSON.stringify(obj);
-    let headers = new HttpHeaders({"Content-type": "application/json","Authorization": this._agenteServicio.getToken()});
+    let headers = new HttpHeaders({
+      "Content-type": "application/json",
+      "Authorization": this._agenteServicio.getToken()
+    });
     return this._http.put<objeto>(this.url + "updateEstadoTienda/" + Id_Tienda, params, {headers: headers});
   }
 
@@ -76,20 +85,21 @@ export class TiendaServicio {
   actualizarTiendaGeneral(tienda_actualizar, Num_Tienda) {
     debugger
     let params = JSON.stringify(tienda_actualizar);
-    let headers = new HttpHeaders({"Content-type": "application/json","Authorization": this._agenteServicio.getToken()});
+    let headers = new HttpHeaders({
+      "Content-type": "application/json",
+      "Authorization": this._agenteServicio.getToken()
+    });
     return this._http.put<objeto>(this.url + "actualizarTiendaGeneral/" + Num_Tienda, params, {headers: headers});
   }
 
   actualizarTiendaSucursal(tiendaSucursal_actualizar, Num_Tienda) {
     debugger
     let params = JSON.stringify(tiendaSucursal_actualizar);
-    let headers = new HttpHeaders({"Content-type": "application/json","Authorization": this._agenteServicio.getToken()});
+    let headers = new HttpHeaders({
+      "Content-type": "application/json",
+      "Authorization": this._agenteServicio.getToken()
+    });
     return this._http.put<objeto>(this.url + "actualizarTiendaSucursal/" + Num_Tienda, params, {headers: headers});
-  }
-
-  obtenerTodosProductos() {
-    let headers = new HttpHeaders({"Content-type": "application/json"});
-    return this._http.get<objeto>(this.url + "obtenerTodosProductos", {headers: headers});
   }
 
   obtenerFiltroPrincipalTodos(termino) {
@@ -107,11 +117,6 @@ export class TiendaServicio {
     return this._http.get<objeto>(this.url + "obtenerFiltroPrincipalProductos/" + termino, {headers: headers});
   }
 
-  getDetalleTiendaProducto(Id_Tienda) {
-    let headers = new HttpHeaders({"Content-type": "application/json"});
-    return this._http.get<objeto>(this.url + "getDetalleTiendaProducto/" + Id_Tienda, {headers: headers});
-  }
-
   obtenerTodasTiendas() {
     let headers = new HttpHeaders({"Content-type": "application/json"});
     return this._http.get<objeto>(this.url + "obtenerTodasTiendas", {headers: headers});
@@ -121,4 +126,10 @@ export class TiendaServicio {
     let headers = new HttpHeaders({"Content-type": "application/json"});
     return this._http.get<objeto>(this.url + "obtenerFiltroBusquedaTodos/" + termino, {headers: headers});
   }
+
+  getDetalleTiendaProducto(Id_Tienda) {
+    let headers = new HttpHeaders({"Content-type": "application/json"});
+    return this._http.get<objeto>(this.url + "getDetalleTiendaProducto/" + Id_Tienda, {headers: headers});
+  }
+
 }

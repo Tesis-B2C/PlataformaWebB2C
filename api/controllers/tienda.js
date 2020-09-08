@@ -20,6 +20,8 @@ const CATEGORIA = require("../models/categoria");
 const CALIFICACION = require("../models/calificacion");
 const COMENTARIO = require("../models/comentario");
 const AGENTE = require("../models/agente");
+const DESCUENTO = require("../models/descuento");
+const PRODUCTO_DESCUENTO = require("../models/producto_descuento");
 
 const {Op} = require("sequelize");
 
@@ -735,11 +737,12 @@ async function obtenerFiltroBusquedaTodos(req, res) {
     try {
         let vectorEnviar = [];
         let termino = req.params.termino;
+        let fechaHoy = moment().format("YYYY-MM-DD");
 
         let productosObtenidos = await OFERTA.findAll({
             include: [{
                 model: PRODUCTO,
-                attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'ID_OFERTA', 'NOMBRE_PRODUCTO', 'DESCRIPCION_PRODUCTO'],
+                attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'ID_OFERTA', 'NOMBRE_PRODUCTO', 'DESCRIPCION_PRODUCTO','CONDICION'],
                 where: {
                     [Op.or]: [
                         {NOMBRE_PRODUCTO: {[Op.like]: termino + '%'}},
@@ -750,20 +753,32 @@ async function obtenerFiltroBusquedaTodos(req, res) {
                 include: [{
                     model: VARIANTE,
                     separate: true,
-                    attributes: ['ID_PRODUCTO', 'NUM_VARIANTE', 'PRECIO_UNITARIO'],
-                    limit: 1,
+                    attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'NUM_VARIANTE', 'PRECIO_UNITARIO'],
                     order: [['NUM_VARIANTE', 'ASC']],
                     include: {
                         model: IMAGEN_PRODUCTO,
                         separate: true,
                         attributes: ['NUM_VARIANTE', 'IMAGEN'],
-                        limit: 1,
                         where: {
                             TIPO_IMAGEN: {
                                 [Op.like]: 'image%'
                             }
                         },
                         order: [['ID_IMAGEN', 'ASC']]
+                    }
+                }, {
+                    model: PRODUCTO_DESCUENTO,
+                    include: {
+                        model: DESCUENTO,
+                        where: {
+                            ESTADO_DESCUENTO: 0,
+                            FECHA_INICIO: {
+                                [Op.lte]: fechaHoy
+                            },
+                            FECHA_FIN: {
+                                [Op.gte]: fechaHoy
+                            }
+                        }
                     }
                 }, {
                     model: CALIFICACION,
@@ -784,7 +799,6 @@ async function obtenerFiltroBusquedaTodos(req, res) {
                 ESTADO_OFERTA: 0
             },
             attributes: ['ID_OFERTA', 'IVA'],
-            // limit: 5,
             transaction: t
         });
 
@@ -802,7 +816,6 @@ async function obtenerFiltroBusquedaTodos(req, res) {
                     }
                 ]
             },
-            limit: 5,
             transaction: t
         });
 console.log('TIENDAS OBTENDAD'+tiendasObtenidos);

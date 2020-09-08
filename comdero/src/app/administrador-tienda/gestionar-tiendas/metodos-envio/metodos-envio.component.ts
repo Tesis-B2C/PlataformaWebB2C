@@ -84,7 +84,7 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
     this.banderaTarifaLocalPeso = true;
     this.banderaTarifaLocalPrecio = false;
     this.banderaTipoAccionLocal = 'Agregar';
-    this.modalService.open(modalLocal, {centered: true, size: 'md'});
+    this.modalService.open(modalLocal, {centered: true, size: 'md', backdrop: "static"});
   }
 
   public opcTarifaLocal(opcion, event) {
@@ -121,7 +121,10 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
   }
 
   public editarAbrirTarifaLocal(indice, modalLocal) {
+    this.objetoAuxiliarLocal = "";
+    this.objetoAuxiliarLocal = new Opcion_Envio('Domicilio', 'Local', this.vectorTarifasLocal[indice].Tipo_Medida, null, null, 0, 999.99, 0);
     this.indiceEditarLocal = indice;
+
     if (this.vectorTarifasLocal[indice].Tipo_Medida == 'Peso') {
       this.banderaTarifaLocalPeso = true;
       this.banderaTarifaLocalPrecio = false;
@@ -131,12 +134,14 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
       this.banderaTarifaLocalPeso = false;
       this.banderaTarifaLocalPrecio = true;
     }
-
+    console.log('VESTOR TARIFA LOCAL' + JSON.stringify(this.objetoAuxiliarLocal));
     this.objetoAuxiliarLocal.Precio = this.vectorTarifasLocal[indice].Precio;
     this.objetoAuxiliarLocal.Minimo = this.vectorTarifasLocal[indice].Minimo;
     this.objetoAuxiliarLocal.Maximo = this.vectorTarifasLocal[indice].Maximo;
+    console.log('VESTOR ' + JSON.stringify(this.objetoAuxiliarLocal));
+
     this.banderaTipoAccionLocal = 'Editar';
-    this.modalService.open(modalLocal, {centered: true, size: 'md'});
+    this.modalService.open(modalLocal, {centered: true, size: 'md', backdrop: "static"});
   }
 
   public eliminarTarifaLocal(indice) {
@@ -151,7 +156,7 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
     this.banderaTarifaRestoPeso = true;
     this.banderaTarifaRestoPrecio = false;
     this.banderaTipoAccionResto = 'Agregar';
-    this.modalService.open(modalResto, {centered: true, size: 'md'});
+    this.modalService.open(modalResto, {centered: true, size: 'md', backdrop: "static"});
   }
 
   public opcTarifaResto(opcion, event) { //listo
@@ -188,6 +193,8 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
   }
 
   public editarAbrirTarifaResto(indice, modalResto) {
+    this.objetoAuxiliarResto = '';
+    this.objetoAuxiliarResto = new Opcion_Envio('Domicilio', 'Resto', this.vectorTarifasResto[indice].Tipo_Medida, null, null, 0, 999.99, 0);
     this.indiceEditarResto = indice;
     if (this.vectorTarifasResto[indice].Tipo_Medida == 'Peso') {
       this.banderaTarifaRestoPeso = true;
@@ -203,7 +210,7 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
     this.objetoAuxiliarResto.Minimo = this.vectorTarifasResto[indice].Minimo;
     this.objetoAuxiliarResto.Maximo = this.vectorTarifasResto[indice].Maximo;
     this.banderaTipoAccionResto = 'Editar';
-    this.modalService.open(modalResto, {centered: true, size: 'md'});
+    this.modalService.open(modalResto, {centered: true, size: 'md', backdrop: "static"});
   }
 
   public eliminarTarifaResto(indice) {
@@ -216,7 +223,7 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
     debugger;
     let valor = this.cp.transform(element.target.value, '$',);
     //let alter=formatCurrency(element.target.value,'USD',getCurrencySymbol('USD', 'wide'));
-    let valor2 = valor.split("$")
+    let valor2 = valor.split("$");
     element.target.value = valor2[1].replace(',', "");
   }
 
@@ -232,7 +239,7 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
 
     this.objetoRetiroLocal = new Opcion_Envio('Retiro', null, null, null, 'Debes traer tu mensaje de confirmación e identificación cuando vengas a retirar tu pedido.', null, null, null);
 
-    if (this.identidadTienda.OPCION_ENVIOs.length) { //Hay algo en el vector metodo envio
+    if (this.identidadTienda.OPCION_ENVIOs.length > 0) { //Hay algo en el vector metodo envio
       for (let me of this.identidadTienda.OPCION_ENVIOs) {
         if (me.TIPO_ENVIO == 'Retiro') {
           this.objetoRetiroLocal.Hora_Estimada_Retiro = me.HORA_ESTIMADA_RETIRO;

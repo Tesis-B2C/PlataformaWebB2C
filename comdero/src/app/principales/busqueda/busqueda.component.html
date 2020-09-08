@@ -98,20 +98,22 @@
         </div> <!-- col.// -->
         <aside class="col-lg-3 col-md-3 col-12">
           <div class="info-aside">
-            <div class="price-wrap">
+            <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO==null">
               <span class="price h5"> {{p.PRECIO_CON_IVA | currency }} </span>
-              <del class="price-old"> $198</del>
             </div> <!-- info-price-detail // -->
-            <p class="text-success">Free shipping</p>
+
+            <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO!=null">
+              <span class="price h5"> {{p.DESCUENTO_AUTOMATICO | currency }} </span>
+              <del class="price-old"> {{p.PRECIO_CON_IVA | currency }} </del>
+            </div> <!-- info-price-detail // -->
+
+
+            <p class="text-success">{{p.CONDICION}}</p>
             <br>
-
+            <br>
             <p>
-
               <a href="principales/menu/detalle-producto/{{p.ID_OFERTA}}" class="btn btn-primary btn-block">
                 Detalles </a>
-              <a *ngIf="p"  class="btn btn-outline-primary btn-block">
-                <span class="text">Agregar al carrito</span><i class="fa fa-shopping-cart"></i>
-              </a>
               <a href="principales/menu/detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda"
                  class="title tituloTienda text-primary"> {{p.NOMBRE_COMERCIAL}}</a>
             </p>

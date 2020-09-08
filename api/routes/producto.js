@@ -15,5 +15,4 @@ api.put('/updateProducto/:id', multer.array('imagenes'),ProductoController.updat
 api.put('/updateEstadoProducto/:id',[md_auth.ensureAuth],ProductoController.updateEstadoProducto);
 api.put('/updateEstadoProductos/:estado',[md_auth.ensureAuth],ProductoController.updateEstadoProductos);
 
-
 module.exports = api;// exportamos el router de express para que las routas funcionen por todo el back end

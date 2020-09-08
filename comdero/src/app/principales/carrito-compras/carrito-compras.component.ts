@@ -211,7 +211,7 @@ export class CarritoComprasComponent implements OnInit {
       await this.calcularPrecios();
       await this.verificarDescuentoAutomatico();
       this.verificarNuevamenteCupon(tienda.idTienda);
-      await this.menu.conteoProductosCarrito();
+      await this.menu.conteoProductosCarrito(true);
       console.log("despues de borrar", this.vTiendas);
 
     } catch (e) {
