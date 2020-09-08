@@ -2,7 +2,7 @@
 <ng-template #contentPedido let-modal>
   <div class="modal-header py-1">
     <p class="modal-title font-weight-bold">Finalice su compra en COMDERO</p>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click');cerrar()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -594,7 +594,8 @@
                       <button type="button" class="btn btn-social-icon btn-whatsapp btn-rounded">
                         <i class="fab fa-whatsapp fa-1x"></i>
                       </button>
-                      <label> {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</label>
+                      <label class="mt-4 ml-2"> {{this.varianteActiva.CONTACTO_WHATSAPP}}</label>
+
                     </div>
                   </div>
                 </div>
@@ -636,7 +637,7 @@
                   <button type="button" class="btn btn-social-icon btn-whatsapp btn-rounded">
                     <i class="fab fa-whatsapp fa-1x"></i>
                   </button>
-                  <label> {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</label>
+                  <label class="mt-4 ml-2"> {{this.varianteActiva.CONTACTO_WHATSAPP}}</label>
                 </div>
               </div>
             </div>
@@ -659,7 +660,7 @@
                       <button type="button" class="btn btn-social-icon btn-whatsapp btn-rounded">
                         <i class="fab fa-whatsapp fa-1x"></i>
                       </button>
-                      <label> {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</label>
+                      <label class="mt-4 ml-2"> {{this.varianteActiva.CONTACTO_WHATSAPP}}</label>
                     </div>
                   </div>
                 </div>

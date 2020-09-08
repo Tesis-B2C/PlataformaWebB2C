@@ -71,6 +71,8 @@ export class CarritoComprasComponent implements OnInit {
       producto_carrito: null,
       metodos_envio: [],
       metodos_pago: [],
+      sucursales:[],
+      contacto_whatsapp:null,
       cuentas: {
         subTotal: null,
         iva: null,
@@ -108,6 +110,8 @@ export class CarritoComprasComponent implements OnInit {
           producto_carrito: [],
           metodos_envio: [],
           metodos_pago: [],
+          sucursales:[],
+          contacto_whatsapp:null,
           cuentas: {
             subTotal: null,
             iva: null,
@@ -128,6 +132,8 @@ export class CarritoComprasComponent implements OnInit {
             element.precio_productos = (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) + (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100);
             this.obj.metodos_envio = element.VARIANTE.PRODUCTO.OFERTum.TIENDA.OPCION_ENVIOs;
             this.obj.metodos_pago = element.VARIANTE.PRODUCTO.OFERTum.TIENDA.METODO_PAGOs;
+           this.obj.sucursales=element.VARIANTE.PRODUCTO.OFERTum.TIENDA.SUCURSALs;
+           this.obj.contacto_whatsapp=element.VARIANTE.PRODUCTO.OFERTum.TIENDA.CONTACTO_WHATSAPP;
 
             this.obj.producto_carrito.push(element);
 
@@ -436,13 +442,15 @@ export class CarritoComprasComponent implements OnInit {
     this.varianteActiva.PORCENTAJE_IMPUESTO = tienda.cuentas.iva;
     this.varianteActiva.DESCUENTO_AUTOMATICO = tienda.cuentas.descuentoAutomatico;
     this.varianteActiva.DESCUENTO_CUPON = tienda.cuentas.descuentoCupon;
+    this.varianteActiva.SUCURSALES=tienda.sucursales;
+    this.varianteActiva.CONTACTO_WHATSAPP=tienda.contacto_whatsapp;
 
     console.log("variante activa", this.varianteActiva);
   }
 
 
 // vanesssa
-  public productoDetalle: any;
+
   public varianteActiva = {
     PRECIO_UNITARIO_CON_IVA: null,
     PRECIO_UNITARIO_CON_IVA_DESCUENTO: null,
@@ -450,6 +458,8 @@ export class CarritoComprasComponent implements OnInit {
     variantes: [],
     OPCION_ENVIO: [],
     METODO_PAGO: [],
+    SUCURSALES:[],
+    CONTACTO_WHATSAPP:null,
     PORCENTAJE_IMPUESTO: null,
     DESCUENTO_AUTOMATICO: 0,
     DESCUENTO_CUPON: 0
@@ -671,7 +681,7 @@ export class CarritoComprasComponent implements OnInit {
 
     if (this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA != null) {
       let banderaEncontroDireccion: boolean = false;
-      for (let opSucursales of this.productoDetalle.TIENDA.SUCURSALs) {
+      for (let opSucursales of this.varianteActiva.SUCURSALES) {
         if (opSucursales.DPA.COD_DPA == this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA && banderaEncontroDireccion == false) {
           //ENCONTRE UN DIRECCION QUE COINCIDE ES LOCAL
           console.log('//ENCONTRE UN DIRECCION QUE COINCIDE ES LOCAL');
