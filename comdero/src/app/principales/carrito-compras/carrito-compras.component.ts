@@ -71,8 +71,9 @@ export class CarritoComprasComponent implements OnInit {
       producto_carrito: null,
       metodos_envio: [],
       metodos_pago: [],
-      sucursales:[],
-      contacto_whatsapp:null,
+      sucursales: [],
+      contacto_whatsapp: null,
+      mensajeCupones: null,
       cuentas: {
         subTotal: null,
         iva: null,
@@ -110,8 +111,9 @@ export class CarritoComprasComponent implements OnInit {
           producto_carrito: [],
           metodos_envio: [],
           metodos_pago: [],
-          sucursales:[],
-          contacto_whatsapp:null,
+          sucursales: [],
+          contacto_whatsapp: null,
+          mensajeCupones: null,
           cuentas: {
             subTotal: null,
             iva: null,
@@ -132,8 +134,8 @@ export class CarritoComprasComponent implements OnInit {
             element.precio_productos = (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) + (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100);
             this.obj.metodos_envio = element.VARIANTE.PRODUCTO.OFERTum.TIENDA.OPCION_ENVIOs;
             this.obj.metodos_pago = element.VARIANTE.PRODUCTO.OFERTum.TIENDA.METODO_PAGOs;
-           this.obj.sucursales=element.VARIANTE.PRODUCTO.OFERTum.TIENDA.SUCURSALs;
-           this.obj.contacto_whatsapp=element.VARIANTE.PRODUCTO.OFERTum.TIENDA.CONTACTO_WHATSAPP;
+            this.obj.sucursales = element.VARIANTE.PRODUCTO.OFERTum.TIENDA.SUCURSALs;
+            this.obj.contacto_whatsapp = element.VARIANTE.PRODUCTO.OFERTum.TIENDA.CONTACTO_WHATSAPP;
 
             this.obj.producto_carrito.push(element);
 
@@ -267,6 +269,7 @@ export class CarritoComprasComponent implements OnInit {
   }
 
 
+
   verificarCupon(tienda) {
     this.hoy = new Date();
     debugger;
@@ -338,6 +341,12 @@ export class CarritoComprasComponent implements OnInit {
       if (bandera && bandera2) {
         element2['cupones'].add(this.cupon);
         element2['cuentas'].descuentoCupon = element2['cuentas'].descuentoCupon + d;
+        element2['mensajeCupones'] ="";
+      } else if (bandera2 && element2['idTienda']==tienda) {
+
+        element2['mensajeCupones'] =  "El cupón ya fue utilizado"
+      } else if(element2['idTienda']==tienda) {
+        element2['mensajeCupones']  = "El cupón no es válido"
       }
     }
     this.cupon = "";
@@ -442,14 +451,14 @@ export class CarritoComprasComponent implements OnInit {
     this.varianteActiva.PORCENTAJE_IMPUESTO = tienda.cuentas.iva;
     this.varianteActiva.DESCUENTO_AUTOMATICO = tienda.cuentas.descuentoAutomatico;
     this.varianteActiva.DESCUENTO_CUPON = tienda.cuentas.descuentoCupon;
-    this.varianteActiva.SUCURSALES=tienda.sucursales;
-    this.varianteActiva.CONTACTO_WHATSAPP=tienda.contacto_whatsapp;
+    this.varianteActiva.SUCURSALES = tienda.sucursales;
+    this.varianteActiva.CONTACTO_WHATSAPP = tienda.contacto_whatsapp;
 
     console.log("variante activa", this.varianteActiva);
   }
 
 
-// vanesssa
+// vanesssa ------------------------------------------------------------------------------
 
   public varianteActiva = {
     PRECIO_UNITARIO_CON_IVA: null,
@@ -458,8 +467,8 @@ export class CarritoComprasComponent implements OnInit {
     variantes: [],
     OPCION_ENVIO: [],
     METODO_PAGO: [],
-    SUCURSALES:[],
-    CONTACTO_WHATSAPP:null,
+    SUCURSALES: [],
+    CONTACTO_WHATSAPP: null,
     PORCENTAJE_IMPUESTO: null,
     DESCUENTO_AUTOMATICO: 0,
     DESCUENTO_CUPON: 0
@@ -600,7 +609,7 @@ export class CarritoComprasComponent implements OnInit {
 
     this.informacionCompra.COSTOS.PRECIO_UNITARIO_PRODUCTO = this.varianteActiva.PRECIO_UNITARIO;
     this.informacionCompra.COSTOS.TOTAL_PRODUCTOS = this.varianteActiva.PRECIO_UNITARIO; //Buscar descuento y menorar
-    this.informacionCompra.COSTOS.IMPUESTOS = (this.varianteActiva.PRECIO_UNITARIO_CON_IVA-this.varianteActiva.PRECIO_UNITARIO);
+    this.informacionCompra.COSTOS.IMPUESTOS = (this.varianteActiva.PRECIO_UNITARIO_CON_IVA - this.varianteActiva.PRECIO_UNITARIO);
     this.informacionCompra.COSTOS.SUBTOTAL = this.informacionCompra.COSTOS.TOTAL_PRODUCTOS + this.informacionCompra.COSTOS.IMPUESTOS;
 
     this.informacionCompra.COSTOS.DESCUENTOS = this.varianteActiva.DESCUENTO_AUTOMATICO;
@@ -674,10 +683,10 @@ export class CarritoComprasComponent implements OnInit {
     let localExisteUno = 'No Existe Local';
     let restoExisteUno = 'No Existe Resto';
     this.arrayPreciosEnvioAux = [];
-    this.pesoPedidoTotalKg=0;
+    this.pesoPedidoTotalKg = 0;
 
-    this.varianteActiva.variantes.forEach(element=>{
-      this.pesoPedidoTotalKg =this.pesoPedidoTotalKg +  element.VARIANTE.PRODUCTO.PESO_PRODUCTO * element.CANTIDAD_PRODUCTO_CARRITO;
+    this.varianteActiva.variantes.forEach(element => {
+      this.pesoPedidoTotalKg = this.pesoPedidoTotalKg + element.VARIANTE.PRODUCTO.PESO_PRODUCTO * element.CANTIDAD_PRODUCTO_CARRITO;
     })
 
     if (this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA != null) {
@@ -707,7 +716,7 @@ export class CarritoComprasComponent implements OnInit {
             }
             if (envioDomicilio.TIPO_MEDIDA == 'Peso') {
               //DE ACUERDO AL PESO DEL PEDIDO
-              console.log('//DE ACUERDO AL PESO DEL PEDIDO',this.pesoPedidoTotalKg);
+              console.log('//DE ACUERDO AL PESO DEL PEDIDO', this.pesoPedidoTotalKg);
               if (this.pesoPedidoTotalKg >= envioDomicilio.MINIMO && this.pesoPedidoTotalKg <= envioDomicilio.MAXIMO) {
                 this.arrayPreciosEnvioAux.push(envioDomicilio.PRECIO);
               }
@@ -988,7 +997,7 @@ export class CarritoComprasComponent implements OnInit {
     this.siguienteDetallePedido = false;
     this.banderaDireccionEnvio = false;
 
-  this.informacionCompra = {
+    this.informacionCompra = {
       COD_AGENTE: null,
       ID_AGENTE: null,
       FECHA_COMPRA: null,
