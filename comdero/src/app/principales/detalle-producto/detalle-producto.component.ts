@@ -112,7 +112,7 @@ export class DetalleProductoComponent implements OnInit {
   public select_ciudad: boolean = false;
   public Carrito_Producto;
 
-  constructor(public menu: MenuComponent, public _carritoServicio: CarritoServicio, 
+  constructor(public menu: MenuComponent, public _carritoServicio: CarritoServicio,
     public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal, private _sanitizer: DomSanitizer, configRating: NgbRatingConfig, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
     configRating.max = 5;
     configRating.readonly = true;
@@ -120,6 +120,7 @@ export class DetalleProductoComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.imagenPrincipal= 'assets/images/no-imagen1.png';
     this.getDpaProvincias("P");
     this.obtenerProducto();
   }
@@ -412,6 +413,7 @@ export class DetalleProductoComponent implements OnInit {
   public noExite = 'assets/images/no-imagen1.png';
 
   getImagen(pathImagen) {
+    console.log("busqueda de imagen fallida", pathImagen)
     this.noExite = 'assets/images/no-imagen1.png';
     if (pathImagen) {
       this.noExite = GLOBAL.urlImagen + pathImagen;

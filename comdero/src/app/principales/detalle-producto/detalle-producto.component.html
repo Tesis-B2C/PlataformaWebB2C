@@ -54,7 +54,7 @@
                           [src]="this.videoYoutube" frameborder="0"
                           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                           allowfullscreen></iframe>
-                  <video *ngIf="this.imagenPrincipal==null && this.videoYoutube == null" class="video-carga" controls
+                  <video *ngIf="this.imagenPrincipal==null && this.videoYoutube == null && data.video!=null" class="video-carga" controls
                          height="auto" width="auto">
                     <source [src]="data.video" type="{{ data.type }}">
                   </video>
@@ -76,7 +76,7 @@
                   </div>
                 </a>
               </div> <!-- thumbs-wrap.// -->
-            </article> <!-- gallery-wrap .end// -->
+            </article>  <!--gallery-wrap .end//-->
           </aside>
           <main class="col-lg-6 col-md-6 border-left">
             <article class="content-body px-4">
