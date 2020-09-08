@@ -2,3 +2,101 @@
   width: 2em;
   height: 2em;
 }
+.alert {
+  font-size: smaller;
+  padding: 0;
+  background-color: white;
+  border: none;
+  color: #bd2130;
+  margin-left: 4px;
+}
+
+.errorSelect {
+  border: 1px solid red;
+}
+.satisfactorioSelect {
+  border: 1px solid limegreen;
+}
+
+.select_ciudad{
+  border: solid  1px red;
+}
+
+.fontTamano {
+  font-size: small;
+}
+
+.btn-facebook:hover,
+.btn-facebook:focus {
+  background: #2d4278;
+  color: #ffffff
+}
+.btn.btn-rounded {
+  border-radius: 50px
+}
+.btn-whatsapp {
+  background: #4AC959;
+  color: #ffffff
+}
+.btn-whatsapp:hover,
+.btn-whatsapp:focus {
+  background: #46E011;
+  color: #ffffff
+}
+.btn-web {
+  background: #000000;
+  color: #ffffff;
+}
+
+.btn-web:hover,
+.btn-web:focus {
+  background: #000000;
+  color: #ffffff;
+}
+
+
+.iconos-pagos {
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  background: #f1f3f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin:0px auto;
+  padding:3%
+}
+
+button{
+  font-size: small;
+}
+
+
+h3{
+  font-family: 'Poppins', sans-serif;
+}
+
+.social-box .box{
+  background: #FFF;
+  border-radius: 10px;
+  padding: 40px 10px;
+  margin: 20px 0px;
+  cursor: pointer;
+  transition: all 0.5s ease-out;
+}
+
+.social-box .box:hover{
+  box-shadow: 0 0 6px #4fb867;
+}
+
+.social-box .box .box-text{
+  margin:20px 0px;
+  font-size: 15px;
+  line-height: 30px;
+}
+
+.social-box .box .box-btn a{
+  text-decoration: none;
+  font-size: 16px;
+}

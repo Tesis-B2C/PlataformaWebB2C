@@ -1,5 +1,7 @@
 'use strict'
 
+
+
 const Carrito = require('../models/carrito'); //importar el modelo del usuario  o lo que son las clases comunes
 const Carrito_Producto = require('../models/carrito_producto'); //importar el modelo del usuario  o lo que son las clases comunes
 const Agente = require("../models/Agente");
@@ -12,7 +14,10 @@ const Descuento = require("../models/descuento");
 const Tienda = require("../models/tienda");
 const {Op} = require("sequelize");
 const moment = require('moment');
-
+const Opcion_Envio = require('../models/opcion_envio');
+const DPA = require('../models/dpa');
+const Metodo_Pago = require('../models/metodo_pago');
+const Sucursal = require('../models/sucursal');
 async function getCarrito(req, res) {
 
     let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
@@ -34,7 +39,7 @@ async function getCarrito(req, res) {
 
                         include: [{
                             model: Producto,
-                            include: [{model: Oferta, include: {model: Tienda}}, {
+                            include: [{model: Oferta, include: {model: Tienda, include:[{model:Metodo_Pago},{model:Opcion_Envio}, {model:Sucursal, include:{model:DPA, include:{model: DPA, as: 'DPAP', required: true}}}]}}, {
                                 model: Producto_Descuento,
                                 include: {model: Descuento}
                             }]
