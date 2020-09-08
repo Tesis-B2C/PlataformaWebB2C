@@ -2,13 +2,25 @@
   <div class="modal-header py-1">
     <p class="modal-title font-weight-bold">Finalice su compra en COMDERO</p>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click');cerrar()">
-      <span aria-hidden="true">&times;</span>
+      <span aria-hidden="true" style="font-size: large">&times;</span>
     </button>
   </div>
+
   <div *ngIf="(!this.direccionEnvioDiferente && !this.datosfacturacionDiferente && !this.siguienteDetallePedido)"
        class="modal-body px-0">
+    <div class="media container ">
+      <img class="mr-3 rounded-circle"
+           [src]="getImagen(this.varianteActiva.TIENDA.LOGO)" alt="logo tienda"
+           width="50px">
+
+      <div class="media-body">
+        <h5 class="mt-3">{{this.varianteActiva.TIENDA.NOMBRE_COMERCIAL}}</h5>
+
+      </div>
 
 
+    </div>
+    <br>
     <div class="card card-body pb-0">
       <div class="form-row">
         <div class="form-group col-sm-3 col-12 mb-0">
@@ -63,8 +75,8 @@
               {{this.informacionCompra?.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA}}
             </p>
           </div>
-          <button (click)="habilitarDireccionDiferente('Envio')"><label class="nuevaDireccionEnvio"> <a
-            class="text-primary p-0">Enviar a una dirección diferente</a></label>
+          <button (click)="habilitarDireccionDiferente('Envio') " class="btn-link" style="font-size: medium">Enviar a
+            una dirección diferente
           </button>
         </div>
       </div>
@@ -113,8 +125,8 @@
             <p class="text-justify mb-0">{{this.informacionCompra?.DATOS_FACTURA.TELEFONO_FACTURA}}</p>
             <p class="text-justify mb-1">{{this.informacionCompra?.DATOS_FACTURA.DIRECCION_FACTURA}}</p>
           </div>
-          <button (click)="habilitarDireccionDiferente('Factura')"><label class="nuevaDireccionEnvio">
-            <a class="text-primary p-0">Factura con otros datos</a></label>
+          <button (click)="habilitarDireccionDiferente('Factura')" class="btn btn-link p-0" style="font-size: medium">
+            Factura con otros datos
           </button>
         </div>
       </div>
@@ -156,7 +168,7 @@
 
           <div class="form-row">
             <div class="form-group col-6 mb-0"><label class="my-0">Descuento
-              ({{this.informacionCompra?.COSTOS.PORCENTAJE_AUTOMATICO}}%)</label></div>
+            </label></div>
             <div class="form-group col-1 my-0 text-right"><label class="my-0">(-)</label></div>
             <div class="form-group col-5 my-0 text-center"><label
               class="my-0">{{this.informacionCompra?.COSTOS.DESCUENTOS | currency}}</label></div>
@@ -164,7 +176,7 @@
 
           <div class="form-row">
             <div class="form-group col-6 mb-0"><label class="my-0">Descuento Cupón
-              ({{this.informacionCompra.COSTOS.PORCENTAJE_CUPON}}%)</label></div>
+           </label></div>
             <div class="form-group col-1 my-0 text-right"><label class="my-0">(-)</label></div>
             <div class="form-group col-5 my-0 text-center"><label
               class="my-0">{{this.informacionCompra.COSTOS.CUPON | currency}}</label></div>
@@ -209,10 +221,10 @@
     <div class="form-row px-5" *ngIf="this.informacionCompra?.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA != null">
       <div class="form-group col-1 mb-0">
         <div>
-          <label class="text-center">Actual</label>
+          <label class="text-center"><strong>Actual</strong></label>
         </div>
       </div>
-      <div class="form-group col-11 mb-0">
+      <div class="form-group col-md-11 mb-0">
         <label
           class="text-justify mb-0">{{this.informacionCompra?.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA}}</label>
         <p class="text-justify mb-0">{{this.informacionCompra?.DATOS_ENTREGA.TELEFONO_ENTREGA}}</p>
@@ -864,8 +876,9 @@
                 </div>
               </div>
 
-              <div *ngIf="tienda.mensajeCupones" class="alert alert-warning alert-dismissible fade show mb-0" role="alert">
-                 {{tienda.mensajeCupones}}
+              <div *ngIf="tienda.mensajeCupones" class="alert alert-warning alert-dismissible fade show mb-0"
+                   role="alert">
+                {{tienda.mensajeCupones}}
                 <button type="button" class="close p-0 m-0" (click)="tienda.mensajeCupones=''">
                   <a aria-hidden="true">&times;</a>
                 </button>
@@ -883,8 +896,10 @@
             </dl>
             <dl class="dlist-align">
               <dt>Impuestos</dt>
-              <dd class="text-right text-danger">{{tienda.cuentas.iva | currency}}</dd>
+              <dd class="text-right text-danger">{{tienda.cuentas.iva | currency}} </dd>
+
             </dl>
+
             <dl class="dlist-align">
               <dt>Subtotal:</dt>
               <dd class="text-right text-dark b"><strong>{{tienda.cuentas.totalConIva | currency}}</strong></dd>
@@ -909,8 +924,10 @@
             <hr>
 
 
-            <a (click)="abrirModalFinalizarPedido(contentPedido,tienda)" class="btn btn-primary btn-block"> Comprar</a>
-            <a href="#" class="btn btn-light btn-block">Continuar comprando</a>
+            <button (click)="abrirModalFinalizarPedido(contentPedido,tienda)" class="btn btn-primary btn-block white">
+              Comprar
+            </button>
+            <button href="#" class="btn btn-light btn-block">Continuar comprando</button>
           </div> <!-- card-body.// -->
         </div> <!-- card.// -->
 

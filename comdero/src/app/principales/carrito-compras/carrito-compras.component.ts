@@ -9,6 +9,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Agente} from "../../modelos/agente";
 import {DpaServicio} from "../../servicios/dpa.servicio";
 import * as moment from 'moment';
+import {Tienda} from "../../modelos/tienda";
 
 @Component({
   selector: 'app-carrito-compras',
@@ -452,6 +453,7 @@ export class CarritoComprasComponent implements OnInit {
     this.varianteActiva.DESCUENTO_CUPON = tienda.cuentas.descuentoCupon;
     this.varianteActiva.SUCURSALES = tienda.sucursales;
     this.varianteActiva.CONTACTO_WHATSAPP = tienda.contacto_whatsapp;
+    this.varianteActiva.TIENDA=tienda.producto_carrito[0].VARIANTE.PRODUCTO.OFERTum.TIENDA
 
     console.log("variante activa", this.varianteActiva);
   }
@@ -470,7 +472,8 @@ export class CarritoComprasComponent implements OnInit {
     CONTACTO_WHATSAPP: null,
     PORCENTAJE_IMPUESTO: null,
     DESCUENTO_AUTOMATICO: 0,
-    DESCUENTO_CUPON: 0
+    DESCUENTO_CUPON: 0,
+    TIENDA:null,
   };
   public informacionCompra = {
     COD_AGENTE: null,
@@ -501,12 +504,9 @@ export class CarritoComprasComponent implements OnInit {
       PRECIO_UNITARIO_PRODUCTO: null,
       TOTAL_PRODUCTOS: null,
       IMPUESTOS: null,
-      PORCENTAJE_IMPUESTO: null,
       SUBTOTAL: null,
       DESCUENTOS: null,
-      PORCENTAJE_AUTOMATICO: null,
       CUPON: null,
-      PORCENTAJE_CUPON: null,
       RECARGO_PAYPAL: null,
       PORCENTAJE_RECARGO_PAYPAL: null,
       COSTOS_ENVIO: null,
