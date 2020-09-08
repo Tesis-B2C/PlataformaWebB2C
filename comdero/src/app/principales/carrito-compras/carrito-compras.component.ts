@@ -269,7 +269,6 @@ export class CarritoComprasComponent implements OnInit {
   }
 
 
-
   verificarCupon(tienda) {
     this.hoy = new Date();
     debugger;
@@ -341,12 +340,12 @@ export class CarritoComprasComponent implements OnInit {
       if (bandera && bandera2) {
         element2['cupones'].add(this.cupon);
         element2['cuentas'].descuentoCupon = element2['cuentas'].descuentoCupon + d;
-        element2['mensajeCupones'] ="";
-      } else if (bandera2 && element2['idTienda']==tienda) {
+        element2['mensajeCupones'] = "";
+      } else if (bandera2 && element2['idTienda'] == tienda) {
 
-        element2['mensajeCupones'] =  "El cupón ya fue utilizado"
-      } else if(element2['idTienda']==tienda) {
-        element2['mensajeCupones']  = "El cupón no es válido"
+        element2['mensajeCupones'] = "El cupón ya fue utilizado"
+      } else if (element2['idTienda'] == tienda) {
+        element2['mensajeCupones'] = "El cupón no es válido"
       }
     }
     this.cupon = "";
@@ -710,7 +709,7 @@ export class CarritoComprasComponent implements OnInit {
             if (envioDomicilio.TIPO_MEDIDA == 'Precio') {
               //DE ACUERDO AL PRECIO DEL PEDIDO
               console.log('//DE ACUERDO AL PRECIO DEL PEDIDO');
-              if (this.informacionCompra.COSTOS.SUBTOTAL >= envioDomicilio.MINIMO && this.informacionCompra.COSTOS.SUBTOTAL <= envioDomicilio.MAXIMO) {
+              if (this.informacionCompra.COSTOS.TOTAL_PEDIDO >= envioDomicilio.MINIMO && this.informacionCompra.COSTOS.TOTAL_PEDIDO <= envioDomicilio.MAXIMO) {
                 this.arrayPreciosEnvioAux.push(envioDomicilio.PRECIO);
               }
             }
@@ -735,7 +734,7 @@ export class CarritoComprasComponent implements OnInit {
             if (envioDomicilio.TIPO_MEDIDA == 'Precio') {
               //DE ACUERDO AL PRECIO DEL PEDIDO
               console.log('//DE ACUERDO AL PRECIO DEL PEDIDO');
-              if (this.informacionCompra.COSTOS.SUBTOTAL >= envioDomicilio.MINIMO && this.informacionCompra.COSTOS.SUBTOTAL <= envioDomicilio.MAXIMO) {
+              if (this.informacionCompra.COSTOS.TOTAL_PEDIDO >= envioDomicilio.MINIMO && this.informacionCompra.COSTOS.TOTAL_PEDIDO <= envioDomicilio.MAXIMO) {
                 this.arrayPreciosEnvioAux.push(envioDomicilio.PRECIO);
               }
             }
