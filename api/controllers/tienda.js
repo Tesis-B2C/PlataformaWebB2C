@@ -238,7 +238,6 @@ async function updateEstadoTienda(req, res) {
                 where: {NUM_TIENDA: req.params.id, ESTADO_OFERTA: {[Op.or]: [0, 1]}},
                 transaction: t
             });
-
             if (tiendaActualizada && ofertaActualizada) {
                 res.status(200).send({
                     message: "La tienda ha sido actualizada correctamente"
