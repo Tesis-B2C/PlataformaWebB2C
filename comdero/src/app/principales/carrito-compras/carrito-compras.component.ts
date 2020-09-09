@@ -67,7 +67,7 @@ export class CarritoComprasComponent implements OnInit {
   public async validarEstadoProductos() {
     this.carritoIdentidad = await this._carritoServicio.getCarrito().toPromise();
     for (let element of this.carritoIdentidad.data.CARRITO_PRODUCTOs) {
-      if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.ESTADO_TIENDA != 0 || element.VARIANTE.ESTADO_VARIANTE != 0 ) {
+      if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.ESTADO_TIENDA != 0 || element.VARIANTE.ESTADO_VARIANTE != 0) {
         await this._carritoServicio.deleteProductoCarrito(element.VARIANTE.NUM_VARIANTE).toPromise();
         await this.menu.conteoProductosCarrito(false);
       }
@@ -495,6 +495,8 @@ export class CarritoComprasComponent implements OnInit {
     ID_AGENTE: null,
     FECHA_COMPRA: null,
     DATOS_ENTREGA: {
+      TIPO_IDENTIFICACION_ENTREGA: null,
+      IDENTIFICACION_ENTREGA: null,
       CALLE_PRINCIPAL_ENTREGA: null,
       CALLE_SECUNDARIA_ENTREGA: null,
       NUM_CASA_ENTREGA: null,
@@ -565,7 +567,8 @@ export class CarritoComprasComponent implements OnInit {
         null, null, null, null, null);
 
       this.informacionCompra.ID_AGENTE = this.identidadComprador.ID_AGENTE;
-
+      this.informacionCompra.DATOS_ENTREGA.TIPO_IDENTIFICACION_ENTREGA = this.identidadComprador.TIPO;
+      this.informacionCompra.DATOS_ENTREGA.IDENTIFICACION_ENTREGA = this.identidadComprador.ID_AGENTE;
       this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA = this.identidadComprador.CALLE_PRINCIPAL_AGENTE;
       this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA = this.identidadComprador.CALLE_SECUNDARIA_AGENTE;
       this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA = this.identidadComprador.NUM_CASA_AGENTE;
@@ -595,6 +598,8 @@ export class CarritoComprasComponent implements OnInit {
         null, null, null, null, null, null);
 
       this.informacionCompra.ID_AGENTE = null;
+      this.informacionCompra.DATOS_ENTREGA.TIPO_IDENTIFICACION_ENTREGA = null;
+      this.informacionCompra.DATOS_ENTREGA.IDENTIFICACION_ENTREGA = null;
       this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA = null;
       this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA = null;
       this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA = null;
@@ -802,6 +807,16 @@ export class CarritoComprasComponent implements OnInit {
   }
 
   public banderaTipo: boolean;
+  public banderaTipoEntrega: boolean;
+
+  public cambiarTipoEntrega(value) {
+    this.DatosDireccion.Tipo = value;
+    if (value == 'Persona') {
+      this.banderaTipoEntrega = true;
+    } else if (value == 'Empresa') {
+      this.banderaTipoEntrega = false;
+    }
+  }
 
   public habilitarDireccionDiferente(proceso) {
     if (proceso == 'Envio') {
@@ -809,6 +824,8 @@ export class CarritoComprasComponent implements OnInit {
       this.direccionEnvioDiferente = !this.direccionEnvioDiferente;
       this.ciudadDireccion = null;
       this.provinciaDireccion = null;
+      this.DatosDireccion.Id_Agente = this.informacionCompra.DATOS_ENTREGA.IDENTIFICACION_ENTREGA;
+      this.DatosDireccion.Tipo = this.informacionCompra.DATOS_ENTREGA.TIPO_IDENTIFICACION_ENTREGA;
       this.DatosDireccion.Num_Cod_Postal = this.informacionCompra.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA;
       this.DatosDireccion.Nombre = this.informacionCompra.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA;
       this.DatosDireccion.Telefono = this.informacionCompra.DATOS_ENTREGA.TELEFONO_ENTREGA;
@@ -816,6 +833,12 @@ export class CarritoComprasComponent implements OnInit {
       this.DatosDireccion.Calle_Secundaria_Agente = this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA;
       this.DatosDireccion.Num_Casa_Agente = this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA;
       this.DatosDireccion.Ciudad = this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA;
+
+      if (this.DatosDireccion.Tipo == 'Persona') {
+        this.banderaTipoEntrega = true;
+      } else if (this.DatosFactura.Tipo == 'Empresa') {
+        this.banderaTipoEntrega = false;
+      }
     }
     if (proceso == 'Factura') {
       this.datosfacturacionDiferente = !this.datosfacturacionDiferente;
@@ -884,36 +907,76 @@ export class CarritoComprasComponent implements OnInit {
 
   public guardarDireccionNueva() {
     if (document.forms['formActualizarDireccionEnvio'].checkValidity()) {
-      this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA = this.DatosDireccion.Calle_Principal_Agente;
-      this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA = this.DatosDireccion.Calle_Secundaria_Agente;
-      this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA = this.DatosDireccion.Num_Casa_Agente;
-      this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA = this.DatosDireccion.Ciudad.toString().trim();
+      if (this.validarCedulaEntrega() == true) {
+        this.informacionCompra.DATOS_ENTREGA.TIPO_IDENTIFICACION_ENTREGA = this.DatosDireccion.Tipo;
+        this.informacionCompra.DATOS_ENTREGA.IDENTIFICACION_ENTREGA = this.DatosDireccion.Id_Agente;
+        this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA = this.DatosDireccion.Calle_Principal_Agente;
+        this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA = this.DatosDireccion.Calle_Secundaria_Agente;
+        this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA = this.DatosDireccion.Num_Casa_Agente;
+        this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA = this.DatosDireccion.Ciudad.toString().trim();
 
-      this.provinciasDireccion.forEach(provincia => {
-        if (provincia.COD_DPA == this.provinciaDireccion)
-          this.provinciaDireccionNombre = provincia.NOMBRE;
-      })
-      console.log(JSON.stringify(this.provinciasDireccion));
-      this.ciudadesDireccion.forEach(ciudad => {
-        if (ciudad.COD_DPA == this.DatosDireccion.Ciudad.toString().trim()) {
-          this.ciudadDireccionNombre = ciudad.NOMBRE;
+        this.provinciasDireccion.forEach(provincia => {
+          if (provincia.COD_DPA == this.provinciaDireccion)
+            this.provinciaDireccionNombre = provincia.NOMBRE;
+        })
+        console.log(JSON.stringify(this.provinciasDireccion));
+        this.ciudadesDireccion.forEach(ciudad => {
+          if (ciudad.COD_DPA == this.DatosDireccion.Ciudad.toString().trim()) {
+            this.ciudadDireccionNombre = ciudad.NOMBRE;
+          }
+        })
+        console.log(JSON.stringify(this.ciudadesDireccion) + this.ciudadDireccion + this.DatosDireccion.Ciudad);
+        this.informacionCompra.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA = this.DatosDireccion.Nombre;
+        this.informacionCompra.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA = this.DatosDireccion.Num_Cod_Postal;
+        this.informacionCompra.DATOS_ENTREGA.TELEFONO_ENTREGA = this.DatosDireccion.Telefono;
+
+        console.log('DDDDDDDDDDDDDDDDD' + this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA + 'DDDDDDDDDDDD');
+
+        this.banderaDireccionEnvio = true;
+        this.calcularCostosEnvioDomicilio();
+        this.direccionEnvioDiferente = !this.direccionEnvioDiferente;
+      } else {
+        if (this.banderaTipoEntrega) {
+          this.mostrarToast("La cédula ingresada no es válida", "");
+        } else if (!this.banderaTipoEntrega) {
+          this.mostrarToast("El ruc ingresado no es válido", "");
         }
-      })
-      console.log(JSON.stringify(this.ciudadesDireccion) + this.ciudadDireccion + this.DatosDireccion.Ciudad);
-      this.informacionCompra.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA = this.DatosDireccion.Nombre;
-      this.informacionCompra.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA = this.DatosDireccion.Num_Cod_Postal;
-      this.informacionCompra.DATOS_ENTREGA.TELEFONO_ENTREGA = this.DatosDireccion.Telefono;
-
-      console.log('DDDDDDDDDDDDDDDDD' + this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA + 'DDDDDDDDDDDD');
-
-      this.banderaDireccionEnvio = true;
-      this.calcularCostosEnvioDomicilio();
-      this.direccionEnvioDiferente = !this.direccionEnvioDiferente;
+      }
     } else {
       this.mostrarToast("Al parecer existe errores en su formulario por favor revise nuevamente, debe llenar todos los campos obligatorios (*)", "");
     }
   }
+  public validarCedulaEntrega() {
+    var cad: any = this.DatosDireccion.Id_Agente;
+    var i;
+    var total = 0;
+    var longitud;
+    if (this.DatosDireccion.Tipo == 'Persona')
+      longitud = cad.length;
+    else
+      longitud = cad.length - 3;
 
+    var longcheck = longitud - 1;
+    if (cad !== "" && longitud === 10) {
+      for (i = 0; i < longcheck; i++) {
+        if (i % 2 === 0) {
+          var aux = cad.charAt(i) * 2;
+          if (aux > 9) aux -= 9;
+          total += aux;
+        } else {
+          total += parseInt(cad.charAt(i)); // parseInt o concatenará en lugar de sumar
+        }
+      }
+      total = total % 10 ? 10 - total % 10 : 0;
+
+      if (cad.charAt(longitud - 1) == total) {
+        return true;
+      } else {
+        this.DatosDireccion.Id_Agente = null;
+        return false;
+      }
+    }
+  }
   public cambiarTipo(value) {
     this.DatosFactura.Tipo = value;
     if (value == 'Persona') {
@@ -1016,11 +1079,13 @@ export class CarritoComprasComponent implements OnInit {
       ID_AGENTE: null,
       FECHA_COMPRA: null,
       DATOS_ENTREGA: {
+        TIPO_IDENTIFICACION_ENTREGA: null,
+        NOMBRE_PERSONA_ENVIO_ENTREGA: null,
+        IDENTIFICACION_ENTREGA: null,
         CALLE_PRINCIPAL_ENTREGA: null,
         CALLE_SECUNDARIA_ENTREGA: null,
         NUM_CASA_ENTREGA: null,
         COD_DPA_ENTREGA: null,
-        NOMBRE_PERSONA_ENVIO_ENTREGA: null,
         NUM_COD_POSTAL_ENTREGA: null,
         TELEFONO_ENTREGA: null,
       },

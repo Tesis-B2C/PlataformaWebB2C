@@ -48,7 +48,11 @@ const Compra = db.sequelize.define('COMPRA', {
                 type: Sequelize.STRING,
                 allowNull: false
             },
-        IDENTIFICACION_PERSONA_ENTREGA:
+        TIPO_IDENTIFICACION_ENTREGA: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        IDENTIFICACION_ENTREGA:
             {
                 type: Sequelize.STRING,
                 allowNull: false
