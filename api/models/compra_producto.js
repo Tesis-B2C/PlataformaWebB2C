@@ -14,37 +14,59 @@ const Compra_Producto = db.sequelize.define('Compra_Producto', {
                 allowNull: false
             },
 
-        CANTIDAD:
+        CANTIDAD_PRODUCTO:
             {
                 type: Sequelize.INTEGER,
+                allowNull: false
+            },
+        PRECIO_UNITARIO:
+            {
+                type: Sequelize.FLOAT(8, 2),
+                allowNull: false
+            },
+        TOTAL_PRODUCTOS:
+            {
+                type: Sequelize.FLOAT(8, 2),
+                allowNull: false
+            },
+        IMPUESTOS:
+            {
+                type: Sequelize.FLOAT(8, 2),
+                allowNull: false
+            },
+        PORCENTAJE_IMPUESTOS:
+            {
+                type: Sequelize.FLOAT(8, 2),
+                allowNull: false
+            },
+        SUBTOTAL:
+            {
+                type: Sequelize.FLOAT(8, 2),
                 allowNull: false
             },
 
-        SUB_TOTAL:
+        DESCUENTOS:
             {
                 type: Sequelize.FLOAT(8, 2),
                 allowNull: false
             },
-        SUB_TOTAL_ENVIO:
+        PORCENTAJE_AUTOMATICO:
             {
                 type: Sequelize.FLOAT(8, 2),
                 allowNull: false
             },
-        FECHA_ENTREGAS:
+        CUPON:
             {
-                type: Sequelize.DATEONLY,
+                type: Sequelize.FLOAT(8, 2),
                 allowNull: false
             },
-        FECHA_ENVIO:
+        PORCENTAJE_CUPON:
             {
-                type: Sequelize.DATEONLY,
+                type: Sequelize.FLOAT(8, 2),
                 allowNull: false
             },
-        ESTADO_COMPRA:
-            {
-                type: Sequelize.INTEGER,
-                allowNull: false
-            }
+
+
 
     },
 
