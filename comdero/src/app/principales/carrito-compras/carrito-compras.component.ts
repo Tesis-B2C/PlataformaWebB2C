@@ -10,6 +10,7 @@ import {Agente} from "../../modelos/agente";
 import {DpaServicio} from "../../servicios/dpa.servicio";
 import * as moment from 'moment';
 import {Tienda} from "../../modelos/tienda";
+import {element} from "protractor";
 
 @Component({
   selector: 'app-carrito-compras',
@@ -53,13 +54,26 @@ export class CarritoComprasComponent implements OnInit {
   }
 
   async ngOnInit() {
-
+    await this.validarEstadoProductos();
     await this.iniciarCarritoCompras();
     await this.verificarStockInicio();
     await this.calcularPrecios();
     await this.verificarDescuentoAutomatico();
     await this.getDpaProvincias("P");
 
+
+  }
+
+  public async validarEstadoProductos() {
+    this.carritoIdentidad = await this._carritoServicio.getCarrito().toPromise();
+    for (let element of this.carritoIdentidad.data.CARRITO_PRODUCTOs) {
+      if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.ESTADO_TIENDA != 0 || element.VARIANTE.ESTADO_VARIANTE != 0 ) {
+        await this._carritoServicio.deleteProductoCarrito(element.VARIANTE.NUM_VARIANTE).toPromise();
+        await this.menu.conteoProductosCarrito(false);
+      }
+
+
+    }
   }
 
   public reiniciar() {
@@ -148,6 +162,7 @@ export class CarritoComprasComponent implements OnInit {
       console.log("por tienda", this.vTiendas);
 
     } catch (e) {
+      console.log("error que busco ", e);
       this.toastr.error(JSON.stringify(e.error.message));
     }
   }
@@ -453,7 +468,7 @@ export class CarritoComprasComponent implements OnInit {
     this.varianteActiva.DESCUENTO_CUPON = tienda.cuentas.descuentoCupon;
     this.varianteActiva.SUCURSALES = tienda.sucursales;
     this.varianteActiva.CONTACTO_WHATSAPP = tienda.contacto_whatsapp;
-    this.varianteActiva.TIENDA=tienda.producto_carrito[0].VARIANTE.PRODUCTO.OFERTum.TIENDA
+    this.varianteActiva.TIENDA = tienda.producto_carrito[0].VARIANTE.PRODUCTO.OFERTum.TIENDA
 
     console.log("variante activa", this.varianteActiva);
   }
@@ -473,7 +488,7 @@ export class CarritoComprasComponent implements OnInit {
     PORCENTAJE_IMPUESTO: null,
     DESCUENTO_AUTOMATICO: 0,
     DESCUENTO_CUPON: 0,
-    TIENDA:null,
+    TIENDA: null,
   };
   public informacionCompra = {
     COD_AGENTE: null,

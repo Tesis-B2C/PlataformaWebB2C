@@ -54,7 +54,7 @@
                           [src]="this.videoYoutube" frameborder="0"
                           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                           allowfullscreen></iframe>
-                  <video *ngIf="this.imagenPrincipal==null && this.videoYoutube == null" class="video-carga" controls
+                  <video *ngIf="this.imagenPrincipal==null && this.videoYoutube == null && data.video!=null" class="video-carga" controls
                          height="auto" width="auto">
                     <source [src]="data.video" type="{{ data.type }}">
                   </video>
@@ -76,13 +76,13 @@
                   </div>
                 </a>
               </div> <!-- thumbs-wrap.// -->
-            </article> <!-- gallery-wrap .end// -->
+            </article>  <!--gallery-wrap .end//-->
           </aside>
           <main class="col-lg-6 col-md-6 border-left">
             <article class="content-body px-4">
               <p class="mb-0">
                 <a
-                  href="principales/menu/detalle-tienda/tienda/{{this.productoDetalle?.TIENDA.NUM_TIENDA}}/inicio-tienda"
+                  routerLink="../../detalle-tienda/tienda/{{this.productoDetalle?.TIENDA.NUM_TIENDA}}/inicio-tienda"
                   class="title tituloTienda text-primary p-0"> {{this.productoDetalle?.TIENDA.NOMBRE_COMERCIAL}}</a>
               </p>
               <h4 class="title m-0">{{this.productoDetalle?.PRODUCTO.NOMBRE_PRODUCTO}}</h4>
@@ -175,11 +175,12 @@
                       </div>
                     </dd>
 
-                    <dt class="col-sm-3 col-4 mt-2">Cantidad</dt>
+                    <dt class="col-sm-3 col-4 mt-4">Cantidad   <a class="m-0 pt-0 text-center" style="font-size: 11px">({{this.varianteActiva.MEDIDA}})</a></dt>
+
                     <dd class="col-sm-9 col-8">
                       <div class="form-group col-lg-6 col-md-6 col-10 my-2 p-0">
 
-                        <div class=" input-spinner">
+                        <div class="input-group input-spinner mt-4">
                           <div class="input-group-prepend">
                             <button
                               [disabled]="this.banderaNoDisponible || (this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0)"
@@ -201,7 +202,7 @@
                             </button>
                           </div>
                         </div> <!-- input-group.// -->
-                        <p class="m-0 pt-0 text-center" style="font-size: 11px">({{this.varianteActiva.MEDIDA}})</p>
+
                       </div>
                     </dd>
                   </dl>
@@ -282,10 +283,11 @@
               <div id="cardMetodosEnvioInformacion">
                 <div class="row justify-content-center ">
                   <h4 class="card-title text-center ">Opciones de Pago</h4>
-                  <p class=" text-center">Contamos con varios métodos de pago para facilitar la compra de tus productos,
-                    al momento de realizar la
-                    transacción.</p>
+
                 </div>
+                <p class="text-center dis-block">Contamos con varios métodos de pago para facilitar la compra de tus productos,
+                  al momento de realizar la
+                  transacción.</p>
 
                 <div class="social-box"
                      *ngIf="this.objTransferencia.Tipo_Pago!=null || this.objEfectivo.Tipo_Pago!=null || this.objElectronico.Tipo_Pago!=null">
@@ -407,7 +409,7 @@
     <div class="modal-header py-1">
       <p class="modal-title font-weight-bold">Finalice su compra en COMDERO</p>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click'); cerrar()">
-        <span aria-hidden="true">&times;</span>
+        <span aria-hidden="true" style="font-size: x-large">&times;</span>
       </button>
     </div>
     <div *ngIf="(!this.direccionEnvioDiferente && !this.datosfacturacionDiferente && !this.siguienteDetallePedido)"
@@ -1040,7 +1042,7 @@
                         <button type="button" class="btn btn-social-icon btn-whatsapp btn-rounded">
                           <i class="fab fa-whatsapp fa-1x"></i>
                         </button>
-                        <label> {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</label>
+                        <a href="https://api.whatsapp.com/send?phone={{contactoWhatsapp}}&text=Hola!%20Quiero%20conocer%20acerca%20de%20su%20tienda!" target="_blank" > {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</a>
                       </div>
                     </div>
                   </div>
@@ -1082,7 +1084,7 @@
                     <button type="button" class="btn btn-social-icon btn-whatsapp btn-rounded">
                       <i class="fab fa-whatsapp fa-1x"></i>
                     </button>
-                    <label> {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</label>
+                    <a href="https://api.whatsapp.com/send?phone={{contactoWhatsapp}}&text=Hola!%20Quiero%20conocer%20acerca%20de%20su%20tienda!" target="_blank" > {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</a>
                   </div>
                 </div>
               </div>
@@ -1105,7 +1107,7 @@
                         <button type="button" class="btn btn-social-icon btn-whatsapp btn-rounded">
                           <i class="fab fa-whatsapp fa-1x"></i>
                         </button>
-                        <label> {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</label>
+                        <a href="https://api.whatsapp.com/send?phone={{contactoWhatsapp}}&text=Hola!%20Quiero%20conocer%20acerca%20de%20su%20tienda!" target="_blank" > {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</a>
                       </div>
                     </div>
                   </div>
@@ -1179,7 +1181,7 @@
 
     <div *ngIf="this.siguienteDetallePedido" class="text-right mb-3 mr-3">
       <button type="button" class="btn btn-primary mr-1" (click)="atras()">Atras</button>
-      <button type="button" class="btn btn-outline-primary ml-1">Realizar Compra</button>
+      <button type="button" class="btn btn-outline-primary ml-1" (click)="comprar()">Realizar Compra</button>
     </div>
 
   </ng-template>

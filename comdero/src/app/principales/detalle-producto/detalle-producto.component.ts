@@ -14,6 +14,7 @@ import * as moment from 'moment';
 import {CarritoServicio} from "../../servicios/carrito.servicio";
 import {MenuComponent} from "../menu/menu.component";
 import {Carrito_Producto} from "../../modelos/carrito_producto";
+import {CompraServicio} from "../../servicios/compra.servicio";
 
 @Component({
   selector: 'app-detalle-producto',
@@ -104,7 +105,6 @@ export class DetalleProductoComponent implements OnInit {
   };
 
   public currentRate = 1;
-
   public provinciasDireccion;
   public ciudadesDireccion;
   public ciudadDireccion;
@@ -112,16 +112,21 @@ export class DetalleProductoComponent implements OnInit {
   public select_ciudad: boolean = false;
   public Carrito_Producto;
 
-  constructor(public menu: MenuComponent, public _carritoServicio: CarritoServicio, 
-    public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal, private _sanitizer: DomSanitizer, configRating: NgbRatingConfig, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
+  constructor(public menu: MenuComponent, public _carritoServicio: CarritoServicio, public _compraServicio: CompraServicio,
+              public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal, private _sanitizer: DomSanitizer, configRating: NgbRatingConfig, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
     configRating.max = 5;
     configRating.readonly = true;
     this.varianteActiva.CANTIDAD = 1;
   }
 
+  public contactoWhatsapp;
+
   ngOnInit() {
+    this.imagenPrincipal = 'assets/images/no-imagen1.png';
     this.getDpaProvincias("P");
     this.obtenerProducto();
+
+
   }
 
   async getDpaProvincias(buscar) {
@@ -167,6 +172,8 @@ export class DetalleProductoComponent implements OnInit {
       this.id_Producto = this.route.snapshot.params.idProducto;
       let response = await this._productoServicio.obtenerProductoDetalle(this.id_Producto).toPromise();
       this.productoDetalle = response.data;
+      let contacto = this.productoDetalle.TIENDA.CONTACTO_WHATSAPP.slice(1, 10);
+      this.contactoWhatsapp = '593' + contacto;
       console.log('PROUCTO OBTENIDO BD' + JSON.stringify(this.productoDetalle));
       this.existeColorMaterialTalla();
       this.asignarVariblePrimero();
@@ -447,21 +454,6 @@ export class DetalleProductoComponent implements OnInit {
       this.varianteActiva.CANTIDAD = this.varianteActiva.CANTIDAD - 1;
   }
 
-  mensageError(mensaje) {
-    Swal.fire({
-      icon: 'error',
-      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Error..</h5></header>',
-      text: mensaje,
-      position: 'center',
-      width: 600,
-      buttonsStyling: false,
-      customClass: {
-        confirmButton: 'btn btn-primary px-5',
-        container: 'my-swal'
-        //icon:'sm'
-      }
-    });
-  }
 
   public DatosDireccion;
   public DatosFactura;
@@ -1126,5 +1118,51 @@ export class DetalleProductoComponent implements OnInit {
       //DIRECCION DE ENTREGA ESTA VACIO.
     }
     this.informacionCompra.COSTOS.TOTAL_PEDIDO = (this.informacionCompra.COSTOS.SUBTOTAL + this.informacionCompra.COSTOS.RECARGO_PAYPAL + this.informacionCompra.COSTOS.COSTOS_ENVIO) - (this.informacionCompra.COSTOS.DESCUENTOS + this.informacionCompra.COSTOS.CUPON);
+  }
+
+
+  public async comprar() {
+    try {
+      let response = await this._compraServicio.saveComprarProducto(this.informacionCompra).toPromise();
+       this.mensageCorrecto(response.message);
+    } catch (e) {
+      console.log("error", e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
+  }
+
+  mensageError(mensaje) {
+    Swal.fire({
+      icon: 'error',
+      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Error..</h5></header>',
+      text: mensaje,
+      position: 'center',
+      width: 600,
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        container: 'my-swal'
+        //icon:'sm'
+      }
+    });
+  }
+
+
+  mensageCorrecto(mensaje) {
+    Swal.fire({
+      icon: 'success',
+      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Correcto..</h5></header>',
+      text: mensaje,
+      position: 'center',
+      width: 600,
+      buttonsStyling: false,
+      //footer: '<a href="http://localhost:4200/loguin"><b><u>Autentificate Ahora</u></b></a>',
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        //icon:'sm'
+      }
+    });
   }
 }

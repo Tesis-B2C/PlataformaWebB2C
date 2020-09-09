@@ -29,23 +29,22 @@ async function getCarrito(req, res) {
         } else {
 
             let carritoObtenido = await Carrito.findOne({
-                where: {COD_AGENTE: req.user.id},
-                include: {
+                where: {COD_AGENTE: req.user.id,},
+                include: [{
                     model: Carrito_Producto,
                     separate: true,
                     order: [['FECHA_CREACION_CARRITO', 'DESC']],
                     include: {
                         model: Variante,
-
                         include: [{
                             model: Producto,
-                            include: [{model: Oferta, include: {model: Tienda, include:[{model:Metodo_Pago},{model:Opcion_Envio}, {model:Sucursal, include:{model:DPA, include:{model: DPA, as: 'DPAP', required: true}}}]}}, {
+                            include: [{model: Oferta,  include: {model: Tienda, include:[{model:Metodo_Pago},{model:Opcion_Envio}, {model:Sucursal, include:{model:DPA, include:{model: DPA, as: 'DPAP', required: true}}}]}}, {
                                 model: Producto_Descuento,
                                 include: {model: Descuento}
                             }]
                         }]
                     }
-                }
+                }]
             });
 
             if (carritoObtenido) {
