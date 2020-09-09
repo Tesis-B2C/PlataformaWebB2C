@@ -16,7 +16,7 @@ import {ProductoServicio} from "./servicios/producto.servicio";
 import {MetodoPagoServicio} from "./servicios/metodo_pago.servicio";
 import {CorreoServicio} from "./servicios/correo.servicio";
 import {CarritoServicio} from "./servicios/carrito.servicio";
-
+import {CompraServicio} from "./servicios/compra.servicio";
 import {AdministradorTiendaModule} from "./administrador-tienda/administrador-tienda.module";
 /*import {GestionarTiendasModule} from "./administrador-tienda/gestionar-tiendas/gestionar-tiendas.module";*/
 import {FormsModule} from "@angular/forms";
@@ -61,6 +61,7 @@ import {ReloadGuard} from "./shared/guards/reload.guard";
     TiendaServicio,
     CorreoServicio,
     CarritoServicio,
+    CompraServicio,
     ReloadGuard],
   bootstrap: [AppComponent]
 })
