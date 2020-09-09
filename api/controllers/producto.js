@@ -573,7 +573,7 @@ async function obtenerProductoDetalle(req, res) {
         let fechaHoy = moment().format("YYYY-MM-DD");
 
         let productoObtenido = await Oferta.findOne({
-            where: {ID_OFERTA: req.params.id},
+            where: {ID_OFERTA: req.params.id,ESTADO_OFERTA:0},
             include: [{
                 model: Producto,
                 include: [{

@@ -104,7 +104,6 @@ export class DetalleProductoComponent implements OnInit {
   };
 
   public currentRate = 1;
-
   public provinciasDireccion;
   public ciudadesDireccion;
   public ciudadDireccion;
@@ -113,14 +112,14 @@ export class DetalleProductoComponent implements OnInit {
   public Carrito_Producto;
 
   constructor(public menu: MenuComponent, public _carritoServicio: CarritoServicio,
-    public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal, private _sanitizer: DomSanitizer, configRating: NgbRatingConfig, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
+              public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal, private _sanitizer: DomSanitizer, configRating: NgbRatingConfig, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
     configRating.max = 5;
     configRating.readonly = true;
     this.varianteActiva.CANTIDAD = 1;
   }
 
   ngOnInit() {
-    this.imagenPrincipal= 'assets/images/no-imagen1.png';
+    this.imagenPrincipal = 'assets/images/no-imagen1.png';
     this.getDpaProvincias("P");
     this.obtenerProducto();
   }
