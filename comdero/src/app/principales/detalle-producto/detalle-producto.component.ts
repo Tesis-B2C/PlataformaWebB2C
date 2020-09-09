@@ -67,13 +67,15 @@ export class DetalleProductoComponent implements OnInit {
     COD_PRODUCTO: null,
     FECHA_COMPRA: null,
     DATOS_ENTREGA: {
+      TIPO_IDENTIFICACION_ENTREGA: null,
+      NOMBRE_PERSONA_ENVIO_ENTREGA: null,
+      IDENTIFICACION_ENTREGA: null,
+      TELEFONO_ENTREGA: null,
       CALLE_PRINCIPAL_ENTREGA: null,
       CALLE_SECUNDARIA_ENTREGA: null,
       NUM_CASA_ENTREGA: null,
       COD_DPA_ENTREGA: null,
-      NOMBRE_PERSONA_ENVIO_ENTREGA: null,
       NUM_COD_POSTAL_ENTREGA: null,
-      TELEFONO_ENTREGA: null,
     },
     DATOS_FACTURA: {
       TIPO_IDENTIFICACION_FACTURA: null,
@@ -125,8 +127,6 @@ export class DetalleProductoComponent implements OnInit {
     this.imagenPrincipal = 'assets/images/no-imagen1.png';
     this.getDpaProvincias("P");
     this.obtenerProducto();
-
-
   }
 
   async getDpaProvincias(buscar) {
@@ -157,6 +157,7 @@ export class DetalleProductoComponent implements OnInit {
   }
 
   public banderaTipo: boolean;
+  public banderaTipoEntrega: boolean;
 
   public cambiarTipo(value) {
     this.DatosFactura.Tipo = value;
@@ -164,6 +165,15 @@ export class DetalleProductoComponent implements OnInit {
       this.banderaTipo = true;
     } else if (value == 'Empresa') {
       this.banderaTipo = false;
+    }
+  }
+
+  public cambiarTipoEntrega(value) {
+    this.DatosDireccion.Tipo = value;
+    if (value == 'Persona') {
+      this.banderaTipoEntrega = true;
+    } else if (value == 'Empresa') {
+      this.banderaTipoEntrega = false;
     }
   }
 
@@ -468,8 +478,8 @@ export class DetalleProductoComponent implements OnInit {
     //DATOS DE COMPRA QUE PUEDEN NO ESTAR
     if (this.identidadComprador.ID_AGENTE != null) {
       console.log('SI HAY DIRECCION');
-      this.DatosDireccion = new Agente(null, this.identidadComprador.NUM_COD_POSTAL, this.identidadComprador.NOMBRE,
-        this.identidadComprador.TELEFONO, null, null, 0, this.identidadComprador.CALLE_PRINCIPAL_AGENTE,
+      this.DatosDireccion = new Agente(this.identidadComprador.ID_AGENTE, this.identidadComprador.NUM_COD_POSTAL, this.identidadComprador.NOMBRE,
+        this.identidadComprador.TELEFONO, null, this.identidadComprador.TIPO, 0, this.identidadComprador.CALLE_PRINCIPAL_AGENTE,
         this.identidadComprador.CALLE_SECUNDARIA_AGENTE, this.identidadComprador.NUM_CASA_AGENTE, null, this.identidadComprador.COD_DPA,
         null);
 
@@ -480,6 +490,9 @@ export class DetalleProductoComponent implements OnInit {
 
       this.informacionCompra.ID_AGENTE = this.identidadComprador.ID_AGENTE;
 
+
+      this.informacionCompra.DATOS_ENTREGA.TIPO_IDENTIFICACION_ENTREGA = this.identidadComprador.TIPO;
+      this.informacionCompra.DATOS_ENTREGA.IDENTIFICACION_ENTREGA = this.identidadComprador.ID_AGENTE;
       this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA = this.identidadComprador.CALLE_PRINCIPAL_AGENTE;
       this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA = this.identidadComprador.CALLE_SECUNDARIA_AGENTE;
       this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA = this.identidadComprador.NUM_CASA_AGENTE;
@@ -509,6 +522,9 @@ export class DetalleProductoComponent implements OnInit {
         null, null, null, null, null, null);
 
       this.informacionCompra.ID_AGENTE = null;
+
+      this.informacionCompra.DATOS_ENTREGA.TIPO_IDENTIFICACION_ENTREGA = null;
+      this.informacionCompra.DATOS_ENTREGA.IDENTIFICACION_ENTREGA = null;
       this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA = null;
       this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA = null;
       this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA = null;
@@ -647,6 +663,8 @@ export class DetalleProductoComponent implements OnInit {
       this.direccionEnvioDiferente = !this.direccionEnvioDiferente;
       this.ciudadDireccion = null;
       this.provinciaDireccion = null;
+      this.DatosDireccion.Id_Agente = this.informacionCompra.DATOS_ENTREGA.IDENTIFICACION_ENTREGA;
+      this.DatosDireccion.Tipo = this.informacionCompra.DATOS_ENTREGA.TIPO_IDENTIFICACION_ENTREGA;
       this.DatosDireccion.Num_Cod_Postal = this.informacionCompra.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA;
       this.DatosDireccion.Nombre = this.informacionCompra.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA;
       this.DatosDireccion.Telefono = this.informacionCompra.DATOS_ENTREGA.TELEFONO_ENTREGA;
@@ -654,13 +672,20 @@ export class DetalleProductoComponent implements OnInit {
       this.DatosDireccion.Calle_Secundaria_Agente = this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA;
       this.DatosDireccion.Num_Casa_Agente = this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA;
       this.DatosDireccion.Ciudad = this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA;
+
+      if (this.DatosDireccion.Tipo == 'Persona') {
+        this.banderaTipoEntrega = true;
+      } else if (this.DatosFactura.Tipo == 'Empresa') {
+        this.banderaTipoEntrega = false;
+      }
+
     }
     if (proceso == 'Factura') {
       this.datosfacturacionDiferente = !this.datosfacturacionDiferente;
 
       this.DatosFactura.Id_Agente = this.informacionCompra.DATOS_FACTURA.IDENTIFICACION_FACTURA;
-      this.DatosFactura.Nombre = this.informacionCompra.DATOS_FACTURA.NOMBRE_FACTURA;
       this.DatosFactura.Tipo = this.informacionCompra.DATOS_FACTURA.TIPO_IDENTIFICACION_FACTURA;
+      this.DatosFactura.Nombre = this.informacionCompra.DATOS_FACTURA.NOMBRE_FACTURA;
       this.DatosFactura.Telefono = this.informacionCompra.DATOS_FACTURA.TELEFONO_FACTURA;
       this.DatosFactura.Calle_Principal_Agente = this.informacionCompra.DATOS_FACTURA.DIRECCION_FACTURA;
       this.DatosFactura.Correo = this.informacionCompra.DATOS_FACTURA.CORREO;
@@ -697,31 +722,43 @@ export class DetalleProductoComponent implements OnInit {
 
   public guardarDireccionNueva() {
     if (document.forms['formActualizarDireccionEnvio'].checkValidity()) {
-      this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA = this.DatosDireccion.Calle_Principal_Agente;
-      this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA = this.DatosDireccion.Calle_Secundaria_Agente;
-      this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA = this.DatosDireccion.Num_Casa_Agente;
-      this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA = this.DatosDireccion.Ciudad.toString().trim();
+      if (this.validarCedulaEntrega() == true) {
+        this.informacionCompra.DATOS_ENTREGA.TIPO_IDENTIFICACION_ENTREGA = this.DatosDireccion.Tipo;
+        this.informacionCompra.DATOS_ENTREGA.IDENTIFICACION_ENTREGA = this.DatosDireccion.Id_Agente;
 
-      this.provinciasDireccion.forEach(provincia => {
-        if (provincia.COD_DPA == this.provinciaDireccion)
-          this.provinciaDireccionNombre = provincia.NOMBRE;
-      })
-      console.log(JSON.stringify(this.provinciasDireccion));
-      this.ciudadesDireccion.forEach(ciudad => {
-        if (ciudad.COD_DPA == this.DatosDireccion.Ciudad.toString().trim()) {
-          this.ciudadDireccionNombre = ciudad.NOMBRE;
+        this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA = this.DatosDireccion.Calle_Principal_Agente;
+        this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA = this.DatosDireccion.Calle_Secundaria_Agente;
+        this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA = this.DatosDireccion.Num_Casa_Agente;
+        this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA = this.DatosDireccion.Ciudad.toString().trim();
+
+        this.provinciasDireccion.forEach(provincia => {
+          if (provincia.COD_DPA == this.provinciaDireccion)
+            this.provinciaDireccionNombre = provincia.NOMBRE;
+        })
+        console.log(JSON.stringify(this.provinciasDireccion));
+        this.ciudadesDireccion.forEach(ciudad => {
+          if (ciudad.COD_DPA == this.DatosDireccion.Ciudad.toString().trim()) {
+            this.ciudadDireccionNombre = ciudad.NOMBRE;
+          }
+        })
+        console.log(JSON.stringify(this.ciudadesDireccion) + this.ciudadDireccion + this.DatosDireccion.Ciudad);
+        this.informacionCompra.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA = this.DatosDireccion.Nombre;
+        this.informacionCompra.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA = this.DatosDireccion.Num_Cod_Postal;
+        this.informacionCompra.DATOS_ENTREGA.TELEFONO_ENTREGA = this.DatosDireccion.Telefono;
+
+        console.log('DDDDDDDDDDDDDDDDD' + this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA + 'DDDDDDDDDDDD');
+
+        this.banderaDireccionEnvio = true;
+        this.calcularCostosEnvioDomicilio();
+        this.direccionEnvioDiferente = !this.direccionEnvioDiferente;
+
+      } else {
+        if (this.banderaTipoEntrega) {
+          this.mostrarToast("La cédula ingresada no es válida", "");
+        } else if (!this.banderaTipoEntrega) {
+          this.mostrarToast("El ruc ingresado no es válido", "");
         }
-      })
-      console.log(JSON.stringify(this.ciudadesDireccion) + this.ciudadDireccion + this.DatosDireccion.Ciudad);
-      this.informacionCompra.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA = this.DatosDireccion.Nombre;
-      this.informacionCompra.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA = this.DatosDireccion.Num_Cod_Postal;
-      this.informacionCompra.DATOS_ENTREGA.TELEFONO_ENTREGA = this.DatosDireccion.Telefono;
-
-      console.log('DDDDDDDDDDDDDDDDD' + this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA + 'DDDDDDDDDDDD');
-
-      this.banderaDireccionEnvio = true;
-      this.calcularCostosEnvioDomicilio();
-      this.direccionEnvioDiferente = !this.direccionEnvioDiferente;
+      }
     } else {
       this.mostrarToast("Al parecer existe errores en su formulario por favor revise nuevamente, debe llenar todos los campos obligatorios (*)", "");
     }
@@ -748,6 +785,39 @@ export class DetalleProductoComponent implements OnInit {
       this.mostrarToast("Al parecer existe errores en su formulario por favor revise nuevamente, debe llenar todos los campos obligatorios (*)", "");
     }
   }
+
+  public validarCedulaEntrega() {
+    var cad: any = this.DatosDireccion.Id_Agente;
+    var i;
+    var total = 0;
+    var longitud;
+    if (this.DatosDireccion.Tipo == 'Persona')
+      longitud = cad.length;
+    else
+      longitud = cad.length - 3;
+
+    var longcheck = longitud - 1;
+    if (cad !== "" && longitud === 10) {
+      for (i = 0; i < longcheck; i++) {
+        if (i % 2 === 0) {
+          var aux = cad.charAt(i) * 2;
+          if (aux > 9) aux -= 9;
+          total += aux;
+        } else {
+          total += parseInt(cad.charAt(i)); // parseInt o concatenará en lugar de sumar
+        }
+      }
+      total = total % 10 ? 10 - total % 10 : 0;
+
+      if (cad.charAt(longitud - 1) == total) {
+        return true;
+      } else {
+        this.DatosDireccion.Id_Agente = null;
+        return false;
+      }
+    }
+  }
+
 
   public validarCedula() {
     var cad: any = this.DatosFactura.Id_Agente;
@@ -823,13 +893,15 @@ export class DetalleProductoComponent implements OnInit {
       COD_PRODUCTO: null,
       FECHA_COMPRA: null,
       DATOS_ENTREGA: {
+        TIPO_IDENTIFICACION_ENTREGA: null,
+        NOMBRE_PERSONA_ENVIO_ENTREGA: null,
+        IDENTIFICACION_ENTREGA: null,
+        TELEFONO_ENTREGA: null,
         CALLE_PRINCIPAL_ENTREGA: null,
         CALLE_SECUNDARIA_ENTREGA: null,
         NUM_CASA_ENTREGA: null,
         COD_DPA_ENTREGA: null,
-        NOMBRE_PERSONA_ENVIO_ENTREGA: null,
         NUM_COD_POSTAL_ENTREGA: null,
-        TELEFONO_ENTREGA: null
       },
       DATOS_FACTURA: {
         TIPO_IDENTIFICACION_FACTURA: null,
@@ -837,7 +909,7 @@ export class DetalleProductoComponent implements OnInit {
         CORREO: null,
         IDENTIFICACION_FACTURA: null,
         TELEFONO_FACTURA: null,
-        DIRECCION_FACTURA: null
+        DIRECCION_FACTURA: null,
       },
       CANTIDAD: null,
       NUM_VARIANTE: null,
@@ -859,6 +931,7 @@ export class DetalleProductoComponent implements OnInit {
         TOTAL_PEDIDO: null
       }
     };
+
     console.log(this.DatosDireccion + this.DatosFactura + JSON.stringify(this.informacionCompra));
   }
 
@@ -1120,9 +1193,9 @@ export class DetalleProductoComponent implements OnInit {
     this.informacionCompra.COSTOS.TOTAL_PEDIDO = (this.informacionCompra.COSTOS.SUBTOTAL + this.informacionCompra.COSTOS.RECARGO_PAYPAL + this.informacionCompra.COSTOS.COSTOS_ENVIO) - (this.informacionCompra.COSTOS.DESCUENTOS + this.informacionCompra.COSTOS.CUPON);
   }
 
-
   public async comprar() {
     try {
+      console.log('INFORMACION COMPRA'+JSON.stringify(this.informacionCompra));
       let response = await this._compraServicio.saveComprarProducto(this.informacionCompra).toPromise();
        this.mensageCorrecto(response.message);
     } catch (e) {
@@ -1148,7 +1221,6 @@ export class DetalleProductoComponent implements OnInit {
       }
     });
   }
-
 
   mensageCorrecto(mensaje) {
     Swal.fire({
