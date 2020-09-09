@@ -82,7 +82,7 @@
             <article class="content-body px-4">
               <p class="mb-0">
                 <a
-                  href="principales/menu/detalle-tienda/tienda/{{this.productoDetalle?.TIENDA.NUM_TIENDA}}/inicio-tienda"
+                  routerLink="../../detalle-tienda/tienda/{{this.productoDetalle?.TIENDA.NUM_TIENDA}}/inicio-tienda"
                   class="title tituloTienda text-primary p-0"> {{this.productoDetalle?.TIENDA.NOMBRE_COMERCIAL}}</a>
               </p>
               <h4 class="title m-0">{{this.productoDetalle?.PRODUCTO.NOMBRE_PRODUCTO}}</h4>
@@ -175,11 +175,12 @@
                       </div>
                     </dd>
 
-                    <dt class="col-sm-3 col-4 mt-2">Cantidad</dt>
+                    <dt class="col-sm-3 col-4 mt-4">Cantidad   <a class="m-0 pt-0 text-center" style="font-size: 11px">({{this.varianteActiva.MEDIDA}})</a></dt>
+
                     <dd class="col-sm-9 col-8">
                       <div class="form-group col-lg-6 col-md-6 col-10 my-2 p-0">
 
-                        <div class=" input-spinner">
+                        <div class="input-group input-spinner mt-4">
                           <div class="input-group-prepend">
                             <button
                               [disabled]="this.banderaNoDisponible || (this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0)"
@@ -201,7 +202,7 @@
                             </button>
                           </div>
                         </div> <!-- input-group.// -->
-                        <p class="m-0 pt-0 text-center" style="font-size: 11px">({{this.varianteActiva.MEDIDA}})</p>
+
                       </div>
                     </dd>
                   </dl>
@@ -282,10 +283,11 @@
               <div id="cardMetodosEnvioInformacion">
                 <div class="row justify-content-center ">
                   <h4 class="card-title text-center ">Opciones de Pago</h4>
-                  <p class=" text-center">Contamos con varios métodos de pago para facilitar la compra de tus productos,
-                    al momento de realizar la
-                    transacción.</p>
+
                 </div>
+                <p class="text-center dis-block">Contamos con varios métodos de pago para facilitar la compra de tus productos,
+                  al momento de realizar la
+                  transacción.</p>
 
                 <div class="social-box"
                      *ngIf="this.objTransferencia.Tipo_Pago!=null || this.objEfectivo.Tipo_Pago!=null || this.objElectronico.Tipo_Pago!=null">
