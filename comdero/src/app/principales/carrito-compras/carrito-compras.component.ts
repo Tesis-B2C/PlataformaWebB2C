@@ -634,11 +634,7 @@ export class CarritoComprasComponent implements OnInit {
     this.informacionCompra.COSTOS.DESCUENTOS = this.varianteActiva.DESCUENTO_AUTOMATICO;
     this.informacionCompra.COSTOS.CUPON = this.varianteActiva.DESCUENTO_CUPON;
     //cupones
-    this.varianteActiva.METODO_PAGO.forEach(pago => {
-      if (pago.TIPO_PAGO == 'Electrónico') {
-        this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL = pago.PORCENTAJE_RECARGO;
-      }
-    });
+    this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL =0;
 
     this.informacionCompra.COSTOS.COSTOS_ENVIO = 0;
     this.informacionCompra.COSTOS.TOTAL_PEDIDO = (this.informacionCompra.COSTOS.SUBTOTAL + this.informacionCompra.COSTOS.RECARGO_PAYPAL + this.informacionCompra.COSTOS.COSTOS_ENVIO) - (this.informacionCompra.COSTOS.DESCUENTOS + this.informacionCompra.COSTOS.CUPON);
@@ -865,6 +861,11 @@ export class CarritoComprasComponent implements OnInit {
     this.informacionCompra.METODO_PAGO_COMPRA = event.target.value;
     if (event.target.value == 'Electrónico') {
       this.banderaRecargoPaypal = true;
+      this.varianteActiva.METODO_PAGO.forEach(pago => {
+        if (pago.TIPO_PAGO == 'Electrónico') {
+          this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL = pago.PORCENTAJE_RECARGO;
+        }
+      });
       this.informacionCompra.COSTOS.RECARGO_PAYPAL = (this.informacionCompra.COSTOS.SUBTOTAL * this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL) / 100;
     }
     this.informacionCompra.COSTOS.TOTAL_PEDIDO = (this.informacionCompra.COSTOS.SUBTOTAL + this.informacionCompra.COSTOS.RECARGO_PAYPAL + this.informacionCompra.COSTOS.COSTOS_ENVIO) - (this.informacionCompra.COSTOS.DESCUENTOS + this.informacionCompra.COSTOS.CUPON);
