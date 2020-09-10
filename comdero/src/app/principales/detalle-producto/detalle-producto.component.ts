@@ -15,6 +15,7 @@ import {CarritoServicio} from "../../servicios/carrito.servicio";
 import {MenuComponent} from "../menu/menu.component";
 import {Carrito_Producto} from "../../modelos/carrito_producto";
 import {CompraServicio} from "../../servicios/compra.servicio";
+import {ICreateOrderRequest, IPayPalConfig} from "ngx-paypal";
 
 @Component({
   selector: 'app-detalle-producto',
@@ -656,6 +657,7 @@ export class DetalleProductoComponent implements OnInit {
       });
       this.banderaRecargoPaypal = true;
       this.informacionCompra.COSTOS.RECARGO_PAYPAL = (this.informacionCompra.COSTOS.SUBTOTAL * this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL) / 100;
+      this.initConfig();
       if (this.informacionCompra.METODO_ENVIO_COMPRA == 'Domicilio') {
         this.calcularCostosEnvioDomicilio();
       }
@@ -1198,9 +1200,13 @@ export class DetalleProductoComponent implements OnInit {
 
   public async comprar() {
     try {
+      if(this.informacionCompra.METODO_PAGO_COMPRA=="Electrónico"){
+
+      }else {
       console.log('INFORMACION COMPRA' + JSON.stringify(this.informacionCompra));
       let response = await this._compraServicio.saveComprarProducto(this.informacionCompra).toPromise();
       this.mensageCorrecto(response.message);
+      }
     } catch (e) {
       console.log("error", e);
       if (JSON.stringify((e).error.message))
@@ -1224,7 +1230,81 @@ export class DetalleProductoComponent implements OnInit {
       }
     });
   }
+  public payPalConfig: IPayPalConfig;
+  initConfig() {
+    this.payPalConfig = {
+      currency: 'USD',
+      clientId: 'Ae5SlhhgQC33YtMTKt0VJV-DlqFVJvWXGSzJNWRDGJLMolNPW_ppiGCy30nSyNlzv521TGmcXTeCuqiW',
+      createOrderOnClient: (data) => <ICreateOrderRequest>{
+        intent: 'CAPTURE',
 
+        payer:{
+          name:{
+            given_name:'stteffano',
+            surname:"Aguayo"
+          },
+          address: {
+            address_line_1: '123 ABC Street',
+            address_line_2: 'Apt 2',
+            postal_code: '95121',
+            country_code: 'EC',
+            admin_area_2: 'Riobamba',
+          },
+          email_address: "tefo.aguayo@gmail.com",
+
+        },
+
+        purchase_units: [
+          {
+            amount: {
+              currency_code: 'USD',
+              value: '0.02',
+              /*  breakdown: {
+                  item_total: {
+                    currency_code: 'USD',
+                    value: '0.02'
+                  }
+                }*/
+            },
+
+
+          }
+        ],
+
+      },
+      advanced: {
+        commit: 'true'
+      },
+      style: {
+        label: 'paypal',
+        layout: 'vertical',
+        color:'blue',
+        size:'small',
+        shape:'pill',
+
+
+      },
+
+      onApprove: (data, actions) => {
+        console.log('onApprove - transaction was approved, but not authorized', data, actions);
+        actions.order.get().then(details => {
+          console.log('onApprove - you can get full order details inside onApprove: ', details);
+        });
+      },
+      onClientAuthorization: (data) => {
+        console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+      },
+      onCancel: (data, actions) => {
+        console.log('OnCancel', data, actions);
+      },
+      onError: err => {
+        console.log('OnError', err);
+      },
+      onClick: (data, actions) => {
+        console.log('onClick', data, actions);
+      },
+    };
+  }
   mensageCorrecto(mensaje) {
     Swal.fire({
       icon: 'success',

@@ -54,7 +54,8 @@
                           [src]="this.videoYoutube" frameborder="0"
                           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                           allowfullscreen></iframe>
-                  <video *ngIf="this.imagenPrincipal==null && this.videoYoutube == null && data.video!=null" class="video-carga" controls
+                  <video *ngIf="this.imagenPrincipal==null && this.videoYoutube == null && data.video!=null"
+                         class="video-carga" controls
                          height="auto" width="auto">
                     <source [src]="data.video" type="{{ data.type }}">
                   </video>
@@ -175,7 +176,9 @@
                       </div>
                     </dd>
 
-                    <dt class="col-sm-3 col-4 mt-4">Cantidad   <a class="m-0 pt-0 text-center" style="font-size: 11px">({{this.varianteActiva.MEDIDA}})</a></dt>
+                    <dt class="col-sm-3 col-4 mt-4">Cantidad <a class="m-0 pt-0 text-center"
+                                                                style="font-size: 11px">({{this.varianteActiva.MEDIDA}}
+                      )</a></dt>
 
                     <dd class="col-sm-9 col-8">
                       <div class="form-group col-lg-6 col-md-6 col-10 my-2 p-0">
@@ -285,7 +288,8 @@
                   <h4 class="card-title text-center ">Opciones de Pago</h4>
 
                 </div>
-                <p class="text-center dis-block">Contamos con varios métodos de pago para facilitar la compra de tus productos,
+                <p class="text-center dis-block">Contamos con varios métodos de pago para facilitar la compra de tus
+                  productos,
                   al momento de realizar la
                   transacción.</p>
 
@@ -1148,7 +1152,9 @@
                         <button type="button" class="btn btn-social-icon btn-whatsapp btn-rounded">
                           <i class="fab fa-whatsapp fa-1x"></i>
                         </button>
-                        <a href="https://api.whatsapp.com/send?phone={{contactoWhatsapp}}&text=Hola!%20Quiero%20conocer%20acerca%20de%20su%20tienda!" target="_blank" > {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</a>
+                        <a
+                          href="https://api.whatsapp.com/send?phone={{contactoWhatsapp}}&text=Hola!%20Quiero%20conocer%20acerca%20de%20su%20tienda!"
+                          target="_blank"> {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</a>
                       </div>
                     </div>
                   </div>
@@ -1190,7 +1196,9 @@
                     <button type="button" class="btn btn-social-icon btn-whatsapp btn-rounded">
                       <i class="fab fa-whatsapp fa-1x"></i>
                     </button>
-                    <a href="https://api.whatsapp.com/send?phone={{contactoWhatsapp}}&text=Hola!%20Quiero%20conocer%20acerca%20de%20su%20tienda!" target="_blank" > {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</a>
+                    <a
+                      href="https://api.whatsapp.com/send?phone={{contactoWhatsapp}}&text=Hola!%20Quiero%20conocer%20acerca%20de%20su%20tienda!"
+                      target="_blank"> {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</a>
                   </div>
                 </div>
               </div>
@@ -1213,7 +1221,9 @@
                         <button type="button" class="btn btn-social-icon btn-whatsapp btn-rounded">
                           <i class="fab fa-whatsapp fa-1x"></i>
                         </button>
-                        <a href="https://api.whatsapp.com/send?phone={{contactoWhatsapp}}&text=Hola!%20Quiero%20conocer%20acerca%20de%20su%20tienda!" target="_blank" > {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</a>
+                        <a
+                          href="https://api.whatsapp.com/send?phone={{contactoWhatsapp}}&text=Hola!%20Quiero%20conocer%20acerca%20de%20su%20tienda!"
+                          target="_blank"> {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</a>
                       </div>
                     </div>
                   </div>
@@ -1265,7 +1275,8 @@
 
                   </div>
                   <div class="alert alert-warning text-justify" role="alert">
-                    Asegurate de poner tu código de compra que reciviras al finalizar la compra en el comentario o motivo de la transaferencia bancaria
+                    Asegurate de poner tu código de compra que reciviras al finalizar la compra en el comentario o
+                    motivo de la transaferencia bancaria
                   </div>
                 </div>
               </div>
@@ -1277,9 +1288,14 @@
               <label class="font-weight-bold">Método de Pago</label>
             </div>
             <div class="form-group col-sm-9 col-md-8">
-              <div class="form-row">
-                <div class="form-group col-12 mb-0">
-                  <label class="my-0 text-justify">PAYPAL AQUI ESTA</label>
+              <div class="form-row ">
+                <div class="form-group col-md-10 mb-0 ">
+
+                  <label>Has escogido pagar a través de PayPal, al finalizar la compra podrás realizar el pago con tu
+                    cuenta PayPal o con una tarjeta de crédito</label>
+                </div>
+                <div class="col-md-6  mt-2" >
+                  <ngx-paypal [config]="payPalConfig" ></ngx-paypal>
                 </div>
               </div>
             </div>
@@ -1294,6 +1310,7 @@
       <button type="button" class="btn btn-primary mr-1" (click)="atras()">Atras</button>
       <button type="button" class="btn btn-outline-primary ml-1" (click)="comprar()">Realizar Compra</button>
     </div>
+
 
   </ng-template>
   <!-- ============================ COMPONENT MODAL  .//END ========================= -->
