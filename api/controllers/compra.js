@@ -3,6 +3,8 @@
 const DPA = require('../models/dpa'); //importar el modelo del usuario  o lo que son las clases comunes
 const Compra = require('../models/compra');
 const Compra_Producto = require('../models/compra_producto');
+const Carrito = require('../models/carrito');
+const Carrito_Producto = require('../models/carrito_producto');
 const db = require('../database/db');
 const Agente = require('../models/agente');
 const Variante = require('../models/variante');
@@ -199,7 +201,7 @@ async function saveComprarProductoCarrito(req, res) {
                     transaction: t
                 });
             }
-           for(const element of req.body.NUM_VARIANTE){
+            for (const element of req.body.NUM_VARIANTE) {
                 await Compra_Producto.create({
                         NUM_VARIANTE: element.NUM_VARIANTE,
                         NUM_COMPRA: compraGuardada.dataValues.NUM_COMPRA,
@@ -231,6 +233,33 @@ async function saveComprarProductoCarrito(req, res) {
                 }, {
                     transaction: t
                 });
+
+
+                let carritoEncontrado = await Carrito.findOne({where: {COD_AGENTE: req.user.id}});
+                if (carritoEncontrado) {
+                    let productoBorrado = await Carrito_Producto.destroy({
+                        where: {
+                            ID_CARRITO: carritoEncontrado.dataValues.ID_CARRITO,
+                            NUM_VARIANTE: element.NUM_VARIANTE
+                        }
+                    });
+                    if (productoBorrado) {
+                        let cont = await Carrito_Producto.findOne({
+                            where: {
+                                ID_CARRITO: carritoEncontrado.dataValues.ID_CARRITO,
+                            },
+                            attributes: ['ID_CARRITO', [Carrito_Producto.sequelize.fn('COUNT', Carrito_Producto.sequelize.col('ID_CARRITO')), 'TOTAL_COM']],
+                        });
+                        console.log("conmt", cont.dataValues.TOTAL_COM);
+
+                        let carritoActualizado = await Carrito.update({CANTIDAD_TOTAL_PRODUCTOS: cont.dataValues.TOTAL_COM}, {
+                            where: {COD_AGENTE: req.user.id}
+                        });
+
+                    }
+                }
+
+
             }
 
             if (compraGuardada) {
@@ -252,7 +281,8 @@ async function saveComprarProductoCarrito(req, res) {
             }
             await t.commit();
         }
-    } catch (err) {
+    } catch
+        (err) {
         await t.rollback();
         res.status(500).send({
             message: 'error:' + err

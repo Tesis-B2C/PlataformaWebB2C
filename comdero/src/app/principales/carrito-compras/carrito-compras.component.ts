@@ -150,7 +150,11 @@ export class CarritoComprasComponent implements OnInit {
             element.porcentaje_impuestos = element.VARIANTE.PRODUCTO.OFERTum.IVA;
             element.precio_productos_sin_iva = element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO;
             element.precio_productos = (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) + (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100);
-            element.impuestos = element.precio_productos - element.precio_productos_sin_iva;
+            element.impuestos = element.precio_productos-element.precio_productos_sin_iva;
+            element.descuentos_cupon=0;
+            element.porcentaje_descuento_cupon=0;
+            element.descuentos=0;
+            element.porcentaje_descuento=0;
             this.obj.metodos_envio = element.VARIANTE.PRODUCTO.OFERTum.TIENDA.OPCION_ENVIOs;
             this.obj.metodos_pago = element.VARIANTE.PRODUCTO.OFERTum.TIENDA.METODO_PAGOs;
             this.obj.sucursales = element.VARIANTE.PRODUCTO.OFERTum.TIENDA.SUCURSALs;
@@ -189,6 +193,7 @@ export class CarritoComprasComponent implements OnInit {
     this.carritoIdentidad.data.CARRITO_PRODUCTOs.forEach(element => {
       if (num_variante == element.NUM_VARIANTE) {
         element.CANTIDAD_PRODUCTO_CARRITO = response;
+
         element.precio_productos_sin_iva = element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO;
         element.precio_productos = (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) + (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100);
       }
@@ -297,6 +302,8 @@ export class CarritoComprasComponent implements OnInit {
       let bandera: boolean = true;
       let bandera2: boolean = false;
       for (let element of element2['producto_carrito']) {
+        element.porcentaje_descuento_cupon=0;
+        element.descuentos_cupon=0;
         if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == tienda) {
           for (let descuento of element.VARIANTE.PRODUCTO.PRODUCTO_DESCUENTOs) {
             if (descuento.DESCUENTO.TIPO_DESCUENTO == 'Cupón') {
@@ -314,7 +321,7 @@ export class CarritoComprasComponent implements OnInit {
 
                         let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100));
                         element.descuentos_cupon = (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
-                        element.porcentaje_descuento_cupon = descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100
+                        element.porcentaje_descuento_cupon = descuento.DESCUENTO.PORCENTAJE_DESCUENTO;
                         d = d + ((precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100) * element.CANTIDAD_PRODUCTO_CARRITO));
                         console.log("descuento", d);
                         bandera2 = true;
@@ -329,7 +336,7 @@ export class CarritoComprasComponent implements OnInit {
 
                           let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100));
                           element.descuentos_cupon = (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
-                          element.porcentaje_descuento_cupon = descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100
+                          element.porcentaje_descuento_cupon = descuento.DESCUENTO.PORCENTAJE_DESCUENTO;
                           d = d + ((precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100) * element.CANTIDAD_PRODUCTO_CARRITO));
                           console.log("descuento", d);
                           bandera2 = true;
@@ -340,7 +347,7 @@ export class CarritoComprasComponent implements OnInit {
 
                         let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
                         element.descuentos_cupon = (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
-                        element.porcentaje_descuento_cupon = descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100
+                        element.porcentaje_descuento_cupon = descuento.DESCUENTO.PORCENTAJE_DESCUENTO;
                         d = d + ((precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100) * element.CANTIDAD_PRODUCTO_CARRITO));
                         console.log("descuento", d);
                         bandera2 = true;
@@ -382,6 +389,8 @@ export class CarritoComprasComponent implements OnInit {
     let d = 0;
     for (let element2 of this.vTiendas) {
       for (let element of element2['producto_carrito']) {
+        element.descuentos_cupon=0;
+        element.porcentaje_descuento_cupon=0;
         if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == element2['idTienda']) {
           for (let descuento of element.VARIANTE.PRODUCTO.PRODUCTO_DESCUENTOs) {
             for (let elemnt2 of this.vTiendas) {
@@ -389,6 +398,8 @@ export class CarritoComprasComponent implements OnInit {
                 for (let element3 of elemnt2['cupones']) {
                   if (element3 == descuento.DESCUENTO.MOTIVO_DESCUENTO) {
                     let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
+                    element.descuentos_cupon = (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
+                    element.porcentaje_descuento_cupon = descuento.DESCUENTO.PORCENTAJE_DESCUENTO;
                     d = d + ((precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100) * element.CANTIDAD_PRODUCTO_CARRITO));
                     console.log("descuento", d);
                     elemnt2['cuentas'].descuentoCupon = 0;
@@ -413,6 +424,7 @@ export class CarritoComprasComponent implements OnInit {
     for (let element2 of this.vTiendas) {
       let d = 0;
       for (let element of element2['producto_carrito']) {
+        element.porcentaje_descuento=0;
         if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == element2['idTienda']) {
           for (let descuento of element.VARIANTE.PRODUCTO.PRODUCTO_DESCUENTOs) {
             if (descuento.DESCUENTO.TIPO_DESCUENTO == 'Automático') {
@@ -428,7 +440,7 @@ export class CarritoComprasComponent implements OnInit {
                     if (this.obtenerMinutos(horaActual) >= this.obtenerMinutos(descuento.DESCUENTO.HORA_INICIO)) {
                       let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
                       element.descuentos = (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
-                      element.porcentaje_descuento = descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100
+                      element.porcentaje_descuento = descuento.DESCUENTO.PORCENTAJE_DESCUENTO;
                       d = d + (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
                       console.log("descuento automatico", d);
                     }
@@ -437,14 +449,14 @@ export class CarritoComprasComponent implements OnInit {
                       let horaActual = this.hoy.getHours() + ':' + this.hoy.getMinutes() + ':' + this.hoy.getSeconds();
                       if (this.obtenerMinutos(horaActual) <= this.obtenerMinutos(descuento.DESCUENTO.HORA_FIN)) {
                         let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100));
-                        element.porcentaje_descuento = descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100
+                        element.porcentaje_descuento = descuento.DESCUENTO.PORCENTAJE_DESCUENTO;
                         element.descuentos = (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
                         d = d + (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
                         console.log("descuento automatico", d);
                       }
                     } else {
                       let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
-                      element.porcentaje_descuento = descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100
+                      element.porcentaje_descuento = descuento.DESCUENTO.PORCENTAJE_DESCUENTO;
                       element.descuentos = (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
                       d = d + (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
                       console.log("descuento automatico", d);
@@ -970,11 +982,15 @@ export class CarritoComprasComponent implements OnInit {
   public async comprar() {
     try {
 
-      console.log('INFORMACION COMPRA' + JSON.stringify(this.informacionCompra));
+      /*console.log('INFORMACION COMPRA' + JSON.stringify(this.informacionCompra));*/
       let response = await this._compraServicio.saveComprarProductoCarrito(this.informacionCompra).toPromise();
-      /* this.mensageCorrecto(response.message);
+       this.mensageCorrecto(response.message);
        this.cerrar();
-       this.modalService.dismissAll();*/
+       this.modalService.dismissAll();
+      await this.iniciarCarritoCompras();
+      await this.verificarStockInicio();
+      await this.calcularPrecios();
+      this.menu.conteoProductosCarrito(true);
 
     } catch (e) {
       console.log("error", e);
@@ -1235,7 +1251,7 @@ export class CarritoComprasComponent implements OnInit {
 
 
   public siguienteProcesoCompra() {
-    console.log('COMPRA' + JSON.stringify(this.informacionCompra));
+    /*console.log('COMPRA' + JSON.stringify(this.informacionCompra));*/
     if (this.informacionCompra.METODO_ENVIO_COMPRA != null && this.informacionCompra.METODO_PAGO_COMPRA != null) {
       if (!this.noExisteEnvioEstaArea) {
         if (this.banderaDireccionEnvio && this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA == null && !this.noExisteEnvioEstaArea) {
