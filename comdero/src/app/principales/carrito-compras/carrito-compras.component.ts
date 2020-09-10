@@ -150,11 +150,11 @@ export class CarritoComprasComponent implements OnInit {
             element.porcentaje_impuestos = element.VARIANTE.PRODUCTO.OFERTum.IVA;
             element.precio_productos_sin_iva = element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO;
             element.precio_productos = (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) + (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100);
-            element.impuestos = element.precio_productos-element.precio_productos_sin_iva;
-            element.descuentos_cupon=0;
-            element.porcentaje_descuento_cupon=0;
-            element.descuentos=0;
-            element.porcentaje_descuento=0;
+            element.impuestos = element.precio_productos - element.precio_productos_sin_iva;
+            element.descuentos_cupon = 0;
+            element.porcentaje_descuento_cupon = 0;
+            element.descuentos = 0;
+            element.porcentaje_descuento = 0;
             this.obj.metodos_envio = element.VARIANTE.PRODUCTO.OFERTum.TIENDA.OPCION_ENVIOs;
             this.obj.metodos_pago = element.VARIANTE.PRODUCTO.OFERTum.TIENDA.METODO_PAGOs;
             this.obj.sucursales = element.VARIANTE.PRODUCTO.OFERTum.TIENDA.SUCURSALs;
@@ -302,8 +302,8 @@ export class CarritoComprasComponent implements OnInit {
       let bandera: boolean = true;
       let bandera2: boolean = false;
       for (let element of element2['producto_carrito']) {
-        element.porcentaje_descuento_cupon=0;
-        element.descuentos_cupon=0;
+        element.porcentaje_descuento_cupon = 0;
+        element.descuentos_cupon = 0;
         if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == tienda) {
           for (let descuento of element.VARIANTE.PRODUCTO.PRODUCTO_DESCUENTOs) {
             if (descuento.DESCUENTO.TIPO_DESCUENTO == 'Cupón') {
@@ -389,8 +389,8 @@ export class CarritoComprasComponent implements OnInit {
     let d = 0;
     for (let element2 of this.vTiendas) {
       for (let element of element2['producto_carrito']) {
-        element.descuentos_cupon=0;
-        element.porcentaje_descuento_cupon=0;
+        element.descuentos_cupon = 0;
+        element.porcentaje_descuento_cupon = 0;
         if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == element2['idTienda']) {
           for (let descuento of element.VARIANTE.PRODUCTO.PRODUCTO_DESCUENTOs) {
             for (let elemnt2 of this.vTiendas) {
@@ -424,7 +424,7 @@ export class CarritoComprasComponent implements OnInit {
     for (let element2 of this.vTiendas) {
       let d = 0;
       for (let element of element2['producto_carrito']) {
-        element.porcentaje_descuento=0;
+        element.porcentaje_descuento = 0;
         if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == element2['idTienda']) {
           for (let descuento of element.VARIANTE.PRODUCTO.PRODUCTO_DESCUENTOs) {
             if (descuento.DESCUENTO.TIPO_DESCUENTO == 'Automático') {
@@ -648,6 +648,10 @@ export class CarritoComprasComponent implements OnInit {
     }
 
     //DATOS DE COMPRA QUE SIEMPRE HABRA
+    this.contactoWhatsapp;
+    let contacto = this.varianteActiva.CONTACTO_WHATSAPP.slice(1, 10);
+    this.contactoWhatsapp = '593' + contacto;
+
     this.informacionCompra.COD_AGENTE = this.identidadComprador.COD_AGENTE;
     this.informacionCompra.FECHA_COMPRA = moment().format("YYYY-MM-DD");
     this.informacionCompra.NUM_VARIANTE = this.varianteActiva.VARIANTES;
@@ -979,14 +983,17 @@ export class CarritoComprasComponent implements OnInit {
     };
   }
 
+  public contactoWhatsapp;
+
   public async comprar() {
     try {
 
       /*console.log('INFORMACION COMPRA' + JSON.stringify(this.informacionCompra));*/
+      console.log("contacto whatsaap", this.contactoWhatsapp);
       let response = await this._compraServicio.saveComprarProductoCarrito(this.informacionCompra).toPromise();
-       this.mensageCorrecto(response.message);
-       this.cerrar();
-       this.modalService.dismissAll();
+      this.mensageCorrecto(response.message);
+      this.cerrar();
+      this.modalService.dismissAll();
       await this.iniciarCarritoCompras();
       await this.verificarStockInicio();
       await this.calcularPrecios();
@@ -1258,7 +1265,6 @@ export class CarritoComprasComponent implements OnInit {
           this.mostrarToast("Ingrese la dirección de envío, para continuar con la compra.", "");
         } else {
           if (this.informacionCompra.DATOS_FACTURA.IDENTIFICACION_FACTURA != null) {
-            console.log('DATOS DE COMPRA A ENVIO' + JSON.stringify(this.informacionCompra));
             this.siguienteDetallePedido = !this.siguienteDetallePedido;
           } else {
             this.mostrarToast("Ingrese los datos de facturación para continuar con la compra.", "");
