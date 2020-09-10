@@ -4,8 +4,9 @@ const DPA = require('../models/dpa'); //importar el modelo del usuario  o lo que
 const Compra = require('../models/compra');
 const Compra_Producto = require('../models/compra_producto');
 const db = require('../database/db');
-const Agente= require('../models/agente');
+const Agente = require('../models/agente');
 const moment = require('moment');
+
 async function saveComprarProducto(req, res) {
     console.log(" INFORMACION COMPRA ", req.body);
     const t = await db.sequelize.transaction({autocommit: false});
@@ -91,10 +92,17 @@ async function saveComprarProducto(req, res) {
                 }
             );
 
+
             if (compraGuardada && compraProductoGuardada) {
-                res.status(200).send({
-                    message: "La compra se ha realizado correctamente"
-                });
+                if (req.body.METODO_PAGO_COMPRA == "Transferencia") {
+                    res.status(200).send({
+                        message: "La compra se ha realizado correctamente su código de compra es:   <strong>"+compraGuardada.dataValues.NUM_COMPRA+"</strong>"
+                    });
+                } else {
+                    res.status(200).send({
+                        message: "La compra se ha realizado correctamente"
+                    });
+                }
             } else {
                 res.status(404).send({
                     message: 'No se pudo realizar la compra'

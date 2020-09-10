@@ -1229,7 +1229,7 @@ export class DetalleProductoComponent implements OnInit {
     Swal.fire({
       icon: 'success',
       title: '<header class="login100-form-title-registro"><h5 class="card-title">!Correcto..</h5></header>',
-      text: mensaje,
+      html: mensaje,
       position: 'center',
       width: 600,
       buttonsStyling: false,
