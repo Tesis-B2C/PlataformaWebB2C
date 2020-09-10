@@ -1211,6 +1211,7 @@ export class DetalleProductoComponent implements OnInit {
       this.mensageCorrecto(response.message);
       this.cerrar();
       this.modalService.dismissAll();
+      this.obtenerProducto();
 
     } catch (e) {
       console.log("error", e);

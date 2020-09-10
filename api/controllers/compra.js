@@ -5,6 +5,7 @@ const Compra = require('../models/compra');
 const Compra_Producto = require('../models/compra_producto');
 const db = require('../database/db');
 const Agente = require('../models/agente');
+const Variante = require('../models/variante');
 const moment = require('moment');
 
 async function saveComprarProducto(req, res) {
@@ -92,11 +93,23 @@ async function saveComprarProducto(req, res) {
                 }
             );
 
+            let varianteEncontrada = await Variante.findOne({
+                where: {NUM_VARIANTE: req.body.NUM_VARIANTE}
+            }, {
+                transaction: t
+            });
 
-            if (compraGuardada && compraProductoGuardada) {
+            let stockReducido = varianteEncontrada.dataValues.STOCK - req.body.CANTIDAD;
+            let varianteActualizada = await Variante.update({STOCK: stockReducido}, {
+                where: {NUM_VARIANTE: req.body.NUM_VARIANTE}
+            }, {
+                transaction: t
+            });
+
+            if (compraGuardada && compraProductoGuardada && varianteActualizada) {
                 if (req.body.METODO_PAGO_COMPRA == "Transferencia") {
                     res.status(200).send({
-                        message: "La compra se ha realizado correctamente su código de compra es:   <strong>"+compraGuardada.dataValues.NUM_COMPRA+"</strong>"
+                        message: "La compra se ha realizado correctamente su código de compra es:   <strong>" + compraGuardada.dataValues.NUM_COMPRA + "</strong>"
                     });
                 } else {
                     res.status(200).send({
