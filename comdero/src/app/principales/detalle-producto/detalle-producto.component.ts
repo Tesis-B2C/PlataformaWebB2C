@@ -471,6 +471,7 @@ export class DetalleProductoComponent implements OnInit {
   public provinciaDireccionNombre;
 
   public abrirModalFinalizarPedido(content) {
+
     this.verificarMetodosTienda();
     this.identidadComprador = this._agenteServicio.getIdentity();
     console.log('AGENTE' + JSON.stringify(this.identidadComprador));
@@ -574,7 +575,7 @@ export class DetalleProductoComponent implements OnInit {
     this.informacionCompra.COSTOS.PORCENTAJE_CUPON = 0;
 
 
-        this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL =0;
+    this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL = 0;
 
 
     this.informacionCompra.COSTOS.COSTOS_ENVIO = 0;
@@ -645,6 +646,7 @@ export class DetalleProductoComponent implements OnInit {
     this.banderaRecargoPaypal = false;
     this.informacionCompra.COSTOS.RECARGO_PAYPAL = 0;
     this.informacionCompra.METODO_PAGO_COMPRA = event.target.value;
+    this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL=0;
     if (event.target.value == 'Electrónico') {
 
       this.varianteActiva.METODO_PAGO.forEach(pago => {
@@ -882,14 +884,15 @@ export class DetalleProductoComponent implements OnInit {
     this.DatosDireccion = null;
     this.DatosFactura = null;
 
+    this.arrayCuponNombres = new Set();
     this.banderaRecargoPaypal = false;
     this.bandCuponActivado = false;
+    this.banCuponUtilizado = false;
     this.noExisteEnvioEstaArea = false;
     this.direccionEnvioDiferente = false;
     this.datosfacturacionDiferente = false;
     this.siguienteDetallePedido = false;
     this.banderaDireccionEnvio = false;
-
     this.informacionCompra = {
       COD_AGENTE: null,
       ID_AGENTE: null,
@@ -997,11 +1000,6 @@ export class DetalleProductoComponent implements OnInit {
     })
   }
 
-  public carritoCompras = {
-    NUM_VARIANTE: null,
-    CANTIDAD: null
-  };
-
 
   public async agregarCarrito() {
     try {
@@ -1017,14 +1015,15 @@ export class DetalleProductoComponent implements OnInit {
   public cuponDescuentoNombre = null;
   public arrayCuponNombres = new Set();
   public bandCuponActivado: boolean = false;
-
+ public banCuponUtilizado:boolean=false;
   public aplicarCuponDescuento() {
     this.bandCuponActivado = false;
+    this.banCuponUtilizado = false;
 
     if (this.arrayCuponNombres.size > 0) {
       for (var nombresCupon of this.arrayCuponNombres) {
         if (nombresCupon == this.cuponDescuentoNombre)
-          this.bandCuponActivado = true;
+          this.banCuponUtilizado = true;
       }
     }
 
@@ -1199,9 +1198,9 @@ export class DetalleProductoComponent implements OnInit {
 
   public async comprar() {
     try {
-      console.log('INFORMACION COMPRA'+JSON.stringify(this.informacionCompra));
+      console.log('INFORMACION COMPRA' + JSON.stringify(this.informacionCompra));
       let response = await this._compraServicio.saveComprarProducto(this.informacionCompra).toPromise();
-       this.mensageCorrecto(response.message);
+      this.mensageCorrecto(response.message);
     } catch (e) {
       console.log("error", e);
       if (JSON.stringify((e).error.message))

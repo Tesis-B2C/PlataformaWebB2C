@@ -647,7 +647,24 @@
                 </div>
               </div>
             </div>
-            <p *ngIf="this.bandCuponActivado" class="text-danger">Cupón no válido</p>
+
+
+            <div *ngIf="this.banCuponUtilizado" class="alert alert-warning alert-dismissible fade show mb-0 w-25"
+                 role="alert">
+              Cupón ya utilizado
+              <button type="button" class="close p-0 m-0" (click)="this.banCuponUtilizado=false">
+                <a aria-hidden="true">&times;</a>
+              </button>
+            </div>
+
+            <div *ngIf="this.bandCuponActivado" class="alert alert-warning alert-dismissible fade show mb-0  w-25"
+                 role="alert">
+              Cupón no válid
+              <button type="button" class="close p-0 m-0" (click)="this.bandCuponActivado=false">
+                <a aria-hidden="true">&times;</a>
+              </button>
+            </div>
+
           </div>
         </div>
       </div>
@@ -1117,10 +1134,10 @@
         <div class="card card-body">
 
           <div *ngIf="this.informacionCompra.METODO_ENVIO_COMPRA == 'Acordar'" class="form-row">
-            <div class="form-group col-sm-3 col-4 mb-0">
+            <div class="form-group col-sm-3 col-md-4 mb-0">
               <label class="font-weight-bold">Método de Envío</label>
             </div>
-            <div class="form-group col-sm-9 col-8">
+            <div class="form-group col-sm-9 col-md-8">
               <div class="form-row">
                 <div class="form-group col-12 mb-0">
                   <label class="my-0 text-justify">Usted podrá acordar con el vendedor sobre el proceso de compra,
@@ -1141,15 +1158,15 @@
           </div>
 
           <div *ngIf="this.informacionCompra.METODO_ENVIO_COMPRA == 'Retiro'" class="form-row">
-            <div class="form-group col-sm-3 col-4 mb-0">
+            <div class="form-group col-sm-3 col-md-4 mb-0">
               <label class="font-weight-bold">Método de Envío</label>
             </div>
-            <div class="form-group col-sm-9 col-8">
-              <div class="form-row">
+            <div class="form-group col-sm-9 col-md-8">
+              <div class="form-row ">
                 <div class="form-group col-12 mb-0">
                   <label class="mb-3 text-justify">Recuerde la siguiente información al momento de retirar su compra en
                     la tienda.</label>
-                  <div class="card card-body">
+                  <div class="card card-body ">
                     <p class=" text-justify" *ngIf="this.hora_estimada_retiro == '1hora'">Su pedido estará listo
                       aproximadamente en 1 hora.</p>
                     <p class=" text-justify" *ngIf="this.hora_estimada_retiro == '4horas'">Su pedido estará listo
@@ -1181,10 +1198,10 @@
           </div>
 
           <div *ngIf="this.informacionCompra.METODO_ENVIO_COMPRA == 'Domicilio'" class="form-row">
-            <div class="form-group col-sm-3 col-4 mb-0">
+            <div class="form-group col-sm-3 col-md-4 mb-0">
               <label class="font-weight-bold">Método de Envío</label>
             </div>
-            <div class="form-group col-sm-9 col-8">
+            <div class="form-group col-sm-9 col-md-8">
               <div class="form-row">
                 <div class="form-group col-12 mb-0">
                   <label class="my-0 text-justify">Usted a seleccionado el envío a domicilio, el costo de envío se ha
@@ -1204,12 +1221,13 @@
               </div>
             </div>
           </div>
+          <hr>
 
           <div *ngIf="this.informacionCompra.METODO_PAGO_COMPRA == 'Efectivo'" class="form-row">
-            <div class="form-group col-sm-3 col-4 mb-0">
+            <div class="form-group col-sm-3 col-md-4 mb-0">
               <label class="font-weight-bold">Método de Pago</label>
             </div>
-            <div class="form-group col-sm-9 col-8">
+            <div class="form-group col-sm-9 col-md-8">
               <div class="form-row">
                 <div class="form-group col-12 mb-0">
                   <label class="my-0 text-justify">Al momento de la entrega se deberá realizar la cancelación total del
@@ -1220,10 +1238,10 @@
           </div>
 
           <div *ngIf="this.informacionCompra.METODO_PAGO_COMPRA == 'Transferencia'" class="form-row">
-            <div class="form-group col-sm-3 col-4 mb-0">
+            <div class="form-group col-sm-3 col-md-4 mb-0">
               <label class="font-weight-bold">Método de Pago</label>
             </div>
-            <div class="form-group col-sm-9 col-8">
+            <div class="form-group col-sm-9 col-md-8">
               <div class="form-row">
                 <div class="form-group col-12 mb-0">
                   <div class="box">
@@ -1233,14 +1251,14 @@
                     </div>
                     <p class=" iconos-pagos "><img src="assets/images/icon-transferencia.png"
                                                    alt="..."></p>
-                    <div class="box-text">
+                    <div class="box-text mt-2 text-md-left text-center">
                       <div class="row justify-content-center mx-auto">
-                        <p class="card-text col-5 mb-0">Banco:</p>
-                        <p class="col-6 mb-0">{{this.Banco_Pertenece}}</p>
-                        <p class="card-text col-5 mb-0 ">Tipo:</p>
-                        <p class="col-6 mb-0">{{this.Tipo_Cuenta}}</p>
-                        <p class="card-text col-5  mb-0">#Cuenta:</p>
-                        <p class="col-6 mb-0">{{this.Numero_cuenta}}</p>
+                        <p class="card-text col-md-5 mb-0 font-weight-bold">Banco:</p>
+                        <p class="col-md-6 mb-0">{{this.Banco_Pertenece}}</p>
+                        <p class="card-text col-md-5 mb-0 font-weight-bold">Tipo:</p>
+                        <p class="col-md-6 mb-0">{{this.Tipo_Cuenta}}</p>
+                        <p class="card-text col-md-5  mb-0 font-weight-bold">#Cuenta:</p>
+                        <p class="col-md-6 mb-0">{{this.Numero_cuenta}}</p>
                       </div>
                     </div>
                   </div>
@@ -1251,10 +1269,10 @@
           </div>
 
           <div *ngIf="this.informacionCompra.METODO_PAGO_COMPRA == 'Electrónico'" class="form-row">
-            <div class="form-group col-sm-3 col-4 mb-0">
+            <div class="form-group col-sm-3 col-md-4 mb-0">
               <label class="font-weight-bold">Método de Pago</label>
             </div>
-            <div class="form-group col-sm-9 col-8">
+            <div class="form-group col-sm-9 col-md-8">
               <div class="form-row">
                 <div class="form-group col-12 mb-0">
                   <label class="my-0 text-justify">PAYPAL AQUI ESTA</label>

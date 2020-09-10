@@ -25,11 +25,11 @@ async function saveComprarProducto(req, res) {
                     CALLE_PRINCIPAL_ENTREGA: req.body.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA,
                     CALLE_SECUNDARIA_ENTREGA: req.body.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA,
                     COD_DPA: req.body.DATOS_ENTREGA.COD_DPA_ENTREGA,
-                    NOMBRE_PERSONA_ENTREGA: req.body.DATOS_ENTREGA.NOMBRE_PERSONA_ENTREGA,
+                    NOMBRE_PERSONA_ENTREGA: req.body.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA,
                     TIPO_IDENTIFICACION_ENTREGA: req.body.DATOS_ENTREGA.TIPO_IDENTIFICACION_ENTREGA,
                     IDENTIFICACION_ENTREGA: req.body.DATOS_ENTREGA.IDENTIFICACION_ENTREGA,
                     NUM_COD_POSTAL_ENTREGA: req.body.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA,
-                    TELEFONO_ENTREGA: req.body.DATOS_ENTREGA.TELEFONO,
+                    TELEFONO_ENTREGA: req.body.DATOS_ENTREGA.TELEFONO_ENTREGA,
                     NUM_CASA_ENTREGA: req.body.DATOS_ENTREGA.NUM_CASA_ENTREGA,
                     TIPO_IDENTIFICACION_FACTURA: req.body.DATOS_FACTURA.TIPO_IDENTIFICACION_FACTURA,
                     NOMBRE_FACTURA: req.body.DATOS_FACTURA.NOMBRE_FACTURA,
@@ -43,7 +43,7 @@ async function saveComprarProducto(req, res) {
                     METODO_ENVIO: req.body.METODO_ENVIO_COMPRA,
                     COSTO_ENVIO: req.body.COSTOS.COSTOS_ENVIO,
                     RECARGO_PAYPAL: req.body.COSTOS.RECARGO_PAYPAL,
-                    PORCENTAJE_RECARGO_PAYPAL: req.body.COSTOS.PROCENTAJE_RECARGO_PAYPAL,
+                    PORCENTAJE_RECARGO_PAYPAL: req.body.COSTOS.PORCENTAJE_RECARGO_PAYPAL,
 
                 }, {
                     transaction: t
