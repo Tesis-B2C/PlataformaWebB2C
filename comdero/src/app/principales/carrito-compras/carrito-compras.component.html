@@ -2,7 +2,7 @@
   <div class="modal-header py-1">
     <p class="modal-title font-weight-bold">Finalice su compra en COMDERO</p>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click');cerrar()">
-      <span aria-hidden="true" style="font-size: large">&times;</span>
+      <span aria-hidden="true" style="font-size: x-large">&times;</span>
     </button>
   </div>
 
@@ -831,7 +831,7 @@
 
   <div *ngIf="this.siguienteDetallePedido" class="text-right mb-3 mr-3">
     <button type="button" class="btn btn-primary mr-1" (click)="atras()">Atras</button>
-    <button type="button" class="btn btn-outline-primary ml-1">Realizar Compra</button>
+    <button type="button" class="btn btn-outline-primary ml-1" (click)="comprar()">Realizar Compra</button>
   </div>
 
 </ng-template>
