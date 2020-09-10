@@ -642,17 +642,21 @@ export class DetalleProductoComponent implements OnInit {
   }
 
   public banderaRecargoPaypal: boolean = false;
+  public apikeyPaypal;
 
   public selectMetodoPago(event) {
     this.banderaRecargoPaypal = false;
+    this.apikeyPaypal;
     this.informacionCompra.COSTOS.RECARGO_PAYPAL = 0;
     this.informacionCompra.METODO_PAGO_COMPRA = event.target.value;
-    this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL=0;
+    this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL = 0;
     if (event.target.value == 'Electrónico') {
 
       this.varianteActiva.METODO_PAGO.forEach(pago => {
         if (pago.TIPO_PAGO == 'Electrónico') {
           this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL = pago.PORCENTAJE_RECARGO;
+          this.apikeyPaypal = pago.API_KEY_PAYPAL;
+          console.log("api paypal", this.apikeyPaypal);
         }
       });
       this.banderaRecargoPaypal = true;
@@ -1017,7 +1021,8 @@ export class DetalleProductoComponent implements OnInit {
   public cuponDescuentoNombre = null;
   public arrayCuponNombres = new Set();
   public bandCuponActivado: boolean = false;
- public banCuponUtilizado:boolean=false;
+  public banCuponUtilizado: boolean = false;
+
   public aplicarCuponDescuento() {
     this.bandCuponActivado = false;
     this.banCuponUtilizado = false;
@@ -1200,13 +1205,13 @@ export class DetalleProductoComponent implements OnInit {
 
   public async comprar() {
     try {
-      if(this.informacionCompra.METODO_PAGO_COMPRA=="Electrónico"){
 
-      }else {
       console.log('INFORMACION COMPRA' + JSON.stringify(this.informacionCompra));
       let response = await this._compraServicio.saveComprarProducto(this.informacionCompra).toPromise();
       this.mensageCorrecto(response.message);
-      }
+      this.cerrar();
+      this.modalService.dismissAll();
+
     } catch (e) {
       console.log("error", e);
       if (JSON.stringify((e).error.message))
@@ -1230,27 +1235,29 @@ export class DetalleProductoComponent implements OnInit {
       }
     });
   }
+
   public payPalConfig: IPayPalConfig;
+
+
   initConfig() {
     this.payPalConfig = {
       currency: 'USD',
-      clientId: 'Ae5SlhhgQC33YtMTKt0VJV-DlqFVJvWXGSzJNWRDGJLMolNPW_ppiGCy30nSyNlzv521TGmcXTeCuqiW',
+      clientId: this.apikeyPaypal,
       createOrderOnClient: (data) => <ICreateOrderRequest>{
         intent: 'CAPTURE',
 
-        payer:{
-          name:{
-            given_name:'stteffano',
-            surname:"Aguayo"
+        payer: {
+          name: {
+            given_name: "",
+            surname: ""
           },
           address: {
-            address_line_1: '123 ABC Street',
-            address_line_2: 'Apt 2',
-            postal_code: '95121',
+            address_line_1: '',
+            address_line_2: '',
+            postal_code: '',
             country_code: 'EC',
-            admin_area_2: 'Riobamba',
+            admin_area_2: '',
           },
-          email_address: "tefo.aguayo@gmail.com",
 
         },
 
@@ -1258,13 +1265,7 @@ export class DetalleProductoComponent implements OnInit {
           {
             amount: {
               currency_code: 'USD',
-              value: '0.02',
-              /*  breakdown: {
-                  item_total: {
-                    currency_code: 'USD',
-                    value: '0.02'
-                  }
-                }*/
+              value: this.informacionCompra.COSTOS.TOTAL_PEDIDO.toFixed(2),
             },
 
 
@@ -1276,14 +1277,14 @@ export class DetalleProductoComponent implements OnInit {
         commit: 'true'
       },
       style: {
-        label: 'paypal',
-        layout: 'vertical',
-        color:'blue',
-        size:'small',
-        shape:'pill',
 
+        layout: 'vertical',
+        color: 'blue',
+        size: 'responsive',
+        shape: 'rect',
 
       },
+
 
       onApprove: (data, actions) => {
         console.log('onApprove - transaction was approved, but not authorized', data, actions);
@@ -1293,6 +1294,9 @@ export class DetalleProductoComponent implements OnInit {
       },
       onClientAuthorization: (data) => {
         console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+        this.comprar();
+
+
       },
       onCancel: (data, actions) => {
         console.log('OnCancel', data, actions);
@@ -1305,6 +1309,7 @@ export class DetalleProductoComponent implements OnInit {
       },
     };
   }
+
   mensageCorrecto(mensaje) {
     Swal.fire({
       icon: 'success',

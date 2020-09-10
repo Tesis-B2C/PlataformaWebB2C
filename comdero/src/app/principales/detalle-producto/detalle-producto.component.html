@@ -1291,24 +1291,39 @@
               <div class="form-row ">
                 <div class="form-group col-md-10 mb-0 ">
 
-                  <label>Has escogido pagar a través de PayPal, al finalizar la compra podrás realizar el pago con tu
-                    cuenta PayPal o con una tarjeta de crédito</label>
+                  <label>Has escogido pagar a través de PayPal, podrás realizar el pago con tu
+                    cuenta PayPal o con una tarjeta de crédito o Débito</label>
                 </div>
-                <div class="col-md-6  mt-2" >
-                  <ngx-paypal [config]="payPalConfig" ></ngx-paypal>
+
+              </div>
+            </div>
+
+          </div>
+
+          <hr>
+          <div *ngIf="this.informacionCompra.METODO_PAGO_COMPRA == 'Electrónico'" class="form-row">
+            <div class="form-group col-sm-3 col-md-4 mb-0">
+              <label class="font-weight-bold">Pagar ahora</label>
+            </div>
+            <div class="col-sm-9 col-md-8 ">
+              <div class="form-row ">
+                <div class="form-group col-md-10 mb-0 ">
+                  <div class="w-75 ">
+                    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
 
       </form>
+
     </div>
 
     <div *ngIf="this.siguienteDetallePedido" class="text-right mb-3 mr-3">
       <button type="button" class="btn btn-primary mr-1" (click)="atras()">Atras</button>
-      <button type="button" class="btn btn-outline-primary ml-1" (click)="comprar()">Realizar Compra</button>
+      <button *ngIf="this.informacionCompra.METODO_PAGO_COMPRA != 'Electrónico'" type="button" class="btn btn-outline-primary ml-1" (click)="comprar()">Realizar Compra</button>
     </div>
 
 
