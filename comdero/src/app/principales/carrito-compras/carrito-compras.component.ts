@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import {CarritoServicio} from "../../servicios/carrito.servicio";
 import {GLOBAL} from 'src/app/servicios/global';
@@ -19,7 +19,7 @@ import {CompraServicio} from "../../servicios/compra.servicio";
   styleUrls: ['./carrito-compras.component.css'],
   providers: [DatePipe]
 })
-export class CarritoComprasComponent implements OnInit {
+export class CarritoComprasComponent implements OnInit, OnDestroy {
 
   public carritoIdentidad;
   public vTiendas = new Set();
@@ -61,7 +61,17 @@ export class CarritoComprasComponent implements OnInit {
     await this.calcularPrecios();
     await this.verificarDescuentoAutomatico();
     await this.getDpaProvincias("P");
+  }
 
+  ngOnDestroy(): void {
+    delete this.DatosDireccion;
+    delete this.DatosFactura;
+    delete this.obj;
+    delete this.hoy;
+    delete this.vTiendas;
+    delete this.varianteActiva;
+    delete this.informacionCompra;
+    delete this.payPalConfig;
 
   }
 
@@ -317,7 +327,7 @@ export class CarritoComprasComponent implements OnInit {
 
                     let horaActual = this.hoy.getHours() + ':' + this.hoy.getMinutes() + ':' + this.hoy.getSeconds();
                     if (this.obtenerMinutos(horaActual) >= this.obtenerMinutos(descuento.DESCUENTO.HORA_INICIO)) {
-                      if (descuento.DESCUENTO.MOTIVO_DESCUENTO == this.cupon) {
+                      if (descuento.DESCUENTO.MOTIVO_DESCUENTO == this.cupon.toUpperCase()) {
 
                         let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100));
                         element.descuentos_cupon = (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
@@ -332,7 +342,7 @@ export class CarritoComprasComponent implements OnInit {
                     if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") == descuento.DESCUENTO.FECHA_FIN) {
                       let horaActual = this.hoy.getHours() + ':' + this.hoy.getMinutes() + ':' + this.hoy.getSeconds();
                       if (this.obtenerMinutos(horaActual) <= this.obtenerMinutos(descuento.DESCUENTO.HORA_FIN)) {
-                        if (descuento.DESCUENTO.MOTIVO_DESCUENTO == this.cupon) {
+                        if (descuento.DESCUENTO.MOTIVO_DESCUENTO == this.cupon.toUpperCase()) {
 
                           let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100));
                           element.descuentos_cupon = (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
@@ -343,7 +353,7 @@ export class CarritoComprasComponent implements OnInit {
                         }
                       }
                     } else {
-                      if (descuento.DESCUENTO.MOTIVO_DESCUENTO == this.cupon) {
+                      if (descuento.DESCUENTO.MOTIVO_DESCUENTO == this.cupon.toUpperCase()) {
 
                         let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
                         element.descuentos_cupon = (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
@@ -366,12 +376,12 @@ export class CarritoComprasComponent implements OnInit {
       }
 
       for (let element3 of element2['cupones']) {
-        if (element3 == this.cupon) {
+        if (element3 == this.cupon.toUpperCase()) {
           bandera = false;
         }
       }
       if (bandera && bandera2) {
-        element2['cupones'].add(this.cupon);
+        element2['cupones'].add(this.cupon.toUpperCase());
         element2['cuentas'].descuentoCupon = element2['cuentas'].descuentoCupon + d;
         element2['mensajeCupones'] = "";
       } else if (bandera2 && element2['idTienda'] == tienda) {

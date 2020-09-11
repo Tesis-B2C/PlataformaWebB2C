@@ -643,10 +643,10 @@
               <div class="form-group col-md-6 col-md-6 col-12 my-0">
                 <div class="input-group">
                   <input #CuponDescuentoNombre="ngModel" [(ngModel)]="this.cuponDescuentoNombre" type="text"
-                         class="tamanioInputs form-control"
-                         placeholder="Introducir el cupón" name="CuponDescuentoNombre">
+                         class="tamanioInputs form-control text-uppercase"
+                         placeholder="Introducir el cupón" name="CuponDescuentoNombre " >
                   <span class="input-group-append">
-                    <button (click)="aplicarCuponDescuento()" class="btn btn-primary">Aplicar</button>
+                    <button (click)="aplicarCuponDescuento()" class="btn btn-primary ">Aplicar</button>
                   </span>
                 </div>
               </div>
@@ -663,7 +663,7 @@
 
             <div *ngIf="this.bandCuponActivado" class="alert alert-warning alert-dismissible fade show mb-0  w-25"
                  role="alert">
-              Cupón no válid
+              Cupón no válido
               <button type="button" class="close p-0 m-0" (click)="this.bandCuponActivado=false">
                 <a aria-hidden="true">&times;</a>
               </button>
@@ -1144,7 +1144,7 @@
             <div class="form-group col-sm-9 col-md-8">
               <div class="form-row">
                 <div class="form-group col-12 mb-0">
-                  <label class="my-0 text-justify">Usted podrá acordar con el vendedor sobre el proceso de compra,
+                  <label class="my-0 text-justify">Usted podrá acordar con el vendedor sobre el proceso de envío de su compra,
                     de acuerdo a su necesidad a través de WhatsApp.</label>
                   <div class="form-row">
                     <div class="form-group col-12 mb-0">

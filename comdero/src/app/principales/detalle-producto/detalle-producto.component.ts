@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ProductoServicio} from "../../servicios/producto.servicio";
 import {ActivatedRoute} from "@angular/router";
 import Swal from "sweetalert2";
@@ -23,7 +23,7 @@ import {ICreateOrderRequest, IPayPalConfig} from "ngx-paypal";
   styleUrls: ['./detalle-producto.component.css']
 })
 
-export class DetalleProductoComponent implements OnInit {
+export class DetalleProductoComponent implements OnInit, OnDestroy {
   private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
   public soloLetrasPattern: any = "[ a-zA-ZÑñáéíóúÁÉÍÓÚ ][ a-zA-ZÑñáéíóúÁÉÍÓÚ ]*$[0-9]{0}";
   private LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
@@ -128,6 +128,23 @@ export class DetalleProductoComponent implements OnInit {
     this.imagenPrincipal = 'assets/images/no-imagen1.png';
     this.getDpaProvincias("P");
     this.obtenerProducto();
+  }
+
+  ngOnDestroy(): void {
+    delete this.DatosDireccion;
+    delete  this.DatosFactura;
+    delete this.Carrito_Producto;
+    delete this.arrayColor;
+    delete this.arrayTalla;
+    delete this.arrayMaterial;
+    delete this.arrayCuponNombres;
+    delete this.data;
+    delete this.informacionCompra;
+    delete this.objEfectivo;
+    delete this.objElectronico;
+    delete this.objTransferencia;
+    delete this.payPalConfig;
+    delete this.varianteActiva;
   }
 
   async getDpaProvincias(buscar) {
@@ -1029,7 +1046,7 @@ export class DetalleProductoComponent implements OnInit {
 
     if (this.arrayCuponNombres.size > 0) {
       for (var nombresCupon of this.arrayCuponNombres) {
-        if (nombresCupon == this.cuponDescuentoNombre)
+        if (nombresCupon == this.cuponDescuentoNombre.toUpperCase())
           this.banCuponUtilizado = true;
       }
     }
@@ -1040,13 +1057,13 @@ export class DetalleProductoComponent implements OnInit {
     if (this.productoDetalle.PRODUCTO.PRODUCTO_DESCUENTOs.length > 0) {
       if (this.bandCuponActivado == false) {
         this.productoDetalle.PRODUCTO.PRODUCTO_DESCUENTOs.forEach(descuentoCupon => {
-          if (descuentoCupon.DESCUENTO.TIPO_DESCUENTO == 'Cupón' && descuentoCupon.DESCUENTO.MOTIVO_DESCUENTO == this.cuponDescuentoNombre) {
+          if (descuentoCupon.DESCUENTO.TIPO_DESCUENTO == 'Cupón' && descuentoCupon.DESCUENTO.MOTIVO_DESCUENTO == this.cuponDescuentoNombre.toUpperCase()) {
             if (descuentoCupon.DESCUENTO.FECHA_INICIO == fechaHoyCupon) {
               if ((this.obtenerMinutos(horaActualCupon) >= this.obtenerMinutos(descuentoCupon.DESCUENTO.HORA_INICIO))) {
                 //CUPON VALIDO
                 this.bandCuponActivado = false;
                 this.informacionCompra.COSTOS.PORCENTAJE_CUPON = this.informacionCompra.COSTOS.PORCENTAJE_CUPON + descuentoCupon.DESCUENTO.PORCENTAJE_DESCUENTO;
-                this.arrayCuponNombres.add(this.cuponDescuentoNombre);
+                this.arrayCuponNombres.add(this.cuponDescuentoNombre.toUpperCase());
                 console.log('1CUPON' + horaActualCupon + fechaHoyCupon);
               }
             } else {
@@ -1054,7 +1071,7 @@ export class DetalleProductoComponent implements OnInit {
                 if ((this.obtenerMinutos(horaActualCupon) <= this.obtenerMinutos(descuentoCupon.DESCUENTO.HORA_FIN))) {
                   //CUPON VALIDO
                   this.bandCuponActivado = false;
-                  this.arrayCuponNombres.add(this.cuponDescuentoNombre);
+                  this.arrayCuponNombres.add(this.cuponDescuentoNombre.toUpperCase());
                   this.informacionCompra.COSTOS.PORCENTAJE_CUPON = this.informacionCompra.COSTOS.PORCENTAJE_CUPON + descuentoCupon.DESCUENTO.PORCENTAJE_DESCUENTO;
                   console.log('2CUPON' + horaActualCupon + fechaHoyCupon);
                 } else {
@@ -1065,7 +1082,7 @@ export class DetalleProductoComponent implements OnInit {
               } else {
                 //CUPON VALIDO
                 this.bandCuponActivado = false;
-                this.arrayCuponNombres.add(this.cuponDescuentoNombre);
+                this.arrayCuponNombres.add(this.cuponDescuentoNombre.toUpperCase());
                 this.informacionCompra.COSTOS.PORCENTAJE_CUPON = this.informacionCompra.COSTOS.PORCENTAJE_CUPON + descuentoCupon.DESCUENTO.PORCENTAJE_DESCUENTO;
                 console.log('3CUPON' + horaActualCupon + fechaHoyCupon);
               }
