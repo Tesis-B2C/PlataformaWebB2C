@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ProductoServicio} from "../../servicios/producto.servicio";
 import {ActivatedRoute} from "@angular/router";
 import Swal from "sweetalert2";
@@ -15,6 +15,7 @@ import {CarritoServicio} from "../../servicios/carrito.servicio";
 import {MenuComponent} from "../menu/menu.component";
 import {Carrito_Producto} from "../../modelos/carrito_producto";
 import {CompraServicio} from "../../servicios/compra.servicio";
+import {ICreateOrderRequest, IPayPalConfig} from "ngx-paypal";
 
 @Component({
   selector: 'app-detalle-producto',
@@ -22,7 +23,7 @@ import {CompraServicio} from "../../servicios/compra.servicio";
   styleUrls: ['./detalle-producto.component.css']
 })
 
-export class DetalleProductoComponent implements OnInit {
+export class DetalleProductoComponent implements OnInit, OnDestroy {
   private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
   public soloLetrasPattern: any = "[ a-zA-ZÑñáéíóúÁÉÍÓÚ ][ a-zA-ZÑñáéíóúÁÉÍÓÚ ]*$[0-9]{0}";
   private LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
@@ -127,6 +128,23 @@ export class DetalleProductoComponent implements OnInit {
     this.imagenPrincipal = 'assets/images/no-imagen1.png';
     this.getDpaProvincias("P");
     this.obtenerProducto();
+  }
+
+  ngOnDestroy(): void {
+    delete this.DatosDireccion;
+    delete  this.DatosFactura;
+    delete this.Carrito_Producto;
+    delete this.arrayColor;
+    delete this.arrayTalla;
+    delete this.arrayMaterial;
+    delete this.arrayCuponNombres;
+    delete this.data;
+    delete this.informacionCompra;
+    delete this.objEfectivo;
+    delete this.objElectronico;
+    delete this.objTransferencia;
+    delete this.payPalConfig;
+    delete this.varianteActiva;
   }
 
   async getDpaProvincias(buscar) {
@@ -471,6 +489,7 @@ export class DetalleProductoComponent implements OnInit {
   public provinciaDireccionNombre;
 
   public abrirModalFinalizarPedido(content) {
+
     this.verificarMetodosTienda();
     this.identidadComprador = this._agenteServicio.getIdentity();
     console.log('AGENTE' + JSON.stringify(this.identidadComprador));
@@ -573,11 +592,9 @@ export class DetalleProductoComponent implements OnInit {
     this.informacionCompra.COSTOS.CUPON = 0;
     this.informacionCompra.COSTOS.PORCENTAJE_CUPON = 0;
 
-    this.varianteActiva.METODO_PAGO.forEach(pago => {
-      if (pago.TIPO_PAGO == 'Electrónico') {
-        this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL = pago.PORCENTAJE_RECARGO;
-      }
-    });
+
+    this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL = 0;
+
 
     this.informacionCompra.COSTOS.COSTOS_ENVIO = 0;
     this.informacionCompra.COSTOS.TOTAL_PEDIDO = (this.informacionCompra.COSTOS.SUBTOTAL + this.informacionCompra.COSTOS.RECARGO_PAYPAL + this.informacionCompra.COSTOS.COSTOS_ENVIO) - (this.informacionCompra.COSTOS.DESCUENTOS + this.informacionCompra.COSTOS.CUPON);
@@ -642,14 +659,26 @@ export class DetalleProductoComponent implements OnInit {
   }
 
   public banderaRecargoPaypal: boolean = false;
+  public apikeyPaypal;
 
   public selectMetodoPago(event) {
     this.banderaRecargoPaypal = false;
+    this.apikeyPaypal;
     this.informacionCompra.COSTOS.RECARGO_PAYPAL = 0;
     this.informacionCompra.METODO_PAGO_COMPRA = event.target.value;
+    this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL = 0;
     if (event.target.value == 'Electrónico') {
+
+      this.varianteActiva.METODO_PAGO.forEach(pago => {
+        if (pago.TIPO_PAGO == 'Electrónico') {
+          this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL = pago.PORCENTAJE_RECARGO;
+          this.apikeyPaypal = pago.API_KEY_PAYPAL;
+          console.log("api paypal", this.apikeyPaypal);
+        }
+      });
       this.banderaRecargoPaypal = true;
       this.informacionCompra.COSTOS.RECARGO_PAYPAL = (this.informacionCompra.COSTOS.SUBTOTAL * this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL) / 100;
+      this.initConfig();
       if (this.informacionCompra.METODO_ENVIO_COMPRA == 'Domicilio') {
         this.calcularCostosEnvioDomicilio();
       }
@@ -878,14 +907,15 @@ export class DetalleProductoComponent implements OnInit {
     this.DatosDireccion = null;
     this.DatosFactura = null;
 
+    this.arrayCuponNombres = new Set();
     this.banderaRecargoPaypal = false;
     this.bandCuponActivado = false;
+    this.banCuponUtilizado = false;
     this.noExisteEnvioEstaArea = false;
     this.direccionEnvioDiferente = false;
     this.datosfacturacionDiferente = false;
     this.siguienteDetallePedido = false;
     this.banderaDireccionEnvio = false;
-
     this.informacionCompra = {
       COD_AGENTE: null,
       ID_AGENTE: null,
@@ -993,11 +1023,6 @@ export class DetalleProductoComponent implements OnInit {
     })
   }
 
-  public carritoCompras = {
-    NUM_VARIANTE: null,
-    CANTIDAD: null
-  };
-
 
   public async agregarCarrito() {
     try {
@@ -1013,14 +1038,16 @@ export class DetalleProductoComponent implements OnInit {
   public cuponDescuentoNombre = null;
   public arrayCuponNombres = new Set();
   public bandCuponActivado: boolean = false;
+  public banCuponUtilizado: boolean = false;
 
   public aplicarCuponDescuento() {
     this.bandCuponActivado = false;
+    this.banCuponUtilizado = false;
 
     if (this.arrayCuponNombres.size > 0) {
       for (var nombresCupon of this.arrayCuponNombres) {
-        if (nombresCupon == this.cuponDescuentoNombre)
-          this.bandCuponActivado = true;
+        if (nombresCupon == this.cuponDescuentoNombre.toUpperCase())
+          this.banCuponUtilizado = true;
       }
     }
 
@@ -1030,13 +1057,13 @@ export class DetalleProductoComponent implements OnInit {
     if (this.productoDetalle.PRODUCTO.PRODUCTO_DESCUENTOs.length > 0) {
       if (this.bandCuponActivado == false) {
         this.productoDetalle.PRODUCTO.PRODUCTO_DESCUENTOs.forEach(descuentoCupon => {
-          if (descuentoCupon.DESCUENTO.TIPO_DESCUENTO == 'Cupón' && descuentoCupon.DESCUENTO.MOTIVO_DESCUENTO == this.cuponDescuentoNombre) {
+          if (descuentoCupon.DESCUENTO.TIPO_DESCUENTO == 'Cupón' && descuentoCupon.DESCUENTO.MOTIVO_DESCUENTO == this.cuponDescuentoNombre.toUpperCase()) {
             if (descuentoCupon.DESCUENTO.FECHA_INICIO == fechaHoyCupon) {
               if ((this.obtenerMinutos(horaActualCupon) >= this.obtenerMinutos(descuentoCupon.DESCUENTO.HORA_INICIO))) {
                 //CUPON VALIDO
                 this.bandCuponActivado = false;
                 this.informacionCompra.COSTOS.PORCENTAJE_CUPON = this.informacionCompra.COSTOS.PORCENTAJE_CUPON + descuentoCupon.DESCUENTO.PORCENTAJE_DESCUENTO;
-                this.arrayCuponNombres.add(this.cuponDescuentoNombre);
+                this.arrayCuponNombres.add(this.cuponDescuentoNombre.toUpperCase());
                 console.log('1CUPON' + horaActualCupon + fechaHoyCupon);
               }
             } else {
@@ -1044,7 +1071,7 @@ export class DetalleProductoComponent implements OnInit {
                 if ((this.obtenerMinutos(horaActualCupon) <= this.obtenerMinutos(descuentoCupon.DESCUENTO.HORA_FIN))) {
                   //CUPON VALIDO
                   this.bandCuponActivado = false;
-                  this.arrayCuponNombres.add(this.cuponDescuentoNombre);
+                  this.arrayCuponNombres.add(this.cuponDescuentoNombre.toUpperCase());
                   this.informacionCompra.COSTOS.PORCENTAJE_CUPON = this.informacionCompra.COSTOS.PORCENTAJE_CUPON + descuentoCupon.DESCUENTO.PORCENTAJE_DESCUENTO;
                   console.log('2CUPON' + horaActualCupon + fechaHoyCupon);
                 } else {
@@ -1055,7 +1082,7 @@ export class DetalleProductoComponent implements OnInit {
               } else {
                 //CUPON VALIDO
                 this.bandCuponActivado = false;
-                this.arrayCuponNombres.add(this.cuponDescuentoNombre);
+                this.arrayCuponNombres.add(this.cuponDescuentoNombre.toUpperCase());
                 this.informacionCompra.COSTOS.PORCENTAJE_CUPON = this.informacionCompra.COSTOS.PORCENTAJE_CUPON + descuentoCupon.DESCUENTO.PORCENTAJE_DESCUENTO;
                 console.log('3CUPON' + horaActualCupon + fechaHoyCupon);
               }
@@ -1195,9 +1222,14 @@ export class DetalleProductoComponent implements OnInit {
 
   public async comprar() {
     try {
-      console.log('INFORMACION COMPRA'+JSON.stringify(this.informacionCompra));
+
+      console.log('INFORMACION COMPRA' + JSON.stringify(this.informacionCompra));
       let response = await this._compraServicio.saveComprarProducto(this.informacionCompra).toPromise();
-       this.mensageCorrecto(response.message);
+      this.mensageCorrecto(response.message);
+      this.cerrar();
+      this.modalService.dismissAll();
+      this.obtenerProducto();
+
     } catch (e) {
       console.log("error", e);
       if (JSON.stringify((e).error.message))
@@ -1222,11 +1254,85 @@ export class DetalleProductoComponent implements OnInit {
     });
   }
 
+  public payPalConfig: IPayPalConfig;
+
+
+  initConfig() {
+    this.payPalConfig = {
+      currency: 'USD',
+      clientId: this.apikeyPaypal,
+      createOrderOnClient: (data) => <ICreateOrderRequest>{
+        intent: 'CAPTURE',
+
+        payer: {
+          name: {
+            given_name: "",
+            surname: ""
+          },
+          address: {
+            address_line_1: '',
+            address_line_2: '',
+            postal_code: '',
+            country_code: 'EC',
+            admin_area_2: '',
+          },
+
+        },
+
+        purchase_units: [
+          {
+            amount: {
+              currency_code: 'USD',
+              value: this.informacionCompra.COSTOS.TOTAL_PEDIDO.toFixed(2),
+            },
+
+
+          }
+        ],
+
+      },
+      advanced: {
+        commit: 'true'
+      },
+      style: {
+
+        layout: 'vertical',
+        color: 'blue',
+        size: 'responsive',
+        shape: 'rect',
+
+      },
+
+
+      onApprove: (data, actions) => {
+        console.log('onApprove - transaction was approved, but not authorized', data, actions);
+        actions.order.get().then(details => {
+          console.log('onApprove - you can get full order details inside onApprove: ', details);
+        });
+      },
+      onClientAuthorization: (data) => {
+        console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+        this.comprar();
+
+
+      },
+      onCancel: (data, actions) => {
+        console.log('OnCancel', data, actions);
+      },
+      onError: err => {
+        console.log('OnError', err);
+      },
+      onClick: (data, actions) => {
+        console.log('onClick', data, actions);
+      },
+    };
+  }
+
   mensageCorrecto(mensaje) {
     Swal.fire({
       icon: 'success',
       title: '<header class="login100-form-title-registro"><h5 class="card-title">!Correcto..</h5></header>',
-      text: mensaje,
+      html: mensaje,
       position: 'center',
       width: 600,
       buttonsStyling: false,

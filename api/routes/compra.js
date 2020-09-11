@@ -4,6 +4,7 @@ const CompraController = require('../controllers/compra');
 const md_auth = require('../middleware/authenticated');
 const api = express.Router(); // esto sirve para crear las rutas
 api.post('/saveComprarProducto',md_auth.ensureAuth, CompraController.saveComprarProducto);
+api.post('/saveComprarProductoCarrito',md_auth.ensureAuth, CompraController.saveComprarProductoCarrito);
 
 
 

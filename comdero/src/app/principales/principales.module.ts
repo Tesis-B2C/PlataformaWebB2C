@@ -9,10 +9,10 @@ import {CarouselModule} from 'ngx-owl-carousel-o';
 import {FormsModule} from "@angular/forms";
 import {BusquedaComponent} from './busqueda/busqueda.component';
 import {TypeaheadModule} from "ngx-bootstrap";
-import { DetalleProductoComponent } from './detalle-producto/detalle-producto.component';
-import { HttpClientModule} from '@angular/common/http';
-import { CarritoComprasComponent } from './carrito-compras/carrito-compras.component';
-
+import {DetalleProductoComponent} from './detalle-producto/detalle-producto.component';
+import {HttpClientModule} from '@angular/common/http';
+import {CarritoComprasComponent} from './carrito-compras/carrito-compras.component';
+import {NgxPayPalModule} from 'ngx-paypal';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,8 @@ import { CarritoComprasComponent } from './carrito-compras/carrito-compras.compo
     NgbModule,
     CarouselModule,
     FormsModule,
-    TypeaheadModule
+    TypeaheadModule,
+    NgxPayPalModule
   ]
 })
 export class PrincipalesModule {

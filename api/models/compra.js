@@ -28,13 +28,13 @@ const Compra = db.sequelize.define('COMPRA', {
         CALLE_PRINCIPAL_ENTREGA:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull: true
             },
 
         CALLE_SECUNDARIA_ENTREGA:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull: true
             },
         COD_DPA:
             {
@@ -46,24 +46,28 @@ const Compra = db.sequelize.define('COMPRA', {
         NOMBRE_PERSONA_ENTREGA:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull: true
             },
-        IDENTIFICACION_PERSONA_ENTREGA:
+        TIPO_IDENTIFICACION_ENTREGA: {
+            type: Sequelize.STRING,
+            allowNull: true
+        },
+        IDENTIFICACION_ENTREGA:
             {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull: true
             },
         NUM_COD_POSTAL_ENTREGA: {
             type: Sequelize.STRING,
-            allowNull: false
+            allowNull: true
         },
         TELEFONO_ENTREGA: {
             type: Sequelize.STRING,
-            allowNull: false
+            allowNull: true
         },
         NUM_CASA_ENTREGA: {
             type: Sequelize.STRING,
-            allowNull: false
+            allowNull: true
         },
         TIPO_IDENTIFICACION_FACTURA: {
             type: Sequelize.STRING,
@@ -95,7 +99,7 @@ const Compra = db.sequelize.define('COMPRA', {
         },
         FECHA_ENVIO: {
             type: Sequelize.DATEONLY,
-            allowNull: false
+            allowNull: true
         },
         METODO_PAGO:
             {
