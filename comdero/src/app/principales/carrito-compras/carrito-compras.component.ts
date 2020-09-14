@@ -72,6 +72,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
     delete this.varianteActiva;
     delete this.informacionCompra;
     delete this.payPalConfig;
+    this.modalService.dismissAll();
 
   }
 

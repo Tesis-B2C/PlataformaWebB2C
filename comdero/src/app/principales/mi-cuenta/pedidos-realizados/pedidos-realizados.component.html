@@ -1,113 +1,168 @@
-<div *ngFor="let compra of comprasObtenidas; let index=i">
+<div *ngFor="let compra of comprasObtenidas; let i = index">
   <div class="card mb-5">
     <div class="card-header ">
       <div class=" mb-0 font-weight-bold row    justify-content-between mx-md-auto"><a
         class="col-auto">{{compra.COMPRA_PRODUCTOs[0].VARIANTE.PRODUCTO.OFERTum.TIENDA.NOMBRE_COMERCIAL}}</a>
         <a *ngIf="compra.ESTADO_COMPRA==0" class="col-auto text-info text-uppercase"> Pendiente</a>
-      <a *ngIf="compra.ESTADO_COMPRA==1" class="col-auto text-success text-uppercase"> Enviado</a></div>
-    <ul class="nav nav-tabs card-header-tabs pull-left mx-md-auto pt-2  " id="myTab2" role="tablist">
+        <a *ngIf="compra.ESTADO_COMPRA==1" class="col-auto text-success text-uppercase"> Enviado</a></div>
+      <ul class="nav nav-tabs card-header-tabs pull-left mx-md-auto pt-2  " id="myTab2" role="tablist">
 
-      <li class="nav-item">
-        <div class="nav-link  py-0 ">
-          <p>Pedido realizado</p>
-          <p>{{compra.FECHA_COMPRA}}</p>
-        </div>
-      </li>
-      <li class="nav-item">
-        <div class="nav-link  py-0 ">
-          <p>Total</p>
-          <p>{{compra.total_final | currency}}</p>
-        </div>
-      </li>
-      <li class="nav-item">
-        <div class="nav-link  py-0 ">
-          <p>Pedido No</p>
-          <p>{{compra.NUM_COMPRA}}</p>
-        </div>
-      </li>
+        <li class="nav-item">
+          <div class="nav-link  py-0 ">
+            <p>Pedido realizado</p>
+            <p>{{compra.FECHA_COMPRA}}</p>
+          </div>
+        </li>
+        <li class="nav-item">
+          <div class="nav-link  py-0 ">
+            <p>Total</p>
+            <p>{{compra.total_final | currency}}</p>
+          </div>
+        </li>
+        <li class="nav-item">
+          <div class="nav-link  py-0 ">
+            <p>Pedido No</p>
+            <p>{{compra.NUM_COMPRA}}</p>
+          </div>
+        </li>
 
-    </ul>
+      </ul>
 
-    <ul class="nav nav-pills card-header-pills   justify-content-md-end justify-content-center  pt-4 pt-md-1"
-        id="myTab" role="tablist">
+      <ul class="nav nav-pills card-header-pills   justify-content-md-end justify-content-center  pt-4 pt-md-1"
+          id="myTab" role="tablist">
 
-      <li class="nav-item">
-        <a class="nav-link active py-0 " id="home-tab" data-toggle="tab" href="#home" role="tab"
-           aria-controls="home"
-           aria-selected="true">Pedido</a>
-      </li>
+        <li class="nav-item">
+          <a class="nav-link active py-0 " id="pedido-tab" data-toggle="tab" href="#pedido{{i}}" role="tab"
+             aria-controls="pedido"
+             aria-selected="true">Pedido</a>
+        </li>
 
-      <li class="nav-item">
-        <a class="nav-link py-0 " id="contact-tab" data-toggle="tab" href="#contact" role="tab"
-           aria-controls="contact"
-           aria-selected="false">Detalle</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link py-0 " id="contact-tab" data-toggle="tab" href="#contact" role="tab"
-           aria-controls="contact"
-           aria-selected="false">Recivo</a>
-      </li>
-    </ul>
-  </div>
+        <li class="nav-item">
+          <a class="nav-link py-0 " id="detalle-tab" data-toggle="tab" href="#detalle{{i}}" role="tab"
+             aria-controls="detalle"
+             aria-selected="false">Detalle</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link py-0 " id="recibo-tab" data-toggle="tab" href="#recibo{{i}}" role="tab"
+             aria-controls="recibo"
+             aria-selected="false">Recibo</a>
+        </li>
+      </ul>
+    </div>
 
-  <div class="card-body">
-    <div class="tab-content" id="myTabContent">
-      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <div class="card-body">
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="pedido{{i}}" role="tabpanel" aria-labelledby="home-tab">
 
-        <div class="row" id="multiCollapseExample">
-          <aside class="col-lg-12 ">
+          <div class="row" id="multiCollapseExample">
+            <aside class="col-lg-12 ">
 
 
-            <div class="row justify-content-center mb-4 no-gutters "
-                 *ngFor="let producto of compra.COMPRA_PRODUCTOs; let i= index">
-              <div class="col-12 col-md-5    mb-md-0 mb-4">
-                <p class="text-uppercase text-center ">Producto</p>
-                <div class="itemside mx-auto">
-                  <div class="aside"><img [src]="getImagen(producto.IMAGEN_MOSTRAR)" height="50px" width="50px">
+              <div class="row justify-content-center mb-4 no-gutters "
+                   *ngFor="let producto of compra.COMPRA_PRODUCTOs; let i= index">
+                <div class="col-12 col-md-5    mb-md-0 mb-4">
+                  <p class="text-uppercase text-center ">Producto</p>
+                  <div class="itemside mx-auto">
+                    <div class="aside"><img [src]="getImagen(producto.IMAGEN_MOSTRAR)" height="50px" width="50px">
+                    </div>
+                    <figcaption class="info">
+
+                      <a href="#" class=" price">{{producto.VARIANTE.PRODUCTO.NOMBRE_PRODUCTO}}</a>
+                      <p class="text-muted small text-left "
+                         *ngIf="producto.VARIANTE.MATERIAL">Material:&nbsp;&nbsp; {{producto.VARIANTE.MATERIAL}}
+                      </p>
+                      <p class="text-muted small text-left" *ngIf="producto.VARIANTE.COLOR">Color:<span
+                        class="px-2 py-0 ml-2 border border-dark"
+                        [style.background-color]="producto.VARIANTE.COLOR"></span></p>
+                      <p class=" smal text-left"
+                         *ngIf="producto.VARIANTE.TALLA">Talla:&nbsp;&nbsp;&nbsp;{{producto.VARIANTE.TALLA}}</p>
+                    </figcaption>
                   </div>
-                  <figcaption class="info">
-
-                    <a href="#" class=" price">{{producto.VARIANTE.PRODUCTO.NOMBRE_PRODUCTO}}</a>
-                    <p class="text-muted small text-left "
-                       *ngIf="producto.VARIANTE.MATERIAL">Material:&nbsp;&nbsp; {{producto.VARIANTE.MATERIAL}}
-                    </p>
-                    <p class="text-muted small text-left" *ngIf="producto.VARIANTE.COLOR">Color:<span
-                      class="px-2 py-0 ml-2 border border-dark"
-                      [style.background-color]="producto.VARIANTE.COLOR"></span></p>
-                    <p class=" smal text-left"
-                       *ngIf="producto.VARIANTE.TALLA">Talla:&nbsp;&nbsp;&nbsp;{{producto.VARIANTE.TALLA}}</p>
-                  </figcaption>
                 </div>
-              </div>
-              <div class="col-6 col-md-2  mb-3 mb-md-0 text-center    ">
-                <p class="text-uppercase mb-0 ">Cantidad </p>
-                <p class="price">{{producto.CANTIDAD_PRODUCTO}}</p>
-                <a style="font-size: x-small; text-transform: lowercase">({{producto.VARIANTE.MEDIDA}})</a>
+                <div class="col-6 col-md-2  mb-3 mb-md-0 text-center    ">
+                  <p class="text-uppercase mb-0 ">Cantidad </p>
+                  <p class="price">{{producto.CANTIDAD_PRODUCTO}}</p>
+                  <a style="font-size: x-small; text-transform: lowercase">({{producto.VARIANTE.MEDIDA}})</a>
 
-              </div>
-              <div class="col-6 col-md-2  text-center text-md-left   ">
-                <p class="text-uppercase mb-0 ">Precio</p>
-                <div class="price-wrap">
-                  <p
-                    class="price">{{(producto.SUBTOTAL)  | currency}} </p>
+                </div>
+                <div class="col-6 col-md-2  text-center text-md-left   ">
+                  <p class="text-uppercase mb-0 ">Precio</p>
+                  <div class="price-wrap">
+                    <p
+                      class="price">{{(producto.SUBTOTAL)  | currency}} </p>
 
-                </div> <!-- price-wrap .// -->
-              </div>
-              <div class="col-12 col-md-3 text-center text-md-left   ">
-                <p class="text-uppercase  white">.</p>
-                <button class="btn btn-light w-75">Agregar opinion</button>
-              </div>
+                  </div> <!-- price-wrap .// -->
+                </div>
+                <div class="col-12 col-md-3 text-center text-md-left   ">
+                  <p class="text-uppercase  white">.</p>
+                  <button class="btn btn-light w-75">Agregar opinion</button>
+                </div>
 
 
-            </div> <!-- card.// -->
+              </div> <!-- card.// -->
 
-          </aside> <!-- col.// -->
+            </aside> <!-- col.// -->
+
+          </div>
+        </div>
+        <div class="tab-pane fade" id="detalle{{i}}" role="tabpanel" aria-labelledby="profile-tab">
+
+          <div class="card">
+            <div class="card-body small">
+              <dl class="dlist-align">
+                <dt>Productos:</dt>
+                <dd class="text-right">{{compra.productos | currency}}</dd>
+              </dl>
+              <dl class="dlist-align">
+                <dt>Impuestos</dt>
+                <dd class="text-right text-danger">{{compra.impuestos | currency}} </dd>
+
+              </dl>
+
+              <dl class="dlist-align">
+                <dt>Subtotal:</dt>
+                <dd class="text-right text-dark b"><strong>{{compra.subtotal | currency}}</strong></dd>
+              </dl>
+
+              <dl class="dlist-align">
+                <dt>Descuento</dt>
+                <dd class="text-center">(-)</dd>
+                <dd class="text-right text-dark b"><strong>{{compra.descuento | currency}}</strong></dd>
+              </dl>
+              <dl class="dlist-align">
+                <dt>Descuento Cupón</dt>
+                <dd class="text-center">(-)</dd>
+                <dd class="text-right text-dark b"><strong>{{compra.cupon | currency}}</strong></dd>
+              </dl>
+              <hr>
+              <dl class="dlist-align">
+                <dt><i class="icon text-success fa fa-truck"></i> &nbsp;Método de envio:</dt>
+                <dd class="text-center">
+                  <strong *ngIf="compra.METODO_ENVIO=='Acordar'">Acordar con el vendedor</strong>
+                  <strong *ngIf="compra.METODO_ENVIO=='Retiro'">Retiro desde la tienda</strong>
+                  <strong *ngIf="compra.METODO_ENVIO=='Domicilio'">Envío a domicilio</strong>
+                </dd>
+                <dd class="text-right text-dark b"> {{compra.COSTO_ENVIO | currency}}</dd>
+              </dl>
+              <dl class="dlist-align">
+                <dt><i class="icon text-success fa fa-cash-register"></i> &nbsp;Método de pago:</dt>
+                <dd class="text-center">
+                  <strong *ngIf="compra.METODO_PAGO=='Efectivo'">Efectivo</strong>
+                  <strong *ngIf="compra.METODO_PAGO=='Transferencia'">Transferencia bancaria</strong>
+                  <strong *ngIf="compra.METODO_PAGO=='Electrónico'">PayPal</strong>
+                </dd>
+                <dd class="text-right text-dark b"> {{compra.RECARGO_PAYPAL | currency}}</dd>
+              </dl>
+              <br>
+              <button href="#" class="btn btn-light btn-block font-weight-bold">Total del
+                pedido:{{compra.total_final| currency}} </button>
+            </div> <!-- card-body.// -->
+          </div> <!-- card.// -->
+
 
         </div>
+        <div class="tab-pane fade" id="recibo{{i}}" role="tabpanel" aria-labelledby="contact-tab">contacto</div>
       </div>
-      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">profile</div>
-      <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">contacto</div>
     </div>
   </div>
-</div>
 </div>

@@ -24,12 +24,30 @@ export class PedidosRealizadosComponent implements OnInit {
       this.comprasObtenidas = response.data;
       console.log("comra obtenidas", this.comprasObtenidas);
       for (let compra of this.comprasObtenidas) {
-        let suma=0;
-        for (let producto of compra.COMPRA_PRODUCTOs) {
-            suma=suma+producto.SUBTOTAL-producto.DESCUENTOS-producto.CUPON;
-        }
-        compra.total_final=suma+compra.COSTO_ENVIO+compra.RECARGO_PAYPAL;
+        let total_final = 0;
+        let productos = 0;
+        let impuestos = 0;
+        let subtotal = 0;
+        let descuento = 0;
+        let cupon = 0;
 
+
+        for (let producto of compra.COMPRA_PRODUCTOs) {
+          total_final = total_final + producto.SUBTOTAL - producto.DESCUENTOS - producto.CUPON;
+          productos = productos + producto.TOTAL_PRODUCTOS;
+          impuestos = impuestos + producto.IMPUESTOS;
+          subtotal = subtotal + producto.SUBTOTAL;
+          descuento = descuento + producto.DESCUENTOS;
+          cupon = cupon + producto.CUPON;
+
+        }
+        compra.productos
+        compra.total_final = total_final + compra.COSTO_ENVIO + compra.RECARGO_PAYPAL;
+        compra.productos = productos;
+        compra.impuestos = impuestos;
+        compra.subtotal = subtotal;
+        compra.descuento = descuento;
+        compra.cupon = cupon;
       }
     } catch (e) {
       console.log("error", e)

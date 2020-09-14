@@ -146,6 +146,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
     delete this.objTransferencia;
     delete this.payPalConfig;
     delete this.varianteActiva;
+    this.modalService.dismissAll();
   }
 
   async getDpaProvincias(buscar) {
