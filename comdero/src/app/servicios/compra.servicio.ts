@@ -31,7 +31,7 @@ export class CompraServicio {
     return this._http.post<objeto>(this.url + "saveComprarProducto/", params, {headers: headers});
   }
 
-  saveComprarProductoCarrito(informacionCompra){
+  saveComprarProductoCarrito(informacionCompra) {
     let params = JSON.stringify(informacionCompra)
     let headers = new HttpHeaders({
       "Content-type": "application/json",
@@ -40,6 +40,13 @@ export class CompraServicio {
     return this._http.post<objeto>(this.url + "saveComprarProductoCarrito/", params, {headers: headers});
   }
 
+  getMisCompras() {
+    let headers = new HttpHeaders({
+      "Content-type": "application/json",
+      "Authorization": this._agenteServicio.getToken()
+    });
+    return this._http.get<objeto>(this.url + "getMisCompras", {headers: headers});
+  }
 
 
 }

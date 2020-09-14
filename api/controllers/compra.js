@@ -1,5 +1,7 @@
 'use strict'
 
+
+
 const DPA = require('../models/dpa'); //importar el modelo del usuario  o lo que son las clases comunes
 const Compra = require('../models/compra');
 const Compra_Producto = require('../models/compra_producto');
@@ -8,6 +10,9 @@ const Carrito_Producto = require('../models/carrito_producto');
 const db = require('../database/db');
 const Agente = require('../models/agente');
 const Variante = require('../models/variante');
+const Producto = require('../models/producto');
+const Oferta = require('../models/oferta');
+const Tienda = require('../models/tienda');
 const moment = require('moment');
 
 async function saveComprarProducto(req, res) {
@@ -291,7 +296,49 @@ async function saveComprarProductoCarrito(req, res) {
     }
 }
 
+async function getMisCompras(req, res) {
+    let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
+    try {
+        if (!verificar) {
+            return res.status(500).send({
+                message: "No tiene los permisos necesarios"
+            });
+        } else {
+            let comprasObtenidas = await Compra.findAll({
+                where: {COD_AGENTE: req.user.id},
+                order: [['NUM_COMPRA', 'DESC']]
+            }, {
+                include: {
+                    model: Compra_Producto
+                    ,
+                    include: {
+                        model: Variante,
+                        include: {model: Producto, include: {model: Oferta, include: {model: Tienda}}}
+                    }
+                }
+            });
+
+            if (comprasObtenidas.length > 0) {
+                res.status(200).send({
+                    data: comprasObtenidas,
+                    message: "Compra obtenida correcctamente"
+                });
+            } else {
+                res.status(404).send({
+                    message: 'No existen compras'
+                });
+
+
+            }
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
 module.exports = {
     saveComprarProducto,
-    saveComprarProductoCarrito
+    saveComprarProductoCarrito,
+    getMisCompras
 };

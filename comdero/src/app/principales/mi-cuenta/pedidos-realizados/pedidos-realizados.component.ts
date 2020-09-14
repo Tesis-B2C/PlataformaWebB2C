@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {CompraServicio} from "../../../servicios/compra.servicio";
 
 @Component({
   selector: 'app-pedidos-realizados',
@@ -6,10 +7,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./pedidos-realizados.component.css']
 })
 export class PedidosRealizadosComponent implements OnInit {
-  currentJustify = 'start';
-  constructor() { }
+  public comprasObtenidas;
 
-  ngOnInit() {
+  constructor(public _compraServicio: CompraServicio) {
+  }
+
+  async ngOnInit() {
+    await this.getMisCompras();
+  }
+
+  public async getMisCompras() {
+    try {
+      let response = await this._compraServicio.getMisCompras().toPromise();
+      this.comprasObtenidas= response.data;
+    } catch (e) {
+      console.log("error", e)
+    }
   }
 
 }
