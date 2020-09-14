@@ -1,15 +1,15 @@
 <!-- ========================= SECTION PAGETOP ========================= -->
 <body >
-<section class="section-pagetop bg">
+<section class="section-pagetop bg py-1 py-md-5">
   <div class="container">
-    <h2 class="title-page">Mi Cuenta</h2>
+    <h2 class="title-page text-md-left text-center">Mi Cuenta</h2>
   </div> <!-- container //  -->
 </section>
 <!-- ========================= SECTION INTRO END// ========================= -->
 
 <!-- ========================= SECTION CONTENT VISION GENERAL ========================= -->
 
-<section class="section-content padding-y">
+<section class="section-content pt-2 pt-md-5">
   <div class="container">
 
     <div class="row">
@@ -18,15 +18,13 @@
           <a class="list-group-item" routerLink="vision-general" routerLinkActive="active" > Visión General </a>
           <a class="list-group-item" routerLink="datos-personales" routerLinkActive="active"  [routerLinkActiveOptions]="{exact: true}"> Datos personales </a>
           <a class="list-group-item" routerLink="cambiar-contrasenia" routerLinkActive="active"  [routerLinkActiveOptions]="{exact: true}"> Cambiar contraseña</a>
-          <a class="list-group-item" routerLink="pedidos-realizados" routerLinkActive="active"  [routerLinkActiveOptions]="{exact: true}"> Pedidos realizadas </a>
-          <a class="list-group-item" href="#"> A la espera de la entrega </a>
-          <a class="list-group-item" href="#"> Articulos entregados </a>
+          <a class="list-group-item" routerLink="pedidos-realizados" routerLinkActive="active"  [routerLinkActiveOptions]="{exact: true}"> Pedidos </a>
 
         </ul>
       </aside> <!-- menu -->
 
       <!--paneles-->
-      <main class="col-md-9"  >
+      <main class="col-md-9 pt-2 pt-md-0"  >
 
         <router-outlet></router-outlet>
 

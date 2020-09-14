@@ -3,3 +3,6 @@ body{
   overflow: auto;
 }
 
+a{
+  font-size: small;
+}
