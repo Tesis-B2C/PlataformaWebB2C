@@ -1,7 +1,6 @@
 'use strict'
 
 
-
 const DPA = require('../models/dpa'); //importar el modelo del usuario  o lo que son las clases comunes
 const Compra = require('../models/compra');
 const Compra_Producto = require('../models/compra_producto');
@@ -94,7 +93,7 @@ async function saveComprarProducto(req, res) {
                     PORCENTAJE_AUTOMATICO: req.body.COSTOS.PORCENTAJE_AUTOMATICO,
                     CUPON: req.body.COSTOS.CUPON,
                     PORCENTAJE_CUPON: req.body.COSTOS.PORCENTAJE_CUPON,
-                    IMAGEN_MOSTRAR:req.body.IMAGEN_MOSTRAR
+                    IMAGEN_MOSTRAR: req.body.IMAGEN_MOSTRAR
 
                 }, {
                     transaction: t
@@ -221,7 +220,7 @@ async function saveComprarProductoCarrito(req, res) {
                         PORCENTAJE_AUTOMATICO: element.porcentaje_descuento,
                         CUPON: element.descuentos_cupon,
                         PORCENTAJE_CUPON: element.porcentaje_descuento_cupon,
-                       IMAGEN_MOSTRAR:element.IMAGEN_MOSTRAR
+                        IMAGEN_MOSTRAR: element.IMAGEN_MOSTRAR
                     }, {
                         transaction: t
                     }
@@ -305,18 +304,18 @@ async function getMisCompras(req, res) {
             });
         } else {
             let comprasObtenidas = await Compra.findAll({
-                where: {COD_AGENTE: req.user.id},
-                order: [['NUM_COMPRA', 'DESC']]
-            }, {
-                include: {
-                    model: Compra_Producto
-                    ,
+                    where: {COD_AGENTE: req.user.id}, order: [['NUM_COMPRA', 'DESC']],
                     include: {
-                        model: Variante,
-                        include: {model: Producto, include: {model: Oferta, include: {model: Tienda}}}
+                        model: Compra_Producto, include: {
+                            model: Variante,
+                            include: {model: Producto, include: {model: Oferta, include: {model: Tienda}}}
+                        }
                     }
+
+
                 }
-            });
+                )
+            ;
 
             if (comprasObtenidas.length > 0) {
                 res.status(200).send({
@@ -337,6 +336,7 @@ async function getMisCompras(req, res) {
         });
     }
 }
+
 module.exports = {
     saveComprarProducto,
     saveComprarProductoCarrito,
