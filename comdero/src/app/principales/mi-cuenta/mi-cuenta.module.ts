@@ -8,14 +8,16 @@ import { DatosPersonalesComponent } from './datos-personales/datos-personales.co
 import {FormsModule} from "@angular/forms";
 
 import { CambiarContraseniaComponent } from './cambiar-contrasenia/cambiar-contrasenia.component';
-
+import { PedidosRealizadosComponent } from './pedidos-realizados/pedidos-realizados.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
-  declarations: [MenuMiCuentaComponent, VisionGeneralComponent, DatosPersonalesComponent, CambiarContraseniaComponent],
+  declarations: [MenuMiCuentaComponent, VisionGeneralComponent, DatosPersonalesComponent, CambiarContraseniaComponent, PedidosRealizadosComponent],
   imports: [
     CommonModule,
     MiCuentaRoutingModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ]
 })
 export class MiCuentaModule { }

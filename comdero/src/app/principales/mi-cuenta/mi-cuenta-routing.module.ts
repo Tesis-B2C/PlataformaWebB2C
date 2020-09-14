@@ -6,6 +6,7 @@ import {VisionGeneralComponent} from "./vision-general/vision-general.component"
 import {DatosPersonalesComponent} from "./datos-personales/datos-personales.component";
 
 import {CambiarContraseniaComponent} from "./cambiar-contrasenia/cambiar-contrasenia.component";
+import {PedidosRealizadosComponent} from "./pedidos-realizados/pedidos-realizados.component";
 
 
 const routes: Routes = [
@@ -13,7 +14,9 @@ const routes: Routes = [
     children: [
      { path: 'vision-general', component: VisionGeneralComponent },
       { path: 'datos-personales', component: DatosPersonalesComponent },
-      { path: 'cambiar-contrasenia', component: CambiarContraseniaComponent }]}];
+      { path: 'cambiar-contrasenia', component: CambiarContraseniaComponent },
+      { path: 'pedidos-realizados', component: PedidosRealizadosComponent },
+     ]}];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

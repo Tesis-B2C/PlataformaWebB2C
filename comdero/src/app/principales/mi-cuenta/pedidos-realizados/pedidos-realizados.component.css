@@ -1,0 +1,21 @@
+p{
+  font-size:smaller;
+  margin-top: 0;
+  margin-bottom: 0;
+  text-align: center;
+}
+a{
+  font-size:smaller;
+  margin-top: 0;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.nav-item .active{
+  font-size: smaller;
+  font-weight: normal;
+  text-decoration-line: underline;
+  background-color: transparent;
+  color: #007bff;
+
+}
