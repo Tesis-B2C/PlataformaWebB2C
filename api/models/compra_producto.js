@@ -65,7 +65,10 @@ const Compra_Producto = db.sequelize.define('COMPRA_PRODUCTO', {
                 type: Sequelize.FLOAT(8, 2),
                 allowNull: false
             },
-
+        IMAGEN_MOSTRAR: {
+            type: Sequelize.STRING,
+            allowNull: false
+        }
 
 
     },

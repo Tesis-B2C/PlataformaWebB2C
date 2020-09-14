@@ -67,6 +67,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
     ID_PRODUCTO: null,
     COD_PRODUCTO: null,
     FECHA_COMPRA: null,
+    IMAGEN_MOSTRAR: null,
     DATOS_ENTREGA: {
       TIPO_IDENTIFICACION_ENTREGA: null,
       NOMBRE_PERSONA_ENVIO_ENTREGA: null,
@@ -132,7 +133,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     delete this.DatosDireccion;
-    delete  this.DatosFactura;
+    delete this.DatosFactura;
     delete this.Carrito_Producto;
     delete this.arrayColor;
     delete this.arrayTalla;
@@ -571,6 +572,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
 
     this.informacionCompra.CANTIDAD = this.varianteActiva.CANTIDAD;
     this.informacionCompra.NUM_VARIANTE = this.varianteActiva.NUM_VARIANTE;
+    this.informacionCompra.IMAGEN_MOSTRAR = this.varianteActiva.IMAGENES[0].IMAGEN;
     console.log('VARIANTE' + this.informacionCompra.NUM_VARIANTE);
     this.informacionCompra.METODO_PAGO_COMPRA = null;
     this.informacionCompra.METODO_ENVIO_COMPRA = null;
@@ -922,6 +924,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
       ID_PRODUCTO: null,
       COD_PRODUCTO: null,
       FECHA_COMPRA: null,
+      IMAGEN_MOSTRAR: null,
       DATOS_ENTREGA: {
         TIPO_IDENTIFICACION_ENTREGA: null,
         NOMBRE_PERSONA_ENVIO_ENTREGA: null,
