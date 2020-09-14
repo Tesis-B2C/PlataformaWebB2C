@@ -78,7 +78,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
   public async validarEstadoProductos() {
     this.carritoIdentidad = await this._carritoServicio.getCarrito().toPromise();
     for (let element of this.carritoIdentidad.data.CARRITO_PRODUCTOs) {
-      if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.ESTADO_TIENDA != 0 || element.VARIANTE.ESTADO_VARIANTE != 0) {
+      if (element.VARIANTE.ESTADO_VARIANTE != 0) {
         await this._carritoServicio.deleteProductoCarrito(element.VARIANTE.NUM_VARIANTE).toPromise();
         await this.menu.conteoProductosCarrito(false);
       }

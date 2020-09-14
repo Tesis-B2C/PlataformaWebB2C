@@ -238,7 +238,22 @@ async function updateEstadoTienda(req, res) {
                 where: {NUM_TIENDA: req.params.id, ESTADO_OFERTA: {[Op.or]: [0, 1]}},
                 transaction: t
             });
-            if (tiendaActualizada && ofertaActualizada) {
+
+            let busquedaOferta = await OFERTA.findAll({
+                where: {NUM_TIENDA: req.params.id, ESTADO_OFERTA: {[Op.or]: [0, 1]}},include:{model:PRODUCTO},
+                transaction: t
+            });
+
+            for(let element of busquedaOferta){
+                await VARIANTE.update({
+                    ESTADO_VARIANTE: req.body.estado,
+                }, {
+                    where: {ID_PRODUCTO: element.dataValues.PRODUCTO.ID_PRODUCTO, ESTADO_VARIANTE: {[Op.or]: [0, 1]}},
+                    transaction: t
+                });
+            }
+
+            if (tiendaActualizada) {
                 res.status(200).send({
                     message: "La tienda ha sido actualizada correctamente"
                 });

@@ -429,6 +429,7 @@ async function updateProducto(req, res) {
 }
 
 async function updateEstadoProducto(req, res) {
+    const t = await db.sequelize.transaction({autocommit: false});
     try {
         let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
@@ -440,12 +441,29 @@ async function updateEstadoProducto(req, res) {
             let ofertaActualizada = await Oferta.update({
                 ESTADO_OFERTA: req.body.estado,
             }, {
-                where: {ID_OFERTA: req.params.id},
+                where: {ID_OFERTA: req.params.id, ESTADO_OFERTA: {[Op.or]: [0, 1]}}, transaction: t
             });
+
+            let busquedaOferta = await Oferta.findAll({
+                where: {ID_OFERTA: req.params.id, ESTADO_OFERTA: {[Op.or]: [0, 1]}}, include: {model: Producto},
+                transaction: t
+            });
+
+            for (let element of busquedaOferta) {
+                await Variante.update({
+                    ESTADO_VARIANTE: req.body.estado,
+                }, {
+                    where: {ID_PRODUCTO: element.dataValues.PRODUCTO.ID_PRODUCTO, ESTADO_VARIANTE: {[Op.or]: [0, 1]}},
+                    transaction: t
+                });
+            }
+
+
             if (ofertaActualizada) {
                 res.status(200).send({
                     message: "El producto ha sido actualizado correctamente"
                 });
+                await t.commit();
             } else {
                 res.status(404).send({
                     message: 'Al parecer no se encuentra el producto registrado en la base de datos'
@@ -453,6 +471,7 @@ async function updateEstadoProducto(req, res) {
             }
         }
     } catch (err) {
+        await t.rollback();
         res.status(500).send({
             message: 'error:' + err
         });
@@ -528,7 +547,7 @@ async function obtenerTodosProductos(req, res) {
                             }
                         }
                     }
-                },{
+                }, {
                     model: Calificacion,
                     separate: true,
                     attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', [Calificacion.sequelize.fn('AVG', Calificacion.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
@@ -573,7 +592,7 @@ async function obtenerProductoDetalle(req, res) {
         let fechaHoy = moment().format("YYYY-MM-DD");
 
         let productoObtenido = await Oferta.findOne({
-            where: {ID_OFERTA: req.params.id,ESTADO_OFERTA:0},
+            where: {ID_OFERTA: req.params.id, ESTADO_OFERTA: 0},
             include: [{
                 model: Producto,
                 include: [{
@@ -655,6 +674,7 @@ async function obtenerProductoDetalle(req, res) {
         });
     }
 }
+
 /*     //FIN SECCION PARA PAGINA PRINCIPAL//      */
 
 module.exports = {          // para exportar todas las funciones de este modulo
