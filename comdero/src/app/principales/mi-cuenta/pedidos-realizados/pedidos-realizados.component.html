@@ -253,16 +253,16 @@
                 el {{compra.FECHA_ENVIO| date}}</strong></p>
               <div class="encabezado_recivo">
                 <p class="pt-2 "><strong>&nbsp;&nbsp;Productos comprados</strong></p>
+                <hr class="mt-1">
                 <div class="encabezado_recivo" *ngFor="let producto of compra.COMPRA_PRODUCTOs; let i= index">
                   <p>&nbsp;&nbsp;{{producto.VARIANTE.PRODUCTO.NOMBRE_PRODUCTO}}
                     &nbsp;{{producto.VARIANTE.PRODUCTO.MARCA}} x {{producto.CANTIDAD_PRODUCTO}}
                     &nbsp;{{producto.VARIANTE.MEDIDA}},&nbsp;{{producto.VARIANTE.MATERIAL}}
-                    ,&nbsp;{{producto.VARIANTE.TALLA}}</p>
-                  <p><strong>&nbsp;&nbsp;Estado:</strong>&nbsp;{{producto.VARIANTE.PRODUCTO.CONDICION}}</p>
-                  <p><strong>&nbsp;&nbsp;Vendido
-                    por:</strong>&nbsp;{{producto.VARIANTE.PRODUCTO.OFERTum.TIENDA.NOMBRE_COMERCIAL}}</p>
-
+                    ,&nbsp;{{producto.VARIANTE.TALLA}},<strong>&nbsp;&nbsp;Estado:</strong>&nbsp;{{producto.VARIANTE.PRODUCTO.CONDICION}}</p>
+                    <hr>
                 </div>
+                <p><strong>&nbsp;&nbsp;Vendido
+                  por:</strong>&nbsp;{{compra.COMPRA_PRODUCTOs[0].VARIANTE.PRODUCTO.OFERTum.TIENDA.NOMBRE_COMERCIAL}}</p>
                 <div class="border-top border-dark encabezado_recivo mt-2 ">
                   <p class="border-bottom border-dark text-center"><strong>Información de envío</strong></p>
                   <p><strong>&nbsp;&nbsp;Método de envío:</strong>&nbsp;
