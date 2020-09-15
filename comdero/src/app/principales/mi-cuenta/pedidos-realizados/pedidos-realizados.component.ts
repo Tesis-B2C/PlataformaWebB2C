@@ -10,17 +10,20 @@ import {GLOBAL} from "../../../servicios/global";
 export class PedidosRealizadosComponent implements OnInit {
   public comprasObtenidas;
   public noExite;
+  public error;
 
   constructor(public _compraServicio: CompraServicio) {
   }
 
   async ngOnInit() {
-    await this.getMisCompras();
+    await this.getMisCompras(0);
   }
 
-  public async getMisCompras() {
+  public async getMisCompras(estado) {
+    this.comprasObtenidas = null;
+    this.error=null;
     try {
-      let response = await this._compraServicio.getMisCompras().toPromise();
+      let response = await this._compraServicio.getMisCompras(estado).toPromise();
       this.comprasObtenidas = response.data;
       console.log("comra obtenidas", this.comprasObtenidas);
       for (let compra of this.comprasObtenidas) {
@@ -51,6 +54,7 @@ export class PedidosRealizadosComponent implements OnInit {
       }
     } catch (e) {
       console.log("error", e)
+      this.error=e;
     }
   }
 

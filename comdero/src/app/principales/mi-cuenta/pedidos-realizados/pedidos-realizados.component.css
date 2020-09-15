@@ -40,4 +40,7 @@ button{
   font-size: smaller;
   color: black;
 }
+.nav-principal > li{
+  cursor: pointer;
+}
 

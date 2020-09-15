@@ -1,3 +1,30 @@
+<div class="bg-light py-2 mb-2">
+<ul class="nav nav-pills card-header-pills  nav-principal pt-4 pt-md-1 mx-auto text-center justify-content-center align-content-center"
+    id="tap-principal" role="tablist">
+
+  <li class="nav-item">
+    <a class="nav-link active py-0  text-primary" id="proceso-tab" data-toggle="tab"
+       aria-controls="proceso" (click)="getMisCompras(0)"
+       aria-selected="true">En proceso</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link py-0 text-primary" id="enviado-tab" data-toggle="tab"
+       aria-controls="enviado"  (click)="getMisCompras(1)"
+       aria-selected="false">Enviado</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link py-0  text-primary" id="recibido-tab" data-toggle="tab"
+       aria-controls="recibo"   (click)="getMisCompras(2)"
+       aria-selected="false">Recibido</a>
+  </li>
+
+
+</ul>
+</div>
+<div *ngIf="this.error?.error.message" role="alert">
+ {{this.error.error.message}}
+</div>
 <div *ngFor="let compra of comprasObtenidas; let i = index">
   <div class="card mb-5">
     <div class="card-header ">
@@ -79,8 +106,10 @@
                     <figcaption class="info">
 
                       <a href="#" class=" price">{{producto.VARIANTE.PRODUCTO.NOMBRE_PRODUCTO}}</a>
-                      <p  class="text-muted small text-left ">Condición:  &nbsp;{{producto.VARIANTE.PRODUCTO.CONDICION}}</p>
-                      <p *ngIf="producto.VARIANTE.PRODUCTO.MARCA" class="text-muted small text-left ">Marca:  &nbsp;{{producto.VARIANTE.PRODUCTO.MARCA}}</p>
+                      <p class="text-muted small text-left ">Condición:
+                        &nbsp;{{producto.VARIANTE.PRODUCTO.CONDICION}}</p>
+                      <p *ngIf="producto.VARIANTE.PRODUCTO.MARCA" class="text-muted small text-left ">Marca:
+                        &nbsp;{{producto.VARIANTE.PRODUCTO.MARCA}}</p>
                       <p class="text-muted small text-left "
                          *ngIf="producto.VARIANTE.MATERIAL">Material:&nbsp;&nbsp; {{producto.VARIANTE.MATERIAL}}
                       </p>
@@ -236,7 +265,6 @@
         </div>
 
 
-
         <div class="tab-pane fade" id="recibo{{i}}" role="tabpanel" aria-labelledby="recibo-tab">
           <h6 class="text-center mb-0">Detalles finales del pedido No {{compra.NUM_COMPRA}}</h6>
           <p>
@@ -258,11 +286,13 @@
                   <p>&nbsp;&nbsp;{{producto.VARIANTE.PRODUCTO.NOMBRE_PRODUCTO}}
                     &nbsp;{{producto.VARIANTE.PRODUCTO.MARCA}} x {{producto.CANTIDAD_PRODUCTO}}
                     &nbsp;{{producto.VARIANTE.MEDIDA}},&nbsp;{{producto.VARIANTE.MATERIAL}}
-                    ,&nbsp;{{producto.VARIANTE.TALLA}},<strong>&nbsp;&nbsp;Estado:</strong>&nbsp;{{producto.VARIANTE.PRODUCTO.CONDICION}}</p>
-                    <hr>
+                    ,&nbsp;{{producto.VARIANTE.TALLA}}
+                    ,<strong>&nbsp;&nbsp;Estado:</strong>&nbsp;{{producto.VARIANTE.PRODUCTO.CONDICION}}</p>
+                  <hr>
                 </div>
                 <p><strong>&nbsp;&nbsp;Vendido
-                  por:</strong>&nbsp;{{compra.COMPRA_PRODUCTOs[0].VARIANTE.PRODUCTO.OFERTum.TIENDA.NOMBRE_COMERCIAL}}</p>
+                  por:</strong>&nbsp;{{compra.COMPRA_PRODUCTOs[0].VARIANTE.PRODUCTO.OFERTum.TIENDA.NOMBRE_COMERCIAL}}
+                </p>
                 <div class="border-top border-dark encabezado_recivo mt-2 ">
                   <p class="border-bottom border-dark text-center"><strong>Información de envío</strong></p>
                   <p><strong>&nbsp;&nbsp;Método de envío:</strong>&nbsp;
