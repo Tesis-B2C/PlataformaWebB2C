@@ -79,6 +79,8 @@
                     <figcaption class="info">
 
                       <a href="#" class=" price">{{producto.VARIANTE.PRODUCTO.NOMBRE_PRODUCTO}}</a>
+                      <p  class="text-muted small text-left ">Condición:  &nbsp;{{producto.VARIANTE.PRODUCTO.CONDICION}}</p>
+                      <p *ngIf="producto.VARIANTE.PRODUCTO.MARCA" class="text-muted small text-left ">Marca:  &nbsp;{{producto.VARIANTE.PRODUCTO.MARCA}}</p>
                       <p class="text-muted small text-left "
                          *ngIf="producto.VARIANTE.MATERIAL">Material:&nbsp;&nbsp; {{producto.VARIANTE.MATERIAL}}
                       </p>
@@ -188,9 +190,6 @@
 
 
         </div>
-        <div class="tab-pane fade" id="recibo{{i}}" role="tabpanel" aria-labelledby="recibo-tab">
-          RECIVO
-        </div>
         <div class="tab-pane fade container" id="entrega{{i}}" role="tabpanel" aria-labelledby="entrega-tab">
           <label class="font-weight-bold">Enviado a</label>
           <div class="row  justify-content-between mx-auto">
@@ -233,6 +232,117 @@
             <p class="col-md-7 text-md-right">{{compra.TELEFONO_FACTURA}}</p>
             <p class="col-md-4 text-md-left"><strong>Dirección:</strong></p>
             <p class="col-md-8 text-md-right">{{compra.DIRECCION_FACTURA}}</p>
+          </div>
+        </div>
+
+
+
+        <div class="tab-pane fade" id="recibo{{i}}" role="tabpanel" aria-labelledby="recibo-tab">
+          <h6 class="text-center mb-0">Detalles finales del pedido No {{compra.NUM_COMPRA}}</h6>
+          <p>
+            <button class="text-center btn btn-link py-0 " style="font-size: small">Imprimir recibo</button>
+          </p>
+          <div class="encabezado_recivo">
+            <p><strong>Pedido realizado:</strong>&nbsp;&nbsp;{{compra.FECHA_COMPRA | date}}</p>
+            <p><strong>Pedido COMDERO No:</strong>&nbsp;&nbsp;{{compra.NUM_COMPRA}}</p>
+            <p><strong>Total del pedido:</strong>&nbsp;&nbsp;{{compra.total_final | currency}}</p>
+          </div>
+          <div class="card ">
+            <div class="card-body p-0 encabezado_recivo" style="border: 1px solid #000000">
+              <p class="border-bottom border-dark text-center"><strong> Enviado
+                el {{compra.FECHA_ENVIO| date}}</strong></p>
+              <div class="encabezado_recivo">
+                <p class="pt-2 "><strong>&nbsp;&nbsp;Productos comprados</strong></p>
+                <div class="encabezado_recivo" *ngFor="let producto of compra.COMPRA_PRODUCTOs; let i= index">
+                  <p>&nbsp;&nbsp;{{producto.VARIANTE.PRODUCTO.NOMBRE_PRODUCTO}}
+                    &nbsp;{{producto.VARIANTE.PRODUCTO.MARCA}} x {{producto.CANTIDAD_PRODUCTO}}
+                    &nbsp;{{producto.VARIANTE.MEDIDA}},&nbsp;{{producto.VARIANTE.MATERIAL}}
+                    ,&nbsp;{{producto.VARIANTE.TALLA}}</p>
+                  <p><strong>&nbsp;&nbsp;Estado:</strong>&nbsp;{{producto.VARIANTE.PRODUCTO.CONDICION}}</p>
+                  <p><strong>&nbsp;&nbsp;Vendido
+                    por:</strong>&nbsp;{{producto.VARIANTE.PRODUCTO.OFERTum.TIENDA.NOMBRE_COMERCIAL}}</p>
+
+                </div>
+                <div class="border-top border-dark encabezado_recivo mt-2 ">
+                  <p class="border-bottom border-dark text-center"><strong>Información de envío</strong></p>
+                  <p><strong>&nbsp;&nbsp;Método de envío:</strong>&nbsp;
+                    <label *ngIf="compra.METODO_ENVIO=='Acordar'">Acordar con el vendedor</label>
+                    <label *ngIf="compra.METODO_ENVIO=='Retiro'">Retiro desde la tienda</label>
+                    <label *ngIf="compra.METODO_ENVIO=='Domicilio'">Envío a domicilio</label></p>
+                  <div *ngIf="compra.METODO_ENVIO=='Domicilio'" class="encabezado_recivo">
+                    <p><strong>&nbsp;&nbsp;Enviado a:</strong>&nbsp;
+                    <p *ngIf="compra.TIPO_IDENTIFICACION_ENTREGA=='Persona'">&nbsp;&nbsp;Persona Natural</p>
+                    <p *ngIf="compra.TIPO_IDENTIFICACION_ENTREGA=='Empresa'">&nbsp;&nbsp;Empresa</p>
+                    <p>&nbsp;&nbsp;{{compra.IDENTIFICACION_ENTREGA}}</p>
+                    <p>&nbsp;&nbsp;{{compra.NOMBRE_PERSONA_ENTREGA}}</p>
+                    <p>&nbsp;&nbsp;{{compra.TELEFONO_ENTREGA}}</p>
+                    <p>&nbsp;&nbsp;{{compra.DPA?.DPAP.NOMBRE}}</p>
+                    <p>&nbsp;&nbsp;{{compra.DPA?.NOMBRE}}</p>
+                    <p>&nbsp;&nbsp;{{compra.CALLE_PRINCIPAL_ENTREGA}},&nbsp;{{compra.CALLE_SECUNDARIA_ENTREGA}}
+                      ,&nbsp;{{compra.NUM_CASA_ENTREGA}}</p>
+                    <p>&nbsp;&nbsp;<strong>Cod postal</strong> &nbsp;{{compra.NUM_COD_POSTAL_ENTREGA}}</p>
+                  </div>
+                </div>
+                <div class="border-top border-dark encabezado_recivo mt-2 ">
+                  <p class="border-bottom border-dark text-center"><strong>Información de pago</strong></p>
+                  <p><strong>&nbsp;&nbsp;Método de pago:</strong>&nbsp;
+                    <label *ngIf="compra.METODO_PAGO=='Efectivo'">Efectivo</label>
+                    <label *ngIf="compra.METODO_PAGO=='Transferencia'">Transferencia bancaria</label>
+                    <label *ngIf="compra.METODO_PAGO=='Electrónico'">PayPal</label>
+                  <p><strong>&nbsp;&nbsp;Facturado a:</strong>&nbsp;
+                  <p *ngIf="compra.TIPO_IDENTIFICACION_FACTURA=='Persona'">&nbsp;&nbsp;Persona
+                    Natural</p>
+                  <p *ngIf="compra.TIPO_IDENTIFICACION_FACTURA=='Empresa'">&nbsp;&nbsp;Empresa</p>
+                  <p>&nbsp;&nbsp;{{compra.IDENTIFICACION_FACTURA}}</p>
+                  <p>&nbsp;&nbsp;{{compra.NOMBRE_FACTURA}}</p>
+                  <p>&nbsp;&nbsp;{{compra.TELEFONO_FACTURA}}</p>
+                  <p>&nbsp;&nbsp;{{compra.DIRECCION_FACTURA}}</p>
+                </div>
+                <div class="border-top border-dark mt-2 ">
+                  <div class=" encabezado_recivo  px-2">
+                    <dl class="dlist-align">
+                      <dt>Productos:</dt>
+                      <dd class="text-right">{{compra.productos | currency}}</dd>
+                    </dl>
+                    <dl class="dlist-align">
+                      <dt>Impuestos</dt>
+                      <dd class="text-right ">{{compra.impuestos | currency}} </dd>
+                    </dl>
+
+                    <dl class="dlist-align">
+                      <dt>Subtotal:</dt>
+                      <dd class="text-right ">{{compra.subtotal | currency}}</dd>
+                    </dl>
+
+                    <dl class="dlist-align">
+                      <dt>Descuento</dt>
+                      <dd class="text-right ">(-) &nbsp;{{compra.descuento | currency}}</dd>
+                    </dl>
+                    <dl class="dlist-align">
+                      <dt>Descuento Cupón</dt>
+                      <dd class="text-right ">(-) &nbsp;{{compra.cupon | currency}}</dd>
+                    </dl>
+
+                    <dl class="dlist-align">
+                      <dt> &nbsp;Método de envio:</dt>
+                      <dd class="text-right "> {{compra.COSTO_ENVIO | currency}}</dd>
+                    </dl>
+                    <dl class="dlist-align">
+                      <dt> &nbsp;Método de pago:</dt>
+                      <dd class="text-right "> {{compra.RECARGO_PAYPAL | currency}}</dd>
+                    </dl>
+
+                    <dl class="dlist-align">
+                      <dt> &nbsp;Total del pedido:
+                      </dt>
+                      <dd class="text-right "><strong> {{compra.total_final| currency}}</strong></dd>
+                    </dl>
+
+
+                  </div> <!-- card-body.// -->
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
