@@ -305,12 +305,12 @@ async function getMisCompras(req, res) {
         } else {
             let comprasObtenidas = await Compra.findAll({
                     where: {COD_AGENTE: req.user.id}, order: [['NUM_COMPRA', 'DESC']],
-                    include: {
+                    include: [{
                         model: Compra_Producto, include: {
                             model: Variante,
                             include: {model: Producto, include: {model: Oferta, include: {model: Tienda}}}
                         }
-                    }
+                    }, {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}]
 
 
                 }

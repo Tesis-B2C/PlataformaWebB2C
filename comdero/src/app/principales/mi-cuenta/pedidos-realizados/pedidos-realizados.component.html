@@ -176,7 +176,7 @@
                   <button class="btn btn-link py-0" (click)="entrega.click()">ver</button>
                 </dd>
               </dl>
-              <dl class="dlist-align"  >
+              <dl class="dlist-align">
                 <dt><i class="icon text-success fa fa-file-invoice-dollar"></i> &nbsp;Facturado a:</dt>
                 <dd class="text-center">
                   <strong> {{compra.NOMBRE_FACTURA}}</strong>
@@ -190,9 +190,53 @@
 
 
         </div>
-        <div class="tab-pane fade" id="recibo{{i}}" role="tabpanel" aria-labelledby="recibo-tab">Recibo</div>
-        <div class="tab-pane fade" id="entrega{{i}}" role="tabpanel" aria-labelledby="entrega-tab">Entregado a</div>
-        <div class="tab-pane fade" id="factura{{i}}" role="tabpanel" aria-labelledby="factura-tab">Factura a</div>
+        <div class="tab-pane fade" id="recibo{{i}}" role="tabpanel" aria-labelledby="recibo-tab">
+          RECIVO
+        </div>
+        <div class="tab-pane fade container" id="entrega{{i}}" role="tabpanel" aria-labelledby="entrega-tab">
+          <label class="font-weight-bold">Enviado a</label>
+            <div class="row  justify-content-between w-75 mx-auto">
+
+              <p class="col-4 text-left"><strong>Tipo de persona:</strong></p>
+              <p class="col-5 text-right" *ngIf="compra.TIPO_IDENTIFICACION_ENTREGA=='Persona'">Persona Natural</p>
+              <p class="col-5 text-right" *ngIf="compra.TIPO_IDENTIFICACION_ENTREGA=='Empresa'">Empresa</p>
+              <p class="col-4 text-left"><strong>Idetentificación:</strong></p>
+              <p class="col-5 text-right">{{compra.IDENTIFICACION_ENTREGA}}</p>
+              <p class="col-5 text-left"><strong>Nombres y Apellidos:</strong></p>
+              <p class="col-5 text-right">{{compra.NOMBRE_PERSONA_ENTREGA}}</p>
+              <p class="col-5 text-left"><strong>Telefono:</strong></p>
+              <p class="col-5 text-right">{{compra.TELEFONO_ENTREGA}}</p>
+              <p class="col-5 text-left"><strong>Provincia:</strong></p>
+              <p class="col-5 text-right">{{compra.DPA?.DPAP.NOMBRE}}</p>
+              <p class="col-5 text-left"><strong>Ciudad:</strong></p>
+              <p class="col-5 text-right">{{compra.DPA?.NOMBRE}}</p>
+              <p class="col-5 text-left"><strong>Calle pricipal:</strong></p>
+              <p class="col-5 text-right">{{compra.CALLE_PRINCIPAL_ENTREGA}}</p>
+              <p class="col-5 text-left"><strong>Calle secundaria:</strong></p>
+              <p class="col-5 text-right">{{compra.CALLE_SECUNDARIA_ENTREGA}}</p>
+              <p class="col-5 text-left"><strong>Número de referencia:</strong></p>
+              <p class="col-5 text-right">{{compra.NUM_CASA_ENTREGA}}</p>
+              <p class="col-5 text-left"><strong>Código postal:</strong></p>
+              <p class="col-5 text-right">{{compra.NUM_COD_POSTAL_ENTREGA}}</p>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="factura{{i}}" role="tabpanel" aria-labelledby="factura-tab">
+          <label class="font-weight-bold">Facturado a</label>
+          <div class="row  justify-content-between w-75 mx-auto">
+
+            <p class="col-4 text-left"><strong>Tipo de persona:</strong></p>
+            <p class="col-5 text-right" *ngIf="compra.TIPO_IDENTIFICACION_FACTURA=='Persona'">Persona Natural</p>
+            <p class="col-5 text-right" *ngIf="compra.TIPO_IDENTIFICACION_FACTURA=='Empresa'">Empresa</p>
+            <p class="col-4 text-left"><strong>Idetentificación:</strong></p>
+            <p class="col-5 text-right">{{compra.IDENTIFICACION_FACTURA}}</p>
+            <p class="col-5 text-left"><strong>Nombres y Apellidos:</strong></p>
+            <p class="col-5 text-right">{{compra.NOMBRE_FACTURA}}</p>
+            <p class="col-5 text-left"><strong>Telefono:</strong></p>
+            <p class="col-5 text-right">{{compra.TELEFONO_FACTURA}}</p>
+            <p class="col-5 text-left"><strong>Dirección:</strong></p>
+            <p class="col-5 text-right">{{compra.DIRECCION_FACTURA}}</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>

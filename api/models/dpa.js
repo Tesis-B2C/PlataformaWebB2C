@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 var Agente = require("./agente.js");
-var Sucursal =require("./sucursal.js");
-var Compra =require("./compra.js");
+var Sucursal = require("./sucursal.js");
+var Compra = require("./compra.js");
 
 const Dpa = db.sequelize.define('DPA', {
         COD_DPA:
@@ -29,7 +29,7 @@ const Dpa = db.sequelize.define('DPA', {
     },
     {
         timestamps: false,
-        id:false
+        id: false
     })
 
 //DPA - Agente
@@ -42,9 +42,9 @@ Sucursal.belongsTo(Dpa, {foreignKey: 'COD_DPA', sourceKey: 'COD_DPA'});
 
 //DPA - DPA
 Dpa.hasMany(Dpa, {foreignKey: 'DPA_COD_DPA', sourceKey: 'COD_DPA'});
-Dpa.belongsTo(Dpa, {as:'DPAP',foreignKey: 'DPA_COD_DPA', sourceKey: 'COD_DPA'});
+Dpa.belongsTo(Dpa, {as: 'DPAP', foreignKey: 'DPA_COD_DPA', sourceKey: 'COD_DPA'});
 
 //DPA - COMPRA
 Dpa.hasMany(Compra, {foreignKey: 'COD_DPA', sourceKey: 'COD_DPA'});
-Compra.belongsTo(Dpa, {as:'DPAP',foreignKey: 'COD_DPA', sourceKey: 'COD_DPA'});
+Compra.belongsTo(Dpa, {foreignKey: 'COD_DPA', sourceKey: 'COD_DPA'});
 module.exports = Dpa;
