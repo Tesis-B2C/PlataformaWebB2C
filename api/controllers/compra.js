@@ -13,6 +13,7 @@ const Producto = require('../models/producto');
 const Oferta = require('../models/oferta');
 const Tienda = require('../models/tienda');
 const moment = require('moment');
+const {Op} = require("sequelize");
 
 async function saveComprarProducto(req, res) {
     console.log(" INFORMACION COMPRA ", req.body);
@@ -303,8 +304,14 @@ async function getMisCompras(req, res) {
                 message: "No tiene los permisos necesarios"
             });
         } else {
-            let comprasObtenidas = await Compra.findAll({
-                    where: {COD_AGENTE: req.user.id, ESTADO_COMPRA:req.params.estado}, order: [['NUM_COMPRA', 'DESC']],
+            let comprasObtenidas;
+            if (req.params.meses != 0) {
+                comprasObtenidas = await Compra.findAll({
+                    where: {
+                        COD_AGENTE: req.user.id,
+                        ESTADO_COMPRA: req.params.estado,
+                        FECHA_COMPRA: {[Op.between]: [moment().subtract(req.params.meses, 'months'), moment()]}
+                    }, order: [['NUM_COMPRA', 'DESC']],
                     include: [{
                         model: Compra_Producto, include: {
                             model: Variante,
@@ -312,11 +319,22 @@ async function getMisCompras(req, res) {
                         }
                     }, {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}]
 
+                });
+            } else {
+                comprasObtenidas = await Compra.findAll({
+                    where: {
+                        COD_AGENTE: req.user.id,
+                        ESTADO_COMPRA: req.params.estado
+                    }, order: [['NUM_COMPRA', 'DESC']],
+                    include: [{
+                        model: Compra_Producto, include: {
+                            model: Variante,
+                            include: {model: Producto, include: {model: Oferta, include: {model: Tienda}}}
+                        }
+                    }, {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}]
 
-                }
-                )
-            ;
-
+                });
+            }
             if (comprasObtenidas.length > 0) {
                 res.status(200).send({
                     data: comprasObtenidas,

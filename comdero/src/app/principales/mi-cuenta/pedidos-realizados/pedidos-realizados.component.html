@@ -1,31 +1,39 @@
 <div class="bg-light py-2 mb-2">
-<ul class="nav nav-pills card-header-pills  nav-principal pt-4 pt-md-1 mx-auto text-center justify-content-center align-content-center"
+  <ul
+    class="nav nav-pills card-header-pills  nav-principal pt-4 pt-md-1 mx-auto text-center justify-content-center align-content-center"
     id="tap-principal" role="tablist">
 
-  <li class="nav-item">
-    <a class="nav-link active py-0  text-primary" id="proceso-tab" data-toggle="tab"
-       aria-controls="proceso" (click)="getMisCompras(0)"
-       aria-selected="true">En proceso</a>
-  </li>
+    <li class="nav-item">
+      <a class="nav-link active py-0  text-primary" id="proceso-tab" data-toggle="tab"
+         aria-controls="proceso" (click)="estado(0)"
+         aria-selected="true">En proceso</a>
+    </li>
 
-  <li class="nav-item">
-    <a class="nav-link py-0 text-primary" id="enviado-tab" data-toggle="tab"
-       aria-controls="enviado"  (click)="getMisCompras(1)"
-       aria-selected="false">Enviado</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link py-0  text-primary" id="recibido-tab" data-toggle="tab"
-       aria-controls="recibo"   (click)="getMisCompras(2)"
-       aria-selected="false">Recibido</a>
-  </li>
+    <li class="nav-item">
+      <a class="nav-link py-0 text-primary" id="enviado-tab" data-toggle="tab"
+         aria-controls="enviado" (click)="estado(1)"
+         aria-selected="false">Enviado</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link py-0  text-primary" id="recibido-tab" data-toggle="tab"
+         aria-controls="recibo" (click)="estado(2)"
+         aria-selected="false">Recibido</a>
+    </li>
+    <li class="nav-item">
+      <select (change)="fecha($event.target.value)" class=" btn btn-link py-0 " style="margin-top: -10px; font-size: small" id="inputGroupSelect01">
+        <option selected value="1">últimos 30 días</option>
+        <option value="6">últimos 6 meses</option>
+        <option value="9">ultimos 9 meses</option>
+        <option value="0">todos</option>
+      </select>
+    </li>
 
-
-</ul>
+  </ul>
 </div>
 <div *ngIf="this.error?.error.message" role="alert">
- {{this.error.error.message}}
+  {{this.error.error.message}}
 </div>
-<div *ngFor="let compra of comprasObtenidas; let i = index">
+<div *ngFor="let compra of this.result  |slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
   <div class="card mb-5">
     <div class="card-header ">
       <div class=" mb-0 font-weight-bold row    justify-content-between mx-md-auto"><a
@@ -378,4 +386,13 @@
       </div>
     </div>
   </div>
+</div>
+<div *ngIf="this.result.length > 0" class="d-flex justify-content-center align-content-center text-center p-2">
+  <ngb-pagination id="paginacion"
+                  [(page)]="page"
+                  [pageSize]="pageSize"
+                  [collectionSize]="this.result.length" [rotate]="true" [ellipses]="true" [boundaryLinks]="false">
+    <ng-template ngbPaginationPrevious>Anterior</ng-template>
+    <ng-template ngbPaginationNext>Siguiente</ng-template>
+  </ngb-pagination>
 </div>

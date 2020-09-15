@@ -12,20 +12,40 @@ export class PedidosRealizadosComponent implements OnInit {
   public noExite;
   public error;
 
+  public page = 1;
+  public pageSize = 3;
+  public result = [];
+  public estadoActivo = 0;
+  public fechaActiva = 1;
+
   constructor(public _compraServicio: CompraServicio) {
   }
 
   async ngOnInit() {
-    await this.getMisCompras(0);
+    await this.getMisCompras(this.estadoActivo, this.fechaActiva);
   }
 
-  public async getMisCompras(estado) {
+  estado(estado) {
+    this.page=1;
+    this.estadoActivo = estado;
+    this.getMisCompras(this.estadoActivo, this.fechaActiva);
+  }
+
+  fecha(fecha) {
+    this.page =1;
+    this.fechaActiva = fecha;
+    this.getMisCompras(this.estadoActivo, this.fechaActiva);
+  }
+
+  public async getMisCompras(estado, fecha) {
     this.comprasObtenidas = null;
-    this.error=null;
+    this.result = [];
+    this.error = null;
     try {
-      let response = await this._compraServicio.getMisCompras(estado).toPromise();
+      let response = await this._compraServicio.getMisCompras(estado, fecha).toPromise();
       this.comprasObtenidas = response.data;
       console.log("comra obtenidas", this.comprasObtenidas);
+      this.result = this.comprasObtenidas;
       for (let compra of this.comprasObtenidas) {
         let total_final = 0;
         let productos = 0;
@@ -54,7 +74,7 @@ export class PedidosRealizadosComponent implements OnInit {
       }
     } catch (e) {
       console.log("error", e)
-      this.error=e;
+      this.error = e;
     }
   }
 

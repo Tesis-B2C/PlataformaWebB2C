@@ -40,12 +40,12 @@ export class CompraServicio {
     return this._http.post<objeto>(this.url + "saveComprarProductoCarrito/", params, {headers: headers});
   }
 
-  getMisCompras(estado) {
+  getMisCompras(estado, fecha) {
     let headers = new HttpHeaders({
       "Content-type": "application/json",
       "Authorization": this._agenteServicio.getToken()
     });
-    return this._http.get<objeto>(this.url + "getMisCompras/"+estado, {headers: headers});
+    return this._http.get<objeto>(this.url + "getMisCompras/"+estado+'/'+fecha, {headers: headers});
   }
 
 
