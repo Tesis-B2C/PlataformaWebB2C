@@ -19,14 +19,14 @@
          aria-controls="recibo" (click)="estado(2)"
          aria-selected="false">Recibido</a>
     </li>
-    <li class="nav-item">
-      <select (change)="fecha($event.target.value)" class=" btn btn-link py-0 " style="margin-top: -10px; font-size: small" id="inputGroupSelect01">
+
+      <select (change)="fecha($event.target.value)" class=" btn btn-link py-0 mt-md-n5 mt-2 mt-md-0" style="font-size: small" id="inputGroupSelect01">
         <option selected value="1">últimos 30 días</option>
         <option value="6">últimos 6 meses</option>
         <option value="9">ultimos 9 meses</option>
         <option value="0">todos</option>
       </select>
-    </li>
+
 
   </ul>
 </div>
@@ -78,7 +78,7 @@
              aria-selected="false">Detalle</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link py-0 " id="recibo-tab" data-toggle="tab" href="#recibo{{i}}" role="tab"
+          <a *ngIf="compra.ESTADO_COMPRA==1" class="nav-link py-0 " id="recibo-tab" data-toggle="tab" href="#recibo{{i}}" role="tab"
              aria-controls="recibo"
              aria-selected="false">Recibo</a>
         </li>
@@ -144,7 +144,7 @@
                   </div> <!-- price-wrap .// -->
                 </div>
                 <div class="col-12 col-md-3 text-center text-md-left   ">
-                  <p class="text-uppercase  white">.</p>
+                  <p class="text-uppercase  white d-md-block d-none">.</p>
                   <button class="btn btn-light dis-block">Agregar opinion</button>
                 </div>
 
@@ -229,46 +229,46 @@
         </div>
         <div class="tab-pane fade container" id="entrega{{i}}" role="tabpanel" aria-labelledby="entrega-tab">
           <label class="font-weight-bold">Enviado a</label>
-          <div class="row  justify-content-between mx-auto">
+          <div class="row  justify-content-between mx-md-auto">
 
-            <p class="col-md-4 text-md-left"><strong>Tipo de persona:</strong></p>
-            <p class="col-md-7 text-md-right" *ngIf="compra.TIPO_IDENTIFICACION_ENTREGA=='Persona'">Persona Natural</p>
-            <p class="col-md-7 text-md-right" *ngIf="compra.TIPO_IDENTIFICACION_ENTREGA=='Empresa'">Empresa</p>
-            <p class="col-md-4 text-md-left"><strong>Idetentificación:</strong></p>
-            <p class="col-md-7 text-md-right">{{compra.IDENTIFICACION_ENTREGA}}</p>
-            <p class="col-md-4 text-md-left"><strong>Nombres y Apellidos:</strong></p>
-            <p class="col-md-7 text-md-right">{{compra.NOMBRE_PERSONA_ENTREGA}}</p>
-            <p class="col-md-4 text-md-left"><strong>Telefono:</strong></p>
-            <p class="col-md-7 text-md-right">{{compra.TELEFONO_ENTREGA}}</p>
-            <p class="col-md-4 text-md-left"><strong>Provincia:</strong></p>
-            <p class="col-md-7 text-md-right">{{compra.DPA?.DPAP.NOMBRE}}</p>
-            <p class="col-md-4 text-md-left"><strong>Ciudad:</strong></p>
-            <p class="col-md-7 text-md-right">{{compra.DPA?.NOMBRE}}</p>
-            <p class="col-md-4 text-md-left"><strong>Calle pricipal:</strong></p>
-            <p class="col-md-7 text-md-right">{{compra.CALLE_PRINCIPAL_ENTREGA}}</p>
-            <p class="col-md-4 text-md-left"><strong>Calle secundaria:</strong></p>
-            <p class="col-md-7 text-md-right">{{compra.CALLE_SECUNDARIA_ENTREGA}}</p>
-            <p class="col-md-4 text-md-left"><strong>Número de referencia:</strong></p>
-            <p class="col-md-7 text-md-right">{{compra.NUM_CASA_ENTREGA}}</p>
-            <p class="col-md-4 text-md-left"><strong>Código postal:</strong></p>
-            <p class="col-md-7 text-md-right">{{compra.NUM_COD_POSTAL_ENTREGA}}</p>
+            <p class="col-md-4 text-md-left text-left"><strong>Tipo de persona:</strong></p>
+            <p class="col-md-7 text-md-right text-left" *ngIf="compra.TIPO_IDENTIFICACION_ENTREGA=='Persona'">Persona Natural</p>
+            <p class="col-md-7 text-md-right text-left" *ngIf="compra.TIPO_IDENTIFICACION_ENTREGA=='Empresa'">Empresa</p>
+            <p class="col-md-4 text-md-left text-left"><strong>Idetentificación:</strong></p>
+            <p class="col-md-7 text-md-right text-left">{{compra.IDENTIFICACION_ENTREGA}}</p>
+            <p class="col-md-4 text-md-left text-left"><strong>Nombres y Apellidos:</strong></p>
+            <p class="col-md-7 text-md-right text-left">{{compra.NOMBRE_PERSONA_ENTREGA}}</p>
+            <p class="col-md-4 text-md-left text-left"><strong>Telefono:</strong></p>
+            <p class="col-md-7 text-md-right text-left">{{compra.TELEFONO_ENTREGA}}</p>
+            <p class="col-md-4 text-md-left text-left"><strong>Provincia:</strong></p>
+            <p class="col-md-7 text-md-right text-left">{{compra.DPA?.DPAP.NOMBRE}}</p>
+            <p class="col-md-4 text-md-left text-left"><strong>Ciudad:</strong></p>
+            <p class="col-md-7 text-md-right text-left">{{compra.DPA?.NOMBRE}}</p>
+            <p class="col-md-4 text-md-left text-left"><strong>Calle pricipal:</strong></p>
+            <p class="col-md-7 text-md-right text-left">{{compra.CALLE_PRINCIPAL_ENTREGA}}</p>
+            <p class="col-md-4 text-md-left text-left"><strong>Calle secundaria:</strong></p>
+            <p class="col-md-7 text-md-right text-left">{{compra.CALLE_SECUNDARIA_ENTREGA}}</p>
+            <p class="col-md-4 text-md-left text-left"><strong>Número de referencia:</strong></p>
+            <p class="col-md-7 text-md-right text-left">{{compra.NUM_CASA_ENTREGA}}</p>
+            <p class="col-md-4 text-md-left text-left"><strong>Código postal:</strong></p>
+            <p class="col-md-7 text-md-right text-left">{{compra.NUM_COD_POSTAL_ENTREGA}}</p>
           </div>
         </div>
         <div class="tab-pane fade" id="factura{{i}}" role="tabpanel" aria-labelledby="factura-tab">
           <label class="font-weight-bold">Facturado a</label>
-          <div class="row  justify-content-between  mx-auto">
+          <div class="row  justify-content-between  mx-md-auto">
 
-            <p class="col-md-4 text-md-left"><strong>Tipo de persona:</strong></p>
-            <p class="col-md-7 text-md-right" *ngIf="compra.TIPO_IDENTIFICACION_FACTURA=='Persona'">Persona Natural</p>
-            <p class="col-md-7 text-md-right" *ngIf="compra.TIPO_IDENTIFICACION_FACTURA=='Empresa'">Empresa</p>
-            <p class="col-md-4 text-md-left"><strong>Idetentificación:</strong></p>
-            <p class="col-md-7 text-md-right">{{compra.IDENTIFICACION_FACTURA}}</p>
-            <p class="col-md-4 text-md-left"><strong>Nombres y Apellidos:</strong></p>
-            <p class="col-md-7 text-md-right">{{compra.NOMBRE_FACTURA}}</p>
-            <p class="col-md-4 text-md-left"><strong>Telefono:</strong></p>
-            <p class="col-md-7 text-md-right">{{compra.TELEFONO_FACTURA}}</p>
-            <p class="col-md-4 text-md-left"><strong>Dirección:</strong></p>
-            <p class="col-md-8 text-md-right">{{compra.DIRECCION_FACTURA}}</p>
+            <p class="col-md-4 text-md-left text-left"><strong>Tipo de persona:</strong></p>
+            <p class="col-md-7 text-md-right text-left" *ngIf="compra.TIPO_IDENTIFICACION_FACTURA=='Persona'">Persona Natural</p>
+            <p class="col-md-7 text-md-right text-left" *ngIf="compra.TIPO_IDENTIFICACION_FACTURA=='Empresa'">Empresa</p>
+            <p class="col-md-4 text-md-left text-left"><strong>Idetentificación:</strong></p>
+            <p class="col-md-7 text-md-right text-left">{{compra.IDENTIFICACION_FACTURA}}</p>
+            <p class="col-md-4 text-md-left text-left"><strong>Nombres y Apellidos:</strong></p>
+            <p class="col-md-7 text-md-right text-left">{{compra.NOMBRE_FACTURA}}</p>
+            <p class="col-md-4 text-md-left text-left"><strong>Telefono:</strong></p>
+            <p class="col-md-7 text-md-right text-left">{{compra.TELEFONO_FACTURA}}</p>
+            <p class="col-md-4 text-md-left text-left"><strong>Dirección:</strong></p>
+            <p class="col-md-8 text-md-right text-left">{{compra.DIRECCION_FACTURA}}</p>
           </div>
         </div>
 
