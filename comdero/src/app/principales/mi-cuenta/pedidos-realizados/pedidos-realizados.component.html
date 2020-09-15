@@ -47,6 +47,17 @@
              aria-controls="recibo"
              aria-selected="false">Recibo</a>
         </li>
+        <li class="nav-item dis-none">
+          <a class="nav-link py-0 " id="entrega-tab" #entrega data-toggle="tab" href="#entrega{{i}}" role="tab"
+             aria-controls="entrega"
+             aria-selected="false">Enviado a</a>
+        </li>
+        <li class="nav-item dis-none">
+          <a class="nav-link py-0 " id="factura-tab" #factura data-toggle="tab" href="#factura{{i}}" role="tab"
+             aria-controls="factura"
+             aria-selected="false">Factura a</a>
+        </li>
+
       </ul>
     </div>
 
@@ -126,15 +137,13 @@
 
               <dl class="dlist-align">
                 <dt>Descuento</dt>
-                <dd class="text-center">(-)</dd>
-                <dd class="text-right text-dark b"><strong>{{compra.descuento | currency}}</strong></dd>
+                <dd class="text-right text-dark b">(-) &nbsp; <strong>{{compra.descuento | currency}}</strong></dd>
               </dl>
               <dl class="dlist-align">
                 <dt>Descuento Cupón</dt>
-                <dd class="text-center">(-)</dd>
-                <dd class="text-right text-dark b"><strong>{{compra.cupon | currency}}</strong></dd>
+                <dd class="text-right text-dark b">(-) &nbsp; <strong>{{compra.cupon | currency}}</strong></dd>
               </dl>
-              <hr>
+
               <dl class="dlist-align">
                 <dt><i class="icon text-success fa fa-truck"></i> &nbsp;Método de envio:</dt>
                 <dd class="text-center">
@@ -153,15 +162,37 @@
                 </dd>
                 <dd class="text-right text-dark b"> {{compra.RECARGO_PAYPAL | currency}}</dd>
               </dl>
-              <br>
+
+              <hr>
               <button href="#" class="btn btn-light btn-block font-weight-bold">Total del
                 pedido:{{compra.total_final| currency}} </button>
+              <br>
+              <dl class="dlist-align" *ngIf="compra.NOMBRE_PERSONA_ENTREGA">
+                <dt><i class="icon text-success fa fa-user"></i> &nbsp;Enviado a:</dt>
+                <dd class="text-center">
+                  <strong> {{compra.NOMBRE_PERSONA_ENTREGA}}</strong>
+                </dd>
+                <dd class="text-right text-dark b">
+                  <button class="btn btn-link py-0" (click)="entrega.click()">ver</button>
+                </dd>
+              </dl>
+              <dl class="dlist-align"  >
+                <dt><i class="icon text-success fa fa-file-invoice-dollar"></i> &nbsp;Facturado a:</dt>
+                <dd class="text-center">
+                  <strong> {{compra.NOMBRE_FACTURA}}</strong>
+                </dd>
+                <dd class="text-right text-dark b">
+                  <button class="btn btn-link py-0" (click)="factura.click()">ver</button>
+                </dd>
+              </dl>
             </div> <!-- card-body.// -->
           </div> <!-- card.// -->
 
 
         </div>
-        <div class="tab-pane fade" id="recibo{{i}}" role="tabpanel" aria-labelledby="contact-tab">contacto</div>
+        <div class="tab-pane fade" id="recibo{{i}}" role="tabpanel" aria-labelledby="recibo-tab">Recibo</div>
+        <div class="tab-pane fade" id="entrega{{i}}" role="tabpanel" aria-labelledby="entrega-tab">Entregado a</div>
+        <div class="tab-pane fade" id="factura{{i}}" role="tabpanel" aria-labelledby="factura-tab">Factura a</div>
       </div>
     </div>
   </div>
