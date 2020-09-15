@@ -42,21 +42,21 @@
         <a *ngIf="compra.ESTADO_COMPRA==1" class="col-auto badge  badge-success text-white"> Enviado</a></div>
       <ul class="nav nav-tabs card-header-tabs pull-left mx-md-auto pt-2  " id="myTab2" role="tablist">
 
-        <li class="nav-item">
-          <div class="nav-link  py-0 ">
-            <p>Realizado el</p>
+        <li class="nav-item ">
+          <div class="nav-link  py-0 pr-1 ">
+            <p style="color: black">Realizado el</p>
             <p>{{compra.FECHA_COMPRA}}</p>
           </div>
         </li>
-        <li class="nav-item">
-          <div class="nav-link  py-0 ">
-            <p>Total</p>
+        <li class="nav-item ">
+          <div class="nav-link  py-0  pr-1">
+            <p style="color: black">Total</p>
             <p>{{compra.total_final | currency}}</p>
           </div>
         </li>
-        <li class="nav-item">
-          <div class="nav-link  py-0 ">
-            <p>Pedido No</p>
+        <li class="nav-item ">
+          <div class="nav-link  py-0 pr-1">
+            <p style="color: black">Pedido No</p>
             <p>{{compra.NUM_COMPRA}}</p>
           </div>
         </li>
