@@ -53,7 +53,7 @@ async function saveComprarProducto(req, res) {
                     COSTO_ENVIO: req.body.COSTOS.COSTOS_ENVIO,
                     RECARGO_PAYPAL: req.body.COSTOS.RECARGO_PAYPAL,
                     PORCENTAJE_RECARGO_PAYPAL: req.body.COSTOS.PORCENTAJE_RECARGO_PAYPAL,
-                    TIENDA:req.body.ID_TIENDA
+                    TIENDA: req.body.ID_TIENDA
 
                 }, {
                     transaction: t
@@ -76,7 +76,7 @@ async function saveComprarProducto(req, res) {
                     COSTO_ENVIO: req.body.COSTOS.COSTOS_ENVIO,
                     RECARGO_PAYPAL: req.body.COSTOS.RECARGO_PAYPAL,
                     PORCENTAJE_RECARGO_PAYPAL: req.body.COSTOS.PORCENTAJE_RECARGO_PAYPAL,
-                    TIENDA:req.body.ID_TIENDA
+                    TIENDA: req.body.ID_TIENDA
 
                 }, {
                     transaction: t
@@ -117,15 +117,13 @@ async function saveComprarProducto(req, res) {
             });
 
             if (compraGuardada && compraProductoGuardada && varianteActualizada) {
-                if (req.body.METODO_PAGO_COMPRA == "Transferencia") {
-                    res.status(200).send({
-                        message: "La compra se ha realizado correctamente su código de compra es:   <strong>" + compraGuardada.dataValues.NUM_COMPRA + "</strong>"
-                    });
-                } else {
-                    res.status(200).send({
-                        message: "La compra se ha realizado correctamente"
-                    });
-                }
+
+                res.status(200).send({
+                  
+                    message: "La compra se ha realizado correctamente su código de compra es: <br>  <strong style='font-size: xx-large'>" + compraGuardada.dataValues.NUM_COMPRA + "</strong>"
+
+                });
+
             } else {
                 res.status(404).send({
                     message: 'No se pudo realizar la compra'
@@ -182,7 +180,7 @@ async function saveComprarProductoCarrito(req, res) {
                     COSTO_ENVIO: req.body.COSTOS.COSTOS_ENVIO,
                     RECARGO_PAYPAL: req.body.COSTOS.RECARGO_PAYPAL,
                     PORCENTAJE_RECARGO_PAYPAL: req.body.COSTOS.PORCENTAJE_RECARGO_PAYPAL,
-                    TIENDA:req.body.ID_TIENDA
+                    TIENDA: req.body.ID_TIENDA
 
                 }, {
                     transaction: t
@@ -205,7 +203,7 @@ async function saveComprarProductoCarrito(req, res) {
                     COSTO_ENVIO: req.body.COSTOS.COSTOS_ENVIO,
                     RECARGO_PAYPAL: req.body.COSTOS.RECARGO_PAYPAL,
                     PORCENTAJE_RECARGO_PAYPAL: req.body.COSTOS.PORCENTAJE_RECARGO_PAYPAL,
-                    TIENDA:req.body.ID_TIENDA
+                    TIENDA: req.body.ID_TIENDA
                 }, {
                     transaction: t
                 });
@@ -268,19 +266,18 @@ async function saveComprarProductoCarrito(req, res) {
                     }
                 }
 
-
             }
 
             if (compraGuardada) {
-                if (req.body.METODO_PAGO_COMPRA == "Transferencia") {
-                    res.status(200).send({
-                        message: "La compra se ha realizado correctamente su código de compra es:   <strong>" + compraGuardada.dataValues.NUM_COMPRA + "</strong>"
-                    });
-                } else {
-                    res.status(200).send({
-                        message: "La compra se ha realizado correctamente"
-                    });
-                }
+
+                res.status(200).send({
+                    message: "La compra se ha realizado correctamente su código de compra es: <br>  <strong style='font-size: xx-large'>" + compraGuardada.dataValues.NUM_COMPRA + "</strong>"
+                });
+
+                res.status(200).send({
+                    message: "La compra se ha realizado correctamente"
+                });
+
             } else {
                 res.status(404).send({
                     message: 'No se pudo realizar la compra'
@@ -371,11 +368,11 @@ async function getMisPedidos(req, res) {
             if (req.body.fechaInicio != 0) {
                 pedidosObtenidos = await Compra.findAll({
                     where: {
-                        TIENDA :req.params.idTienda,
+                        TIENDA: req.params.idTienda,
                         ESTADO_COMPRA: req.params.estado,
-                        FECHA_COMPRA: {[Op.between]: [req.body.fechaInicio,req.body.fechaFin]}
+                        FECHA_COMPRA: {[Op.between]: [req.body.fechaInicio, req.body.fechaFin]}
                     }, order: [['NUM_COMPRA', 'DESC']],
-                    include: [{model: Agente, required:true},{
+                    include: [{model: Agente, required: true}, {
                         model: Compra_Producto, include: {
                             model: Variante,
                             include: {model: Producto, include: {model: Oferta, include: {model: Tienda}}}
@@ -386,11 +383,11 @@ async function getMisPedidos(req, res) {
             } else {
                 pedidosObtenidos = await Compra.findAll({
                     where: {
-                        TIENDA :req.params.idTienda,
+                        TIENDA: req.params.idTienda,
                         COD_AGENTE: req.user.id,
                         ESTADO_COMPRA: req.params.estado
                     }, order: [['NUM_COMPRA', 'DESC']],
-                    include: [{model: Agente},{
+                    include: [{model: Agente}, {
                         model: Compra_Producto, include: {
                             model: Variante,
                             include: {model: Producto, include: {model: Oferta, include: {model: Tienda}}}

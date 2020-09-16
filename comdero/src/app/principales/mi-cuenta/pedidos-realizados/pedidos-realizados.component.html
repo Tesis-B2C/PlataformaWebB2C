@@ -78,7 +78,7 @@
              aria-selected="false">Detalle</a>
         </li>
         <li class="nav-item">
-          <a *ngIf="compra.ESTADO_COMPRA==1" class="nav-link py-0 " id="recibo-tab" data-toggle="tab" href="#recibo{{i}}" role="tab"
+          <a *ngIf="compra.ESTADO_COMPRA==0" class="nav-link py-0 " id="recibo-tab" data-toggle="tab" href="#recibo{{i}}" role="tab"
              aria-controls="recibo"
              aria-selected="false">Recibo</a>
         </li>
@@ -293,9 +293,9 @@
                 <div class="encabezado_recivo" *ngFor="let producto of compra.COMPRA_PRODUCTOs; let i= index">
                   <p>&nbsp;&nbsp;{{producto.VARIANTE.PRODUCTO.NOMBRE_PRODUCTO}}
                     &nbsp;{{producto.VARIANTE.PRODUCTO.MARCA}} x {{producto.CANTIDAD_PRODUCTO}}
-                    &nbsp;{{producto.VARIANTE.MEDIDA}},&nbsp;{{producto.VARIANTE.MATERIAL}}
-                    ,&nbsp;{{producto.VARIANTE.TALLA}}
-                    ,<strong>&nbsp;&nbsp;Estado:</strong>&nbsp;{{producto.VARIANTE.PRODUCTO.CONDICION}}</p>
+                    <a> &nbsp;{{producto.VARIANTE.MEDIDA}},</a> <a  *ngIf="producto.VARIANTE.MATERIA">&nbsp; {{producto.VARIANTE.MATERIAL}},</a>
+                    <a *ngIf="producto.VARIANTE.TALLA">&nbsp;{{producto.VARIANTE.TALLA}},</a>&nbsp; <a *ngIf="producto.VARIANTE.COLOR" [style.background-color]="producto.VARIANTE.COLOR" class=" px-2"></a>
+                    <strong> &nbsp;&nbsp;Estado:</strong>&nbsp;{{producto.VARIANTE.PRODUCTO.CONDICION}}</p>
                   <hr>
                 </div>
                 <p><strong>&nbsp;&nbsp;Vendido
