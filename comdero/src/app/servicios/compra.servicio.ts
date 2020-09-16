@@ -47,12 +47,18 @@ export class CompraServicio {
     });
     return this._http.get<objeto>(this.url + "getMisCompras/"+estado+'/'+fecha, {headers: headers});
   }
-  getMisPedidos(estado, fecha,idTienda) {
+  getMisPedidos(estado, fechaInicio,fechaFin,idTienda) {
+    let obj={
+      fechaInicio:fechaInicio,
+      fechaFin:fechaFin
+    }
+    let params = JSON.stringify(obj);
+
     let headers = new HttpHeaders({
       "Content-type": "application/json",
       "Authorization": this._agenteServicio.getToken()
     });
-    return this._http.get<objeto>(this.url + "getMisPedidos/"+estado+'/'+fecha+'/'+idTienda, {headers: headers});
+    return this._http.post<objeto>(this.url + "getMisPedidos/"+estado+'/'+idTienda, params,{headers: headers});
   }
 
 

@@ -368,12 +368,12 @@ async function getMisPedidos(req, res) {
             });
         } else {
             let pedidosObtenidos;
-            if (req.params.meses != 0) {
+            if (req.body.fechaInicio != 0) {
                 pedidosObtenidos = await Compra.findAll({
                     where: {
                         TIENDA :req.params.idTienda,
                         ESTADO_COMPRA: req.params.estado,
-                        FECHA_COMPRA: {[Op.between]: [moment().subtract(req.params.meses, 'months'), moment()]}
+                        FECHA_COMPRA: {[Op.between]: [req.body.fechaInicio,req.body.fechaFin]}
                     }, order: [['NUM_COMPRA', 'DESC']],
                     include: [{model: Agente, required:true},{
                         model: Compra_Producto, include: {
@@ -399,7 +399,7 @@ async function getMisPedidos(req, res) {
 
                 });
             }
-            if (pedidosObtenidos.length > 0) {
+            if (pedidosObtenidos) {
                 res.status(200).send({
                     data: pedidosObtenidos,
                     message: "Compra obtenida correcctamente"
@@ -408,7 +408,6 @@ async function getMisPedidos(req, res) {
                 res.status(404).send({
                     message: 'No existen pedidos'
                 });
-
 
             }
         }

@@ -6,7 +6,7 @@ const api = express.Router(); // esto sirve para crear las rutas
 api.post('/saveComprarProducto',md_auth.ensureAuth, CompraController.saveComprarProducto);
 api.post('/saveComprarProductoCarrito',md_auth.ensureAuth, CompraController.saveComprarProductoCarrito);
 api.get('/getMisCompras/:estado/:meses',md_auth.ensureAuth, CompraController.getMisCompras);
-api.get('/getMisPedidos/:estado/:meses/:idTienda',md_auth.ensureAuth, CompraController.getMisPedidos);
+api.post('/getMisPedidos/:estado/:idTienda',md_auth.ensureAuth, CompraController.getMisPedidos);
 
 module.exports = api;// exportamos el router de express para que las routas funcionen por todo el back end
 

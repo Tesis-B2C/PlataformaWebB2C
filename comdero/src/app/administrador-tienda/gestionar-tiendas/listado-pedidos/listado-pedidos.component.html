@@ -1,10 +1,10 @@
 <body class="bg">
-<div class=" mt-5"  [ngClass]="{'container':this.misPedidos?.length==0, 'container-fluid':this.misPedidos?.length>0}">
+<div class=" mt-5"  >
   <div class="row  justify-content-center">
     <h4 class=" col-md-11 text-left">Listado de pedidos</h4>
     <hr class=" col-md-11  ">
   </div>
-  <div *ngIf="this.misPedidos?.length==0" class="row justify-content-center   ">
+  <!--<div *ngIf="this.misPedidos?.length==0" class="row justify-content-center   ">
     <div class=" col-md-9  ml-md-5 ">
       <div class=" container  bg-white  shadow ">
         <br><br><br>
@@ -40,19 +40,52 @@
 
       </div>
     </div>
-  </div>
-  <div  *ngIf="misPedidos?.length>0" class="container-fluid mx-auto px-md-5 ">
+  </div>-->
+  <div  class="container-fluid mx-auto px-md-5 ">
     <div class="row mb-2  ">
-      <div class=" input-group col-lg-6 mr-lg-auto pr-0" >
-        <input class="form-control " style="font-size: small" type="text" #busquedaasd="ngModel"
+      <div class=" input-group col-lg-4 mr-lg-auto pr-0" >
+        <input class="form-control " style="font-size: small" type="text" #busquedaasd="ngModel" placeholder="Número de pedido, Realizado por"
                [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="filtrar()"/>
         <div class="input-group-append ">
           <span class="input-group-text  "><li class="fas fa-search"></li></span>
         </div>
         &nbsp; &nbsp; &nbsp;
+
+
       </div>
+      <div class="bg-light ">
+        <ul
+          class="nav nav-pills card-header-pills  nav-principal pt-4 pt-md-1 mx-auto text-center justify-content-center align-content-center"
+          id="tap-principal" role="tablist">
+
+          <li class="nav-item">
+            <a class="nav-link active py-0  " id="proceso-tab" data-toggle="tab"
+               aria-controls="proceso" (click)="estado(0)"
+               aria-selected="true">En proceso</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link py-0 " id="enviado-tab" data-toggle="tab"
+               aria-controls="enviado" (click)="estado(1)"
+               aria-selected="false">Enviado</a>
+          </li>
+
+
+
+        </ul>
+      </div>
+
+
       <div class="col-md-auto ">
-        <button class="btn btn-primary w-100 mt-md-0 mt-2" style="font-size:small"  routerLink="../productos">Nuevo Producto</button>
+        <input type="text" class="form-control" bsDaterangepicker
+               #Calendario="ngModel"
+               style="border-right: none"
+               (bsValueChange)="fecha($event)"
+               [(ngModel)]="bsRangeValue" name="calendario"
+
+               [bsConfig]='{ rangeInputFormat: "YYYY-MM-DD", locale: "es", adaptivePosition: true, containerClass:"theme-orange" }'
+               #dpr="bsDaterangepicker" required
+        >
       </div>
     </div>
     <div *ngIf="loading">
