@@ -532,6 +532,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
   public informacionCompra = {
     COD_AGENTE: null,
     ID_AGENTE: null,
+    ID_TIENDA:null,
     FECHA_COMPRA: null,
     DATOS_ENTREGA: {
       TIPO_IDENTIFICACION_ENTREGA: null,
@@ -664,6 +665,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
     this.contactoWhatsapp = '593' + contacto;
 
     this.informacionCompra.COD_AGENTE = this.identidadComprador.COD_AGENTE;
+    this.informacionCompra.ID_TIENDA=this.varianteActiva.TIENDA.NUM_TIENDA;
     this.informacionCompra.FECHA_COMPRA = moment().format("YYYY-MM-DD");
     this.informacionCompra.NUM_VARIANTE = this.varianteActiva.VARIANTES;
     console.log("variantes que van a ir-----------", this.informacionCompra.NUM_VARIANTE);
@@ -1227,6 +1229,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
     this.informacionCompra = {
       COD_AGENTE: null,
       ID_AGENTE: null,
+      ID_TIENDA:null,
       FECHA_COMPRA: null,
       DATOS_ENTREGA: {
         TIPO_IDENTIFICACION_ENTREGA: null,

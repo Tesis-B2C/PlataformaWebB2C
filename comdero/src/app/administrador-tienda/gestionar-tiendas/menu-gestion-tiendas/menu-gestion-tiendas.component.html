@@ -49,7 +49,11 @@
         </a>
         <ul class="collapse list-unstyled" id="pedidos">
           <li>
-            <a href="#">Home 1</a>
+            <a (click)="cerrarSideBar()" routerLink="listado-pedidos" routerLinkActive="active"
+               [routerLinkActiveOptions]="{exact: true}">Listado</a>
+          </li>
+          <li>
+            <a href="#">Listado</a>
           </li>
 
         </ul>

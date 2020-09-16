@@ -53,6 +53,7 @@ async function saveComprarProducto(req, res) {
                     COSTO_ENVIO: req.body.COSTOS.COSTOS_ENVIO,
                     RECARGO_PAYPAL: req.body.COSTOS.RECARGO_PAYPAL,
                     PORCENTAJE_RECARGO_PAYPAL: req.body.COSTOS.PORCENTAJE_RECARGO_PAYPAL,
+                    TIENDA:req.body.ID_TIENDA
 
                 }, {
                     transaction: t
@@ -75,6 +76,7 @@ async function saveComprarProducto(req, res) {
                     COSTO_ENVIO: req.body.COSTOS.COSTOS_ENVIO,
                     RECARGO_PAYPAL: req.body.COSTOS.RECARGO_PAYPAL,
                     PORCENTAJE_RECARGO_PAYPAL: req.body.COSTOS.PORCENTAJE_RECARGO_PAYPAL,
+                    TIENDA:req.body.ID_TIENDA
 
                 }, {
                     transaction: t
@@ -180,6 +182,7 @@ async function saveComprarProductoCarrito(req, res) {
                     COSTO_ENVIO: req.body.COSTOS.COSTOS_ENVIO,
                     RECARGO_PAYPAL: req.body.COSTOS.RECARGO_PAYPAL,
                     PORCENTAJE_RECARGO_PAYPAL: req.body.COSTOS.PORCENTAJE_RECARGO_PAYPAL,
+                    TIENDA:req.body.ID_TIENDA
 
                 }, {
                     transaction: t
@@ -202,7 +205,7 @@ async function saveComprarProductoCarrito(req, res) {
                     COSTO_ENVIO: req.body.COSTOS.COSTOS_ENVIO,
                     RECARGO_PAYPAL: req.body.COSTOS.RECARGO_PAYPAL,
                     PORCENTAJE_RECARGO_PAYPAL: req.body.COSTOS.PORCENTAJE_RECARGO_PAYPAL,
-
+                    TIENDA:req.body.ID_TIENDA
                 }, {
                     transaction: t
                 });
@@ -355,8 +358,69 @@ async function getMisCompras(req, res) {
     }
 }
 
+
+async function getMisPedidos(req, res) {
+    let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
+    try {
+        if (!verificar) {
+            return res.status(500).send({
+                message: "No tiene los permisos necesarios"
+            });
+        } else {
+            let pedidosObtenidos;
+            if (req.params.meses != 0) {
+                pedidosObtenidos = await Compra.findAll({
+                    where: {
+                        '$Tienda.NUM_TIENDA$' :req.params.idTienda,
+                        ESTADO_COMPRA: req.params.estado,
+                        FECHA_COMPRA: {[Op.between]: [moment().subtract(req.params.meses, 'months'), moment()]}
+                    }, order: [['NUM_COMPRA', 'DESC']],
+                    include: [{
+                        model: Compra_Producto, include: {
+                            model: Variante,
+                            include: {model: Producto, include: {model: Oferta, include: {model: Tienda}}}
+                        }
+                    }, {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}]
+
+                });
+            } else {
+              /*  pedidosObtenidos = await Compra.findAll({
+                    where: {
+                        COD_AGENTE: req.user.id,
+                        ESTADO_COMPRA: req.params.estado
+                    }, order: [['NUM_COMPRA', 'DESC']],
+                    include: [{
+                        model: Compra_Producto, include: {
+                            model: Variante,
+                            include: {model: Producto, include: {model: Oferta, include: {model: Tienda}}}
+                        }
+                    }, {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}]
+
+                });*/
+            }
+            if (pedidosObtenidos.length > 0) {
+                res.status(200).send({
+                    data: pedidosObtenidos,
+                    message: "Compra obtenida correcctamente"
+                });
+            } else {
+                res.status(404).send({
+                    message: 'No existen compras'
+                });
+
+
+            }
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+
 module.exports = {
     saveComprarProducto,
     saveComprarProductoCarrito,
-    getMisCompras
+    getMisCompras,
+    getMisPedidos
 };

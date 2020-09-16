@@ -126,6 +126,11 @@ const Compra = db.sequelize.define('COMPRA', {
                 type: Sequelize.FLOAT(8, 2),
                 allowNull: false
             },
+        TIENDA:
+            {
+                type: Number,
+                allowNull: false
+            }
 
     },
 

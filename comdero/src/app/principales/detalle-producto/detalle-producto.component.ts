@@ -66,6 +66,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
     ID_AGENTE: null,
     ID_PRODUCTO: null,
     COD_PRODUCTO: null,
+    ID_TIENDA:null,
     FECHA_COMPRA: null,
     IMAGEN_MOSTRAR: null,
     DATOS_ENTREGA: {
@@ -569,6 +570,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
     this.informacionCompra.COD_AGENTE = this.identidadComprador.COD_AGENTE;
     this.informacionCompra.ID_PRODUCTO = this.varianteActiva.ID_PRODUCTO;
     this.informacionCompra.COD_PRODUCTO = this.varianteActiva.COD_PRODUCTO;
+    this.informacionCompra.ID_TIENDA=this.productoDetalle.TIENDA.NUM_TIENDA
     this.informacionCompra.FECHA_COMPRA = moment().format("YYYY-MM-DD");
 
     this.informacionCompra.CANTIDAD = this.varianteActiva.CANTIDAD;
@@ -924,6 +926,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
       ID_AGENTE: null,
       ID_PRODUCTO: null,
       COD_PRODUCTO: null,
+      ID_TIENDA: null,
       FECHA_COMPRA: null,
       IMAGEN_MOSTRAR: null,
       DATOS_ENTREGA: {
