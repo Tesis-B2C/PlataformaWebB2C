@@ -93,7 +93,8 @@
           {{compra.AGENTE.NOMBRE}}
         </td>
         <td>
-          {{compra.AGENTE.TELEFONO}}
+          <label *ngIf="compra.AGENTE.TELEFONO">{{compra.AGENTE.TELEFONO}}</label>
+           <label *ngIf="compra.TELEFONO_FACTURA && !compra.AGENTE.TELEFONO"> {{compra.TELEFONO_FACTURA}}</label>
         </td>
         <td>
 
