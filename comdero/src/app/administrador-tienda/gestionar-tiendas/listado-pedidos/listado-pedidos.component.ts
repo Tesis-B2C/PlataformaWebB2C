@@ -29,16 +29,16 @@ export class ListadoPedidosComponent implements OnInit {
 
   async ngOnInit() {
     console.log("leng", this.misPedidos.length)
-    this.loading = true;
+
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
     await this.getMisPedidos(this.estadoActivo, this.fechaActivaInicio, this.fechaActivaFin);
-    this.loading = false
+
   }
 
   public async filtrar() {
-    this.loading = true;
+
     this.result = await this.search(this.busqueda);
-    this.loading = false;
+
   }
 
   public search(text: string): any[] {
@@ -83,7 +83,7 @@ export class ListadoPedidosComponent implements OnInit {
   public async getMisPedidos(estado, fechaInicio, fechaFin) {
     this.misPedidos = [];
     this.result = [];
-
+     this.loading=true;
     try {
       let response = await this._compraServicio.getMisPedidos(estado, fechaInicio, fechaFin, this.identidadTienda.NUM_TIENDA).toPromise();
       this.misPedidos = response.data;
@@ -117,10 +117,19 @@ export class ListadoPedidosComponent implements OnInit {
         compra.cupon = cupon;
         compra.peso = peso;
       }
+      this.loading=false;
     } catch (e) {
+      this.loading=false;
       console.log("error", e)
 
     }
   }
 
+
+  public async limpiarFecha(){
+    this.fechaActivaInicio=0;
+    this.fechaActivaFin=0;
+    await this.getMisPedidos(this.estadoActivo, this.fechaActivaInicio, this.fechaActivaFin);
+    this.filtrar();
+  }
 }

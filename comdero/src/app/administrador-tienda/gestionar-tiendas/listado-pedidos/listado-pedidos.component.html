@@ -1,5 +1,5 @@
 <body class="bg">
-<div class=" mt-5"  >
+<div class=" mt-5">
   <div class="row  justify-content-center">
     <h4 class=" col-md-11 text-left">Listado de pedidos</h4>
     <hr class=" col-md-11  ">
@@ -41,10 +41,11 @@
       </div>
     </div>
   </div>-->
-  <div  class="container-fluid mx-auto px-md-5 ">
+  <div class="container-fluid mx-auto px-md-5 ">
     <div class="row mb-2  ">
-      <div class=" input-group col-lg-4 mr-lg-auto pr-0" >
-        <input class="form-control " style="font-size: small" type="text" #busquedaasd="ngModel" placeholder="Número de pedido, Realizado por"
+      <div class=" input-group col-lg-4  pr-0">
+        <input class="form-control " style="font-size: small" type="text" #busquedaasd="ngModel"
+               placeholder="Número de pedido, Realizado por"
                [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="filtrar()"/>
         <div class="input-group-append ">
           <span class="input-group-text  "><li class="fas fa-search"></li></span>
@@ -53,9 +54,10 @@
 
 
       </div>
-      <div class="bg-light ">
+
+      <div class="bg-light col-md-4">
         <ul
-          class="nav nav-pills card-header-pills  nav-principal pt-4 pt-md-1 mx-auto text-center justify-content-center align-content-center"
+          class="nav nav-pills card-header-pills  nav-principal py-3 py-md-0 pt-md-1 mx-auto text-center justify-content-center align-content-center"
           id="tap-principal" role="tablist">
 
           <li class="nav-item">
@@ -71,22 +73,30 @@
           </li>
 
 
-
         </ul>
       </div>
 
-
-      <div class="col-md-auto ">
-        <input type="text" class="form-control" bsDaterangepicker
+      <div class="input-group col-md-4">
+        <input type="text" class="form-control "  placement="left" bsDaterangepicker
                #Calendario="ngModel"
                style="border-right: none"
                (bsValueChange)="fecha($event)"
                [(ngModel)]="bsRangeValue" name="calendario"
 
-               [bsConfig]='{ rangeInputFormat: "YYYY-MM-DD", locale: "es", adaptivePosition: true, containerClass:"theme-orange" }'
-               #dpr="bsDaterangepicker" required
-        >
+               [bsConfig]='{ adaptivePosition: true,rangeInputFormat: "YYYY-MM-DD", locale: "es",  containerClass:"theme-orange" }'
+               #dpr="bsDaterangepicker" required>
+        <div class="input-group-append">
+                  <span class="input-group-text fa fa-calendar"
+                        style="background-color: white; font-size: small"></span>
+        </div>
+        <div class="input-group-append" placement="top" ngbTooltip="Sin fecha">
+          <p class="input-group-text"    style="background-color: white; font-size: small" (click)="limpiarFecha()">
+            <i class=" fas fa-ban"></i>
+          </p>
+        </div>
       </div>
+
+
     </div>
     <div *ngIf="loading">
       <label>Buscando . . .</label>
@@ -99,7 +109,8 @@
 
 
     <div *ngIf="this.result.length==0" class="ml-1"><p>No se encontraron resultados.</p></div>
-    <table class="table table-bordered table-responsive-sm bg-white small w-100 text-center" *ngIf="this.result.length>0">
+    <table class="table table-bordered table-responsive-sm bg-white small w-100 text-center"
+           *ngIf="this.result.length>0">
       <thead>
       <tr>
 
@@ -115,7 +126,8 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let compra of   this.result  |slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+      <tr
+        *ngFor="let compra of   this.result  |slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
         <td>
           {{compra.NUM_COMPRA}}
         </td>
@@ -127,7 +139,7 @@
         </td>
         <td>
           <label *ngIf="compra.AGENTE.TELEFONO">{{compra.AGENTE.TELEFONO}}</label>
-           <label *ngIf="compra.TELEFONO_FACTURA && !compra.AGENTE.TELEFONO"> {{compra.TELEFONO_FACTURA}}</label>
+          <label *ngIf="compra.TELEFONO_FACTURA && !compra.AGENTE.TELEFONO"> {{compra.TELEFONO_FACTURA}}</label>
         </td>
         <td>
 
