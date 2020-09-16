@@ -371,11 +371,11 @@ async function getMisPedidos(req, res) {
             if (req.params.meses != 0) {
                 pedidosObtenidos = await Compra.findAll({
                     where: {
-                        '$Tienda.NUM_TIENDA$' :req.params.idTienda,
+                        TIENDA :req.params.idTienda,
                         ESTADO_COMPRA: req.params.estado,
                         FECHA_COMPRA: {[Op.between]: [moment().subtract(req.params.meses, 'months'), moment()]}
                     }, order: [['NUM_COMPRA', 'DESC']],
-                    include: [{
+                    include: [{model: Agente, required:true},{
                         model: Compra_Producto, include: {
                             model: Variante,
                             include: {model: Producto, include: {model: Oferta, include: {model: Tienda}}}
@@ -384,19 +384,20 @@ async function getMisPedidos(req, res) {
 
                 });
             } else {
-              /*  pedidosObtenidos = await Compra.findAll({
+                pedidosObtenidos = await Compra.findAll({
                     where: {
+                        TIENDA :req.params.idTienda,
                         COD_AGENTE: req.user.id,
                         ESTADO_COMPRA: req.params.estado
                     }, order: [['NUM_COMPRA', 'DESC']],
-                    include: [{
+                    include: [{model: Agente},{
                         model: Compra_Producto, include: {
                             model: Variante,
                             include: {model: Producto, include: {model: Oferta, include: {model: Tienda}}}
                         }
                     }, {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}]
 
-                });*/
+                });
             }
             if (pedidosObtenidos.length > 0) {
                 res.status(200).send({
@@ -405,7 +406,7 @@ async function getMisPedidos(req, res) {
                 });
             } else {
                 res.status(404).send({
-                    message: 'No existen compras'
+                    message: 'No existen pedidos'
                 });
 
 

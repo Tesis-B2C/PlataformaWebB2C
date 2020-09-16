@@ -6,7 +6,7 @@ var Metodo_Pago = require("./metodo_pago");
 var Horario_Atencion = require("./horario_atencion");
 var Opcion_Envio = require("./opcion_envio");
 
-const Tienda= db.sequelize.define('TIENDA', {
+const Tienda = db.sequelize.define('TIENDA', {
         NUM_TIENDA:
             {
                 type: Sequelize.BIGINT,
@@ -14,11 +14,16 @@ const Tienda= db.sequelize.define('TIENDA', {
                 allowNull: false,
                 autoIncrement: true
             },
+        COD_AGENTE:
+            {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+            },
         CORREO_TIENDA: {
             type: Sequelize.STRING,
             allowNull: false
         },
-       RAZON_SOCIAL:
+        RAZON_SOCIAL:
             {
                 type: Sequelize.STRING,
                 allowNull: false
@@ -80,8 +85,8 @@ const Tienda= db.sequelize.define('TIENDA', {
             }
     },
     {
-        timestamps:false,
-        id:false
+        timestamps: false,
+        id: false
     })
 
 //TIENDA-SUCURSAL
@@ -91,7 +96,6 @@ Sucursal.belongsTo(Tienda, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
 // TIENDA-OFERTA
 Tienda.hasMany(Oferta, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
 Oferta.belongsTo(Tienda, {foreignKey: 'NUM_TIENDA', sourceKey: 'NUM_TIENDA'});
-
 
 
 // TIENDA-METODO DE PAGO
