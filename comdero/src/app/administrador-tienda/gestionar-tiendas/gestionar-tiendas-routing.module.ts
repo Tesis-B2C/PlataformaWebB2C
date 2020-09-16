@@ -15,6 +15,7 @@ import {ListadoCuponDescuentoComponent} from "./listado-cupon-descuento/listado-
 import {ModificarCuponDescuentoComponent} from "./modificar-cupon-descuento/modificar-cupon-descuento.component";
 import {ReloadGuard} from "../../shared/guards/reload.guard";
 import {ListadoPedidosComponent} from "./listado-pedidos/listado-pedidos.component";
+import {GestionarPedidoComponent} from "./gestionar-pedido/gestionar-pedido.component";
 const routes: Routes = [
   {
     path: 'menu-gestion-tienda', component: MenuGestionTiendasComponent,
@@ -31,7 +32,8 @@ const routes: Routes = [
       {path: 'cupon-descuento', component: CuponDescuentoComponent},
       {path: 'listado-cupon-descuento', component: ListadoCuponDescuentoComponent},
       {path: 'modificar-cupon-descuento/:id', component: ModificarCuponDescuentoComponent},
-      {path: 'listado-pedidos', component: ListadoPedidosComponent}
+      {path: 'listado-pedidos', component: ListadoPedidosComponent},
+      {path: 'gestionar-pedido/:id', component: GestionarPedidoComponent}
     ]
   }];
 

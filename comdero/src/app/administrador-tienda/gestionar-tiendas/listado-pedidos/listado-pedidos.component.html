@@ -159,7 +159,7 @@
         </td>
         <td>
           <div class="btn-group">
-            <button (click)="cambiarEstadoProducto(producto.ID_OFERTA,0)" placement="top" ngbTooltip="Gestionar"
+            <button routerLink="../gestionar-pedido/{{compra.NUM_COMPRA}}" placement="top" ngbTooltip="Gestionar"
                     class="btn btn-secondary   mt-md-0 mt-1" style="font-size: x-small">
               <span class="fa fa-cog"></span>
             </button>
