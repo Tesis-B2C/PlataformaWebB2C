@@ -68,5 +68,13 @@ export class CompraServicio {
     return this._http.get<objeto>(this.url + "getPedido/"+idCompra, {headers: headers});
   }
 
+  updateEstadoPedido(idCompra, estado) {
+    let headers = new HttpHeaders({
+      "Content-type": "application/json",
+      "Authorization": this._agenteServicio.getToken()
+    });
+    return this._http.get<objeto>(this.url + "updateEstadoPedido/"+idCompra+'/'+estado, {headers: headers});
+  }
+
 
 }

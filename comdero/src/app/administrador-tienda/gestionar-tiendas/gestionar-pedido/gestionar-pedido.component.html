@@ -2,12 +2,12 @@
 
 <div class="container mt-5 ">
   <div class="row  justify-content-center" id="top">
-    <h4 class=" col-11  ">Pedido No {{compra.NUM_TIENDA}} </h4>
+    <h4 class=" col-11  ">Pedido No {{compra.NUM_COMPRA}} </h4>
     <hr class="col-11  ">
   </div>
 
   <div class="card col-md-11 mx-auto">
-    <div class=" small card-body ">
+    <div class="  card-body ">
 
       <div class="row justify-content-center mb-4 no-gutters  "
            *ngFor="let producto of compra.COMPRA_PRODUCTOs; let i= index">
@@ -52,7 +52,7 @@
 
       </div> <!-- card.// -->
 
-      <div class="">
+      <div class="small">
         <dl class="dlist-align">
           <dt>Productos:</dt>
           <dd class="text-right">{{compra.productos | currency}}</dd>
@@ -154,9 +154,16 @@
     </div>
 
   </div>
-  <div class="container px-5">
-  <button class="btn btn-primary dis-block w-100 font-weight-bold">Tramitar ahora</button>
+  <div class="container px-5" *ngIf="compra.ESTADO_COMPRA==0">
+    <button class="btn btn-primary dis-block w-100 " [disabled]="loading" (click)="updatePedido(1)">Tramitar ahora
+    </button>
+    <p class="text-danger small ">Debes dar click en "Tramitar ahora" cuando tengas listo el pedido</p>
   </div>
+  <div class="container px-5" *ngIf="compra.ESTADO_COMPRA==1">
+    <button class="btn btn-success dis-block w-100  ">Tramitado el {{compra.FECHA_ENVIO}}
+    </button>
+  </div>
+
 </div>
 
 <br><br><br>

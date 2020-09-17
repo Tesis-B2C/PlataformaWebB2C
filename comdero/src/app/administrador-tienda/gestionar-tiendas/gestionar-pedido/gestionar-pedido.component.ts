@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CompraServicio} from "../../../servicios/compra.servicio";
 import {GLOBAL} from "../../../servicios/global";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-gestionar-pedido',
@@ -16,12 +17,13 @@ export class GestionarPedidoComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.idPedido = this.route.snapshot.params.id;
     await this.getPedido();
 
   }
 
   async getPedido() {
-    this.idPedido = this.route.snapshot.params.id;
+
     try {
       let response = await this._compraServicio.getPedido(this.idPedido).toPromise();
       this.compra = response.data;
@@ -50,7 +52,10 @@ export class GestionarPedidoComponent implements OnInit {
       this.compra.descuento = descuento;
       this.compra.cupon = cupon;
     } catch (e) {
-
+      console.log("error", e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
     }
   }
 
@@ -62,6 +67,58 @@ export class GestionarPedidoComponent implements OnInit {
       this.noExite = GLOBAL.urlImagen + pathImagen;
     }
     return this.noExite;
+  }
+
+  public loading: boolean;
+
+  async updatePedido(estado) {
+    this.loading = true;
+    try {
+      let response = await this._compraServicio.updateEstadoPedido(this.idPedido, estado).toPromise();
+      this.mensageCorrecto(response.message);
+      this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/listado-pedidos'])
+      this.loading = false;
+    } catch (e) {
+      this.loading = false;
+      console.log("error", e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
+  }
+
+
+  mensageError(mensaje) {
+    Swal.fire({
+      icon: 'error',
+      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Error..</h5></header>',
+      text: mensaje,
+      position: 'center',
+      width: 600,
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        container: 'my-swal'
+        //icon:'sm'
+      }
+    });
+  }
+
+
+  mensageCorrecto(mensaje) {
+    Swal.fire({
+      icon: 'success',
+      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Correcto..</h5></header>',
+      text: mensaje,
+      position: 'center',
+      width: 600,
+      buttonsStyling: false,
+      //footer: '<a href="http://localhost:4200/loguin"><b><u>Autentificate Ahora</u></b></a>',
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        //icon:'sm'
+      }
+    });
   }
 
 }

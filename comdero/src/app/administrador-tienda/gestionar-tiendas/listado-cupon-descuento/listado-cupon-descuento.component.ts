@@ -29,47 +29,61 @@ export class ListadoCuponDescuentoComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.loading = true;
-    this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
-    let response = await this._descuentoServicio.getMisDescuentos(this.identidadTienda.NUM_TIENDA).toPromise();
-    this.misDescuentos = response.data;
-    this.hoy = new Date();
-    for (let i in this.misDescuentos) {
-      if (this.misDescuentos[i].ESTADO_DESCUENTO == 0) {
-        if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") < this.misDescuentos[i].FECHA_INICIO) {
-
-          this.misDescuentos[i].ESTADO_FECHA = "Programado"
-        }
-        if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") > this.misDescuentos[i].FECHA_FIN) {
-          this.misDescuentos[i].ESTADO_FECHA = "Vencido"
-        }
-
-        if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") >= this.misDescuentos[i].FECHA_INICIO && this.datePipe.transform(this.hoy, "yyyy-MM-dd") <= this.misDescuentos[i].FECHA_FIN) {
-          this.misDescuentos[i].ESTADO_FECHA = "Activo"
-        }
-
-        if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") == this.misDescuentos[i].FECHA_INICIO) {
-          debugger;
-          let horaActual = this.hoy.getHours() + ':' + this.hoy.getMinutes() + ':' + this.hoy.getSeconds();
-          if (this.obtenerMinutos(horaActual) < this.obtenerMinutos(this.misDescuentos[i].HORA_INICIO)) {
-            this.misDescuentos[i].ESTADO_FECHA = "Programado";
-          }
-        }
-        if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") == this.misDescuentos[i].FECHA_FIN) {
-          let horaActual = this.hoy.getHours() + ':' + this.hoy.getMinutes() + ':' + this.hoy.getSeconds();
-          if (this.obtenerMinutos(horaActual) > this.obtenerMinutos(this.misDescuentos[i].HORA_FIN)) {
-            this.misDescuentos[i].ESTADO_FECHA = "Vencido";
-          }
-        }
-      } else {
-        this.misDescuentos[i].ESTADO_FECHA = "Desactivado"
-      }
-    }
-
-    this.result = this.misDescuentos;
-    console.log("mis productos", this.vectorDescuentos);
-    this.loading = false;
+    await this.traerDescuentos();
   }
+
+
+  async traerDescuentos() {
+    try {
+      this.loading = true;
+
+      this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
+      let response = await this._descuentoServicio.getMisDescuentos(this.identidadTienda.NUM_TIENDA).toPromise();
+      this.misDescuentos = response.data;
+      this.hoy = new Date();
+      for (let i in this.misDescuentos) {
+        if (this.misDescuentos[i].ESTADO_DESCUENTO == 0) {
+          if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") < this.misDescuentos[i].FECHA_INICIO) {
+
+            this.misDescuentos[i].ESTADO_FECHA = "Programado"
+          }
+          if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") > this.misDescuentos[i].FECHA_FIN) {
+            this.misDescuentos[i].ESTADO_FECHA = "Vencido"
+          }
+
+          if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") >= this.misDescuentos[i].FECHA_INICIO && this.datePipe.transform(this.hoy, "yyyy-MM-dd") <= this.misDescuentos[i].FECHA_FIN) {
+            this.misDescuentos[i].ESTADO_FECHA = "Activo"
+          }
+
+          if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") == this.misDescuentos[i].FECHA_INICIO) {
+            debugger;
+            let horaActual = this.hoy.getHours() + ':' + this.hoy.getMinutes() + ':' + this.hoy.getSeconds();
+            if (this.obtenerMinutos(horaActual) < this.obtenerMinutos(this.misDescuentos[i].HORA_INICIO)) {
+              this.misDescuentos[i].ESTADO_FECHA = "Programado";
+            }
+          }
+          if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") == this.misDescuentos[i].FECHA_FIN) {
+            let horaActual = this.hoy.getHours() + ':' + this.hoy.getMinutes() + ':' + this.hoy.getSeconds();
+            if (this.obtenerMinutos(horaActual) > this.obtenerMinutos(this.misDescuentos[i].HORA_FIN)) {
+              this.misDescuentos[i].ESTADO_FECHA = "Vencido";
+            }
+          }
+        } else {
+          this.misDescuentos[i].ESTADO_FECHA = "Desactivado"
+        }
+      }
+
+      this.result = this.misDescuentos;
+      console.log("mis productos", this.vectorDescuentos);
+      this.loading = false;
+    } catch (e) {
+      console.log("error:" + e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
+  }
+
 
   obtenerMinutos(hora) {
     if (hora) {

@@ -456,10 +456,45 @@ async function getPedido(req, res) {
     }
 }
 
+
+async function updateEstadoPedido(req, res) {
+    try {
+        let verificar = await  Agente.findOne({where: {COD_AGENTE: req.user.id}});
+
+        if (!verificar) {
+            return res.status(500).send({
+                message: "No tiene los permisos necesarios", verificar
+            });
+        } else {
+
+            let pedidoActualizado = await Compra.update({
+                ESTADO_COMPRA: req.params.estado,
+                FECHA_ENVIO:moment()
+            }, {
+                where: {NUM_COMPRA: req.params.id},
+            });
+            if (pedidoActualizado) {
+                res.status(200).send({
+                    message: "El pedido ha sido tramitado"
+                });
+            } else {
+                res.status(404).send({
+                    message: 'Al parecer no existe el pedido en la base de datos'
+                });
+            }
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+
 module.exports = {
     saveComprarProducto,
     saveComprarProductoCarrito,
     getMisCompras,
     getMisPedidos,
-    getPedido
+    getPedido,
+    updateEstadoPedido
 };

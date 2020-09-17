@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CompraServicio} from "../../../servicios/compra.servicio";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-listado-pedidos',
@@ -83,7 +84,7 @@ export class ListadoPedidosComponent implements OnInit {
   public async getMisPedidos(estado, fechaInicio, fechaFin) {
     this.misPedidos = [];
     this.result = [];
-     this.loading=true;
+    this.loading = true;
     try {
       let response = await this._compraServicio.getMisPedidos(estado, fechaInicio, fechaFin, this.identidadTienda.NUM_TIENDA).toPromise();
       this.misPedidos = response.data;
@@ -117,19 +118,55 @@ export class ListadoPedidosComponent implements OnInit {
         compra.cupon = cupon;
         compra.peso = peso;
       }
-      this.loading=false;
+      this.loading = false;
     } catch (e) {
-      this.loading=false;
-      console.log("error", e)
+      this.loading = false;
+      console.log("error:" + e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
 
     }
   }
 
 
-  public async limpiarFecha(){
-    this.fechaActivaInicio=0;
-    this.fechaActivaFin=0;
+  public async limpiarFecha() {
+    this.fechaActivaInicio = 0;
+    this.fechaActivaFin = 0;
     await this.getMisPedidos(this.estadoActivo, this.fechaActivaInicio, this.fechaActivaFin);
     this.filtrar();
+  }
+
+  mensageError(mensaje) {
+    Swal.fire({
+      icon: 'error',
+      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Error..</h5></header>',
+      text: mensaje,
+      position: 'center',
+      width: 600,
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        container: 'my-swal'
+        //icon:'sm'
+      }
+    });
+  }
+
+
+  mensageCorrecto(mensaje) {
+    Swal.fire({
+      icon: 'success',
+      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Correcto..</h5></header>',
+      text: mensaje,
+      position: 'center',
+      width: 600,
+      buttonsStyling: false,
+      //footer: '<a href="http://localhost:4200/loguin"><b><u>Autentificate Ahora</u></b></a>',
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        //icon:'sm'
+      }
+    });
   }
 }
