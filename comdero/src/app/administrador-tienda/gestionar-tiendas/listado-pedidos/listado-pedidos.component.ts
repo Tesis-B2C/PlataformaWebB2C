@@ -133,6 +133,7 @@ export class ListadoPedidosComponent implements OnInit {
   public async limpiarFecha() {
     this.fechaActivaInicio = 0;
     this.fechaActivaFin = 0;
+    this.bsRangeValue=null;
     await this.getMisPedidos(this.estadoActivo, this.fechaActivaInicio, this.fechaActivaFin);
     this.filtrar();
   }

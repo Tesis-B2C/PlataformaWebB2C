@@ -154,12 +154,12 @@
     </div>
 
   </div>
-  <div class="container px-5" *ngIf="compra.ESTADO_COMPRA==0">
+  <div class="container px-md-5 px-0" *ngIf="compra.ESTADO_COMPRA==0">
     <button class="btn btn-primary dis-block w-100 " [disabled]="loading" (click)="updatePedido(1)">Tramitar ahora
     </button>
     <p class="text-danger small ">Debes dar click en "Tramitar ahora" cuando tengas listo el pedido</p>
   </div>
-  <div class="container px-5" *ngIf="compra.ESTADO_COMPRA==1">
+  <div class="container px-md-5 px-0" *ngIf="compra.ESTADO_COMPRA==1">
     <button class="btn btn-success dis-block w-100  ">Tramitado el {{compra.FECHA_ENVIO}}
     </button>
   </div>

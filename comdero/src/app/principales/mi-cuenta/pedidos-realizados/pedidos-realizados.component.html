@@ -38,8 +38,8 @@
     <div class="card-header ">
       <div class=" mb-0 font-weight-bold row    justify-content-between mx-md-auto"><a
         class="col-auto">{{compra.COMPRA_PRODUCTOs[0].VARIANTE.PRODUCTO.OFERTum.TIENDA.NOMBRE_COMERCIAL}}</a>
-        <a *ngIf="compra.ESTADO_COMPRA==0" class="col-auto text-primary "> En proceso</a>
-        <a *ngIf="compra.ESTADO_COMPRA==1" class="col-auto badge  badge-success text-white"> Enviado</a></div>
+        <a *ngIf="compra.ESTADO_COMPRA==0" class="col-auto text-primary font-weight-bold "> En proceso</a>
+        <a *ngIf="compra.ESTADO_COMPRA==1" class="col-auto text-success font-weight-bold"> Enviado</a></div>
       <ul class="nav nav-tabs card-header-tabs pull-left mx-md-auto pt-2  " id="myTab2" role="tablist">
 
         <li class="nav-item ">
