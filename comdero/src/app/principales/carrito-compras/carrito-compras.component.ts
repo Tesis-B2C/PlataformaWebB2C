@@ -532,7 +532,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
   public informacionCompra = {
     COD_AGENTE: null,
     ID_AGENTE: null,
-    ID_TIENDA:null,
+    ID_TIENDA: null,
     FECHA_COMPRA: null,
     DATOS_ENTREGA: {
       TIPO_IDENTIFICACION_ENTREGA: null,
@@ -665,7 +665,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
     this.contactoWhatsapp = '593' + contacto;
 
     this.informacionCompra.COD_AGENTE = this.identidadComprador.COD_AGENTE;
-    this.informacionCompra.ID_TIENDA=this.varianteActiva.TIENDA.NUM_TIENDA;
+    this.informacionCompra.ID_TIENDA = this.varianteActiva.TIENDA.NUM_TIENDA;
     this.informacionCompra.FECHA_COMPRA = moment().format("YYYY-MM-DD");
     this.informacionCompra.NUM_VARIANTE = this.varianteActiva.VARIANTES;
     console.log("variantes que van a ir-----------", this.informacionCompra.NUM_VARIANTE);
@@ -997,8 +997,10 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
   }
 
   public contactoWhatsapp;
+  public loading: boolean;
 
   public async comprar() {
+    this.loading = true;
     try {
 
       /*console.log('INFORMACION COMPRA' + JSON.stringify(this.informacionCompra));*/
@@ -1011,8 +1013,9 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
       await this.verificarStockInicio();
       await this.calcularPrecios();
       this.menu.conteoProductosCarrito(true);
-
+      this.loading = false;
     } catch (e) {
+      this.loading = false;
       console.log("error", e);
       if (JSON.stringify((e).error.message))
         this.mensageError(JSON.stringify((e).error.message));
@@ -1229,7 +1232,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
     this.informacionCompra = {
       COD_AGENTE: null,
       ID_AGENTE: null,
-      ID_TIENDA:null,
+      ID_TIENDA: null,
       FECHA_COMPRA: null,
       DATOS_ENTREGA: {
         TIPO_IDENTIFICACION_ENTREGA: null,

@@ -66,7 +66,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
     ID_AGENTE: null,
     ID_PRODUCTO: null,
     COD_PRODUCTO: null,
-    ID_TIENDA:null,
+    ID_TIENDA: null,
     FECHA_COMPRA: null,
     IMAGEN_MOSTRAR: null,
     DATOS_ENTREGA: {
@@ -570,7 +570,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
     this.informacionCompra.COD_AGENTE = this.identidadComprador.COD_AGENTE;
     this.informacionCompra.ID_PRODUCTO = this.varianteActiva.ID_PRODUCTO;
     this.informacionCompra.COD_PRODUCTO = this.varianteActiva.COD_PRODUCTO;
-    this.informacionCompra.ID_TIENDA=this.productoDetalle.TIENDA.NUM_TIENDA
+    this.informacionCompra.ID_TIENDA = this.productoDetalle.TIENDA.NUM_TIENDA
     this.informacionCompra.FECHA_COMPRA = moment().format("YYYY-MM-DD");
 
     this.informacionCompra.CANTIDAD = this.varianteActiva.CANTIDAD;
@@ -1227,7 +1227,10 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
     this.informacionCompra.COSTOS.TOTAL_PEDIDO = (this.informacionCompra.COSTOS.SUBTOTAL + this.informacionCompra.COSTOS.RECARGO_PAYPAL + this.informacionCompra.COSTOS.COSTOS_ENVIO) - (this.informacionCompra.COSTOS.DESCUENTOS + this.informacionCompra.COSTOS.CUPON);
   }
 
+  public loading: boolean;
+
   public async comprar() {
+    this.loading = true;
     try {
 
       console.log('INFORMACION COMPRA' + JSON.stringify(this.informacionCompra));
@@ -1236,8 +1239,9 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
       this.cerrar();
       this.modalService.dismissAll();
       this.obtenerProducto();
-
+      this.loading = false;
     } catch (e) {
+      this.loading = false;
       console.log("error", e);
       if (JSON.stringify((e).error.message))
         this.mensageError(JSON.stringify((e).error.message));

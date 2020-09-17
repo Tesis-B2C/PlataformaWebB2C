@@ -1323,7 +1323,7 @@
 
     <div *ngIf="this.siguienteDetallePedido" class="text-right mb-3 mr-3">
       <button type="button" class="btn btn-primary mr-1" (click)="atras()">Atras</button>
-      <button *ngIf="this.informacionCompra.METODO_PAGO_COMPRA != 'Electrónico'" type="button" class="btn btn-outline-primary ml-1" (click)="comprar()">Realizar Compra</button>
+      <button *ngIf="this.informacionCompra.METODO_PAGO_COMPRA != 'Electrónico'" type="button" class="btn btn-outline-primary ml-1" [disabled]="loading" (click)="comprar()">Realizar Compra</button>
     </div>
 
 
