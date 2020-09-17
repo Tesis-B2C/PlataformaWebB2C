@@ -15,7 +15,7 @@
          aria-selected="false">Enviado</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link py-0  text-primary" id="recibido-tab" data-toggle="tab"
+      <a class="nav-link py-0  text-primary" id="recibido-tab" #recibidos data-toggle="tab"
          aria-controls="recibo" (click)="estado(2)"
          aria-selected="false">Recibido</a>
     </li>
@@ -78,7 +78,7 @@
              aria-selected="false">Detalle</a>
         </li>
         <li class="nav-item">
-          <a *ngIf="compra.ESTADO_COMPRA==0" class="nav-link py-0 " id="recibo-tab" data-toggle="tab" href="#recibo{{i}}" role="tab"
+          <a *ngIf="compra.ESTADO_COMPRA==1" class="nav-link py-0 " id="recibo-tab"   data-toggle="tab" href="#recibo{{i}}" role="tab"
              aria-controls="recibo"
              aria-selected="false">Recibo</a>
         </li>
@@ -385,6 +385,8 @@
         </div>
       </div>
     </div>
+
+  <div class="card-header " *ngIf="compra.ESTADO_COMPRA==1"><button class="btn btn-light float-right" (click)="updatePedido(compra.NUM_COMPRA,2); recibidos.click()">Finalizar pedido</button> </div>
   </div>
 </div>
 <div *ngIf="this.result.length > 0" class="d-flex justify-content-center align-content-center text-center p-2">
