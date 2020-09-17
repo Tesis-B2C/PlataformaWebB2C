@@ -119,7 +119,7 @@ async function saveComprarProducto(req, res) {
             if (compraGuardada && compraProductoGuardada && varianteActualizada) {
 
                 res.status(200).send({
-                  
+
                     message: "La compra se ha realizado correctamente su código de compra es: <br>  <strong style='font-size: xx-large'>" + compraGuardada.dataValues.NUM_COMPRA + "</strong>"
 
                 });
@@ -415,9 +415,51 @@ async function getMisPedidos(req, res) {
     }
 }
 
+async function getPedido(req, res) {
+    let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
+    try {
+        if (!verificar) {
+            return res.status(500).send({
+                message: "No tiene los permisos necesarios"
+            });
+        } else {
+
+            let pedido = await Compra.findOne({
+                where: {
+                   NUM_COMPRA:req.params.id
+                }, order: [['NUM_COMPRA', 'DESC']],
+                include: [{model: Agente}, {
+                    model: Compra_Producto, include: {
+                        model: Variante,
+                        include: {model: Producto, include: {model: Oferta, include: {model: Tienda}}}
+                    }
+                }, {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}]
+
+            });
+
+            if (pedido) {
+                res.status(200).send({
+                    data: pedido,
+                    message: "Compra obtenida correcctamente"
+                });
+            } else {
+                res.status(404).send({
+                    message: 'No existen pedidos'
+                });
+
+            }
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+
 module.exports = {
     saveComprarProducto,
     saveComprarProductoCarrito,
     getMisCompras,
-    getMisPedidos
+    getMisPedidos,
+    getPedido
 };

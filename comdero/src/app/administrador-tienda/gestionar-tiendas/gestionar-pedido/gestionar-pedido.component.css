@@ -1,0 +1,11 @@
+body {
+  height: 100vh !important;
+  overflow: auto;
+}
+
+.letras-minusculas >p{
+  font-size:smaller;
+  margin-bottom: 0;
+  font-weight: normal;
+  color: black;
+}

@@ -7,6 +7,6 @@ api.post('/saveComprarProducto',md_auth.ensureAuth, CompraController.saveComprar
 api.post('/saveComprarProductoCarrito',md_auth.ensureAuth, CompraController.saveComprarProductoCarrito);
 api.get('/getMisCompras/:estado/:meses',md_auth.ensureAuth, CompraController.getMisCompras);
 api.post('/getMisPedidos/:estado/:idTienda',md_auth.ensureAuth, CompraController.getMisPedidos);
-
+api.get('/getPedido/:id',md_auth.ensureAuth, CompraController.getPedido);
 module.exports = api;// exportamos el router de express para que las routas funcionen por todo el back end
 
