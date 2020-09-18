@@ -1,3 +1,28 @@
+
+<ng-template #contentCalificacion let-modal >
+  <div class="modal-header text-center justify-content-center align-content-center">
+    <h5 class=" text-center">Danos tu opinion sobre este producto</h5>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true" style="font-size: large">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body text-center justify-content-center align-content-center ">
+    <ngb-rating [(rate)]="calificacion">
+      <ng-template let-fill="fill" let-index="index">
+        <span class="star" [class.filled]="fill === 100" [class.bad]="index < 3">&#9733;</span>
+      </ng-template>
+    </ngb-rating>
+    <pre>Calificación: <b>{{calificacion}}</b></pre>
+    <hr>
+    <textarea class="form-control" rows="5" type="text" placeholder="Comentario"></textarea>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Cerrar</button>
+    <button type="button" class="btn btn-primary" (click)="modal.close('Close click')">Guardar</button>
+  </div>
+</ng-template>
+
+
 <div class="bg-light py-2 mb-2">
   <ul
     class="nav nav-pills card-header-pills  nav-principal pt-4 pt-md-1 mx-auto text-center justify-content-center align-content-center"
@@ -148,7 +173,7 @@
               </div>
               <div class="col-12 col-md-3 text-center text-md-left   ">
                 <p class="text-uppercase  white d-md-block d-none">.</p>
-                <button class="btn btn-light dis-block">Agregar opinion</button>
+                <button class="btn btn-light dis-block"  (click)="abrirModalCalificacion(contentCalificacion)" >Agregar opinion</button>
               </div>
 
 

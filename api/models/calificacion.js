@@ -5,9 +5,9 @@ const Calificacion = db.sequelize.define('CALIFICACION', {
         ID_CALIFICACION:
             {
                 primaryKey: true,
-                type:Sequelize.BIGINT,
-                allowNull:false,
-                autoIncrement:true
+                type: Sequelize.BIGINT,
+                allowNull: false,
+                autoIncrement: true
             },
         ID_PRODUCTO:
             {
@@ -19,6 +19,11 @@ const Calificacion = db.sequelize.define('CALIFICACION', {
                 type: Sequelize.STRING,
                 allowNull: false
             },
+        COD_AGENTE:
+            {
+                type: Sequelize.NUMBER,
+                allowNull: false
+            },
         NUM_ESTRELLAS:
             {
                 type: Sequelize.INTEGER,
@@ -27,7 +32,7 @@ const Calificacion = db.sequelize.define('CALIFICACION', {
     },
     {
         timestamps: false,
-        id:false
+        id: false
     })
 
 module.exports = Calificacion;

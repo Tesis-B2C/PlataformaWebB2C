@@ -3,6 +3,7 @@ import {CompraServicio} from "../../../servicios/compra.servicio";
 import {GLOBAL} from "../../../servicios/global";
 import {ToastrService} from "ngx-toastr";
 import Swal from "sweetalert2";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-pedidos-realizados',
@@ -20,7 +21,9 @@ export class PedidosRealizadosComponent implements OnInit {
   public estadoActivo = 0;
   public fechaActiva = 1;
 
-  constructor(public toastr: ToastrService,public _compraServicio: CompraServicio) {
+  public calificacion=0;
+
+  constructor( public modalService: NgbModal, public toastr: ToastrService,public _compraServicio: CompraServicio) {
   }
 
   async ngOnInit() {
@@ -105,6 +108,18 @@ export class PedidosRealizadosComponent implements OnInit {
       else this.mensageError("Error de conexión intentelo mas tarde");
     }
   }
+
+
+  abrirModalCalificacion(content) {
+    this.modalService.open(content, { centered: true ,windowClass: 'animated backInDown'});
+  }
+
+  guardarCalificacionComentario(){
+
+
+
+  }
+
   mensageError(mensaje) {
     Swal.fire({
       icon: 'error',
@@ -120,4 +135,6 @@ export class PedidosRealizadosComponent implements OnInit {
       }
     });
   }
+
+
 }

@@ -88,4 +88,9 @@ Agente.hasOne(Carrito, {foreignKey: 'COD_AGENTE', sourceKey: 'COD_AGENTE'});
 Carrito.belongsTo(Agente, {foreignKey: 'COD_AGENTE', sourceKey: 'COD_AGENTE'});
 Agente.hasMany(Compra, {foreignKey: 'COD_AGENTE', sourceKey: 'COD_AGENTE'});
 Compra.belongsTo(Agente, {foreignKey: 'COD_AGENTE', sourceKey: 'COD_AGENTE'});
+
+
+Agente.hasMany(Comentario, {foreignKey: 'COD_AGENTE', sourceKey: 'COD_AGENTE'});
+Comentario.belongsTo(Agente, {foreignKey: 'COD_AGENTE', sourceKey: 'COD_AGENTE'});
+
 module.exports = Agente;

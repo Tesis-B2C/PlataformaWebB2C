@@ -20,6 +20,11 @@ const Comentario = db.sequelize.define('COMENTARIO', {
                 type: Sequelize.STRING,
                 allowNull: false
             },
+        COD_AGENTE:
+            {
+                type: Sequelize.NUMBER,
+                allowNull: false
+            },
         COMENTARIO:
             {
                 type: Sequelize.STRING,
