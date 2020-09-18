@@ -14,11 +14,13 @@
     </ngb-rating>
     <pre>Calificación: <b>{{calificacion}}</b></pre>
     <hr>
-    <textarea class="form-control" rows="5" type="text" placeholder="Comentario"></textarea>
+    <textarea  class="form-control" rows="5" type="text" placeholder="Comentario"
+               #ComentarioProducto="ngModel" [(ngModel)]="this.comentario"
+               class="form-control" name="comentarioProducto" ></textarea>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Cerrar</button>
-    <button type="button" class="btn btn-primary" (click)="modal.close('Close click')">Guardar</button>
+    <button type="button" class="btn btn-primary" (click)="saveValoracion();modal.close('Close click')">Guardar</button>
   </div>
 </ng-template>
 
@@ -173,7 +175,7 @@
               </div>
               <div class="col-12 col-md-3 text-center text-md-left   ">
                 <p class="text-uppercase  white d-md-block d-none">.</p>
-                <button class="btn btn-light dis-block"  (click)="abrirModalCalificacion(contentCalificacion)" >Agregar opinion</button>
+                <button class="btn btn-light dis-block"  (click)="productoActivo(producto.VARIANTE.PRODUCTO.ID_PRODUCTO,producto.VARIANTE.PRODUCTO.COD_PRODUCTO);abrirModalCalificacion(contentCalificacion)" >Agregar opinion</button>
               </div>
 
 

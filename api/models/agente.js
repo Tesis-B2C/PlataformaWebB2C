@@ -3,6 +3,8 @@ var db = require("../database/db.js");
 var Tienda = require("./tienda");
 const Carrito=require('../models/carrito');
 const Compra=require('../models/compra');
+const Comentario = require('../models/comentario');
+const Calificacion = require('../models/calificacion');
 const  Agente = db.sequelize.define('AGENTE', {
         COD_AGENTE: {
             primaryKey: true,
@@ -92,5 +94,7 @@ Compra.belongsTo(Agente, {foreignKey: 'COD_AGENTE', sourceKey: 'COD_AGENTE'});
 
 Agente.hasMany(Comentario, {foreignKey: 'COD_AGENTE', sourceKey: 'COD_AGENTE'});
 Comentario.belongsTo(Agente, {foreignKey: 'COD_AGENTE', sourceKey: 'COD_AGENTE'});
+Agente.hasMany(Calificacion, {foreignKey: 'COD_AGENTE', sourceKey: 'COD_AGENTE'});
+Calificacion.belongsTo(Agente, {foreignKey: 'COD_AGENTE', sourceKey: 'COD_AGENTE'});
 
 module.exports = Agente;

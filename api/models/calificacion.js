@@ -28,6 +28,11 @@ const Calificacion = db.sequelize.define('CALIFICACION', {
             {
                 type: Sequelize.INTEGER,
                 allowNull: false
+            },
+        FECHA_CALIFICACION:
+            {
+                type: Sequelize.DATEONLY,
+                allowNull: false
             }
     },
     {

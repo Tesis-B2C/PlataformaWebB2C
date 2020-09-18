@@ -29,6 +29,11 @@ const Comentario = db.sequelize.define('COMENTARIO', {
             {
                 type: Sequelize.STRING,
                 allowNull: false
+            },
+        FECHA_COMENTARIO:
+            {
+                type: Sequelize.DATEONLY,
+                allowNull: false
             }
     },
     {

@@ -7,7 +7,6 @@ const jwt = require('../services/jwt');
 const correo = require('./correo');
 const DPA = require('../models/dpa');
 
-
 async function registrarAgente(req, res) {
     try {
         let agenteEncontrado = await AGENTE.findOne({where: {CORREO: req.body.Correo}});

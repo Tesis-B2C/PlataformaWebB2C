@@ -4,6 +4,7 @@ import {GLOBAL} from "../../../servicios/global";
 import {ToastrService} from "ngx-toastr";
 import Swal from "sweetalert2";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ValoracionServicio} from "../../../servicios/valoracion.servicio";
 
 @Component({
   selector: 'app-pedidos-realizados',
@@ -21,9 +22,10 @@ export class PedidosRealizadosComponent implements OnInit {
   public estadoActivo = 0;
   public fechaActiva = 1;
 
-  public calificacion=0;
+  public calificacion = 0;
+  public comentario;
 
-  constructor( public modalService: NgbModal, public toastr: ToastrService,public _compraServicio: CompraServicio) {
+  constructor(public modalService: NgbModal, public toastr: ToastrService, public _compraServicio: CompraServicio, public _valoracionServicio: ValoracionServicio) {
   }
 
   async ngOnInit() {
@@ -97,8 +99,12 @@ export class PedidosRealizadosComponent implements OnInit {
     this.loading = true;
     try {
       let response = await this._compraServicio.updateEstadoPedido(idPedido, estado).toPromise();
-      let mensaje= response.message;
-      this.toastr.success( JSON.stringify(mensaje) ,'Correcto',{positionClass: 'toast-top-right', enableHtml: true, closeButton: true});
+      let mensaje = response.message;
+      this.toastr.success(JSON.stringify(mensaje), 'Correcto', {
+        positionClass: 'toast-top-right',
+        enableHtml: true,
+        closeButton: true
+      });
       this.loading = false;
     } catch (e) {
       this.loading = false;
@@ -111,12 +117,40 @@ export class PedidosRealizadosComponent implements OnInit {
 
 
   abrirModalCalificacion(content) {
-    this.modalService.open(content, { centered: true ,windowClass: 'animated backInDown'});
+    this.modalService.open(content, {centered: true, windowClass: 'animated backInDown'});
   }
 
-  guardarCalificacionComentario(){
+  public id_producto;
+  public cod_producto;
 
+  productoActivo(id_producto, cod_producto) {
+    this.comentario=null;
+    this.calificacion=0;
+    this.id_producto = id_producto;
+    this.cod_producto = cod_producto;
+  }
 
+  public async saveValoracion() {
+
+    let objValoracion = {
+      ID_PRODUCTO: this.id_producto,
+      COD_PRODUCTO: this.cod_producto,
+      COMENTARIO: this.comentario,
+      CALIFICACION: this.calificacion
+    }
+    try {
+      let response = await this._valoracionServicio.saveValoracion(objValoracion).toPromise();
+      this.mensageCorrecto(response.message);
+      this.id_producto;
+      this.cod_producto;
+      this.comentario=null;
+      this.calificacion = 0;
+    } catch (e) {
+      console.log("error", e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
 
   }
 
@@ -136,5 +170,21 @@ export class PedidosRealizadosComponent implements OnInit {
     });
   }
 
+
+  mensageCorrecto(mensaje) {
+    Swal.fire({
+      icon: 'success',
+      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Correcto..</h5></header>',
+      text: mensaje,
+      position: 'center',
+      width: 600,
+      buttonsStyling: false,
+      //footer: '<a href="http://localhost:4200/loguin"><b><u>Autentificate Ahora</u></b></a>',
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        //icon:'sm'
+      }
+    });
+  }
 
 }
