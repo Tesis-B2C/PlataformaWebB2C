@@ -17,27 +17,32 @@ async function saveValoracion(req, res) {
             });
         } else {
 
-            await Comentario.create({
-                    ID_PRODUCTO: req.body.ID_PRODUCTO,
-                    COD_PRODUCTO: req.body.COD_PRODUCTO,
-                    COD_AGENTE: req.user.id,
-                    COMENTARIO: req.body.COMENTARIO,
-                    FECHA_COMENTARIO: moment()
-                },
-                {
-                    transaction: t
-                });
+            if (req.body.COMENTARIO) {
 
-            await Calificacion.create({
-                    ID_PRODUCTO: req.body.ID_PRODUCTO,
-                    COD_PRODUCTO: req.body.COD_PRODUCTO,
-                    COD_AGENTE: req.user.id,
-                    NUM_ESTRELLAS: req.body.CALIFICACION,
-                    FECHA_CALIFICACION: moment()
-                },
-                {
-                    transaction: t
-                });
+                await Comentario.create({
+                        ID_PRODUCTO: req.body.ID_PRODUCTO,
+                        COD_PRODUCTO: req.body.COD_PRODUCTO,
+                        COD_AGENTE: req.user.id,
+                        COMENTARIO: req.body.COMENTARIO,
+                        FECHA_COMENTARIO: moment()
+                    },
+                    {
+                        transaction: t
+                    });
+            }
+
+            if (req.body.CALIFICACION) {
+                await Calificacion.create({
+                        ID_PRODUCTO: req.body.ID_PRODUCTO,
+                        COD_PRODUCTO: req.body.COD_PRODUCTO,
+                        COD_AGENTE: req.user.id,
+                        NUM_ESTRELLAS: req.body.CALIFICACION,
+                        FECHA_CALIFICACION: moment()
+                    },
+                    {
+                        transaction: t
+                    });
+            }
 
             res.status(200).send({
                 message: "Su valoración se ha guardado correctamente"

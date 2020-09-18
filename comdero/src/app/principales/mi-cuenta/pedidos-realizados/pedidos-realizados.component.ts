@@ -145,6 +145,7 @@ export class PedidosRealizadosComponent implements OnInit {
       this.cod_producto;
       this.comentario=null;
       this.calificacion = 0;
+      await this.getMisCompras(this.estadoActivo, this.fechaActiva);
     } catch (e) {
       console.log("error", e);
       if (JSON.stringify((e).error.message))
