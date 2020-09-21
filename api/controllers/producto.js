@@ -630,6 +630,7 @@ async function obtenerProductoDetalle(req, res) {
                 }, {
                     model: Comentario,
                     include:{model: Agente},
+                    order: [['ID_COMENTARIO','DESC']],
                     separate: true
                 }],
             }, {

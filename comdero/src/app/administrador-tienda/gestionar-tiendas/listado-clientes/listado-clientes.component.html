@@ -1,0 +1,69 @@
+<body>
+<div class="mt-5 container-fluid">
+  <div class="row  justify-content-center" id="top">
+    <h4 class=" col-11">Listado de clientes</h4>
+    <hr class="col-11">
+  </div>
+  <div class="container-fluid mx-auto px-md-5 ">
+  <div class="row mb-2  ">
+    <div class=" input-group col-md-6 mr-md-auto pr-0">
+      <input class="form-control" style="font-size: small" type="text" #Busquedaasd="ngModel"
+             [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="filtrar()"/>
+      <div class="input-group-append">
+        <span class="input-group-text  small"><li class="fas fa-search"></li></span>
+      </div>
+      &nbsp; &nbsp; &nbsp;
+    </div>
+
+  </div>
+  <div *ngIf="loading">
+    <label>Buscando  . . .</label>
+    &nbsp;  &nbsp;  &nbsp;
+    <div class="progress">
+      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+    </div>
+  </div>
+    <div *ngIf="this.result.length==0" class="ml-1"><p>No se encontraron resultados.</p></div>
+  <table class="table table-bordered table-responsive-sm bg-white small w-100 text-center" *ngIf="this.result.length>0">
+    <thead>
+    <tr>
+
+      <th scope="col">NOMBRE</th>
+      <th scope="col">IDENTIFICACIÓN</th>
+      <th scope="col">CORREO</th>
+      <th scope="col">TELEFONO</th>
+
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr
+        *ngFor="let cliente of   this.result  |slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+      <td>
+        {{cliente.NOMBRE_FACTURA}}
+      </td>
+      <td>
+        {{cliente.IDENTIFICACION_FACTURA  }}
+      </td>
+      <td>
+        {{cliente.CORREO_FACTURA}}
+      </td>
+      <td>
+        {{cliente.TELEFONO_FACTURA}}
+      </td>
+
+    </tr>
+    </tbody>
+  </table>
+    <div *ngIf="this.result.length > 0" class="d-flex justify-content-between p-2">
+      <ngb-pagination id="paginacion"
+                      [(page)]="page"
+                      [pageSize]="pageSize"
+                      [collectionSize]="this.result.length" [rotate]="true" [ellipses]="true" [boundaryLinks]="false">
+        <ng-template ngbPaginationPrevious>Anterior</ng-template>
+        <ng-template ngbPaginationNext>Siguiente</ng-template>
+      </ngb-pagination>
+    </div>
+  </div>
+</div>
+</body>

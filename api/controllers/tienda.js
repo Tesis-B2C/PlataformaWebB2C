@@ -22,7 +22,7 @@ const COMENTARIO = require("../models/comentario");
 const AGENTE = require("../models/agente");
 const DESCUENTO = require("../models/descuento");
 const PRODUCTO_DESCUENTO = require("../models/producto_descuento");
-
+const COMPRA = require("../models/compra");
 const {Op} = require("sequelize");
 
 /*const {QueryTypes} = require('sequelize');*/
@@ -896,6 +896,34 @@ async function obtenerTodasTiendas(req, res) {
     }
 }
 
+
+
+async function getListadoClientesTienda(req, res) {
+    try {
+        let ListadoClientes = await COMPRA.findAll({
+            where: {
+               TIENDA:req.params.id
+            },attributes: ['IDENTIFICACION_FACTURA','NOMBRE_FACTURA', 'CORREO_FACTURA', 'TELEFONO_FACTURA' ],group: ['IDENTIFICACION_FACTURA']
+        });
+
+        if (ListadoClientes.length > 0) {
+            res.status(200).send({
+                data: ListadoClientes,
+                message: "Clientes cargados correctamente"
+            });
+        } else {
+            res.status(404).send({
+                message: 'Al parecer no se encuentran clientes registrados en la base de datos'
+            });
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+
+
 module.exports = {          // para exportar todas las funciones de este modulo
     registrarTienda,
     getDatosTienda,
@@ -909,7 +937,8 @@ module.exports = {          // para exportar todas las funciones de este modulo
     obtenerFiltroPrincipalTodos,
     getDetalleTiendaProducto,
     obtenerTodasTiendas,
-    obtenerFiltroBusquedaTodos
+    obtenerFiltroBusquedaTodos,
+    getListadoClientesTienda
     /* subirImagenesTienda,*/
     /*   obtenerImagenTienda*/
 };
