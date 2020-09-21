@@ -4,6 +4,7 @@ import {TiendaServicio} from "../../../servicios/tienda.servicio";
 import Swal from "sweetalert2";
 import * as XLSX from 'xlsx';
 import {ExcelServicio} from "../../../servicios/excel.servicio";
+
 @Component({
   selector: 'app-listado-clientes',
   templateUrl: './listado-clientes.component.html',
@@ -17,7 +18,8 @@ export class ListadoClientesComponent implements OnInit {
   public loading: boolean;
   public busqueda;
   public misClientes;
-  constructor(public _excelService:ExcelServicio, public _tiendaServicio: TiendaServicio) {
+
+  constructor(public _excelService: ExcelServicio, public _tiendaServicio: TiendaServicio) {
   }
 
   ngOnInit() {
@@ -27,20 +29,21 @@ export class ListadoClientesComponent implements OnInit {
 
 
   async getClientes() {
-    this.loading=true;
+    this.loading = true;
     try {
       let response = await this._tiendaServicio.getListadoClientesTienda(this.identidadTienda.NUM_TIENDA).toPromise();
-       this.misClientes=response.data;
-       this.result=this.misClientes;
-       this.loading=false;
+      this.misClientes = response.data;
+      this.result = this.misClientes;
+      this.loading = false;
     } catch (e) {
-      this.loading=false;
+      this.loading = false;
       console.log("error", e);
       if (JSON.stringify((e).error.message))
         this.mensageError(JSON.stringify((e).error.message));
       else this.mensageError("Error de conexión intentelo más tarde");
     }
   }
+
   public async filtrar() {
 
     this.result = await this.search(this.busqueda);
@@ -55,11 +58,25 @@ export class ListadoClientesComponent implements OnInit {
     });
   }
 
-  fileName= 'ExcelSheet.xlsx';
+  fileName = 'ExcelSheet.xlsx';
 
-  exportexcel(): void
-  {
-    this._excelService.exportAsExcelFile(this.result, 'reporteUsuarios');
+  exportexcel(): void {
+    let vectorExcel = [];
+    for (let cliente of this.result) {
+      let obj = {
+        CÉDULA: null,
+        NOMBRE: null,
+        CORREO: null,
+        TELÉFONO: null,
+      }
+      obj.CÉDULA = cliente.IDENTIFICACION_FACTURA;
+      obj.NOMBRE = cliente.NOMBRE_FACTURA;
+      obj.CORREO = cliente.CORREO_FACTURA;
+      obj.TELÉFONO = cliente.TELEFONO_FACTURA;
+      vectorExcel.push(obj);
+    }
+
+    this._excelService.exportAsExcelFile(vectorExcel, 'reporteUsuarios');
 
     /*/!* table id is passed over here *!/
     let element = document.getElementById('tablaUsuarios');
