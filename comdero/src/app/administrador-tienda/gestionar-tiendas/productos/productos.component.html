@@ -84,7 +84,7 @@
             <label>Descripción del producto </label>
             <textarea #DescripcionProducto="ngModel" [(ngModel)]="this.Producto.Descripcion_Producto"
                       class="form-control" name="descripcionProducto" required
-                      rows="2" type="text"[ngClass]="{'is-invalid': DescripcionProducto.invalid && banderaValidaciones}"></textarea>
+                      rows="2" type="text" [ngClass]="{'is-invalid': DescripcionProducto.invalid && banderaValidaciones}"></textarea>
             <div *ngIf="DescripcionProducto.errors?.required && banderaValidaciones">
               <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
             </div>
