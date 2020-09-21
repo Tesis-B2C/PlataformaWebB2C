@@ -105,15 +105,17 @@
             </article>  <!--gallery-wrap .end//-->
           </aside>
           <main class="col-lg-6 col-md-6 border-left">
-            <article class="content-body px-4">
-              <p class="mb-0">
+            <article class="content-body px-4 pt-2">
+              <p class="mb-0 text-center mb-2">
                 <a
                   routerLink="../../detalle-tienda/tienda/{{this.productoDetalle?.TIENDA.NUM_TIENDA}}/inicio-tienda"
                   class="title tituloTienda text-primary p-0"> {{this.productoDetalle?.TIENDA.NOMBRE_COMERCIAL}}</a>
               </p>
-              <h4 class="title m-0">{{this.productoDetalle?.PRODUCTO.NOMBRE_PRODUCTO}}</h4>
 
-              <div class="rating-wrap mb-0">
+              <div class="form-row justify-content-center text-center">
+              <h4 class="title m-0 col-md-4">{{this.productoDetalle?.PRODUCTO.NOMBRE_PRODUCTO}}</h4>
+
+              <div class="rating-wrap mb-0 col-md-4">
                 <ul class="rating-stars">
                   <ngb-rating *ngIf="this.productoDetalle?.PRODUCTO.CALIFICACIONs.length != 0"
                               [(rate)]="this.productoDetalle?.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL">
@@ -127,11 +129,17 @@
                       <span class="star" [class.filled]="fill === 100">&#9733;</span>
                     </ng-template>
                   </ngb-rating>
+                  <p class="font-weight-bold text-center">{{this.productoDetalle?.PRODUCTO.CALIFICACIONs[0]?.PROMEDIO_CAL | number}}</p>
                 </ul>
+
+              </div>
+                <div class="col-md-4">
                 <span *ngIf="this.productoDetalle?.PRODUCTO.COMENTARIOs.length > 0"
                       class="label-rating text-muted">{{this.productoDetalle?.PRODUCTO.COMENTARIOs.length}}
                   comentarios</span>
+
                 <span *ngIf="this.productoDetalle?.PRODUCTO.COMENTARIOs.length == 0" class="label-rating text-muted">0 Comentarios </span>
+                </div>
               </div> <!-- rating-wrap.// -->
 
               <hr class="mt-2">

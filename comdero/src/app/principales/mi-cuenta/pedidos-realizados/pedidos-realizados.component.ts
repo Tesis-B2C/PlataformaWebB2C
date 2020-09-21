@@ -117,6 +117,7 @@ export class PedidosRealizadosComponent implements OnInit {
 
 
   abrirModalCalificacion(content) {
+    this.calificacion=0;
     this.modalService.open(content, {centered: true, windowClass: 'animated backInDown'});
   }
 
