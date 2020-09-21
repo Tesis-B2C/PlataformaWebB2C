@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {CarouselModule} from 'ngx-owl-carousel-o';
 import {HttpClientModule} from '@angular/common/http';
-import {NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {PaginasModule} from './paginas/paginas.module';
@@ -19,16 +19,18 @@ import {CarritoServicio} from "./servicios/carrito.servicio";
 import {CompraServicio} from "./servicios/compra.servicio";
 import {ValoracionServicio} from "./servicios/valoracion.servicio";
 import {AdministradorTiendaModule} from "./administrador-tienda/administrador-tienda.module";
+
 /*import {GestionarTiendasModule} from "./administrador-tienda/gestionar-tiendas/gestionar-tiendas.module";*/
 import {FormsModule} from "@angular/forms";
 import {ArchwizardModule} from 'angular-archwizard';
 import {ToastrModule} from 'ngx-toastr';
 import {MetodoEnvioServicio} from "./servicios/metodo_envio.servicio";
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {DescuentoServicio} from "./servicios/descuento.servicio";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+import {TypeaheadModule} from 'ngx-bootstrap/typeahead';
 import {ReloadGuard} from "./shared/guards/reload.guard";
+import {ExcelServicio} from "./servicios/excel.servicio";
 
 @NgModule({
   declarations: [
@@ -64,7 +66,7 @@ import {ReloadGuard} from "./shared/guards/reload.guard";
     CarritoServicio,
     CompraServicio,
     ValoracionServicio,
-    ReloadGuard],
+    ReloadGuard, ExcelServicio],
   bootstrap: [AppComponent]
 })
 export class AppModule {

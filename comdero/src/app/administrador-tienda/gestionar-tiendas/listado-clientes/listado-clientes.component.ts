@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {CompraServicio} from "../../../servicios/compra.servicio";
 import {TiendaServicio} from "../../../servicios/tienda.servicio";
 import Swal from "sweetalert2";
-
+import * as XLSX from 'xlsx';
+import {ExcelServicio} from "../../../servicios/excel.servicio";
 @Component({
   selector: 'app-listado-clientes',
   templateUrl: './listado-clientes.component.html',
@@ -16,7 +17,7 @@ export class ListadoClientesComponent implements OnInit {
   public loading: boolean;
   public busqueda;
   public misClientes;
-  constructor(public _tiendaServicio: TiendaServicio) {
+  constructor(public _excelService:ExcelServicio, public _tiendaServicio: TiendaServicio) {
   }
 
   ngOnInit() {
@@ -53,6 +54,26 @@ export class ListadoClientesComponent implements OnInit {
       return cliente.TELEFONO_FACTURA.toLowerCase().includes(term) || cliente.NOMBRE_FACTURA.toLowerCase().includes(term) || cliente.IDENTIFICACION_FACTURA.toLowerCase().includes(term) // || siguiente
     });
   }
+
+  fileName= 'ExcelSheet.xlsx';
+
+  exportexcel(): void
+  {
+    this._excelService.exportAsExcelFile(this.result, 'reporteUsuarios');
+
+    /*/!* table id is passed over here *!/
+    let element = document.getElementById('tablaUsuarios');
+    const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+
+    /!* generate workbook and add the worksheet *!/
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    /!* save to file *!/
+    XLSX.writeFile(wb, this.fileName);*/
+
+  }
+
 
   mensageError(mensaje) {
     Swal.fire({

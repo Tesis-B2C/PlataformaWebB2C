@@ -19,7 +19,7 @@
         Exportar
       </button>
       <div class="dropdown-menu  dropdown-menu-right " style="width: 2px" aria-labelledby="dropdownExportacion">
-        <a class="dropdown-item text-success "  href="#"><i class="fa fa-file-excel fa-1x "></i> &nbsp;Excel</a>
+        <a class="dropdown-item text-success " (click)="exportexcel()" ><i class="fa fa-file-excel fa-1x "></i> &nbsp;Excel</a>
 
       </div>
     </div>
@@ -32,7 +32,7 @@
     </div>
   </div>
     <div *ngIf="this.result.length==0" class="ml-1"><p>No se encontraron resultados.</p></div>
-  <table class="table table-bordered table-responsive-sm bg-white small w-100 text-center" *ngIf="this.result.length>0">
+  <table id="tablaUsuarios" class="table table-bordered table-responsive-sm bg-white small w-100 text-center" *ngIf="this.result.length>0">
     <thead>
     <tr>
 
