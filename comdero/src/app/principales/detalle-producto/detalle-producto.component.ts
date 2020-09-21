@@ -16,6 +16,7 @@ import {MenuComponent} from "../menu/menu.component";
 import {Carrito_Producto} from "../../modelos/carrito_producto";
 import {CompraServicio} from "../../servicios/compra.servicio";
 import {ICreateOrderRequest, IPayPalConfig} from "ngx-paypal";
+import {ValoracionServicio} from "../../servicios/valoracion.servicio";
 
 @Component({
   selector: 'app-detalle-producto',
@@ -117,7 +118,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
   public select_ciudad: boolean = false;
   public Carrito_Producto;
 
-  constructor(public menu: MenuComponent, public _carritoServicio: CarritoServicio, public _compraServicio: CompraServicio,
+  constructor(public _valoracionServicio:ValoracionServicio, public menu: MenuComponent, public _carritoServicio: CarritoServicio, public _compraServicio: CompraServicio,
               public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal, private _sanitizer: DomSanitizer, configRating: NgbRatingConfig, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
     configRating.max = 5;
     configRating.readonly = true;
@@ -125,11 +126,13 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
   }
 
   public contactoWhatsapp;
+  public identidadAgente;
 
   ngOnInit() {
     this.imagenPrincipal = 'assets/images/no-imagen1.png';
     this.getDpaProvincias("P");
     this.obtenerProducto();
+    this.identidadAgente = JSON.parse(localStorage.getItem('identity'));
   }
 
   ngOnDestroy(): void {
@@ -205,7 +208,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
       this.productoDetalle = response.data;
       let contacto = this.productoDetalle.TIENDA.CONTACTO_WHATSAPP.slice(1, 10);
       this.contactoWhatsapp = '593' + contacto;
-      console.log('PROUCTO OBTENIDO BD' + JSON.stringify(this.productoDetalle));
+
       this.existeColorMaterialTalla();
       this.asignarVariblePrimero();
       this.informacionPagoEnvio();
@@ -1337,6 +1340,45 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
         console.log('onClick', data, actions);
       },
     };
+  }
+
+
+  abrirModalComentario(content, idComentario) {
+    this.idComentario=idComentario;
+    this.modalService.open(content, {centered: true});
+
+  }
+
+  public comentario;
+  public idComentario;
+
+  public async  editarComentario() {
+    try{
+    let response = await this._valoracionServicio.updateComentario(this.idComentario, this.comentario).toPromise();
+      this.comentario=null;
+      this.idComentario=null;
+      this.mensageCorrecto(response.message);
+      this.obtenerProducto();
+    }catch (e) {
+      console.log("error", e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
+
+  }
+
+ async deleteComentario(idComentario){
+    try{
+      let response = await this._valoracionServicio.deleteComentario(idComentario).toPromise();
+      this.mensageCorrecto(response.message);
+      this.obtenerProducto();
+    }catch (e) {
+      console.log("error", e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
   }
 
   mensageCorrecto(mensaje) {

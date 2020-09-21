@@ -46,7 +46,11 @@ button{
 
 
 
+.star {
+  font-size: xx-large;
 
+}
+/*
 .star {
   font-size: xx-large;
   color: #b0c4de;
@@ -60,3 +64,4 @@ button{
 .filled.bad {
   color: #ff1e1e;
 }
+*/

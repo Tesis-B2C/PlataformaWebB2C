@@ -629,6 +629,7 @@ async function obtenerProductoDetalle(req, res) {
                     group: ['ID_PRODUCTO']
                 }, {
                     model: Comentario,
+                    include:{model: Agente},
                     separate: true
                 }],
             }, {

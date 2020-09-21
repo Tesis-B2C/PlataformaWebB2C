@@ -1,3 +1,28 @@
+<ng-template #contentComentario let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Editar comentario</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true" style="font-size: large">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label>Comentario</label>
+        <div class="input-group">
+          <textarea type="text" name="workoutName" class="form-control" id="workout-name"  rows="5" [(ngModel)]="comentario"></textarea>
+
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="editarComentario();modal.close('Save click')">Guardar</button>
+  </div>
+</ng-template>
+
+
+
 <!-- ========================= SECTION FRANJA AZUL ========================= -->
 <section>
   <nav class="navbar navbar-main navbar-expand-md  border-bottom colorNavbar mx-0">
@@ -644,7 +669,7 @@
                 <div class="input-group">
                   <input #CuponDescuentoNombre="ngModel" [(ngModel)]="this.cuponDescuentoNombre" type="text"
                          class="tamanioInputs form-control text-uppercase"
-                         placeholder="Introducir el cupón" name="CuponDescuentoNombre " >
+                         placeholder="Introducir el cupón" name="CuponDescuentoNombre ">
                   <span class="input-group-append">
                     <button (click)="aplicarCuponDescuento()" class="btn btn-primary ">Aplicar</button>
                   </span>
@@ -1144,7 +1169,8 @@
             <div class="form-group col-sm-9 col-md-8">
               <div class="form-row">
                 <div class="form-group col-12 mb-0">
-                  <label class="my-0 text-justify">Usted podrá acordar con el vendedor sobre el proceso de envío de su compra,
+                  <label class="my-0 text-justify">Usted podrá acordar con el vendedor sobre el proceso de envío de su
+                    compra,
                     de acuerdo a su necesidad a través de WhatsApp.</label>
                   <div class="form-row">
                     <div class="form-group col-12 mb-0">
@@ -1323,12 +1349,48 @@
 
     <div *ngIf="this.siguienteDetallePedido" class="text-right mb-3 mr-3">
       <button type="button" class="btn btn-primary mr-1" (click)="atras()">Atras</button>
-      <button *ngIf="this.informacionCompra.METODO_PAGO_COMPRA != 'Electrónico'" type="button" class="btn btn-outline-primary ml-1" [disabled]="loading" (click)="comprar()">Realizar Compra</button>
+      <button *ngIf="this.informacionCompra.METODO_PAGO_COMPRA != 'Electrónico'" type="button"
+              class="btn btn-outline-primary ml-1" [disabled]="loading" (click)="comprar()">Realizar Compra
+      </button>
     </div>
 
 
   </ng-template>
   <!-- ============================ COMPONENT MODAL  .//END ========================= -->
+  <br>
+  <div class="container">
+    <h4 class="font-weight-bold">Opiniones de clientes</h4>
+    <br>
+    <div *ngFor="let comentario of this.productoDetalle?.PRODUCTO.COMENTARIOs">
+      <hr class="my-0">
+      <div class="row no-gutters ">
+        <div class="col-md-1 justify-content-center align-items-center dis-flex ">
+          <img src="assets/images/user.png" class="card-img  w-50" alt="usuario">
+        </div>
+        <div class="col-md-9">
+          <div class="card-body py-2">
+            <p class="font-weight-bold mb-0">{{comentario.AGENTE.NOMBRE}}</p>
+            <p class="card-text mb-0 w-100">{{comentario.COMENTARIO}}</p>
+            <p class="card-text mb-0"><small class="text-muted">{{comentario.FECHA_COMENTARIO | date}}</small></p>
 
+          </div>
+        </div>
+        <div class="col-1 justify-content-center align-items-center dis-flex ml-auto" *ngIf="comentario.AGENTE.COD_AGENTE==identidadAgente.COD_AGENTE">
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class=" btn text-primary" (click)="abrirModalComentario(contentComentario,comentario.ID_COMENTARIO)">
+              <li class=" fa fa-pen"></li>
+            </button>
+            <button type="button" class="btn text-danger" (click)="deleteComentario(comentario.ID_COMENTARIO)">
+              <li class="fa fa-trash"></li>
+            </button>
+          </div>
+        </div>
+      </div>
 
+      <hr class="my-0">
+
+    </div>
+  </div>
+  <br>
+  <br><br><br><br><br><br>
 </form>

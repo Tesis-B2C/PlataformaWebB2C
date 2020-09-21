@@ -57,7 +57,74 @@ async function saveValoracion(req, res) {
     }
 }
 
+async function updateComentario(req, res) {
+
+    try {
+        let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
+
+        if (!verificar) {
+            return res.status(500).send({
+                message: "No tiene los permisos necesarios"
+            });
+        } else {
+            let comentarioActualizado = await Comentario.update({
+                COMENTARIO: req.body.COMENTARIO,
+            }, {
+                where: {ID_COMENTARIO: req.params.id},
+            });
+
+
+            if (comentarioActualizado) {
+                res.status(200).send({
+                    message: "El comentario ha sido actualizado correctamente"
+                });
+            } else {
+                res.status(404).send({
+                    message: 'Al parecer no existe el comentario registrado en la base de datos'
+                });
+            }
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+
+async function deleteComentario(req, res) {
+
+    try {
+        let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
+
+        if (!verificar) {
+            return res.status(500).send({
+                message: "No tiene los permisos necesarios"
+            });
+        } else {
+            let comentarioBorrado = await Comentario.destroy({
+                where: {ID_COMENTARIO: req.params.id},
+            });
+
+
+            if (comentarioBorrado) {
+                res.status(200).send({
+                    message: "El comentario ha sido borrado"
+                });
+            } else {
+                res.status(404).send({
+                    message: 'Al parecer no existe el comentario registrado en la base de datos'
+                });
+            }
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
 
 module.exports = {          // para exportar todas las funciones de este modulo
-    saveValoracion
+    saveValoracion,
+    updateComentario,
+    deleteComentario
 };

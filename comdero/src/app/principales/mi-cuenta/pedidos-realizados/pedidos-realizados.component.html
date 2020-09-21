@@ -6,9 +6,9 @@
     </button>
   </div>
   <div class="modal-body text-center justify-content-center align-content-center ">
-    <ngb-rating [(rate)]="calificacion">
+    <ngb-rating [(rate)]="calificacion" [max]="5" >
       <ng-template let-fill="fill" let-index="index">
-        <span class="star" [class.filled]="fill === 100" [class.bad]="index < 3">&#9733;</span>
+        <span class="star" [class.filled]="fill === 100" [class.bad]="index < 2">&#9733;</span>
       </ng-template>
     </ngb-rating>
     <pre>Calificación: <b>{{calificacion}}</b></pre>
