@@ -1372,10 +1372,10 @@
     <div *ngFor="let comentario of this.productoDetalle?.PRODUCTO.COMENTARIOs">
       <hr class="my-0">
       <div class="row no-gutters ">
-        <div class="col-md-1 justify-content-center align-items-center dis-flex ">
+        <div class="col-md-1 mt-md-0 mt-2 justify-content-center align-items-center dis-flex ">
           <img src="assets/images/user.png" class="card-img " style="width: 50px"  alt="usuario">
         </div>
-        <div class="col-md-9">
+        <div class="col-md-9 col-10">
           <div class="card-body py-2">
             <label class="font-weight-bold mb-0">{{comentario.AGENTE.NOMBRE}}</label>
             <label class="card-text mb-0 w-100">{{comentario.COMENTARIO}}</label>
@@ -1383,7 +1383,7 @@
 
           </div>
         </div>
-        <div class="col-1 justify-content-center align-items-center dis-flex ml-auto" *ngIf="comentario.AGENTE.COD_AGENTE==identidadAgente?.COD_AGENTE">
+        <div class="col-2 justify-content-center align-items-center dis-flex ml-auto" *ngIf="comentario.AGENTE.COD_AGENTE==identidadAgente?.COD_AGENTE">
           <div class="btn-group" role="group" aria-label="Basic example">
             <button type="button" class=" btn text-primary" (click)="abrirModalComentario(contentComentario,comentario.ID_COMENTARIO)">
               <li class=" fa fa-pen"></li>
