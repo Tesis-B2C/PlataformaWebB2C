@@ -1,1 +1,98 @@
-<p>estadisticas works!</p>
+<body class="bg">
+<div class="mt-5 container-fluid">
+  <div class="row  justify-content-center no-gutters" id="top">
+    <h4 class=" col-11">Estadisticas</h4>
+    <hr class="col-11">
+  </div>
+  <div class="container-fluid px-md-5 mx-auto">
+  <div class="row px-md-5  justify-content-center" >
+    <div class="col-md-3">
+      <div class="card-counter primary">
+        <i class="fa fa-code-fork"></i>
+        <span class="count-numbers">12</span>
+        <span class="count-name">Flowz</span>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card-counter danger">
+        <i class="fa fa-ticket"></i>
+        <span class="count-numbers">599</span>
+        <span class="count-name">Instances</span>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card-counter success">
+        <i class="fa fa-database"></i>
+        <span class="count-numbers">6875</span>
+        <span class="count-name">Data</span>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card-counter info">
+        <i class="fa fa-users"></i>
+        <span class="count-numbers">35</span>
+        <span class="count-name">Users</span>
+      </div>
+    </div>
+  </div>
+  <div class="row  justify-content-center ">
+   <!-- <div #containerRef  class="col-md-6">
+      <ngx-charts-pie-chart
+        [view]="[containerRef.offsetWidth, 300]"
+        [scheme]="colorScheme"
+        [results]="single"
+        [gradient]="gradient"
+        [legend]="showLegend"
+        [legendPosition]="legendPosition"
+        [labels]="showLabels"
+        [doughnut]="isDoughnut"
+        (select)="onSelect($event)"
+        (activate)="onActivate($event)"
+        (deactivate)="onDeactivate($event)"
+      >
+      </ngx-charts-pie-chart>
+    </div>-->
+    <div #containerRef1  class="col-md-6   ">
+      <ngx-charts-pie-chart
+        [view]="[containerRef1.offsetWidth, 300]"
+        [scheme]="colorScheme"
+        [results]="single"
+        [gradient]="gradient"
+        [legend]="showLegend"
+        [legendPosition]="legendPosition"
+        [labels]="showLabels"
+        [doughnut]="isDoughnut"
+        (select)="onSelect($event)"
+        (activate)="onActivate($event)"
+        (deactivate)="onDeactivate($event)"
+      >
+      </ngx-charts-pie-chart>
+    </div>
+
+    <div #containerRef2  class="col-md-10   ">
+      <ngx-charts-line-chart
+        [view]="[containerRef2.offsetWidth, 300]"
+        [scheme]="colorScheme"
+        [legend]="legend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxis]="xAxis"
+        [yAxis]="yAxis"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [timeline]="timeline"
+        [results]="multi"
+
+        (select)="onSelect($event)"
+        (activate)="onActivate($event)"
+        (deactivate)="onDeactivate($event)"
+      >
+      </ngx-charts-line-chart>
+    </div>
+  </div>
+  </div>
+</div>
+</body>
