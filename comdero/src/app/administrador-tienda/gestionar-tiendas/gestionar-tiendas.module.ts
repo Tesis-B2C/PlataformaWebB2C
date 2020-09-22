@@ -27,7 +27,8 @@ import { ListadoPedidosComponent } from './listado-pedidos/listado-pedidos.compo
 import { GestionarPedidoComponent } from './gestionar-pedido/gestionar-pedido.component';
 import { ListadoClientesComponent } from './listado-clientes/listado-clientes.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+
+
 
 @NgModule({
   declarations: [MenuGestionTiendasComponent, ProductosComponent, MetodosPagoComponent, GeneralTiendaComponent, SucursalesTiendaComponent, PersonalizacionTiendaComponent, MetodosEnvioComponent, InicioAdministracionComponent, ListadoProductosComponent, ModificarProductoComponent, CuponDescuentoComponent, ListadoCuponDescuentoComponent, ModificarCuponDescuentoComponent, ListadoPedidosComponent, GestionarPedidoComponent, ListadoClientesComponent, EstadisticasComponent],
@@ -41,7 +42,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     GestionarTiendasRoutingModule,
     ColorPickerModule,
     BsDatepickerModule,
-    NgxChartsModule
+
   ]
 })
 export class GestionarTiendasModule {
