@@ -52,7 +52,7 @@
             <a (click)="cerrarSideBar()" routerLink="listado-pedidos" routerLinkActive="active"
                [routerLinkActiveOptions]="{exact: true}">Listado</a>
           </li>
-         
+
 
         </ul>
       </li>
@@ -91,8 +91,9 @@
           Estadísticas
         </a>
         <ul class="collapse list-unstyled" id="estadisticas">
-          <li>
-            <a href="#">Home 1</a>
+          <li  (click)="cerrarSideBar()" routerLink="estadisticas" routerLinkActive="active"
+               [routerLinkActiveOptions]="{exact: true}">
+            <a>General</a>
           </li>
           <li>
             <a href="#">Home 2</a>

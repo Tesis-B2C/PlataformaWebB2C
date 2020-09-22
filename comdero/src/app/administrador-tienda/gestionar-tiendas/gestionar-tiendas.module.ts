@@ -26,11 +26,12 @@ import { ModificarCuponDescuentoComponent } from './modificar-cupon-descuento/mo
 import { ListadoPedidosComponent } from './listado-pedidos/listado-pedidos.component';
 import { GestionarPedidoComponent } from './gestionar-pedido/gestionar-pedido.component';
 import { ListadoClientesComponent } from './listado-clientes/listado-clientes.component';
+import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 
 
 
 @NgModule({
-  declarations: [MenuGestionTiendasComponent, ProductosComponent, MetodosPagoComponent, GeneralTiendaComponent, SucursalesTiendaComponent, PersonalizacionTiendaComponent, MetodosEnvioComponent, InicioAdministracionComponent, ListadoProductosComponent, ModificarProductoComponent, CuponDescuentoComponent, ListadoCuponDescuentoComponent, ModificarCuponDescuentoComponent, ListadoPedidosComponent, GestionarPedidoComponent, ListadoClientesComponent],
+  declarations: [MenuGestionTiendasComponent, ProductosComponent, MetodosPagoComponent, GeneralTiendaComponent, SucursalesTiendaComponent, PersonalizacionTiendaComponent, MetodosEnvioComponent, InicioAdministracionComponent, ListadoProductosComponent, ModificarProductoComponent, CuponDescuentoComponent, ListadoCuponDescuentoComponent, ModificarCuponDescuentoComponent, ListadoPedidosComponent, GestionarPedidoComponent, ListadoClientesComponent, EstadisticasComponent],
 
   imports: [
     CommonModule,
