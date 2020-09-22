@@ -99,3 +99,9 @@ modificar en la libreria nodemoudles/lib/componentes/paypal.component quitar el 
 
 == PARA LAS HORASB Y FECHAS
 npm install moment --save
+
+
+----- para exportar tablas excel
+npm install xlsx
+npm install file-server
+https://medium.com/@patade888/exporting-data-to-excel-in-angular-8-5a7cf5d0d25d
