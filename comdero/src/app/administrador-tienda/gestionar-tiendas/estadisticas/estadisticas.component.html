@@ -1,1 +1,126 @@
-<p>estadisticas works!</p>
+<body id="body" class="bg">
+<div class="mt-5 container-fluid">
+  <div class="row  justify-content-center" id="top">
+    <h4 class=" col-11">Estadisticas</h4>
+    <hr class="col-11">
+  </div>
+  <div class="container-fluid  justify-content-center mt-3 ">
+    <div class="row mx-5">
+
+      <div class="col-lg-3">
+        <div class="card borde shadow mover">
+          <div class="card-body "><a class="bg-primary float-left mt-100  borde "><i
+            class="fa fa-pie-chart fa-2x  p-3"></i></a>
+            <p class="text-right text-primary font-weight-light mb-0 " style="font-size: 1rem">Compras</p>
+            <h3 class=" text-right  font-weight-normal">23$</h3>
+          </div>
+          <p class="pl-3 pb-2 text-muted" style="font-size: small">obtener mas ventas</p>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="card borde shadow">
+          <div class="card-body "><a class="bg-primary float-left mt-100  borde mover"><i
+            class="fa fa-pie-chart fa-2x  p-3"></i></a>
+            <p class="text-right text-primary font-weight-light mb-0 " style="font-size: 1rem">Compras</p>
+            <h3 class=" text-right  font-weight-normal">23$</h3>
+          </div>
+          <p class="pl-3 pb-2 text-muted" style="font-size: small">obtener mas ventas</p>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="card borde shadow">
+          <div class="card-body "><a class="bg-primary float-left mt-100  borde mover"><i
+            class="fa fa-pie-chart fa-2x  p-3"></i></a>
+            <p class="text-right text-primary font-weight-light mb-0 " style="font-size: 1rem">Compras</p>
+            <h3 class=" text-right  font-weight-normal">23$</h3>
+          </div>
+          <p class="pl-3 pb-2 text-muted" style="font-size: small">obtener mas ventas</p>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="card borde shadow">
+          <div class="card-body "><a class="bg-primary float-left mt-100  borde mover"><i
+            class="fa fa-pie-chart fa-2x  p-3"></i></a>
+            <p class="text-right text-primary font-weight-light mb-0 " style="font-size: 1rem">Compras</p>
+            <h3 class=" text-right  font-weight-normal">23$</h3>
+          </div>
+          <p class="pl-3 pb-2 text-muted" style="font-size: small">obtener mas ventas</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br><br><br>
+  <div class="container-fluid mx-auto ">
+    <div class="row mx-5 ">
+
+      <div class="col-md-4">
+        <div class="chart card card-body shadow">
+          <canvas baseChart
+                  [data]="pieChartData"
+                  [labels]="pieChartLabels"
+                  [chartType]="pieChartType"
+                  [options]="pieChartOptions"
+                  [colors]="pieChartColors"
+                  [legend]="pieChartLegend">
+          </canvas>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="chart card card-body shadow">
+          <canvas baseChart
+                  [data]="pieChartData"
+                  [labels]="pieChartLabels"
+                  [chartType]="pieChartType"
+                  [options]="pieChartOptions"
+                  [colors]="pieChartColors"
+                  [legend]="pieChartLegend">
+          </canvas>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="chart card card-body shadow">
+          <canvas baseChart
+
+                  [data]="pieChartData"
+                  [labels]="pieChartLabels"
+                  [chartType]="pieChartType"
+                  [options]="pieChartOptions"
+                  [colors]="pieChartColors"
+                  [legend]="pieChartLegend"
+          >
+          </canvas>
+        </div>
+      </div>
+
+    </div>
+    <br><br><br>
+    <div class="card card-body mx-5 ">
+
+      <div class="row">
+        <div class="col-md-6">
+          <div style="display: block" >
+            <canvas baseChart
+                    [colors]="barChartColors"
+                    [datasets]="barChartData"
+                    [labels]="barChartLabels"
+                    [options]="barChartOptions"
+                    [legend]="barChartLegend"
+                    [chartType]="barChartType">
+            </canvas>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div style="display: block">
+            <canvas baseChart [colors]="lineChartColors" [datasets]="curveChartData" [labels]="curveChartLabels"
+                    [options]="curveChartOptions"
+                    [legend]="curveChartLegend" [chartType]="curveChartType" (chartHover)="chartHovered($event)"
+                    (chartClick)="chartClicked($event)"></canvas>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>

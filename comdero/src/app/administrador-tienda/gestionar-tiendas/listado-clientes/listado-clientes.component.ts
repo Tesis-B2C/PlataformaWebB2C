@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {CompraServicio} from "../../../servicios/compra.servicio";
 import {TiendaServicio} from "../../../servicios/tienda.servicio";
 import Swal from "sweetalert2";
 import * as XLSX from 'xlsx';

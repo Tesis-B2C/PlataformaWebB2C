@@ -1,0 +1,26 @@
+body {
+  height: 100vh !important;
+  overflow: auto;
+  font-family: 'Poppins', sans-serif;
+}
+.mt-100 {
+  margin-top: -30px
+}
+
+.borde{
+  border-radius: 6px;
+}
+
+.mover:hover{
+
+  -webkit-transform: translate(0px,-10px);
+  -webkit-transition: all 0.5s ease;
+}
+
+
+
+[class*=bg-]:not(.bg-transparent):not(.bg-light):not(.bg-white):not(.btn-outline):not(body) {
+  color: #fff
+}
+
+

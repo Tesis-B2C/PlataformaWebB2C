@@ -27,7 +27,7 @@ import { ListadoPedidosComponent } from './listado-pedidos/listado-pedidos.compo
 import { GestionarPedidoComponent } from './gestionar-pedido/gestionar-pedido.component';
 import { ListadoClientesComponent } from './listado-clientes/listado-clientes.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
-
+import { ChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -42,7 +42,7 @@ import { EstadisticasComponent } from './estadisticas/estadisticas.component';
     GestionarTiendasRoutingModule,
     ColorPickerModule,
     BsDatepickerModule,
-
+    ChartsModule
   ]
 })
 export class GestionarTiendasModule {
