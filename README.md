@@ -105,3 +105,8 @@ npm install moment --save
 npm install xlsx
 npm install file-server
 https://medium.com/@patade888/exporting-data-to-excel-in-angular-8-5a7cf5d0d25d
+
+
+------- graficas
+npm i chart.js
+npm i ng2-charts@2.0.0-beta.9

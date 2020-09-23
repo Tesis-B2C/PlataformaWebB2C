@@ -22,6 +22,7 @@ var correo_rutas=require('./routes/correo');
 var carrito_rutas=require('./routes/carrito');
 var compra_rutas=require('./routes/compra');
 var valoracion_rutas=require('./routes/valoracion');
+var estadisticas_rutas=require('./routes/estadisticas');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); //convertir a json als peticiones
 
@@ -50,6 +51,7 @@ app.use('/api',correo_rutas);
 app.use('/api',carrito_rutas);
 app.use('/api',compra_rutas);
 app.use('/api',valoracion_rutas);
+app.use('/api',estadisticas_rutas);
 
 
 app.use('/uploads/tiendas',express.static(path.resolve('uploads/tiendas')));
