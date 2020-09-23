@@ -3,13 +3,14 @@ import {Component, OnInit} from '@angular/core';
 import {ChartType, ChartOptions, ChartDataSets} from 'chart.js';
 import {Color} from "ng2-charts";
 import {EstadisticasServicio} from "../../../servicios/estadisticas.servicio";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-estadisticas',
   templateUrl: './estadisticas.component.html',
   styleUrls: ['./estadisticas.component.css']
 })
-export class EstadisticasComponent {
+export class EstadisticasComponent implements OnInit {
   // Pie
   public pieChartOptions: ChartOptions = {
     responsive: true,
@@ -92,10 +93,80 @@ export class EstadisticasComponent {
   ];
 
 
+
+
+  public identidadTienda;
+  public ventas;
+  public calificacion;
+  public productos;
   constructor(public _estadisticasServicio: EstadisticasServicio) {
+    this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
+  }
+
+  ngOnInit(): void {
+    this.getVentas();
+    this.getCalificaciones();
+    this.getProductos();
+  }
+
+  public async getVentas() {
+    try {
+      let response = await this._estadisticasServicio.getVentas(this.identidadTienda.NUM_TIENDA).toPromise();
+      console.log("count", response.data);
+      this.ventas = response.data[0]['COMPRAS_COUNT'];
+    } catch (e) {
+      console.log("error", e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
   }
 
 
+  public async getCalificaciones() {
+    try {
+      let response = await this._estadisticasServicio.getCalificaciones(this.identidadTienda.NUM_TIENDA).toPromise();
+      console.log("avg", response.data);
+     let calificacion =response.data[0]['PRODUCTO'].CALIFICACIONs[0].CALIFICACION_AVG;
+      this.calificacion = parseFloat(calificacion).toFixed(2);
+    } catch (e) {
+      console.log("error", e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
+  }
+
+
+  public async getProductos() {
+    try {
+      let response = await this._estadisticasServicio.getProductos(this.identidadTienda.NUM_TIENDA).toPromise();
+      console.log("productoscount", response.data);
+      this.productos=response.data[0].OFERTAS_COUNT
+
+    } catch (e) {
+      console.log("error", e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
+  }
+
+
+  mensageError(mensaje) {
+    Swal.fire({
+      icon: 'error',
+      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Error..</h5></header>',
+      text: mensaje,
+      position: 'center',
+      width: 600,
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        //icon:'sm'
+      }
+    });
+  }
   // events
   public chartClicked({event, active}: { event: MouseEvent, active: {}[] }): void {
     console.log(event, active);
