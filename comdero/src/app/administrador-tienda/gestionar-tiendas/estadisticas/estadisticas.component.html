@@ -111,7 +111,7 @@
         </div>
         <div class="col-md-6">
           <div style="display: block">
-            <canvas baseChart [colors]="lineChartColors" [datasets]="curveChartData" [labels]="curveChartLabels"
+            <canvas baseChart [colors]="curveChartColors" [datasets]="curveChartData" [labels]="curveChartLabels"
                     [options]="curveChartOptions"
                     [legend]="curveChartLegend" [chartType]="curveChartType" (chartHover)="chartHovered($event)"
                     (chartClick)="chartClicked($event)"></canvas>

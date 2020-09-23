@@ -18,6 +18,7 @@ import {CorreoServicio} from "./servicios/correo.servicio";
 import {CarritoServicio} from "./servicios/carrito.servicio";
 import {CompraServicio} from "./servicios/compra.servicio";
 import {ValoracionServicio} from "./servicios/valoracion.servicio";
+import {EstadisticasServicio} from "./servicios/estadisticas.servicio";
 import {AdministradorTiendaModule} from "./administrador-tienda/administrador-tienda.module";
 
 /*import {GestionarTiendasModule} from "./administrador-tienda/gestionar-tiendas/gestionar-tiendas.module";*/
@@ -66,7 +67,10 @@ import {ExcelServicio} from "./servicios/excel.servicio";
     CarritoServicio,
     CompraServicio,
     ValoracionServicio,
-    ReloadGuard, ExcelServicio],
+    ReloadGuard,
+    ExcelServicio,
+    EstadisticasServicio
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
