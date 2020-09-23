@@ -35,6 +35,30 @@ export class EstadisticasServicio {
     let headers = new HttpHeaders({ "Content-type": "application/json","Authorization": this._agenteServicio.getToken() });
     return this._http.get<objeto>(this.url + "getProductos/"+idTienda , { headers: headers });
   }
+  getVisitas(idTienda)
+  {
+    let headers = new HttpHeaders({ "Content-type": "application/json","Authorization": this._agenteServicio.getToken() });
+    return this._http.get<objeto>(this.url + "getVisitas/"+idTienda , { headers: headers });
+  }
+
+
+  getMetodosPago(idTienda)
+  {
+    let headers = new HttpHeaders({ "Content-type": "application/json","Authorization": this._agenteServicio.getToken() });
+    return this._http.get<objeto>(this.url + "getMetodosPago/"+idTienda , { headers: headers });
+  }
+
+
+  getMetodosEnvio(idTienda)
+  {
+    let headers = new HttpHeaders({ "Content-type": "application/json","Authorization": this._agenteServicio.getToken() });
+    return this._http.get<objeto>(this.url + "getMetodosEnvio/"+idTienda , { headers: headers });
+  }
+  getDescuentos(idTienda)
+  {
+    let headers = new HttpHeaders({ "Content-type": "application/json","Authorization": this._agenteServicio.getToken() });
+    return this._http.get<objeto>(this.url + "getDescuentos/"+idTienda , { headers: headers });
+  }
 
 
 

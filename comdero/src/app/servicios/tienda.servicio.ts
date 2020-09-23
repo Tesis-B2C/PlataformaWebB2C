@@ -137,4 +137,17 @@ export class TiendaServicio {
     return this._http.get<objeto>(this.url + "getListadoClientesTienda/" + Id_Tienda, {headers: headers});
   }
 
+  updateVisitas(visitas, Num_Tienda) {
+    debugger
+    let obj={
+      visitas:visitas
+    }
+    let params = JSON.stringify(obj);
+    let headers = new HttpHeaders({
+      "Content-type": "application/json",
+      "Authorization": this._agenteServicio.getToken()
+    });
+    return this._http.put<objeto>(this.url + "updateVisitas/" + Num_Tienda, params, {headers: headers});
+  }
+
 }

@@ -64,7 +64,8 @@ async function registrarTienda(req, res) {
                     HORARIO_ATENCION: params.Tienda.Horario_Atencion,
                     LOGO: logo,
                     BANNER: banner,
-                    CONTACTO_WHATSAPP: params.Tienda.Contacto_WhatsApp
+                    CONTACTO_WHATSAPP: params.Tienda.Contacto_WhatsApp,
+                    VISITAS: 0
                 },
                 {
                     transaction: t
@@ -240,11 +241,11 @@ async function updateEstadoTienda(req, res) {
             });
 
             let busquedaOferta = await OFERTA.findAll({
-                where: {NUM_TIENDA: req.params.id, ESTADO_OFERTA: {[Op.or]: [0, 1]}},include:{model:PRODUCTO},
+                where: {NUM_TIENDA: req.params.id, ESTADO_OFERTA: {[Op.or]: [0, 1]}}, include: {model: PRODUCTO},
                 transaction: t
             });
 
-            for(let element of busquedaOferta){
+            for (let element of busquedaOferta) {
                 await VARIANTE.update({
                     ESTADO_VARIANTE: req.body.estado,
                 }, {
@@ -589,30 +590,30 @@ async function getDetalleTiendaProducto(req, res) {
                             order: [['ID_IMAGEN', 'ASC']]
                         }
                     }, {
-                            model: PRODUCTO_DESCUENTO,
-                            include: {
-                                model: DESCUENTO,
-                                where: {
-                                    ESTADO_DESCUENTO: 0,
-                                    FECHA_INICIO: {
-                                        [Op.lte]: fechaHoy
-                                    },
-                                    FECHA_FIN: {
-                                        [Op.gte]: fechaHoy
-                                    }
+                        model: PRODUCTO_DESCUENTO,
+                        include: {
+                            model: DESCUENTO,
+                            where: {
+                                ESTADO_DESCUENTO: 0,
+                                FECHA_INICIO: {
+                                    [Op.lte]: fechaHoy
+                                },
+                                FECHA_FIN: {
+                                    [Op.gte]: fechaHoy
                                 }
                             }
-                        }, {
-                            model: CALIFICACION,
-                            separate: true,
-                            attributes: ['ID_PRODUCTO', [CALIFICACION.sequelize.fn('AVG', CALIFICACION.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
-                            group: ['ID_PRODUCTO']
-                        }, {
-                            model: COMENTARIO,
-                            separate: true,
-                            attributes: ['ID_PRODUCTO', [COMENTARIO.sequelize.fn('COUNT', COMENTARIO.sequelize.col('ID_COMENTARIO')), 'TOTAL_COM']],
-                            group: ['ID_PRODUCTO']
-                        }]
+                        }
+                    }, {
+                        model: CALIFICACION,
+                        separate: true,
+                        attributes: ['ID_PRODUCTO', [CALIFICACION.sequelize.fn('AVG', CALIFICACION.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
+                        group: ['ID_PRODUCTO']
+                    }, {
+                        model: COMENTARIO,
+                        separate: true,
+                        attributes: ['ID_PRODUCTO', [COMENTARIO.sequelize.fn('COUNT', COMENTARIO.sequelize.col('ID_COMENTARIO')), 'TOTAL_COM']],
+                        group: ['ID_PRODUCTO']
+                    }]
                 }],
                 order: [[SUCURSAL, 'NUM_SUCURSAL', 'ASC']]
             }]
@@ -897,13 +898,14 @@ async function obtenerTodasTiendas(req, res) {
 }
 
 
-
 async function getListadoClientesTienda(req, res) {
     try {
         let ListadoClientes = await COMPRA.findAll({
             where: {
-               TIENDA:req.params.id
-            },attributes: ['IDENTIFICACION_FACTURA','NOMBRE_FACTURA', 'CORREO_FACTURA', 'TELEFONO_FACTURA' ],group: ['IDENTIFICACION_FACTURA']
+                TIENDA: req.params.id
+            },
+            attributes: ['IDENTIFICACION_FACTURA', 'NOMBRE_FACTURA', 'CORREO_FACTURA', 'TELEFONO_FACTURA'],
+            group: ['IDENTIFICACION_FACTURA']
         });
 
         if (ListadoClientes.length > 0) {
@@ -923,6 +925,40 @@ async function getListadoClientesTienda(req, res) {
     }
 }
 
+async function updateVisitas(req, res) {
+
+    try {
+        let verificar = await AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
+
+        if (!verificar) {
+            return res.status(500).send({
+                message: "No tiene los permisos necesarios"
+            });
+        } else {
+            let tiendaActualizada = await TIENDA.update({
+                VISITAS: req.body.visitas,
+            }, {
+                where: {NUM_TIENDA: req.params.id, ESTADO_TIENDA: 0},
+
+            });
+
+
+            if (tiendaActualizada) {
+                res.status(200).send({
+                    message: "La tienda ha sido actualizada correctamente"
+                });
+            } else {
+                res.status(404).send({
+                    message: 'Al parecer no se encuentra la tienda registrada en la base de datos'
+                });
+            }
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
 
 module.exports = {          // para exportar todas las funciones de este modulo
     registrarTienda,
@@ -938,7 +974,8 @@ module.exports = {          // para exportar todas las funciones de este modulo
     getDetalleTiendaProducto,
     obtenerTodasTiendas,
     obtenerFiltroBusquedaTodos,
-    getListadoClientesTienda
+    getListadoClientesTienda,
+    updateVisitas
     /* subirImagenesTienda,*/
     /*   obtenerImagenTienda*/
 };

@@ -82,7 +82,12 @@ const Tienda = db.sequelize.define('TIENDA', {
             {
                 type: Sequelize.STRING,
                 allowNull: false
-            }
+            },
+        VISITAS:
+            {
+                type: Sequelize.NUMBER,
+                allowNull: false
+            },
     },
     {
         timestamps: false,

@@ -3,7 +3,7 @@ import {TiendaServicio} from "../../../servicios/tienda.servicio";
 import {ActivatedRoute, Router} from "@angular/router";
 import Swal from "sweetalert2";
 import {esLocale} from "ngx-bootstrap";
-import{GLOBAL} from "../../../servicios/global";
+import {GLOBAL} from "../../../servicios/global";
 
 @Component({
   selector: 'app-encabezado-tienda',
@@ -29,18 +29,32 @@ export class EncabezadoTiendaComponent implements OnInit {
     await this.getSitiosWeb();
     await this.getCategorias();
     await this.getDisponibilidad();
-   this.getContacto();
-
+    this.getContacto();
+    this.updateVisitas();
     // this.router.navigate(['/principales/menu/detalle-tienda/118/tienda',this.Tienda.NUM_TIENDA])
 
   }
 
-  public getContacto(){
+
+  public async updateVisitas() {
+    try {
+      let count = this.Tienda.VISITAS + 1;
+      let response = await this._tiendaServicio.updateVisitas(count, this.idTienda).toPromise();
+    } catch (e) {
+      console.log("error", e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
+  }
+
+  public getContacto() {
     debugger;
-  let contacto=this.Tienda.CONTACTO_WHATSAPP.slice(1,10);
-    this.contactoWhatsapp='593'+contacto;
+    let contacto = this.Tienda.CONTACTO_WHATSAPP.slice(1, 10);
+    this.contactoWhatsapp = '593' + contacto;
 
   }
+
   async getDetalleTiendaProducto() {
     try {
       this.idTienda = this.route.snapshot.params.id;
@@ -49,11 +63,10 @@ export class EncabezadoTiendaComponent implements OnInit {
       console.log("tienda buscada", JSON.stringify(this.Tienda));
     } catch (e) {
       console.log("error:" + e);
-      if (JSON.stringify((e).error)){
+      if (JSON.stringify((e).error)) {
         this.mensageError(JSON.stringify((e).error.message));
         this.router.navigate(['/principales/menu/principal'])
-      }
-      else{
+      } else {
         this.mensageError("Error de conexión intentelo mas tarde");
         debugger;
         this.router.navigate(['/principales/menu/principal'])
@@ -68,7 +81,7 @@ export class EncabezadoTiendaComponent implements OnInit {
     let pathImagen = this.Tienda.LOGO;
 
     if (pathImagen) {
-      this.Logo =GLOBAL.urlImagen + pathImagen;
+      this.Logo = GLOBAL.urlImagen + pathImagen;
       console.log("direccion", this.Logo)
     }
     return this.Logo;
@@ -78,7 +91,7 @@ export class EncabezadoTiendaComponent implements OnInit {
     this.Banner = 'assets/images/no-imagen8.png';
     let pathImagen = this.Tienda.BANNER;
     if (pathImagen) {
-      this.Banner = GLOBAL.urlImagen+ pathImagen;
+      this.Banner = GLOBAL.urlImagen + pathImagen;
       console.log("direccion", this.Banner)
     }
     return this.Banner;
@@ -186,16 +199,16 @@ export class EncabezadoTiendaComponent implements OnInit {
 
 
   transformarHora(hora) {
-    if(hora) {
+    if (hora) {
       let response = hora.split(":");
       return response[0] + ":" + response[1];
     }
   }
 
   obtenerMinutos(hora) {
-    if(hora){
-    var spl = hora.split(":");
-    return parseInt(spl[0]) * 60 + parseInt(spl[1]);
+    if (hora) {
+      var spl = hora.split(":");
+      return parseInt(spl[0]) * 60 + parseInt(spl[1]);
     }
   }
 

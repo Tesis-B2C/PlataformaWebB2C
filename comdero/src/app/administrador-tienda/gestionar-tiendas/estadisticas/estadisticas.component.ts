@@ -27,8 +27,8 @@ export class EstadisticasComponent implements OnInit {
       },
     }
   };
-  public pieChartLabels = ['hola 20', 'hoola 234', 'hola 556'];
-  public pieChartData: number[] = [300, 500, 100];
+  public pieChartLabels = ['Efectivo', 'Transferencia', 'Paypal'];
+  public pieChartData: number[] = [0, 0, 0];
   public pieChartType: ChartType = 'pie';
   public pieChartLegend = true;
   public pieChartColors = [
@@ -38,6 +38,10 @@ export class EstadisticasComponent implements OnInit {
       backgroundColor: ['#ff788b', '#66a7f4', '#7cce83'],
     },
   ];
+
+
+  public pieChartLabels1 = ['Retiro', 'Acordado', 'A domicilio'];
+  public pieChartData1: number[] = [0, 0, 0];
 
 
   //barchart
@@ -62,8 +66,9 @@ export class EstadisticasComponent implements OnInit {
   ////// curveChart
   public curveChartOptions: ChartOptions = {
     responsive: true,
-    // We use these empty structures as placeholders for dynamic theming.
-    scales: {xAxes: [{}], yAxes: [{}]},
+    legend: {
+      position: 'bottom',
+    },
   };
   public curveChartLabels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
   public curveChartType: ChartType = 'line';
@@ -92,13 +97,34 @@ export class EstadisticasComponent implements OnInit {
 
   ];
 
+//dona
+  doughnutChartOptions = {
+    responsive: true,
+    legend: {
+      position: 'bottom',
+    },
 
+  };
+  public doughnutChartLabels = ['Cupones', 'Descuentos'];
+  public doughnutChartData = [
+    [25, 100 - 25],
+
+  ];
+  public doughnutChartType: ChartType = 'doughnut';
+  public doughnuChartColors = [
+    {
+      /* backgroundColor: ['rgba(255,0,0,05)', 'rgba(0,255,0,0.5)', 'rgba(0,0,255,0.5)'], */
+      backgroundColor: ['#ff788b', '#66a7f4', '#7cce83'],
+    },
+  ];
 
 
   public identidadTienda;
   public ventas;
   public calificacion;
   public productos;
+  public visitas;
+
   constructor(public _estadisticasServicio: EstadisticasServicio) {
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
   }
@@ -107,13 +133,17 @@ export class EstadisticasComponent implements OnInit {
     this.getVentas();
     this.getCalificaciones();
     this.getProductos();
+    this.getVisitas();
+    this.getMetodosPago();
+    this.getMetodosEnvio();
+    this.getDescuentos();
   }
 
   public async getVentas() {
     try {
       let response = await this._estadisticasServicio.getVentas(this.identidadTienda.NUM_TIENDA).toPromise();
       console.log("count", response.data);
-      this.ventas = response.data[0]['COMPRAS_COUNT'];
+      this.ventas = response.data;
     } catch (e) {
       console.log("error", e);
       if (JSON.stringify((e).error.message))
@@ -127,7 +157,7 @@ export class EstadisticasComponent implements OnInit {
     try {
       let response = await this._estadisticasServicio.getCalificaciones(this.identidadTienda.NUM_TIENDA).toPromise();
       console.log("avg", response.data);
-     let calificacion =response.data[0]['PRODUCTO'].CALIFICACIONs[0].CALIFICACION_AVG;
+      let calificacion = response.data[0]['PRODUCTO'].CALIFICACIONs[0].CALIFICACION_AVG;
       this.calificacion = parseFloat(calificacion).toFixed(2);
     } catch (e) {
       console.log("error", e);
@@ -142,7 +172,7 @@ export class EstadisticasComponent implements OnInit {
     try {
       let response = await this._estadisticasServicio.getProductos(this.identidadTienda.NUM_TIENDA).toPromise();
       console.log("productoscount", response.data);
-      this.productos=response.data[0].OFERTAS_COUNT
+      this.productos = response.data
 
     } catch (e) {
       console.log("error", e);
@@ -152,6 +182,65 @@ export class EstadisticasComponent implements OnInit {
     }
   }
 
+
+  public async getVisitas() {
+    try {
+      let response = await this._estadisticasServicio.getVisitas(this.identidadTienda.NUM_TIENDA).toPromise();
+      console.log("visitas", response.data);
+      this.visitas = response.data['VISITAS'];
+
+    } catch (e) {
+      console.log("error", e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
+  }
+
+  public async getMetodosPago() {
+    try {
+      let response = await this._estadisticasServicio.getMetodosPago(this.identidadTienda.NUM_TIENDA).toPromise();
+      console.log("metodos pago", response.data);
+      this.pieChartData = [response.data['Efectivo'], response.data['Transferencia'], response.data['Electrónico']]
+
+
+    } catch (e) {
+      console.log("error", e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
+  }
+
+  public async getMetodosEnvio() {
+    try {
+      let response = await this._estadisticasServicio.getMetodosEnvio(this.identidadTienda.NUM_TIENDA).toPromise();
+      console.log("metodos pago", response.data);
+      this.pieChartData1 = [response.data['Retiro'], response.data['Acordar'], response.data['Domicilio']]
+
+
+    } catch (e) {
+      console.log("error", e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
+  }
+
+  public async getDescuentos() {
+    try {
+      let response = await this._estadisticasServicio.getDescuentos(this.identidadTienda.NUM_TIENDA).toPromise();
+      console.log("descuentos", response.data);
+      this.doughnutChartData = [response.data['Cupon'], response.data['Automatico']]
+
+
+    } catch (e) {
+      console.log("error", e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
+  }
 
   mensageError(mensaje) {
     Swal.fire({
@@ -167,6 +256,7 @@ export class EstadisticasComponent implements OnInit {
       }
     });
   }
+
   // events
   public chartClicked({event, active}: { event: MouseEvent, active: {}[] }): void {
     console.log(event, active);
