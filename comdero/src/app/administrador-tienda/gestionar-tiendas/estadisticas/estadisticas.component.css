@@ -1,7 +1,6 @@
 body {
   height: 100vh !important;
   overflow: auto;
-  font-family: 'Poppins', sans-serif;
 }
 .mt-100 {
   margin-top: -30px

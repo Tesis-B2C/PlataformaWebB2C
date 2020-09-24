@@ -1,5 +1,7 @@
 'use strict'
 
+const Imagen_Producto = require('../models/imagen_producto');
+
 const Compra = require('../models/compra'); //importar el modelo del usuario  o lo que son las clases comunes
 const Agente = require('../models/agente');
 const Oferta = require('../models/oferta');
@@ -7,7 +9,8 @@ const Producto = require('../models/producto');
 const Calificacion = require('../models/calificacion');
 const Tienda = require('../models/tienda');
 const Descuento = require('../models/descuento');
-
+const Compra_Producto = require('../models/compra_producto');
+const Variante = require('../models/variante');
 const {Op} = require("sequelize");
 
 async function getVentas(req, res) {
@@ -258,7 +261,6 @@ async function getVentasMensuales(req, res) {
             });
 
 
-
             res.status(200).send({
                 data: compras,
                 message: "Ventas cargadas correctamente"
@@ -273,6 +275,121 @@ async function getVentasMensuales(req, res) {
     }
 }
 
+async function getVentasVisitas(req, res) {
+    let busqueda = req.params.id;
+    try {
+        let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
+        if (!verificar) {
+            return res.status(500).send({
+                message: "No tiene los permisos necesarios"
+            });
+        } else {
+            let Visitas = await Tienda.findOne({ //$or: [{ESTADO_OFERTA: 0},{ESTADO_OFERTA: 1}]
+                where: {NUM_TIENDA: req.params.id},
+                attributes: ['VISITAS'],
+
+            });
+
+            let Ventas = await Compra.findAndCountAll({ //$or: [{ESTADO_OFERTA: 0},{ESTADO_OFERTA: 1}]
+                where: {TIENDA: req.params.id},
+            });
+
+            let obj = {
+                Visitas: Visitas.dataValues.VISITAS,
+                Ventas: Ventas.count,
+
+            }
+            res.status(200).send({
+                data: obj,
+                message: "Métodos de envío cargados correctamente"
+            });
+
+        }
+
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+
+async function getProductoMasVendido(req, res) {
+    let busqueda = req.params.id;
+    try {
+        let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
+        if (!verificar) {
+            return res.status(500).send({
+                message: "No tiene los permisos necesarios"
+            });
+        } else {
+
+
+            let Prodducto = await Compra.findAll({ //$or: [{ESTADO_OFERTA: 0},{ESTADO_OFERTA: 1}]
+                where: {TIENDA: req.params.id}, attributes: ['NUM_COMPRA'], include: {
+                    model: Compra_Producto,
+                    attributes: ['NUM_VARIANTE']
+                }
+
+            });
+
+
+            res.status(200).send({
+                data: Prodducto,
+                message: "Métodos de envío cargados correctamente"
+            });
+
+        }
+
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+
+async function getProductoDetalleMasVendido(req, res) {
+
+    try {
+
+        let productoObtenido = await Variante.findOne({
+            where: {NUM_VARIANTE: req.params.id},
+            include: [{
+                model: Producto, include: [
+                    {
+                        model: Calificacion,
+                        separate: true,
+                        attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', [Calificacion.sequelize.fn('AVG', Calificacion.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
+                        group: ['ID_PRODUCTO']
+                    }, {model: Oferta}]
+            }, {
+                model: Imagen_Producto, separate: true,
+                order: [['ID_IMAGEN', 'ASC']]
+            }],
+        })
+
+
+        if (productoObtenido) {
+
+            res.status(200).send({
+                data: productoObtenido,
+                message: "Producto cargado correctamente"
+            });
+        } else {
+
+            res.status(404).send({
+                message: 'Al parecer no se encuentra el producto registrado en la base de datos'
+            });
+        }
+    } catch
+        (err) {
+        await t.rollback();
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+
+
 module.exports = {          // para exportar todas las funciones de este modulo
     getVentas,
     getCalificaciones,
@@ -281,5 +398,8 @@ module.exports = {          // para exportar todas las funciones de este modulo
     getMetodosPago,
     getMetodosEnvio,
     getDescuentos,
-    getVentasMensuales
+    getVentasMensuales,
+    getVentasVisitas,
+    getProductoMasVendido,
+    getProductoDetalleMasVendido
 };

@@ -61,5 +61,22 @@ export class EstadisticasServicio {
   }
 
 
+  getVentasMensuales(idTienda){
+    let headers = new HttpHeaders({ "Content-type": "application/json","Authorization": this._agenteServicio.getToken() });
+    return this._http.get<objeto>(this.url + "getVentasMensuales/"+idTienda , { headers: headers });
+  }
+  getVentasVisitas(idTienda){
+    let headers = new HttpHeaders({ "Content-type": "application/json","Authorization": this._agenteServicio.getToken() });
+    return this._http.get<objeto>(this.url + "getVentasVisitas/"+idTienda , { headers: headers });
+  }
+  getProductoMasVendido(idTienda){
+    let headers = new HttpHeaders({ "Content-type": "application/json","Authorization": this._agenteServicio.getToken() });
+    return this._http.get<objeto>(this.url + "getProductoMasVendido/"+idTienda , { headers: headers });
+  }
+
+  getProductoDetalleMasVendido(idVariante){
+    let headers = new HttpHeaders({ "Content-type": "application/json","Authorization": this._agenteServicio.getToken() });
+    return this._http.get<objeto>(this.url + "getProductoDetalleMasVendido/"+idVariante , { headers: headers });
+  }
 
 }

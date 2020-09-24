@@ -88,6 +88,7 @@ const Tienda = db.sequelize.define('TIENDA', {
                 type: Sequelize.NUMBER,
                 allowNull: false
             },
+
     },
     {
         timestamps: false,

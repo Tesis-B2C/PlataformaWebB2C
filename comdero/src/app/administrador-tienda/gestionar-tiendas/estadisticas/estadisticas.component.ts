@@ -4,6 +4,8 @@ import {ChartType, ChartOptions, ChartDataSets} from 'chart.js';
 import {Color} from "ng2-charts";
 import {EstadisticasServicio} from "../../../servicios/estadisticas.servicio";
 import Swal from "sweetalert2";
+import * as moment from 'moment';
+import {GLOBAL} from "../../../servicios/global";
 
 @Component({
   selector: 'app-estadisticas',
@@ -38,8 +40,6 @@ export class EstadisticasComponent implements OnInit {
       backgroundColor: ['#ff788b', '#66a7f4', '#7cce83'],
     },
   ];
-
-
   public pieChartLabels1 = ['Retiro', 'Acordado', 'A domicilio'];
   public pieChartData1: number[] = [0, 0, 0];
 
@@ -49,40 +49,41 @@ export class EstadisticasComponent implements OnInit {
   public barChartOptions = {
     scaleShowVerticalLines: false,
     responsive: true
+
   };
-  public barChartLabels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+  public barChartLabels = [];
   public barChartType = 'bar';
   public barChartLegend = true;
   public barChartData = [
-    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-    {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
+    {data: [20, 0], label: 'Ventas'},
+    {data: [30, 0], label: 'Visitas'}
   ];
   public barChartColors: Color[] = [
-    {backgroundColor: 'red'},
-    {backgroundColor: 'green'},
+    {backgroundColor: '#ff788b'},
+    {backgroundColor: '#66a7f4'},
   ]
 
 
   ////// curveChart
   public curveChartOptions = {
     responsive: true,
-    legend:false,
+    legend: false,
     scales: {
       // We use this empty structure as a placeholder for dynamic theming.
       xAxes: [{}],
       yAxes: [{
         ticks: {
-          stepSize:1,
+          stepSize: 1,
 
         }
       }]
     }
   };
-  public curveChartLabels = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio','Agosto','Septiembre','Octubre','Noviembre','Dieciembre'];
+  public curveChartLabels = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Dieciembre'];
   public curveChartType: ChartType = 'line';
   public curveChartLegend = true;
-  public curveChartData= [
-    {data: [10, 12, 13, 12, 12, 15], label: 'Ventas'},
+  public curveChartData = [
+    {data: [0, 0, 0, 0, 0, 0], label: 'Ventas'},
   ];
   public curveChartColors = [
 
@@ -137,6 +138,10 @@ export class EstadisticasComponent implements OnInit {
     this.getMetodosPago();
     this.getMetodosEnvio();
     this.getDescuentos();
+    this.obtenerAnios();
+    this.getVentasMensuales();
+    this.ventasVsVisitas();
+    this.getProductoMasVendido();
   }
 
   public async getVentas() {
@@ -240,6 +245,181 @@ export class EstadisticasComponent implements OnInit {
         this.mensageError(JSON.stringify((e).error.message));
       else this.mensageError("Error de conexión intentelo mas tarde");
     }
+  }
+
+  public contEnero = 0;
+  public contFebrero = 0;
+  public contMarzo = 0;
+  public contAbril = 0;
+  public contMayo = 0;
+  public contJunio = 0;
+  public contJulio = 0;
+  public contAgosto = 0;
+  public contSeptiembre = 0;
+  public contOctubre = 0;
+  public contNoviembre = 0;
+  public contDiciembre = 0;
+  public anios = new Set();
+  public anioActual = moment().year();
+
+  public async obtenerAnios() {
+    this.anios = new Set();
+    let response = await this._estadisticasServicio.getVentasMensuales(this.identidadTienda.NUM_TIENDA).toPromise();
+    let fechas = response.data;
+    for (let i in response.data) {
+      let fecha = fechas[i].FECHA_COMPRA.split('-');
+      this.anios.add(fecha[0]);
+    }
+  }
+
+  public async getVentasMensuales() {
+    this.contEnero = 0;
+    this.contFebrero = 0;
+    this.contMarzo = 0;
+    this.contAbril = 0;
+    this.contMayo = 0;
+    this.contJunio = 0;
+    this.contJulio = 0;
+    this.contAgosto = 0;
+    this.contSeptiembre = 0;
+    this.contOctubre = 0;
+    this.contNoviembre = 0;
+    this.contDiciembre = 0;
+    try {
+      let response = await this._estadisticasServicio.getVentasMensuales(this.identidadTienda.NUM_TIENDA).toPromise();
+      console.log("ventas mensuales", response.data);
+      let fechas = response.data
+      for (let i in response.data) {
+        let fecha = fechas[i].FECHA_COMPRA.split('-');
+        if (fecha[0] == this.anioActual) {
+          if (fecha[1] == '01') {
+            this.contEnero = this.contEnero + 1;
+          }
+          if (fecha[1] == '02') {
+            this.contFebrero = this.contFebrero + 1;
+          }
+          if (fecha[1] == '03') {
+            this.contMarzo = this.contMarzo + 1;
+          }
+          if (fecha[1] == '04') {
+            this.contAbril = this.contAbril + 1;
+          }
+          if (fecha[1] == '05') {
+            this.contMayo = this.contMayo + 1;
+          }
+          if (fecha[1] == '06') {
+            this.contJunio = this.contJunio + 1;
+          }
+          if (fecha[1] == '07') {
+            this.contJulio = this.contJulio + 1;
+          }
+          if (fecha[1] == '08') {
+            this.contAgosto = this.contAgosto + 1;
+          }
+          if (fecha[1] == '09') {
+            this.contSeptiembre = this.contSeptiembre + 1;
+          }
+          if (fecha[1] == '10') {
+            this.contOctubre = this.contOctubre + 1;
+          }
+          if (fecha[1] == '11') {
+            this.contNoviembre = this.contNoviembre + 1;
+          }
+          if (fecha[1] == '12') {
+            this.contDiciembre = this.contDiciembre + 1;
+          }
+
+        }
+      }
+
+      this.curveChartData = [
+        {
+          data: [this.contEnero, this.contFebrero, this.contMarzo, this.contAbril, this.contMayo, this.contJunio, this.contJulio,
+            this.contAgosto, this.contSeptiembre, this.contOctubre, this.contNoviembre, this.contDiciembre],
+          label: 'Ventas'
+        },
+      ];
+
+    } catch (e) {
+      console.log("error", e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
+  }
+
+  cambiarAnio(value) {
+    this.anioActual = value;
+    console.log("value", value);
+    this.getVentasMensuales();
+  }
+
+  public async ventasVsVisitas() {
+    try {
+      let response = await this._estadisticasServicio.getVentasVisitas(this.identidadTienda.NUM_TIENDA).toPromise();
+      console.log("Ventas", response.data);
+      this.barChartData = [
+        {data: [response.data['Ventas'], 0], label: 'Ventas'},
+        {data: [response.data['Visitas'], 0], label: 'Visitas'},
+      ];
+
+
+    } catch (e) {
+      console.log("error", e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
+  }
+
+  public productoMasVendido;
+
+  public async getProductoMasVendido() {
+    try {
+      let response = await this._estadisticasServicio.getProductoMasVendido(this.identidadTienda.NUM_TIENDA).toPromise();
+      console.log("mas vendido variantes inicial", response.data);
+      let vVariantes = []
+      for (let i in response.data) {
+        vVariantes.push(response.data[i].COMPRA_PRODUCTOs[0].NUM_VARIANTE)
+      }
+      let response2 = await this._estadisticasServicio.getProductoDetalleMasVendido(this.mode(vVariantes)).toPromise();
+      this.productoMasVendido = response2.data;
+      console.log("mas vendido", this.productoMasVendido);
+
+    } catch (e) {
+      console.log("error", e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
+  }
+
+  public maxValue = 0;
+  public maxCount = 0;
+
+  public mode(a) {
+    for (let i in a) {
+      let count = 0;
+      for (let j in a) {
+        if (a[j] == a[i]) ++count;
+      }
+      if (count > this.maxCount) {
+        this.maxCount = count;
+        this.maxValue = a[i];
+      }
+    }
+    console.log("modaaaa", this.maxValue);
+    return this.maxValue;
+  }
+
+  public noExite;
+
+  getImagen(pathImagen) {
+    this.noExite = 'assets/images/no-imagen1.png';
+    if (pathImagen) {
+      this.noExite = GLOBAL.urlImagen + pathImagen;
+    }
+    return this.noExite;
   }
 
   mensageError(mensaje) {

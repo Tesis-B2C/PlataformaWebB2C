@@ -65,7 +65,8 @@ async function registrarTienda(req, res) {
                     LOGO: logo,
                     BANNER: banner,
                     CONTACTO_WHATSAPP: params.Tienda.Contacto_WhatsApp,
-                    VISITAS: 0
+                    VISITAS: 0,
+
                 },
                 {
                     transaction: t
