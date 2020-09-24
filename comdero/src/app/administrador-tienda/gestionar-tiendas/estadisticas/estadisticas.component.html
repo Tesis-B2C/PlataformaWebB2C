@@ -5,7 +5,7 @@
     <hr class="col-11">
   </div>
   <div class="container-fluid  justify-content-center mt-3 ">
-    <div class="row mx-5">
+    <div class="row mx-md-5">
 
       <div class="col-lg-3">
         <div class="card borde shadow mover">
@@ -57,7 +57,7 @@
   </div>
   <br>
   <div class="container-fluid mx-auto ">
-    <div class="row mx-5 ">
+    <div class="row mx-md-5 ">
 
       <div class="col-md-4">
         <div class="chart card card-body shadow">
@@ -103,11 +103,26 @@
       </div>
 
     </div>
-    <br><br><br>
-    <div class="card card-body mx-5 ">
+    <br>
 
-      <div class="row">
-        <div class="col-md-6">
+
+      <div class="row mx-md-5">
+        <div class="col-md-8">
+          <div class="card card-body shadow-lg"  >
+            <h4 class="mb-0">Ventas</h4>
+            <p>Ventas realizadas por mes</p>
+            <canvas style="width: auto; height: 200px"  baseChart [colors]="curveChartColors" [datasets]="curveChartData"  [labels]="curveChartLabels"
+                    [options]="curveChartOptions"
+                    [legend]="curveChartLegend" [chartType]="curveChartType" (chartHover)="chartHovered($event)"
+                    (chartClick)="chartClicked($event)"></canvas>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card card-body shadow-lg">
+
+          </div>
+        </div>
+        <div class="col-md-12">
           <div style="display: block">
             <canvas baseChart
                     [colors]="barChartColors"
@@ -117,14 +132,7 @@
                     [legend]="barChartLegend"
                     [chartType]="barChartType">
             </canvas>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div style="display: block">
-            <canvas baseChart [colors]="curveChartColors" [datasets]="curveChartData" [labels]="curveChartLabels"
-                    [options]="curveChartOptions"
-                    [legend]="curveChartLegend" [chartType]="curveChartType" (chartHover)="chartHovered($event)"
-                    (chartClick)="chartClicked($event)"></canvas>
+
           </div>
 
         </div>
@@ -132,5 +140,5 @@
     </div>
 
   </div>
-</div>
+
 </body>

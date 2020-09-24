@@ -151,7 +151,7 @@ async function getMetodosPago(req, res) {
                 PayPal: PayPal.count
             }
             res.status(200).send({
-                data:obj,
+                data: obj,
                 message: "Métodos de pago cargados correctamente"
             });
 
@@ -191,7 +191,7 @@ async function getMetodosEnvio(req, res) {
                 Domicilio: Domicilio.count
             }
             res.status(200).send({
-                data:obj,
+                data: obj,
                 message: "Métodos de envío cargados correctamente"
             });
 
@@ -227,7 +227,7 @@ async function getDescuentos(req, res) {
 
             }
             res.status(200).send({
-                data:obj,
+                data: obj,
                 message: "Métodos de envío cargados correctamente"
             });
 
@@ -239,6 +239,40 @@ async function getDescuentos(req, res) {
         });
     }
 }
+
+
+async function getVentasMensuales(req, res) {
+    let busqueda = req.params.id;
+
+    try {
+        let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
+        if (!verificar) {
+            return res.status(500).send({
+                message: "No tiene los permisos necesarios"
+            });
+        } else {
+            let compras = await Compra.findAll({ //$or: [{ESTADO_OFERTA: 0},{ESTADO_OFERTA: 1}]
+                where: {TIENDA: req.params.id},
+                attributes: ['FECHA_COMPRA'],
+
+            });
+
+
+
+            res.status(200).send({
+                data: compras,
+                message: "Ventas cargadas correctamente"
+            });
+
+        }
+
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+
 module.exports = {          // para exportar todas las funciones de este modulo
     getVentas,
     getCalificaciones,
@@ -246,5 +280,6 @@ module.exports = {          // para exportar todas las funciones de este modulo
     getVisitas,
     getMetodosPago,
     getMetodosEnvio,
-    getDescuentos
+    getDescuentos,
+    getVentasMensuales
 };

@@ -64,35 +64,35 @@ export class EstadisticasComponent implements OnInit {
 
 
   ////// curveChart
-  public curveChartOptions: ChartOptions = {
+  public curveChartOptions = {
     responsive: true,
-    legend: {
-      position: 'bottom',
-    },
+    legend:false,
+    scales: {
+      // We use this empty structure as a placeholder for dynamic theming.
+      xAxes: [{}],
+      yAxes: [{
+        ticks: {
+          stepSize:1,
+
+        }
+      }]
+    }
   };
-  public curveChartLabels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+  public curveChartLabels = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio','Agosto','Septiembre','Octubre','Noviembre','Dieciembre'];
   public curveChartType: ChartType = 'line';
   public curveChartLegend = true;
-  public curveChartData: ChartDataSets[] = [
-    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-    {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
+  public curveChartData= [
+    {data: [10, 12, 13, 12, 12, 15], label: 'Ventas'},
   ];
   public curveChartColors = [
-    { // grey
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    },
+
     { // red
-      backgroundColor: 'rgba(255,0,0,0.3)',
-      borderColor: 'red',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
+      backgroundColor: 'rgba(102,167,244,0.5)',
+      borderColor: '#0971eb',
+      pointBackgroundColor: '#034ca2',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+      pointHoverBorderColor: 'rgba(102,167,244,0.5)',
     }
 
   ];

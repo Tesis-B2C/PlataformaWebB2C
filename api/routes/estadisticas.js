@@ -11,5 +11,6 @@ api.get('/getVisitas/:id',md_auth.ensureAuth, EstadisticasController.getVisitas)
 api.get('/getMetodosPago/:id',md_auth.ensureAuth, EstadisticasController.getMetodosPago);
 api.get('/getMetodosEnvio/:id',md_auth.ensureAuth, EstadisticasController.getMetodosEnvio);
 api.get('/getDescuentos/:id',md_auth.ensureAuth, EstadisticasController.getDescuentos);
+api.get('/getVentasMensuales/:id',md_auth.ensureAuth, EstadisticasController.getVentasMensuales);
 
 module.exports = api;// exportamos el router de express para que las routas funcionen por todo el back end
