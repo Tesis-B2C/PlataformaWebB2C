@@ -51,7 +51,7 @@ export class EstadisticasComponent implements OnInit {
     responsive: true
 
   };
-  public barChartLabels = [];
+  public barChartLabels = ['Estadistica'];
   public barChartType = 'bar';
   public barChartLegend = true;
   public barChartData = [
@@ -83,7 +83,7 @@ export class EstadisticasComponent implements OnInit {
   public curveChartType: ChartType = 'line';
   public curveChartLegend = true;
   public curveChartData = [
-    {data: [0, 0, 0, 0, 0, 0], label: 'Ventas'},
+    {data: [0, 0, 0, 0, 0, 0], label: 'Ventas'}
   ];
   public curveChartColors = [
 
