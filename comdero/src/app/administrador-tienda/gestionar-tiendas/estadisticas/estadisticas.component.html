@@ -172,11 +172,10 @@
               <div class="card-body">
 
                 <h5 class="title-card">{{this.productoMasVendido?.PRODUCTO.NOMBRE_PRODUCTO}}</h5>
-                <br>
-                <p><strong>Marca:</strong></p>
-                <p><strong>Color:</strong></p>
-                <p><strong>Talla:</strong></p>
-                <p><strong>Material:</strong></p>
+                <p><strong>Marca:</strong> &nbsp;&nbsp;{{this.productoMasVendido?.PRODUCTO.MARCA}}</p>
+                <p><strong>Color:</strong>&nbsp; &nbsp; <a [style.background-color]="this.productoMasVendido?.COLOR" class="px-2"></a></p>
+                <p><strong>Talla:</strong> &nbsp; &nbsp;{{this.productoMasVendido?.TALLA}}</p>
+                <p><strong>Material:</strong>&nbsp; &nbsp;{{this.productoMasVendido?.MATERIAL}}</p>
               </div>
             </div>
           </div>
@@ -188,5 +187,5 @@
   </div>
 
 </div>
-
+<br><br><br><br><br>
 </body>
