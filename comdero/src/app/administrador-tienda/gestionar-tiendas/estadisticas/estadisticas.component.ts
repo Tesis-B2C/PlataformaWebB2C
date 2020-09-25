@@ -51,7 +51,7 @@ export class EstadisticasComponent implements OnInit {
     responsive: true
 
   };
-  public barChartLabels = ['Estadistica'];
+  public barChartLabels = ['Estadística'];
   public barChartType = 'bar';
   public barChartLegend = true;
   public barChartData = [
@@ -151,14 +151,12 @@ export class EstadisticasComponent implements OnInit {
       this.ventas = response.data;
     } catch (e) {
       console.log("error", e);
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
     }
   }
 
 
   public async getCalificaciones() {
+   this.calificacion=0;
     try {
       let response = await this._estadisticasServicio.getCalificaciones(this.identidadTienda.NUM_TIENDA).toPromise();
       console.log("avg", response.data);
@@ -166,9 +164,6 @@ export class EstadisticasComponent implements OnInit {
       this.calificacion = parseFloat(calificacion).toFixed(2);
     } catch (e) {
       console.log("error", e);
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
     }
   }
 
@@ -181,9 +176,6 @@ export class EstadisticasComponent implements OnInit {
 
     } catch (e) {
       console.log("error", e);
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
     }
   }
 
@@ -196,54 +188,51 @@ export class EstadisticasComponent implements OnInit {
 
     } catch (e) {
       console.log("error", e);
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
     }
   }
 
+  public metodosPago;
   public async getMetodosPago() {
     try {
       let response = await this._estadisticasServicio.getMetodosPago(this.identidadTienda.NUM_TIENDA).toPromise();
       console.log("metodos pago", response.data);
-      this.pieChartData = [response.data['Efectivo'], response.data['Transferencia'], response.data['Electrónico']]
+      this.metodosPago=response.data;
+      this.pieChartData = [response.data['Efectivo'], response.data['Transferencia'], response.data['PayPal']]
 
 
     } catch (e) {
       console.log("error", e);
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
+
     }
   }
 
+
+  public metodosEnvio;
   public async getMetodosEnvio() {
     try {
       let response = await this._estadisticasServicio.getMetodosEnvio(this.identidadTienda.NUM_TIENDA).toPromise();
       console.log("metodos pago", response.data);
+      this.metodosEnvio=response.data;
       this.pieChartData1 = [response.data['Retiro'], response.data['Acordar'], response.data['Domicilio']]
 
 
     } catch (e) {
       console.log("error", e);
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
     }
   }
 
+  public descuentos;
   public async getDescuentos() {
     try {
       let response = await this._estadisticasServicio.getDescuentos(this.identidadTienda.NUM_TIENDA).toPromise();
       console.log("descuentos", response.data);
+      this.descuentos=response.data;
       this.doughnutChartData = [response.data['Cupon'], response.data['Automatico']]
 
 
     } catch (e) {
       console.log("error", e);
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
+
     }
   }
 
@@ -366,9 +355,7 @@ export class EstadisticasComponent implements OnInit {
 
     } catch (e) {
       console.log("error", e);
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
+
     }
   }
 
@@ -388,9 +375,7 @@ export class EstadisticasComponent implements OnInit {
 
     } catch (e) {
       console.log("error", e);
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
+
     }
   }
 

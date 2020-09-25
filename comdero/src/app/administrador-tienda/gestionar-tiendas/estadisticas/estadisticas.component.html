@@ -60,10 +60,11 @@
     <div class="row mx-md-5 ">
 
       <div class="col-md-4">
-        <div class="chart card card-body shadow">
+        <div class="chart card card-body shadow" style="height: 100%">
           <p class="mb-0">Métodos de pago</p>
           <p style="font-size: x-small" class="text-muted">Ventas realizadas según los métodos de pago</p>
-          <canvas baseChart
+          <p class="text-info" *ngIf="metodosPago?.Efectivo==0 && metodosPago?.Transferencia==0 && metodosPago?.PayPal==0">No existen productos comprados por estos medios</p>
+          <canvas *ngIf="metodosPago?.Efectivo!=0 && metodosPago?.Transferencia!=0 && metodosPago?.PayPal!=0" baseChart
                   [data]="pieChartData"
                   [labels]="pieChartLabels"
                   [chartType]="pieChartType"
@@ -71,13 +72,15 @@
                   [colors]="pieChartColors"
                   [legend]="pieChartLegend">
           </canvas>
+
         </div>
       </div>
       <div class="col-md-4">
-        <div class="chart card card-body shadow">
+        <div class="chart card card-body shadow" style="height: 100%">
           <p class="mb-0">Métodos de envío</p>
           <p style="font-size: x-small" class="text-muted">Ventas realizadas según los métodos de envío</p>
-          <canvas baseChart
+          <p class="text-info" *ngIf="metodosEnvio?.Retiro==0 && metodosEnvio?.Acordar==0 && metodosEnvio?.Domicilio==0">No existen productos comprados por estos medios</p>
+          <canvas *ngIf="metodosEnvio?.Retiro!=0 && metodosEnvio?.Acordar!=0 && metodosEnvio?.Domicilio!=0" baseChart
                   [data]="pieChartData1"
                   [labels]="pieChartLabels1"
                   [chartType]="pieChartType"
@@ -89,10 +92,11 @@
       </div>
       <div class="col-md-4">
 
-        <div class="chart card card-body shadow">
+        <div class="chart card card-body shadow" style="height: 100%">
           <p class="mb-0">Descuentos</p>
           <p style="font-size: x-small" class="text-muted">Total de descuentos generados</p>
-          <canvas baseChart
+          <p class="text-info" *ngIf="descuentos?.Cupon==0 && descuentos?.Automatico==0">No existen descuentos creados</p>
+          <canvas *ngIf="descuentos?.Cupon!=0 && descuentos?.Automatico!=0" baseChart
                   [colors]="doughnuChartColors"
                   [data]="doughnutChartData"
                   [labels]="doughnutChartLabels"
@@ -170,12 +174,12 @@
             </div>
             <div class="col-md-8">
               <div class="card-body">
-
+            <p class="text-info" *ngIf="!this.productoMasVendido?.PRODUCTO.NOMBRE_PRODUCTO">No se han realizado compras a tu tienda </p>
                 <h5 class="title-card">{{this.productoMasVendido?.PRODUCTO.NOMBRE_PRODUCTO}}</h5>
-                <p><strong>Marca:</strong> &nbsp;&nbsp;{{this.productoMasVendido?.PRODUCTO.MARCA}}</p>
-                <p><strong>Color:</strong>&nbsp; &nbsp; <a [style.background-color]="this.productoMasVendido?.COLOR" class="px-2"></a></p>
-                <p><strong>Talla:</strong> &nbsp; &nbsp;{{this.productoMasVendido?.TALLA}}</p>
-                <p><strong>Material:</strong>&nbsp; &nbsp;{{this.productoMasVendido?.MATERIAL}}</p>
+                <p *ngIf="this.productoMasVendido?.PRODUCTO.MARCA"><strong>Marca:</strong> &nbsp;&nbsp;{{this.productoMasVendido?.PRODUCTO.MARCA}}</p>
+                <p *ngIf="this.productoMasVendido?.COLOR"><strong>Color:</strong>&nbsp; &nbsp; <a [style.background-color]="this.productoMasVendido?.COLOR" class="px-2"></a></p>
+                <p *ngIf="this.productoMasVendido?.TALLA"><strong>Talla:</strong> &nbsp; &nbsp;{{this.productoMasVendido?.TALLA}}</p>
+                <p *ngIf="this.productoMasVendido?.MATERIAL"><strong>Material:</strong>&nbsp; &nbsp;{{this.productoMasVendido?.MATERIAL}}</p>
               </div>
             </div>
           </div>
