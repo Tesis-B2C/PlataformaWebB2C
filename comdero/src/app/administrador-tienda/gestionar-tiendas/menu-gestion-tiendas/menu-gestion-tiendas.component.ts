@@ -50,8 +50,6 @@ export class MenuGestionTiendasComponent {
           this.mensageCorrecto(responseUpdate['menssage']);
           localStorage.removeItem("identityTienda");
           this.router.navigate(['/administrador/administrador-tienda/mis-tiendas'])
-
-
         } catch (e) {
           console.log("error:" + e);
           if (JSON.stringify((e).error.message))
