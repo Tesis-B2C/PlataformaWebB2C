@@ -208,7 +208,7 @@ async function actualizarAgente(req, res) {
             let agenteId = req.params.id;
             let agente = {
                 ID_AGENTE: req.body.Id_Agente,
-                NOMBRE: req.body.Nombre,
+                NOMBRE: req.body.Nombre.toUpperCase(),
                 TELEFONO: req.body.Telefono,
                 CORREO: req.body.Correo.trim(),
                 NUM_COD_POSTAL: req.body.Num_Cod_Postal,

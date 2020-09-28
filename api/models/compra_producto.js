@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 
-const Compra_Producto = db.sequelize.define('Compra_Producto', {
+const Compra_Producto = db.sequelize.define('COMPRA_PRODUCTO', {
         NUM_VARIANTE: {
             type: Sequelize.INTEGER,
             primaryKey: true,
@@ -34,7 +34,7 @@ const Compra_Producto = db.sequelize.define('Compra_Producto', {
                 type: Sequelize.FLOAT(8, 2),
                 allowNull: false
             },
-        PORCENTAJE_IMPUESTOS:
+        PORCENTAJE_IMPUESTO:
             {
                 type: Sequelize.FLOAT(8, 2),
                 allowNull: false

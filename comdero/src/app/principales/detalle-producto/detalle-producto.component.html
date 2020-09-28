@@ -54,7 +54,8 @@
                           [src]="this.videoYoutube" frameborder="0"
                           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                           allowfullscreen></iframe>
-                  <video *ngIf="this.imagenPrincipal==null && this.videoYoutube == null && data.video!=null" class="video-carga" controls
+                  <video *ngIf="this.imagenPrincipal==null && this.videoYoutube == null && data.video!=null"
+                         class="video-carga" controls
                          height="auto" width="auto">
                     <source [src]="data.video" type="{{ data.type }}">
                   </video>
@@ -175,7 +176,9 @@
                       </div>
                     </dd>
 
-                    <dt class="col-sm-3 col-4 mt-4">Cantidad   <a class="m-0 pt-0 text-center" style="font-size: 11px">({{this.varianteActiva.MEDIDA}})</a></dt>
+                    <dt class="col-sm-3 col-4 mt-4">Cantidad <a class="m-0 pt-0 text-center"
+                                                                style="font-size: 11px">({{this.varianteActiva.MEDIDA}}
+                      )</a></dt>
 
                     <dd class="col-sm-9 col-8">
                       <div class="form-group col-lg-6 col-md-6 col-10 my-2 p-0">
@@ -285,7 +288,8 @@
                   <h4 class="card-title text-center ">Opciones de Pago</h4>
 
                 </div>
-                <p class="text-center dis-block">Contamos con varios métodos de pago para facilitar la compra de tus productos,
+                <p class="text-center dis-block">Contamos con varios métodos de pago para facilitar la compra de tus
+                  productos,
                   al momento de realizar la
                   transacción.</p>
 
@@ -639,15 +643,32 @@
               <div class="form-group col-md-6 col-md-6 col-12 my-0">
                 <div class="input-group">
                   <input #CuponDescuentoNombre="ngModel" [(ngModel)]="this.cuponDescuentoNombre" type="text"
-                         class="tamanioInputs form-control"
-                         placeholder="Introducir el cupón" name="CuponDescuentoNombre">
+                         class="tamanioInputs form-control text-uppercase"
+                         placeholder="Introducir el cupón" name="CuponDescuentoNombre " >
                   <span class="input-group-append">
-                    <button (click)="aplicarCuponDescuento()" class="btn btn-primary">Aplicar</button>
+                    <button (click)="aplicarCuponDescuento()" class="btn btn-primary ">Aplicar</button>
                   </span>
                 </div>
               </div>
             </div>
-            <p *ngIf="this.bandCuponActivado" class="text-danger">Cupón no válido</p>
+
+
+            <div *ngIf="this.banCuponUtilizado" class="alert alert-warning alert-dismissible fade show mb-0 w-25"
+                 role="alert">
+              Cupón ya utilizado
+              <button type="button" class="close p-0 m-0" (click)="this.banCuponUtilizado=false">
+                <a aria-hidden="true">&times;</a>
+              </button>
+            </div>
+
+            <div *ngIf="this.bandCuponActivado" class="alert alert-warning alert-dismissible fade show mb-0  w-25"
+                 role="alert">
+              Cupón no válido
+              <button type="button" class="close p-0 m-0" (click)="this.bandCuponActivado=false">
+                <a aria-hidden="true">&times;</a>
+              </button>
+            </div>
+
           </div>
         </div>
       </div>
@@ -1117,13 +1138,13 @@
         <div class="card card-body">
 
           <div *ngIf="this.informacionCompra.METODO_ENVIO_COMPRA == 'Acordar'" class="form-row">
-            <div class="form-group col-sm-3 col-4 mb-0">
+            <div class="form-group col-sm-3 col-md-4 mb-0">
               <label class="font-weight-bold">Método de Envío</label>
             </div>
-            <div class="form-group col-sm-9 col-8">
+            <div class="form-group col-sm-9 col-md-8">
               <div class="form-row">
                 <div class="form-group col-12 mb-0">
-                  <label class="my-0 text-justify">Usted podrá acordar con el vendedor sobre el proceso de compra,
+                  <label class="my-0 text-justify">Usted podrá acordar con el vendedor sobre el proceso de envío de su compra,
                     de acuerdo a su necesidad a través de WhatsApp.</label>
                   <div class="form-row">
                     <div class="form-group col-12 mb-0">
@@ -1131,7 +1152,9 @@
                         <button type="button" class="btn btn-social-icon btn-whatsapp btn-rounded">
                           <i class="fab fa-whatsapp fa-1x"></i>
                         </button>
-                        <a href="https://api.whatsapp.com/send?phone={{contactoWhatsapp}}&text=Hola!%20Quiero%20conocer%20acerca%20de%20su%20tienda!" target="_blank" > {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</a>
+                        <a
+                          href="https://api.whatsapp.com/send?phone={{contactoWhatsapp}}&text=Hola!%20Quiero%20conocer%20acerca%20de%20su%20tienda!"
+                          target="_blank"> {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</a>
                       </div>
                     </div>
                   </div>
@@ -1141,15 +1164,15 @@
           </div>
 
           <div *ngIf="this.informacionCompra.METODO_ENVIO_COMPRA == 'Retiro'" class="form-row">
-            <div class="form-group col-sm-3 col-4 mb-0">
+            <div class="form-group col-sm-3 col-md-4 mb-0">
               <label class="font-weight-bold">Método de Envío</label>
             </div>
-            <div class="form-group col-sm-9 col-8">
-              <div class="form-row">
+            <div class="form-group col-sm-9 col-md-8">
+              <div class="form-row ">
                 <div class="form-group col-12 mb-0">
                   <label class="mb-3 text-justify">Recuerde la siguiente información al momento de retirar su compra en
                     la tienda.</label>
-                  <div class="card card-body">
+                  <div class="card card-body ">
                     <p class=" text-justify" *ngIf="this.hora_estimada_retiro == '1hora'">Su pedido estará listo
                       aproximadamente en 1 hora.</p>
                     <p class=" text-justify" *ngIf="this.hora_estimada_retiro == '4horas'">Su pedido estará listo
@@ -1173,7 +1196,9 @@
                     <button type="button" class="btn btn-social-icon btn-whatsapp btn-rounded">
                       <i class="fab fa-whatsapp fa-1x"></i>
                     </button>
-                    <a href="https://api.whatsapp.com/send?phone={{contactoWhatsapp}}&text=Hola!%20Quiero%20conocer%20acerca%20de%20su%20tienda!" target="_blank" > {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</a>
+                    <a
+                      href="https://api.whatsapp.com/send?phone={{contactoWhatsapp}}&text=Hola!%20Quiero%20conocer%20acerca%20de%20su%20tienda!"
+                      target="_blank"> {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</a>
                   </div>
                 </div>
               </div>
@@ -1181,10 +1206,10 @@
           </div>
 
           <div *ngIf="this.informacionCompra.METODO_ENVIO_COMPRA == 'Domicilio'" class="form-row">
-            <div class="form-group col-sm-3 col-4 mb-0">
+            <div class="form-group col-sm-3 col-md-4 mb-0">
               <label class="font-weight-bold">Método de Envío</label>
             </div>
-            <div class="form-group col-sm-9 col-8">
+            <div class="form-group col-sm-9 col-md-8">
               <div class="form-row">
                 <div class="form-group col-12 mb-0">
                   <label class="my-0 text-justify">Usted a seleccionado el envío a domicilio, el costo de envío se ha
@@ -1196,7 +1221,9 @@
                         <button type="button" class="btn btn-social-icon btn-whatsapp btn-rounded">
                           <i class="fab fa-whatsapp fa-1x"></i>
                         </button>
-                        <a href="https://api.whatsapp.com/send?phone={{contactoWhatsapp}}&text=Hola!%20Quiero%20conocer%20acerca%20de%20su%20tienda!" target="_blank" > {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</a>
+                        <a
+                          href="https://api.whatsapp.com/send?phone={{contactoWhatsapp}}&text=Hola!%20Quiero%20conocer%20acerca%20de%20su%20tienda!"
+                          target="_blank"> {{this.productoDetalle.TIENDA.CONTACTO_WHATSAPP}}</a>
                       </div>
                     </div>
                   </div>
@@ -1204,12 +1231,13 @@
               </div>
             </div>
           </div>
+          <hr>
 
           <div *ngIf="this.informacionCompra.METODO_PAGO_COMPRA == 'Efectivo'" class="form-row">
-            <div class="form-group col-sm-3 col-4 mb-0">
+            <div class="form-group col-sm-3 col-md-4 mb-0">
               <label class="font-weight-bold">Método de Pago</label>
             </div>
-            <div class="form-group col-sm-9 col-8">
+            <div class="form-group col-sm-9 col-md-8">
               <div class="form-row">
                 <div class="form-group col-12 mb-0">
                   <label class="my-0 text-justify">Al momento de la entrega se deberá realizar la cancelación total del
@@ -1220,10 +1248,10 @@
           </div>
 
           <div *ngIf="this.informacionCompra.METODO_PAGO_COMPRA == 'Transferencia'" class="form-row">
-            <div class="form-group col-sm-3 col-4 mb-0">
+            <div class="form-group col-sm-3 col-md-4 mb-0">
               <label class="font-weight-bold">Método de Pago</label>
             </div>
-            <div class="form-group col-sm-9 col-8">
+            <div class="form-group col-sm-9 col-md-8">
               <div class="form-row">
                 <div class="form-group col-12 mb-0">
                   <div class="box">
@@ -1233,45 +1261,71 @@
                     </div>
                     <p class=" iconos-pagos "><img src="assets/images/icon-transferencia.png"
                                                    alt="..."></p>
-                    <div class="box-text">
+                    <div class="box-text mt-2 text-md-left text-center">
                       <div class="row justify-content-center mx-auto">
-                        <p class="card-text col-5 mb-0">Banco:</p>
-                        <p class="col-6 mb-0">{{this.Banco_Pertenece}}</p>
-                        <p class="card-text col-5 mb-0 ">Tipo:</p>
-                        <p class="col-6 mb-0">{{this.Tipo_Cuenta}}</p>
-                        <p class="card-text col-5  mb-0">#Cuenta:</p>
-                        <p class="col-6 mb-0">{{this.Numero_cuenta}}</p>
+                        <p class="card-text col-md-5 mb-0 font-weight-bold">Banco:</p>
+                        <p class="col-md-6 mb-0">{{this.Banco_Pertenece}}</p>
+                        <p class="card-text col-md-5 mb-0 font-weight-bold">Tipo:</p>
+                        <p class="col-md-6 mb-0">{{this.Tipo_Cuenta}}</p>
+                        <p class="card-text col-md-5  mb-0 font-weight-bold">#Cuenta:</p>
+                        <p class="col-md-6 mb-0">{{this.Numero_cuenta}}</p>
                       </div>
-                    </div>
-                  </div>
 
+                    </div>
+
+                  </div>
+                  <div class="alert alert-warning text-justify" role="alert">
+                    Asegurate de poner tu código de compra que reciviras al finalizar la compra en el comentario o
+                    motivo de la transaferencia bancaria
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           <div *ngIf="this.informacionCompra.METODO_PAGO_COMPRA == 'Electrónico'" class="form-row">
-            <div class="form-group col-sm-3 col-4 mb-0">
+            <div class="form-group col-sm-3 col-md-4 mb-0">
               <label class="font-weight-bold">Método de Pago</label>
             </div>
-            <div class="form-group col-sm-9 col-8">
-              <div class="form-row">
-                <div class="form-group col-12 mb-0">
-                  <label class="my-0 text-justify">PAYPAL AQUI ESTA</label>
+            <div class="form-group col-sm-9 col-md-8">
+              <div class="form-row ">
+                <div class="form-group col-md-10 mb-0 ">
+
+                  <label>Has escogido pagar a través de PayPal, podrás realizar el pago con tu
+                    cuenta PayPal o con una tarjeta de crédito o Débito</label>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <hr>
+          <div *ngIf="this.informacionCompra.METODO_PAGO_COMPRA == 'Electrónico'" class="form-row">
+            <div class="form-group col-sm-3 col-md-4 mb-0">
+              <label class="font-weight-bold">Pagar ahora</label>
+            </div>
+            <div class="col-sm-9 col-md-8 ">
+              <div class="form-row ">
+                <div class="form-group col-md-10 mb-0 ">
+                  <div class="w-75 ">
+                    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
 
       </form>
+
     </div>
 
     <div *ngIf="this.siguienteDetallePedido" class="text-right mb-3 mr-3">
       <button type="button" class="btn btn-primary mr-1" (click)="atras()">Atras</button>
-      <button type="button" class="btn btn-outline-primary ml-1" (click)="comprar()">Realizar Compra</button>
+      <button *ngIf="this.informacionCompra.METODO_PAGO_COMPRA != 'Electrónico'" type="button" class="btn btn-outline-primary ml-1" (click)="comprar()">Realizar Compra</button>
     </div>
+
 
   </ng-template>
   <!-- ============================ COMPONENT MODAL  .//END ========================= -->

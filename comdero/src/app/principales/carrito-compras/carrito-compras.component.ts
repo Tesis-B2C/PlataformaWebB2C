@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import {CarritoServicio} from "../../servicios/carrito.servicio";
 import {GLOBAL} from 'src/app/servicios/global';
@@ -9,8 +9,9 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Agente} from "../../modelos/agente";
 import {DpaServicio} from "../../servicios/dpa.servicio";
 import * as moment from 'moment';
-import {Tienda} from "../../modelos/tienda";
-import {element} from "protractor";
+import {ICreateOrderRequest, IPayPalConfig} from "ngx-paypal";
+import Swal from "sweetalert2";
+import {CompraServicio} from "../../servicios/compra.servicio";
 
 @Component({
   selector: 'app-carrito-compras',
@@ -18,7 +19,7 @@ import {element} from "protractor";
   styleUrls: ['./carrito-compras.component.css'],
   providers: [DatePipe]
 })
-export class CarritoComprasComponent implements OnInit {
+export class CarritoComprasComponent implements OnInit, OnDestroy {
 
   public carritoIdentidad;
   public vTiendas = new Set();
@@ -50,7 +51,7 @@ export class CarritoComprasComponent implements OnInit {
   private LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
   private soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
 
-  constructor(public  _dpaServicio: DpaServicio, private modalService: NgbModal, public datePipe: DatePipe, public menu: MenuComponent, public toastr: ToastrService, public  _agenteServicio: AgenteServicio, public _carritoServicio: CarritoServicio) {
+  constructor(public _compraServicio: CompraServicio, public _dpaServicio: DpaServicio, private modalService: NgbModal, public datePipe: DatePipe, public menu: MenuComponent, public toastr: ToastrService, public  _agenteServicio: AgenteServicio, public _carritoServicio: CarritoServicio) {
   }
 
   async ngOnInit() {
@@ -60,14 +61,24 @@ export class CarritoComprasComponent implements OnInit {
     await this.calcularPrecios();
     await this.verificarDescuentoAutomatico();
     await this.getDpaProvincias("P");
+  }
 
+  ngOnDestroy(): void {
+    delete this.DatosDireccion;
+    delete this.DatosFactura;
+    delete this.obj;
+    delete this.hoy;
+    delete this.vTiendas;
+    delete this.varianteActiva;
+    delete this.informacionCompra;
+    delete this.payPalConfig;
 
   }
 
   public async validarEstadoProductos() {
     this.carritoIdentidad = await this._carritoServicio.getCarrito().toPromise();
     for (let element of this.carritoIdentidad.data.CARRITO_PRODUCTOs) {
-      if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.ESTADO_TIENDA != 0 || element.VARIANTE.ESTADO_VARIANTE != 0 ) {
+      if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.ESTADO_TIENDA != 0 || element.VARIANTE.ESTADO_VARIANTE != 0) {
         await this._carritoServicio.deleteProductoCarrito(element.VARIANTE.NUM_VARIANTE).toPromise();
         await this.menu.conteoProductosCarrito(false);
       }
@@ -145,8 +156,15 @@ export class CarritoComprasComponent implements OnInit {
 
           if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == element2) {
             this.obj.idTienda = element2;
+            element.precio_unitario = element.VARIANTE.PRECIO_UNITARIO;
+            element.porcentaje_impuestos = element.VARIANTE.PRODUCTO.OFERTum.IVA;
             element.precio_productos_sin_iva = element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO;
             element.precio_productos = (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) + (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100);
+            element.impuestos = element.precio_productos - element.precio_productos_sin_iva;
+            element.descuentos_cupon = 0;
+            element.porcentaje_descuento_cupon = 0;
+            element.descuentos = 0;
+            element.porcentaje_descuento = 0;
             this.obj.metodos_envio = element.VARIANTE.PRODUCTO.OFERTum.TIENDA.OPCION_ENVIOs;
             this.obj.metodos_pago = element.VARIANTE.PRODUCTO.OFERTum.TIENDA.METODO_PAGOs;
             this.obj.sucursales = element.VARIANTE.PRODUCTO.OFERTum.TIENDA.SUCURSALs;
@@ -185,6 +203,7 @@ export class CarritoComprasComponent implements OnInit {
     this.carritoIdentidad.data.CARRITO_PRODUCTOs.forEach(element => {
       if (num_variante == element.NUM_VARIANTE) {
         element.CANTIDAD_PRODUCTO_CARRITO = response;
+
         element.precio_productos_sin_iva = element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO;
         element.precio_productos = (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) + (element.VARIANTE.PRECIO_UNITARIO * element.CANTIDAD_PRODUCTO_CARRITO) * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100);
       }
@@ -293,6 +312,8 @@ export class CarritoComprasComponent implements OnInit {
       let bandera: boolean = true;
       let bandera2: boolean = false;
       for (let element of element2['producto_carrito']) {
+        element.porcentaje_descuento_cupon = 0;
+        element.descuentos_cupon = 0;
         if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == tienda) {
           for (let descuento of element.VARIANTE.PRODUCTO.PRODUCTO_DESCUENTOs) {
             if (descuento.DESCUENTO.TIPO_DESCUENTO == 'Cupón') {
@@ -306,9 +327,11 @@ export class CarritoComprasComponent implements OnInit {
 
                     let horaActual = this.hoy.getHours() + ':' + this.hoy.getMinutes() + ':' + this.hoy.getSeconds();
                     if (this.obtenerMinutos(horaActual) >= this.obtenerMinutos(descuento.DESCUENTO.HORA_INICIO)) {
-                      if (descuento.DESCUENTO.MOTIVO_DESCUENTO == this.cupon) {
+                      if (descuento.DESCUENTO.MOTIVO_DESCUENTO == this.cupon.toUpperCase()) {
 
-                        let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
+                        let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100));
+                        element.descuentos_cupon = (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
+                        element.porcentaje_descuento_cupon = descuento.DESCUENTO.PORCENTAJE_DESCUENTO;
                         d = d + ((precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100) * element.CANTIDAD_PRODUCTO_CARRITO));
                         console.log("descuento", d);
                         bandera2 = true;
@@ -319,18 +342,22 @@ export class CarritoComprasComponent implements OnInit {
                     if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") == descuento.DESCUENTO.FECHA_FIN) {
                       let horaActual = this.hoy.getHours() + ':' + this.hoy.getMinutes() + ':' + this.hoy.getSeconds();
                       if (this.obtenerMinutos(horaActual) <= this.obtenerMinutos(descuento.DESCUENTO.HORA_FIN)) {
-                        if (descuento.DESCUENTO.MOTIVO_DESCUENTO == this.cupon) {
+                        if (descuento.DESCUENTO.MOTIVO_DESCUENTO == this.cupon.toUpperCase()) {
 
-                          let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
+                          let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100));
+                          element.descuentos_cupon = (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
+                          element.porcentaje_descuento_cupon = descuento.DESCUENTO.PORCENTAJE_DESCUENTO;
                           d = d + ((precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100) * element.CANTIDAD_PRODUCTO_CARRITO));
                           console.log("descuento", d);
                           bandera2 = true;
                         }
                       }
                     } else {
-                      if (descuento.DESCUENTO.MOTIVO_DESCUENTO == this.cupon) {
+                      if (descuento.DESCUENTO.MOTIVO_DESCUENTO == this.cupon.toUpperCase()) {
 
                         let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
+                        element.descuentos_cupon = (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
+                        element.porcentaje_descuento_cupon = descuento.DESCUENTO.PORCENTAJE_DESCUENTO;
                         d = d + ((precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100) * element.CANTIDAD_PRODUCTO_CARRITO));
                         console.log("descuento", d);
                         bandera2 = true;
@@ -349,12 +376,12 @@ export class CarritoComprasComponent implements OnInit {
       }
 
       for (let element3 of element2['cupones']) {
-        if (element3 == this.cupon) {
+        if (element3 == this.cupon.toUpperCase()) {
           bandera = false;
         }
       }
       if (bandera && bandera2) {
-        element2['cupones'].add(this.cupon);
+        element2['cupones'].add(this.cupon.toUpperCase());
         element2['cuentas'].descuentoCupon = element2['cuentas'].descuentoCupon + d;
         element2['mensajeCupones'] = "";
       } else if (bandera2 && element2['idTienda'] == tienda) {
@@ -372,6 +399,8 @@ export class CarritoComprasComponent implements OnInit {
     let d = 0;
     for (let element2 of this.vTiendas) {
       for (let element of element2['producto_carrito']) {
+        element.descuentos_cupon = 0;
+        element.porcentaje_descuento_cupon = 0;
         if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == element2['idTienda']) {
           for (let descuento of element.VARIANTE.PRODUCTO.PRODUCTO_DESCUENTOs) {
             for (let elemnt2 of this.vTiendas) {
@@ -379,6 +408,8 @@ export class CarritoComprasComponent implements OnInit {
                 for (let element3 of elemnt2['cupones']) {
                   if (element3 == descuento.DESCUENTO.MOTIVO_DESCUENTO) {
                     let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
+                    element.descuentos_cupon = (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
+                    element.porcentaje_descuento_cupon = descuento.DESCUENTO.PORCENTAJE_DESCUENTO;
                     d = d + ((precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100) * element.CANTIDAD_PRODUCTO_CARRITO));
                     console.log("descuento", d);
                     elemnt2['cuentas'].descuentoCupon = 0;
@@ -403,6 +434,7 @@ export class CarritoComprasComponent implements OnInit {
     for (let element2 of this.vTiendas) {
       let d = 0;
       for (let element of element2['producto_carrito']) {
+        element.porcentaje_descuento = 0;
         if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == element2['idTienda']) {
           for (let descuento of element.VARIANTE.PRODUCTO.PRODUCTO_DESCUENTOs) {
             if (descuento.DESCUENTO.TIPO_DESCUENTO == 'Automático') {
@@ -417,6 +449,8 @@ export class CarritoComprasComponent implements OnInit {
                     let horaActual = this.hoy.getHours() + ':' + this.hoy.getMinutes() + ':' + this.hoy.getSeconds();
                     if (this.obtenerMinutos(horaActual) >= this.obtenerMinutos(descuento.DESCUENTO.HORA_INICIO)) {
                       let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
+                      element.descuentos = (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
+                      element.porcentaje_descuento = descuento.DESCUENTO.PORCENTAJE_DESCUENTO;
                       d = d + (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
                       console.log("descuento automatico", d);
                     }
@@ -424,12 +458,16 @@ export class CarritoComprasComponent implements OnInit {
                     if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") == descuento.DESCUENTO.FECHA_FIN) {
                       let horaActual = this.hoy.getHours() + ':' + this.hoy.getMinutes() + ':' + this.hoy.getSeconds();
                       if (this.obtenerMinutos(horaActual) <= this.obtenerMinutos(descuento.DESCUENTO.HORA_FIN)) {
-                        let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
+                        let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100));
+                        element.porcentaje_descuento = descuento.DESCUENTO.PORCENTAJE_DESCUENTO;
+                        element.descuentos = (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
                         d = d + (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
                         console.log("descuento automatico", d);
                       }
                     } else {
                       let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
+                      element.porcentaje_descuento = descuento.DESCUENTO.PORCENTAJE_DESCUENTO;
+                      element.descuentos = (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
                       d = d + (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
                       console.log("descuento automatico", d);
                     }
@@ -460,7 +498,7 @@ export class CarritoComprasComponent implements OnInit {
     this.varianteActiva.PRECIO_UNITARIO_CON_IVA = tienda.cuentas.totalConIva;
     this.varianteActiva.PRECIO_UNITARIO = tienda.cuentas.subTotal;
     this.varianteActiva.PRECIO_UNITARIO_CON_IVA_DESCUENTO = tienda.cuentas.totalConIva - tienda.cuentas.descuentoAutomatico - tienda.cuentas.descuentoCupon;
-    this.varianteActiva.variantes = tienda.producto_carrito;
+    this.varianteActiva.VARIANTES = tienda.producto_carrito;
     this.varianteActiva.OPCION_ENVIO = tienda.metodos_envio;
     this.varianteActiva.METODO_PAGO = tienda.metodos_pago;
     this.varianteActiva.PORCENTAJE_IMPUESTO = tienda.cuentas.iva;
@@ -480,7 +518,7 @@ export class CarritoComprasComponent implements OnInit {
     PRECIO_UNITARIO_CON_IVA: null,
     PRECIO_UNITARIO_CON_IVA_DESCUENTO: null,
     PRECIO_UNITARIO: null,
-    variantes: [],
+    VARIANTES: [],
     OPCION_ENVIO: [],
     METODO_PAGO: [],
     SUCURSALES: [],
@@ -495,6 +533,8 @@ export class CarritoComprasComponent implements OnInit {
     ID_AGENTE: null,
     FECHA_COMPRA: null,
     DATOS_ENTREGA: {
+      TIPO_IDENTIFICACION_ENTREGA: null,
+      IDENTIFICACION_ENTREGA: null,
       CALLE_PRINCIPAL_ENTREGA: null,
       CALLE_SECUNDARIA_ENTREGA: null,
       NUM_CASA_ENTREGA: null,
@@ -565,7 +605,8 @@ export class CarritoComprasComponent implements OnInit {
         null, null, null, null, null);
 
       this.informacionCompra.ID_AGENTE = this.identidadComprador.ID_AGENTE;
-
+      this.informacionCompra.DATOS_ENTREGA.TIPO_IDENTIFICACION_ENTREGA = this.identidadComprador.TIPO;
+      this.informacionCompra.DATOS_ENTREGA.IDENTIFICACION_ENTREGA = this.identidadComprador.ID_AGENTE;
       this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA = this.identidadComprador.CALLE_PRINCIPAL_AGENTE;
       this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA = this.identidadComprador.CALLE_SECUNDARIA_AGENTE;
       this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA = this.identidadComprador.NUM_CASA_AGENTE;
@@ -595,6 +636,8 @@ export class CarritoComprasComponent implements OnInit {
         null, null, null, null, null, null);
 
       this.informacionCompra.ID_AGENTE = null;
+      this.informacionCompra.DATOS_ENTREGA.TIPO_IDENTIFICACION_ENTREGA = null;
+      this.informacionCompra.DATOS_ENTREGA.IDENTIFICACION_ENTREGA = null;
       this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA = null;
       this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA = null;
       this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA = null;
@@ -615,9 +658,14 @@ export class CarritoComprasComponent implements OnInit {
     }
 
     //DATOS DE COMPRA QUE SIEMPRE HABRA
+    this.contactoWhatsapp;
+    let contacto = this.varianteActiva.CONTACTO_WHATSAPP.slice(1, 10);
+    this.contactoWhatsapp = '593' + contacto;
+
     this.informacionCompra.COD_AGENTE = this.identidadComprador.COD_AGENTE;
     this.informacionCompra.FECHA_COMPRA = moment().format("YYYY-MM-DD");
-
+    this.informacionCompra.NUM_VARIANTE = this.varianteActiva.VARIANTES;
+    console.log("variantes que van a ir-----------", this.informacionCompra.NUM_VARIANTE);
     this.informacionCompra.METODO_PAGO_COMPRA = null;
     this.informacionCompra.METODO_ENVIO_COMPRA = null;
 
@@ -629,15 +677,11 @@ export class CarritoComprasComponent implements OnInit {
     this.informacionCompra.COSTOS.DESCUENTOS = this.varianteActiva.DESCUENTO_AUTOMATICO;
     this.informacionCompra.COSTOS.CUPON = this.varianteActiva.DESCUENTO_CUPON;
     //cupones
-    this.varianteActiva.METODO_PAGO.forEach(pago => {
-      if (pago.TIPO_PAGO == 'Electrónico') {
-        this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL = pago.PORCENTAJE_RECARGO;
-      }
-    });
+    this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL = 0;
 
     this.informacionCompra.COSTOS.COSTOS_ENVIO = 0;
     this.informacionCompra.COSTOS.TOTAL_PEDIDO = (this.informacionCompra.COSTOS.SUBTOTAL + this.informacionCompra.COSTOS.RECARGO_PAYPAL + this.informacionCompra.COSTOS.COSTOS_ENVIO) - (this.informacionCompra.COSTOS.DESCUENTOS + this.informacionCompra.COSTOS.CUPON);
-    console.log('VARIANTE COMPRAS' + JSON.stringify(this.informacionCompra));
+    // console.log('VARIANTE COMPRAS' + JSON.stringify(this.informacionCompra));
     //FIN DATOS DE COMPRA
     this.modalService.open(content, {centered: true, size: 'lg', backdrop: "static"});
   }
@@ -699,7 +743,7 @@ export class CarritoComprasComponent implements OnInit {
     this.arrayPreciosEnvioAux = [];
     this.pesoPedidoTotalKg = 0;
 
-    this.varianteActiva.variantes.forEach(element => {
+    this.varianteActiva.VARIANTES.forEach(element => {
       this.pesoPedidoTotalKg = this.pesoPedidoTotalKg + element.VARIANTE.PRODUCTO.PESO_PRODUCTO * element.CANTIDAD_PRODUCTO_CARRITO;
     })
 
@@ -802,6 +846,16 @@ export class CarritoComprasComponent implements OnInit {
   }
 
   public banderaTipo: boolean;
+  public banderaTipoEntrega: boolean;
+
+  public cambiarTipoEntrega(value) {
+    this.DatosDireccion.Tipo = value;
+    if (value == 'Persona') {
+      this.banderaTipoEntrega = true;
+    } else if (value == 'Empresa') {
+      this.banderaTipoEntrega = false;
+    }
+  }
 
   public habilitarDireccionDiferente(proceso) {
     if (proceso == 'Envio') {
@@ -809,6 +863,8 @@ export class CarritoComprasComponent implements OnInit {
       this.direccionEnvioDiferente = !this.direccionEnvioDiferente;
       this.ciudadDireccion = null;
       this.provinciaDireccion = null;
+      this.DatosDireccion.Id_Agente = this.informacionCompra.DATOS_ENTREGA.IDENTIFICACION_ENTREGA;
+      this.DatosDireccion.Tipo = this.informacionCompra.DATOS_ENTREGA.TIPO_IDENTIFICACION_ENTREGA;
       this.DatosDireccion.Num_Cod_Postal = this.informacionCompra.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA;
       this.DatosDireccion.Nombre = this.informacionCompra.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA;
       this.DatosDireccion.Telefono = this.informacionCompra.DATOS_ENTREGA.TELEFONO_ENTREGA;
@@ -816,6 +872,12 @@ export class CarritoComprasComponent implements OnInit {
       this.DatosDireccion.Calle_Secundaria_Agente = this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA;
       this.DatosDireccion.Num_Casa_Agente = this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA;
       this.DatosDireccion.Ciudad = this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA;
+
+      if (this.DatosDireccion.Tipo == 'Persona') {
+        this.banderaTipoEntrega = true;
+      } else if (this.DatosFactura.Tipo == 'Empresa') {
+        this.banderaTipoEntrega = false;
+      }
     }
     if (proceso == 'Factura') {
       this.datosfacturacionDiferente = !this.datosfacturacionDiferente;
@@ -835,16 +897,124 @@ export class CarritoComprasComponent implements OnInit {
     }
   }
 
+  public apikeyPaypal;
 
   public selectMetodoPago(event) {
     this.banderaRecargoPaypal = false;
+    this.apikeyPaypal;
     this.informacionCompra.COSTOS.RECARGO_PAYPAL = 0;
     this.informacionCompra.METODO_PAGO_COMPRA = event.target.value;
     if (event.target.value == 'Electrónico') {
+      this.varianteActiva.METODO_PAGO.forEach(pago => {
+        if (pago.TIPO_PAGO == 'Electrónico') {
+          this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL = pago.PORCENTAJE_RECARGO;
+          this.apikeyPaypal = pago.API_KEY_PAYPAL;
+          console.log("api paypal", this.apikeyPaypal);
+        }
+      });
       this.banderaRecargoPaypal = true;
       this.informacionCompra.COSTOS.RECARGO_PAYPAL = (this.informacionCompra.COSTOS.SUBTOTAL * this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL) / 100;
+      this.initConfig();
     }
     this.informacionCompra.COSTOS.TOTAL_PEDIDO = (this.informacionCompra.COSTOS.SUBTOTAL + this.informacionCompra.COSTOS.RECARGO_PAYPAL + this.informacionCompra.COSTOS.COSTOS_ENVIO) - (this.informacionCompra.COSTOS.DESCUENTOS + this.informacionCompra.COSTOS.CUPON);
+  }
+
+  public payPalConfig: IPayPalConfig;
+
+
+  initConfig() {
+    this.payPalConfig = {
+      currency: 'USD',
+      clientId: this.apikeyPaypal,
+      createOrderOnClient: (data) => <ICreateOrderRequest>{
+        intent: 'CAPTURE',
+
+        payer: {
+          name: {
+            given_name: "",
+            surname: ""
+          },
+          address: {
+            address_line_1: '',
+            address_line_2: '',
+            postal_code: '',
+            country_code: 'EC',
+            admin_area_2: '',
+          },
+
+        },
+
+        purchase_units: [
+          {
+            amount: {
+              currency_code: 'USD',
+              value: this.informacionCompra.COSTOS.TOTAL_PEDIDO.toFixed(2),
+            },
+
+
+          }
+        ],
+
+      },
+      advanced: {
+        commit: 'true'
+      },
+      style: {
+
+        layout: 'vertical',
+        color: 'blue',
+        size: 'responsive',
+        shape: 'rect',
+
+      },
+
+
+      onApprove: (data, actions) => {
+        console.log('onApprove - transaction was approved, but not authorized', data, actions);
+        actions.order.get().then(details => {
+          console.log('onApprove - you can get full order details inside onApprove: ', details);
+        });
+      },
+      onClientAuthorization: (data) => {
+        console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+        this.comprar();
+
+
+      },
+      onCancel: (data, actions) => {
+        console.log('OnCancel', data, actions);
+      },
+      onError: err => {
+        console.log('OnError', err);
+      },
+      onClick: (data, actions) => {
+        console.log('onClick', data, actions);
+      },
+    };
+  }
+
+  public contactoWhatsapp;
+
+  public async comprar() {
+    try {
+
+      /*console.log('INFORMACION COMPRA' + JSON.stringify(this.informacionCompra));*/
+      console.log("contacto whatsaap", this.contactoWhatsapp);
+      let response = await this._compraServicio.saveComprarProductoCarrito(this.informacionCompra).toPromise();
+      this.mensageCorrecto(response.message);
+      this.cerrar();
+      this.modalService.dismissAll();
+      await this.iniciarCarritoCompras();
+      await this.verificarStockInicio();
+      await this.calcularPrecios();
+      this.menu.conteoProductosCarrito(true);
+
+    } catch (e) {
+      console.log("error", e);
+      if (JSON.stringify((e).error.message))
+        this.mensageError(JSON.stringify((e).error.message));
+      else this.mensageError("Error de conexión intentelo mas tarde");
+    }
   }
 
   public provinciasDireccion;
@@ -884,33 +1054,75 @@ export class CarritoComprasComponent implements OnInit {
 
   public guardarDireccionNueva() {
     if (document.forms['formActualizarDireccionEnvio'].checkValidity()) {
-      this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA = this.DatosDireccion.Calle_Principal_Agente;
-      this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA = this.DatosDireccion.Calle_Secundaria_Agente;
-      this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA = this.DatosDireccion.Num_Casa_Agente;
-      this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA = this.DatosDireccion.Ciudad.toString().trim();
+      if (this.validarCedulaEntrega() == true) {
+        this.informacionCompra.DATOS_ENTREGA.TIPO_IDENTIFICACION_ENTREGA = this.DatosDireccion.Tipo;
+        this.informacionCompra.DATOS_ENTREGA.IDENTIFICACION_ENTREGA = this.DatosDireccion.Id_Agente;
+        this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA = this.DatosDireccion.Calle_Principal_Agente;
+        this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA = this.DatosDireccion.Calle_Secundaria_Agente;
+        this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA = this.DatosDireccion.Num_Casa_Agente;
+        this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA = this.DatosDireccion.Ciudad.toString().trim();
 
-      this.provinciasDireccion.forEach(provincia => {
-        if (provincia.COD_DPA == this.provinciaDireccion)
-          this.provinciaDireccionNombre = provincia.NOMBRE;
-      })
-      console.log(JSON.stringify(this.provinciasDireccion));
-      this.ciudadesDireccion.forEach(ciudad => {
-        if (ciudad.COD_DPA == this.DatosDireccion.Ciudad.toString().trim()) {
-          this.ciudadDireccionNombre = ciudad.NOMBRE;
+        this.provinciasDireccion.forEach(provincia => {
+          if (provincia.COD_DPA == this.provinciaDireccion)
+            this.provinciaDireccionNombre = provincia.NOMBRE;
+        })
+        console.log(JSON.stringify(this.provinciasDireccion));
+        this.ciudadesDireccion.forEach(ciudad => {
+          if (ciudad.COD_DPA == this.DatosDireccion.Ciudad.toString().trim()) {
+            this.ciudadDireccionNombre = ciudad.NOMBRE;
+          }
+        })
+        console.log(JSON.stringify(this.ciudadesDireccion) + this.ciudadDireccion + this.DatosDireccion.Ciudad);
+        this.informacionCompra.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA = this.DatosDireccion.Nombre;
+        this.informacionCompra.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA = this.DatosDireccion.Num_Cod_Postal;
+        this.informacionCompra.DATOS_ENTREGA.TELEFONO_ENTREGA = this.DatosDireccion.Telefono;
+
+        console.log('DDDDDDDDDDDDDDDDD' + this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA + 'DDDDDDDDDDDD');
+
+        this.banderaDireccionEnvio = true;
+        this.calcularCostosEnvioDomicilio();
+        this.direccionEnvioDiferente = !this.direccionEnvioDiferente;
+      } else {
+        if (this.banderaTipoEntrega) {
+          this.mostrarToast("La cédula ingresada no es válida", "");
+        } else if (!this.banderaTipoEntrega) {
+          this.mostrarToast("El ruc ingresado no es válido", "");
         }
-      })
-      console.log(JSON.stringify(this.ciudadesDireccion) + this.ciudadDireccion + this.DatosDireccion.Ciudad);
-      this.informacionCompra.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA = this.DatosDireccion.Nombre;
-      this.informacionCompra.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA = this.DatosDireccion.Num_Cod_Postal;
-      this.informacionCompra.DATOS_ENTREGA.TELEFONO_ENTREGA = this.DatosDireccion.Telefono;
-
-      console.log('DDDDDDDDDDDDDDDDD' + this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA + 'DDDDDDDDDDDD');
-
-      this.banderaDireccionEnvio = true;
-      this.calcularCostosEnvioDomicilio();
-      this.direccionEnvioDiferente = !this.direccionEnvioDiferente;
+      }
     } else {
       this.mostrarToast("Al parecer existe errores en su formulario por favor revise nuevamente, debe llenar todos los campos obligatorios (*)", "");
+    }
+  }
+
+  public validarCedulaEntrega() {
+    var cad: any = this.DatosDireccion.Id_Agente;
+    var i;
+    var total = 0;
+    var longitud;
+    if (this.DatosDireccion.Tipo == 'Persona')
+      longitud = cad.length;
+    else
+      longitud = cad.length - 3;
+
+    var longcheck = longitud - 1;
+    if (cad !== "" && longitud === 10) {
+      for (i = 0; i < longcheck; i++) {
+        if (i % 2 === 0) {
+          var aux = cad.charAt(i) * 2;
+          if (aux > 9) aux -= 9;
+          total += aux;
+        } else {
+          total += parseInt(cad.charAt(i)); // parseInt o concatenará en lugar de sumar
+        }
+      }
+      total = total % 10 ? 10 - total % 10 : 0;
+
+      if (cad.charAt(longitud - 1) == total) {
+        return true;
+      } else {
+        this.DatosDireccion.Id_Agente = null;
+        return false;
+      }
     }
   }
 
@@ -1016,11 +1228,13 @@ export class CarritoComprasComponent implements OnInit {
       ID_AGENTE: null,
       FECHA_COMPRA: null,
       DATOS_ENTREGA: {
+        TIPO_IDENTIFICACION_ENTREGA: null,
+        NOMBRE_PERSONA_ENVIO_ENTREGA: null,
+        IDENTIFICACION_ENTREGA: null,
         CALLE_PRINCIPAL_ENTREGA: null,
         CALLE_SECUNDARIA_ENTREGA: null,
         NUM_CASA_ENTREGA: null,
         COD_DPA_ENTREGA: null,
-        NOMBRE_PERSONA_ENVIO_ENTREGA: null,
         NUM_COD_POSTAL_ENTREGA: null,
         TELEFONO_ENTREGA: null,
       },
@@ -1054,14 +1268,13 @@ export class CarritoComprasComponent implements OnInit {
 
 
   public siguienteProcesoCompra() {
-    console.log('COMPRA' + JSON.stringify(this.informacionCompra));
+    /*console.log('COMPRA' + JSON.stringify(this.informacionCompra));*/
     if (this.informacionCompra.METODO_ENVIO_COMPRA != null && this.informacionCompra.METODO_PAGO_COMPRA != null) {
       if (!this.noExisteEnvioEstaArea) {
         if (this.banderaDireccionEnvio && this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA == null && !this.noExisteEnvioEstaArea) {
           this.mostrarToast("Ingrese la dirección de envío, para continuar con la compra.", "");
         } else {
           if (this.informacionCompra.DATOS_FACTURA.IDENTIFICACION_FACTURA != null) {
-            console.log('DATOS DE COMPRA A ENVIO' + JSON.stringify(this.informacionCompra));
             this.siguienteDetallePedido = !this.siguienteDetallePedido;
           } else {
             this.mostrarToast("Ingrese los datos de facturación para continuar con la compra.", "");
@@ -1078,5 +1291,36 @@ export class CarritoComprasComponent implements OnInit {
   public atras() {
     this.siguienteDetallePedido = !this.siguienteDetallePedido;
   }
-}
 
+  mensageCorrecto(mensaje) {
+    Swal.fire({
+      icon: 'success',
+      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Correcto..</h5></header>',
+      html: mensaje,
+      position: 'center',
+      width: 600,
+      buttonsStyling: false,
+      //footer: '<a href="http://localhost:4200/loguin"><b><u>Autentificate Ahora</u></b></a>',
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        //icon:'sm'
+      }
+    });
+  }
+
+  mensageError(mensaje) {
+    Swal.fire({
+      icon: 'error',
+      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Error..</h5></header>',
+      text: mensaje,
+      position: 'center',
+      width: 600,
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        container: 'my-swal'
+        //icon:'sm'
+      }
+    });
+  }
+}
