@@ -59,46 +59,46 @@
 <!-- ========================= SECTION INTRO END// ========================= -->
 
 
-
 <!-- ========================= SECTION FEATURE ========================= -->
 <section class="section-content padding-y-sm">
-  <div class="ancho-banner2 mx-auto">
-    <article class=" bg border small pt-2 px-3">
+  <div class="ancho-banner2 mx-auto rounded">
+    <article class=" bg border small pt-3 px-3 rounded">
       <div class="row  ">
-        <div class="col-md-4">
-          <figure class="item-feature">
-            <span class="text-primary"><i class="fa fa-2x fa-truck"></i></span>
+        <div class="col-md-4 border-right">
+          <figure class="item-feature mb-0">
+            <span class="text-primary"><i class="fa fa-3x fa-truck"></i></span>
             <figcaption class="pt-3">
-              <h5 class="title">Fast delivery</h5>
-              <p>Dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore </p>
+              <h5 class="title">Compra sin moverte</h5>
+              <label style="font-size: 0.9rem">Encuentra lo que necesitas, y coordina el pago y la entrega con el
+                vendedor. Es fácil y rápido. ¡Todos podemos hacerlo! </label>
             </figcaption>
           </figure> <!-- iconbox // -->
         </div><!-- col // -->
-        <div class="col-md-4">
-          <figure class="item-feature">
-            <span class="text-primary"><i class="fa fa-3x fa-landmark"></i></span>
+        <div class="col-md-4 border-right">
+          <figure class="item-feature mb-0">
+            <span class="text-primary"><i class="fa fa-3x fa-box-open"></i></span>
             <figcaption class="pt-3">
-              <h5 class="title">Creative Strategy</h5>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-              </p>
+              <h5 class="title">Recibe tu producto</h5>
+              <label style="font-size: 0.9rem">Acuerda la entrega de tu compra con el vendedor. Puedes recibirlo en tu
+                casa, en la oficina o retirarlo. ¡Tú decides qué prefieres!
+              </label>
             </figcaption>
           </figure> <!-- iconbox // -->
         </div><!-- col // -->
-        <div class="col-md-4">
-          <figure class="item-feature">
-            <span class="text-primary"><i class="fa fa-3x fa-lock"></i></span>
+        <div class="col-md-4 border-right">
+          <figure class="item-feature mb-0">
+            <span class="text-primary"><i class="fa fa-3x fa-money-bill-wave"></i></span>
             <figcaption class="pt-3">
-              <h5 class="title">High secured </h5>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-              </p>
+              <h5 class="title">Vende 100% gratis </h5>
+              <label style="font-size: 0.9rem">Piensa qué te gustaría vender, publícalo y gana dinero sin gastar ni un centavo. Tendrás publicaciones gratuitas ilimitadas para todo tipo de productos. ¡Anímate!
+              </label>
             </figcaption>
           </figure> <!-- iconbox // -->
         </div> <!-- col // -->
       </div>
     </article>
     <section *ngIf="vectorTiendasObtenidas.length > 0" class="section-name  ">
-      <div class="mx-auto" >
+      <div class="mx-auto">
         <header class="section-heading">
           <h3 class="section-title">Tiendas asociadas</h3>
         </header><!-- sect-heading -->
@@ -159,7 +159,7 @@
             <div class="card card-product-grid mx-2">
               <a routerLink="../detalle-producto/{{p.ID_OFERTA}}">
                 <img [src]="getImagen(p.IMAGEN)" width="100%"
-                               height="200rem"></a>
+                     height="200rem"></a>
               <figcaption class="info-wrap">
                 <a routerLink="../detalle-producto/{{p.ID_OFERTA}}" class="title"
                    style="overflow:hidden; white-space: nowrap; text-overflow: ellipsis; text-align: justify">{{p.NOMBRE_PRODUCTO}}</a>
@@ -192,7 +192,8 @@
                 </div> <!-- info-price-detail // -->
 
                 <!-- price-wrap.// -->
-                <a routerLink="../detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda" class="title tituloTienda">{{p.NOMBRE_COMERCIAL}}</a>
+                <a routerLink="../detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda"
+                   class="title tituloTienda">{{p.NOMBRE_COMERCIAL}}</a>
               </figcaption>
             </div>
           </ng-template>
@@ -222,7 +223,7 @@
         <ng-container *ngFor="let p of this.populares;index as i">
           <ng-template dataHash="one" carouselSlide id="slider1+{{i}}">
             <div class="card card-product-grid mx-2">
-              <a class="" >
+              <a class="">
                 <img [src]="getImagen(p.IMAGEN)" width="100%"
                      height="200rem"></a>
               <figcaption class="info-wrap">
@@ -257,7 +258,8 @@
                 </div> <!-- info-price-detail // -->
 
                 <!-- price-wrap.// -->
-                <a routerLink="../detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda" class="title tituloTienda">{{p.NOMBRE_COMERCIAL}}</a>
+                <a routerLink="../detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda"
+                   class="title tituloTienda">{{p.NOMBRE_COMERCIAL}}</a>
               </figcaption>
             </div>
           </ng-template>
@@ -287,7 +289,7 @@
         <ng-container *ngFor="let p of this.recomendados;index as i">
           <ng-template dataHash="one" carouselSlide id="slider2+{{i}}">
             <div class="card card-product-grid mx-2">
-              <a class="" >
+              <a class="">
                 <img [src]="getImagen(p.IMAGEN)" width="100%"
                      height="200rem"></a>
               <figcaption class="info-wrap">
@@ -322,7 +324,8 @@
                 </div> <!-- info-price-detail // -->
 
                 <!-- price-wrap.// -->
-                <a routerLink="../detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda" class="title tituloTienda">{{p.NOMBRE_COMERCIAL}}</a>
+                <a routerLink="../detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda"
+                   class="title tituloTienda">{{p.NOMBRE_COMERCIAL}}</a>
               </figcaption>
             </div>
           </ng-template>
@@ -553,15 +556,11 @@
 <!-- ========================= SECTION CONTENT END// ========================= -->
 
 
-
-
-
 <!-- ========================= SECTION  ========================= -->
 <section class="section-name padding-y">
   <div class="container">
 
     <h3 class="mb-3">Download app demo text</h3>
-
 
 
   </div><!-- container // -->
