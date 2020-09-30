@@ -7,7 +7,7 @@
   background-color: #2a4c75;
 }
 
-.nombre-producto{
+.nombre-producto {
 
 }
 
@@ -21,14 +21,11 @@
 }
 
 
-
-
 .nav-link {
   color: white;
- font-weight: normal;
+  font-weight: normal;
   font-size: small;
 }
-
 
 
 .nav-link:hover {
@@ -38,12 +35,24 @@
 
 .alto-banner {
   height: 400px;
+
 }
 
+.ancho-banner {
+  width: 65%;
+}
+.ancho-banner2{
+  width: 64%;
+}
 
-@media (max-width:720px) {
+@media (max-width: 720px) {
   .alto-banner {
     height: 200px;
+    width: 100%;
   }
+  .ancho-banner2{
+    width: 100%;
+  }
+
 
 }

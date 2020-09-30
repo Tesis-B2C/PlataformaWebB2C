@@ -70,7 +70,7 @@ export class PrincipalComponent implements OnInit {
     mouseDrag: true,
     touchDrag: true,
     pullDrag: true,
-    dots: true,
+    dots: false,
     navSpeed: 1000,
 
     autoplay: true,
@@ -92,7 +92,7 @@ export class PrincipalComponent implements OnInit {
         items: 4
       },
       940: {
-        items: 4
+        items: 5
       }
     },
     nav: false
