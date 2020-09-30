@@ -356,6 +356,49 @@ async function getMisCompras(req, res) {
 }
 
 
+async function getMisComprasRecientes(req, res) {
+    let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
+    try {
+        if (!verificar) {
+            return res.status(500).send({
+                message: "No tiene los permisos necesarios"
+            });
+        } else {
+            let comprasObtenidas = await Compra.findAll({
+                where: {
+                    COD_AGENTE: req.user.id,
+                    FECHA_COMPRA: {[Op.between]: [moment().subtract(1, 'months'), moment()]}
+                }, order: [['NUM_COMPRA', 'DESC']],
+                include: [{
+                    model: Compra_Producto, include: {
+                        model: Variante,
+                        include: {model: Producto, include: {model: Oferta, include: {model: Tienda}}}
+                    }
+                }, {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}]
+
+            });
+
+            if (comprasObtenidas.length > 0) {
+                res.status(200).send({
+                    data: comprasObtenidas,
+                    message: "Compra obtenida correcctamente"
+                });
+            } else {
+                res.status(404).send({
+                    message: 'No existen compras'
+                });
+
+
+            }
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+
+
 async function getMisPedidos(req, res) {
     let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
     try {
@@ -426,7 +469,7 @@ async function getPedido(req, res) {
 
             let pedido = await Compra.findOne({
                 where: {
-                   NUM_COMPRA:req.params.id
+                    NUM_COMPRA: req.params.id
                 }, order: [['NUM_COMPRA', 'DESC']],
                 include: [{model: Agente}, {
                     model: Compra_Producto, include: {
@@ -459,7 +502,7 @@ async function getPedido(req, res) {
 
 async function updateEstadoPedido(req, res) {
     try {
-        let verificar = await  Agente.findOne({where: {COD_AGENTE: req.user.id}});
+        let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
             return res.status(500).send({
@@ -469,7 +512,7 @@ async function updateEstadoPedido(req, res) {
 
             let pedidoActualizado = await Compra.update({
                 ESTADO_COMPRA: req.params.estado,
-                FECHA_ENVIO:moment()
+                FECHA_ENVIO: moment()
             }, {
                 where: {NUM_COMPRA: req.params.id},
             });
@@ -496,5 +539,6 @@ module.exports = {
     getMisCompras,
     getMisPedidos,
     getPedido,
-    updateEstadoPedido
+    updateEstadoPedido,
+    getMisComprasRecientes
 };

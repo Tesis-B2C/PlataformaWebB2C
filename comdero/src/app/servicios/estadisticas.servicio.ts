@@ -79,4 +79,17 @@ export class EstadisticasServicio {
     return this._http.get<objeto>(this.url + "getProductoDetalleMasVendido/"+idVariante , { headers: headers });
   }
 
+  getEstadisticaCarrito(idAgente){
+    let headers = new HttpHeaders({ "Content-type": "application/json","Authorization": this._agenteServicio.getToken() });
+    return this._http.get<objeto>(this.url + "getEstadisticaCarrito/"+idAgente , { headers: headers });
+  }
+
+
+  getEstadisticaPedidosRealizados(idAgente){
+    let headers = new HttpHeaders({ "Content-type": "application/json","Authorization": this._agenteServicio.getToken() });
+    return this._http.get<objeto>(this.url + "getEstadisticaPedidosRealizados/"+idAgente , { headers: headers });
+  }
+
+
+
 }

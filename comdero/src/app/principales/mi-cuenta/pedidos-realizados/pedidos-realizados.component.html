@@ -175,12 +175,12 @@
                 </div>
                 <div class="col-12 col-md-3 text-center text-md-left   ">
                   <p class="text-uppercase  white d-md-block d-none">.</p>
-                  <button class="btn btn-outline-dark w-100"
+                  <button class="btn btn-outline-dark w-100 btn-sm"
                           (click)="productoActivo(producto.VARIANTE.PRODUCTO.ID_PRODUCTO,producto.VARIANTE.PRODUCTO.COD_PRODUCTO);abrirModalCalificacion(contentCalificacion)">
                     Agregar opinion
                   </button>
 
-                  <button *ngIf="compra.ESTADO_COMPRA==1" class="btn btn-outline-dark w-100 mt-2"
+                  <button *ngIf="compra.ESTADO_COMPRA==1" class="btn btn-outline-dark w-100 mt-2 btn-sm"
                           (click)="updatePedido(compra.NUM_COMPRA,2); recibidos.click()">Finalizar
                     pedido
                   </button>

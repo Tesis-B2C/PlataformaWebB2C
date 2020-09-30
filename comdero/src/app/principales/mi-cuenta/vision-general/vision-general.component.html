@@ -7,7 +7,7 @@
       </div>
       <div class="">
         <strong>{{identidad.NOMBRE}} </strong> <br>
-       {{identidad.CORREO}} <br>
+        {{identidad.CORREO}} <br>
         <a [routerLink]="['/principales/menu/mi-cuenta/menu-mi-cuenta/datos-personales']">Editar</a>
       </div>
     </figure>
@@ -16,28 +16,29 @@
     <article class="card-group">
       <figure class="card bg">
         <div class="p-3">
-          <h5 class="card-title">38</h5>
-          <span>Ordenes</span>
+          <h5 class="card-title">{{this.carrito}}</h5>
+          <span>Productos en el carrito</span>
         </div>
       </figure>
       <figure class="card bg">
         <div class="p-3">
-          <h5 class="card-title">5</h5>
-          <span>Deseos</span>
+          <h5 class="card-title">{{this.pedidos?.realizados}}</h5>
+          <span>En proceso</span>
         </div>
       </figure>
       <figure class="card bg">
         <div class="p-3">
-          <h5 class="card-title">12</h5>
-          <span>A la espera de la entrega</span>
+          <h5 class="card-title">{{this.pedidos?.espera}}</h5>
+          <span>A espera de la entrega</span>
         </div>
       </figure>
       <figure class="card bg">
         <div class="p-3">
-          <h5 class="card-title">50</h5>
-          <span>Articulos entregados</span>
+          <h5 class="card-title">{{this.pedidos?.entregados}}</h5>
+          <span>Entregados</span>
         </div>
       </figure>
+
     </article>
 
 
@@ -48,39 +49,22 @@
   <div class="card-body">
     <h5 class="card-title mb-4">Ordenes recientes</h5>
 
-    <!--         <div class="row">
-               <div class="col-md-6">
+             <div class="row">
+               <div class="col-md-6" *ngFor="let pedidos of this.comprasObtenidas ">
                  <figure class="itemside  mb-3">
-                   <div class="aside"><img src="images/items/1.jpg" class="border img-sm"></div>
+                   <div class="aside"><img [src]="getImagen(pedidos.COMPRA_PRODUCTOs[0].IMAGEN_MOSTRAR)"  class="border img-sm"></div>
                    <figcaption class="info">
-                     <time class="text-muted"><i class="fa fa-calendar-alt"></i> 12.09.2019</time>
-                     <p>Great item name goes here </p>
-                     <span class="text-warning">Pending</span>
+                     <time class="text-muted"><i class="fa fa-calendar-alt"></i>&nbsp; {{pedidos.FECHA_COMPRA}}</time>
+                     <p ><label class="mb-0">Productos:</label> &nbsp;{{pedidos.COMPRA_PRODUCTOs.length}} </p>
+                     <p><label class="mb-0">Total:</label> &nbsp;{{pedidos.total_final | currency}} </p>
+                     <span class="text-warning" *ngIf="pedidos.ESTADO_COMPRA==0">En proceso</span>
+                     <span class="text-primary" *ngIf="pedidos.ESTADO_COMPRA==1">Enviado</span>
+                     <span class="text-success" *ngIf="pedidos.ESTADO_COMPRA==2">Recibido</span>
                    </figcaption>
                  </figure>
                </div>
-               <div class="col-md-6">
-                 <figure class="itemside  mb-3">
-                   <div class="aside"><img src="images/items/2.jpg" class="border img-sm"></div>
-                   <figcaption class="info">
-                     <time class="text-muted"><i class="fa fa-calendar-alt"></i> 12.09.2019</time>
-                     <p>Machine for kitchen to blend </p>
-                     <span class="text-success">Departured</span>
-                   </figcaption>
-                 </figure>
-               </div>
-               <div class="col-md-6">
-                 <figure class="itemside mb-3">
-                   <div class="aside"><img src="images/items/3.jpg" class="border img-sm"></div>
-                   <figcaption class="info">
-                     <time class="text-muted"><i class="fa fa-calendar-alt"></i> 12.09.2019</time>
-                     <p>Ladies bag original leather </p>
-                     <span class="text-success">Shipped  </span>
-                   </figcaption>
-                 </figure>
-               </div>
-             </div>  row.// -->
+             </div>
 
-    <a href="#" class="btn btn-outline-primary">Ver todas </a>
+    <a routerLink="../pedidos-realizados" class="btn btn-outline-primary btn-sm float-right">Ver todas </a>
   </div> <!-- card-body .// -->
 </article> <!-- card.// -->

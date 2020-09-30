@@ -16,4 +16,9 @@ api.get('/getVentasVisitas/:id',md_auth.ensureAuth, EstadisticasController.getVe
 api.get('/getProductoMasVendido/:id',md_auth.ensureAuth, EstadisticasController.getProductoMasVendido);
 api.get('/getProductoDetalleMasVendido/:id',md_auth.ensureAuth, EstadisticasController.getProductoDetalleMasVendido);
 
+
+// usuario
+api.get('/getEstadisticaCarrito/:id',md_auth.ensureAuth, EstadisticasController.getEstadisticaCarrito);
+api.get('/getEstadisticaPedidosRealizados/:id',md_auth.ensureAuth, EstadisticasController.getEstadisticaPedidosRealizados);
+
 module.exports = api;// exportamos el router de express para que las routas funcionen por todo el back end

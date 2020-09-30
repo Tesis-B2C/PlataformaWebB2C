@@ -6,6 +6,10 @@ const api = express.Router(); // esto sirve para crear las rutas
 api.post('/saveComprarProducto', md_auth.ensureAuth, CompraController.saveComprarProducto);
 api.post('/saveComprarProductoCarrito', md_auth.ensureAuth, CompraController.saveComprarProductoCarrito);
 api.get('/getMisCompras/:estado/:meses', md_auth.ensureAuth, CompraController.getMisCompras);
+api.get('/getMisComprasRecientes', md_auth.ensureAuth, CompraController.getMisComprasRecientes);
+
+
+
 api.post('/getMisPedidos/:estado/:idTienda', md_auth.ensureAuth, CompraController.getMisPedidos);
 api.get('/getPedido/:id', md_auth.ensureAuth, CompraController.getPedido);
 api.get('/updateEstadoPedido/:id/:estado', md_auth.ensureAuth, CompraController.updateEstadoPedido);

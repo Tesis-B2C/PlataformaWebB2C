@@ -12,6 +12,8 @@ const Descuento = require('../models/descuento');
 const Compra_Producto = require('../models/compra_producto');
 const Variante = require('../models/variante');
 const {Op} = require("sequelize");
+const Carrito = require('../models/carrito');
+const Carrito_Producto = require('../models/carrito_producto');
 
 async function getVentas(req, res) {
     let busqueda = req.params.id;
@@ -390,6 +392,75 @@ async function getProductoDetalleMasVendido(req, res) {
 }
 
 
+async function getEstadisticaCarrito(req, res) {
+    let busqueda = req.params.id;
+    try {
+        let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
+        if (!verificar) {
+            return res.status(500).send({
+                message: "No tiene los permisos necesarios"
+            });
+        } else {
+            let Car = await Carrito.findOne({
+                where: {COD_AGENTE: req.params.id},
+            });
+
+            let carritoObtenido = await Carrito_Producto.findAndCountAll({ //$or: [{ESTADO_OFERTA: 0},{ESTADO_OFERTA: 1}]
+                where: {ID_CARRITO: Car.dataValues.ID_CARRITO},
+            });
+
+            res.status(200).send({
+                data: carritoObtenido.count,
+                message: "Métodos de envío cargados correctamente"
+            });
+        }
+
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+
+async function getEstadisticaPedidosRealizados(req, res) {
+    let busqueda = req.params.id;
+    try {
+        let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
+        if (!verificar) {
+            return res.status(500).send({
+                message: "No tiene los permisos necesarios"
+            });
+        } else {
+            let realizados = await Compra.findAndCountAll({
+                where: {COD_AGENTE: req.params.id, ESTADO_COMPRA:0},
+            });
+            let espera = await Compra.findAndCountAll({
+                where: {COD_AGENTE: req.params.id, ESTADO_COMPRA:1},
+            });
+            let entregados = await Compra.findAndCountAll({
+                where: {COD_AGENTE: req.params.id, ESTADO_COMPRA:2},
+            });
+
+            let obj={
+                realizados:realizados.count,
+                espera:espera.count,
+                entregados:entregados.count
+
+            }
+
+            res.status(200).send({
+                data: obj,
+                message: "Métodos de envío cargados correctamente"
+            });
+        }
+
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+
 module.exports = {          // para exportar todas las funciones de este modulo
     getVentas,
     getCalificaciones,
@@ -401,5 +472,8 @@ module.exports = {          // para exportar todas las funciones de este modulo
     getVentasMensuales,
     getVentasVisitas,
     getProductoMasVendido,
-    getProductoDetalleMasVendido
+    getProductoDetalleMasVendido,
+    getEstadisticaCarrito,
+    getEstadisticaPedidosRealizados
+
 };
