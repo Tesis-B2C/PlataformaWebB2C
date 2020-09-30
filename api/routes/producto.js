@@ -9,7 +9,7 @@ const cache=require('../middleware/cahce');
 api.post('/saveProducto', multer.array('imagenes'), ProductoController.saveProducto);
 api.get('/getMisProductos/:id' ,[ md_auth.ensureAuth], ProductoController.getMisProductos);
 api.get('/getProducto/:id',[md_auth.ensureAuth],ProductoController.getProducto);
-api.get('/obtenerTodosProductos',ProductoController.obtenerTodosProductos);
+api.get('/obtenerTodosProductos/:estado',ProductoController.obtenerTodosProductos);
 api.get('/obtenerProductoDetalle/:id',ProductoController.obtenerProductoDetalle);
 api.put('/updateProducto/:id', multer.array('imagenes'),ProductoController.updateProducto);
 api.put('/updateEstadoProducto/:id',[md_auth.ensureAuth],ProductoController.updateEstadoProducto);

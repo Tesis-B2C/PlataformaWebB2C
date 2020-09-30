@@ -513,66 +513,130 @@ async function obtenerTodosProductos(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
     let fechaHoy = moment().format("YYYY-MM-DD");
     try {
-        let productosObtenidos = await Oferta.findAll({
-            include: [{
-                model: Producto,
-                attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'ID_OFERTA', 'NOMBRE_PRODUCTO',],
+        let productosObtenidos;
+        if (req.params.estado == 0) {
+            productosObtenidos = await Oferta.findAll({
                 include: [{
-                    model: Variante,
-                    separate: true,
-                    attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'NUM_VARIANTE', 'PRECIO_UNITARIO'],
-                    order: [['NUM_VARIANTE', 'ASC']],
-                    include: {
-                        model: Imagen_Producto,
-                        where: {
-                            TIPO_IMAGEN: {
-                                [Op.like]: 'image%'
-                            }
-                        },
+                    model: Producto,
+                    attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'ID_OFERTA', 'NOMBRE_PRODUCTO',],
+                    include: [{
+                        model: Variante,
                         separate: true,
-                        attributes: ['NUM_VARIANTE', 'IMAGEN'],
-                        order: [['ID_IMAGEN', 'ASC']]
-                    }
-                }, {
-                    model: Producto_Descuento,
-                    include: {
-                        model: Descuento,
-                        where: {
-                            ESTADO_DESCUENTO: 0,
-                            FECHA_INICIO: {
-                                [Op.lte]: fechaHoy
+                        attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'NUM_VARIANTE', 'PRECIO_UNITARIO'],
+                        order: [['NUM_VARIANTE', 'ASC']],
+                        include: {
+                            model: Imagen_Producto,
+                            where: {
+                                TIPO_IMAGEN: {
+                                    [Op.like]: 'image%'
+                                }
                             },
-                            FECHA_FIN: {
-                                [Op.gte]: fechaHoy
+                            separate: true,
+                            attributes: ['NUM_VARIANTE', 'IMAGEN'],
+                            order: [['ID_IMAGEN', 'ASC']]
+                        }
+                    }, {
+                        model: Producto_Descuento,
+                        include: {
+                            model: Descuento,
+                            where: {
+                                ESTADO_DESCUENTO: 0,
+                                FECHA_INICIO: {
+                                    [Op.lte]: fechaHoy
+                                },
+                                FECHA_FIN: {
+                                    [Op.gte]: fechaHoy
+                                }
                             }
                         }
-                    }
+                    }, {
+                        model: Calificacion,
+                        separate: true,
+                        attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', [Calificacion.sequelize.fn('AVG', Calificacion.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
+                        group: ['ID_PRODUCTO', 'COD_PRODUCTO']
+                    }, {
+                        model: Comentario,
+                        separate: true,
+                        attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', [Comentario.sequelize.fn('COUNT', Comentario.sequelize.col('ID_COMENTARIO')), 'TOTAL_COM']],
+                        group: ['ID_PRODUCTO', 'COD_PRODUCTO']
+                    }]
                 }, {
-                    model: Calificacion,
-                    separate: true,
-                    attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', [Calificacion.sequelize.fn('AVG', Calificacion.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
-                    group: ['ID_PRODUCTO', 'COD_PRODUCTO']
-                }, {
-                    model: Comentario,
-                    separate: true,
-                    attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', [Comentario.sequelize.fn('COUNT', Comentario.sequelize.col('ID_COMENTARIO')), 'TOTAL_COM']],
-                    group: ['ID_PRODUCTO', 'COD_PRODUCTO']
-                }]
-            }, {
-                model: Tienda,
+                    model: Tienda,
+                    where: {
+                        ESTADO_TIENDA: 0,
+                    },
+                    attributes: ['NOMBRE_COMERCIAL', 'NUM_TIENDA']
+                }],
+                attributes: ['ID_OFERTA', 'IVA'],
                 where: {
-                    ESTADO_TIENDA: 0
+                    ESTADO_OFERTA: 0,
+                    FECHA_CREACION: {[Op.between]: [moment().subtract(1, 'months'), moment()]}
                 },
-                attributes: ['NOMBRE_COMERCIAL', 'NUM_TIENDA']
-            }],
-            attributes: ['ID_OFERTA', 'IVA'],
-            where: {
-                ESTADO_OFERTA: 0
-            },
-            order: [['ID_OFERTA', 'ASC']],
-            transaction: t
-        });
+                order: [['ID_OFERTA', 'ASC']],
+                transaction: t
+            });
+        } else {
+            productosObtenidos = await Oferta.findAll({
+                include: [{
+                    model: Producto,
+                    attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'ID_OFERTA', 'NOMBRE_PRODUCTO',],
+                    include: [{
+                        model: Variante,
+                        separate: true,
+                        attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'NUM_VARIANTE', 'PRECIO_UNITARIO'],
+                        order: [['NUM_VARIANTE', 'ASC']],
+                        include: {
+                            model: Imagen_Producto,
+                            where: {
+                                TIPO_IMAGEN: {
+                                    [Op.like]: 'image%'
+                                }
+                            },
+                            separate: true,
+                            attributes: ['NUM_VARIANTE', 'IMAGEN'],
+                            order: [['ID_IMAGEN', 'ASC']]
+                        }
+                    }, {
+                        model: Producto_Descuento,
+                        include: {
+                            model: Descuento,
+                            where: {
+                                ESTADO_DESCUENTO: 0,
+                                FECHA_INICIO: {
+                                    [Op.lte]: fechaHoy
+                                },
+                                FECHA_FIN: {
+                                    [Op.gte]: fechaHoy
+                                }
+                            }
+                        }
+                    }, {
+                        model: Calificacion,
+                        separate: true,
+                        attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', [Calificacion.sequelize.fn('AVG', Calificacion.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
+                        group: ['ID_PRODUCTO', 'COD_PRODUCTO']
+                    }, {
+                        model: Comentario,
+                        separate: true,
+                        attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', [Comentario.sequelize.fn('COUNT', Comentario.sequelize.col('ID_COMENTARIO')), 'TOTAL_COM']],
+                        group: ['ID_PRODUCTO', 'COD_PRODUCTO']
+                    }]
+                }, {
+                    model: Tienda,
+                    where: {
+                        ESTADO_TIENDA: 0,
+                    },
+                    attributes: ['NOMBRE_COMERCIAL', 'NUM_TIENDA']
+                }],
+                attributes: ['ID_OFERTA', 'IVA'],
+                where: {
+                    ESTADO_OFERTA: 0,
 
+                },
+                order: [['ID_OFERTA', 'ASC']],
+                transaction: t
+            });
+        }
         await t.commit();
         res.status(200).send({
             data: productosObtenidos,
@@ -629,8 +693,8 @@ async function obtenerProductoDetalle(req, res) {
                     group: ['ID_PRODUCTO']
                 }, {
                     model: Comentario,
-                    include:{model: Agente},
-                    order: [['ID_COMENTARIO','DESC']],
+                    include: {model: Agente},
+                    order: [['ID_COMENTARIO', 'DESC']],
                     separate: true
                 }],
             }, {

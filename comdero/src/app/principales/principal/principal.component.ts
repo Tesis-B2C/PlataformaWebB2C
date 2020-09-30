@@ -102,7 +102,7 @@ export class PrincipalComponent implements OnInit {
   public vectorProductosObtenidos = [];
   currentRate = 1;
 
-  constructor(configRating: NgbRatingConfig, public route: ActivatedRoute, public router: Router, public _agenteServicio: AgenteServicio, public _tiendaServicio: TiendaServicio, public _productoServicio:ProductoServicio , public _categoriaServicio: CategoriaServicio, config: NgbCarouselConfig) {
+  constructor(configRating: NgbRatingConfig, public route: ActivatedRoute, public router: Router, public _agenteServicio: AgenteServicio, public _tiendaServicio: TiendaServicio, public _productoServicio: ProductoServicio, public _categoriaServicio: CategoriaServicio, config: NgbCarouselConfig) {
     configRating.max = 5;
     configRating.readonly = true;
     // customize default values of carousels used by this component tree
@@ -110,9 +110,15 @@ export class PrincipalComponent implements OnInit {
     config.showNavigationIndicators = true;
   }
 
-  ngOnInit() {
+  public nuevos;
+  public populares;
+  public recomendados;
+
+  async ngOnInit() {
     this.getCategorias();
-    this.obtenerTodosProductos();
+    this.nuevos = await this.obtenerTodosProductos(0); // nuevos
+    this.populares = await this.obtenerTodosProductos(1); //populares o con mas estrellas
+    this.recomendados = await this.obtenerTodosProductos(2);// recomendados o con mas
     this.obtenerTodasTiendas();
   }
 
@@ -126,9 +132,10 @@ export class PrincipalComponent implements OnInit {
     return this.noExite;
   }
 
-  public async obtenerTodosProductos() {
+  public async obtenerTodosProductos(estado) {
+    this.vectorProductosObtenidos = [];
     try {
-      let response = await this._productoServicio.obtenerTodosProductos().toPromise();
+      let response = await this._productoServicio.obtenerTodosProductos(estado).toPromise();
       console.log("PRODUCTOS" + JSON.stringify(response));
       this.productosObtenidos = response.data;
       this.productosObtenidos.forEach(elemnt => {
@@ -168,8 +175,34 @@ export class PrincipalComponent implements OnInit {
         objProducto.DESCUENTO_AUTOMATICO = this.buscarDescuentoAutomatico(elemnt.PRODUCTO.PRODUCTO_DESCUENTOs, objProducto.PRECIO_CON_IVA);
 
         this.vectorProductosObtenidos.push(objProducto);
-      })
-      console.log(JSON.stringify(this.vectorProductosObtenidos)+'hola');
+      });
+
+      if (estado == 1) {
+        this.vectorProductosObtenidos.sort(function (a, b) {
+          if (a.PROMEDIO_CAL > b.PROMEDIO_CAL) {
+            return 1;
+          }
+          if (a.PROMEDIO_CAL < b.PROMEDIO_CAL) {
+            return -1;
+          }
+          // a must be equal to b
+          return 0;
+        }).reverse();
+      }
+
+      if (estado == 2) {
+        this.vectorProductosObtenidos.sort(function (a, b) {
+          if (a.TOTAL_COM > b.TOTAL_COM) {
+            return 1;
+          }
+          if (a.TOTAL_COM < b.TOTAL_COM) {
+            return -1;
+          }
+          return 0;
+        }).reverse();
+      }
+
+      return this.vectorProductosObtenidos;
     } catch (e) {
       console.log("error:" + JSON.stringify((e)));
     }
@@ -212,9 +245,9 @@ export class PrincipalComponent implements OnInit {
         }
       })
 
-      if(this.porcentajeDescuento > 0){
+      if (this.porcentajeDescuento > 0) {
         this.PRECIO_UNITARIO_CON_IVA_DESCUENTO = PRECIO_CON_IVA - ((PRECIO_CON_IVA * this.porcentajeDescuento) / 100);
-      }else{
+      } else {
         this.PRECIO_UNITARIO_CON_IVA_DESCUENTO = null;
       }
     } else {
