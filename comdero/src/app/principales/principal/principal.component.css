@@ -53,3 +53,7 @@
 
 
 }
+
+footer p, li, a{
+  font-size: small;
+}
