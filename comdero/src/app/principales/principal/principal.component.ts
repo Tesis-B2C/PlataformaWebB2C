@@ -92,7 +92,7 @@ export class PrincipalComponent implements OnInit {
         items: 4
       },
       940: {
-        items: 4
+        items: 5
       }
     },
     nav: false
