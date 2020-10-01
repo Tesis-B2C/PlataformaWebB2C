@@ -10,17 +10,18 @@
       <div class="form-group">
         <label>Comentario</label>
         <div class="input-group">
-          <textarea type="text" name="workoutName" class="form-control" id="workout-name"  rows="5" [(ngModel)]="comentario"></textarea>
+          <textarea type="text" name="workoutName" class="form-control" id="workout-name" rows="5"
+                    [(ngModel)]="comentario"></textarea>
 
         </div>
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="editarComentario();modal.close('Save click')">Guardar</button>
+    <button type="button" class="btn btn-outline-dark" (click)="editarComentario();modal.close('Save click')">Guardar
+    </button>
   </div>
 </ng-template>
-
 
 
 <!-- ========================= SECTION FRANJA AZUL ========================= -->
@@ -115,36 +116,37 @@
               <div class="form-row justify-content-center text-center">
 
                 <label class=" m-0 col-md-4 "><strong>{{this.productoDetalle?.PRODUCTO.CONDICION}}</strong></label>
-              <div class="rating-wrap mb-0 col-md-4">
+                <div class="rating-wrap mb-0 col-md-4">
 
-                <div class="row no-gutters justify-content-center">
-                <h3 class=" text-center col-auto">{{this.productoDetalle?.PRODUCTO.CALIFICACIONs[0]?.PROMEDIO_CAL | number}}</h3>
+                  <div class="row no-gutters justify-content-center">
+                    <h3
+                      class=" text-center col-auto mr-2">{{this.productoDetalle?.PRODUCTO.CALIFICACIONs[0]?.PROMEDIO_CAL | number}}</h3>
 
-                <ul class="rating-stars col-auto">
+                    <ul class="rating-stars col-auto">
 
-                  <ngb-rating *ngIf="this.productoDetalle?.PRODUCTO.CALIFICACIONs.length != 0"
-                              [(rate)]="this.productoDetalle?.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL">
-                    <ng-template let-fill="fill">
-                      <span class="star" [class.filled]="fill === 100">&#9733;</span>
-                    </ng-template>
-                  </ngb-rating>
+                      <ngb-rating *ngIf="this.productoDetalle?.PRODUCTO.CALIFICACIONs.length != 0"
+                                  [(rate)]="this.productoDetalle?.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL">
+                        <ng-template let-fill="fill">
+                          <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                        </ng-template>
+                      </ngb-rating>
 
-                  <ngb-rating *ngIf="this.productoDetalle?.PRODUCTO.CALIFICACIONs.length == 0"
-                              [(rate)]="currentRate">
-                    <ng-template let-fill="fill">
-                      <span class="star" [class.filled]="fill === 100">&#9733;</span>
-                    </ng-template>
-                  </ngb-rating>
+                      <ngb-rating *ngIf="this.productoDetalle?.PRODUCTO.CALIFICACIONs.length == 0"
+                                  [(rate)]="currentRate">
+                        <ng-template let-fill="fill">
+                          <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                        </ng-template>
+                      </ngb-rating>
 
-                </ul>
+                    </ul>
+                  </div>
                 </div>
-              </div>
                 <div class="col-md-4">
                 <span *ngIf="this.productoDetalle?.PRODUCTO.COMENTARIOs.length > 0"
                       class="label-rating text-muted">{{this.productoDetalle?.PRODUCTO.COMENTARIOs.length}}
                   comentarios</span>
 
-                <span *ngIf="this.productoDetalle?.PRODUCTO.COMENTARIOs.length == 0" class="label-rating text-muted">0 Comentarios </span>
+                  <span *ngIf="this.productoDetalle?.PRODUCTO.COMENTARIOs.length == 0" class="label-rating text-muted">0 Comentarios </span>
                 </div>
               </div> <!-- rating-wrap.// -->
 
@@ -192,7 +194,8 @@
                     <dd *ngIf="this.existeTalla == true" class="col-sm-9 col-8">
 
                       <div class="form-group col-lg-6 col-md-6 col-10 my-2 p-0">
-                        <select (change)="this.verificarVariante()" class=" tamanioInputs form-control form-control-sm" data-size="4"
+                        <select (change)="this.verificarVariante()" class=" tamanioInputs form-control form-control-sm"
+                                data-size="4"
                                 name="tallaSelect" id="tallaSelect">
                           <option *ngFor="let talla of this.arrayTalla"
                                   [selected]="talla == this.varianteActiva.TALLA"
@@ -206,7 +209,8 @@
                     <dd *ngIf="this.existeMaterial == true" class="col-sm-9 col-8">
 
                       <div class="form-group col-lg-6 col-md-6 col-10 my-2 p-0">
-                        <select (change)="this.verificarVariante()" class="tamanioInputs form-control form-control-sm" data-size="4"
+                        <select (change)="this.verificarVariante()" class="tamanioInputs form-control form-control-sm"
+                                data-size="4"
                                 name="materialSelect" id="materialSelect">
                           <option *ngFor="let material of this.arrayMaterial"
                                   [selected]="material == this.varianteActiva.MATERIAL"
@@ -215,7 +219,9 @@
                       </div>
                     </dd>
 
-                    <dt class="col-sm-3 col-4 mt-4">Cantidad <a class="m-0 pt-0 text-center" style="font-size: 11px">({{this.varianteActiva.MEDIDA}})</a></dt>
+                    <dt class="col-sm-3 col-4 mt-4">Cantidad <a class="m-0 pt-0 text-center"
+                                                                style="font-size: 11px">({{this.varianteActiva.MEDIDA}}
+                      )</a></dt>
 
                     <dd class="col-sm-9 col-8">
                       <div class="form-group form-control-sm col-lg-6 col-md-6 col-10 my-2 p-0">
@@ -285,7 +291,7 @@
             <article class="card">
               <div class="card-body">
                 <h5>Descripción del producto</h5>
-                <p class="small text-justify">
+                <p class=" text-justify">
                   {{this.productoDetalle?.PRODUCTO.DESCRIPCION_PRODUCTO}}
                 </p>
                 <hr>
@@ -321,10 +327,10 @@
             <article class="card">
               <div id="cardMetodosEnvioInformacion">
                 <div class="row justify-content-center ">
-                  <h4 class="card-title text-center ">Opciones de Pago</h4>
+                  <h4 class="card-title text-center mt-3">Opciones de Pago</h4>
 
                 </div>
-                <p class="text-center dis-block">Contamos con varios métodos de pago para facilitar la compra de tus
+                <p class="text-center px-2">Contamos con varios métodos de pago para facilitar la compra de tus
                   productos,
                   al momento de realizar la
                   transacción.</p>
@@ -337,7 +343,7 @@
                       <div class="col-lg-4 col-xs-12  text-center" *ngIf="this.objEfectivo.Tipo_Pago!=null">
                         <div class="box py-2">
                           <div class="box-title mb-2">
-                            <h3>Efectivo</h3>
+                            <h5>Efectivo</h5>
                           </div>
                           <p class=" iconos-pagos "><img src="assets/images/icon-efectivo.png" alt="..."></p>
                           <div class="box-text">
@@ -349,7 +355,7 @@
                       <div class="col-lg-4 col-xs-12  text-center" *ngIf="this.objTransferencia.Tipo_Pago!=null">
                         <div class="box py-2">
                           <div class="box-title mb-2">
-                            <h3>Transferencia bancaria</h3>
+                            <h5>Transferencia bancaria</h5>
                           </div>
                           <p class=" iconos-pagos "><img src="assets/images/icon-transferencia.png" alt="..."></p>
                           <div class="box-text">
@@ -370,7 +376,7 @@
                       <div class="col-lg-4 col-xs-12  text-center" *ngIf="this.objElectronico.Tipo_Pago!=null">
                         <div class="box py-2">
                           <div class="box-title mb-2">
-                            <h3>Electrónico</h3>
+                            <h5>Electrónico</h5>
                           </div>
                           <p class=" iconos-pagos "><img src="assets/images/icon-electronico.png" alt="..."></p>
                           <div class="box-text">
@@ -389,17 +395,15 @@
 
               <div id="cardMetodosPagoInformacion">
 
-                <div class="row justify-content-center ">
-                  <h4 class="card-title text-center ">Opciones de Entrega</h4>
-                  <p class=" text-center">Contamos con algunas opciones para facilitar la entrega de
-                    nuestros productos, si no encuentras una opción que se ajuste a tus necesidades de seguro llegaremos
-                    a un acuerdo </p>
-                </div>
+                <h4 class="card-title text-center ">Opciones de Entrega</h4>
+                <p class=" text-center px-2">Contamos con algunas opciones para facilitar la entrega de
+                  nuestros productos, si no encuentras una opción que se ajuste a tus necesidades de seguro llegaremos
+                  a un acuerdo </p>
 
                 <div class="social-box"
                      *ngIf="this.objTransferencia.Tipo_Pago!=null || this.objEfectivo.Tipo_Pago!=null || this.objElectronico.Tipo_Pago!=null">
                   <div class="container">
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center px-3">
 
                       <div class="card col-md-4" *ngFor="let envio of this.productoDetalle.TIENDA.OPCION_ENVIOs">
                         <div class="card-body" *ngIf="envio.TIPO_ENVIO=='Domicilio'">
@@ -1376,7 +1380,7 @@
       <hr class="my-0">
       <div class="row no-gutters ">
         <div class="col-md-1 mt-md-0 mt-2 justify-content-center align-items-center dis-flex ">
-          <img src="assets/images/user.png" class="card-img " style="width: 50px"  alt="usuario">
+          <img src="assets/images/user.png" class="card-img " style="width: 50px" alt="usuario">
         </div>
         <div class="col-md-9 col-10">
           <div class="card-body py-2">
@@ -1386,9 +1390,11 @@
 
           </div>
         </div>
-        <div class="col-2 justify-content-center align-items-center dis-flex ml-auto" *ngIf="comentario.AGENTE.COD_AGENTE==identidadAgente?.COD_AGENTE">
+        <div class="col-2 justify-content-center align-items-center dis-flex ml-auto"
+             *ngIf="comentario.AGENTE.COD_AGENTE==identidadAgente?.COD_AGENTE">
           <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class=" btn text-primary" (click)="abrirModalComentario(contentComentario,comentario.ID_COMENTARIO)">
+            <button type="button" class=" btn text-primary"
+                    (click)="abrirModalComentario(contentComentario,comentario.ID_COMENTARIO)">
               <li class=" fa fa-pen"></li>
             </button>
             <button type="button" class="btn text-danger" (click)="deleteComentario(comentario.ID_COMENTARIO)">
