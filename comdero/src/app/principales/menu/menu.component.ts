@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit,ViewEncapsulation} from '@angular/core';
 import {TiendaServicio} from "../../servicios/tienda.servicio";
 import {Observable} from 'rxjs';
 import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
@@ -9,7 +9,8 @@ import {CarritoServicio} from "../../servicios/carrito.servicio";
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css']
+  styleUrls: ['./menu.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 
 export class MenuComponent implements OnInit, OnDestroy {
@@ -81,10 +82,13 @@ public banderaCarrito:boolean;
         })
 
         this.datosObtenidos[1].forEach(elemnt => {
-          this.objetoDatos.push(elemnt.PRODUCTO.NOMBRE_PRODUCTO);
-        })
+          this.objetoDatos.push(elemnt.PRODUCTO.NOMBRE_PRODUCTO.toUpperCase());
+        });
+
+
       }
     }
+ console.log( "ordenado",this.objetoDatos.sort());
   }
 
   buscarDatosTerm = (text$: Observable<string>) =>
