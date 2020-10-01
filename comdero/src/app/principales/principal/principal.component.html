@@ -41,7 +41,7 @@
 </section>
 <!-- ========================= SECTION INTRO ========================= -->
 <section class="px-5">
-  <div class="container-fluid  px-5">
+  <div class="container  ">
 
     <ngb-carousel *ngIf="images" [showNavigationArrows]="showNavigationArrows"
                   [showNavigationIndicators]="showNavigationIndicators">
@@ -60,13 +60,14 @@
 
 
 <!-- ========================= SECTION FEATURE ========================= -->
-<section class="section-content padding-y-sm">
-  <div class="ancho-banner2 mx-auto rounded">
+<section class="section-content padding-y-sm  ">
+  <div class="mx-auto container  ">
+
     <article class=" bg border small pt-3 px-3 rounded">
       <div class="row  ">
         <div class="col-md-4 border-right">
           <figure class="item-feature mb-0">
-            <span class="text-primary"><i class="fa fa-3x fa-truck"></i></span>
+            <span class="text-primary"><i class="fa fa-2x fa-truck"></i></span>
             <figcaption class="pt-3">
               <h5 class="title">Compra sin moverte</h5>
               <label style="font-size: 0.9rem">Encuentra lo que necesitas, y coordina el pago y la entrega con el
@@ -76,7 +77,7 @@
         </div><!-- col // -->
         <div class="col-md-4 border-right">
           <figure class="item-feature mb-0">
-            <span class="text-primary"><i class="fa fa-3x fa-box-open"></i></span>
+            <span class="text-primary"><i class="fa fa-2x fa-box-open"></i></span>
             <figcaption class="pt-3">
               <h5 class="title">Recibe tu producto</h5>
               <label style="font-size: 0.9rem">Acuerda la entrega de tu compra con el vendedor. Puedes recibirlo en tu
@@ -87,7 +88,7 @@
         </div><!-- col // -->
         <div class="col-md-4 border-right">
           <figure class="item-feature mb-0">
-            <span class="text-primary"><i class="fa fa-3x fa-money-bill-wave"></i></span>
+            <span class="text-primary"><i class="fa fa-2x fa-money-bill-wave"></i></span>
             <figcaption class="pt-3">
               <h5 class="title">Vende 100% gratis </h5>
               <label style="font-size: 0.9rem">Piensa qué te gustaría vender, publícalo y gana dinero sin gastar ni un centavo. Tendrás publicaciones gratuitas ilimitadas para todo tipo de productos. ¡Anímate!
@@ -126,10 +127,6 @@
           </owl-carousel-o>
 
         </div>
-        <br>
-        <header class="section-heading">
-          <h3 class="section-title">Productos</h3>
-        </header><!-- sect-heading -->
 
       </div><!-- container // -->
     </section>
@@ -144,9 +141,11 @@
 
 <section class="section-content" *ngIf="this.nuevos.length > 0">
   <div class="container">
-
     <header class="section-heading">
-      <h4 class="section-title">Nuevos</h4>
+      <h3 class="section-title">Productos</h3>
+    </header><!-- sect-heading -->
+    <header class="section-heading ">
+      <h4 class="section-title text-right">Nuevos</h4>
     </header><!-- sect-heading -->
 
     <div style="position: relative">
@@ -204,15 +203,11 @@
     </div>
   </div> <!-- container .//  -->
 </section>
-<!-- ========================= SECTION CONTENT COMDERO END// ========================= -->
-
-
-<!-- ========================= SECTION CONTENT PRUEBA 1 ========================= -->
 <section class="section-content" *ngIf="this.populares.length > 0">
   <div class="container">
 
     <header class="section-heading">
-      <h4 class="section-title">Populares</h4>
+      <h4 class="section-title text-right">Populares</h4>
     </header><!-- sect-heading -->
 
     <div style="position: relative">
@@ -221,13 +216,14 @@
 
       <owl-carousel-o [options]="opcionesCarrouselFilaUno" #carrouselFilaUno>
         <ng-container *ngFor="let p of this.populares;index as i">
-          <ng-template dataHash="one" carouselSlide id="slider1+{{i}}">
+          <ng-template dataHash="one" carouselSlide id="slider2+{{i}}">
             <div class="card card-product-grid mx-2">
-              <a class="">
+              <a routerLink="../detalle-producto/{{p.ID_OFERTA}}">
                 <img [src]="getImagen(p.IMAGEN)" width="100%"
                      height="200rem"></a>
               <figcaption class="info-wrap">
-                <a href="principales/menu/detalle-producto/{{p.ID_OFERTA}}" class="title">{{p.NOMBRE_PRODUCTO}}</a>
+                <a routerLink="../detalle-producto/{{p.ID_OFERTA}}" class="title"
+                   style="overflow:hidden; white-space: nowrap; text-overflow: ellipsis; text-align: justify">{{p.NOMBRE_PRODUCTO}}</a>
                 <div class="rating-wrap">
                   <ul class="rating-stars">
                     <ngb-rating *ngIf="p.PROMEDIO_CAL != null"
@@ -246,13 +242,12 @@
                         class="label-rating text-muted">{{p.TOTAL_COM}} comentarios</span>
                   <span *ngIf="p.TOTAL_COM == null" class="label-rating text-muted">0 Comentarios </span>
                 </div> <!-- rating-wrap.// -->
-                <!--                <div class="price mt-1">{{producto.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO | currency }}</div>-->
 
-                <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO==null">
+                <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO == null">
                   <span class="price h5"> {{p.PRECIO_CON_IVA | currency }} </span>
                 </div> <!-- info-price-detail // -->
 
-                <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO!=null">
+                <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO != null">
                   <span class="price h5"> {{p.DESCUENTO_AUTOMATICO | currency }} </span>
                   <del class="price-old"> {{p.PRECIO_CON_IVA | currency }} </del>
                 </div> <!-- info-price-detail // -->
@@ -270,15 +265,11 @@
     </div>
   </div> <!-- container .//  -->
 </section>
-<!-- ========================= SECTION CONTENT PRUEBA 1 END// ========================= -->
-
-
-<!-- ========================= SECTION CONTENT PRUEBA 2 PRODUCTOS ========================= -->
 <section class="section-content" *ngIf="this.recomendados.length > 0">
   <div class="container">
 
     <header class="section-heading">
-      <h4 class="section-title">Recomendados</h4>
+      <h4 class="section-title text-right">Recomendados</h4>
     </header><!-- sect-heading -->
 
     <div style="position: relative">
@@ -287,13 +278,14 @@
 
       <owl-carousel-o [options]="opcionesCarrouselFilaUno" #carrouselFilaUno>
         <ng-container *ngFor="let p of this.recomendados;index as i">
-          <ng-template dataHash="one" carouselSlide id="slider2+{{i}}">
+          <ng-template dataHash="one" carouselSlide id="slider3+{{i}}">
             <div class="card card-product-grid mx-2">
-              <a class="">
+              <a routerLink="../detalle-producto/{{p.ID_OFERTA}}">
                 <img [src]="getImagen(p.IMAGEN)" width="100%"
                      height="200rem"></a>
               <figcaption class="info-wrap">
-                <a href="principales/menu/detalle-producto/{{p.ID_OFERTA}}" class="title">{{p.NOMBRE_PRODUCTO}}</a>
+                <a routerLink="../detalle-producto/{{p.ID_OFERTA}}" class="title"
+                   style="overflow:hidden; white-space: nowrap; text-overflow: ellipsis; text-align: justify">{{p.NOMBRE_PRODUCTO}}</a>
                 <div class="rating-wrap">
                   <ul class="rating-stars">
                     <ngb-rating *ngIf="p.PROMEDIO_CAL != null"
@@ -312,13 +304,12 @@
                         class="label-rating text-muted">{{p.TOTAL_COM}} comentarios</span>
                   <span *ngIf="p.TOTAL_COM == null" class="label-rating text-muted">0 Comentarios </span>
                 </div> <!-- rating-wrap.// -->
-                <!--                <div class="price mt-1">{{producto.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO | currency }}</div>-->
 
-                <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO==null">
+                <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO == null">
                   <span class="price h5"> {{p.PRECIO_CON_IVA | currency }} </span>
                 </div> <!-- info-price-detail // -->
 
-                <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO!=null">
+                <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO != null">
                   <span class="price h5"> {{p.DESCUENTO_AUTOMATICO | currency }} </span>
                   <del class="price-old"> {{p.PRECIO_CON_IVA | currency }} </del>
                 </div> <!-- info-price-detail // -->
@@ -336,8 +327,6 @@
     </div>
   </div> <!-- container .//  -->
 </section>
-<!-- ========================= SECTION CONTENT PRUEBA 2 END// ========================= -->
-
 
 <!-- ========================= SECTION CONTENT ========================= -->
 <!--<section class="section-content">

@@ -41,9 +41,6 @@
 .ancho-banner {
   width: 65%;
 }
-.ancho-banner2{
-  width: 64%;
-}
 
 @media (max-width: 720px) {
   .alto-banner {
