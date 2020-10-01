@@ -98,48 +98,46 @@
         </div> <!-- col // -->
       </div>
     </article>
-    <section *ngIf="vectorTiendasObtenidas.length > 0" class="section-name  ">
-      <div class="mx-auto">
-        <header class="section-heading">
-          <h3 class="section-title">Tiendas asociadas</h3>
-        </header><!-- sect-heading -->
 
-        <div style="position: relative">
-
-
-          <owl-carousel-o [options]="opcionesCarrouselTienda" #carrouselTiendas>
-            <ng-container *ngFor="let tienda of vectorTiendasObtenidas; index as i">
-
-              <ng-template carouselSlide id="sliderTiendas{{i}}">
-
-                <div class="mx-2 mx-md-5">
-                  <figure class=" item-logo ">
-                    <a routerLink="../detalle-tienda/tienda/{{tienda.NUM_TIENDA}}/inicio-tienda"><img
-                      [src]="getImagen(tienda.LOGO) " style="width: 100%; min-height: 8rem"></a>
-                    <figcaption class="border-top pt-2 small"> {{tienda.NOMBRE_COMERCIAL}}</figcaption>
-                  </figure> <!-- item-logo.// -->
-                </div>
-
-              </ng-template>
-
-
-            </ng-container>
-          </owl-carousel-o>
-
-        </div>
-
-      </div><!-- container // -->
-    </section>
 
   </div> <!-- container .//  -->
+
+</section>
+<section *ngIf="vectorTiendasObtenidas?.length > 0" class="container ">
+  <div class="">
+    <header class="section-heading">
+      <h3 class="section-title">Tiendas asociadas</h3>
+    </header><!-- sect-heading -->
+
+
+
+      <owl-carousel-o [options]="opcionesCarrouselTienda" #carrouselTiendas>
+        <ng-container *ngFor="let tienda of vectorTiendasObtenidas; index as i">
+
+          <ng-template carouselSlide id="sliderTiendas{{i}}">
+            <div class="mx-2 mx-md-5">
+              <figure class=" item-logo ">
+                <a routerLink="../detalle-tienda/tienda/{{tienda.NUM_TIENDA}}/inicio-tienda"><img
+                  [src]="getImagen(tienda.LOGO) " style="width: 100%; min-height: 8rem"></a>
+                <figcaption class="border-top pt-2 small"> {{tienda.NOMBRE_COMERCIAL}}</figcaption>
+              </figure> <!-- item-logo.// -->
+            </div>
+
+          </ng-template>
+
+
+        </ng-container>
+      </owl-carousel-o>
+
+    </div>
+
 
 </section>
 <!-- ========================= SECTION FEATURE END// ========================= -->
 
 <!-- ========================= SECTION CONTENT COMDERO PRODUCTOS ========================= -->
 
-
-<section class="section-content" *ngIf="this.nuevos.length > 0">
+<section class="section-content" *ngIf="this.nuevos?.length > 0">
   <div class="container">
     <header class="section-heading">
       <h3 class="section-title">Productos</h3>
@@ -267,7 +265,7 @@
   </div> <!-- container .//  -->
 </section>
 <br>
-<section class="section-content" *ngIf="this.recomendados.length > 0">
+<section class="section-content" *ngIf="this.recomendados?.length > 0">
   <div class="container">
 
     <header class="section-heading">

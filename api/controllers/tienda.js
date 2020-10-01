@@ -836,12 +836,12 @@ async function obtenerFiltroBusquedaTodos(req, res) {
             where: {
                 ESTADO_OFERTA: 0
             },
-            attributes: ['ID_OFERTA', 'IVA'],
+            attributes: ['ID_OFERTA', 'IVA','FECHA_CREACION'],
             transaction: t
         });
 
         let tiendasObtenidos = await TIENDA.findAll({
-            attributes: ['NUM_TIENDA', 'NOMBRE_COMERCIAL', 'LOGO'],
+            attributes: ['NUM_TIENDA', 'NOMBRE_COMERCIAL', 'LOGO','DESCRIPCION_TIENDA'],
             where: {
                 [Op.and]: [
                     {ESTADO_TIENDA: 0},

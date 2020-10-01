@@ -17,7 +17,7 @@ import {ProductoServicio} from "../../servicios/producto.servicio";
 
 export class BusquedaComponent implements OnInit, OnDestroy, OnChanges {
   paginaActual = 1;
-  datosXpagina = 2;
+  datosXpagina = 10;
   paginaTamano: number = 0;
   ultimoSerie: number;
 
@@ -40,6 +40,7 @@ export class BusquedaComponent implements OnInit, OnDestroy, OnChanges {
     'fa fa-gem', 'fa fa-palette', 'fa fa-laptop',
     'fa fa-car', 'fa fa-dumbbell', 'fa fa-book',
     'fa fa-dog', 'fa fa-gamepad', 'fa fa-grin-stars', 'fa fa-heartbeat', 'fa fa-building', 'fa fa-tractor'];
+
 
   constructor(public _carritoServicio: CarritoServicio, public _categoriaServicio: CategoriaServicio, public _agenteServicio: AgenteServicio, public router: Router, configRating: NgbRatingConfig, public route: ActivatedRoute, public _tiendaServicio: TiendaServicio, public _productoServicio: ProductoServicio) {
     configRating.max = 5;
@@ -120,11 +121,14 @@ export class BusquedaComponent implements OnInit, OnDestroy, OnChanges {
       this.datosObtenidos[0].forEach(elemnt => {
         let objTienda = {
           NUM_TIENDA: null,
-          NOMBRE_COMERCIAL: null,
-          LOGO: null
+          NOMBRE: null,
+          LOGO: null,
+          DESCRIPCION: null,
+          TIPO: 'Tienda'
         }
         objTienda.NUM_TIENDA = elemnt.NUM_TIENDA;
-        objTienda.NOMBRE_COMERCIAL = elemnt.NOMBRE_COMERCIAL;
+        objTienda.NOMBRE = elemnt.NOMBRE_COMERCIAL;
+        objTienda.DESCRIPCION = elemnt.DESCRIPCION_TIENDA
         objTienda.LOGO = elemnt.LOGO;
         this.vectorTienda.push(objTienda);
       })
@@ -133,8 +137,8 @@ export class BusquedaComponent implements OnInit, OnDestroy, OnChanges {
     if (this.datosObtenidos[1].length > 0) {
       this.datosObtenidos[1].forEach((elemnt) => {
         let objProducto = {
-          NOMBRE_COMERCIAL: null,
-          NOMBRE_PRODUCTO: null,
+          NOMBRE_COMERCIAL_TIENDA_PRODUCTO: null,
+          NOMBRE: null,
           DESCRIPCION_PRODUCTO: null,
           PROMEDIO_CAL: null,
           TOTAL_COM: null,
@@ -145,15 +149,23 @@ export class BusquedaComponent implements OnInit, OnDestroy, OnChanges {
           ID_PRODUCTO: null,
           COD_PRODUCTO: null,
           CONDICION: null,
-          DESCUENTO_AUTOMATICO: null
+          DESCUENTO_AUTOMATICO: null,
+          TIPO: 'Producto',
+          FECHA_CREACION: null
         }
 
-        objProducto.NOMBRE_COMERCIAL = elemnt.TIENDA.NOMBRE_COMERCIAL;
-        objProducto.NOMBRE_PRODUCTO = elemnt.PRODUCTO.NOMBRE_PRODUCTO;
+        objProducto.NOMBRE_COMERCIAL_TIENDA_PRODUCTO = elemnt.TIENDA.NOMBRE_COMERCIAL;
+        objProducto.NOMBRE = elemnt.PRODUCTO.NOMBRE_PRODUCTO;
         objProducto.ID_PRODUCTO = elemnt.PRODUCTO.ID_PRODUCTO;
         objProducto.COD_PRODUCTO = elemnt.PRODUCTO.COD_PRODUCTO;
         objProducto.DESCRIPCION_PRODUCTO = elemnt.PRODUCTO.DESCRIPCION_PRODUCTO;
         objProducto.CONDICION = elemnt.PRODUCTO.CONDICION;
+        objProducto.FECHA_CREACION=false;
+        debugger;
+        if (elemnt.FECHA_CREACION >= moment().subtract(1, 'months').format("YYYY-MM-DD") && elemnt.FECHA_CREACION <= moment().format("YYYY-MM-DD")) {
+          objProducto.FECHA_CREACION = true;
+        }
+
 
         if (elemnt.PRODUCTO.CALIFICACIONs.length > 0)
           objProducto.PROMEDIO_CAL = elemnt.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL;
@@ -173,7 +185,20 @@ export class BusquedaComponent implements OnInit, OnDestroy, OnChanges {
         this.vectorProductos.push(objProducto);
       })
     }
-    console.log(JSON.stringify(this.vectorProductos));
+
+    let vproductosAux = this.vectorProductos;
+    this.vectorProductos = vproductosAux.concat(this.vectorTienda);
+    this.vectorProductos.sort(function (a, b) {
+      if (a.NOMBRE.toUpperCase() > b.NOMBRE.toUpperCase()) {
+        return 1;
+      }
+      if (a.NOMBRE.toUpperCase() < b.NOMBRE.toUpperCase()) {
+        return -1;
+      }
+      // a must be equal to b
+      return 0;
+    });
+    console.log("TODO LO QUE VIENE", JSON.stringify(this.vectorProductos));
   }
 
   public porcentajeDescuento = null;
@@ -213,16 +238,16 @@ export class BusquedaComponent implements OnInit, OnDestroy, OnChanges {
         }
       })
 
-      if(this.porcentajeDescuento > 0){
+      if (this.porcentajeDescuento > 0) {
         this.PRECIO_UNITARIO_CON_IVA_DESCUENTO = PRECIO_CON_IVA - ((PRECIO_CON_IVA * this.porcentajeDescuento) / 100);
-      }else{
+      } else {
         this.PRECIO_UNITARIO_CON_IVA_DESCUENTO = null;
       }
     } else {
       this.porcentajeDescuento = null;
       this.PRECIO_UNITARIO_CON_IVA_DESCUENTO = null;
     }
-    console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'+this.PRECIO_UNITARIO_CON_IVA_DESCUENTO + 'PRECIO DESCUENTO' + this.porcentajeDescuento + 'DESCUENTO');
+    console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' + this.PRECIO_UNITARIO_CON_IVA_DESCUENTO + 'PRECIO DESCUENTO' + this.porcentajeDescuento + 'DESCUENTO');
     return this.PRECIO_UNITARIO_CON_IVA_DESCUENTO;
     console.log(this.PRECIO_UNITARIO_CON_IVA_DESCUENTO + 'PRECIO DESCUENTO' + this.porcentajeDescuento + 'DESCUENTO');
   }
