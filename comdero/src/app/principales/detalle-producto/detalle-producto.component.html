@@ -69,7 +69,7 @@
     <div class="container">
       <div class="card">
         <div class="row no-gutters">
-          <aside class="col-lg-6 col-md-6">
+          <aside class="col-lg-7 col-md-7">
 
             <article class="gallery-wrap">
               <div class="img-big-wrap ">
@@ -104,7 +104,7 @@
               </div> <!-- thumbs-wrap.// -->
             </article>  <!--gallery-wrap .end//-->
           </aside>
-          <main class="col-lg-6 col-md-6 border-left">
+          <main class="col-lg-5 col-md-5 border-left">
             <article class="content-body px-4 pt-2">
               <p class="mb-0 text-center mb-2">
                 <a
@@ -113,25 +113,31 @@
               </p>
 
               <div class="form-row justify-content-center text-center">
-              <h4 class="title m-0 col-md-4">{{this.productoDetalle?.PRODUCTO.NOMBRE_PRODUCTO}}</h4>
 
+                <label class=" m-0 col-md-4 "><strong>{{this.productoDetalle?.PRODUCTO.CONDICION}}</strong></label>
               <div class="rating-wrap mb-0 col-md-4">
-                <ul class="rating-stars">
+
+                <div class="row no-gutters justify-content-center">
+                <h3 class=" text-center col-auto">{{this.productoDetalle?.PRODUCTO.CALIFICACIONs[0]?.PROMEDIO_CAL | number}}</h3>
+
+                <ul class="rating-stars col-auto">
+
                   <ngb-rating *ngIf="this.productoDetalle?.PRODUCTO.CALIFICACIONs.length != 0"
                               [(rate)]="this.productoDetalle?.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL">
                     <ng-template let-fill="fill">
                       <span class="star" [class.filled]="fill === 100">&#9733;</span>
                     </ng-template>
                   </ngb-rating>
+
                   <ngb-rating *ngIf="this.productoDetalle?.PRODUCTO.CALIFICACIONs.length == 0"
                               [(rate)]="currentRate">
                     <ng-template let-fill="fill">
                       <span class="star" [class.filled]="fill === 100">&#9733;</span>
                     </ng-template>
                   </ngb-rating>
-                  <p class="font-weight-bold text-center">{{this.productoDetalle?.PRODUCTO.CALIFICACIONs[0]?.PROMEDIO_CAL | number}}</p>
-                </ul>
 
+                </ul>
+                </div>
               </div>
                 <div class="col-md-4">
                 <span *ngIf="this.productoDetalle?.PRODUCTO.COMENTARIOs.length > 0"
@@ -144,16 +150,16 @@
 
               <hr class="mt-2">
 
-              <div>
-                <label class="mb-1 "><strong>{{this.productoDetalle?.PRODUCTO.CONDICION}}</strong></label>
+              <div class="mt-2">
+                <h3 class="title m-0  mb-2">{{this.productoDetalle?.PRODUCTO.NOMBRE_PRODUCTO}}</h3>
               </div>
 
-              <div class="mb-2">
+              <div class="my-3">
                 <var
                   *ngIf="this.banderaNoDisponible == false && this.varianteActiva?.STOCK != 0 && !this.banderaActivarDescuentoAutomatico"
-                  class="price h5">{{this.varianteActiva?.PRECIO_UNITARIO_CON_IVA | currency}}</var>
+                  class="price h3">{{this.varianteActiva?.PRECIO_UNITARIO_CON_IVA | currency}}</var>
 
-                <var *ngIf="this.banderaActivarDescuentoAutomatico" class="price h5">
+                <var *ngIf="this.banderaActivarDescuentoAutomatico" class="price h3">
                   {{this.varianteActiva.PRECIO_UNITARIO_CON_IVA_DESCUENTO | currency}}
                 </var>
                 <del *ngIf="this.banderaActivarDescuentoAutomatico" class="price-old">
@@ -180,13 +186,13 @@
                 <div class="fontTamano">
                   <dl class="row mb-3">
                     <dt class="col-sm-3 col-4">Marca</dt>
-                    <dd class="col-sm-9 col-8">{{this.productoDetalle?.PRODUCTO.MARCA}}</dd>
+                    <dd class="col-sm-9 col-8 mb-2">{{this.productoDetalle?.PRODUCTO.MARCA}}</dd>
 
                     <dt *ngIf="this.existeTalla == true" class="col-sm-3 col-4 mt-2">Talla</dt>
                     <dd *ngIf="this.existeTalla == true" class="col-sm-9 col-8">
 
                       <div class="form-group col-lg-6 col-md-6 col-10 my-2 p-0">
-                        <select (change)="this.verificarVariante()" class=" tamanioInputs form-control" data-size="4"
+                        <select (change)="this.verificarVariante()" class=" tamanioInputs form-control form-control-sm" data-size="4"
                                 name="tallaSelect" id="tallaSelect">
                           <option *ngFor="let talla of this.arrayTalla"
                                   [selected]="talla == this.varianteActiva.TALLA"
@@ -200,7 +206,7 @@
                     <dd *ngIf="this.existeMaterial == true" class="col-sm-9 col-8">
 
                       <div class="form-group col-lg-6 col-md-6 col-10 my-2 p-0">
-                        <select (change)="this.verificarVariante()" class="tamanioInputs form-control" data-size="4"
+                        <select (change)="this.verificarVariante()" class="tamanioInputs form-control form-control-sm" data-size="4"
                                 name="materialSelect" id="materialSelect">
                           <option *ngFor="let material of this.arrayMaterial"
                                   [selected]="material == this.varianteActiva.MATERIAL"
@@ -209,18 +215,16 @@
                       </div>
                     </dd>
 
-                    <dt class="col-sm-3 col-4 mt-4">Cantidad <a class="m-0 pt-0 text-center"
-                                                                style="font-size: 11px">({{this.varianteActiva.MEDIDA}}
-                      )</a></dt>
+                    <dt class="col-sm-3 col-4 mt-4">Cantidad <a class="m-0 pt-0 text-center" style="font-size: 11px">({{this.varianteActiva.MEDIDA}})</a></dt>
 
                     <dd class="col-sm-9 col-8">
-                      <div class="form-group col-lg-6 col-md-6 col-10 my-2 p-0">
+                      <div class="form-group form-control-sm col-lg-6 col-md-6 col-10 my-2 p-0">
 
                         <div class="input-group input-spinner mt-4">
                           <div class="input-group-prepend">
                             <button
                               [disabled]="this.banderaNoDisponible || (this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0)"
-                              (click)="this.decrementar()" class="btn btn-light tamanioInputs m-0 px-1"
+                              (click)="this.decrementar()" class="btn btn-light  tamanioInputs m-0 px-1"
                               style="border-color: darkgray" type="button"
                               id="button-plus"> -
                             </button>
@@ -246,20 +250,19 @@
               </article> <!-- gallery-wrap .end// -->
 
 
-              <div class="form-row">
-                <div class="form-group col-md-6 col-12 mb-0">
+              <div class="form-row justify-content-around m-t-100">
+                <div class="form-group col-md-7 col-12 mb-md-0 mb-2">
+                  <button (click)="this.abrirModalFinalizarPedido(contentPedido)"
+                          [disabled]="this.banderaNoDisponible || (this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0)"
+                          class="btn btn-primary col-12 mt-md-0 mt-2"> Comprar
+                  </button>
+                </div><!--form-group end.-->
+                <div class="form-group col-md-5 col-12 mb-0">
                   <button (click)="agregarCarrito()"
                           [disabled]="this.banderaNoDisponible || (this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0)"
                           class="btn btn-outline-primary col-12">
                     <span class="text">Agregar al carrito</span>
                     <i class="fas fa-shopping-cart"></i>
-                  </button>
-                </div><!--form-group end.-->
-
-                <div class="form-group col-md-6 col-12 mb-0">
-                  <button (click)="this.abrirModalFinalizarPedido(contentPedido)"
-                          [disabled]="this.banderaNoDisponible || (this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0)"
-                          class="btn btn-primary col-12 mt-md-0 mt-2"> Comprar
                   </button>
                 </div><!--form-group end.-->
 
