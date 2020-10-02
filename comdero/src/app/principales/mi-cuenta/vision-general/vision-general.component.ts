@@ -3,6 +3,7 @@ import {AgenteServicio} from "../../../servicios/agente.servicio";
 import {EstadisticasServicio} from "../../../servicios/estadisticas.servicio";
 import {CompraServicio} from "../../../servicios/compra.servicio";
 import {GLOBAL} from "../../../servicios/global";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-vision-general',
@@ -78,8 +79,11 @@ export class VisionGeneralComponent implements OnInit {
         compra.total_final = total_final + compra.COSTO_ENVIO + compra.RECARGO_PAYPAL;
       }
     } catch (e) {
-      console.log("error", e)
-      this.error = e;
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 
@@ -91,5 +95,20 @@ export class VisionGeneralComponent implements OnInit {
       this.noExite = GLOBAL.urlImagen + pathImagen;
     }
     return this.noExite;
+  }
+  mensageError(mensaje) {
+    Swal.fire({
+      icon: 'error',
+      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Error..</h5></header>',
+      text: mensaje,
+      position: 'center',
+      width: 600,
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        container: 'my-swal'
+        //icon:'sm'
+      }
+    });
   }
 }

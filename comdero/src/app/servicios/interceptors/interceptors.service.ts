@@ -17,7 +17,8 @@ export class InterceptorsService implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError(error => {
         let errorMessage = '';
-        if (error instanceof ErrorEvent) {
+        console.log("lo estoy capturando ", errorMessage);
+        if (error.error instanceof ErrorEvent) {
           // client-side error
           errorMessage = `Client-side error: ${error.error.message}`;
         } else {
@@ -41,6 +42,7 @@ export class InterceptorsService implements HttpInterceptor {
             }
 
             if (error.status === 404) {
+              Swal.close();
               // realiza la acción que necesites,
               // en tu caso la redirección a la ruta para 404 que creaste
               console.log("Error 404");
@@ -51,6 +53,7 @@ export class InterceptorsService implements HttpInterceptor {
             }
 
             if (error.status === 0) {
+
               console.log("Error 0");
               // otra acción distinta, por ejemplo...
             }
@@ -59,7 +62,7 @@ export class InterceptorsService implements HttpInterceptor {
 
         // aquí podrías agregar código que muestre el error en alguna parte fija de la pantalla.
         console.log("lo estoy capturando ", errorMessage);
-        return throwError(errorMessage);
+        return throwError(error);
       })
     );
   }

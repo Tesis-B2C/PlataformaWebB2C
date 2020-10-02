@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit,ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {TiendaServicio} from "../../servicios/tienda.servicio";
 import {Observable} from 'rxjs';
 import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
@@ -27,19 +27,23 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     console.log("user", JSON.stringify(this._agenteServicio.getIdentity()));
-   this.conteoProductosCarrito(false);
+    if (this._agenteServicio.getIdentity()) {
+      this.conteoProductosCarrito(false);
+    }
   }
-public banderaCarrito:boolean;
+
+  public banderaCarrito: boolean;
+
   public async conteoProductosCarrito(bandera) {
-    this.banderaCarrito=bandera;
+    this.banderaCarrito = bandera;
     try {
-        this.carritoIdentidad = await this._carritoServicio.getCarrito().toPromise();
-        console.log("OBTENIENDO carrito", this.carritoIdentidad.data);
+      this.carritoIdentidad = await this._carritoServicio.getCarrito().toPromise();
+      console.log("OBTENIENDO carrito", this.carritoIdentidad.data);
 
     } catch (e) {
 
       console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
+      console.log("error como objeto:" + e);
       if (JSON.stringify(e) === '{}')
         this.mensageError(e);
       else this.mensageError(JSON.stringify(e));
@@ -93,7 +97,7 @@ public banderaCarrito:boolean;
 
       }
     }
- console.log( "ordenado",this.objetoDatos.sort());
+    console.log("ordenado", this.objetoDatos.sort());
   }
 
   buscarDatosTerm = (text$: Observable<string>) =>

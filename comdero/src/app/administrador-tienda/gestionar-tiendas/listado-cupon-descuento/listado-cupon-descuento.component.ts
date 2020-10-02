@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {DescuentoServicio} from "../../../servicios/descuento.servicio";
 import {DatePipe} from '@angular/common';
 import Swal from "sweetalert2";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-listado-cupon-descuento',
@@ -77,11 +78,14 @@ export class ListadoCuponDescuentoComponent implements OnInit {
       console.log("mis productos", this.vectorDescuentos);
       this.loading = false;
     } catch (e) {
-      console.log("error Parseado:" + JSON.stringify(e));
+      debugger;
+    if (!(e instanceof HttpErrorResponse)){
+      console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
       console.log("error como objeto:"+ e);
       if (JSON.stringify(e) === '{}')
         this.mensageError(e);
       else this.mensageError(JSON.stringify(e));
+    }
     }
   }
 
