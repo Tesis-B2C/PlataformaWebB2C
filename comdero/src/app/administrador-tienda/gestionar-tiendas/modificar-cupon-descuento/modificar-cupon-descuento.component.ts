@@ -77,10 +77,11 @@ export class ModificarCuponDescuentoComponent implements OnInit {
    console.log("el descuento que trae" , this.identidadDescuento, this.idDescuento);
 
     } catch (e) {
-      console.log("error:" + e);
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 
@@ -297,10 +298,11 @@ export class ModificarCuponDescuentoComponent implements OnInit {
       }
     } catch (e) {
       this.loading = false;
-      console.log("error:" + e);
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
 
 
@@ -325,10 +327,11 @@ export class ModificarCuponDescuentoComponent implements OnInit {
 
     } catch (e) {
 
-      console.log("error:" + e);
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
 
   }

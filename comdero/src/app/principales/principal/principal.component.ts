@@ -9,7 +9,7 @@ import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';
 import {GLOBAL} from 'src/app/servicios/global';
 import * as moment from "moment";
 import {ProductoServicio} from "../../servicios/producto.servicio";
-
+import Swal from "sweetalert2";
 @Component({
   selector: 'app-principal',
   templateUrl: './principal.component.html',
@@ -204,7 +204,11 @@ export class PrincipalComponent implements OnInit {
 
       return this.vectorProductosObtenidos;
     } catch (e) {
-      console.log("error:" + JSON.stringify((e)));
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 
@@ -279,7 +283,11 @@ export class PrincipalComponent implements OnInit {
         this.vectorTiendasObtenidas.push(element);
       }
     } catch (e) {
-      console.log("error:" + JSON.stringify((e)));
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 
@@ -297,7 +305,11 @@ export class PrincipalComponent implements OnInit {
         }*/
       })
     } catch (e) {
-      console.log("error:" + JSON.stringify((e)));
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 
@@ -314,4 +326,21 @@ export class PrincipalComponent implements OnInit {
     }
     // [routerLink]="['/registro-tienda']"
   }
+
+  mensageError(mensaje) {
+    Swal.fire({
+      icon: 'error',
+      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Error..</h5></header>',
+      text: mensaje,
+      position: 'center',
+      width: 600,
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        container: 'my-swal'
+        //icon:'sm'
+      }
+    });
+  }
+
 }

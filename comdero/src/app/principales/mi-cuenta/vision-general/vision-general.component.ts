@@ -31,7 +31,11 @@ export class VisionGeneralComponent implements OnInit {
       console.log("esatdstica carrito", response.data);
       this.carrito = response.data;
     } catch (e) {
-      console.log("error", e);
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 
@@ -43,7 +47,11 @@ export class VisionGeneralComponent implements OnInit {
       console.log("esatdstica carrito", response.data);
       this.pedidos = response.data;
     } catch (e) {
-      console.log("error", e);
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 

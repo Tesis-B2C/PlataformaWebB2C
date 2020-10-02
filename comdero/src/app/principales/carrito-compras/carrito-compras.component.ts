@@ -181,8 +181,11 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
       console.log("por tienda", this.vTiendas);
 
     } catch (e) {
-      console.log("error que busco ", e);
-      this.toastr.error(JSON.stringify(e.error.message));
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 
@@ -278,7 +281,11 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
       console.log("despues de borrar", this.vTiendas);
 
     } catch (e) {
-      console.log(e);
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 
@@ -1016,10 +1023,11 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
       this.loading = false;
     } catch (e) {
       this.loading = false;
-      console.log("error", e);
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 
@@ -1031,7 +1039,11 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
       let response = await this._dpaServicio.getDpaProvincias(buscar).toPromise();
       this.provinciasDireccion = response.data;
     } catch (e) {
-      console.log("error:" + JSON.stringify((e).error.message));
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 
@@ -1045,7 +1057,11 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
       let response = await this._dpaServicio.getDpaCiudades(buscar).toPromise();
       this.ciudadesDireccion = response.data;
     } catch (e) {
-      console.log("error:" + JSON.stringify((e).error.message));
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 

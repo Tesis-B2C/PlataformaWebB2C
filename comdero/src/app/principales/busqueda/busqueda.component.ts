@@ -8,6 +8,7 @@ import {CategoriaServicio} from "../../servicios/categoria.servicio";
 import {CarritoServicio} from "../../servicios/carrito.servicio";
 import * as moment from "moment";
 import {ProductoServicio} from "../../servicios/producto.servicio";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-busqueda',
@@ -85,7 +86,11 @@ export class BusquedaComponent implements OnInit, OnDestroy, OnChanges {
         }*/
       })
     } catch (e) {
-      console.log("error:" + JSON.stringify((e)));
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 
@@ -267,11 +272,30 @@ export class BusquedaComponent implements OnInit, OnDestroy, OnChanges {
         this.router.navigate(['/administrador/administrador-tienda/mis-tiendas']);
       }
     } catch (e) {
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
       this.router.navigate(['/registro-tienda']);
       console.log("error:" + JSON.stringify((e).error.message));
     }
     // [routerLink]="['/registro-tienda']"
   }
-
+  mensageError(mensaje) {
+    Swal.fire({
+      icon: 'error',
+      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Error..</h5></header>',
+      text: mensaje,
+      position: 'center',
+      width: 600,
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        container: 'my-swal'
+        //icon:'sm'
+      }
+    });
+  }
 
 }

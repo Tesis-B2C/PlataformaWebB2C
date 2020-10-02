@@ -5,6 +5,7 @@ import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 import {ActivatedRoute, Router} from "@angular/router";
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import {CarritoServicio} from "../../servicios/carrito.servicio";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-menu',
@@ -37,7 +38,11 @@ public banderaCarrito:boolean;
 
     } catch (e) {
 
-      console.log(e);
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 
@@ -108,4 +113,22 @@ public banderaCarrito:boolean;
       this.router.navigate(['principales/menu/busqueda/' + palabraBuscada]);
     }
   }
+
+
+  mensageError(mensaje) {
+    Swal.fire({
+      icon: 'error',
+      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Error..</h5></header>',
+      text: mensaje,
+      position: 'center',
+      width: 600,
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        container: 'my-swal'
+        //icon:'sm'
+      }
+    });
+  }
+
 }

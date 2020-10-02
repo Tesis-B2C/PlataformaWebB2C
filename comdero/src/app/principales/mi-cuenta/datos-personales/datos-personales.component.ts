@@ -67,7 +67,11 @@ export class DatosPersonalesComponent implements OnInit {
       let response = await this._dpaServicio.getDpaProvincias(buscar).toPromise();
       this.provincias = response.data;
     } catch (e) {
-      console.log("error:" + JSON.stringify((e).error.message));
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 
@@ -77,7 +81,11 @@ export class DatosPersonalesComponent implements OnInit {
       let response = await this._dpaServicio.getDpaCiudades(buscar).toPromise();
       this.ciudades = response.data;
     } catch (e) {
-      console.log("error:" + JSON.stringify((e).error.message));
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 
@@ -220,10 +228,11 @@ export class DatosPersonalesComponent implements OnInit {
       this.banderaPasoDosCambiarCorreo = true;
       this.banderaPasoUnoCambiarCorreo = false;
     } catch (e) {
-      console.log("error:" + JSON.stringify((e).error.message));
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 
@@ -260,10 +269,11 @@ export class DatosPersonalesComponent implements OnInit {
       }
     } catch (e) {
       this.loading = false;
-      console.log("error:" +e);
-      if (JSON.stringify((e).error))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
     this.loading = false;
   }
@@ -286,10 +296,11 @@ export class DatosPersonalesComponent implements OnInit {
         this.mensageError('Codigo incorrecto');
       }
     } catch (e) {
-      console.log("error:" + JSON.stringify((e).error.message));
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 
@@ -330,10 +341,11 @@ export class DatosPersonalesComponent implements OnInit {
       let responseCorreo = await this._correoServicio.correoCambioCorreo(this.objetoEmail).toPromise();
       this.mensageCorrecto(responseCorreo.message);
     } catch (e) {
-      console.log("error:" + JSON.stringify((e).error.message));
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 

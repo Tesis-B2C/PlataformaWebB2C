@@ -139,11 +139,12 @@ export class RegistroComponent implements OnInit, OnDestroy {
         null, null, null, null);
       document.forms["formRegistro"].reset();
     } catch (e) {
-      console.log("error:" + JSON.stringify((e).error.message));
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
       this.loading = false;
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 
@@ -152,11 +153,12 @@ export class RegistroComponent implements OnInit, OnDestroy {
       let correoresponse = await this._correoServicio.correoActivacion(this.agenteRegistrado).toPromise();
       this.mensageCorrecto(correoresponse.message);
     } catch (e) {
-      console.log("error:" + JSON.stringify((e).error.message));
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
       this.loading = false;
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 
@@ -165,7 +167,11 @@ export class RegistroComponent implements OnInit, OnDestroy {
       let response = await this._dpaServicio.getDpaProvincias(buscar).toPromise();
       this.provincias = response.data;
     } catch (e) {
-      console.log("error:" + JSON.stringify((e).error.message));
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 
@@ -175,7 +181,11 @@ export class RegistroComponent implements OnInit, OnDestroy {
       let response = await this._dpaServicio.getDpaCiudades(buscar).toPromise();
       this.ciudades = response.data;
     } catch (e) {
-      console.log("error:" + JSON.stringify((e).error.message));
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 

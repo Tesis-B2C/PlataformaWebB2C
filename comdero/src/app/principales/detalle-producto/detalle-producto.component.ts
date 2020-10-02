@@ -158,7 +158,11 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
       let response = await this._dpaServicio.getDpaProvincias(buscar).toPromise();
       this.provinciasDireccion = response.data;
     } catch (e) {
-      console.log("error:" + JSON.stringify((e).error.message));
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 
@@ -171,7 +175,11 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
       let response = await this._dpaServicio.getDpaCiudades(buscar).toPromise();
       this.ciudadesDireccion = response.data;
     } catch (e) {
-      console.log("error:" + JSON.stringify((e).error.message));
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 
@@ -213,10 +221,11 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
       this.asignarVariblePrimero();
       this.informacionPagoEnvio();
     } catch (e) {
-      console.log("error:" + e);
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 
@@ -1040,8 +1049,11 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
       let response = await this._carritoServicio.saveCarrito(this.Carrito_Producto).toPromise();
       this.menu.conteoProductosCarrito(true);
     } catch (e) {
-      console.log("error:" + JSON.stringify((e)));
-      this.toastr.error(JSON.stringify((e.error.message)))
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 
@@ -1245,10 +1257,11 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
       this.loading = false;
     } catch (e) {
       this.loading = false;
-      console.log("error", e);
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 
@@ -1360,10 +1373,11 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
       this.mensageCorrecto(response.message);
       this.obtenerProducto();
     }catch (e) {
-      console.log("error", e);
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
 
   }
@@ -1374,10 +1388,11 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
       this.mensageCorrecto(response.message);
       this.obtenerProducto();
     }catch (e) {
-      console.log("error", e);
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 

@@ -4,6 +4,7 @@ import {TiendaServicio} from "../../servicios/tienda.servicio";
 import {GLOBAL} from "../../servicios/global";
 import {Router} from "@angular/router";
 import { NgxSpinnerService } from "ngx-spinner";
+import Swal from "sweetalert2"
 @Component({
   selector: 'app-tiendas',
   templateUrl: './tiendas.component.html',
@@ -38,6 +39,7 @@ export class TiendasComponent implements OnInit, AfterContentInit {
       console.log("tiendas", this.misTiendas, "url", this.url);
 
     } catch (e) {
+      
 
       this.router.navigate(['/registro-tienda']);
       console.log("error:" + JSON.stringify((e).error.message));
@@ -59,8 +61,26 @@ export class TiendasComponent implements OnInit, AfterContentInit {
     localStorage.setItem("identityTienda", JSON.stringify(identidadTienda.data));
     this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/inicio-administracion']);
     }catch (e) {
-      console.log("error:" + JSON.stringify((e).error.message));
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
-
+  mensageError(mensaje) {
+    Swal.fire({
+      icon: 'error',
+      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Error..</h5></header>',
+      text: mensaje,
+      position: 'center',
+      width: 600,
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        container: 'my-swal'
+        //icon:'sm'
+      }
+    });
+  }
 }

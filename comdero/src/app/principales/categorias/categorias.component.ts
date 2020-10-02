@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CategoriaServicio} from "../../servicios/categoria.servicio";
-
+import Swal from "sweetalert2";
 @Component({
   selector: 'app-categorias',
   templateUrl: './categorias.component.html',
@@ -39,8 +39,28 @@ export class CategoriasComponent implements OnInit {
 
 
     } catch (e) {
-      console.log("error:" + JSON.stringify((e).error.message));
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
 
   }
+  mensageError(mensaje) {
+    Swal.fire({
+      icon: 'error',
+      title: '<header class="login100-form-title-registro"><h5 class="card-title">!Error..</h5></header>',
+      text: mensaje,
+      position: 'center',
+      width: 600,
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'btn btn-primary px-5',
+        container: 'my-swal'
+        //icon:'sm'
+      }
+    });
+  }
+
 }
