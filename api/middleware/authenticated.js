@@ -28,7 +28,7 @@ exports.ensureAuth=function(req, res, next) // comprobar si los datos son correc
     }catch(ex)
     {
         //console.log(ex);
-        return res.status(404).send({message:'token no valido'});
+        return res.status(401).send({message:'token no valido'});
     }
 
     req.user=payload;// ya lo tiene en la request  un usuario con todols los datos

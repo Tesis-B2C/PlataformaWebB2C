@@ -28,7 +28,7 @@ function correoActivacion(req, res) {
     transporter.sendMail(mailOptions, function (error) {
         if (error) {
             console.log(error);
-            res.status(500).send({
+            res.status(402).send({
                 message: "Al parecer existe un error intentelo nuevamente" + error
             });
         } else {

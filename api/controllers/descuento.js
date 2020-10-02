@@ -14,7 +14,7 @@ async function saveDescuento(req, res) {
         const params = req.body;
         let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -62,7 +62,7 @@ async function getMisDescuentos(req, res) {
     try {
         let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -71,16 +71,11 @@ async function getMisDescuentos(req, res) {
                 order: [['ID_DESCUENTO', 'DESC']]
             });
 
-            if (descuentoObtenidos.length > 0) {
                 res.status(200).send({
                     data: descuentoObtenidos,
-                    message: "Productos cargados correctamente"
+                    message: "Descuentos cargados correctamente"
                 });
-            } else {
-                res.status(404).send({
-                    message: 'Al parecer no se encuentra productos registrados en la base de datos'
-                });
-            }
+
         }
     } catch (err) {
         res.status(500).send({
@@ -95,7 +90,7 @@ async function updateEstadoDescuento(req, res) {
         let verificar = await  Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -105,12 +100,12 @@ async function updateEstadoDescuento(req, res) {
             }, {
                 where: {ID_DESCUENTO: req.params.id},
             });
-            if (descuentoActualizado) {
+            if (descuentoActualizado>0) {
                 res.status(200).send({
                     message: "El descuento ha sido actualizado correctamente"
                 });
             } else {
-                res.status(404).send({
+                res.status(402).send({
                     message: 'Al parecer no se encuentra el descuento registrado en la base de datos'
                 });
             }
@@ -128,7 +123,7 @@ async function getDescuento(req, res) {
         let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -149,7 +144,7 @@ async function getDescuento(req, res) {
                     message: "Descuento cargado correctamente"
                 });
             } else {
-                res.status(404).send({
+                res.status(402).send({
                     message: 'Al parecer no se encuentra el descuento registrado en la base de datos'
                 });
             }
@@ -170,7 +165,7 @@ async function updateDescuento(req, res) {
         let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -228,7 +223,7 @@ async function updateEstadoDescuentos(req, res) {
         let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -241,7 +236,7 @@ async function updateEstadoDescuentos(req, res) {
                 });
             }
             res.status(200).send({
-                message: "El producto ha sido actualizado correctamente"
+                message: "los descuentos han sido actualizados correctamente"
             });
             t.commit();
         }

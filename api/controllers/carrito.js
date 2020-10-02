@@ -1,7 +1,6 @@
 'use strict'
 
 
-
 const Carrito = require('../models/carrito'); //importar el modelo del usuario  o lo que son las clases comunes
 const Carrito_Producto = require('../models/carrito_producto'); //importar el modelo del usuario  o lo que son las clases comunes
 const Agente = require("../models/Agente");
@@ -18,12 +17,14 @@ const Opcion_Envio = require('../models/opcion_envio');
 const DPA = require('../models/dpa');
 const Metodo_Pago = require('../models/metodo_pago');
 const Sucursal = require('../models/sucursal');
+const db = require('../database/db');
+
 async function getCarrito(req, res) {
 
     let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
     try {
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -38,7 +39,16 @@ async function getCarrito(req, res) {
                         model: Variante,
                         include: [{
                             model: Producto,
-                            include: [{model: Oferta,  include: {model: Tienda, include:[{model:Metodo_Pago},{model:Opcion_Envio}, {model:Sucursal, include:{model:DPA, include:{model: DPA, as: 'DPAP', required: true}}}]}}, {
+                            include: [{
+                                model: Oferta,
+                                include: {
+                                    model: Tienda,
+                                    include: [{model: Metodo_Pago}, {model: Opcion_Envio}, {
+                                        model: Sucursal,
+                                        include: {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}
+                                    }]
+                                }
+                            }, {
                                 model: Producto_Descuento,
                                 include: {model: Descuento}
                             }]
@@ -56,7 +66,7 @@ async function getCarrito(req, res) {
                 let crearCarrito = await Carrito.create({COD_AGENTE: req.user.id, CANTIDAD_TOTAL_PRODUCTOS: 0});
 
                 res.status(200).send({
-                    data: carritoObtenido,
+                    data: crearCarrito,
                     message: "Carrito de compras cargado correctamente"
                 });
 
@@ -70,13 +80,12 @@ async function getCarrito(req, res) {
     }
 }
 
-
 async function saveCarrito(req, res) {
-    console.log(" cod agente ", req.body);
-    let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}, include: {model: Carrito}});
+    const t = await db.sequelize.transaction({autocommit: false});
     try {
+        let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}, include: {model: Carrito}});
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -97,34 +106,32 @@ async function saveCarrito(req, res) {
                     CANTIDAD_PRODUCTO_CARRITO: req.body.Cantidad_Producto_Carrito,
                     FECHA_CREACION_CARRITO: moment(),
                     IMAGEN_MOSTRAR: req.body.Imagen_Mostrar
+                }, {
+                    transaction: t
                 });
                 let cont = await Carrito_Producto.findOne({
                     where: {
                         ID_CARRITO: verificar.dataValues.CARRITO.ID_CARRITO,
-                    },
+                    }, transaction: t,
                     attributes: ['ID_CARRITO', [Carrito_Producto.sequelize.fn('COUNT', Carrito_Producto.sequelize.col('ID_CARRITO')), 'TOTAL_COM']],
                 });
                 console.log("conmt", cont.dataValues.TOTAL_COM);
 
                 let carritoActualizado = await Carrito.update({CANTIDAD_TOTAL_PRODUCTOS: cont.dataValues.TOTAL_COM}, {
-                    where: {COD_AGENTE: req.user.id}
+                    where: {COD_AGENTE: req.user.id}, transaction: t,
                 });
 
-                if (carritoGuardado) {
-                    res.status(200).send({
-                        data: carritoGuardado,
-                        message: "Carrito de compras actualizado correctamente"
-                    });
-                } else {
-                    res.status(404).send({
-                        message: 'No se pudo agregar producto al carrito de comrpas'
-                    });
+                res.status(200).send({
+                    data: carritoGuardado,
+                    message: "Carrito de compras actualizado correctamente"
+                });
+                await t.commit();
 
 
-                }
             }
         }
     } catch (err) {
+        await t.rollback();
         res.status(500).send({
             message: 'error:' + err
         });
@@ -136,12 +143,11 @@ async function updateCantidadProducto(req, res) {
         let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
             let verificarCantidad = await Variante.findOne({where: {NUM_VARIANTE: req.params.num_variante}});
-            console.log("asd", req.params.num_variante, "cantidad", req.body.cantidad)
             if (verificarCantidad.dataValues.STOCK >= req.body.cantidad) {
                 let cantidadActualizada = await Carrito_Producto.update({
                     CANTIDAD_PRODUCTO_CARRITO: req.body.cantidad,
@@ -162,7 +168,7 @@ async function updateCantidadProducto(req, res) {
                     where: {NUM_VARIANTE: req.params.num_variante, ID_CARRITO: req.body.id_carrito},
                 });
 
-                res.status(201).send({
+                res.status(200).send({
                     message: 'Estock no disponible',
                     data: verificarCantidad.dataValues.STOCK
 
@@ -182,7 +188,7 @@ async function deleteProductoCarrito(req, res) {
         let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -210,10 +216,15 @@ async function deleteProductoCarrito(req, res) {
                         message: "Se quito el producto de tu carrito de compras",
 
                     });
+                } else {
+                    res.status(402).send({
+                        message: "No se quito el producto de tu carrito de compras",
+
+                    });
                 }
             }
         }
-    } catch (err) {
+    } catch(err) {
         res.status(500).send({
             message: 'error:' + err
         });

@@ -14,7 +14,7 @@ async function getCategorias(req, res) {
                 message: "Categorías cargadas correctamente"
             });
         } else {
-            res.status(404).send({
+            res.status(402).send({
                 message: 'No existen categorías registradas en la base de datos'
             });
         }

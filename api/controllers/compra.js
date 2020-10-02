@@ -16,10 +16,9 @@ const moment = require('moment');
 const {Op} = require("sequelize");
 
 async function saveComprarProducto(req, res) {
-    console.log(" INFORMACION COMPRA ", req.body);
     const t = await db.sequelize.transaction({autocommit: false});
-    let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
     try {
+        let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
         if (!verificar) {
             return res.status(500).send({
                 message: "No tiene los permisos necesarios"
@@ -104,33 +103,20 @@ async function saveComprarProducto(req, res) {
             );
 
             let varianteEncontrada = await Variante.findOne({
-                where: {NUM_VARIANTE: req.body.NUM_VARIANTE}
-            }, {
-                transaction: t
-            });
+                    where: {NUM_VARIANTE: req.body.NUM_VARIANTE}, transaction: t
+                }
+            );
 
             let stockReducido = varianteEncontrada.dataValues.STOCK - req.body.CANTIDAD;
             let varianteActualizada = await Variante.update({STOCK: stockReducido}, {
-                where: {NUM_VARIANTE: req.body.NUM_VARIANTE}
-            }, {
-                transaction: t
+                where: {NUM_VARIANTE: req.body.NUM_VARIANTE}, transaction: t
             });
 
-            if (compraGuardada && compraProductoGuardada && varianteActualizada) {
 
-                res.status(200).send({
+            res.status(200).send({
+                message: "La compra se ha realizado correctamente su código de compra es: <br>  <strong style='font-size: xx-large'>" + compraGuardada.dataValues.NUM_COMPRA + "</strong>"
+            });
 
-                    message: "La compra se ha realizado correctamente su código de compra es: <br>  <strong style='font-size: xx-large'>" + compraGuardada.dataValues.NUM_COMPRA + "</strong>"
-
-                });
-
-            } else {
-                res.status(404).send({
-                    message: 'No se pudo realizar la compra'
-                });
-
-
-            }
             await t.commit();
         }
     } catch (err) {
@@ -143,12 +129,11 @@ async function saveComprarProducto(req, res) {
 
 
 async function saveComprarProductoCarrito(req, res) {
-    console.log(" INFORMACION COMPRA ", req.body);
     const t = await db.sequelize.transaction({autocommit: false});
-    let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
     try {
+        let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -229,15 +214,13 @@ async function saveComprarProductoCarrito(req, res) {
                 );
 
                 let varianteEncontrada = await Variante.findOne({
-                    where: {NUM_VARIANTE: element.NUM_VARIANTE}
-                }, {
+                    where: {NUM_VARIANTE: element.NUM_VARIANTE},
                     transaction: t
                 });
 
                 let stockReducido = varianteEncontrada.dataValues.STOCK - element.CANTIDAD_PRODUCTO_CARRITO;
                 let varianteActualizada = await Variante.update({STOCK: stockReducido}, {
-                    where: {NUM_VARIANTE: element.NUM_VARIANTE}
-                }, {
+                    where: {NUM_VARIANTE: element.NUM_VARIANTE},
                     transaction: t
                 });
 
@@ -257,7 +240,6 @@ async function saveComprarProductoCarrito(req, res) {
                             },
                             attributes: ['ID_CARRITO', [Carrito_Producto.sequelize.fn('COUNT', Carrito_Producto.sequelize.col('ID_CARRITO')), 'TOTAL_COM']],
                         });
-                        console.log("conmt", cont.dataValues.TOTAL_COM);
 
                         let carritoActualizado = await Carrito.update({CANTIDAD_TOTAL_PRODUCTOS: cont.dataValues.TOTAL_COM}, {
                             where: {COD_AGENTE: req.user.id}
@@ -268,23 +250,10 @@ async function saveComprarProductoCarrito(req, res) {
 
             }
 
-            if (compraGuardada) {
+            res.status(200).send({
+                message: "La compra se ha realizado correctamente su código de compra es: <br>  <strong style='font-size: xx-large'>" + compraGuardada.dataValues.NUM_COMPRA + "</strong>"
+            });
 
-                res.status(200).send({
-                    message: "La compra se ha realizado correctamente su código de compra es: <br>  <strong style='font-size: xx-large'>" + compraGuardada.dataValues.NUM_COMPRA + "</strong>"
-                });
-
-                res.status(200).send({
-                    message: "La compra se ha realizado correctamente"
-                });
-
-            } else {
-                res.status(404).send({
-                    message: 'No se pudo realizar la compra'
-                });
-
-
-            }
             await t.commit();
         }
     } catch
@@ -300,7 +269,7 @@ async function getMisCompras(req, res) {
     let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
     try {
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -354,7 +323,7 @@ async function getMisComprasRecientes(req, res) {
     let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
     try {
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -391,7 +360,7 @@ async function getMisPedidos(req, res) {
     let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
     try {
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -427,17 +396,11 @@ async function getMisPedidos(req, res) {
 
                 });
             }
-            if (pedidosObtenidos) {
+
                 res.status(200).send({
                     data: pedidosObtenidos,
                     message: "Compra obtenida correcctamente"
                 });
-            } else {
-                res.status(404).send({
-                    message: 'No existen pedidos'
-                });
-
-            }
         }
     } catch (err) {
         res.status(500).send({
@@ -450,7 +413,7 @@ async function getPedido(req, res) {
     let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
     try {
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -458,7 +421,7 @@ async function getPedido(req, res) {
             let pedido = await Compra.findOne({
                 where: {
                     NUM_COMPRA: req.params.id
-                }, order: [['NUM_COMPRA', 'DESC']],
+                },
                 include: [{model: Agente}, {
                     model: Compra_Producto, include: {
                         model: Variante,
@@ -471,11 +434,11 @@ async function getPedido(req, res) {
             if (pedido) {
                 res.status(200).send({
                     data: pedido,
-                    message: "Compra obtenida correcctamente"
+                    message: "Pedido obtenido correctamente"
                 });
             } else {
-                res.status(404).send({
-                    message: 'No existen pedidos'
+                res.status(402).send({
+                    message: 'No existe el pedido'
                 });
 
             }
@@ -504,12 +467,12 @@ async function updateEstadoPedido(req, res) {
             }, {
                 where: {NUM_COMPRA: req.params.id},
             });
-            if (pedidoActualizado) {
+            if (pedidoActualizado>0) {
                 res.status(200).send({
                     message: "El pedido ha sido tramitado"
                 });
             } else {
-                res.status(404).send({
+                res.status(402).send({
                     message: 'Al parecer no existe el pedido en la base de datos'
                 });
             }

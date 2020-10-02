@@ -11,7 +11,7 @@ async function registrarAgente(req, res) {
     try {
         let agenteEncontrado = await AGENTE.findOne({where: {CORREO: req.body.Correo}});
         if (agenteEncontrado) {
-            res.status(404).send({
+            res.status(402).send({
                 message: 'Este correo electrónico ya está vinculado a una cuenta'
             });
         } else {
@@ -46,7 +46,7 @@ async function registrarAgente(req, res) {
                     });
                 }
             } else {
-                res.status(500).send({
+                res.status(402).send({
                     message: 'No se ha podido registrar sus datos intenta nuevamente'
                 });
             }
@@ -82,7 +82,7 @@ async function autenticarAgente(req, res) {
                     });
                 }
             } else {
-                res.status(404).send({message: 'Error al ingresar, contraseña incorrecta.'});
+                res.status(402).send({message: 'Error al ingresar, contraseña incorrecta.'});
             }
         }
     } catch (err) {
@@ -101,13 +101,13 @@ async function autenticarActivarAgente(req, res) {
         let contrasenia = params.Contrasenia;
 
         if (correo != req.user.email.trim()) {
-            res.status(500).send({
+            res.status(401).send({
                 message: "token no valido"
             });
         } else {
             let agente = await AGENTE.findOne({where: {ESTADO: '1', CORREO: req.user.email}});
             if (!agente) {
-                res.status(500).send({
+                res.status(402).send({
                     message: "Al parecer el usuario no ha sido registrado"
                 });
             } else {
@@ -120,7 +120,7 @@ async function autenticarActivarAgente(req, res) {
                         let agenteActualizado = agente.update({ESTADO: "0"});
 
                         if (!agenteActualizado) {
-                            res.status(404).send({message: 'El Usuario no ha sido activado'});
+                            res.status(402).send({message: 'El usuario no ha sido activado'});
                         } else {
                             res.status(200).send({
                                 data: agente
@@ -129,7 +129,7 @@ async function autenticarActivarAgente(req, res) {
                         }
                     }
                 } else {
-                    res.status(404).send({message: 'Error, contraseña incorrecta'});
+                    res.status(402).send({message: 'Error, contraseña incorrecta'});
                 }
             }
 
@@ -147,7 +147,7 @@ async function resetearContrasenia(req, res) {
         let params = req.body;
         let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: params.Correo.trim()}});
         if (!agente) {
-            res.status(404).send({
+            res.status(402).send({
                 message: 'Usuario no encontrado'
             });
         } else {
@@ -168,7 +168,7 @@ async function resetearContrasenia2(req, res) {
     try {
         let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: req.user.email.trim()}});
         if (!agente) {
-            res.status(500).send({
+            res.status(401).send({
                 message: "Token no valido"
             });
         } else {
@@ -176,14 +176,15 @@ async function resetearContrasenia2(req, res) {
             await bcrypt.hash(req.body.Contrasenia2, null, null, function (err, hash) {
                 let nuevaContrasenia = hash;//aqui e cambio
                 let agenteActualizado = agente.update({CONTRASENIA: nuevaContrasenia});
-                if (!agenteActualizado) {
-                    res.status(500).send({
-                        message: "La contraseña no pudo ser actualizada"
-                    });
-                } else {
+                if (agenteActualizado > 0) {
                     res.status(200).send({
                         message: "Su contraseña ha sido actualizada"
                     });
+                } else {
+                    res.status(402).send({
+                        message: "La contraseña no pudo ser actualizada"
+                    });
+
                 }
             });
         }
@@ -200,7 +201,7 @@ async function actualizarAgente(req, res) {
         let verificar = await AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tienes permisos necesarios"
             });
         } else {
@@ -220,10 +221,11 @@ async function actualizarAgente(req, res) {
 
             }
             let agenteActualizado = await AGENTE.update(agente, {where: {ESTADO: '0', CORREO: agenteId}});
-            if (!agenteActualizado) {
-                res.status(404).send({message: 'El Usuario no ha sido actualizado'});
-            } else {
+            if (agenteActualizado > 0) {
                 res.status(200).send({message: 'El Usuario ha sido actualizado'});
+            } else {
+                res.status(402).send({message: 'El Usuario no ha sido actualizado'});
+
             }
         }
 
@@ -242,7 +244,7 @@ async function verificarExistenciaCorreo(req, res) {
         let verificar = await AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tienes permisos necesarios"
             });
         } else {
@@ -250,8 +252,8 @@ async function verificarExistenciaCorreo(req, res) {
             let agenteEncontrado = await AGENTE.findOne({where: {CORREO: req.body.correo.trim()}});
 
             if (agenteEncontrado) {
-                res.status(404).send({
-                    message: 'Este correo electronico ya esta vinculado a una cuenta'
+                res.status(402).send({
+                    message: 'Este correo electrónico ya esta vinculado a una cuenta'
                 });
             } else {
                 /*  let respuestaCorreo = await correo.EnviarCorreo(req.body.correo, req.body.asunto, req.body.codigo, null);
@@ -280,7 +282,7 @@ async function cambioCorreoAgente(req, res) {
         let verificar = await AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tienes permisos necesarios"
             });
         } else {
@@ -289,9 +291,9 @@ async function cambioCorreoAgente(req, res) {
             let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: agenteId}});
             let agenteActualizado = await agente.update({CORREO: req.body.correo.trim()});
             if (!agenteActualizado) {
-                res.status(404).send({message: 'El Usuario no ha sido actualizado'});
+                res.status(402).send({message: 'El usuario no ha sido actualizado'});
             } else {
-                res.status(200).send({message: 'El Usuario ha sido actualizado'});
+                res.status(200).send({message: 'El usuario ha sido actualizado'});
             }
         }
     } catch (e) {
@@ -309,8 +311,8 @@ async function actualizarAgenteIdentity(req, res) {
         let verificar = await AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
-            return res.status(500).send({
-                message: "No tienes permisos necesarios"
+            return res.status(401).send({
+                message: "No tienes los permisos necesarios"
             });
         } else {
 
@@ -325,8 +327,8 @@ async function actualizarAgenteIdentity(req, res) {
                     data: agente,
                 });
             } else {
-                res.status(404).send({
-                    message: 'No se pudieron recargar sus datos puede probar auntenticandose nuevamente'
+                res.status(402).send({
+                    message: 'No se pudieron recargar sus datos, intenta autenticandote nuevamente'
                 });
 
 
@@ -346,7 +348,7 @@ async function actualizarContrasenia(req, res) {
         let verificar = await AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -357,17 +359,16 @@ async function actualizarContrasenia(req, res) {
             let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: agenteId}});
             let result = await bcrypt.compareSync(req.body.contraseniaActual, agente.dataValues.CONTRASENIA);
             if (result) {
-
                 await bcrypt.hash(req.body.contraseniaNueva, null, null, async function (err, hash) {
                     let agenteActualizado = await agente.update({CONTRASENIA: hash});
-                    if (!agenteActualizado) {
-                        res.status(404).send({message: 'No se ha podido actualizar la contraseña'});
-                    } else {
+                    if (agenteActualizado > 0) {
                         res.status(200).send({message: 'La contraseña ha sido actualizada'});
+                    } else {
+                        res.status(402).send({message: 'No se ha podido actualizar la contraseña'});
                     }
                 });
             } else {
-                res.status(404).send({
+                res.status(402).send({
                     message: 'La contraseña actual no coincide'
                 });
             }

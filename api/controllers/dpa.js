@@ -14,7 +14,7 @@ async function getDpaProvincias(req, res) {
                 message: "DPA cargado correctamente"
             });
         } else {
-            res.status(404).send({
+            res.status(402).send({
                 message: 'No existe DPA registrada en la base de datos'
             });
 

@@ -20,7 +20,7 @@ async function getVentas(req, res) {
     try {
         let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -30,7 +30,7 @@ async function getVentas(req, res) {
 
             res.status(200).send({
                 data: ventasObtenidas.count,
-                message: "Productos cargados correctamente"
+                message: "Ventas cargadas correctamente"
             });
 
         }
@@ -47,7 +47,7 @@ async function getCalificaciones(req, res) {
     try {
         let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -63,7 +63,7 @@ async function getCalificaciones(req, res) {
 
             res.status(200).send({
                 data: calificacionesObtenidas,
-                message: "Productos cargados correctamente"
+                message: "Calificaciones cargadas correctamente"
             });
         }
     } catch (err) {
@@ -78,7 +78,7 @@ async function getProductos(req, res) {
     try {
         let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -106,7 +106,7 @@ async function getVisitas(req, res) {
     try {
         let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -135,7 +135,7 @@ async function getMetodosPago(req, res) {
     try {
         let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -175,7 +175,7 @@ async function getMetodosEnvio(req, res) {
     try {
         let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -214,7 +214,7 @@ async function getDescuentos(req, res) {
     try {
         let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -233,7 +233,7 @@ async function getDescuentos(req, res) {
             }
             res.status(200).send({
                 data: obj,
-                message: "Métodos de envío cargados correctamente"
+                message: "Descuentos cargados correctamente"
             });
 
         }
@@ -252,7 +252,7 @@ async function getVentasMensuales(req, res) {
     try {
         let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -282,7 +282,7 @@ async function getVentasVisitas(req, res) {
     try {
         let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -303,7 +303,7 @@ async function getVentasVisitas(req, res) {
             }
             res.status(200).send({
                 data: obj,
-                message: "Métodos de envío cargados correctamente"
+                message: "Ventas y visitas cargadas correctamente"
             });
 
         }
@@ -320,7 +320,7 @@ async function getProductoMasVendido(req, res) {
     try {
         let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -337,7 +337,7 @@ async function getProductoMasVendido(req, res) {
 
             res.status(200).send({
                 data: Prodducto,
-                message: "Métodos de envío cargados correctamente"
+                message: "Producto cargado correctamente"
             });
 
         }
@@ -352,39 +352,36 @@ async function getProductoMasVendido(req, res) {
 async function getProductoDetalleMasVendido(req, res) {
 
     try {
+        let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
+        if (!verificar) {
+            return res.status(401).send({
+                message: "No tiene los permisos necesarios"
+            });
+        } else {
+            let productoObtenido = await Variante.findOne({
+                where: {NUM_VARIANTE: req.params.id},
+                include: [{
+                    model: Producto, include: [
+                        {
+                            model: Calificacion,
+                            separate: true,
+                            attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', [Calificacion.sequelize.fn('AVG', Calificacion.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
+                            group: ['ID_PRODUCTO']
+                        }, {model: Oferta}]
+                }, {
+                    model: Imagen_Producto, separate: true,
+                    order: [['ID_IMAGEN', 'ASC']]
+                }],
+            })
 
-        let productoObtenido = await Variante.findOne({
-            where: {NUM_VARIANTE: req.params.id},
-            include: [{
-                model: Producto, include: [
-                    {
-                        model: Calificacion,
-                        separate: true,
-                        attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', [Calificacion.sequelize.fn('AVG', Calificacion.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
-                        group: ['ID_PRODUCTO']
-                    }, {model: Oferta}]
-            }, {
-                model: Imagen_Producto, separate: true,
-                order: [['ID_IMAGEN', 'ASC']]
-            }],
-        })
-
-
-        if (productoObtenido) {
 
             res.status(200).send({
                 data: productoObtenido,
                 message: "Producto cargado correctamente"
             });
-        } else {
-
-            res.status(404).send({
-                message: 'Al parecer no se encuentra el producto registrado en la base de datos'
-            });
         }
     } catch
         (err) {
-        await t.rollback();
         res.status(500).send({
             message: 'error:' + err
         });
@@ -399,7 +396,7 @@ async function getEstadisticaCarrito(req, res) {
     try {
         let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -413,7 +410,7 @@ async function getEstadisticaCarrito(req, res) {
 
             res.status(200).send({
                 data: carritoObtenido.count,
-                message: "Métodos de envío cargados correctamente"
+                message: "Productos del carrito cargados correctamente"
             });
         }
 
@@ -429,7 +426,7 @@ async function getEstadisticaPedidosRealizados(req, res) {
     try {
         let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -452,7 +449,7 @@ async function getEstadisticaPedidosRealizados(req, res) {
 
             res.status(200).send({
                 data: obj,
-                message: "Métodos de envío cargados correctamente"
+                message: "Pedidos realizados cargados correctamente"
             });
         }
 
