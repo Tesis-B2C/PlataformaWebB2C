@@ -9,7 +9,7 @@ import {CorreoServicio} from "../../../servicios/correo.servicio";
 
 declare const require: any;
 const places = require("../../../../../node_modules/places.js/dist/cdn/places.js");
-
+import {HttpErrorResponse} from "@angular/common/http";
 @Component({
   selector: 'app-datos-personales',
   templateUrl: './datos-personales.component.html',
@@ -67,11 +67,13 @@ export class DatosPersonalesComponent implements OnInit {
       let response = await this._dpaServicio.getDpaProvincias(buscar).toPromise();
       this.provincias = response.data;
     } catch (e) {
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
     }
   }
 
@@ -81,11 +83,13 @@ export class DatosPersonalesComponent implements OnInit {
       let response = await this._dpaServicio.getDpaCiudades(buscar).toPromise();
       this.ciudades = response.data;
     } catch (e) {
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
     }
   }
 
@@ -228,11 +232,13 @@ export class DatosPersonalesComponent implements OnInit {
       this.banderaPasoDosCambiarCorreo = true;
       this.banderaPasoUnoCambiarCorreo = false;
     } catch (e) {
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
     }
   }
 
@@ -269,11 +275,13 @@ export class DatosPersonalesComponent implements OnInit {
       }
     } catch (e) {
       this.loading = false;
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
     }
     this.loading = false;
   }
@@ -296,11 +304,13 @@ export class DatosPersonalesComponent implements OnInit {
         this.mensageError('Codigo incorrecto');
       }
     } catch (e) {
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
     }
   }
 
@@ -341,11 +351,13 @@ export class DatosPersonalesComponent implements OnInit {
       let responseCorreo = await this._correoServicio.correoCambioCorreo(this.objetoEmail).toPromise();
       this.mensageCorrecto(responseCorreo.message);
     } catch (e) {
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
     }
   }
 

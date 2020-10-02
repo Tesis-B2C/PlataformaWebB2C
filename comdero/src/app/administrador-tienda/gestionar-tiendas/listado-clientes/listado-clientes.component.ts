@@ -3,7 +3,7 @@ import {TiendaServicio} from "../../../servicios/tienda.servicio";
 import Swal from "sweetalert2";
 import * as XLSX from 'xlsx';
 import {ExcelServicio} from "../../../servicios/excel.servicio";
-
+import {HttpErrorResponse} from "@angular/common/http";
 @Component({
   selector: 'app-listado-clientes',
   templateUrl: './listado-clientes.component.html',
@@ -36,11 +36,13 @@ export class ListadoClientesComponent implements OnInit {
       this.loading = false;
     } catch (e) {
       this.loading = false;
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
     }
   }
 

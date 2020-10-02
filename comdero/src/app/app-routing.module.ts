@@ -7,6 +7,7 @@ import { RegistroTiendaComponent } from './paginas/registro-tienda/registro-tien
 import {OlvidoContraseniaComponent} from './paginas/olvido-contrasenia/olvido-contrasenia.component';
 import { OlvidoContraseniaPaso2Component } from './paginas/olvido-contrasenia-paso2/olvido-contrasenia-paso2.component';
 import {AuthGuard} from "./shared/guards/auth.guard";
+import {Error500Component} from "./paginas/error500/error500.component";
 
 const routes: Routes = [
 
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: 'registro-tienda', component: RegistroTiendaComponent,canActivate:[AuthGuard]},
   {path: 'olvido-contrasenia', component: OlvidoContraseniaComponent},
   {path: 'olvido-contrasenia-paso2/:token', component: OlvidoContraseniaPaso2Component},
+  {path: 'error500', component: Error500Component},
   {path: '**', redirectTo: 'principales/menu/principal'},
 ];
 

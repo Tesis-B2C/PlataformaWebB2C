@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import Swal from "sweetalert2";
 import {CorreoServicio} from "../../servicios/correo.servicio";
+import {HttpErrorResponse} from "@angular/common/http";
 @Component({
   selector: 'app-olvido-contrasenia',
   templateUrl: './olvido-contrasenia.component.html',
@@ -29,9 +30,13 @@ public response;
 
     } catch (e) {
       this.loading = false;
-      if (JSON.stringify((e).error.message))
-        this.mensageError(JSON.stringify((e).error.message));
-      else this.mensageError("Error de conexión intentelo mas tarde");
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
     }
   }
 
@@ -42,11 +47,13 @@ public response;
     this.mensageCorrecto(correoResponse.message);
     } catch (e) {
       this.loading = false;
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
     }
   }
 

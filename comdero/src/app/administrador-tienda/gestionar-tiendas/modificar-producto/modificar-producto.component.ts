@@ -14,7 +14,7 @@ import {CurrencyPipe} from "@angular/common";
 import {Cmyk, ColorPickerService} from "ngx-color-picker";
 import {ToastrService} from "ngx-toastr";
 import {GLOBAL} from 'src/app/servicios/global';
-
+import {HttpErrorResponse} from "@angular/common/http";
 @Component({
   selector: 'app-modificar-producto',
   templateUrl: './modificar-producto.component.html',
@@ -127,11 +127,13 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
       this.identidadProducto = response.data
       console.log("producto", this.identidadProducto);
     } catch (e) {
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:" + e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
     }
   }
 
@@ -248,11 +250,13 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
 
 
     } catch (e) {
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:" + e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
     }
 
   }
@@ -418,11 +422,13 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
       this.unidades = response.data;
 
     } catch (e) {
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:" + e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
     }
   }
 
@@ -696,11 +702,13 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
           this.loading = false;
         } catch (e) {
           this.loading = false;
-          console.log("error Parseado:" + JSON.stringify(e));
-          console.log("error como objeto:" + e);
-          if (JSON.stringify(e) === '{}')
-            this.mensageError(e);
-          else this.mensageError(JSON.stringify(e));
+          if (!(e instanceof HttpErrorResponse)){
+            console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+            console.log("error como objeto:"+ e);
+            if (JSON.stringify(e) === '{}')
+              this.mensageError(e);
+            else this.mensageError(JSON.stringify(e));
+          }
         }
       }
     })
@@ -747,11 +755,13 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
       this.loading = false;
     } catch (e) {
       this.loading = false;
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:" + e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
     }
 
   }
@@ -775,11 +785,13 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
     } catch
       (e) {
       this.loading = false;
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:" + e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
     }
 
   }

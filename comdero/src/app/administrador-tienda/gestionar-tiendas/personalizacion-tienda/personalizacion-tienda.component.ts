@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {TiendaServicio} from "../../../servicios/tienda.servicio";
 import Swal from "sweetalert2";
 import{GLOBAL} from'../../../servicios/global';
-
+import {HttpErrorResponse} from "@angular/common/http";
 @Component({
   selector: 'app-personalizacion-tienda',
   templateUrl: './personalizacion-tienda.component.html',
@@ -97,11 +97,13 @@ export class PersonalizacionTiendaComponent implements OnInit {
       localStorage.setItem("identityTienda", JSON.stringify(identidadTienda.data));
     } catch (e) {
       this.loading = false;
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
     }
   }
 

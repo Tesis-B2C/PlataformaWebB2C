@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {TiendaServicio} from "../../../servicios/tienda.servicio";
 import {ToastrService} from "ngx-toastr";
 import Swal from "sweetalert2";
-import {Sucursal} from "../../../modelos/sucursal";
+import {HttpErrorResponse} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
@@ -36,12 +36,13 @@ export class EncuentranosTiendaComponent implements OnInit {
 
     } catch (e) {
 
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
-
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
 
 
     }

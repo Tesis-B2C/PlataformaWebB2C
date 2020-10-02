@@ -7,7 +7,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ProductoServicio} from "../../../servicios/producto.servicio";
 import {DatePipe} from "@angular/common";
 import {ToastrService} from "ngx-toastr";
-
+import {HttpErrorResponse} from "@angular/common/http";
 @Component({
   selector: 'app-modificar-cupon-descuento',
   templateUrl: './modificar-cupon-descuento.component.html',
@@ -77,11 +77,13 @@ export class ModificarCuponDescuentoComponent implements OnInit {
       console.log("el descuento que trae", this.identidadDescuento, this.idDescuento);
 
     } catch (e) {
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:" + e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
     }
   }
 
@@ -298,11 +300,13 @@ export class ModificarCuponDescuentoComponent implements OnInit {
       }
     } catch (e) {
       this.loading = false;
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:" + e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
     }
 
 
@@ -327,11 +331,13 @@ export class ModificarCuponDescuentoComponent implements OnInit {
 
     } catch (e) {
       this.loading = false;
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:" + e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
     }
 
   }

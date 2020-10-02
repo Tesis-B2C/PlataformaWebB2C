@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import {NgbRatingConfig} from "@ng-bootstrap/ng-bootstrap";
 import {GLOBAL} from 'src/app/servicios/global';
 import * as moment from "moment";
-
+import {HttpErrorResponse} from "@angular/common/http";
 @Component({
   selector: 'app-inicio-tienda',
   templateUrl: './inicio-tienda.component.html',
@@ -48,12 +48,13 @@ export class InicioTiendaComponent implements OnInit {
       console.log("tienda buscada en inicio pilas", this.Tienda);
     } catch (e) {
 
-
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
 
     }
 
@@ -100,11 +101,13 @@ export class InicioTiendaComponent implements OnInit {
       })
       console.log(JSON.stringify(this.vectorProductosObtenidos)+'hola');
     } catch (e) {
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
     }
   }
 

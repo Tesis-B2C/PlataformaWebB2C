@@ -2,9 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {TiendaServicio} from "../../../servicios/tienda.servicio";
 import {ActivatedRoute, Router} from "@angular/router";
 import Swal from "sweetalert2";
-import {esLocale} from "ngx-bootstrap";
-import {GLOBAL} from "../../../servicios/global";
 
+import {GLOBAL} from "../../../servicios/global";
+import {HttpErrorResponse} from "@angular/common/http";
 @Component({
   selector: 'app-encabezado-tienda',
   templateUrl: './encabezado-tienda.component.html',
@@ -41,11 +41,13 @@ export class EncabezadoTiendaComponent implements OnInit {
       let count = this.Tienda.VISITAS + 1;
       let response = await this._tiendaServicio.updateVisitas(count, this.idTienda).toPromise();
     } catch (e) {
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
     }
   }
 
@@ -63,11 +65,13 @@ export class EncabezadoTiendaComponent implements OnInit {
       this.Tienda = response.data;
       console.log("tienda buscada", JSON.stringify(this.Tienda));
     } catch (e) {
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
 
 
     }

@@ -12,13 +12,15 @@ import { ArchwizardModule } from 'angular-archwizard';
 import { NgxEditorModule } from 'ngx-editor';
 import {RouterModule} from "@angular/router";
 import { NgxPayPalModule } from 'ngx-paypal';
+import { Error500Component } from './error500/error500.component';
 @NgModule({
   declarations: [
     LoguinComponent,
     RegistroComponent,
     RegistroTiendaComponent,
     OlvidoContraseniaComponent,
-    OlvidoContraseniaPaso2Component
+    OlvidoContraseniaPaso2Component,
+    Error500Component
   ],
     imports: [
         ArchwizardModule,

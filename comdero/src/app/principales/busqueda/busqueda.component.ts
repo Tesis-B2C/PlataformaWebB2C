@@ -9,7 +9,7 @@ import {CarritoServicio} from "../../servicios/carrito.servicio";
 import * as moment from "moment";
 import {ProductoServicio} from "../../servicios/producto.servicio";
 import Swal from "sweetalert2";
-
+import {HttpErrorResponse} from "@angular/common/http";
 @Component({
   selector: 'app-busqueda',
   templateUrl: './busqueda.component.html',
@@ -86,11 +86,13 @@ export class BusquedaComponent implements OnInit, OnDestroy, OnChanges {
         }*/
       })
     } catch (e) {
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
     }
   }
 
@@ -275,11 +277,13 @@ export class BusquedaComponent implements OnInit, OnDestroy, OnChanges {
         this.router.navigate(['/registro-tienda']);
       }
     } catch (e) {
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
 
 
     }

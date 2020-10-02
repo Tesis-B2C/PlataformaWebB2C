@@ -6,7 +6,7 @@ import {ToastrService} from "ngx-toastr";
 import {TiendaServicio} from "../../../servicios/tienda.servicio";
 import Swal from "sweetalert2";
 import {MetodoEnvioServicio} from "../../../servicios/metodo_envio.servicio";
-
+import {HttpErrorResponse} from "@angular/common/http";
 @Component({
   selector: 'app-metodos-envio',
   templateUrl: './metodos-envio.component.html',
@@ -311,11 +311,13 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
       }
     } catch (e) {
       this.loading = false;
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
     }
   }
 

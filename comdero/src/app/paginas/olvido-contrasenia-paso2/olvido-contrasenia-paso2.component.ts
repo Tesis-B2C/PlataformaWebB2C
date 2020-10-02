@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import Swal from "sweetalert2";
+import {HttpErrorResponse} from "@angular/common/http";
 @Component({
   selector: 'app-olvido-contrasenia-paso2',
   templateUrl: './olvido-contrasenia-paso2.component.html',
@@ -34,11 +35,13 @@ export class OlvidoContraseniaPaso2Component implements OnInit {
 
     }catch (e) {
       this.loading = false;
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
     }
 
   }

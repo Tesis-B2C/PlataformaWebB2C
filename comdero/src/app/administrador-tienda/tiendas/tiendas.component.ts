@@ -5,6 +5,7 @@ import {GLOBAL} from "../../servicios/global";
 import {Router} from "@angular/router";
 import { NgxSpinnerService } from "ngx-spinner";
 import Swal from "sweetalert2"
+import {HttpErrorResponse} from "@angular/common/http";
 @Component({
   selector: 'app-tiendas',
   templateUrl: './tiendas.component.html',
@@ -42,11 +43,13 @@ export class TiendasComponent implements OnInit, AfterContentInit {
       console.log("tiendas", this.misTiendas, "url", this.url);
 
     } catch (e) {
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
 
 
     }
@@ -67,11 +70,13 @@ export class TiendasComponent implements OnInit, AfterContentInit {
     localStorage.setItem("identityTienda", JSON.stringify(identidadTienda.data));
     this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/inicio-administracion']);
     }catch (e) {
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
     }
   }
   mensageError(mensaje) {

@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import Swal from "sweetalert2";
 import {ActivatedRoute, Router} from "@angular/router";
-
+import {HttpErrorResponse} from "@angular/common/http";
 @Component({
   selector: 'app-loguin',
   templateUrl: './loguin.component.html',
@@ -53,11 +53,13 @@ export class LoguinComponent {
       }
     } catch (e) {
       this.loading = false;
-      console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
     }
     this.loading = false;
   }
