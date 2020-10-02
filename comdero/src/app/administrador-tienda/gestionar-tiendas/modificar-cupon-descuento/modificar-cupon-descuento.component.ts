@@ -74,11 +74,11 @@ export class ModificarCuponDescuentoComponent implements OnInit {
       this.idDescuento = this.route.snapshot.params.id;
       let response = await this._descuentoServicio.getDescuento(this.idDescuento).toPromise();
       this.identidadDescuento = response.data
-   console.log("el descuento que trae" , this.identidadDescuento, this.idDescuento);
+      console.log("el descuento que trae", this.identidadDescuento, this.idDescuento);
 
     } catch (e) {
       console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
+      console.log("error como objeto:" + e);
       if (JSON.stringify(e) === '{}')
         this.mensageError(e);
       else this.mensageError(JSON.stringify(e));
@@ -145,7 +145,7 @@ export class ModificarCuponDescuentoComponent implements OnInit {
     this.page2 = 1;
     this.pageSize2 = 10;
     this.banderaModificar = false;
-    this.bsRangeValue=[];
+    this.bsRangeValue = [];
   }
 
   public generarCodigDescuento() {
@@ -166,7 +166,7 @@ export class ModificarCuponDescuentoComponent implements OnInit {
   public opcionAplicarA(value) {
     debugger;
     //this.vectorProductos=new Set();
-    this.vectorProductosEnviar=[];
+    this.vectorProductosEnviar = [];
     this.banderaOpcionAplicarA = value;
     if (this.banderaOpcionAplicarA) {
 
@@ -265,7 +265,7 @@ export class ModificarCuponDescuentoComponent implements OnInit {
             this.objDescuento.vProductos = this.vectorProductosEnviar;
             let response = await this._descuentoServicio.updateDescuento(this.identidadDescuento.ID_DESCUENTO, this.objDescuento).toPromise();
             this.mensageCorrecto(response.message);
-            this.loading=false;
+            this.loading = false;
             this.iniciarModificarDescuento();
 
           } else {
@@ -299,7 +299,7 @@ export class ModificarCuponDescuentoComponent implements OnInit {
     } catch (e) {
       this.loading = false;
       console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
+      console.log("error como objeto:" + e);
       if (JSON.stringify(e) === '{}')
         this.mensageError(e);
       else this.mensageError(JSON.stringify(e));
@@ -310,25 +310,25 @@ export class ModificarCuponDescuentoComponent implements OnInit {
 
 
   public obtenerFecha(fecha) {
-    fecha.setHours(0,0,0);
-    console.log("fecha antes", this.bsRangeValue, "fecha entrante",fecha.toISOString());
+    fecha.setHours(0, 0, 0);
+    console.log("fecha antes", this.bsRangeValue, "fecha entrante", fecha.toISOString());
     return fecha.toISOString().split('T')[0]
 
   }
 
 
-  public async cambiarEstadoDescuento( estado) {
-
+  public async cambiarEstadoDescuento(estado) {
+    this.loading = true;
     try {
       let responseUpdate = await this._descuentoServicio.updateEstadoDescuento(this.identidadDescuento.ID_DESCUENTO, estado).toPromise();
       this.mensageCorrecto(responseUpdate.message);
       this.iniciarModificarDescuento();
-
+      this.loading = false;
 
     } catch (e) {
-
+      this.loading = false;
       console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
+      console.log("error como objeto:" + e);
       if (JSON.stringify(e) === '{}')
         this.mensageError(e);
       else this.mensageError(JSON.stringify(e));

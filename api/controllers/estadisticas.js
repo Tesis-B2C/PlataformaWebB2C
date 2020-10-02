@@ -391,6 +391,8 @@ async function getProductoDetalleMasVendido(req, res) {
     }
 }
 
+// usuario
+
 
 async function getEstadisticaCarrito(req, res) {
     let busqueda = req.params.id;

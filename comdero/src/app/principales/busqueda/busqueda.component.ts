@@ -268,8 +268,11 @@ export class BusquedaComponent implements OnInit, OnDestroy, OnChanges {
     try {
       let identidad = this._agenteServicio.getIdentity();
       let response = await this._tiendaServicio.getMisTiendas(identidad.COD_AGENTE).toPromise();
-      if (response.data) {
+      let misTiendas:any=response.data;
+      if (misTiendas.length>0) {
         this.router.navigate(['/administrador/administrador-tienda/mis-tiendas']);
+      }else{
+        this.router.navigate(['/registro-tienda']);
       }
     } catch (e) {
       console.log("error Parseado:" + JSON.stringify(e));
@@ -277,8 +280,8 @@ export class BusquedaComponent implements OnInit, OnDestroy, OnChanges {
       if (JSON.stringify(e) === '{}')
         this.mensageError(e);
       else this.mensageError(JSON.stringify(e));
-      this.router.navigate(['/registro-tienda']);
-      console.log("error:" + JSON.stringify((e).error.message));
+
+
     }
     // [routerLink]="['/registro-tienda']"
   }

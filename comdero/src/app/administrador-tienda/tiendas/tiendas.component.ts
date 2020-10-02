@@ -36,13 +36,19 @@ export class TiendasComponent implements OnInit, AfterContentInit {
       let identidad = this._agenteServicio.getIdentity();
       let response = await this._tiendaServicio.getMisTiendas(identidad.COD_AGENTE).toPromise();
       this.misTiendas = response.data;
+      if(this.misTiendas.length==0){
+        this.router.navigate(['/registro-tienda']);
+      }
       console.log("tiendas", this.misTiendas, "url", this.url);
 
     } catch (e) {
-      
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
 
-      this.router.navigate(['/registro-tienda']);
-      console.log("error:" + JSON.stringify((e).error.message));
+
     }
 
 

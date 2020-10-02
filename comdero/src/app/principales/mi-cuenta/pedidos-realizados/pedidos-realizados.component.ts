@@ -14,7 +14,7 @@ import {ValoracionServicio} from "../../../servicios/valoracion.servicio";
 export class PedidosRealizadosComponent implements OnInit {
   public comprasObtenidas;
   public noExite;
-  public error;
+
 
   public page = 1;
   public pageSize = 3;
@@ -47,7 +47,7 @@ export class PedidosRealizadosComponent implements OnInit {
   public async getMisCompras(estado, fecha) {
     this.comprasObtenidas = null;
     this.result = [];
-    this.error = null;
+
     try {
       let response = await this._compraServicio.getMisCompras(estado, fecha).toPromise();
       this.comprasObtenidas = response.data;
@@ -80,8 +80,11 @@ export class PedidosRealizadosComponent implements OnInit {
         compra.cupon = cupon;
       }
     } catch (e) {
-      console.log("error", e)
-      this.error = e;
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:"+ e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 

@@ -13,7 +13,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {CurrencyPipe} from "@angular/common";
 import {Cmyk, ColorPickerService} from "ngx-color-picker";
 import {ToastrService} from "ngx-toastr";
-import { GLOBAL } from 'src/app/servicios/global';
+import {GLOBAL} from 'src/app/servicios/global';
 
 @Component({
   selector: 'app-modificar-producto',
@@ -72,7 +72,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
   public imagenes = [[]];
   public vectorBanderaAgregarImagen = [];
   public vectorBanderaHabilitante = [];
-  public vbanderaMensajeMaximoImagenes=[];
+  public vbanderaMensajeMaximoImagenes = [];
   public banderaMensajeMaximoVideo: boolean = false;
   public data: any = [];
   public banderaAnimacionVideo: boolean = false;
@@ -94,7 +94,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
   public banderaModificar: boolean = false;
   public loading: boolean = false;
 
-  constructor(  public router: Router,public toastr: ToastrService, public cpService: ColorPickerService, public cp: CurrencyPipe, public _sanitizer: DomSanitizer, public _unidadesMedidaServicio: UnidadMedidaServicio, public _categoriaServicio: CategoriaServicio, public modalService: NgbModal, public route: ActivatedRoute, public _productoServicio: ProductoServicio) {
+  constructor(public router: Router, public toastr: ToastrService, public cpService: ColorPickerService, public cp: CurrencyPipe, public _sanitizer: DomSanitizer, public _unidadesMedidaServicio: UnidadMedidaServicio, public _categoriaServicio: CategoriaServicio, public modalService: NgbModal, public route: ActivatedRoute, public _productoServicio: ProductoServicio) {
     this.Oferta = new Oferta(null, null, null, null);
     this.Producto = new Producto(null, null, null, null, null, null, null, null, null);
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
@@ -128,7 +128,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
       console.log("producto", this.identidadProducto);
     } catch (e) {
       console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
+      console.log("error como objeto:" + e);
       if (JSON.stringify(e) === '{}')
         this.mensageError(e);
       else this.mensageError(JSON.stringify(e));
@@ -151,7 +151,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
 
     this.vectorBanderaAgregarImagen = [];
     this.vectorBanderaHabilitante = [];
-    this.vbanderaMensajeMaximoImagenes= [];
+    this.vbanderaMensajeMaximoImagenes = [];
     this.banderaMensajeMaximoVideo = false;
     this.banderaAnimacionVideo = false;
     this.auxi = null;
@@ -197,7 +197,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
           this.Imagenes_Producto[i].push(new Imagen_Producto(v[i].IMAGEN_PRODUCTOs[j].NOMBRE_IMAGEN, v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN, v[i].IMAGEN_PRODUCTOs[j].IMAGEN, v[i].IMAGEN_PRODUCTOs[j].TAMANIO_IMAGEN));
           this.Imagenes_Producto[i][j].Id_Imagen = v[i].IMAGEN_PRODUCTOs[j].ID_IMAGEN;
           this.Imagenes_Producto[i][j].Estado_Imagen = 0;
-          this.imagenes[i][j] = GLOBAL.urlImagen+ v[i].IMAGEN_PRODUCTOs[j].IMAGEN
+          this.imagenes[i][j] = GLOBAL.urlImagen + v[i].IMAGEN_PRODUCTOs[j].IMAGEN
         } else if (v[i].IMAGEN_PRODUCTOs[j].TIPO_IMAGEN == "video") {
           this.imagenes[i][j] = "video"
           this.auxi = i;
@@ -249,7 +249,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
 
     } catch (e) {
       console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
+      console.log("error como objeto:" + e);
       if (JSON.stringify(e) === '{}')
         this.mensageError(e);
       else this.mensageError(JSON.stringify(e));
@@ -334,12 +334,12 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
       this.imagenes[indice] = [];
     }
     this.vectorBanderaHabilitante[indice] = true;
-   /* this.vbanderaMensajeMaximoImagenes[indice]=true;*/
+    /* this.vbanderaMensajeMaximoImagenes[indice]=true;*/
     if (eventEntrante.target.files && eventEntrante.target.files[0]) {
       var filesAmount = eventEntrante.target.files.length;
       this.vectorBanderaAgregarImagen[indice] = true;
       if (filesAmount > 6) {
-        this.vbanderaMensajeMaximoImagenes[indice]= true;
+        this.vbanderaMensajeMaximoImagenes[indice] = true;
         this.vectorBanderaHabilitante[indice] = true;
       } else {
         for (let i = 0; i < filesAmount; i++) {
@@ -419,7 +419,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
 
     } catch (e) {
       console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
+      console.log("error como objeto:" + e);
       if (JSON.stringify(e) === '{}')
         this.mensageError(e);
       else this.mensageError(JSON.stringify(e));
@@ -650,16 +650,17 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
       return false
     }
   }
+
   validarFormularios() {
-    let bandera=true;
-    for(let i in this.Variantes) {
-if(document.forms["formVariaciones" + i]!=null){
-      if (document.forms["formVariaciones" + i].checkValidity()) {
-        bandera = true;
-      } else {
-        bandera = false;
+    let bandera = true;
+    for (let i in this.Variantes) {
+      if (document.forms["formVariaciones" + i] != null) {
+        if (document.forms["formVariaciones" + i].checkValidity()) {
+          bandera = true;
+        } else {
+          bandera = false;
+        }
       }
-    }
     }
 
     return bandera;
@@ -693,13 +694,13 @@ if(document.forms["formVariaciones" + i]!=null){
           this.mensageCorrecto(response['message']);
           this.iniciarModificarProducto();
           this.loading = false;
-        }catch (e) {
+        } catch (e) {
           this.loading = false;
           console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
-      if (JSON.stringify(e) === '{}')
-        this.mensageError(e);
-      else this.mensageError(JSON.stringify(e));
+          console.log("error como objeto:" + e);
+          if (JSON.stringify(e) === '{}')
+            this.mensageError(e);
+          else this.mensageError(JSON.stringify(e));
         }
       }
     })
@@ -736,17 +737,18 @@ if(document.forms["formVariaciones" + i]!=null){
   }
 
   public async cambiarEstadoProducto(estado) {
-
+    this.loading = true;
     try {
       let responseUpdate = await this._productoServicio.updateEstadoProducto(this.identidadProducto.ID_OFERTA, estado).toPromise();
       this.mensageCorrecto(responseUpdate['menssage']);
       let response = await this._productoServicio.getMisProductos(this.identidadTienda.NUM_TIENDA).toPromise();
       //this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/listado-productos']);
       this.iniciarModificarProducto();
+      this.loading = false;
     } catch (e) {
-
+      this.loading = false;
       console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
+      console.log("error como objeto:" + e);
       if (JSON.stringify(e) === '{}')
         this.mensageError(e);
       else this.mensageError(JSON.stringify(e));
@@ -757,7 +759,7 @@ if(document.forms["formVariaciones" + i]!=null){
   public async publicarProducto() {
     try {
       debugger;
-      this.loading=true;
+      this.loading = true;
       if (this.validar()) {
         if (this.auxi == null && this.videoPorGuardar.Tamanio_Imagen != null) {
           this.Imagenes_Producto[0].push(this.videoPorGuardar);
@@ -774,7 +776,7 @@ if(document.forms["formVariaciones" + i]!=null){
       (e) {
       this.loading = false;
       console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
+      console.log("error como objeto:" + e);
       if (JSON.stringify(e) === '{}')
         this.mensageError(e);
       else this.mensageError(JSON.stringify(e));

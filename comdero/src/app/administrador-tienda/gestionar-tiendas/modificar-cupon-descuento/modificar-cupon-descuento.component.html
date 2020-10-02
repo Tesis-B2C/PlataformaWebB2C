@@ -338,17 +338,17 @@
               Modificar &nbsp;&nbsp;
               <span class="fa fa-edit"></span></button>
             &nbsp;&nbsp;
-            <button *ngIf="!banderaModificar &&  this.Descuento.Estado_Descuento ==0"
+            <button *ngIf="!banderaModificar &&  this.Descuento.Estado_Descuento ==0" [disabled]="loading"
                     class="btn btn-light text-nowrap mb-4  col-auto" (click)="cambiarEstadoDescuento(1)">
               Desactivar &nbsp;&nbsp;
               <span class="fa fa-ban"></span></button>
 
-            <button *ngIf="!banderaModificar &&   this.Descuento.Estado_Descuento ==1"
+            <button *ngIf="!banderaModificar &&   this.Descuento.Estado_Descuento ==1" [disabled]="loading"
                     class="btn btn-light text-nowrap mb-4  col-auto" (click)="cambiarEstadoDescuento(0)">
               Mostrar &nbsp;&nbsp;
               <span class="fa fa-check"></span></button>
             &nbsp;&nbsp;
-            <button *ngIf="!banderaModificar" class="btn btn-danger text-nowrap mb-4  col-auto"
+            <button *ngIf="!banderaModificar" class="btn btn-danger text-nowrap mb-4  col-auto" [disabled]="loading"
                     (click)="cambiarEstadoDescuento(2)">
               Eliminar &nbsp;&nbsp;
               <span class="fa fa-trash"></span></button>

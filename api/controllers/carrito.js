@@ -87,7 +87,7 @@ async function saveCarrito(req, res) {
                 }
             });
             if (busquedaCarrito) {
-                res.status(404).send({
+                res.status(400).send({
                     message: 'Este producto ya se encuentra en el carrito de compras'
                 });
             } else {
@@ -162,7 +162,7 @@ async function updateCantidadProducto(req, res) {
                     where: {NUM_VARIANTE: req.params.num_variante, ID_CARRITO: req.body.id_carrito},
                 });
 
-                res.status(404).send({
+                res.status(201).send({
                     message: 'Estock no disponible',
                     data: verificarCantidad.dataValues.STOCK
 

@@ -10,6 +10,7 @@ import {GLOBAL} from 'src/app/servicios/global';
 import * as moment from "moment";
 import {ProductoServicio} from "../../servicios/producto.servicio";
 import Swal from "sweetalert2";
+
 @Component({
   selector: 'app-principal',
   templateUrl: './principal.component.html',
@@ -205,7 +206,7 @@ export class PrincipalComponent implements OnInit {
       return this.vectorProductosObtenidos;
     } catch (e) {
       console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
+      console.log("error como objeto:" + e);
       if (JSON.stringify(e) === '{}')
         this.mensageError(e);
       else this.mensageError(JSON.stringify(e));
@@ -284,7 +285,7 @@ export class PrincipalComponent implements OnInit {
       }
     } catch (e) {
       console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
+      console.log("error como objeto:" + e);
       if (JSON.stringify(e) === '{}')
         this.mensageError(e);
       else this.mensageError(JSON.stringify(e));
@@ -306,7 +307,7 @@ export class PrincipalComponent implements OnInit {
       })
     } catch (e) {
       console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
+      console.log("error como objeto:" + e);
       if (JSON.stringify(e) === '{}')
         this.mensageError(e);
       else this.mensageError(JSON.stringify(e));
@@ -317,12 +318,18 @@ export class PrincipalComponent implements OnInit {
     try {
       let identidad = this._agenteServicio.getIdentity();
       let response = await this._tiendaServicio.getMisTiendas(identidad.COD_AGENTE).toPromise();
-      if (response.data) {
+      let mistiendas: any = response.data;
+      if (mistiendas.length > 0) {
         this.router.navigate(['/administrador/administrador-tienda/mis-tiendas']);
+      } else {
+        this.router.navigate(['/registro-tienda']);
       }
     } catch (e) {
-      this.router.navigate(['/registro-tienda']);
-      console.log("error:" + JSON.stringify((e).error.message));
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:" + e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
     // [routerLink]="['/registro-tienda']"
   }

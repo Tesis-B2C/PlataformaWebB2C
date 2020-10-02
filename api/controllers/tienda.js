@@ -197,17 +197,11 @@ async function getMisTiendas(req, res) {
                 }, order: [['NUM_TIENDA', 'ASC']]
             });
 
-            if (tiendasObtenidas.length > 0) {
+            if (tiendasObtenidas) {
                 res.status(200).send({
                     data: tiendasObtenidas,
                     message: "Tiendas cargadas correctamente"
                 });
-            } else {
-                res.status(404).send({
-                    message: 'Al parecer no se encuentran tiendas registradas en la base de datos'
-                });
-
-
             }
         }
     } catch (err) {

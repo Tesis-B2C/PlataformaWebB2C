@@ -182,7 +182,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
 
     } catch (e) {
       console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
+      console.log("error como objeto:" + e);
       if (JSON.stringify(e) === '{}')
         this.mensageError(e);
       else this.mensageError(JSON.stringify(e));
@@ -260,9 +260,11 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
       let response = await this._carritoServicio.updateCantidadProducto(num_variante, id_carrito, cantidad).toPromise();
       return response.data
     } catch (e) {
-      console.log(JSON.stringify(e.error.data));
-      //this.toastr.error(JSON.stringify(e.error.message));
-      return e.error.data
+      console.log("error Parseado:" + JSON.stringify(e));
+      console.log("error como objeto:" + e);
+      if (JSON.stringify(e) === '{}')
+        this.mensageError(e);
+      else this.mensageError(JSON.stringify(e));
     }
   }
 
@@ -282,7 +284,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
 
     } catch (e) {
       console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
+      console.log("error como objeto:" + e);
       if (JSON.stringify(e) === '{}')
         this.mensageError(e);
       else this.mensageError(JSON.stringify(e));
@@ -1024,7 +1026,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
     } catch (e) {
       this.loading = false;
       console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
+      console.log("error como objeto:" + e);
       if (JSON.stringify(e) === '{}')
         this.mensageError(e);
       else this.mensageError(JSON.stringify(e));
@@ -1040,7 +1042,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
       this.provinciasDireccion = response.data;
     } catch (e) {
       console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
+      console.log("error como objeto:" + e);
       if (JSON.stringify(e) === '{}')
         this.mensageError(e);
       else this.mensageError(JSON.stringify(e));
@@ -1058,7 +1060,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
       this.ciudadesDireccion = response.data;
     } catch (e) {
       console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
+      console.log("error como objeto:" + e);
       if (JSON.stringify(e) === '{}')
         this.mensageError(e);
       else this.mensageError(JSON.stringify(e));

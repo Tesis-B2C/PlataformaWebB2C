@@ -556,15 +556,15 @@
               Modificar &nbsp;&nbsp;
               <span class="fa fa-edit"></span></button>
             &nbsp;&nbsp;
-            <button *ngIf="!banderaModificar && identidadProducto?.ESTADO_OFERTA==0" class="btn btn-light text-nowrap mb-4  col-auto" (click)="guardarCambiarEstadoProducto(1)">
+            <button [disabled]="loading" *ngIf="!banderaModificar && identidadProducto?.ESTADO_OFERTA==0" class="btn btn-light text-nowrap mb-4  col-auto" (click)="guardarCambiarEstadoProducto(1)">
               Ocultar &nbsp;&nbsp;
               <span class="fa fa-eye-slash"></span></button>
 
-            <button *ngIf="!banderaModificar && identidadProducto?.ESTADO_OFERTA==1" class="btn btn-light text-nowrap mb-4  col-auto" (click)="guardarCambiarEstadoProducto(0)">
+            <button [disabled]="loading" *ngIf="!banderaModificar && identidadProducto?.ESTADO_OFERTA==1" class="btn btn-light text-nowrap mb-4  col-auto" (click)="guardarCambiarEstadoProducto(0)">
               Mostrar &nbsp;&nbsp;
               <span class="fa fa-eye"></span></button>
             &nbsp;&nbsp;
-            <button *ngIf="!banderaModificar" class="btn btn-danger text-nowrap mb-4  col-auto" (click)="guardarCambiarEstadoProducto(2)">
+            <button [disabled]="loading" *ngIf="!banderaModificar" class="btn btn-danger text-nowrap mb-4  col-auto" (click)="guardarCambiarEstadoProducto(2)">
               Eliminar &nbsp;&nbsp;
               <span class="fa fa-trash"></span></button>
           </div>

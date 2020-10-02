@@ -335,18 +335,12 @@ async function getMisCompras(req, res) {
 
                 });
             }
-            if (comprasObtenidas.length > 0) {
-                res.status(200).send({
-                    data: comprasObtenidas,
-                    message: "Compra obtenida correcctamente"
-                });
-            } else {
-                res.status(404).send({
-                    message: 'No existen compras'
-                });
 
+            res.status(200).send({
+                data: comprasObtenidas,
+                message: "Compra obtenida correcctamente"
+            });
 
-            }
         }
     } catch (err) {
         res.status(500).send({
@@ -378,18 +372,12 @@ async function getMisComprasRecientes(req, res) {
 
             });
 
-            if (comprasObtenidas.length > 0) {
-                res.status(200).send({
-                    data: comprasObtenidas,
-                    message: "Compra obtenida correcctamente"
-                });
-            } else {
-                res.status(404).send({
-                    message: 'No existen compras'
-                });
 
+            res.status(200).send({
+                data: comprasObtenidas,
+                message: "Compra obtenida correcctamente"
+            });
 
-            }
         }
     } catch (err) {
         res.status(500).send({

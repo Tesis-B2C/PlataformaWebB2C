@@ -69,15 +69,7 @@ export class EncabezadoTiendaComponent implements OnInit {
         this.mensageError(e);
       else this.mensageError(JSON.stringify(e));
 
-      //antiguo
-      if (JSON.stringify((e).error)) {
-        this.mensageError(JSON.stringify((e).error.message));
-        this.router.navigate(['/principales/menu/principal'])
-      } else {
-        this.mensageError("Error de conexión intentelo mas tarde");
-        debugger;
-        this.router.navigate(['/principales/menu/principal'])
-      }
+
     }
 
 
