@@ -8,6 +8,8 @@ import {OlvidoContraseniaComponent} from './paginas/olvido-contrasenia/olvido-co
 import { OlvidoContraseniaPaso2Component } from './paginas/olvido-contrasenia-paso2/olvido-contrasenia-paso2.component';
 import {AuthGuard} from "./shared/guards/auth.guard";
 import {Error500Component} from "./paginas/error500/error500.component";
+import {Error404Component} from "./paginas/error404/error404.component";
+import {Error0Component} from "./paginas/error0/error0.component";
 
 const routes: Routes = [
 
@@ -21,6 +23,8 @@ const routes: Routes = [
   {path: 'olvido-contrasenia', component: OlvidoContraseniaComponent},
   {path: 'olvido-contrasenia-paso2/:token', component: OlvidoContraseniaPaso2Component},
   {path: 'error500', component: Error500Component},
+  {path: 'error404', component: Error404Component},
+  {path: 'error0', component: Error0Component},
   {path: '**', redirectTo: 'principales/menu/principal'},
 ];
 

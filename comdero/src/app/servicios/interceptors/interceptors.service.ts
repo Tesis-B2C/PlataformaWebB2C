@@ -32,18 +32,21 @@ export class InterceptorsService implements HttpInterceptor {
             if (error.status === 400) {
               this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo"><strong>!Error</strong><br>' + JSON.stringify((error).error.message) + '</p> </div>', "",
                 {positionClass: 'toast-top-right', enableHtml: true, closeButton: true});
+            } else if (error.status === 401) {
+              console.log("Error 401");
+              this.mensageError(JSON.stringify((error).error.message));
             } else if (error.status === 402) {
               console.log("Error 402");
-              this.mensageError(JSON.stringify((error).error.message))
+              this.mensageError(JSON.stringify((error).error.message));
             } else if (error.status === 403) {
               console.log("Error 403");
-              this.mensageError(JSON.stringify((error).error.message))
+              this.mensageError(JSON.stringify((error).error.message));
             } else if (error.status === 404) {
               console.log("Error 404");
-              this.router.navigate(['/error400']);
+              this.router.navigate(['/error404']);
             } else if (error.status === 500) {
               console.log("Error 500");
-              this.router.navigate(['/error500'])
+              this.router.navigate(['/error500']);
             } else if (error.status === 0) {
               console.log("Error 0");
               this.router.navigate(['/error0']);
