@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {CarouselModule} from 'ngx-owl-carousel-o';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule,HTTP_INTERCEPTORS} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -32,6 +32,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TypeaheadModule} from 'ngx-bootstrap/typeahead';
 import {ReloadGuard} from "./shared/guards/reload.guard";
 import {ExcelServicio} from "./servicios/excel.servicio";
+
+import {InterceptorsService} from './servicios/interceptors/interceptors.service';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,8 @@ import {ExcelServicio} from "./servicios/excel.servicio";
     ValoracionServicio,
     ReloadGuard,
     ExcelServicio,
-    EstadisticasServicio
+    EstadisticasServicio,
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true }
   ],
   bootstrap: [AppComponent]
 })
