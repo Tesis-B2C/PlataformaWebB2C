@@ -19,9 +19,9 @@ import {HttpErrorResponse} from "@angular/common/http";
 })
 export class PrincipalComponent implements OnInit {
   /*images = [1055, 194, 368].map((n) => `https://picsum.photos/id/${n}/2000/400`);*/
-  images = ["../../../assets/estilos-principal/images/bannerPrincipal.png",];
+  images = ["assets/estilos-principal/images/bannerPrincipal.png","assets/images/comdero-01.png","assets/images/comdero-02.png","assets/images/comdero-03.png" ];
   showNavigationArrows = false;
-  showNavigationIndicators = false;
+  showNavigationIndicators = true;
 
   // tslint:disable-next-line: max-line-length
   public categorias;
