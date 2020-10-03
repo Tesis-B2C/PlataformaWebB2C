@@ -3,61 +3,14 @@
 <div class="px-2">
   <section class="section-main">
 
-    <div class="row no-gutters  justify-content-center ">
+    <div class="row no-gutters justify-content-center ">
 
-      <div class="col-xl-9 mt-1  ">
-        <section class=" w-100">
-          <section class="py-0   colorNavbar">
-            <nav class="navbar   navbar-expand-xl  justify-content-between px-lg-5 ">
+      <div class="col-xl-8 mt-1 mx-auto bg-white ">
+        <section class="w-100">
 
-              <button class="navbar-toggler" style="border: none" type="button" #menu name="menu"
-                      data-toggle="collapse" data-target="#main_nav"
-                      aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="fa fa-bars " style="color: white"></span>
-              </button>
-             <a class="navbar-brand mr-auto  ml-2 mx-md-0 " href="#">
-                <h6 class="title-page white mt-2 ">{{this.Tienda?.NOMBRE_COMERCIAL}}</h6>
-              </a>
-              <div class="container   mr-0 pr-0 ">
-                <div class="collapse navbar-collapse ml-auto" id="main_nav">
-                  <ul class="navbar-nav ml-auto ">
-                    <li class="nav-item  ">
-                      <a class="nav-link pl-2 pl-lg-2" (click)="menu.click()" routerLink="inicio-tienda" routerLinkActive='active'
-                         [routerLinkActiveOptions]="{exact: true} " >Inicio </a>
-                    </li>
-                    <li class="nav-item dropdown ">
-                      <a class="nav-link dropdown-toggle pl-2 pl-lg-2" data-toggle="dropdown"
-                         href="#"> Categorias</a>
-                      <div class="dropdown-menu ">
-                        <a class="dropdown-item " *ngFor="let c of this.categorias" href="#"><span
-                          class="fas fa-tag"></span> &nbsp;&nbsp;{{c}}</a>
-
-                      </div>
-                    </li>
-
-                    <li class="nav-item">
-                      <a class="nav-link pl-2 pl-lg-2" (click)="menu.click()" routerLink="informacion-tienda" routerLinkActive='active'
-                         [routerLinkActiveOptions]="{exact: true} ">Información</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link pl-2 pl-lg-2" (click)="menu.click()" routerLink="terminos-y-condiciones-tienda" routerLinkActive='active'
-                         [routerLinkActiveOptions]="{exact: true} "> Terminos y
-                        condiciones </a>
-                    </li>
-
-
-
-                  </ul>
-                </div> <!--  nav .// -->
-
-
-              </div> <!-- container .// -->
-
-            </nav>
-          </section><!-- menu-->
           <div class="section-intro  w-100 mx-auto   bg-white">
             <div class="w-100">
-              <img [src]=this.Banner class="w-100 alto-banner  bg-white ">
+              <img [src]=this.Banner class="w-100 alto-banner  bg-white" style="border-radius: 10px">
             </div>
 
             <div class="posicion-logo row w-100  justify-content-center justify-content-md-start  ml-md-5 ml-1   ">
@@ -67,37 +20,43 @@
 
                 </div>
 
+                <h4 class="text-center  mt-2   ">{{this.Tienda?.NOMBRE_COMERCIAL}}</h4>
               </div>
             </div>
 
 
           </div> <!--banner-->
 
-          <div class="bg-white border-bottom   posicion-iconos" >
+          <div class="bg-white  border-bottom   posicion-iconos">
             <div class="  text-center  d-block">
               <button class='btn btn-lg btn-link ' style='background-color:transparent;'>
                 <div style='text-align:center;'>
-                  <a #contactanos href="https://api.whatsapp.com/send?phone={{contactoWhatsapp}}&text=Hola!%20Quiero%20conocer%20acerca%20de%20su%20tienda!" target="_blank" class="icon icon-sm rounded-circle border border-primary text-center" >
+                  <a #contactanos
+                     href="https://api.whatsapp.com/send?phone={{contactoWhatsapp}}&text=Hola!%20Quiero%20conocer%20acerca%20de%20su%20tienda!"
+                     target="_blank" class="icon icon-sm rounded-circle border border-primary text-center">
                     <i class="fab fa-whatsapp"></i></a>
                 </div>
                 <p (click)="contactanos.click()" class="text-primary" style="font-size: small">Contáctanos</p>
               </button>
 
-              <button class='btn btn-lg btn-link ' style='background-color:transparent;'  routerLink="encuentranos-tienda" routerLinkActive='active-icon'
+              <button class='btn btn-lg btn-link ' style='background-color:transparent;'
+                      routerLink="encuentranos-tienda" routerLinkActive='active-icon'
                       [routerLinkActiveOptions]="{exact: true} ">
                 <div style='text-align:center;'>
-                  <a class="icon icon-sm rounded-circle border border-primary text-center"  routerLinkActive='active-icon'>
+                  <a class="icon icon-sm rounded-circle border border-primary text-center"
+                     routerLinkActive='active-icon'>
                     <i class="fa fa-directions"></i></a>
                 </div>
-                <p  class="text-primary " style="font-size: small">Encuentranos</p>
+                <p class="text-primary " style="font-size: small">Encuentranos</p>
               </button>
 
-              <button *ngIf="this.vPaginasWeb.length>0 " class='btn btn-lg btn-link ' style='background-color:transparent;' data-toggle="dropdown" >
+              <button *ngIf="this.vPaginasWeb.length>0 " class='btn btn-lg btn-link '
+                      style='background-color:transparent;' data-toggle="dropdown">
                 <div style='text-align:center;'>
-                  <a class="icon icon-sm rounded-circle border border-primary text-center" >
+                  <a class="icon icon-sm rounded-circle border border-primary text-center">
                     <i class="fa fa-globe-americas"></i></a>
                 </div>
-                <p  class="text-primary" style="font-size: small">Sitio Web</p>
+                <p class="text-primary" style="font-size: small">Sitio Web</p>
 
               </button>
               <div class="dropdown-menu ">
@@ -112,7 +71,6 @@
                 </div>
 
               </div>
-
 
               <hr>
               <div class="widget-header ">
@@ -145,6 +103,37 @@
             </div>
           </div> <!--iconos pequenios-->
 
+
+          <section class="py-0   bg-white slider justify-content-md-center" >
+
+
+                       <li class="nav-item dis-inline ">
+                         <a class="nav-link" routerLink="inicio-tienda" routerLinkActive='active'
+                            [routerLinkActiveOptions]="{exact: true} " >Tienda </a>
+                       </li>
+                       <!--<li class="nav-item dropdown ">
+                         <a class="nav-link dropdown-toggle " data-toggle="dropdown"
+                            href="#"> Categorias</a>
+                         <div class="dropdown-menu ">
+                           <a class="dropdown-item " *ngFor="let c of this.categorias" href="#"><span
+                             class="fas fa-tag"></span> &nbsp;&nbsp;{{c}}</a>
+
+                         </div>
+                       </li>-->
+
+                       <li class="nav-item dis-inline">
+                         <a class="nav-link "  routerLink="informacion-tienda" routerLinkActive='active'
+                            [routerLinkActiveOptions]="{exact: true} ">Información</a>
+                       </li>
+                       <li class="nav-item dis-inline ">
+                         <a class="nav-link "  id="contenido" routerLink="terminos-y-condiciones-tienda" routerLinkActive='active'
+                            [routerLinkActiveOptions]="{exact: true} "> Términos y
+                           condiciones </a>
+                       </li>
+
+
+
+          </section><!-- menu-->
           <br>
 
 
@@ -152,7 +141,7 @@
 
       </div>
 
-      <div class="col-xl-9  ">
+      <div class="col-xl-8  ">
 
         <router-outlet></router-outlet>
       </div>

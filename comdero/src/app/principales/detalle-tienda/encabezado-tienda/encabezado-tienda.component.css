@@ -1,8 +1,9 @@
 .posicion-logo {
   margin-top: -100px;
 }
-.posicion-iconos{
-  margin-top: -70px;
+
+.posicion-iconos {
+  margin-top: -110px;
 }
 
 
@@ -17,32 +18,39 @@
 }
 
 .nav-link {
-  color: white;
-  border-right: 0.1px solid rgba(244, 246, 246, 0.2);
-  font-size: small;
+
+  color:#495057;
+  font-size: 1rem;
+  width: 100%;
+
 }
 
 .active {
-  color: white;
-  background-color: rgba(244, 246, 246, 0.2);
-
+  color: #1a56e9;
+  border-bottom: solid 2px;
+  border-bottom-color: #1a56e9;
 }
 
 .nav-link:hover {
-  color: white;
-  background-color: rgba(244, 246, 246, 0.2);
+
+  color: #2a4c75;
+  background-color: rgba(244, 246, 246, 1);
+  border-radius: 5px;
+
 }
 
 .alto-banner {
-  height: 500px;
+  height: 450px;
 }
+
 
 .alto-logo {
   border: rgba(244, 246, 246, 0.8) 4px solid;
   height: 180px;
   width: 180px;
 }
-.dropdown-menu{
+
+.dropdown-menu {
   /*max-height: 25vw;
   overflow: auto;*/
 }
@@ -58,21 +66,25 @@
     height: 160px;
     width: 160px;
   }
+
   .posicion-logo {
     margin-top: -60px;
   }
-  .posicion-iconos{
+
+  .posicion-iconos {
     margin-top: 0px;
   }
-  .dropdown-menu{
-  /*  max-height: 100vw;
-    overflow: auto;*/
+
+  .dropdown-menu {
+    /*  max-height: 100vw;
+      overflow: auto;*/
   }
+
 
 }
 
-i{
-  color:#017bff ;
+i {
+  color: #017bff;
 }
 
 .active-icon {
@@ -81,13 +93,14 @@ i{
 
 
 }
-.active-icon i  {
+
+.active-icon i {
 
   color: white;
 
 }
 
-.link{
+.link {
   color: #495057;
 
 }
@@ -98,14 +111,34 @@ i{
 }
 
 .dropdown-menu::-webkit-scrollbar {
-  width:6px;
+  width: 6px;
   height: 6px;
 
 }
+
 .dropdown-menu::-webkit-scrollbar-track {
   background-color: rgba(35, 35, 35, 0.1);
 }
+
 .dropdown-menu::-webkit-scrollbar-thumb {
   background-color: #2a4c75;
   border-radius: 50px;
+}
+
+.slider{
+  display: flex;
+  width: 100%;
+  overflow:auto ;
+
+
+}
+.slider::-webkit-scrollbar {
+  display: none;
+}
+
+#contenido {
+  width:100%;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow: ellipsis;
 }
