@@ -72,8 +72,8 @@
 
               </div>
 
-              <hr>
-              <div class="widget-header ">
+              <br>
+              <div class="widget-header ml-4 mt-2">
                 <li class="small">
                   <p
                     [ngClass]="{'text-success':(this.Disponibilidad=='Disponible' || this.Disponibilidad=='Siempre abierto'), 'text-danger': (this.Disponibilidad=='Cerrado'|| this.Disponibilidad=='No disponible')}"
@@ -104,37 +104,35 @@
           </div> <!--iconos pequenios-->
 
 
-          <section class="py-0   bg-white slider justify-content-md-center" >
+          <section class="py-0   bg-white slider justify-content-md-center">
 
 
-                       <li class="nav-item dis-inline ">
-                         <a class="nav-link" routerLink="inicio-tienda" routerLinkActive='active'
-                            [routerLinkActiveOptions]="{exact: true} " >Tienda </a>
-                       </li>
-                       <!--<li class="nav-item dropdown ">
-                         <a class="nav-link dropdown-toggle " data-toggle="dropdown"
-                            href="#"> Categorias</a>
-                         <div class="dropdown-menu ">
-                           <a class="dropdown-item " *ngFor="let c of this.categorias" href="#"><span
-                             class="fas fa-tag"></span> &nbsp;&nbsp;{{c}}</a>
+            <li class="nav-item dis-inline ">
+              <a class="nav-link" routerLink="inicio-tienda" routerLinkActive='active'
+                 [routerLinkActiveOptions]="{exact: true} ">Tienda </a>
+            </li>
+            <!--<li class="nav-item dropdown ">
+              <a class="nav-link dropdown-toggle " data-toggle="dropdown"
+                 href="#"> Categorias</a>
+              <div class="dropdown-menu ">
+                <a class="dropdown-item " *ngFor="let c of this.categorias" href="#"><span
+                  class="fas fa-tag"></span> &nbsp;&nbsp;{{c}}</a>
 
-                         </div>
-                       </li>-->
+              </div>
+            </li>-->
 
-                       <li class="nav-item dis-inline">
-                         <a class="nav-link "  routerLink="informacion-tienda" routerLinkActive='active'
-                            [routerLinkActiveOptions]="{exact: true} ">Información</a>
-                       </li>
-                       <li class="nav-item dis-inline ">
-                         <a class="nav-link "  id="contenido" routerLink="terminos-y-condiciones-tienda" routerLinkActive='active'
-                            [routerLinkActiveOptions]="{exact: true} "> Términos y
-                           condiciones </a>
-                       </li>
-
+            <li class="nav-item dis-inline">
+              <a class="nav-link " routerLink="informacion-tienda" routerLinkActive='active'
+                 [routerLinkActiveOptions]="{exact: true} ">Información</a>
+            </li>
+            <li class="nav-item dis-inline ">
+              <a class="nav-link " id="contenido" routerLink="terminos-y-condiciones-tienda" routerLinkActive='active'
+                 [routerLinkActiveOptions]="{exact: true} "> Términos y
+                condiciones </a>
+            </li>
 
 
           </section><!-- menu-->
-          <br>
 
 
         </section>
