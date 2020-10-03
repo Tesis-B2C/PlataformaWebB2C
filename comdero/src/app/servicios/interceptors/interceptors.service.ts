@@ -19,13 +19,13 @@ export class InterceptorsService implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError(error => {
         let errorMessage = '';
-        console.log("lo estoy capturando ", errorMessage);
+
         if (error.error instanceof ErrorEvent) {
           // client-side error
           errorMessage = `Client-side error: ${error.error.message}`;
         } else {
           // backend error
-          errorMessage = 'Error del servidor : Estatus:' + error.status + 'Servidor:' + error.message + 'Usuario:' + JSON.stringify((error).error.message);
+          errorMessage = ` Server side Error Status: ${error.status}\nMessage: ${error.message}`;
 
           if (error instanceof HttpErrorResponse) {
 

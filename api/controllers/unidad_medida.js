@@ -17,7 +17,7 @@ async function getUnidadesMedida(req, res) {
                 message: "Unidades de medida cargadas correctamente"
             });
         } else {
-            res.status(404).send({
+            res.status(402).send({
                 message: 'No existen unidades de medida registradas en la base de datos'
             });
 

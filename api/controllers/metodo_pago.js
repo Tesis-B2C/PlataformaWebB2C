@@ -13,7 +13,7 @@ async function saveMetodosPago(req, res) {
         let verificar = Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {

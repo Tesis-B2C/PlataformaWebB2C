@@ -167,8 +167,13 @@ export class EstadisticasComponent implements OnInit {
     try {
       let response = await this._estadisticasServicio.getCalificaciones(this.identidadTienda.NUM_TIENDA).toPromise();
       console.log("avg", response.data);
-      let calificacion = response.data[0]['PRODUCTO'].CALIFICACIONs[0].CALIFICACION_AVG;
-      this.calificacion = parseFloat(calificacion).toFixed(2);
+      let calificacion ;
+      if(response.data[0]['PRODUCTO']){
+        calificacion= response.data[0]['PRODUCTO'].CALIFICACIONs[0].CALIFICACION_AVG;
+        this.calificacion = parseFloat(calificacion).toFixed(2);
+      }
+
+
     } catch (e) {
       if (!(e instanceof HttpErrorResponse)){
         console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));

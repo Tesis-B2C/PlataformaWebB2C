@@ -32,7 +32,6 @@ async function registrarTienda(req, res) {
 
     try {
         let params = JSON.parse(req.body.tienda);
-        console.log("body asd", params);
         if (req.files.logo) {
             var logo = req.files.logo[0].path;
         }
@@ -47,7 +46,7 @@ async function registrarTienda(req, res) {
             }
         });
         if (tiendaEncontrado) {
-            res.status(404).send({
+            res.status(402).send({
                 message: 'Este correo electrónico ya está vinculado a una tienda'
             });
         } else {
@@ -97,7 +96,7 @@ async function registrarTienda(req, res) {
 
                 await t.commit();
             } else {
-                res.status(404).send({
+                res.status(402).send({
                     message: "Al parecer hubo problemas con la creación de su tienda, inténtalo nuevamente"
                 });
             }
@@ -150,7 +149,7 @@ async function getDatosTienda(req, res) {
         let verificar = await AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -169,7 +168,7 @@ async function getDatosTienda(req, res) {
                     message: "Tienda cargada correctamente"
                 });
             } else {
-                res.status(404).send({
+                res.status(402).send({
                     message: 'Al parecer la tienda no se encuentra registrada en la base de datos'
                 });
             }
@@ -186,7 +185,7 @@ async function getMisTiendas(req, res) {
         let verificar = await AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -197,12 +196,12 @@ async function getMisTiendas(req, res) {
                 }, order: [['NUM_TIENDA', 'ASC']]
             });
 
-            if (tiendasObtenidas) {
-                res.status(200).send({
-                    data: tiendasObtenidas,
-                    message: "Tiendas cargadas correctamente"
-                });
-            }
+
+            res.status(200).send({
+                data: tiendasObtenidas,
+                message: "Tiendas cargadas correctamente"
+            });
+
         }
     } catch (err) {
         res.status(500).send({
@@ -217,7 +216,7 @@ async function updateEstadoTienda(req, res) {
         let verificar = await AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -249,16 +248,10 @@ async function updateEstadoTienda(req, res) {
                 });
             }
 
-            if (tiendaActualizada) {
-                res.status(200).send({
-                    message: "La tienda ha sido actualizada correctamente"
-                });
-                await t.commit();
-            } else {
-                res.status(404).send({
-                    message: 'Al parecer no se encuentra la tienda registrada en la base de datos'
-                });
-            }
+            res.status(200).send({
+                message: "La tienda ha sido actualizada correctamente"
+            });
+            await t.commit();
         }
     } catch (err) {
         await t.rollback();
@@ -270,7 +263,7 @@ async function updateEstadoTienda(req, res) {
 
 
 async function updatePersonalizacionTienda(req, res) {
-    console.log("files ", req.files)
+    console.log("files ", req.files);
     try {
         let tiendaObtenida = await TIENDA.findOne({
             where: {NUM_TIENDA: req.params.id}
@@ -306,18 +299,17 @@ async function updatePersonalizacionTienda(req, res) {
             }
             res.status(200).send({
                 data: tiendaGuardado.dataValues,
-                message: "Su tienda ha sido actualizada correctamente"
+                message: "Tu tienda ha sido actualizada correctamente"
             });
 
 
         } else {
-            res.status(404).send({
-                message: "Al parecer hubo problemas con la actualización de su tienda inténtalo nuevamente"
+            res.status(402).send({
+                message: "Al parecer hubo problemas con la actualización de tu tienda inténtalo nuevamente"
             });
         }
 
-    } catch
-        (err) {
+    } catch (err) {
         /*if (fs.exists(path.resolve(req.files.logo[0].path))) {
               console.log('existe');
               await fs.unlink(path.resolve(req.files.logo[0].path));
@@ -430,7 +422,7 @@ async function actualizarTiendaGeneral(req, res) {
         let verificar = await AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -477,12 +469,10 @@ async function actualizarTiendaGeneral(req, res) {
                     }
                 }
             }
-            if (tiendaActualizado) {
-                res.status(200).send({message: 'Los datos generales de la tienda han sido actualizados'});
-                await trans.commit();
-            } else {
-                res.status(404).send({message: 'Los datos generales de la tienda no han sido actualizados'});
-            }
+
+            res.status(200).send({message: 'Los datos generales de la tienda han sido actualizados'});
+            await trans.commit();
+
         }
     } catch (e) {
         await trans.rollback();
@@ -498,7 +488,7 @@ async function actualizarTiendaSucursal(req, res) {
         let verificar = await AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -530,7 +520,7 @@ async function actualizarTiendaSucursal(req, res) {
                     },
                     {transaction: t});
             }
-            res.status(200).send({message: 'Sus datos han sido actualizados'});
+            res.status(200).send({message: 'Los datos de la sucursal han sido actualizados'});
             await t.commit();
         }
     } catch (e) {
@@ -542,7 +532,6 @@ async function actualizarTiendaSucursal(req, res) {
 }
 
 async function getDetalleTiendaProducto(req, res) {
-    console.log("detalle tienda");
     try {
         let fechaHoy = moment().format("YYYY-MM-DD");
         let tiendaObtenida = await TIENDA.findOne({
@@ -652,12 +641,11 @@ async function obtenerFiltroPrincipalTienda(req, res) {
             limit: 10,
             transaction: t
         });
-
-        await t.commit();
         res.status(200).send({
             data: tiendasObtenidos,
             message: "Tiendas obtenidas correctamente"
         });
+        await t.commit();
     } catch (e) {
         await t.rollback();
         res.status(500).send({
@@ -691,11 +679,12 @@ async function obtenerFiltroPrincipalProductos(req, res) {
             transaction: t
         });
 
-        await t.commit();
+
         res.status(200).send({
             data: productosObtenidos,
             message: "Productos cargados correctamente"
         });
+        await t.commit();
     } catch (e) {
         await t.rollback();
         res.status(500).send({
@@ -750,14 +739,18 @@ async function obtenerFiltroPrincipalTodos(req, res) {
         vectorEnviar.push(tiendasObtenidos);
         vectorEnviar.push(productosObtenidos);
 
-        await t.commit();
+
         res.status(200).send({
             data: vectorEnviar,
             message: "Búsqueda cargada correctamente"
         });
+        await t.commit();
 
     } catch (e) {
         await t.rollback();
+        res.status(500).send({
+            message: 'error:' + err
+        });
     }
 }
 
@@ -830,12 +823,12 @@ async function obtenerFiltroBusquedaTodos(req, res) {
             where: {
                 ESTADO_OFERTA: 0
             },
-            attributes: ['ID_OFERTA', 'IVA','FECHA_CREACION'],
+            attributes: ['ID_OFERTA', 'IVA', 'FECHA_CREACION'],
             transaction: t
         });
 
         let tiendasObtenidos = await TIENDA.findAll({
-            attributes: ['NUM_TIENDA', 'NOMBRE_COMERCIAL', 'LOGO','DESCRIPCION_TIENDA'],
+            attributes: ['NUM_TIENDA', 'NOMBRE_COMERCIAL', 'LOGO', 'DESCRIPCION_TIENDA'],
             where: {
                 [Op.and]: [
                     {ESTADO_TIENDA: 0},
@@ -854,11 +847,12 @@ async function obtenerFiltroBusquedaTodos(req, res) {
 
         vectorEnviar.push(tiendasObtenidos);
         vectorEnviar.push(productosObtenidos);
-        await t.commit();
+
         res.status(200).send({
             data: vectorEnviar,
             message: "Tiendas y productos cargados correctamente"
         });
+        await t.commit();
     } catch (err) {
         await t.rollback();
         res.status(500).send({
@@ -875,16 +869,11 @@ async function obtenerTodasTiendas(req, res) {
             }
         });
 
-        if (tiendasObtenidas.length > 0) {
             res.status(200).send({
                 data: tiendasObtenidas,
                 message: "Tiendas cargadas correctamente"
             });
-        } else {
-            res.status(404).send({
-                message: 'Al parecer no se encuentran tiendas registradas en la base de datos'
-            });
-        }
+
     } catch (err) {
         res.status(500).send({
             message: 'error:' + err
@@ -903,16 +892,11 @@ async function getListadoClientesTienda(req, res) {
             group: ['IDENTIFICACION_FACTURA']
         });
 
-        if (ListadoClientes.length > 0) {
             res.status(200).send({
                 data: ListadoClientes,
                 message: "Clientes cargados correctamente"
             });
-        } else {
-            res.status(404).send({
-                message: 'Al parecer no se encuentran clientes registrados en la base de datos'
-            });
-        }
+
     } catch (err) {
         res.status(500).send({
             message: 'error:' + err
@@ -923,13 +907,7 @@ async function getListadoClientesTienda(req, res) {
 async function updateVisitas(req, res) {
 
     try {
-        let verificar = await AGENTE.findOne({where: {COD_AGENTE: req.user.id}});
 
-        if (!verificar) {
-            return res.status(500).send({
-                message: "No tiene los permisos necesarios"
-            });
-        } else {
             let tiendaActualizada = await TIENDA.update({
                 VISITAS: req.body.visitas,
             }, {
@@ -937,8 +915,7 @@ async function updateVisitas(req, res) {
 
             });
 
-
-            if (tiendaActualizada) {
+            if (tiendaActualizada>0) {
                 res.status(200).send({
                     message: "La tienda ha sido actualizada correctamente"
                 });
@@ -947,7 +924,7 @@ async function updateVisitas(req, res) {
                     message: 'Al parecer no se encuentra la tienda registrada en la base de datos'
                 });
             }
-        }
+
     } catch (err) {
         res.status(500).send({
             message: 'error:' + err

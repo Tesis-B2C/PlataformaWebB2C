@@ -39,8 +39,10 @@ export class EncabezadoTiendaComponent implements OnInit {
   public async updateVisitas() {
     try {
       let count = this.Tienda.VISITAS + 1;
-      let response = await this._tiendaServicio.updateVisitas(count, this.idTienda).toPromise();
+      debugger
+     let response = await this._tiendaServicio.updateVisitas(count, this.idTienda).toPromise();
     } catch (e) {
+      console.log("error como objeto 2:"+ e);
       if (!(e instanceof HttpErrorResponse)){
         console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
         console.log("error como objeto:"+ e);

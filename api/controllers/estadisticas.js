@@ -61,6 +61,7 @@ async function getCalificaciones(req, res) {
                 }
             });
 
+
             res.status(200).send({
                 data: calificacionesObtenidas,
                 message: "Calificaciones cargadas correctamente"

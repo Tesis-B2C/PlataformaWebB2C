@@ -11,7 +11,7 @@ api.get('/getMisProductos/:id' ,[ md_auth.ensureAuth], ProductoController.getMis
 api.get('/getProducto/:id',[md_auth.ensureAuth],ProductoController.getProducto);
 api.get('/obtenerTodosProductos/:estado',ProductoController.obtenerTodosProductos);
 api.get('/obtenerProductoDetalle/:id',ProductoController.obtenerProductoDetalle);
-api.put('/updateProducto/:id', multer.array('imagenes'),ProductoController.updateProducto);
+api.put('/updateProducto/:id', multer.array('imagenes'),[md_auth.ensureAuth],ProductoController.updateProducto);
 api.put('/updateEstadoProducto/:id',[md_auth.ensureAuth],ProductoController.updateEstadoProducto);
 api.put('/updateEstadoProductos/:estado',[md_auth.ensureAuth],ProductoController.updateEstadoProductos);
 

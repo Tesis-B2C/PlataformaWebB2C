@@ -28,7 +28,7 @@ api.get('/obtenerFiltroPrincipalProductos/:termino', TiendaController.obtenerFil
 api.get('/obtenerTodasTiendas',TiendaController.obtenerTodasTiendas);
 api.get('/obtenerFiltroBusquedaTodos/:termino', TiendaController.obtenerFiltroBusquedaTodos);
 api.get('/getListadoClientesTienda/:id', TiendaController.getListadoClientesTienda);
-api.put('/updateVisitas/:id',[ md_auth.ensureAuth], TiendaController.updateVisitas);
+api.put('/updateVisitas/:id', TiendaController.updateVisitas);
 
 //api.post('/subirImagenesTienda/:id/:tipo',[md_upload],TiendaController.subirImagenesTienda);
 /*api.get('/obtenerImagenTienda/:imageFile', TiendaController.obtenerImagenTienda);*/

@@ -129,10 +129,11 @@ async function saveProducto(req, res) {
 
             await t.commit();
         } else {
-            res.status(404).send({
+            res.status(401).send({
                 message: "Al parecer hubo problemas con el registro del producto"
             });
         }
+
     } catch (err) {
         for (let h = 0; h < req.files.length; h++) {
             if (fs.exists(path.resolve(req.files[h].path))) {
@@ -152,7 +153,7 @@ async function getMisProductos(req, res) {
         let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -162,14 +163,10 @@ async function getMisProductos(req, res) {
                 order: [['ID_OFERTA', 'DESC']]
             });
 
-            if (productosObtenidas.length > 0) {
+            if (productosObtenidas) {
                 res.status(200).send({
                     data: productosObtenidas,
                     message: "Productos cargadas correctamente"
-                });
-            } else {
-                res.status(404).send({
-                    message: 'Al parecer no se encuentra productos registrados en la base de datos'
                 });
             }
         }
@@ -186,12 +183,14 @@ async function getProducto(req, res) {
         let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
             let productoObtenido = await Oferta.findOne({
-                where: {ID_OFERTA: req.params.id},
+                where: {
+                    ID_OFERTA: req.params.id, ESTADO_OFERTA: {[Op.or]: [0, 1]}
+                },
                 include: {
                     model: Producto,
                     include: [{
@@ -458,14 +457,13 @@ async function updateEstadoProducto(req, res) {
                 });
             }
 
-
-            if (ofertaActualizada) {
+            if (ofertaActualizada > 0) {
                 res.status(200).send({
                     message: "El producto ha sido actualizado correctamente"
                 });
                 await t.commit();
             } else {
-                res.status(404).send({
+                res.status(402).send({
                     message: 'Al parecer no se encuentra el producto registrado en la base de datos'
                 });
             }

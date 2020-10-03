@@ -12,7 +12,7 @@ async function saveValoracion(req, res) {
         let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -63,7 +63,7 @@ async function updateComentario(req, res) {
         let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -74,12 +74,12 @@ async function updateComentario(req, res) {
             });
 
 
-            if (comentarioActualizado) {
+            if (comentarioActualizado>0) {
                 res.status(200).send({
                     message: "El comentario ha sido actualizado correctamente"
                 });
             } else {
-                res.status(404).send({
+                res.status(402).send({
                     message: 'Al parecer no existe el comentario registrado en la base de datos'
                 });
             }
@@ -97,7 +97,7 @@ async function deleteComentario(req, res) {
         let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -111,7 +111,7 @@ async function deleteComentario(req, res) {
                     message: "El comentario ha sido borrado"
                 });
             } else {
-                res.status(404).send({
+                res.status(402).send({
                     message: 'Al parecer no existe el comentario registrado en la base de datos'
                 });
             }

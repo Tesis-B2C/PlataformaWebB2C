@@ -145,7 +145,6 @@ export class TiendaServicio {
     let params = JSON.stringify(obj);
     let headers = new HttpHeaders({
       "Content-type": "application/json",
-      "Authorization": this._agenteServicio.getToken()
     });
     return this._http.put<objeto>(this.url + "updateVisitas/" + Num_Tienda, params, {headers: headers});
   }

@@ -12,7 +12,7 @@ async function guardarMetodoEnvio(req, res) {
         let verificar = await Agente.findOne({ where: { COD_AGENTE: req.user.id } });
 
         if (!verificar) {
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "No tiene los permisos necesarios"
             });
         } else {
@@ -39,7 +39,7 @@ async function guardarMetodoEnvio(req, res) {
                     });
             }
             res.status(200).send({
-                message: "Sus métodos de envio se han guardado correctamente"
+                message: "Sus métodos de envío se han guardado correctamente"
             });
             await t.commit();
         }
