@@ -1,0 +1,56 @@
+.iconos-pagos {
+  width: 35rem;
+  height: 35rem;
+  border-radius: 50%;
+  background: #f1f3f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 0px auto;
+  padding: 5%;
+  display: block;
+}
+
+.comdero {
+  width: 280px
+}
+
+.letras {
+  font-size: x-large;
+}
+
+button {
+  font-size: larger;
+
+}
+.boton-inicio{
+  width: 70%;
+}
+@media (max-width: 720px) {
+  .iconos-pagos {
+    display: none;
+  }
+
+  .comdero {
+    width: 200px
+  }
+
+  .letras {
+    font-size: large;
+  }
+
+  button {
+    font-size: small;
+  }
+
+  .display-1 {
+    font-size: 6em;
+    margin-bottom: 30px;
+  }
+
+  .boton-inicio{
+    width: 100%;
+
+  }
+}
