@@ -66,41 +66,43 @@ export class InicioTiendaComponent implements OnInit {
 
   public asignarVariables() {
     try {
-     this.Tienda.OFERTA.forEach(elemnt => {
-        let objProducto = {
-          NOMBRE_PRODUCTO: null,
-          PROMEDIO_CAL: null,
-          TOTAL_COM: null,
-          PRECIO_CON_IVA: null,
-          IMAGEN: null,
-          ID_OFERTA: null,
-          ID_PRODUCTO: null,
-          COD_PRODUCTO: null,
-          DESCUENTO_AUTOMATICO: null
-        }
+      if (this.Tienda) {
+        this.Tienda.OFERTA.forEach(elemnt => {
+          let objProducto = {
+            NOMBRE_PRODUCTO: null,
+            PROMEDIO_CAL: null,
+            TOTAL_COM: null,
+            PRECIO_CON_IVA: null,
+            IMAGEN: null,
+            ID_OFERTA: null,
+            ID_PRODUCTO: null,
+            COD_PRODUCTO: null,
+            DESCUENTO_AUTOMATICO: null
+          }
 
-        objProducto.NOMBRE_PRODUCTO = elemnt.PRODUCTO.NOMBRE_PRODUCTO;
-        objProducto.ID_PRODUCTO = elemnt.PRODUCTO.ID_PRODUCTO;
-        objProducto.COD_PRODUCTO = elemnt.PRODUCTO.COD_PRODUCTO;
+          objProducto.NOMBRE_PRODUCTO = elemnt.PRODUCTO.NOMBRE_PRODUCTO;
+          objProducto.ID_PRODUCTO = elemnt.PRODUCTO.ID_PRODUCTO;
+          objProducto.COD_PRODUCTO = elemnt.PRODUCTO.COD_PRODUCTO;
 
-        if (elemnt.PRODUCTO.CALIFICACIONs.length > 0)
-          objProducto.PROMEDIO_CAL = elemnt.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL;
-        else
-          objProducto.PROMEDIO_CAL = null;
+          if (elemnt.PRODUCTO.CALIFICACIONs.length > 0)
+            objProducto.PROMEDIO_CAL = elemnt.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL;
+          else
+            objProducto.PROMEDIO_CAL = null;
 
-        if (elemnt.PRODUCTO.COMENTARIOs.length > 0)
-          objProducto.TOTAL_COM = elemnt.PRODUCTO.COMENTARIOs[0].TOTAL_COM;
-        else
-          objProducto.TOTAL_COM = null;
+          if (elemnt.PRODUCTO.COMENTARIOs.length > 0)
+            objProducto.TOTAL_COM = elemnt.PRODUCTO.COMENTARIOs[0].TOTAL_COM;
+          else
+            objProducto.TOTAL_COM = null;
 
-        objProducto.PRECIO_CON_IVA = ((elemnt.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO * elemnt.IVA) / 100) + elemnt.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO;
-        objProducto.IMAGEN = elemnt.PRODUCTO.VARIANTEs[0].IMAGEN_PRODUCTOs[0].IMAGEN;
-        objProducto.ID_OFERTA = elemnt.ID_OFERTA;
-        objProducto.DESCUENTO_AUTOMATICO = this.buscarDescuentoAutomatico(elemnt.PRODUCTO.PRODUCTO_DESCUENTOs, objProducto.PRECIO_CON_IVA);
-        this.vectorProductosObtenidos.push(objProducto);
-      });
-     this.result=this.vectorProductosObtenidos;
-      console.log(JSON.stringify(this.vectorProductosObtenidos) + 'hola');
+          objProducto.PRECIO_CON_IVA = ((elemnt.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO * elemnt.IVA) / 100) + elemnt.PRODUCTO.VARIANTEs[0].PRECIO_UNITARIO;
+          objProducto.IMAGEN = elemnt.PRODUCTO.VARIANTEs[0].IMAGEN_PRODUCTOs[0].IMAGEN;
+          objProducto.ID_OFERTA = elemnt.ID_OFERTA;
+          objProducto.DESCUENTO_AUTOMATICO = this.buscarDescuentoAutomatico(elemnt.PRODUCTO.PRODUCTO_DESCUENTOs, objProducto.PRECIO_CON_IVA);
+          this.vectorProductosObtenidos.push(objProducto);
+        });
+        this.result = this.vectorProductosObtenidos;
+        console.log(JSON.stringify(this.vectorProductosObtenidos) + 'hola');
+      }
     } catch (e) {
       if (!(e instanceof HttpErrorResponse)) {
         console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
@@ -114,7 +116,7 @@ export class InicioTiendaComponent implements OnInit {
 
   public asignarVariables2() {
 
-    this.vectorProductosObtenidos=[];
+    this.vectorProductosObtenidos = [];
     try {
       this.result.forEach(elemnt => {
         let objProducto = {
@@ -149,7 +151,7 @@ export class InicioTiendaComponent implements OnInit {
         objProducto.DESCUENTO_AUTOMATICO = this.buscarDescuentoAutomatico(elemnt.PRODUCTO.PRODUCTO_DESCUENTOs, objProducto.PRECIO_CON_IVA);
         this.vectorProductosObtenidos.push(objProducto);
       });
-      this.result=this.vectorProductosObtenidos;
+      this.result = this.vectorProductosObtenidos;
       console.log(JSON.stringify(this.vectorProductosObtenidos) + 'hola');
     } catch (e) {
       if (!(e instanceof HttpErrorResponse)) {
@@ -243,15 +245,17 @@ export class InicioTiendaComponent implements OnInit {
   }
 
   public search(text: string): any[] {
-    return this.Tienda.OFERTA.filter(producto => {
-      const term = text.toLowerCase();
-      debugger
-      if (producto.PRODUCTO.NOMBRE_PRODUCTO.toLowerCase().includes(term)) {
-        return producto;
-      }
-      // || siguiente
+    if (this.Tienda) {
+      return this.Tienda.OFERTA.filter(producto => {
+        const term = text.toLowerCase();
+        debugger
+        if (producto.PRODUCTO.NOMBRE_PRODUCTO.toLowerCase().includes(term)) {
+          return producto;
+        }
+        // || siguiente
 
-    });
+      });
+    }
   }
 
   mensageError(mensaje) {

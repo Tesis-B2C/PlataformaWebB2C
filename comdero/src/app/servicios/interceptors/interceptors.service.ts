@@ -6,15 +6,19 @@ import Swal from "sweetalert2";
 import {ToastrService} from "ngx-toastr";
 import {Router} from "@angular/router";
 
+import {LoadingBarModule, LoadingBarService} from "@ngx-loading-bar/core";
+import {finalize, tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InterceptorsService implements HttpInterceptor {
-  constructor(public router: Router, public toastr: ToastrService) {
+  constructor(public loadingService: LoadingBarService, public router: Router, public toastr: ToastrService) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+
 
     return next.handle(req).pipe(
       catchError(error => {
@@ -59,7 +63,9 @@ export class InterceptorsService implements HttpInterceptor {
         return throwError(error);
       })
     );
+
   }
+
 
   mensageError(mensaje) {
     Swal.fire({
@@ -76,6 +82,7 @@ export class InterceptorsService implements HttpInterceptor {
       }
     });
   }
+
 
 }
 

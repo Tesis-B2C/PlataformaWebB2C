@@ -110,3 +110,13 @@ https://medium.com/@patade888/exporting-data-to-excel-in-angular-8-5a7cf5d0d25d
 ------- graficas
 npm i chart.js
 npm i ng2-charts@2.0.0-beta.9
+
+
+--- BARRA DE CARGA
+  npm install @ngx-loading-bar/core --save
+  import { AppComponent } from './app';
+ -- En app.component.html
+  <ngx-loading-bar color="#CD67BA" height="4px"></ngx-loading-bar>
+  
+https://dev.to/susomejias/automatic-page-loading-progress-bar-for-angular-3ann
+https://github.com/aitboudad/ngx-loading-bar/blob/main/packages/http-client/src/loading-bar.interceptor.ts

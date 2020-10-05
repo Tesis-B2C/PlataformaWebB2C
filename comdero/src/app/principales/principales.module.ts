@@ -14,6 +14,9 @@ import {HttpClientModule} from '@angular/common/http';
 import {CarritoComprasComponent} from './carrito-compras/carrito-compras.component';
 import {NgxPayPalModule} from 'ngx-paypal';
 
+
+// for Core import:
+
 @NgModule({
   declarations: [
     PrincipalComponent,
@@ -31,7 +34,8 @@ import {NgxPayPalModule} from 'ngx-paypal';
     CarouselModule,
     FormsModule,
     TypeaheadModule,
-    NgxPayPalModule
+    NgxPayPalModule,
+
   ]
 })
 export class PrincipalesModule {

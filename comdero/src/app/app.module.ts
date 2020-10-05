@@ -34,7 +34,8 @@ import {ReloadGuard} from "./shared/guards/reload.guard";
 import {ExcelServicio} from "./servicios/excel.servicio";
 
 import {InterceptorsService} from './servicios/interceptors/interceptors.service';
-
+import { LoadingBarModule } from '@ngx-loading-bar/core';
+import {Interceptors2Service} from "./servicios/interceptors/interceptors2.service";
 @NgModule({
   declarations: [
     AppComponent
@@ -53,7 +54,8 @@ import {InterceptorsService} from './servicios/interceptors/interceptors.service
     CarouselModule,
     ToastrModule.forRoot({preventDuplicates: true}),
     BsDatepickerModule.forRoot(),
-    TypeaheadModule.forRoot()
+    TypeaheadModule.forRoot(),
+    LoadingBarModule
   ],
   providers: [
     DescuentoServicio,
@@ -72,7 +74,8 @@ import {InterceptorsService} from './servicios/interceptors/interceptors.service
     ReloadGuard,
     ExcelServicio,
     EstadisticasServicio,
-    { provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: Interceptors2Service, multi: true }
   ],
   bootstrap: [AppComponent]
 })

@@ -23,21 +23,21 @@ const routes: Routes = [
     path: 'menu-gestion-tienda', component: MenuGestionTiendasComponent,
     children: [
       { path: 'productos', component: ProductosComponent,canDeactivate:[ReloadGuard] },
-      { path: 'listado-productos', component: ListadoProductosComponent,canDeactivate:[ReloadGuard] },
-      { path: 'modificar-producto/:id', component: ModificarProductoComponent,canDeactivate:[ReloadGuard] },
-      { path: 'metodos-pago', component: MetodosPagoComponent,canDeactivate:[ReloadGuard] },
-      { path: 'metodos-envio', component: MetodosEnvioComponent,canDeactivate:[ReloadGuard] },
-      { path: 'general-tienda', component: GeneralTiendaComponent,canDeactivate:[ReloadGuard] },
-      { path: 'sucursales-tienda', component: SucursalesTiendaComponent,canDeactivate:[ReloadGuard] },
-      { path: 'personalizacion-tienda', component: PersonalizacionTiendaComponent,canDeactivate:[ReloadGuard] },
-      {path: 'inicio-administracion', component: InicioAdministracionComponent,canDeactivate:[ReloadGuard]},
-      {path: 'cupon-descuento', component: CuponDescuentoComponent,canDeactivate:[ReloadGuard]},
-      {path: 'listado-cupon-descuento', component: ListadoCuponDescuentoComponent,canDeactivate:[ReloadGuard]},
-      {path: 'modificar-cupon-descuento/:id', component: ModificarCuponDescuentoComponent,canDeactivate:[ReloadGuard]},
-      {path: 'listado-pedidos', component: ListadoPedidosComponent,canDeactivate:[ReloadGuard]},
-      {path: 'gestionar-pedido/:id', component: GestionarPedidoComponent,canDeactivate:[ReloadGuard]},
-      {path: 'listado-clientes', component: ListadoClientesComponent,canDeactivate:[ReloadGuard]},
-      {path: 'estadisticas', component: EstadisticasComponent,canDeactivate:[ReloadGuard]}
+      { path: 'listado-productos', component: ListadoProductosComponent },
+      { path: 'modificar-producto/:id', component: ModificarProductoComponent },
+      { path: 'metodos-pago', component: MetodosPagoComponent },
+      { path: 'metodos-envio', component: MetodosEnvioComponent },
+      { path: 'general-tienda', component: GeneralTiendaComponent },
+      { path: 'sucursales-tienda', component: SucursalesTiendaComponent },
+      { path: 'personalizacion-tienda', component: PersonalizacionTiendaComponent },
+      {path: 'inicio-administracion', component: InicioAdministracionComponent},
+      {path: 'cupon-descuento', component: CuponDescuentoComponent},
+      {path: 'listado-cupon-descuento', component: ListadoCuponDescuentoComponent},
+      {path: 'modificar-cupon-descuento/:id', component: ModificarCuponDescuentoComponent},
+      {path: 'listado-pedidos', component: ListadoPedidosComponent},
+      {path: 'gestionar-pedido/:id', component: GestionarPedidoComponent},
+      {path: 'listado-clientes', component: ListadoClientesComponent},
+      {path: 'estadisticas', component: EstadisticasComponent}
     ]
   }];
 

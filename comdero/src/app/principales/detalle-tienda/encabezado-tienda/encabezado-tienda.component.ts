@@ -24,7 +24,7 @@ export class EncabezadoTiendaComponent implements OnInit {
 
   async ngOnInit() {
     await this.getDetalleTiendaProducto();
-    await this.getLogo();
+     await this.getLogo();
     await this.getBanner();
     await this.getSitiosWeb();
     await this.getCategorias();
