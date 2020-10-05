@@ -8,49 +8,66 @@
   align-items: center;
   text-align: center;
 }
-.banner-pago{
-  height:500px
+
+.banner-pago {
+  height: 500px
 }
 
-.banner-envio{
+.banner-envio {
   height: 400px;
 }
 
+.texto {
+  font-size: larger;
+}
+
+.imagen {
+  height: 600px;
+}
+
 @media (max-width: 720px) {
-  .banner-pago{
-    height:350px
+
+  .imagen {
+    height: 500px;
   }
-  .banner-envio{
-    height: 200px;
+
+  .texto {
+    font-size: medium;
+  }
+
+  .banner-pago {
+    height: 350px
+  }
+
+  .banner-envio {
+    height: 250px;
     margin-top: 100px;
   }
 
 }
 
-.color-fondo{
-  background-color:#e0f9f8;
+.color-fondo {
+  background-color: #e0f9f8;
 }
 
-.color-fondo-iconos{
+.color-fondo-iconos {
   background-color: #4fb867;
 }
 
-button{
+button {
   font-size: small;
 }
 
-.color-fondo3{
-  background-color: #c7d4ff ;
+.color-fondo3 {
+  background-color: #c7d4ff;
 }
 
 
-
-
-h3{
+h3 {
   font-family: 'Poppins', sans-serif;
 }
 
-.social-box .box{
+.social-box .box {
   background: #FFF;
   border-radius: 10px;
   padding: 40px 10px;
@@ -59,17 +76,17 @@ h3{
   transition: all 0.5s ease-out;
 }
 
-.social-box .box:hover{
+.social-box .box:hover {
   box-shadow: 0 0 6px #4fb867;
 }
 
-.social-box .box .box-text{
-  margin:20px 0px;
+.social-box .box .box-text {
+  margin: 20px 0px;
   font-size: 15px;
   line-height: 30px;
 }
 
-.social-box .box .box-btn a{
+.social-box .box .box-btn a {
   text-decoration: none;
 
   font-size: 16px;
@@ -84,6 +101,6 @@ h3{
   justify-content: center;
   align-items: center;
   text-align: center;
-  margin:0px auto;
-  padding:3%
+  margin: 0px auto;
+  padding: 3%
 }

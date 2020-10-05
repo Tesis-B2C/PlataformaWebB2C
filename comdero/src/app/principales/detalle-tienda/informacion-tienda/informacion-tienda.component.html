@@ -1,20 +1,19 @@
-<section >
-  <h5 class="font-weight-bold text-lg-left text-center py-3 px-5">Información <span
-    class="fa fa-info-circle"></span></h5>
-  <hr>
+<section  class="px-3">
+  <h5 class="text-left  py-3 ">Información <span class="fa fa- fa-info"></span></h5>
 
-  <div class="row justify-content-center ">
+
+  <div class="row justify-content-center bg-white ">
     <div class=" col-12">
 
-      <div class="card  bg-white text-white">
+      <div class="  bg-white text-white">
 
-        <img class="card-img" src="assets/images/fondo-info-valid2.png" height="600px" alt="Card image">
+        <img class="card-img imagen" src="assets/images/fondo-info-valid2.png"  alt="Card image">
         <div class="card-img-overlay">
           <div class="jumbotron jumbotron-fluid" style="background-color: rgba(255,255,255,0.8)">
-          <h3 class="card-title black text-center">¿ Quienes somos ?</h3>
+          <h4 class="card-title black text-center">¿ Quienes somos ?</h4>
 
 
-            <p class="lead black text-center "> {{this.Tienda?.DESCRIPCION_TIENDA}}</p>
+            <p class="texto  text-dark text-justify "> {{this.Tienda?.DESCRIPCION_TIENDA}}</p>
 
         </div>
 
@@ -23,20 +22,20 @@
       </div>
   </div>
 
-  <br><br><br>
 
 
-  <div class="row justify-content-center "
+
+  <div class="row justify-content-center mt-4 "
        *ngIf="this.objTransferencia.Tipo_Pago!=null || this.objEfectivo.Tipo_Pago!=null || this.objElectronico.Tipo_Pago!=null">
-    <div class=" col-12 ">
-      <div class="card  text-white py-5  ">
+    <div class=" col-12 px-0">
+      <div class=" bg-white   text-white py-5  ">
 
 
-          <div class="" >
+          <div class="px-3" >
           <h3 class="card-title black text-center ">¿ Problemas al pagar ?</h3>
 
-            <h5 class="black text-center font-weight-normal px-1">Olvidate de ello, nosotros contamos con varios métodos de pago para
-              facilitar la compra de tus productos </h5>
+            <p class="texto  text-dark text-justify ">Olvidate de ello, nosotros contamos con varios métodos de pago para
+              facilitar la compra de tus productos </p>
 
 
         </div>
@@ -126,7 +125,7 @@
     </div>
   </div>
   <div class="row justify-content-center ">
-    <div class=" col-12 ">
+    <div class=" col-12 px-0">
       <div class="card  text-white bg-white ">
         <br><br><br>
         <img class="mx-auto  pt-md-0  banner-envio py-5" src="assets/images/banner-envios.png" width="80%"
@@ -134,10 +133,10 @@
         <div class="card-img-overlay ">
           <div class="jumbotron jumbotron-fluid" style="background-color: rgba(255,255,255,0.8)">
           <h3 class="card-title black text-center ">Opciones de Entrega</h3>
-          <div class="">
-            <p class=" lead black text-center ">Contamos con algunas opciones para facilitar la entrega de
+
+            <p class=" texto  text-dark   text-justify">Contamos con algunas opciones para facilitar la entrega de
               nuestros productos, si no encuentras una opción que se ajuste a tus necesidades de seguro llegaremos a un acuerdo </p>
-            </div>
+
 
           </div>
         </div>
