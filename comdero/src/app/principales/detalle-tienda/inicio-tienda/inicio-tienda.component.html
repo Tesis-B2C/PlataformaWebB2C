@@ -1,17 +1,30 @@
-<section class="section-name bg  py-3 px-md-5  ">
+<section class="section-name   px-3">
+  <h5 class="text-left  py-3 ">Tienda <span class="fa fa-shopping-cart"></span></h5>
+  <article>
 
-  <article class="">
-    <h6 class="text-center">ENCUENTRA LO QUE NECESITAS EN {{this.Tienda?.NOMBRE_COMERCIAL}}</h6>
-    <div class="input-group   mx-auto  mt-3  ">
+    <div class="row justify-content-center ">
+      <div class="col-12 col-md-12">
+        <form class="card card-sm" style="border-radius:50px 0px 0px 50px;">
+          <div class="card-body row no-gutters align-items-center py-0">
+            <div class="col-auto">
+              <i class="fas fa-search"></i>
+            </div>
+            <!--end of col-->
+            <div class="col">
+              <input class="form-control form-control-lg form-control-borderless" type="search"
+                     name="busqueda" [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="filtrar()"
+                     placeholder="ENCUENTRA LO QUE NECESITAS EN {{this.Tienda?.NOMBRE_COMERCIAL}}">
+            </div>
+            <!--end of col-->
 
-      <input type="text" class="form-control " style="border-radius:50px 0px 0px 50px;" #Busqueda="ngModel"
-             name="busqueda" [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="filtrar()">
-      <div class="input-group-append ">
-        <button class="btn btn-secondary  px-3 py-1" style="border-radius:0px 50px 50px 0px;" type="submit">
-          <i class="fa fa-search"></i>
-        </button>
+            <!--end of col-->
+          </div>
+        </form>
       </div>
-    </div> <!-- buscador tienda-->
+      <!--end of col-->
+    </div>
+
+
     <br>
 
     <div class="progress" *ngIf="this.loading">
@@ -22,12 +35,13 @@
   </article>
   <p *ngIf="this.result.length==0">No se encontraron resultados.</p>
 </section>
-<div class="container">
+
+<div class="">
   <section class="section-name padding-y-sm row ">
     <div class="col-md-3"
-         *ngFor="let producto of this.vectorProductosObtenidos | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+         *ngFor="let producto of this.result | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
 
-      <div class="card  card-product-grid mx-2">
+      <div class="card  card-product-grid mx-4">
         <a routerLink="../../../../detalle-producto/{{producto.ID_OFERTA}}">
           <img [src]="getImagen(producto.IMAGEN)" width="100%" height="200rem">
         </a>
