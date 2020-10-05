@@ -16,7 +16,7 @@ const routes: Routes = [
       {path: 'categorias', component: CategoriasComponent},
       {path: 'busqueda/:palabraBuscada', component: BusquedaComponent},
       {path: 'detalle-producto/:idProducto', component: DetalleProductoComponent},
-      {path: 'carrito-compras/:idUsuario', component: CarritoComprasComponent},
+      {path: 'carrito-compras/:idUsuario', component: CarritoComprasComponent,canActivate:[AuthGuard]},
       {path: 'detalle-tienda', loadChildren:'./detalle-tienda/detalle-tienda.module#DetalleTiendaModule'},
       {path: 'mi-cuenta', loadChildren: './mi-cuenta/mi-cuenta.module#MiCuentaModule',canActivate:[AuthGuard]}
     ]

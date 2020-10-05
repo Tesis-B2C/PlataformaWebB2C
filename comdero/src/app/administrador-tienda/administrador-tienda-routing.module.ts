@@ -6,7 +6,7 @@ import {AuthGuard} from "../shared/guards/auth.guard";
 
 const routes: Routes = [{path:'administrador-tienda', component:EncabezadoComponent,
   children: [
-    { path: 'mis-tiendas', component: TiendasComponent },
+    { path: 'mis-tiendas', component: TiendasComponent, canActivate:[AuthGuard]},
     { path: 'gestion-tienda', loadChildren:'./gestionar-tiendas/gestionar-tiendas.module#GestionarTiendasModule',canActivate:[AuthGuard]}]}];
 
 @NgModule({
