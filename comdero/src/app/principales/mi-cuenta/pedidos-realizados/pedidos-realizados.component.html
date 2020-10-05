@@ -63,7 +63,7 @@
 <div *ngFor="let compra of this.result  |slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
   <div class="card mb-5">
     <div class="card-header ">
-      <div class=" mb-0 font-weight-bold row    justify-content-between mx-md-auto"><a
+      <div class=" mb-0 font-weight-bold row justify-content-between mx-md-auto"><a routerLink="../../../detalle-tienda/tienda/{{compra.COMPRA_PRODUCTOs[0].VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA}}/inicio-tienda"
         class="col-auto">{{compra.COMPRA_PRODUCTOs[0].VARIANTE.PRODUCTO.OFERTum.TIENDA.NOMBRE_COMERCIAL}}</a>
         <a *ngIf="compra.ESTADO_COMPRA==0" class="col-auto text-warning font-weight-bold "> En proceso</a>
         <a *ngIf="compra.ESTADO_COMPRA==1" class="col-auto text-primary font-weight-bold"> Enviado</a>
@@ -139,11 +139,11 @@
                 <div class="col-12 col-md-5    mb-md-0 mb-4">
                   <p class="text-uppercase text-center ">Producto</p>
                   <div class="itemside mx-auto">
-                    <div class="aside"><img [src]="getImagen(producto.IMAGEN_MOSTRAR)" height="50px" width="50px">
+                    <div class="aside"><img [src]="getImagen(producto.IMAGEN_MOSTRAR)" height="50px" width="50px"  routerLink="../../../detalle-producto/{{producto.VARIANTE.PRODUCTO.OFERTum.ID_OFERTA}}">
                     </div>
                     <figcaption class="info">
 
-                      <a href="#" class=" price">{{producto.VARIANTE.PRODUCTO.NOMBRE_PRODUCTO}}</a>
+                      <a class=" price"   routerLink="../../../detalle-producto/{{producto.VARIANTE.PRODUCTO.OFERTum.ID_OFERTA}}">{{producto.VARIANTE.PRODUCTO.NOMBRE_PRODUCTO}}</a>
                       <p class="text-muted small text-left ">Condición:
                         &nbsp;{{producto.VARIANTE.PRODUCTO.CONDICION}}</p>
                       <p *ngIf="producto.VARIANTE.PRODUCTO.MARCA" class="text-muted small text-left ">Marca:

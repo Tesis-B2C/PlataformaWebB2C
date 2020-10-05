@@ -3,7 +3,7 @@ import {CompraServicio} from "../../../servicios/compra.servicio";
 import {GLOBAL} from "../../../servicios/global";
 import {ToastrService} from "ngx-toastr";
 import Swal from "sweetalert2";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbRatingConfig} from "@ng-bootstrap/ng-bootstrap";
 import {ValoracionServicio} from "../../../servicios/valoracion.servicio";
 import {HttpErrorResponse} from "@angular/common/http";
 @Component({
@@ -25,7 +25,8 @@ export class PedidosRealizadosComponent implements OnInit {
   public calificacion = 0;
   public comentario;
 
-  constructor(public modalService: NgbModal, public toastr: ToastrService, public _compraServicio: CompraServicio, public _valoracionServicio: ValoracionServicio) {
+  constructor(public configRating2: NgbRatingConfig,public modalService: NgbModal, public toastr: ToastrService, public _compraServicio: CompraServicio, public _valoracionServicio: ValoracionServicio) {
+ configRating2.readonly=false;
   }
 
   async ngOnInit() {
