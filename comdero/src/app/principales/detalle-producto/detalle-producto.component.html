@@ -39,13 +39,15 @@
             <a class="nav-link pl-0" data-toggle="dropdown" href="#" aria-expanded="false"> &nbsp;Categorías <span
               class="fa fa-caret-down"></span></a>
             <div class="dropdown-menu ">
+              <a class="dropdown-item" *ngFor="let c11 of c1; let i = index" href="#"><span
+                class="{{this.vectorIconos[i]}} "></span> &nbsp;{{c11.NOMBRE}}</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item col-2" [routerLink]="['/principales/menu/categorias']">Ver todas</a>
             </div>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" style="color: white; cursor: pointer">Vende con nosotros</a>
+            <a class="nav-link" (click)="vender()" style="color: white; cursor: pointer">Vende con nosotros</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Ayuda</a>

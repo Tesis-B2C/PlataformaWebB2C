@@ -69,9 +69,16 @@ input[type="text"]:focus
   display: none;
 }
 
-
-
+.dropdown-item{
+  cursor: pointer;
+}
+.icono-usuario-inicio{
+  display: block;
+}
 @media (max-width:720px) {
+  .icono-usuario-inicio{
+    display: none;
+  }
   .celular{
     display: flex;
   }
@@ -80,7 +87,7 @@ input[type="text"]:focus
     display: none;
   }
   .logo{
-    width: 65%;
+    width: 100%;
   }
 
 }

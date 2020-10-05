@@ -139,8 +139,8 @@ export class TiendaServicio {
 
   updateVisitas(visitas, Num_Tienda) {
     debugger
-    let obj={
-      visitas:visitas
+    let obj = {
+      visitas: visitas
     }
     let params = JSON.stringify(obj);
     let headers = new HttpHeaders({

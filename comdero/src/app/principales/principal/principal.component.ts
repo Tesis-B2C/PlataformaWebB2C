@@ -11,6 +11,7 @@ import * as moment from "moment";
 import {ProductoServicio} from "../../servicios/producto.servicio";
 import Swal from "sweetalert2";
 import {HttpErrorResponse} from "@angular/common/http";
+
 @Component({
   selector: 'app-principal',
   templateUrl: './principal.component.html',
@@ -19,7 +20,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 })
 export class PrincipalComponent implements OnInit {
   /*images = [1055, 194, 368].map((n) => `https://picsum.photos/id/${n}/2000/400`);*/
-  images = ["assets/estilos-principal/images/bannerPrincipal.png","assets/images/comdero-01.png","assets/images/comdero-02.png","assets/images/comdero-03.png" ];
+  images = ["assets/estilos-principal/images/bannerPrincipal.png", "assets/images/comdero-01.png", "assets/images/comdero-02.png", "assets/images/comdero-03.png"];
   showNavigationArrows = false;
   showNavigationIndicators = true;
 
@@ -205,9 +206,9 @@ export class PrincipalComponent implements OnInit {
 
       return this.vectorProductosObtenidos;
     } catch (e) {
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
@@ -286,9 +287,9 @@ export class PrincipalComponent implements OnInit {
         this.vectorTiendasObtenidas.push(element);
       }
     } catch (e) {
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
@@ -310,9 +311,9 @@ export class PrincipalComponent implements OnInit {
         }*/
       })
     } catch (e) {
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
@@ -320,20 +321,26 @@ export class PrincipalComponent implements OnInit {
     }
   }
 
+
   public async vender() {
     try {
       let identidad = this._agenteServicio.getIdentity();
-      let response = await this._tiendaServicio.getMisTiendas(identidad.COD_AGENTE).toPromise();
-      let mistiendas: any = response.data;
-      if (mistiendas.length > 0) {
-        this.router.navigate(['/administrador/administrador-tienda/mis-tiendas']);
+
+      if (!identidad) {
+        this.router.navigate(['/loguin']);
       } else {
-        this.router.navigate(['/registro-tienda']);
+        let response = await this._tiendaServicio.getMisTiendas(identidad.COD_AGENTE).toPromise();
+        let mistiendas: any = response.data;
+        if (mistiendas.length > 0) {
+          this.router.navigate(['/administrador/administrador-tienda/mis-tiendas']);
+        } else {
+          this.router.navigate(['/registro-tienda']);
+        }
       }
     } catch (e) {
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));

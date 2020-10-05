@@ -1,6 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ProductoServicio} from "../../servicios/producto.servicio";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import Swal from "sweetalert2";
 import {NgbRatingConfig} from "@ng-bootstrap/ng-bootstrap";
 import {GLOBAL} from "../../servicios/global";
@@ -18,6 +18,8 @@ import {CompraServicio} from "../../servicios/compra.servicio";
 import {ICreateOrderRequest, IPayPalConfig} from "ngx-paypal";
 import {ValoracionServicio} from "../../servicios/valoracion.servicio";
 import {HttpErrorResponse} from "@angular/common/http";
+import {TiendaServicio} from "../../servicios/tienda.servicio";
+import {CategoriaServicio} from "../../servicios/categoria.servicio";
 @Component({
   selector: 'app-detalle-producto',
   templateUrl: './detalle-producto.component.html',
@@ -118,7 +120,15 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
   public select_ciudad: boolean = false;
   public Carrito_Producto;
 
-  constructor(public _valoracionServicio:ValoracionServicio, public menu: MenuComponent, public _carritoServicio: CarritoServicio, public _compraServicio: CompraServicio,
+
+
+  public vectorIconos = ['fa fa-charging-station', 'fa fa-tshirt',
+    'fa fa-ring', 'fa fa-baby-carriage', 'fa fa-home',
+    'fa fa-gem', 'fa fa-palette', 'fa fa-laptop',
+    'fa fa-car', 'fa fa-dumbbell', 'fa fa-book',
+    'fa fa-dog', 'fa fa-gamepad', 'fa fa-grin-stars', 'fa fa-heartbeat', 'fa fa-building', 'fa fa-tractor'];
+
+  constructor( public _categoriaServicio:CategoriaServicio, public router: Router, public _tiendaServicio:TiendaServicio, public _valoracionServicio:ValoracionServicio, public menu: MenuComponent, public _carritoServicio: CarritoServicio, public _compraServicio: CompraServicio,
               public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal, private _sanitizer: DomSanitizer, configRating: NgbRatingConfig, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
     configRating.max = 5;
     configRating.readonly = true;
@@ -133,6 +143,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
     this.getDpaProvincias("P");
     this.obtenerProducto();
     this.identidadAgente = JSON.parse(localStorage.getItem('identity'));
+    this.getCategorias();
   }
 
   ngOnDestroy(): void {
@@ -1260,6 +1271,56 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
       this.loading = false;
     } catch (e) {
       this.loading = false;
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
+    }
+  }
+
+
+  public async vender() {
+    try {
+      let identidad = this._agenteServicio.getIdentity();
+      let response = await this._tiendaServicio.getMisTiendas(identidad.COD_AGENTE).toPromise();
+      let misTiendas:any=response.data;
+      if (misTiendas.length>0) {
+        this.router.navigate(['/administrador/administrador-tienda/mis-tiendas']);
+      }else{
+        this.router.navigate(['/registro-tienda']);
+      }
+    } catch (e) {
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
+
+
+    }
+
+  }
+public categorias;
+  public c1=[];
+  public async getCategorias() {
+    try {
+      let response = await this._categoriaServicio.getCategorias().toPromise();
+      this.categorias = response.data;
+      this.categorias.forEach(elemnt => {
+        if (elemnt.TIPO == 'C1') {
+          this.c1.push(elemnt)
+        } /*else if (elemnt.TIPO == 'C2') {
+          this.c2.push(elemnt)
+        } else if (elemnt.TIPO == 'C3') {
+          this.c3.push(elemnt)
+        }*/
+      })
+    } catch (e) {
       if (!(e instanceof HttpErrorResponse)){
         console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
         console.log("error como objeto:"+ e);

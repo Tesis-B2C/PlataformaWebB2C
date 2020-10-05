@@ -35,6 +35,7 @@
             </div>
           </div>
         </div>
+
         <div class="col-lg-3 col-md-4 col-sm-4 col-12 mx-auto" >
           <div class="widgets-wrap float-md-right">
             <div class="widget-header mr-3" *ngIf="this._agenteServicio.getIdentity()">
@@ -55,14 +56,14 @@
                 <div class="dropdown-menu " *ngIf="this._agenteServicio.getIdentity()">
                   <small class="dropdown-item">{{this._agenteServicio.getIdentity().NOMBRE}}</small>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#" routerLink="mi-cuenta/menu-mi-cuenta/vision-general"><span
+                  <a class="dropdown-item" routerLink="mi-cuenta/menu-mi-cuenta/vision-general"><span
                     class="fa fa-user "></span> &nbsp;Mi cuenta</a>
 
-                  <a class="dropdown-item" href="#" routerLink="/administrador/administrador-tienda/mis-tiendas">
+                  <a class="dropdown-item"  routerLink="/administrador/administrador-tienda/mis-tiendas">
                     <span class="fas fa-store-alt mr-2"></span>
                     Mis tiendas
                   </a>
-                  <a class="dropdown-item" (click)="this._agenteServicio.logout()">
+                  <a class="dropdown-item"  (click)="this._agenteServicio.logout()">
                     <span class="fas fa-power-off mr-2"></span>
                     Cerrar Sesión
                   </a>
@@ -85,10 +86,12 @@
 
       </div>
   </div>
+
+
     <div class="container-fluid  celular">
     <div class="row align-items-center " >
 
-      <div class="col-lg-3 col-md-3 col-sm-3 col-6 divlogo mx-auto">
+      <div class="col-lg-3 col-md-3 col-sm-3 col-6 divlogo mr-auto ">
         <a href="#" class="brand-wrap mb-2">
           <img class="logo " src="../../../assets/images/logoValid4.png" >
         </a> <!-- brand-wrap.// -->
@@ -107,16 +110,16 @@
           <div class="widget-header icontext"  >
 
             <li class="nav-item dropdown">
-              <a href="#" class="icon icon-xs rounded-circle border mr-0" data-toggle="dropdown" href="#"
+              <a href="#" class="icono-usuario-inicio icon icon-xs rounded-circle border mr-0" data-toggle="dropdown" href="#"
                  aria-expanded="false"><i class="fa fa-user"></i>
               </a>
 
               <div class="dropdown-menu "  *ngIf="this._agenteServicio.getIdentity()">
                 <small class="dropdown-item">{{this._agenteServicio.getIdentity().NOMBRE}}</small>
-                <a class="dropdown-item" href="#" routerLink="mi-cuenta/menu-mi-cuenta/vision-general"><span
+                <a class="dropdown-item" routerLink="mi-cuenta/menu-mi-cuenta/vision-general"><span
                   class="fa fa-user "></span> &nbsp;Mi cuenta</a>
 
-                <a class="dropdown-item" href="#" routerLink="/administrador/administrador-tienda/mis-tiendas">
+                <a class="dropdown-item"  routerLink="/administrador/administrador-tienda/mis-tiendas">
                   <span class="fas fa-store-alt mr-2"></span>
                   Mis tiendas
                 </a>
@@ -174,4 +177,7 @@
 </header> <!-- section-header.// -->
 
 <router-outlet></router-outlet>
+
+
+
 </body>
