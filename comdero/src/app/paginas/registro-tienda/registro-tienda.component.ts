@@ -63,7 +63,9 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
   public mensaje;
   public titulo;
 
-  @ViewChild(WizardComponent, null) wizard: WizardComponent
+  @ViewChild(WizardComponent, null) wizard: WizardComponent;
+
+
 
   constructor(public toastr: ToastrService, public _agenteServicio: AgenteServicio, public _dpaServicio: DpaServicio, public _tiendaServicio: TiendaServicio) {
     let identidad = this._agenteServicio.getIdentity();

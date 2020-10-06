@@ -1,8 +1,10 @@
-import {Component} from '@angular/core';
+import {Component, HostListener} from '@angular/core';
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import Swal from "sweetalert2";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpErrorResponse} from "@angular/common/http";
+import {Toast, ToastrService} from "ngx-toastr";
+
 @Component({
   selector: 'app-loguin',
   templateUrl: './loguin.component.html',
@@ -19,7 +21,36 @@ export class LoguinComponent {
   public tokenTemporal;
   public response;
 
-  constructor(public route: ActivatedRoute, public _agenteServicio: AgenteServicio, public router: Router) {
+
+
+  @HostListener('window:click', ['$event']) onClick(event) {
+    if (event.getModifierState && event.getModifierState('CapsLock')) {
+      this.toastr.warning("Mayúsculas activas");
+    } else {
+      this.toastr.clear();
+    }
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(event) {
+    if (event.getModifierState && event.getModifierState('CapsLock')) {
+      this.toastr.warning("Mayúsculas activas");
+    } else {
+      this.toastr.clear();
+    }
+  }
+
+  @HostListener('window:keyup', ['$event'])
+  onKeyUp(event) {
+    if (event.getModifierState && event.getModifierState('CapsLock')) {
+
+      this.toastr.warning("Mayúsculas activas");
+    } else {
+      this.toastr.clear();
+    }
+  }
+
+  constructor(public toastr: ToastrService, public route: ActivatedRoute, public _agenteServicio: AgenteServicio, public router: Router) {
 
   }
 
@@ -53,9 +84,9 @@ export class LoguinComponent {
       }
     } catch (e) {
       this.loading = false;
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));

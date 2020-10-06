@@ -34,7 +34,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
   public bandera: boolean = false;
   public loading: boolean = false;
   public banderaTipo: boolean = true;
-
+  
   constructor(public _correoServicio: CorreoServicio, public toastr: ToastrService, public _dpaServicio: DpaServicio, public _agenteServicio: AgenteServicio) {
     this.Agente = new Agente(null, null, null,
       null, null, "Persona", 1, null, null,
