@@ -13,6 +13,7 @@ import {DetalleProductoComponent} from './detalle-producto/detalle-producto.comp
 import {HttpClientModule} from '@angular/common/http';
 import {CarritoComprasComponent} from './carrito-compras/carrito-compras.component';
 import {NgxPayPalModule} from 'ngx-paypal';
+import { BusquedaCategoriaComponent } from './busqueda-categoria/busqueda-categoria.component';
 
 
 // for Core import:
@@ -24,7 +25,8 @@ import {NgxPayPalModule} from 'ngx-paypal';
     CategoriasComponent,
     BusquedaComponent,
     DetalleProductoComponent,
-    CarritoComprasComponent
+    CarritoComprasComponent,
+    BusquedaCategoriaComponent
   ],
   imports: [
     HttpClientModule,

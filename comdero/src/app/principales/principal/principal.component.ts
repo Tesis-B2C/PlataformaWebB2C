@@ -27,8 +27,8 @@ export class PrincipalComponent implements OnInit {
   // tslint:disable-next-line: max-line-length
   public categorias;
   public c1 = [];
-  public c2;
-  public c3;
+  public c2=[];
+  public c3=[];
   public vectorIconos = ['fa fa-charging-station', 'fa fa-tshirt',
     'fa fa-ring', 'fa fa-baby-carriage', 'fa fa-home',
     'fa fa-gem', 'fa fa-palette', 'fa fa-laptop',
@@ -103,6 +103,8 @@ export class PrincipalComponent implements OnInit {
 
   public vectorProductosObtenidos = [];
   currentRate = 1;
+
+  public banera:boolean=true;
 
   constructor(configRating: NgbRatingConfig, public route: ActivatedRoute, public router: Router, public _agenteServicio: AgenteServicio, public _tiendaServicio: TiendaServicio, public _productoServicio: ProductoServicio, public _categoriaServicio: CategoriaServicio, config: NgbCarouselConfig) {
     configRating.max = 5;
@@ -300,27 +302,31 @@ export class PrincipalComponent implements OnInit {
   public async getCategorias() {
     try {
       let response = await this._categoriaServicio.getCategorias().toPromise();
+
       this.categorias = response.data;
+
       this.categorias.forEach(elemnt => {
         if (elemnt.TIPO == 'C1') {
           this.c1.push(elemnt)
-        } /*else if (elemnt.TIPO == 'C2') {
+        } else if (elemnt.TIPO == 'C2') {
           this.c2.push(elemnt)
         } else if (elemnt.TIPO == 'C3') {
           this.c3.push(elemnt)
-        }*/
+        }
       })
+
+
     } catch (e) {
-      if (!(e instanceof HttpErrorResponse)) {
-        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
-        console.log("error como objeto:" + e);
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
       }
     }
-  }
 
+  }
 
   public async vender() {
     try {

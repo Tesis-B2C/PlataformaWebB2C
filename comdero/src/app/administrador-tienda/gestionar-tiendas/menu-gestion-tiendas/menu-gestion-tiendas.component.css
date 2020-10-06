@@ -18,8 +18,6 @@
   display: flex;
   width: 100%;
   align-items: stretch;
-
-
 }
 
 #sidebar {
@@ -72,6 +70,8 @@ body {
   font-family: 'Poppins', sans-serif;
   background: #fafafa;
 }
+
+
 
 p {
   font-family: 'Poppins', sans-serif;

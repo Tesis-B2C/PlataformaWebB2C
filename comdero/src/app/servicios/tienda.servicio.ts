@@ -126,6 +126,10 @@ export class TiendaServicio {
     let headers = new HttpHeaders({"Content-type": "application/json"});
     return this._http.get<objeto>(this.url + "obtenerFiltroBusquedaTodos/" + termino, {headers: headers});
   }
+  obtenerFiltroBusquedaTodosCategoria(categoria) {
+    let headers = new HttpHeaders({"Content-type": "application/json"});
+    return this._http.get<objeto>(this.url + "obtenerFiltroBusquedaTodosCategoria/" + categoria, {headers: headers});
+  }
 
   getDetalleTiendaProducto(Id_Tienda) {
     let headers = new HttpHeaders({"Content-type": "application/json"});
