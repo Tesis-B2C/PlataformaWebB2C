@@ -20,6 +20,7 @@ import {ValoracionServicio} from "../../servicios/valoracion.servicio";
 import {HttpErrorResponse} from "@angular/common/http";
 import {TiendaServicio} from "../../servicios/tienda.servicio";
 import {CategoriaServicio} from "../../servicios/categoria.servicio";
+
 @Component({
   selector: 'app-detalle-producto',
   templateUrl: './detalle-producto.component.html',
@@ -121,14 +122,13 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
   public Carrito_Producto;
 
 
-
   public vectorIconos = ['fa fa-charging-station', 'fa fa-tshirt',
     'fa fa-ring', 'fa fa-baby-carriage', 'fa fa-home',
     'fa fa-gem', 'fa fa-palette', 'fa fa-laptop',
     'fa fa-car', 'fa fa-dumbbell', 'fa fa-book',
     'fa fa-dog', 'fa fa-gamepad', 'fa fa-grin-stars', 'fa fa-heartbeat', 'fa fa-building', 'fa fa-tractor'];
 
-  constructor( public _categoriaServicio:CategoriaServicio, public router: Router, public _tiendaServicio:TiendaServicio, public _valoracionServicio:ValoracionServicio, public menu: MenuComponent, public _carritoServicio: CarritoServicio, public _compraServicio: CompraServicio,
+  constructor(public _categoriaServicio: CategoriaServicio, public router: Router, public _tiendaServicio: TiendaServicio, public _valoracionServicio: ValoracionServicio, public menu: MenuComponent, public _carritoServicio: CarritoServicio, public _compraServicio: CompraServicio,
               public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal, private _sanitizer: DomSanitizer, configRating: NgbRatingConfig, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
     configRating.max = 5;
     configRating.readonly = true;
@@ -169,9 +169,9 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
       let response = await this._dpaServicio.getDpaProvincias(buscar).toPromise();
       this.provinciasDireccion = response.data;
     } catch (e) {
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
@@ -188,9 +188,9 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
       let response = await this._dpaServicio.getDpaCiudades(buscar).toPromise();
       this.ciudadesDireccion = response.data;
     } catch (e) {
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
@@ -236,9 +236,9 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
       this.asignarVariblePrimero();
       this.informacionPagoEnvio();
     } catch (e) {
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
@@ -500,14 +500,20 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
     this.videoYoutube = this._sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + video);
   }
 
-  public incrementar() {
+  public async incrementar() {
+    let response = await this._productoServicio.obtenerProductoDetalle(this.id_Producto).toPromise();
+    this.productoDetalle = response.data;
+    this.asignarVariblePrimero();
     if (this.varianteActiva.CANTIDAD >= this.varianteActiva.STOCK)
       this.varianteActiva.CANTIDAD = this.varianteActiva.STOCK;
     else
       this.varianteActiva.CANTIDAD = this.varianteActiva.CANTIDAD + 1;
   }
 
-  public decrementar() {
+  public async decrementar() {
+    let response = await this._productoServicio.obtenerProductoDetalle(this.id_Producto).toPromise();
+    this.productoDetalle = response.data;
+    this.asignarVariblePrimero();
     if (this.varianteActiva.CANTIDAD <= 1)
       this.varianteActiva.CANTIDAD = 1;
     else
@@ -1067,7 +1073,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
       this.menu.conteoProductosCarrito(true);
     } catch (e) {
       console.log("error Parseado:" + JSON.stringify(e));
-      console.log("error como objeto:"+ e);
+      console.log("error como objeto:" + e);
     }
   }
 
@@ -1271,9 +1277,9 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
       this.loading = false;
     } catch (e) {
       this.loading = false;
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
@@ -1286,16 +1292,16 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
     try {
       let identidad = this._agenteServicio.getIdentity();
       let response = await this._tiendaServicio.getMisTiendas(identidad.COD_AGENTE).toPromise();
-      let misTiendas:any=response.data;
-      if (misTiendas.length>0) {
+      let misTiendas: any = response.data;
+      if (misTiendas.length > 0) {
         this.router.navigate(['/administrador/administrador-tienda/mis-tiendas']);
-      }else{
+      } else {
         this.router.navigate(['/registro-tienda']);
       }
     } catch (e) {
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
@@ -1305,8 +1311,10 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
     }
 
   }
-public categorias;
-  public c1=[];
+
+  public categorias;
+  public c1 = [];
+
   public async getCategorias() {
     try {
       let response = await this._categoriaServicio.getCategorias().toPromise();
@@ -1321,9 +1329,9 @@ public categorias;
         }*/
       })
     } catch (e) {
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
@@ -1423,7 +1431,7 @@ public categorias;
 
 
   abrirModalComentario(content, idComentario) {
-    this.idComentario=idComentario;
+    this.idComentario = idComentario;
     this.modalService.open(content, {centered: true});
 
   }
@@ -1431,17 +1439,17 @@ public categorias;
   public comentario;
   public idComentario;
 
-  public async  editarComentario() {
-    try{
-    let response = await this._valoracionServicio.updateComentario(this.idComentario, this.comentario).toPromise();
-      this.comentario=null;
-      this.idComentario=null;
+  public async editarComentario() {
+    try {
+      let response = await this._valoracionServicio.updateComentario(this.idComentario, this.comentario).toPromise();
+      this.comentario = null;
+      this.idComentario = null;
       this.mensageCorrecto(response.message);
       this.obtenerProducto();
-    }catch (e) {
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+    } catch (e) {
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
@@ -1450,15 +1458,15 @@ public categorias;
 
   }
 
- async deleteComentario(idComentario){
-    try{
+  async deleteComentario(idComentario) {
+    try {
       let response = await this._valoracionServicio.deleteComentario(idComentario).toPromise();
       this.mensageCorrecto(response.message);
       this.obtenerProducto();
-    }catch (e) {
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+    } catch (e) {
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
