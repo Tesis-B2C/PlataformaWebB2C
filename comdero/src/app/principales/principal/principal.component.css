@@ -75,7 +75,13 @@
   border-radius: 50px;
 }
 
+.categoriaCelular{
+   display: none;
+ }
 
+.categoriaNormal{
+  display: block;
+}
 @media (max-width: 720px) {
   .alto-banner {
     height: 200px;
@@ -86,8 +92,18 @@
     width: 100%;
   }
 
+  .categoriaNormal{
+    display: none;
+  }
+  .categoriaCelular{
+    display: block;
 
+  }
+  #sidebar {
+    margin-left: -250px;
+  }
 }
+
 
 footer p, li, a {
   font-size: small;
@@ -104,11 +120,6 @@ footer p, li, a {
 
 #sidebar.active {
   margin-left: -250px;
-}
-
-#bdy{
-  height: 100vh;
-  overflow: auto;
 }
 
 
