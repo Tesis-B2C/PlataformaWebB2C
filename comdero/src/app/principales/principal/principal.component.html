@@ -13,7 +13,7 @@
           <a class=" categoriaCelular nav-link pl-0" data-toggle="dropdown" href="#" aria-expanded="false"> &nbsp;Categorías <span
             class="fa fa-caret-down"></span></a>
 
-          <a class="categoriaNormal nav-link pl-0 text-white" style="cursor: pointer" (click)="banera=!banera"> &nbsp;Categorías</a>
+          <a class="categoriaNormal nav-link pl-0 text-white" style="cursor: pointer" (click)="banera=!banera"> <span class="fa fa-bars"></span> &nbsp;Categorías</a>
 
           <div class="dropdown-menu " style="height: 300px; overflow: auto">
             <div class="row px-3">
@@ -78,12 +78,11 @@
 
       <div *ngFor="let c22 of c2">
         <div class="" *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA">
-          <p class="mb-1 " style="color: black; ">{{c22.NOMBRE}}</p>
+          <li class="btn btn-link" style="color: black; " (click)="verificar(c22.ID_CATEGORIA, c22.NOMBRE)">{{c22.NOMBRE}}</li>
 
           <div *ngFor="let c33 of c3" class="mb-3">
-            <div class=""
-                 *ngIf=" (c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA) && (c22.ID_CATEGORIA==c33.CAT_ID_CATEGORIA)">
-              <p class=" " style="font-size: smaller">{{c33.NOMBRE}}</p>
+            <div *ngIf=" (c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA) && (c22.ID_CATEGORIA==c33.CAT_ID_CATEGORIA)">
+              <li class="btn btn-link ml-3" (click)="verificar(c33.ID_CATEGORIA, c33.NOMBRE)" style="font-size: smaller">{{c33.NOMBRE}}</li>
             </div>
           </div>
 

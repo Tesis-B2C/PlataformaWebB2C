@@ -27,8 +27,8 @@ export class PrincipalComponent implements OnInit {
   // tslint:disable-next-line: max-line-length
   public categorias;
   public c1 = [];
-  public c2=[];
-  public c3=[];
+  public c2 = [];
+  public c3 = [];
   public vectorIconos = ['fa fa-charging-station', 'fa fa-tshirt',
     'fa fa-ring', 'fa fa-baby-carriage', 'fa fa-home',
     'fa fa-gem', 'fa fa-palette', 'fa fa-laptop',
@@ -104,7 +104,7 @@ export class PrincipalComponent implements OnInit {
   public vectorProductosObtenidos = [];
   currentRate = 1;
 
-  public banera:boolean=true;
+  public banera: boolean = true;
 
   constructor(configRating: NgbRatingConfig, public route: ActivatedRoute, public router: Router, public _agenteServicio: AgenteServicio, public _tiendaServicio: TiendaServicio, public _productoServicio: ProductoServicio, public _categoriaServicio: CategoriaServicio, config: NgbCarouselConfig) {
     configRating.max = 5;
@@ -124,6 +124,22 @@ export class PrincipalComponent implements OnInit {
     this.populares = await this.obtenerTodosProductos(1); //populares o con mas estrellas
     this.recomendados = await this.obtenerTodosProductos(2);// recomendados o con mas
     this.obtenerTodasTiendas();
+  }
+
+
+  verificar(codigo, nombre) {
+    let bandera:boolean=false;
+    this.categorias.forEach(elemnt => {
+      if (elemnt.CAT_ID_CATEGORIA == codigo) {
+        bandera=true
+      }
+    });
+
+    if(!bandera){
+      this.router.navigate(['/principales/menu/busqueda-categoria',codigo,nombre])
+
+    }
+
   }
 
   public noExite = 'assets/images/no-imagen1.png';
@@ -317,9 +333,9 @@ export class PrincipalComponent implements OnInit {
 
 
     } catch (e) {
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));

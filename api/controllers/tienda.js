@@ -869,10 +869,10 @@ async function obtenerTodasTiendas(req, res) {
             }
         });
 
-            res.status(200).send({
-                data: tiendasObtenidas,
-                message: "Tiendas cargadas correctamente"
-            });
+        res.status(200).send({
+            data: tiendasObtenidas,
+            message: "Tiendas cargadas correctamente"
+        });
 
     } catch (err) {
         res.status(500).send({
@@ -884,73 +884,77 @@ async function obtenerTodasTiendas(req, res) {
 async function obtenerFiltroBusquedaTodosCategoria(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
     try {
-        let vectorEnviar = [];
+
         let fechaHoy = moment().format("YYYY-MM-DD");
 
         let productosObtenidos = await PRODUCTO.findAll({
-            include: [{model:PRODUCTO_CATEGORIA, where:{ID_CATEGORIA:req.params.categoria}},{
-                    model: VARIANTE,
+            include: [{model: PRODUCTO_CATEGORIA, where: {ID_CATEGORIA: req.params.categoria}}, {
+                model: VARIANTE,
+                separate: true,
+                attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'NUM_VARIANTE', 'PRECIO_UNITARIO'],
+                order: [['NUM_VARIANTE', 'ASC']],
+                include: {
+                    model: IMAGEN_PRODUCTO,
                     separate: true,
-                    attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'NUM_VARIANTE', 'PRECIO_UNITARIO'],
-                    order: [['NUM_VARIANTE', 'ASC']],
-                    include: {
-                        model: IMAGEN_PRODUCTO,
-                        separate: true,
-                        attributes: ['NUM_VARIANTE', 'IMAGEN'],
-                        where: {
-                            TIPO_IMAGEN: {
-                                [Op.like]: 'image%'
-                            }
+                    attributes: ['NUM_VARIANTE', 'IMAGEN'],
+                    where: {
+                        TIPO_IMAGEN: {
+                            [Op.like]: 'image%'
+                        }
+                    },
+                    order: [['ID_IMAGEN', 'ASC']]
+                }
+            }, {
+                model: PRODUCTO_DESCUENTO,
+                include: {
+                    model: DESCUENTO,
+                    where: {
+                        ESTADO_DESCUENTO: 0,
+                        FECHA_INICIO: {
+                            [Op.lte]: fechaHoy
                         },
-                        order: [['ID_IMAGEN', 'ASC']]
-                    }
-                }, {
-                    model: PRODUCTO_DESCUENTO,
-                    include: {
-                        model: DESCUENTO,
-                        where: {
-                            ESTADO_DESCUENTO: 0,
-                            FECHA_INICIO: {
-                                [Op.lte]: fechaHoy
-                            },
-                            FECHA_FIN: {
-                                [Op.gte]: fechaHoy
-                            }
+                        FECHA_FIN: {
+                            [Op.gte]: fechaHoy
                         }
                     }
-                }, {
-                    model: CALIFICACION,
-                    separate: true,
-                    attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', [CALIFICACION.sequelize.fn('AVG', CALIFICACION.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
-                    group: ['ID_PRODUCTO', 'COD_PRODUCTO']
-                }, {
-                    model: COMENTARIO,
-                    separate: true,
-                    attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', [COMENTARIO.sequelize.fn('COUNT', COMENTARIO.sequelize.col('ID_COMENTARIO')), 'TOTAL_COM']],
-                    group: ['ID_PRODUCTO', 'COD_PRODUCTO']
-                }]
+                }
+            }, {
+                model: CALIFICACION,
+                separate: true,
+                attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', [CALIFICACION.sequelize.fn('AVG', CALIFICACION.sequelize.col('NUM_ESTRELLAS')), 'PROMEDIO_CAL']],
+                group: ['ID_PRODUCTO', 'COD_PRODUCTO']
+            }, {
+                model: COMENTARIO,
+                separate: true,
+                attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', [COMENTARIO.sequelize.fn('COUNT', COMENTARIO.sequelize.col('ID_COMENTARIO')), 'TOTAL_COM']],
+                group: ['ID_PRODUCTO', 'COD_PRODUCTO']
             }, {
                 model: OFERTA,
                 where: {
                     ESTADO_OFERTA: 0
-                },include:{model:TIENDA},
+                }, include: {model: TIENDA}
+            }],
 
-            transaction: t
-        });
 
-        vectorEnviar.push(productosObtenidos);
-
-        res.status(200).send({
-            data: vectorEnviar,
-            message: "Tiendas y productos cargados correctamente"
-        });
-        await t.commit();
-    } catch (err) {
-        await t.rollback();
-        res.status(500).send({
-            message: 'error:' + err
-        });
+        transaction: t
     }
+);
+
+
+
+res.status(200).send({
+    data: productosObtenidos,
+    message: "Tiendas y productos cargados correctamente"
+});
+await t.commit();
+} catch
+(err)
+{
+    await t.rollback();
+    res.status(500).send({
+        message: 'error:' + err
+    });
+}
 }
 
 async function getListadoClientesTienda(req, res) {
@@ -963,10 +967,10 @@ async function getListadoClientesTienda(req, res) {
             group: ['IDENTIFICACION_FACTURA']
         });
 
-            res.status(200).send({
-                data: ListadoClientes,
-                message: "Clientes cargados correctamente"
-            });
+        res.status(200).send({
+            data: ListadoClientes,
+            message: "Clientes cargados correctamente"
+        });
 
     } catch (err) {
         res.status(500).send({
@@ -979,22 +983,22 @@ async function updateVisitas(req, res) {
 
     try {
 
-            let tiendaActualizada = await TIENDA.update({
-                VISITAS: req.body.visitas,
-            }, {
-                where: {NUM_TIENDA: req.params.id, ESTADO_TIENDA: 0},
+        let tiendaActualizada = await TIENDA.update({
+            VISITAS: req.body.visitas,
+        }, {
+            where: {NUM_TIENDA: req.params.id, ESTADO_TIENDA: 0},
 
+        });
+
+        if (tiendaActualizada > 0) {
+            res.status(200).send({
+                message: "La tienda ha sido actualizada correctamente"
             });
-
-            if (tiendaActualizada>0) {
-                res.status(200).send({
-                    message: "La tienda ha sido actualizada correctamente"
-                });
-            } else {
-                res.status(404).send({
-                    message: 'Al parecer no se encuentra la tienda registrada en la base de datos'
-                });
-            }
+        } else {
+            res.status(404).send({
+                message: 'Al parecer no se encuentra la tienda registrada en la base de datos'
+            });
+        }
 
     } catch (err) {
         res.status(500).send({

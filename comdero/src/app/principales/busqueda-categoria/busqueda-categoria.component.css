@@ -1,0 +1,51 @@
+.section-pagetop {
+  padding: 12px 0;
+}
+
+.colorNavbar {
+  background-color: #2a4c75;
+}
+
+.nav-link {
+  color: white;
+  font-weight: normal;
+}
+
+.nav-link:hover {
+  color: #fca147;
+  font-weight: bold;
+}
+
+.tituloTienda{
+  font-size: small;
+  padding-top: 10px;
+  text-align: left;
+}
+
+/*TIENDAS*/
+.item-logo {
+  margin: 10px;
+  text-align: center;
+}
+
+.box {
+  padding: 15px;
+}
+
+#paginacion {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#paginacionTienda {
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+
+
+
+
