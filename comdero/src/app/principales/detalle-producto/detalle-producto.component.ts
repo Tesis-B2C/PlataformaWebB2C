@@ -137,7 +137,10 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
 
   public contactoWhatsapp;
   public identidadAgente;
-
+  public categorias;
+  public c1 = [];
+  public c2=[];
+  public c3=[]
   ngOnInit() {
     this.imagenPrincipal = 'assets/images/no-imagen1.png';
     this.getDpaProvincias("P");
@@ -163,6 +166,53 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
     delete this.varianteActiva;
     this.modalService.dismissAll();
   }
+
+  public async getCategorias() {
+    try {
+      let response = await this._categoriaServicio.getCategorias().toPromise();
+
+      this.categorias = response.data;
+
+      this.categorias.forEach(elemnt => {
+        if (elemnt.TIPO == 'C1') {
+          this.c1.push(elemnt)
+        } else if (elemnt.TIPO == 'C2') {
+          this.c2.push(elemnt)
+        } else if (elemnt.TIPO == 'C3') {
+          this.c3.push(elemnt)
+        }
+      })
+
+
+    } catch (e) {
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
+    }
+
+  }
+
+  verificar(codigo, nombre) {
+    let bandera: boolean = false;
+    this.categorias.forEach(elemnt => {
+      if (elemnt.CAT_ID_CATEGORIA == codigo) {
+        bandera = true
+      }
+    });
+
+    if (!bandera) {
+      this.router.navigate(['/principales/menu/busqueda-categoria', codigo, nombre])
+
+    }
+
+  }
+
+
+
 
   async getDpaProvincias(buscar) {
     try {
@@ -1312,32 +1362,9 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
 
   }
 
-  public categorias;
-  public c1 = [];
 
-  public async getCategorias() {
-    try {
-      let response = await this._categoriaServicio.getCategorias().toPromise();
-      this.categorias = response.data;
-      this.categorias.forEach(elemnt => {
-        if (elemnt.TIPO == 'C1') {
-          this.c1.push(elemnt)
-        } /*else if (elemnt.TIPO == 'C2') {
-          this.c2.push(elemnt)
-        } else if (elemnt.TIPO == 'C3') {
-          this.c3.push(elemnt)
-        }*/
-      })
-    } catch (e) {
-      if (!(e instanceof HttpErrorResponse)) {
-        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
-        console.log("error como objeto:" + e);
-        if (JSON.stringify(e) === '{}')
-          this.mensageError(e);
-        else this.mensageError(JSON.stringify(e));
-      }
-    }
-  }
+
+
 
   mensageError(mensaje) {
     Swal.fire({
