@@ -1435,10 +1435,14 @@
   <!-- ============================ COMPONENT SECCION INFORMACION  .//END ================================= -->
 
 
+  <hr>
   <br>
   <div class="container ">
     <h4 class="font-weight-bold">Opiniones de clientes</h4>
     <br>
+    <div *ngIf="this.productoDetalle?.PRODUCTO.COMENTARIOs.length==0">
+      <p>No existen comentarios</p>
+    </div>
     <div *ngFor="let comentario of this.productoDetalle?.PRODUCTO.COMENTARIOs">
       <hr class="my-0">
       <div class="row no-gutters ">
