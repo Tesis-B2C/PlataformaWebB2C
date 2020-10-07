@@ -7,6 +7,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import Swal from "sweetalert2";
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import {NgbRatingConfig} from "@ng-bootstrap/ng-bootstrap";
+import {CategoriaServicio} from "../../servicios/categoria.servicio";
 
 @Component({
   selector: 'app-busqueda-categoria',
@@ -23,7 +24,7 @@ export class BusquedaCategoriaComponent implements OnInit {
   datosXpaginaTienda = 4;
   paginaTamanoTienda: number;
 
-  constructor(public configRating: NgbRatingConfig,public router: Router, public _agenteServicio: AgenteServicio, public _tiendaServicio: TiendaServicio, public route: ActivatedRoute) {
+  constructor(public _categoriaServicio: CategoriaServicio, public configRating: NgbRatingConfig, public router: Router, public _agenteServicio: AgenteServicio, public _tiendaServicio: TiendaServicio, public route: ActivatedRoute) {
     configRating.max = 5;
     configRating.readonly = true;
   }
@@ -35,19 +36,80 @@ export class BusquedaCategoriaComponent implements OnInit {
   currentRate = 1;
   public categorias;
   public c1 = [];
-  public c2;
-  public c3;
+  public c2 = [];
+  public c3 = [];
   public categoria;
+  public bandera:boolean=true;
+  public vectorIconos = ['fa fa-charging-station', 'fa fa-tshirt',
+    'fa fa-ring', 'fa fa-baby-carriage', 'fa fa-home',
+    'fa fa-gem', 'fa fa-palette', 'fa fa-laptop',
+    'fa fa-car', 'fa fa-dumbbell', 'fa fa-book',
+    'fa fa-dog', 'fa fa-gamepad', 'fa fa-grin-stars', 'fa fa-heartbeat', 'fa fa-building', 'fa fa-tractor'];
   public palabraBuscada;
 
   async ngOnInit() {
+    this.getCategorias()
     this.route.params.subscribe(params => {
       this.categoria = params.categoria;
-      this.palabraBuscada=params.nombre;
+      this.palabraBuscada = params.nombre;
       this.buscarDatos();
+
     });
   }
 
+  ngOnChanges() {
+    this.route.params.subscribe(params => {
+      this.categoria = params.categoria;
+      this.palabraBuscada = params.nombre;
+      this.buscarDatos();
+
+    });
+  }
+
+
+  public async getCategorias() {
+    try {
+      let response = await this._categoriaServicio.getCategorias().toPromise();
+
+      this.categorias = response.data;
+
+      this.categorias.forEach(elemnt => {
+        if (elemnt.TIPO == 'C1') {
+          this.c1.push(elemnt)
+        } else if (elemnt.TIPO == 'C2') {
+          this.c2.push(elemnt)
+        } else if (elemnt.TIPO == 'C3') {
+          this.c3.push(elemnt)
+        }
+      })
+
+
+    } catch (e) {
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
+    }
+
+  }
+
+  verificar(codigo, nombre) {
+    let bandera: boolean = false;
+    this.categorias.forEach(elemnt => {
+      if (elemnt.CAT_ID_CATEGORIA == codigo) {
+        bandera = true
+      }
+    });
+
+    if (!bandera) {
+      this.router.navigate(['/principales/menu/busqueda-categoria', codigo, nombre])
+
+    }
+
+  }
 
   public noExite = 'assets/images/no-image.png';
 

@@ -26,12 +26,12 @@
 
                 <div *ngFor="let c22 of c2">
                   <div class="" *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA">
-                    <p class="" style="color: black; ">{{c22.NOMBRE}}</p>
+                    <p (click)="verificar(c22.ID_CATEGORIA, c22.NOMBRE)" style="color: black; ">{{c22.NOMBRE}}</p>
 
                     <div *ngFor="let c33 of c3">
                       <div class=""
                            *ngIf=" (c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA) && (c22.ID_CATEGORIA==c33.CAT_ID_CATEGORIA)">
-                        <p class=" " style="font-size: smaller">{{c33.NOMBRE}}</p>
+                        <p (click)="verificar(c33.ID_CATEGORIA, c33.NOMBRE)" style="font-size: smaller">{{c33.NOMBRE}}</p>
                       </div>
                     </div>
 

@@ -48,4 +48,73 @@
 
 
 
+#sidebar {
+  background: white;
+  color: #2a4c75;
+  transition: all 0.3s;
 
+
+}
+
+#sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  overflow: auto;
+  z-index: 100;
+}
+
+.scrollbar2 {
+  height: 100%;
+  overflow: auto;
+}
+
+.scrollbar2::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.scrollbar2::-webkit-scrollbar-track {
+  background-color: rgba(35, 35, 35, 0.1);
+}
+
+.scrollbar2::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 50px;
+}
+#sidebar.active {
+  margin-left: -250px;
+}
+.wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+  height: 100%;
+}
+
+body {
+  height: 100vh !important;
+  overflow: auto;
+}
+
+
+.categoriaCelular{
+  display: none;
+}
+
+.categoriaNormal{
+  display: block;
+}
+@media (max-width: 720px) {
+
+
+  .categoriaNormal{
+    display: none;
+  }
+  .categoriaCelular{
+    display: block;
+
+  }
+  #sidebar {
+    margin-left: -250px;
+  }
+}
