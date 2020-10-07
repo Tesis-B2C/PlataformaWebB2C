@@ -25,8 +25,6 @@
                   <p class=" iconos-pagos mx-auto "><span class="{{this.vectorIconos[i]}} fa-2x"
                                                           style="color: #2a4c75"></span></p>
                   <h5 class="mb-3  text-center my-1" style="font-weight: bold">{{c11.NOMBRE}}</h5>
-
-
                   <div *ngFor="let c22 of c2">
                     <div class="" *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA">
                       <p  (click)="verificar(c22.ID_CATEGORIA,c22.NOMBRE);btnBarra.click() " style="color: black; ">{{c22.NOMBRE}}</p>

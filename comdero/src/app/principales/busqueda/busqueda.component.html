@@ -1,21 +1,52 @@
 <!-- ========================= SECTION FRANJA AZUL CORREGIR ========================= -->
-<body class="bg">
+
 <section class="bg">
-  <nav class="navbar navbar-main navbar-expand-md  border-bottom colorNavbar mx-0">
+  <nav class=" stick-top navbar navbar-main navbar-expand-md  border-bottom colorNavbar mx-0">
     <div class="mx-lg-auto">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav"
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav" #btnBarra
               aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="fa fa-bars" style="color: white"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="main_nav">
-        <ul class="navbar-nav">
+      <div class="collapse navbar-collapse " id="main_nav">
+        <ul class="navbar-nav ">
           <li class="nav-item dropdown">
-            <a class="nav-link pl-0" data-toggle="dropdown" href="#" aria-expanded="false"> &nbsp;Categorías <span
-              class="fa fa-caret-down"></span></a>
-            <div class="dropdown-menu ">
-              <a class="dropdown-item" *ngFor="let c11 of c1; let i = index" href="#"><span
-                class="{{this.vectorIconos[i]}} "></span> &nbsp;{{c11.NOMBRE}}</a>
+            <a class=" categoriaCelular nav-link pl-0" data-toggle="dropdown" href="#" aria-expanded="false"> &nbsp;Categorías
+              <span
+                class="fa fa-caret-down"></span></a>
+
+            <a class="categoriaNormal nav-link pl-0 text-white" style="cursor: pointer"
+               (click)="bandera=!bandera"> <span
+              class="fa fa-bars"></span> &nbsp;Categorías</a>
+
+            <div class="dropdown-menu " style="height: 300px; overflow: auto">
+              <div class="row px-3">
+                <div class="col-12 " *ngFor="let c11 of c1; let i = index">
+
+                  <p class=" iconos-pagos mx-auto "><span class="{{this.vectorIconos[i]}} fa-2x"
+                                                          style="color: #2a4c75"></span></p>
+                  <h5 class="mb-3  text-center my-1" style="font-weight: bold">{{c11.NOMBRE}}</h5>
+                  <div *ngFor="let c22 of c2">
+                    <div class="" *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA">
+                      <p (click)="verificar(c22.ID_CATEGORIA,c22.NOMBRE);btnBarra.click() "
+                         style="color: black; ">{{c22.NOMBRE}}</p>
+
+                      <div *ngFor="let c33 of c3">
+                        <div class=""
+                             *ngIf=" (c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA) && (c22.ID_CATEGORIA==c33.CAT_ID_CATEGORIA)">
+                          <p (click)="verificar(c33.ID_CATEGORIA, c33.NOMBRE);btnBarra.click()"
+                             style="font-size: smaller">{{c33.NOMBRE}}</p>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+
+                  <hr>
+                </div>
+              </div>
+
               <div class="dropdown-divider"></div>
               <a class="dropdown-item col-2" [routerLink]="['/principales/menu/categorias']">Ver todas</a>
             </div>
@@ -33,6 +64,7 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Quienes somos</a>
           </li>
+
         </ul>
       </div> <!-- collapse .// -->
     </div> <!-- container .// -->
@@ -40,175 +72,212 @@
 </section>
 <!-- ========================= SECTION FRANJA AZUL END ========================= -->
 
-<!-- ========================= SECTION PAGETOP ========================= -->
-<section *ngIf="this.vectorProductos.length > 0" class="section-pagetop bg">
-  <div class="container">
-    <p class="title-page">{{paginaTamano + 1}} - {{this.ultimoSerie}}  de {{this.vectorProductos.length}} resultados
-      para  <strong>"{{this.palabraBuscada}}"</strong></p>
-  </div> <!-- container //  -->
-</section>
-<!-- ========================= SECTION PAGETOP END// ========================= -->
+
+<section class="bg wrapper">
+  <!-- ========================= SECTION FRANJA AZUL END ========================= -->
+  <nav id="sidebar" class="scrollbar2  bg-white " [ngClass]="{'active':bandera}">
+
+    <div class="px-4 py-2" *ngFor="let c11 of c1; let i = index">
+
+      <p class=" iconos-pagos mx-auto "><span class="{{this.vectorIconos[i]}} fa-2x" style="color: #2a4c75"></span>
+      </p>
+      <h5 class="mb-3  text-center my-1" style="font-weight: bold">{{c11.NOMBRE}}</h5>
 
 
-<!-- ========================= SECTION LISTADO DE PRODUCTOS// ========================= -->
-<section *ngIf="this.vectorProductos.length == 0 " class="section-content padding-y-sm bg">
-  <div class="container">
-    <article class="my-4 text-justify">
-      <label class="m-0">Sin resultados para <label class="font-weight-bold mb-0">{{this.palabraBuscada}}</label> en el
-        catálogo de productos </label>
-      <p style="font-size: x-small"> Revisa la ortografía o usa términos más generales. </p><br><br>
-    </article> <!-- card-product .// -->
-  </div> <!-- container .//  -->
-</section>
+      <div *ngFor="let c22 of c2">
+        <div class="" *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA">
+          <li class="btn btn-link" style="color: black; "
+              (click)="verificar(c22.ID_CATEGORIA, c22.NOMBRE)">{{c22.NOMBRE}}</li>
 
-<section *ngIf="this.vectorProductos.length > 0" class="section-content padding-y-sm bg">
-  <div class="container   ">
-    <article class="card card-product-list col-12  "
-             *ngFor="let p of this.vectorProductos | slice: paginaTamano | slice: 0:datosXpagina">
-      <div *ngIf="p.TIPO=='Producto'" class="row no-gutters">
-        <aside class="col-lg-3 col-md-3 col-12">
-          <a routerLink="../../detalle-producto/{{p.ID_OFERTA}}">
-
-            <span class="badge badge-danger" *ngIf="p.FECHA_CREACION"> Nuevo </span>
-            <img [src]="getImagen(p.IMAGEN)" width="100%" height="218rem" class="p-4">
-          </a>
-        </aside> <!-- col.// -->
-        <div class="col-lg-6 col-md-6 col-6">
-          <div class="info-main">
-            <a routerLink="../../detalle-producto/{{p.ID_OFERTA}}" class="h5 title"> {{p.NOMBRE}} </a>
-            <div class="rating-wrap mb-3">
-              <ul class="rating-stars">
-                <ngb-rating *ngIf="p.PROMEDIO_CAL != null"
-                            [(rate)]="p.PROMEDIO_CAL">
-                  <ng-template let-fill="fill">
-                    <span class="star" [class.filled]="fill === 100">&#9733;</span>
-                  </ng-template>
-                </ngb-rating>
-                <ngb-rating *ngIf="p.PROMEDIO_CAL == null" [(rate)]="currentRate">
-                  <ng-template let-fill="fill">
-                    <span class="star" [class.filled]="fill === 100">&#9733;</span>
-                  </ng-template>
-                </ngb-rating>
-              </ul>
-              <br>
-              <p *ngIf="p.TOTAL_COM != null"
-                 class="label-rating text-muted">{{p.TOTAL_COM}} comentarios</p>
-              <p *ngIf="p.TOTAL_COM == null" class="label-rating text-muted">0 Comentarios </p>
-            </div> <!-- rating-wrap.// -->
-            <p> {{p.DESCRIPCION_PRODUCTO}}
-            </p>
-          </div> <!-- info-main.// -->
-        </div> <!-- col.// -->
-        <aside class="col-lg-3 col-md-3 col-6">
-          <div class="info-aside">
-            <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO == null">
-              <span class="price h3"> {{p.PRECIO_CON_IVA | currency }} </span>
-            </div> <!-- info-price-detail // -->
-
-            <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO != null">
-              <span class="price h3"> {{p.DESCUENTO_AUTOMATICO | currency }} </span>
-              <del class="price-old"> {{p.PRECIO_CON_IVA | currency }} </del>
-            </div> <!-- info-price-detail // -->
-
-
-            <p class="text-success mt-2">{{p.CONDICION}}</p>
-
-            <p class=" mt-2">
-              <a routerLink="../../detalle-producto/{{p.ID_OFERTA}}" class="btn btn-primary btn-block">
-                Detalles </a>
-              <a routerLink="../../detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda"
-                 class="title tituloTienda text-primary"> {{p.NOMBRE_COMERCIAL_TIENDA_PRODUCTO}}</a>
-            </p>
-          </div> <!-- info-aside.// -->
-        </aside> <!-- col.// -->
-      </div> <!-- row.// -->
-      <div *ngIf="p.TIPO=='Tienda'" class="row no-gutters">
-        <aside class="col-lg-3 col-md-3 col-12">
-
-          <a routerLink="../../detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda">
-            <img [src]="getImagen(p.LOGO)" width="100%" height="218rem" class="p-4">
-          </a>
-        </aside> <!-- col.// -->
-        <div class="col-lg-6 col-md-6 col-12">
-          <div class="info-main">
-            <a routerLink="../../detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda"
-               class="h5 title text-center text-md-left"> {{p.NOMBRE}} </a>
-
-            <p class="text-center text-md-left text-justify"> {{p.DESCRIPCION}}
-            </p>
-          </div> <!-- info-main.// -->
-        </div> <!-- col.// -->
-        <aside class="col-lg-3 col-md-3 col-12">
-          <div class="info-aside  pr-0">
-            <p class=" mt-md-5 ">
-              <a routerLink="../../detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda"
-                 class="btn btn-primary btn-block ml-auto ">Detalles</a>
-            </p>
-          </div> <!-- info-aside.// -->
-        </aside> <!-- col.// -->
-      </div>
-    </article> <!-- card-product .// -->
-
-    <ngb-pagination id="paginacionTienda" [collectionSize]="this.vectorProductos.length" #numPagina
-                    [(page)]="paginaActual"
-                    [pageSize]="datosXpagina" [maxSize]="4" [rotate]="true" [ellipses]="true"
-                    [boundaryLinks]="false" (pageChange)="onPageChange(paginaActual)">
-      <ng-template ngbPaginationPrevious>Anterior</ng-template>
-      <ng-template ngbPaginationNext>Siguiente</ng-template>
-    </ngb-pagination>
-  </div> <!-- container .//  -->
-</section>
-<!-- ========================= SECTION LISTADO DE PRODUCTOS END// ========================= -->
-
-<!-- ========================= SECTION LISTADO DE TIENDAS  ========================= -->
-<!--<section *ngIf="this.vectorTienda.length == 0" class="section-content padding-y-sm">
-  <div class="container">
-    <article class="my-4 text-justify">
-      <label class="m-0">Sin resultados para <label class="font-weight-bold mb-0">{{this.palabraBuscada}}</label> en el
-        catálogo de tiendas </label>
-      <p style="font-size: x-small"> Revisa la ortografía o usa términos más generales. </p><br><br>
-    </article> &lt;!&ndash; card-product .// &ndash;&gt;
-  </div> &lt;!&ndash; container .//  &ndash;&gt;
-</section>-->
-
-<!--<section *ngIf="this.vectorTienda.length > 0" class="section-content padding-y-sm">
-  <div class="container">
-    <header class="section-heading">
-      <h3 class="section-title">
-        Tiendas asociadas
-      </h3>
-    </header>&lt;!&ndash; sect-heading &ndash;&gt;
-
-    <div class="container card">
-      <p><span class="float-md-right mt-3">Página {{ paginaActualTienda }} de {{numPaginaTienda.pageCount }}</span></p>
-      <article class="card-product-list">
-        <div class="row no-gutters">
-          <div class="col-lg-3 col-md-3 col-sm-3 col-12"
-               *ngFor="let t of this.vectorTienda | slice: paginaTamanoTienda | slice: 0:datosXpaginaTienda">
-
-            <div class="mx-1">
-              <figure class="box item-logo">
-                <a routerLink="../../detalle-tienda/tienda/{{t.NUM_TIENDA}}/inicio-tienda"><img
-                  [src]="getImagen(t.LOGO) " style="width: 100%; min-height: 10rem"></a>
-                <figcaption class="border-top pt-2 small">{{t.NOMBRE_COMERCIAL}}</figcaption>
-              </figure> &lt;!&ndash; item-logo.// &ndash;&gt;
+          <div *ngFor="let c33 of c3" class="mb-3">
+            <div *ngIf=" (c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA) && (c22.ID_CATEGORIA==c33.CAT_ID_CATEGORIA)">
+              <li class="btn btn-link ml-3" (click)="verificar(c33.ID_CATEGORIA, c33.NOMBRE)"
+                  style="font-size: smaller">{{c33.NOMBRE}}</li>
             </div>
-
           </div>
-        </div> &lt;!&ndash; row.// &ndash;&gt;
-      </article> &lt;!&ndash; card-product .// &ndash;&gt;
 
-      <ngb-pagination id="paginacion" [collectionSize]="this.vectorTienda.length" #numPaginaTienda
-                      [(page)]="paginaActualTienda"
-                      [pageSize]="datosXpaginaTienda" [maxSize]="4" [rotate]="true" [ellipses]="true"
-                      [boundaryLinks]="false" (pageChange)="onPageChangeTienda(paginaActualTienda)">
-        <ng-template ngbPaginationPrevious>Anterior</ng-template>
-        <ng-template ngbPaginationNext>Siguiente</ng-template>
-      </ngb-pagination>
+        </div>
+      </div>
 
-    </div> &lt;!&ndash; container .//  &ndash;&gt;
 
-  </div>&lt;!&ndash; container // &ndash;&gt;
-</section>-->
-<!-- ========================= SECTION LISTADO DE TIENDAS  ========================= -->
-</body>
+      <hr>
+    </div>
+
+
+  </nav>
+  <body class="bg w-100">
+  <!-- ========================= SECTION PAGETOP ========================= -->
+  <section *ngIf="this.vectorProductos.length > 0" class="section-pagetop bg">
+    <div class="container">
+      <p class="title-page">{{paginaTamano + 1}} - {{this.ultimoSerie}}  de {{this.vectorProductos.length}} resultados
+        para <strong>"{{this.palabraBuscada}}"</strong></p>
+    </div> <!-- container //  -->
+  </section>
+  <!-- ========================= SECTION PAGETOP END// ========================= -->
+
+
+    <!-- ========================= SECTION LISTADO DE PRODUCTOS// ========================= -->
+    <section *ngIf="this.vectorProductos.length == 0 " class="section-content padding-y-sm bg">
+      <div class="container">
+        <article class="my-4 text-justify">
+          <label class="m-0">Sin resultados para <label class="font-weight-bold mb-0">{{this.palabraBuscada}}</label> en
+            el
+            catálogo de productos </label>
+          <p style="font-size: x-small"> Revisa la ortografía o usa términos más generales. </p><br><br>
+        </article> <!-- card-product .// -->
+      </div> <!-- container .//  -->
+    </section>
+
+    <section *ngIf="this.vectorProductos.length > 0" class="section-content padding-y-sm bg">
+      <div class="container   ">
+        <article class="card card-product-list col-12  "
+                 *ngFor="let p of this.vectorProductos | slice: paginaTamano | slice: 0:datosXpagina">
+          <div *ngIf="p.TIPO=='Producto'" class="row no-gutters">
+            <aside class="col-lg-3 col-md-3 col-12">
+              <a routerLink="../../detalle-producto/{{p.ID_OFERTA}}">
+
+                <span class="badge badge-danger" *ngIf="p.FECHA_CREACION"> Nuevo </span>
+                <img [src]="getImagen(p.IMAGEN)" width="100%" height="218rem" class="p-4">
+              </a>
+            </aside> <!-- col.// -->
+            <div class="col-lg-6 col-md-6 col-6">
+              <div class="info-main">
+                <a routerLink="../../detalle-producto/{{p.ID_OFERTA}}" class="h5 title"> {{p.NOMBRE}} </a>
+                <div class="rating-wrap mb-3">
+                  <ul class="rating-stars">
+                    <ngb-rating *ngIf="p.PROMEDIO_CAL != null"
+                                [(rate)]="p.PROMEDIO_CAL">
+                      <ng-template let-fill="fill">
+                        <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                      </ng-template>
+                    </ngb-rating>
+                    <ngb-rating *ngIf="p.PROMEDIO_CAL == null" [(rate)]="currentRate">
+                      <ng-template let-fill="fill">
+                        <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                      </ng-template>
+                    </ngb-rating>
+                  </ul>
+                  <br>
+                  <p *ngIf="p.TOTAL_COM != null"
+                     class="label-rating text-muted">{{p.TOTAL_COM}} comentarios</p>
+                  <p *ngIf="p.TOTAL_COM == null" class="label-rating text-muted">0 Comentarios </p>
+                </div> <!-- rating-wrap.// -->
+                <p> {{p.DESCRIPCION_PRODUCTO}}
+                </p>
+              </div> <!-- info-main.// -->
+            </div> <!-- col.// -->
+            <aside class="col-lg-3 col-md-3 col-6">
+              <div class="info-aside">
+                <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO == null">
+                  <span class="price h3"> {{p.PRECIO_CON_IVA | currency }} </span>
+                </div> <!-- info-price-detail // -->
+
+                <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO != null">
+                  <span class="price h3"> {{p.DESCUENTO_AUTOMATICO | currency }} </span>
+                  <del class="price-old"> {{p.PRECIO_CON_IVA | currency }} </del>
+                </div> <!-- info-price-detail // -->
+
+
+                <p class="text-success mt-2">{{p.CONDICION}}</p>
+
+                <p class=" mt-2">
+                  <a routerLink="../../detalle-producto/{{p.ID_OFERTA}}" class="btn btn-primary btn-block">
+                    Detalles </a>
+                  <a routerLink="../../detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda"
+                     class="title tituloTienda text-primary"> {{p.NOMBRE_COMERCIAL_TIENDA_PRODUCTO}}</a>
+                </p>
+              </div> <!-- info-aside.// -->
+            </aside> <!-- col.// -->
+          </div> <!-- row.// -->
+          <div *ngIf="p.TIPO=='Tienda'" class="row no-gutters">
+            <aside class="col-lg-3 col-md-3 col-12">
+
+              <a routerLink="../../detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda">
+                <img [src]="getImagen(p.LOGO)" width="100%" height="218rem" class="p-4">
+              </a>
+            </aside> <!-- col.// -->
+            <div class="col-lg-6 col-md-6 col-12">
+              <div class="info-main">
+                <a routerLink="../../detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda"
+                   class="h5 title text-center text-md-left"> {{p.NOMBRE}} </a>
+
+                <p class="text-center text-md-left text-justify"> {{p.DESCRIPCION}}
+                </p>
+              </div> <!-- info-main.// -->
+            </div> <!-- col.// -->
+            <aside class="col-lg-3 col-md-3 col-12">
+              <div class="info-aside  pr-0">
+                <p class=" mt-md-5 ">
+                  <a routerLink="../../detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda"
+                     class="btn btn-primary btn-block ml-auto ">Detalles</a>
+                </p>
+              </div> <!-- info-aside.// -->
+            </aside> <!-- col.// -->
+          </div>
+        </article> <!-- card-product .// -->
+
+        <ngb-pagination id="paginacionTienda" [collectionSize]="this.vectorProductos.length" #numPagina
+                        [(page)]="paginaActual"
+                        [pageSize]="datosXpagina" [maxSize]="4" [rotate]="true" [ellipses]="true"
+                        [boundaryLinks]="false" (pageChange)="onPageChange(paginaActual)">
+          <ng-template ngbPaginationPrevious>Anterior</ng-template>
+          <ng-template ngbPaginationNext>Siguiente</ng-template>
+        </ngb-pagination>
+      </div> <!-- container .//  -->
+    </section>
+    <!-- ========================= SECTION LISTADO DE PRODUCTOS END// ========================= -->
+
+    <!-- ========================= SECTION LISTADO DE TIENDAS  ========================= -->
+    <!--<section *ngIf="this.vectorTienda.length == 0" class="section-content padding-y-sm">
+      <div class="container">
+        <article class="my-4 text-justify">
+          <label class="m-0">Sin resultados para <label class="font-weight-bold mb-0">{{this.palabraBuscada}}</label> en el
+            catálogo de tiendas </label>
+          <p style="font-size: x-small"> Revisa la ortografía o usa términos más generales. </p><br><br>
+        </article> &lt;!&ndash; card-product .// &ndash;&gt;
+      </div> &lt;!&ndash; container .//  &ndash;&gt;
+    </section>-->
+
+    <!--<section *ngIf="this.vectorTienda.length > 0" class="section-content padding-y-sm">
+      <div class="container">
+        <header class="section-heading">
+          <h3 class="section-title">
+            Tiendas asociadas
+          </h3>
+        </header>&lt;!&ndash; sect-heading &ndash;&gt;
+
+        <div class="container card">
+          <p><span class="float-md-right mt-3">Página {{ paginaActualTienda }} de {{numPaginaTienda.pageCount }}</span></p>
+          <article class="card-product-list">
+            <div class="row no-gutters">
+              <div class="col-lg-3 col-md-3 col-sm-3 col-12"
+                   *ngFor="let t of this.vectorTienda | slice: paginaTamanoTienda | slice: 0:datosXpaginaTienda">
+
+                <div class="mx-1">
+                  <figure class="box item-logo">
+                    <a routerLink="../../detalle-tienda/tienda/{{t.NUM_TIENDA}}/inicio-tienda"><img
+                      [src]="getImagen(t.LOGO) " style="width: 100%; min-height: 10rem"></a>
+                    <figcaption class="border-top pt-2 small">{{t.NOMBRE_COMERCIAL}}</figcaption>
+                  </figure> &lt;!&ndash; item-logo.// &ndash;&gt;
+                </div>
+
+              </div>
+            </div> &lt;!&ndash; row.// &ndash;&gt;
+          </article> &lt;!&ndash; card-product .// &ndash;&gt;
+
+          <ngb-pagination id="paginacion" [collectionSize]="this.vectorTienda.length" #numPaginaTienda
+                          [(page)]="paginaActualTienda"
+                          [pageSize]="datosXpaginaTienda" [maxSize]="4" [rotate]="true" [ellipses]="true"
+                          [boundaryLinks]="false" (pageChange)="onPageChangeTienda(paginaActualTienda)">
+            <ng-template ngbPaginationPrevious>Anterior</ng-template>
+            <ng-template ngbPaginationNext>Siguiente</ng-template>
+          </ngb-pagination>
+
+        </div> &lt;!&ndash; container .//  &ndash;&gt;
+
+      </div>&lt;!&ndash; container // &ndash;&gt;
+    </section>-->
+
+    <!-- ========================= SECTION LISTADO DE TIENDAS  ========================= -->
+    </body>
+</section>
