@@ -136,6 +136,15 @@ async function autenticarActivarAgente(req, res) {
                         if (!agenteActualizado) {
                             res.status(402).send({message: 'El usuario no ha sido activado'});
                         } else {
+
+                            let tienda = await TIENDA.findAll({
+                                where: {
+                                    COD_AGENTE: agente.dataValues.COD_AGENTE,
+                                    ESTADO_TIENDA:0
+                                }, attributes:['NUM_TIENDA']
+                            });
+
+                            agente.dataValues.TIENDAs=tienda;
                             res.status(200).send({
                                 data: agente
                             });

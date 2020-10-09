@@ -71,8 +71,12 @@ export class LoguinComponent {
         this.mensageError("el usuario no se ha logueado correctamente");
       } else {
 
-
         localStorage.setItem("identity", JSON.stringify(this.identity));
+        let payload={
+          COD_AGENTE:this.identity.COD_AGENTE,
+          TIENDAs:this.identity.TIENDAs
+        }
+        localStorage.setItem('payload',JSON.stringify(payload));
         let reponse2 = await this._agenteServicio.autenticarAgente(this.obj, "true").toPromise();
         this.loading = false;
         this.token = reponse2.token;

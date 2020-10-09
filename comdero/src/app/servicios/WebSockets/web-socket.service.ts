@@ -25,7 +25,7 @@ export class WebSocketService extends Socket {
    * En nuestro constructor injectamos el "CookieService" para luego hacer uso de sus metodos.
    */
 
-  public identidad = JSON.parse(localStorage.getItem('identity'));
+  public identidad = JSON.parse(localStorage.getItem('payload'));
 
   constructor(protected _agenteServicio: AgenteServicio) {
 
@@ -35,7 +35,7 @@ export class WebSocketService extends Socket {
       url: 'http://localhost:5000',
       options: {
         query: {
-          payload:localStorage.getItem('identity'),
+          payload:localStorage.getItem('payload'),
         }
       }
 
