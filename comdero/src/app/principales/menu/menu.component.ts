@@ -7,6 +7,7 @@ import {AgenteServicio} from "../../servicios/agente.servicio";
 import {CarritoServicio} from "../../servicios/carrito.servicio";
 import Swal from "sweetalert2";
 import {HttpErrorResponse} from "@angular/common/http";
+import {NotificacionesServicio} from "../../servicios/notificaciones.servicio";
 
 @Component({
   selector: 'app-menu',
@@ -23,14 +24,39 @@ export class MenuComponent implements OnInit, OnDestroy {
   public datosObtenidos: any;
   public carritoIdentidad;
 
-  constructor(public _carritoServicio: CarritoServicio, public _agenteServicio: AgenteServicio, public route: ActivatedRoute, public _tiendaServicio: TiendaServicio, public router: Router) {
+  constructor(public _notificacionesServicio:NotificacionesServicio, public _carritoServicio: CarritoServicio, public _agenteServicio: AgenteServicio, public route: ActivatedRoute, public _tiendaServicio: TiendaServicio, public router: Router) {
   }
+
 
   async ngOnInit() {
     console.log("user", JSON.stringify(this._agenteServicio.getIdentity()));
     if (this._agenteServicio.getIdentity()) {
       this.conteoProductosCarrito(false);
     }
+
+    this.getMisNotificaciones();
+  }
+
+  public notificaciones;
+
+  public async getMisNotificaciones(){
+
+    try {
+     let response = await this._notificacionesServicio.getMisNotificaciones().toPromise();
+      this.notificaciones = response.data;
+
+
+    } catch (e) {
+
+      if (!(e instanceof HttpErrorResponse)){
+        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+        console.log("error como objeto:"+ e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
+    }
+
   }
 
   public banderaCarrito: boolean;

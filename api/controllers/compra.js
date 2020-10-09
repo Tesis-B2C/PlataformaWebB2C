@@ -12,12 +12,14 @@ const Variante = require('../models/variante');
 const Producto = require('../models/producto');
 const Oferta = require('../models/oferta');
 const Tienda = require('../models/tienda');
+const Notificacion = require('../models/notificacion');
+
 const moment = require('moment');
 const {Op} = require("sequelize");
 const {io} = require('../appi.js');
 
 
-const {vUsuarios}=require('../sockets/socket');
+const {vUsuarios} = require('../sockets/socket');
 
 async function saveComprarProducto(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
@@ -123,20 +125,33 @@ async function saveComprarProducto(req, res) {
                     where: {NUM_VARIANTE: req.body.NUM_VARIANTE}, transaction: t
                 });
 
+                let tiendaReceptora = await Tienda.findOne({
+                        where: {NUM_TIENDA: req.body.ID_TIENDA}, transaction: t
+                    }
+                );
 
-
-
+                let notificacionCreada = await Notificacion.create({
+                    AGENTE_EMISOR: req.user.id,
+                    AGENTE_RECEPTOR: tiendaReceptora.dataValues.COD_AGENTE,
+                    ENVIAR_A: 'Tienda',
+                    ASUNTO:'Nueva compra',
+                    MENSAJE:"Tienes una nueva solicitud  de compra",
+                    CODIGO_TIENDA:req.body.ID_TIENDA,
+                    CODIGO_COMPRA: compraGuardada.dataValues.NUM_COMPRA
+                }, {
+                    transaction: t
+                });
 
 
                 let agentes = vUsuarios;
                 for (let agent of agentes) {
                     for (let tienda of agent.tiendas) {
-                        if (tienda.NUM_TIENDA==req.body.ID_TIENDA) {
-                            io.in(`room_${agent.cod_agente}`).emit("notificacion",{message:"hola"})
+                        if (tienda.NUM_TIENDA == req.body.ID_TIENDA) {
+                            io.in(`room_${agent.cod_agente}`).emit("notificacion", {message: "hola"});
+                            break;
                         }
                     }
                 }
-
 
 
                 res.status(200).send({

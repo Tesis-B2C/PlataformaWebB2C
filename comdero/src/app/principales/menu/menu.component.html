@@ -40,7 +40,7 @@
           <div class="widgets-wrap float-md-right">
             <div class="widget-header mr-3" *ngIf="this._agenteServicio.getIdentity()">
               <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-bell" aria-hidden="true"></i></a>
-              <span class="badge badge-pill badge-danger notify">0</span>
+              <span class="badge badge-pill badge-danger notify">{{this.notificaciones?.length}}</span>
             </div>
             <div class="widget-header  mr-3  " [ngClass]="{'heartBeat animated':banderaCarrito==true}" *ngIf="this._agenteServicio.getIdentity()">
               <a routerLink="carrito-compras/{{this._agenteServicio.getIdentity().COD_AGENTE}}" class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></a>

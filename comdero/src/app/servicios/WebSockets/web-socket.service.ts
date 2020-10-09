@@ -9,6 +9,7 @@ import {Injectable, EventEmitter, Output} from '@angular/core';
 import {Socket} from 'ngx-socket-io';
 import {GLOBAL} from "../global";
 import {AgenteServicio} from "../agente.servicio";
+import {MenuComponent} from "../../principales/menu/menu.component";
 
 @Injectable()
 /**
@@ -27,7 +28,7 @@ export class WebSocketService extends Socket {
 
   public identidad = JSON.parse(localStorage.getItem('payload'));
 
-  constructor(protected _agenteServicio: AgenteServicio) {
+  constructor( protected _agenteServicio: AgenteServicio) {
 
 
 
@@ -52,7 +53,8 @@ export class WebSocketService extends Socket {
 
 
     this.ioSocket.on('notificacion', res => {
-      window.alert("hola")
+      //this.menu.getMisNotificaciones();
+
     })
 
   }

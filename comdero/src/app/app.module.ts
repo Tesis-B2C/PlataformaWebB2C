@@ -19,6 +19,7 @@ import {CarritoServicio} from "./servicios/carrito.servicio";
 import {CompraServicio} from "./servicios/compra.servicio";
 import {ValoracionServicio} from "./servicios/valoracion.servicio";
 import {EstadisticasServicio} from "./servicios/estadisticas.servicio";
+import {NotificacionesServicio} from "./servicios/notificaciones.servicio";
 import {AdministradorTiendaModule} from "./administrador-tienda/administrador-tienda.module";
 
 /*import {GestionarTiendasModule} from "./administrador-tienda/gestionar-tiendas/gestionar-tiendas.module";*/
@@ -82,6 +83,7 @@ import { WebSocketService } from './servicios/WebSockets/web-socket.service';
     ExcelServicio,
     EstadisticasServicio,
     WebSocketService,
+    NotificacionesServicio,
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: Interceptors2Service, multi: true }
   ],
