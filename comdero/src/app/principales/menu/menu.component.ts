@@ -8,6 +8,7 @@ import {CarritoServicio} from "../../servicios/carrito.servicio";
 import Swal from "sweetalert2";
 import {HttpErrorResponse} from "@angular/common/http";
 import {NotificacionesServicio} from "../../servicios/notificaciones.servicio";
+import {WebSocketService} from "../../servicios/WebSockets/web-socket.service";
 
 @Component({
   selector: 'app-menu',
@@ -24,7 +25,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   public datosObtenidos: any;
   public carritoIdentidad;
 
-  constructor(public _notificacionesServicio:NotificacionesServicio, public _carritoServicio: CarritoServicio, public _agenteServicio: AgenteServicio, public route: ActivatedRoute, public _tiendaServicio: TiendaServicio, public router: Router) {
+  constructor(public _socketServicio:WebSocketService, public _notificacionesServicio:NotificacionesServicio, public _carritoServicio: CarritoServicio, public _agenteServicio: AgenteServicio, public route: ActivatedRoute, public _tiendaServicio: TiendaServicio, public router: Router) {
   }
 
 
@@ -35,6 +36,12 @@ export class MenuComponent implements OnInit, OnDestroy {
     }
 
     this.getMisNotificaciones();
+    this._socketServicio.ioSocket.on('notificacion', res => {
+      this.getMisNotificaciones();
+     
+
+
+    })
   }
 
   public notificaciones;

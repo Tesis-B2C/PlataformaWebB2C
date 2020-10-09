@@ -42,9 +42,11 @@ import {Interceptors2Service} from "./servicios/interceptors/interceptors2.servi
 
 import { SocketIoModule } from 'ngx-socket-io';
 import { WebSocketService } from './servicios/WebSockets/web-socket.service';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+
   ],
   imports: [
     ArchwizardModule,
