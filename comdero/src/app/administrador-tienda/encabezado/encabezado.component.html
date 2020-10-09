@@ -16,6 +16,12 @@
         <div class="col-lg-3 col-sm-6 ">
           <div class="widgets-wrap float-md-right">
 
+            <div class="widget-header mr-3" *ngIf="this._agenteServicio.getIdentity()">
+              <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-bell" aria-hidden="true"></i></a>
+              <span class="badge badge-pill badge-danger notify">0</span>
+            </div>
+
+
             <div class="widget-header icontext">
               <li class="nav-item dropdown">
                 <a href="#" class="icon icon-sm rounded-circle border" data-toggle="dropdown" href="#"
@@ -52,17 +58,23 @@
       </div> <!-- row.// -->
     </div> <!-- container.// -->
 
-    <div class="container-fluid container-menu celular">
-      <div class="row justify-content-between">
-        <div class="col-6  mx-auto mb-2">
+    <div class=" container-menu celular">
+      <div class="row justify-content-end ">
+        <div class="col-6  mx-auto mb-2 ">
           <a class="" href="#">
-            <img class="logo" src="../../../assets/images/logoValid4.png" width="70%">
+            <img class="logo" src="../../../assets/images/logoValid4.png" width="50%">
           </a> <!-- brand-wrap.// -->
         </div>
-        <div class="col-6  mx-auto">
-          <div class="widgets-wrap mx-auto">
+        <div class="col-6 mx-auto ">
+          <div class="widgets-wrap ml-auto ">
 
-            <div class="widget-header icontext">
+            <div class="widget-header mr-3" *ngIf="this._agenteServicio.getIdentity()">
+              <a href="#" class="icon icon-xs rounded-circle border"><i class="fa fa-bell" aria-hidden="true"></i></a>
+              <span class="badge badge-pill badge-danger notify">0</span>
+            </div>
+
+
+            <div class="widget-header  icontext">
               <li class="nav-item dropdown">
                 <a href="#" class="icon icon-xs rounded-circle border" data-toggle="dropdown" href="#"
                    aria-expanded="false"><i class="fa fa-user"></i>
@@ -85,13 +97,7 @@
 
                 </div>
               </li>
-              <div class="text">
-                <span class="text-muted">Bienvenido!</span>
-                <div>
-                  <a [routerLink]="['/principal']">Principal</a> |
-                  <a  (click)="this._agenteServicio.logout()" > Salir</a>
-                </div>
-              </div>
+
             </div>
 
           </div> <!-- widgets-wrap.// -->

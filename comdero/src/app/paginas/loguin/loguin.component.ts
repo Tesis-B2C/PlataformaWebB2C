@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Toast, ToastrService} from "ngx-toastr";
+import {TiendaServicio} from "../../servicios/tienda.servicio";
 
 @Component({
   selector: 'app-loguin',
@@ -20,7 +21,6 @@ export class LoguinComponent {
   public loading: boolean = false;
   public tokenTemporal;
   public response;
-
 
 
   @HostListener('window:click', ['$event']) onClick(event) {
@@ -50,7 +50,7 @@ export class LoguinComponent {
     }
   }
 
-  constructor(public toastr: ToastrService, public route: ActivatedRoute, public _agenteServicio: AgenteServicio, public router: Router) {
+  constructor(public _tiendaServicio: TiendaServicio, public toastr: ToastrService, public route: ActivatedRoute, public _agenteServicio: AgenteServicio, public router: Router) {
 
   }
 
@@ -65,12 +65,13 @@ export class LoguinComponent {
       } else {
         this.response = await this._agenteServicio.autenticarActivarAgente(this.obj, "", this.tokenTemporal).toPromise();
       }
-      debugger
       this.identity = this.response.data;
+
       if (!this.identity.CORREO) {
         this.mensageError("el usuario no se ha logueado correctamente");
-
       } else {
+
+
         localStorage.setItem("identity", JSON.stringify(this.identity));
         let reponse2 = await this._agenteServicio.autenticarAgente(this.obj, "true").toPromise();
         this.loading = false;

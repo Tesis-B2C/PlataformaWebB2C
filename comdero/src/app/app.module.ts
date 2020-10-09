@@ -36,6 +36,11 @@ import {ExcelServicio} from "./servicios/excel.servicio";
 import {InterceptorsService} from './servicios/interceptors/interceptors.service';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import {Interceptors2Service} from "./servicios/interceptors/interceptors2.service";
+
+
+
+import { SocketIoModule } from 'ngx-socket-io';
+import { WebSocketService } from './servicios/WebSockets/web-socket.service';
 @NgModule({
   declarations: [
     AppComponent
@@ -55,7 +60,9 @@ import {Interceptors2Service} from "./servicios/interceptors/interceptors2.servi
     ToastrModule.forRoot({preventDuplicates: true}),
     BsDatepickerModule.forRoot(),
     TypeaheadModule.forRoot(),
-    LoadingBarModule
+    LoadingBarModule,
+    SocketIoModule,
+
   ],
   providers: [
     DescuentoServicio,
@@ -74,6 +81,7 @@ import {Interceptors2Service} from "./servicios/interceptors/interceptors2.servi
     ReloadGuard,
     ExcelServicio,
     EstadisticasServicio,
+    WebSocketService,
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: Interceptors2Service, multi: true }
   ],

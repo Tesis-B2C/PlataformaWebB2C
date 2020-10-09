@@ -14,6 +14,10 @@ const Oferta = require('../models/oferta');
 const Tienda = require('../models/tienda');
 const moment = require('moment');
 const {Op} = require("sequelize");
+const {io} = require('../appi.js');
+
+
+const {vUsuarios}=require('../sockets/socket');
 
 async function saveComprarProducto(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
@@ -115,10 +119,25 @@ async function saveComprarProducto(req, res) {
                 );
 
                 let stockReducido = varianteEncontrada.dataValues.STOCK - req.body.CANTIDAD;
-
                 let varianteActualizada = await Variante.update({STOCK: stockReducido}, {
                     where: {NUM_VARIANTE: req.body.NUM_VARIANTE}, transaction: t
                 });
+
+
+
+
+
+
+                let agentes = vUsuarios;
+                for (let agent of agentes) {
+                    for (let tienda of agent.tiendas) {
+                        if (tienda.NUM_TIENDA==req.body.ID_TIENDA) {
+                            io.in(`room_${agent.cod_agente}`).emit("notificacion",{message:"hola"})
+                        }
+                    }
+                }
+
+
 
                 res.status(200).send({
                     message: "La compra se ha realizado correctamente su código de compra es: <br>  <strong style='font-size: xx-large'>" + compraGuardada.dataValues.NUM_COMPRA + "</strong>"

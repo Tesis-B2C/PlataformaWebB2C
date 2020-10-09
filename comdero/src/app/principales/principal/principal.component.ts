@@ -11,6 +11,7 @@ import * as moment from "moment";
 import {ProductoServicio} from "../../servicios/producto.servicio";
 import Swal from "sweetalert2";
 import {HttpErrorResponse} from "@angular/common/http";
+import {WebSocketService} from "../../servicios/WebSockets/web-socket.service";
 
 @Component({
   selector: 'app-principal',
@@ -124,6 +125,7 @@ export class PrincipalComponent implements OnInit {
     this.populares = await this.obtenerTodosProductos(1); //populares o con mas estrellas
     this.recomendados = await this.obtenerTodosProductos(2);// recomendados o con mas
     this.obtenerTodasTiendas();
+
   }
 
 

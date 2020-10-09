@@ -4,8 +4,17 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 const path = require('path');
-
+const chalk = require('chalk');
 //Notificaciones
+const  socketIO = require('socket.io');
+
+const http= require('http');
+let server =http.createServer(http);
+let io=socketIO(server);
+
+module.exports.io=socketIO(server);
+
+require('./sockets/socket');
 
 //cargar Rutas
 
@@ -63,6 +72,12 @@ app.use('/api', administrador_rutes);
 app.use('/api',email);*/
 
 //app.use('/api',paypal);
+
+server.listen(5000, function () {
+    console.log('\n')
+    console.log(`>> Socket listo y escuchando por el puerto: ${chalk.green('5000')}`)
+})
+
 
 module.exports = app; // hace referencia a la variable de express
 

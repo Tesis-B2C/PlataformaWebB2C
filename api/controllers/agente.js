@@ -1,11 +1,14 @@
 'use strict'
 
+
 const bcrypt = require('bcrypt-nodejs');
 const moment = require('moment');
 const AGENTE = require('../models/agente'); //importar el modelo del usuario  o lo que son las clases comunesvar DPA = require('../models/dpa'); //importar el modelo del usuario  o lo que son las clases comunes
 const jwt = require('../services/jwt');
 const correo = require('./correo');
 const DPA = require('../models/dpa');
+
+const TIENDA = require('../models/tienda');
 
 async function registrarAgente(req, res) {
     try {
@@ -60,23 +63,31 @@ async function registrarAgente(req, res) {
 
 
 async function autenticarAgente(req, res) {
+
     try {
         let params = req.body;
         let correo = params.Correo.trim();
         let contrasenia = params.Contrasenia;
         let agente = await AGENTE.findOne({
-            where: {ESTADO: '0', CORREO: correo},
-            include: {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}
+            where: {ESTADO: '0', CORREO: correo}, required: false,
+            include: [{model: DPA, include: {model: DPA, as: 'DPAP', required: true}}]
         });
         if (!agente) {
-            res.status(404).send({message: 'El Usuario no existe o no está activado'});
+            res.status(402).send({message: 'El Usuario no existe o no está activado'});
         } else {
             let result = bcrypt.compareSync(contrasenia, agente.dataValues.CONTRASENIA);
             if (result) {
                 if (params.getHash) {
                     res.status(200).send({token: jwt.createToken(agente.dataValues)});
                 } else {
+                    let tienda = await TIENDA.findAll({
+                        where: {
+                            COD_AGENTE: agente.dataValues.COD_AGENTE,
+                            ESTADO_TIENDA:0
+                        }, attributes:['NUM_TIENDA']
+                    });
 
+                    agente.dataValues.TIENDAs=tienda;
                     res.status(200).send({
                         data: agente
                     });
@@ -105,7 +116,10 @@ async function autenticarActivarAgente(req, res) {
                 message: "token no valido"
             });
         } else {
-            let agente = await AGENTE.findOne({where: {ESTADO: '1', CORREO: req.user.email}});
+            let agente = await AGENTE.findOne({
+                where: {ESTADO: '1', CORREO: req.user.email},
+                include: [{model: DPA, include: {model: DPA, as: 'DPAP', required: true}}]
+            });
             if (!agente) {
                 res.status(402).send({
                     message: "Al parecer el usuario no ha sido registrado"

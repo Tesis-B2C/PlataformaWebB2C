@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AgenteServicio} from "./servicios/agente.servicio";
+import {WebSocketService} from "./servicios/WebSockets/web-socket.service";
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,7 @@ export class AppComponent implements OnInit{
 
   public token;
   public identity;
-  constructor(public _agenteService: AgenteServicio) {
+  constructor(protected socketService:WebSocketService,public _agenteService: AgenteServicio) {
   }
 
   ngOnInit() {

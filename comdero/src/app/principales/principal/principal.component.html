@@ -423,7 +423,7 @@
               <li><a routerLink="/registro"> Usuario registro </a></li>
               <li><a routerLink="../mi-cuenta/menu-mi-cuenta/vision-general"> Configuración de cuenta </a></li>
               <li><a routerLink="../mi-cuenta/menu-mi-cuenta/pedidos-realizados"> Mis Pedidos </a></li>
-              <li><a routerLink="/principales/menu/carrito-compras/{{this._agenteServicio.getIdentity().COD_AGENTE}}">
+              <li><a routerLink="/principales/menu/carrito-compras/{{this._agenteServicio.getIdentity()?.COD_AGENTE}}">
                 Carrito de compras</a></li>
               <li><a routerLink="/registro-tienda"> Vende con nosotros</a></li>
             </ul>

@@ -23,7 +23,7 @@ export class InterceptorsService implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError(error => {
         let errorMessage = '';
-
+ debugger;
         if (error.error instanceof ErrorEvent) {
           // client-side error
           errorMessage = `Client-side error: ${error.error.message}`;
