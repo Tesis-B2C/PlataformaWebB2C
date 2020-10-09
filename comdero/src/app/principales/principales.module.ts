@@ -43,7 +43,4 @@ import {BusquedaCategoriaComponent} from './busqueda-categoria/busqueda-categori
 export class PrincipalesModule {
 
 
-
-
-
 }

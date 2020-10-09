@@ -97,3 +97,12 @@ input[type="text"]:focus
 
 }
 
+.notificaciones{
+  font-family: 'Poppins', "Inter", Arial, "Helvetica Neue", "Segoe UI", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-weight: normal;
+  color: black;
+  font-size: 0.9em;
+ margin-bottom: 0;
+  margin-top: 0;
+}
+

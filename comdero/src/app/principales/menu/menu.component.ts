@@ -25,7 +25,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   public datosObtenidos: any;
   public carritoIdentidad;
 
-  constructor(public _socketServicio:WebSocketService, public _notificacionesServicio:NotificacionesServicio, public _carritoServicio: CarritoServicio, public _agenteServicio: AgenteServicio, public route: ActivatedRoute, public _tiendaServicio: TiendaServicio, public router: Router) {
+  constructor(public _socketServicio: WebSocketService, public _notificacionesServicio: NotificacionesServicio, public _carritoServicio: CarritoServicio, public _agenteServicio: AgenteServicio, public route: ActivatedRoute, public _tiendaServicio: TiendaServicio, public router: Router) {
   }
 
 
@@ -38,7 +38,6 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.getMisNotificaciones();
     this._socketServicio.ioSocket.on('notificacion', res => {
       this.getMisNotificaciones();
-     
 
 
     })
@@ -46,18 +45,18 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   public notificaciones;
 
-  public async getMisNotificaciones(){
+  public async getMisNotificaciones() {
 
     try {
-     let response = await this._notificacionesServicio.getMisNotificaciones().toPromise();
+      let response = await this._notificacionesServicio.getMisNotificaciones().toPromise();
       this.notificaciones = response.data;
-
+      console.log("notificaciones", this.notificaciones)
 
     } catch (e) {
 
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
@@ -76,9 +75,9 @@ export class MenuComponent implements OnInit, OnDestroy {
 
     } catch (e) {
 
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));

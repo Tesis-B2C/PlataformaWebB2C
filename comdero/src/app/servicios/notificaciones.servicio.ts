@@ -1,11 +1,12 @@
-import { Injectable } from "@angular/core";
-import { HttpClient,HttpResponse, HttpHeaders } from '@angular/common/http';
-import { GLOBAL } from "./global";
+import {Injectable} from "@angular/core";
+import {HttpClient, HttpResponse, HttpHeaders} from '@angular/common/http';
+import {GLOBAL} from "./global";
 import {AgenteServicio} from "./agente.servicio";
+
 //import { Http, Headers } from "@angular/http";
 
 interface objeto {
-  data:JSON
+  data: JSON
 }
 
 @Injectable()
@@ -18,10 +19,12 @@ export class NotificacionesServicio {
     this.url = GLOBAL.url;
   }
 
-  getMisNotificaciones()
-  {
-    let headers = new HttpHeaders({ "Content-type": "application/json","Authorization": this._agenteServicio.getToken() });
-    return this._http.get<objeto>(this.url + "getMisNotificaciones/" , { headers: headers });
+  getMisNotificaciones() {
+    let headers = new HttpHeaders({
+      "Content-type": "application/json",
+      "Authorization": this._agenteServicio.getToken()
+    });
+    return this._http.get<objeto>(this.url + "getMisNotificaciones/", {headers: headers});
   }
 
 }

@@ -1,17 +1,17 @@
-<body >
+<body>
 <header class="section-header">
 
   <section class="header-main pb-0 pb-md-2">
- <div class="container-fluid computadora">
+    <div class="container-fluid computadora">
       <div class="row align-items-center  ">
 
         <div class="col-lg-3 col-md-3 col-sm-3 col-12 divlogo mx-auto">
           <a href="#" class="brand-wrap mb-2">
-            <img class="logo mx-auto" src="../../../assets/images/logoValid4.png" >
+            <img class="logo mx-auto" src="../../../assets/images/logoValid4.png">
           </a> <!-- brand-wrap.// -->
         </div>
 
-        <div class="col-lg-6 col-md-5 col-sm-5 col-12 mx-auto "  >
+        <div class="col-lg-6 col-md-5 col-sm-5 col-12 mx-auto ">
           <div class="input-group search">
             <div class="input-group-prepend">
               <button class="btn dropdown-toggle btnTodos" type="button" data-toggle="dropdown" aria-haspopup="true"
@@ -24,9 +24,10 @@
               </div>
             </div>
 
-            <input (keyup.enter)="buscarPalabra(this.palabraBuscadora)" id="typeahead-format" type="text" class="form-control"
+            <input (keyup.enter)="buscarPalabra(this.palabraBuscadora)" id="typeahead-format" type="text"
+                   class="form-control"
                    (keyup)="buscarDatos(this.palabraBuscadora)" #buscarTexto
-                   [(ngModel)]="this.palabraBuscadora" [ngbTypeahead]="buscarDatosTerm" />
+                   [(ngModel)]="this.palabraBuscadora" [ngbTypeahead]="buscarDatosTerm"/>
 
             <div class="input-group-append">
               <button class="btn btnTodos" type="submit" (click)="buscarPalabra(buscarTexto.value)">
@@ -36,34 +37,56 @@
           </div>
         </div>
 
-        <div class="col-lg-3 col-md-4 col-sm-4 col-12 mx-auto" >
+        <div class="col-lg-3 col-md-4 col-sm-4 col-12 mx-auto">
           <div class="widgets-wrap float-md-right">
             <div class="widget-header mr-3" *ngIf="this._agenteServicio.getIdentity()">
-              <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-bell" aria-hidden="true"></i></a>
+              <a data-toggle="dropdown" href="#"
+                 aria-expanded="false" aria-haspopup="true" class="icon icon-sm rounded-circle border"><i
+                class="fa fa-bell" aria-hidden="true"></i></a>
               <span class="badge badge-pill badge-danger notify">{{this.notificaciones?.length}}</span>
+
+
+              <div class="dropdown-menu "  aria-labelledby="dropdownMenuLink">
+                <h3 class="dropdown-header">Notificaciones</h3>
+                <div class="dropdown-divider"></div>
+                <div class="border-bottom " *ngFor="let notificaciones of this.notificaciones">
+                  <a class="dropdown-item " routerLink="/administrador/administrador-tienda/mis-tiendas">
+
+                    <p class="notificaciones text-success">  <a class="fa fa-exclamation-circle"></a> &nbsp;&nbsp;{{notificaciones.ASUNTO}}</p>
+                    <label class="notificaciones"><i>De: {{notificaciones.AGENTE.NOMBRE}}</i></label>
+                    <p  class="notificaciones"> {{notificaciones.MENSAJE}}</p>
+                    <p  class="notificaciones">Orden #: {{notificaciones.CODIGO_COMPRA}}</p>
+                  </a>
+                </div>
+
+
+              </div>
             </div>
-            <div class="widget-header  mr-3  " [ngClass]="{'heartBeat animated':banderaCarrito==true}" *ngIf="this._agenteServicio.getIdentity()">
-              <a routerLink="carrito-compras/{{this._agenteServicio.getIdentity().COD_AGENTE}}" class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
-              <span class="badge badge-pill badge-danger notify">{{this.carritoIdentidad?.data.CANTIDAD_TOTAL_PRODUCTOS}}</span>
+            <div class="widget-header  mr-3  " [ngClass]="{'heartBeat animated':banderaCarrito==true}"
+                 *ngIf="this._agenteServicio.getIdentity()">
+              <a routerLink="carrito-compras/{{this._agenteServicio.getIdentity().COD_AGENTE}}"
+                 class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
+              <span
+                class="badge badge-pill badge-danger notify">{{this.carritoIdentidad?.data.CANTIDAD_TOTAL_PRODUCTOS}}</span>
             </div>
-            <div class="widget-header icontext"  >
+            <div class="widget-header icontext">
 
               <li class="nav-item dropdown">
                 <a href="#" class="icon icon-sm rounded-circle border" data-toggle="dropdown" href="#"
-                   aria-expanded="false"><i class="fa fa-user"></i>
+                   aria-expanded="false" aria-haspopup="true"><i class="fa fa-user"></i>
                 </a>
 
-                <div class="dropdown-menu " *ngIf="this._agenteServicio.getIdentity()">
+                <div class="dropdown-menu dropdown-menu-right" *ngIf="this._agenteServicio.getIdentity()">
                   <small class="dropdown-item">{{this._agenteServicio.getIdentity().NOMBRE}}</small>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" routerLink="mi-cuenta/menu-mi-cuenta/vision-general"><span
                     class="fa fa-user "></span> &nbsp;Mi cuenta</a>
 
-                  <a class="dropdown-item"  routerLink="/administrador/administrador-tienda/mis-tiendas">
+                  <a class="dropdown-item" routerLink="/administrador/administrador-tienda/mis-tiendas">
                     <span class="fas fa-store-alt mr-2"></span>
                     Mis tiendas
                   </a>
-                  <a class="dropdown-item"  (click)="this._agenteServicio.logout()">
+                  <a class="dropdown-item" (click)="this._agenteServicio.logout()">
                     <span class="fas fa-power-off mr-2"></span>
                     Cerrar Sesión
                   </a>
@@ -85,91 +108,94 @@
 
 
       </div>
-  </div>
+    </div>
 
 
     <div class="container-fluid  celular">
-    <div class="row align-items-center " >
+      <div class="row align-items-center ">
 
-      <div class="col-lg-3 col-md-3 col-sm-3 col-6 divlogo mr-auto ">
-        <a href="#" class="brand-wrap mb-2">
-          <img class="logo " src="../../../assets/images/logoValid4.png" >
-        </a> <!-- brand-wrap.// -->
-      </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-6 divlogo mr-auto ">
+          <a href="#" class="brand-wrap mb-2">
+            <img class="logo " src="../../../assets/images/logoValid4.png">
+          </a> <!-- brand-wrap.// -->
+        </div>
 
-      <div class="col-lg-3 col-md-4 col-sm-4 col-6 text-right " >
-        <div class="widgets-wrap float-md-right">
-          <div class="widget-header mr-3" *ngIf="this._agenteServicio.getIdentity()">
-            <a href="#" class="icon icon-xs  rounded-circle border"><i class="fa fa-bell" aria-hidden="true"></i></a>
-            <span class="badge badge-pill badge-danger notify">0</span>
-          </div>
-          <div class="widget-header  mr-3" *ngIf="this._agenteServicio.getIdentity()">
-            <a routerLink="carrito-compras/{{this._agenteServicio.getIdentity().COD_AGENTE}}" class="icon icon-xs rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
-            <span class="badge badge-pill badge-danger notify">{{this.carritoIdentidad?.data.CANTIDAD_TOTAL_PRODUCTOS}}</span>
-          </div>
-          <div class="widget-header icontext"  >
+        <div class="col-lg-3 col-md-4 col-sm-4 col-6 text-right ">
+          <div class="widgets-wrap float-md-right">
+            <div class="widget-header mr-3" *ngIf="this._agenteServicio.getIdentity()">
+              <a href="#" class="icon icon-xs  rounded-circle border"><i class="fa fa-bell" aria-hidden="true"></i></a>
+              <span class="badge badge-pill badge-danger notify">{{this.notificaciones?.length}}</span>
+            </div>
+            <div class="widget-header  mr-3" *ngIf="this._agenteServicio.getIdentity()">
+              <a routerLink="carrito-compras/{{this._agenteServicio.getIdentity().COD_AGENTE}}"
+                 class="icon icon-xs rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
+              <span
+                class="badge badge-pill badge-danger notify">{{this.carritoIdentidad?.data.CANTIDAD_TOTAL_PRODUCTOS}}</span>
+            </div>
+            <div class="widget-header icontext">
 
-            <li class="nav-item dropdown">
-              <a href="#" class="icono-usuario-inicio icon icon-xs rounded-circle border mr-0" data-toggle="dropdown" href="#"
-                 aria-expanded="false"><i class="fa fa-user"></i>
-              </a>
-
-              <div class="dropdown-menu "  *ngIf="this._agenteServicio.getIdentity()">
-                <small class="dropdown-item">{{this._agenteServicio.getIdentity().NOMBRE}}</small>
-                <a class="dropdown-item" routerLink="mi-cuenta/menu-mi-cuenta/vision-general"><span
-                  class="fa fa-user "></span> &nbsp;Mi cuenta</a>
-
-                <a class="dropdown-item"  routerLink="/administrador/administrador-tienda/mis-tiendas">
-                  <span class="fas fa-store-alt mr-2"></span>
-                  Mis tiendas
-                </a>
-                <a class="dropdown-item" (click)="this._agenteServicio.logout()">
-                  <span class="fas fa-power-off mr-2"></span>
-                  Cerrar Sesión
+              <li class="nav-item dropdown">
+                <a href="#" class="icono-usuario-inicio icon icon-xs rounded-circle border mr-0" data-toggle="dropdown"
+                   href="#"
+                   aria-expanded="false"><i class="fa fa-user"></i>
                 </a>
 
-              </div>
-            </li>
+                <div class="dropdown-menu " *ngIf="this._agenteServicio.getIdentity()">
+                  <small class="dropdown-item">{{this._agenteServicio.getIdentity().NOMBRE}}</small>
+                  <a class="dropdown-item" routerLink="mi-cuenta/menu-mi-cuenta/vision-general"><span
+                    class="fa fa-user "></span> &nbsp;Mi cuenta</a>
 
-            <div class="text" *ngIf="!this._agenteServicio.getIdentity()">
-              <span class="text-muted">Bienvenido!</span>
-              <div>
-                <a [routerLink]="['/loguin']">Loguin</a> |
-                <a [routerLink]="['/registro']"> Registro</a>
+                  <a class="dropdown-item" routerLink="/administrador/administrador-tienda/mis-tiendas">
+                    <span class="fas fa-store-alt mr-2"></span>
+                    Mis tiendas
+                  </a>
+                  <a class="dropdown-item" (click)="this._agenteServicio.logout()">
+                    <span class="fas fa-power-off mr-2"></span>
+                    Cerrar Sesión
+                  </a>
+
+                </div>
+              </li>
+
+              <div class="text" *ngIf="!this._agenteServicio.getIdentity()">
+                <span class="text-muted">Bienvenido!</span>
+                <div>
+                  <a [routerLink]="['/loguin']">Loguin</a> |
+                  <a [routerLink]="['/registro']"> Registro</a>
+                </div>
               </div>
             </div>
-          </div>
 
-        </div> <!-- widgets-wrap.// -->
-      </div> <!-- col.// -->
+          </div> <!-- widgets-wrap.// -->
+        </div> <!-- col.// -->
 
-      <div class="col-lg-6 col-md-5 col-sm-5 col-12 mx-auto "  >
-        <div class="input-group search ">
-          <div class="input-group-prepend">
-            <button class="btn dropdown-toggle btnTodos" type="button" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">{{tipoBuscador}}</button>
-            <div class="dropdown-menu">
-              <a style="cursor:pointer;" (click)="cambiarBuscador('Todos')" class="dropdown-item py-0">Todos</a>
-              <div role="separator" class="dropdown-divider"></div>
-              <a style="cursor:pointer;" (click)="cambiarBuscador('Productos')" class="dropdown-item">Productos</a>
-              <a style="cursor:pointer;" (click)="cambiarBuscador('Tiendas')" class="dropdown-item">Tiendas</a>
+        <div class="col-lg-6 col-md-5 col-sm-5 col-12 mx-auto ">
+          <div class="input-group search ">
+            <div class="input-group-prepend">
+              <button class="btn dropdown-toggle btnTodos" type="button" data-toggle="dropdown" aria-haspopup="true"
+                      aria-expanded="false">{{tipoBuscador}}</button>
+              <div class="dropdown-menu">
+                <a style="cursor:pointer;" (click)="cambiarBuscador('Todos')" class="dropdown-item py-0">Todos</a>
+                <div role="separator" class="dropdown-divider"></div>
+                <a style="cursor:pointer;" (click)="cambiarBuscador('Productos')" class="dropdown-item">Productos</a>
+                <a style="cursor:pointer;" (click)="cambiarBuscador('Tiendas')" class="dropdown-item">Tiendas</a>
+              </div>
             </div>
-          </div>
 
-          <input (keyup.enter)="buscarPalabra(this.palabraBuscadora)"  type="text" class="form-control " (keyup)="buscarDatos(this.palabraBuscadora)" #buscarTexto
-                 [(ngModel)]="this.palabraBuscadora" [ngbTypeahead]="buscarDatosTerm" />
+            <input (keyup.enter)="buscarPalabra(this.palabraBuscadora)" type="text" class="form-control "
+                   (keyup)="buscarDatos(this.palabraBuscadora)" #buscarTexto
+                   [(ngModel)]="this.palabraBuscadora" [ngbTypeahead]="buscarDatosTerm"/>
 
-          <div class="input-group-append">
-            <button class="btn btnTodos" type="submit" (click)="buscarPalabra(buscarTexto.value)">
-              <i class="fa fa-search"></i>
-            </button>
+            <div class="input-group-append">
+              <button class="btn btnTodos" type="submit" (click)="buscarPalabra(buscarTexto.value)">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
 
-
-    </div> <!-- row.// -->
+      </div> <!-- row.// -->
     </div>
 
   </section>
@@ -177,7 +203,6 @@
 </header> <!-- section-header.// -->
 
 <router-outlet></router-outlet>
-
 
 
 </body>

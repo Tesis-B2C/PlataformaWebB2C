@@ -142,13 +142,13 @@ async function saveComprarProducto(req, res) {
                     transaction: t
                 });
 
-
+                let bandera=true;
                 let agentes = vUsuarios;
                 for (let agent of agentes) {
                     for (let tienda of agent.tiendas) {
-                        if (tienda.NUM_TIENDA == req.body.ID_TIENDA) {
+                        if (tienda.NUM_TIENDA == req.body.ID_TIENDA && bandera==true) {
                             io.in(`room_${agent.cod_agente}`).emit("notificacion", {message: "hola"});
-                            break;
+                            bandera=false;
                         }
                     }
                 }

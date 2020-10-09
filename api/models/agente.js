@@ -102,9 +102,9 @@ Calificacion.belongsTo(Agente, {foreignKey: 'COD_AGENTE', sourceKey: 'COD_AGENTE
 
 Agente.hasMany(Notificacion, {foreignKey: 'AGENTE_EMISOR', sourceKey: 'COD_AGENTE'});
 Notificacion.belongsTo(Agente, {foreignKey: 'AGENTE_EMISOR', sourceKey: 'COD_AGENTE'});
-Agente.hasMany(Notificacion, {foreignKey: 'AGENTE_RECEPTOR', sourceKey: 'COD_AGENTE'});
-Notificacion.belongsTo(Agente, {foreignKey: 'AGENTE_RECEPTOR', sourceKey: 'COD_AGENTE'});
 
+/*Agente.hasMany(Notificacion, {as:'RECEPTOR',foreignKey: 'AGENTE_RECEPTOR', sourceKey: 'COD_AGENTE'});*/
+/*Notificacion.belongsTo(Agente, {as:'RECEPTOR',foreignKey: 'AGENTE_RECEPTOR', sourceKey: 'COD_AGENTE'});*/
 
 
 module.exports = Agente;
