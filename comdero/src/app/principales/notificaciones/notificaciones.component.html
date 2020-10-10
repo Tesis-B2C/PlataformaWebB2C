@@ -1,0 +1,34 @@
+
+
+<section class="section-pagetop bg  py-1 py-md-4">
+  <div class="container">
+    <h2 class="title-page text-center text-md-left">Notificaciones</h2>
+  </div> <!-- container //  -->
+</section>
+<div class="container mt-3">
+
+
+  <div class="row justify-content-center mt-5">
+
+    <div *ngFor="let notificaciones of notificaciones?.todas" class="card mb-3 col-12 border-notificaiones noti " (click)="direccionar(notificaciones.CODIGO_COMPRA, notificaciones.CODIGO_TIENDA)" >
+     <div class="row no-gutters " >
+        <div class="col-2 align-self-center">
+
+          <img src="assets/images/notificacion.png" class="card-img px-md-5  "  alt="...">
+
+        </div>
+        <div class="col-10">
+          <div class="card-body">
+            <h5 class="card-title">{{notificaciones.ASUNTO}}</h5>
+            <p class="text-primary notificaciones"><i>De:{{notificaciones.AGENTE.NOMBRE}}</i></p>
+            <p class="card-text notificaciones ">{{notificaciones.MENSAJE}}</p>
+            <p class="notificaciones">Orden #: {{notificaciones.CODIGO_COMPRA}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<br><br><br>
+

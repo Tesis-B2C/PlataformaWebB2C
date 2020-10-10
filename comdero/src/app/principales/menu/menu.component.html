@@ -43,22 +43,26 @@
               <a data-toggle="dropdown" href="#"
                  aria-expanded="false" aria-haspopup="true" class="icon icon-sm rounded-circle border"><i
                 class="fa fa-bell" aria-hidden="true"></i></a>
-              <span class="badge badge-pill badge-danger notify">{{this.notificaciones?.length}}</span>
+              <span class="badge badge-pill badge-danger notify">{{this.notificaciones?.todas.length}}</span>
 
 
-              <div class="dropdown-menu "  aria-labelledby="dropdownMenuLink">
+              <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
                 <h3 class="dropdown-header">Notificaciones</h3>
                 <div class="dropdown-divider"></div>
-                <div class="border-bottom " *ngFor="let notificaciones of this.notificaciones">
-                  <a class="dropdown-item " routerLink="/administrador/administrador-tienda/mis-tiendas">
+                <div class="border-bottom " *ngFor="let notificaciones of this.notificaciones?.limitadas">
 
-                    <p class="notificaciones text-success">  <a class="fa fa-exclamation-circle"></a> &nbsp;&nbsp;{{notificaciones.ASUNTO}}</p>
-                    <label class="notificaciones"><i>De: {{notificaciones.AGENTE.NOMBRE}}</i></label>
-                    <p  class="notificaciones"> {{notificaciones.MENSAJE}}</p>
-                    <p  class="notificaciones">Orden #: {{notificaciones.CODIGO_COMPRA}}</p>
+                  <a class="dropdown-item " (click)="direccionar(notificaciones.CODIGO_COMPRA, notificaciones.CODIGO_TIENDA)">
+
+                    <p class="notificaciones text-success"><a class="fa fa-exclamation-circle"></a>
+                      &nbsp;&nbsp;{{notificaciones.ASUNTO}}</p>
+                    <label class="notificaciones"><i class="text-muted">De: {{notificaciones.AGENTE.NOMBRE}}</i></label>
+                    <p class="notificaciones"> {{notificaciones.MENSAJE}}</p>
+                    <p class="notificaciones">Orden #: {{notificaciones.CODIGO_COMPRA}}</p>
                   </a>
                 </div>
-
+                <p class="text-center mt-1">
+                  <button class=" notificaciones text-center btn btn-link text-secondary" routerLink="notificaciones">Ver todas</button>
+                </p>
 
               </div>
             </div>
@@ -123,8 +127,31 @@
         <div class="col-lg-3 col-md-4 col-sm-4 col-6 text-right ">
           <div class="widgets-wrap float-md-right">
             <div class="widget-header mr-3" *ngIf="this._agenteServicio.getIdentity()">
-              <a href="#" class="icon icon-xs  rounded-circle border"><i class="fa fa-bell" aria-hidden="true"></i></a>
-              <span class="badge badge-pill badge-danger notify">{{this.notificaciones?.length}}</span>
+              <a data-toggle="dropdown" href="#"
+                 aria-expanded="false" aria-haspopup="true" class="icon icon-xs rounded-circle border"><i
+                class="fa fa-bell" aria-hidden="true"></i></a>
+              <span class="badge badge-pill badge-danger notify">{{this.notificaciones?.todas.length}}</span>
+
+
+              <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+                <h3 class="dropdown-header">Notificaciones</h3>
+                <div class="dropdown-divider"></div>
+                <div class="border-bottom " *ngFor="let notificaciones of this.notificaciones?.limitadas">
+
+                  <a class="dropdown-item " (click)="direccionar(notificaciones.CODIGO_COMPRA, notificaciones.CODIGO_TIENDA)">
+
+                    <p class="notificaciones text-success"><a class="fa fa-exclamation-circle"></a>
+                      &nbsp;&nbsp;{{notificaciones.ASUNTO}}</p>
+                    <label class="notificaciones"><i class="text-muted">De: {{notificaciones.AGENTE.NOMBRE}}</i></label>
+                    <p class="notificaciones"> {{notificaciones.MENSAJE}}</p>
+                    <p class="notificaciones">Orden #: {{notificaciones.CODIGO_COMPRA}}</p>
+                  </a>
+                </div>
+                <p class="text-center mt-1">
+                  <button class=" notificaciones text-center btn btn-link text-secondary" routerLink="notificaciones">Ver todas</button>
+                </p>
+
+              </div>
             </div>
             <div class="widget-header  mr-3" *ngIf="this._agenteServicio.getIdentity()">
               <a routerLink="carrito-compras/{{this._agenteServicio.getIdentity().COD_AGENTE}}"

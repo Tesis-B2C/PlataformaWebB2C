@@ -120,3 +120,13 @@ npm i ng2-charts@2.0.0-beta.9
   
 https://dev.to/susomejias/automatic-page-loading-progress-bar-for-angular-3ann
 https://github.com/aitboudad/ngx-loading-bar/blob/main/packages/http-client/src/loading-bar.interceptor.ts
+
+
+----- NOTIFICACIONES SOCKET
+-- CLIENTE ANGULAR
+npm i ngx-socket-io
+---- SERVIDOR
+npm i socket.io
+https://medium.com/@leifer33/manejar-eventos-socket-io-y-angular-ad8c8f340be1
+https://sodocumentation.net/es/node-js/topic/10892/notificaciones-push
+VIDEO DE FERNANDO HERRERA NODEJS DE CERO A EXPERTO UDEMY

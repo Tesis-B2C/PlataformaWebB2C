@@ -134,21 +134,24 @@ async function saveComprarProducto(req, res) {
                     AGENTE_EMISOR: req.user.id,
                     AGENTE_RECEPTOR: tiendaReceptora.dataValues.COD_AGENTE,
                     ENVIAR_A: 'Tienda',
-                    ASUNTO:'Nueva compra',
-                    MENSAJE:"Tienes una nueva solicitud  de compra",
-                    CODIGO_TIENDA:req.body.ID_TIENDA,
-                    CODIGO_COMPRA: compraGuardada.dataValues.NUM_COMPRA
+                    ASUNTO: 'Nueva compra',
+                    MENSAJE: "Tienes una nueva solicitud  de compra",
+                    CODIGO_TIENDA: req.body.ID_TIENDA,
+                    CODIGO_COMPRA: compraGuardada.dataValues.NUM_COMPRA,
+                    ESTADO_NOTIFICACION: 0,
+                    FECHA_NOTIFICACION: moment(),
+                    HORA_NOTIFICACION: moment().format('HH:mm:ss')
                 }, {
                     transaction: t
                 });
 
-                let bandera=true;
+                let bandera = true;
                 let agentes = vUsuarios;
                 for (let agent of agentes) {
                     for (let tienda of agent.tiendas) {
-                        if (tienda.NUM_TIENDA == req.body.ID_TIENDA && bandera==true) {
+                        if (tienda.NUM_TIENDA == req.body.ID_TIENDA && bandera == true) {
                             io.in(`room_${agent.cod_agente}`).emit("notificacion", {message: "hola"});
-                            bandera=false;
+                            bandera = false;
                         }
                     }
                 }
@@ -302,6 +305,40 @@ async function saveComprarProductoCarrito(req, res) {
 
                 }
             }
+            let tiendaReceptora = await Tienda.findOne({
+                    where: {NUM_TIENDA: req.body.ID_TIENDA}, transaction: t
+                }
+            );
+
+            let notificacionCreada = await Notificacion.create({
+                AGENTE_EMISOR: req.user.id,
+                AGENTE_RECEPTOR: tiendaReceptora.dataValues.COD_AGENTE,
+                ENVIAR_A: 'Tienda',
+                ASUNTO: 'Nueva compra',
+                MENSAJE: "Tienes una nueva solicitud  de compra",
+                CODIGO_TIENDA: req.body.ID_TIENDA,
+                CODIGO_COMPRA: compraGuardada.dataValues.NUM_COMPRA,
+                ESTADO_NOTIFICACION: 0,
+                FECHA_NOTIFICACION: moment(),
+                HORA_NOTIFICACION: moment().format('HH:mm:ss')
+            }, {
+                transaction: t
+            });
+
+            let bandera = true;
+            let agentes = vUsuarios;
+            for (let agent of agentes) {
+                for (let tienda of agent.tiendas) {
+                    if (tienda.NUM_TIENDA == req.body.ID_TIENDA && bandera == true) {
+                        io.in(`room_${agent.cod_agente}`).emit("notificacion", {message: "hola"});
+                        bandera = false;
+                    }
+                }
+            }
+
+
+
+
             res.status(200).send({
                 message: "La compra se ha realizado correctamente su código de compra es: <br>  <strong style='font-size: xx-large'>" + compraGuardada.dataValues.NUM_COMPRA + "</strong>"
             });

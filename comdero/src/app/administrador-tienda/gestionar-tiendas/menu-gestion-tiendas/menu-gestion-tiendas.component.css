@@ -165,3 +165,76 @@ i {
 }
 
 
+
+/*encabezado
+
+ */
+
+
+.logo {
+
+  max-height: 55px;
+  align-items: center;
+  position: center;
+
+}
+
+.mx-auto {
+  margin-right: auto !important;
+  margin-left: auto !important;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 1035px) {
+  .container-menu {
+    padding-right: 150px;
+    padding-left: 150px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+.celular{
+  display: none;
+}
+
+
+
+@media (max-width:720px) {
+  .celular{
+    display: flex;
+  }
+
+  .computadora{
+    display: none;
+  }
+  .logo{
+    width: 65%;
+  }
+
+}
+
+.notificaciones{
+  font-family: 'Poppins', "Inter", Arial, "Helvetica Neue", "Segoe UI", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-weight: normal;
+  color: black;
+  font-size: 0.9em;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.notificaciones >i{
+  font-family: 'Poppins', "Inter", Arial, "Helvetica Neue", "Segoe UI", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-weight: normal;
+  color: black;
+  font-size: 1em;
+  margin-bottom: 0;
+  margin-top: 0;
+}

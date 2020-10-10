@@ -1,3 +1,172 @@
+
+<header class="bg-white">
+  <section class="header-main pb-0 ">
+    <div class="container-fluid container-menu computadora">
+      <div class="row ">
+        <div class="col-lg-3  col-sm-12  ">
+          <a class="mb-5" href="#">
+            <img class="logo" src="../../../assets/images/logoValid4.png">
+          </a> <!-- brand-wrap.// -->
+        </div>
+        <div class="col-lg-6 col-sm-12 ">
+          <div class="input-group w-100  mx-auto my-3">
+            <h4>Panel Administrativo</h4>
+          </div>
+        </div> <!-- col.// -->
+        <div class="col-lg-3 col-sm-6 ">
+          <div class="widgets-wrap float-md-right">
+
+            <div class="widget-header mr-3" *ngIf="this._agenteServicio.getIdentity()">
+              <a data-toggle="dropdown" href="#"
+                 aria-expanded="false" aria-haspopup="true" class="icon icon-sm rounded-circle border"><i
+                class="fa fa-bell" aria-hidden="true"></i></a>
+              <span class="badge badge-pill badge-danger notify">{{this.notificaciones?.todas.length}}</span>
+
+
+              <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+                <h3 class="dropdown-header">Notificaciones</h3>
+                <div class="dropdown-divider"></div>
+                <div class="border-bottom " *ngFor="let notificaciones of this.notificaciones?.limitadas">
+
+                  <a class="dropdown-item " (click)="direccionar(notificaciones.CODIGO_COMPRA, notificaciones.CODIGO_TIENDA)">
+
+                    <p class="notificaciones text-success"><a class="fa fa-exclamation-circle"></a>
+                      &nbsp;&nbsp;{{notificaciones.ASUNTO}}</p>
+                    <label class="notificaciones"><i class="text-muted">De: {{notificaciones.AGENTE.NOMBRE}}</i></label>
+                    <p class="notificaciones"> {{notificaciones.MENSAJE}}</p>
+                    <p class="notificaciones">Orden #: {{notificaciones.CODIGO_COMPRA}}</p>
+                  </a>
+                </div>
+                <p class="text-center mt-1">
+                  <button class=" notificaciones text-center btn btn-link text-secondary" routerLink="notificaciones">Ver todas</button>
+                </p>
+
+              </div>
+            </div>
+
+
+            <div class="widget-header icontext">
+              <li class="nav-item dropdown">
+                <a href="#" class="icon icon-sm rounded-circle border" data-toggle="dropdown" href="#"
+                   aria-expanded="false"><i class="fa fa-user"></i>
+                </a>
+
+                <div class="dropdown-menu ">
+                  <small class="dropdown-item" >&nbsp;{{this._agenteServicio.getIdentity().NOMBRE}}</small>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#" routerLink="/principales/menu/mi-cuenta/menu-mi-cuenta/vision-general"><span
+                    class="fa fa-user "></span> &nbsp;Mi cuenta</a>
+
+                  <a class="dropdown-item"   href="#" routerLink="/administrador/administrador-tienda/mis-tiendas">
+                    <span class="fas fa-store-alt mr-2"></span>
+                    Mis tiendas
+                  </a>
+
+                  <a (click)="_agenteServicio.logout()" class="dropdown-item col-2" href="#">  <span class="fa fa-power-off mr-2"></span>
+                    Cerrar sesión</a>
+
+                </div>
+              </li>
+              <div class="text">
+                <span class="text-muted">Bienvenido!</span>
+                <div>
+                  <a [routerLink]="['/principal']">Principal</a> |
+                  <a style="cursor: pointer" (click)="this._agenteServicio.logout()"> Salir</a>
+                </div>
+              </div>
+            </div>
+
+          </div> <!-- widgets-wrap.// -->
+        </div> <!-- col.// -->
+      </div> <!-- row.// -->
+    </div> <!-- container.// -->
+
+    <div class="container-fluid  celular">
+      <div class="row justify-content-end ">
+        <div class="col-6  mx-auto mb-2 ">
+          <a class="" href="#">
+            <img class="logo" src="../../../assets/images/logoValid4.png" width="50%">
+          </a> <!-- brand-wrap.// -->
+        </div>
+        <div class="col-6 mx-auto ">
+          <div class="widgets-wrap ml-auto ">
+
+            <div class="widget-header mr-3" *ngIf="this._agenteServicio.getIdentity()">
+              <a data-toggle="dropdown" href="#"
+                 aria-expanded="false" aria-haspopup="true" class="icon icon-sm rounded-circle border"><i
+                class="fa fa-bell" aria-hidden="true"></i></a>
+              <span class="badge badge-pill badge-danger notify">{{this.notificaciones?.todas.length}}</span>
+
+
+              <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+                <h3 class="dropdown-header">Notificaciones</h3>
+                <div class="dropdown-divider"></div>
+                <div class="border-bottom " *ngFor="let notificaciones of this.notificaciones?.limitadas">
+
+                  <a class="dropdown-item " (click)="direccionar(notificaciones.CODIGO_COMPRA, notificaciones.CODIGO_TIENDA)">
+
+                    <p class="notificaciones text-success"><a class="fa fa-exclamation-circle"></a>
+                      &nbsp;&nbsp;{{notificaciones.ASUNTO}}</p>
+                    <label class="notificaciones"><i class="text-muted">De: {{notificaciones.AGENTE.NOMBRE}}</i></label>
+                    <p class="notificaciones"> {{notificaciones.MENSAJE}}</p>
+                    <p class="notificaciones">Orden #: {{notificaciones.CODIGO_COMPRA}}</p>
+                  </a>
+                </div>
+                <p class="text-center mt-1">
+                  <button class=" notificaciones text-center btn btn-link text-secondary" routerLink="notificaciones">Ver todas</button>
+                </p>
+
+              </div>
+            </div>
+
+
+            <div class="widget-header  icontext">
+              <li class="nav-item dropdown">
+                <a href="#" class="icon icon-xs rounded-circle border" data-toggle="dropdown" href="#"
+                   aria-expanded="false"><i class="fa fa-user"></i>
+                </a>
+
+
+                <div class="dropdown-menu dropdown-menu-right">
+                  <small class="dropdown-item" >&nbsp;{{this._agenteServicio.getIdentity().NOMBRE}}</small>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#" routerLink="/principales/menu/mi-cuenta/menu-mi-cuenta/vision-general"><span
+                    class="fa fa-user "></span> &nbsp;Mi cuenta</a>
+
+                  <a class="dropdown-item"   href="#" routerLink="/administrador/administrador-tienda/mis-tiendas">
+                    <span class="fas fa-store-alt mr-2"></span>
+                    Mis tiendas
+                  </a>
+
+                  <a (click)="_agenteServicio.logout()"class="dropdown-item col-2" href="#">  <span class="fa fa-power-off mr-2"></span>
+                    Cerrar sesión</a>
+
+                </div>
+              </li>
+
+            </div>
+
+          </div> <!-- widgets-wrap.// -->
+        </div> <!-- col.// -->
+        <div class="col-12 ">
+          <div class="input-group w-100  mx-auto py-1">
+            <h4>Panel Administrativo</h4>
+          </div>
+        </div> <!-- col.// -->
+
+      </div> <!-- row.// -->
+    </div> <!-- container.// -->
+  </section> <!-- header-main .// -->
+</header> <!-- section-header.// -->
+
+
+
+
+
+
+
+
+
 <div class=" border-bottom colorNavbar  py-1 p-absolute">
   <p class=" encabezado ">
     <button (click)="abrirSideBar()"><i class=" col-sm-1  fa fa-bars px-3  "></i></button>

@@ -8,6 +8,7 @@ import {DetalleProductoComponent} from "./detalle-producto/detalle-producto.comp
 import {CarritoComprasComponent} from "./carrito-compras/carrito-compras.component";
 import {AuthGuard} from "../shared/guards/auth.guard";
 import {BusquedaCategoriaComponent} from "./busqueda-categoria/busqueda-categoria.component";
+import {NotificacionesComponent} from "./notificaciones/notificaciones.component";
 
 const routes: Routes = [
   {
@@ -19,7 +20,9 @@ const routes: Routes = [
       {path: 'busqueda-categoria/:categoria/:nombre', component: BusquedaCategoriaComponent},
       {path: 'detalle-producto/:idProducto', component: DetalleProductoComponent},
       {path: 'carrito-compras/:idUsuario', component: CarritoComprasComponent,canActivate:[AuthGuard]},
+      {path: 'notificaciones', component: NotificacionesComponent,canActivate:[AuthGuard]},
       {path: 'detalle-tienda', loadChildren:'./detalle-tienda/detalle-tienda.module#DetalleTiendaModule'},
+
       {path: 'mi-cuenta', loadChildren: './mi-cuenta/mi-cuenta.module#MiCuentaModule',canActivate:[AuthGuard]}
     ]
   },

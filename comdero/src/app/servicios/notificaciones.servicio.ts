@@ -26,5 +26,11 @@ export class NotificacionesServicio {
     });
     return this._http.get<objeto>(this.url + "getMisNotificaciones/", {headers: headers});
   }
-
+  getMisNotificacionesTienda(idTienda) {
+    let headers = new HttpHeaders({
+      "Content-type": "application/json",
+      "Authorization": this._agenteServicio.getToken()
+    });
+    return this._http.get<objeto>(this.url + "getMisNotificacionesTienda/"+idTienda, {headers: headers});
+  }
 }

@@ -43,6 +43,12 @@ export class MenuComponent implements OnInit, OnDestroy {
     })
   }
 
+  public async  direccionar(codigo ,tienda){
+    let identidadTienda = await this._tiendaServicio.getDatosTienda(tienda).toPromise();
+    localStorage.setItem("identityTienda", JSON.stringify(identidadTienda.data));
+    this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/gestionar-pedido/',codigo]);
+  }
+
   public notificaciones;
 
   public async getMisNotificaciones() {

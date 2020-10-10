@@ -46,6 +46,21 @@ const Notificacion = db.sequelize.define('NOTIFICACION', {
             {
                 type: Sequelize.INTEGER,
                 allowNull: true
+            },
+        ESTADO_NOTIFICACION:
+            {
+                type: Sequelize.INTEGER,
+                allowNull: false
+            },
+        FECHA_NOTIFICACION:
+            {
+                type: Sequelize.DATEONLY,
+                allowNull: false
+            },
+        HORA_NOTIFICACION:
+            {
+                type: Sequelize.TIME,
+                allowNull: false
             }
 
 

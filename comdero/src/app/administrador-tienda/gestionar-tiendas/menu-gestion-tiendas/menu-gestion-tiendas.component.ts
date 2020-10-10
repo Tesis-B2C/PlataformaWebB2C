@@ -1,21 +1,59 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import Swal from "sweetalert2";
 import {TiendaServicio} from "../../../servicios/tienda.servicio";
 import {HttpErrorResponse} from "@angular/common/http";
+import {AgenteServicio} from "../../../servicios/agente.servicio";
+import {WebSocketService} from "../../../servicios/WebSockets/web-socket.service";
+import {NotificacionesServicio} from "../../../servicios/notificaciones.servicio";
 @Component({
   selector: 'app-menu-gestion-tiendas',
   templateUrl: './menu-gestion-tiendas.component.html',
   styleUrls: ['./menu-gestion-tiendas.component.css']
 })
-export class MenuGestionTiendasComponent {
+export class MenuGestionTiendasComponent implements OnInit{
   public banderaSideBar: boolean = false;
   public identidadTienda;
 
-  constructor(public _tiendaServicio: TiendaServicio, public router: Router) {
+  constructor( public _socketServicio:WebSocketService, public _notificacionesServicio: NotificacionesServicio,public _agenteServicio:AgenteServicio,public _tiendaServicio: TiendaServicio, public router: Router) {
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
   }
 
+  ngOnInit(): void {
+    this.getMisNotificaciones();
+    this._socketServicio.ioSocket.on('notificacion', res => {
+      this.getMisNotificaciones();
+
+
+    })
+  }
+
+  public async  direccionar(codigo ,tienda){
+    let identidadTienda = await this._tiendaServicio.getDatosTienda(tienda).toPromise();
+    localStorage.setItem("identityTienda", JSON.stringify(identidadTienda.data));
+    this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/gestionar-pedido/',codigo]);
+  }
+
+  public notificaciones;
+  public async getMisNotificaciones() {
+
+    try {
+      let response = await this._notificacionesServicio.getMisNotificacionesTienda(this.identidadTienda.NUM_TIENDA).toPromise();
+       this.notificaciones = response.data;
+      console.log("notificaciones", this.notificaciones)
+
+    } catch (e) {
+
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
+    }
+
+  }
   abrirSideBar() {
     this.banderaSideBar = !this.banderaSideBar;
   }
