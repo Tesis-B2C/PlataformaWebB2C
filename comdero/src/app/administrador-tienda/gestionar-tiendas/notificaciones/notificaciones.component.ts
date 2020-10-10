@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpErrorResponse} from "@angular/common/http";
 import Swal from "sweetalert2";
-import {NotificacionesServicio} from "../../servicios/notificaciones.servicio";
-import {TiendaServicio} from "../../servicios/tienda.servicio";
+import {TiendaServicio} from "../../../servicios/tienda.servicio";
+import {NotificacionesServicio} from "../../../servicios/notificaciones.servicio";
 import {Router} from "@angular/router";
-import {WebSocketService} from "../../servicios/WebSockets/web-socket.service";
+import {WebSocketService} from "../../../servicios/WebSockets/web-socket.service";
 
 @Component({
   selector: 'app-notificaciones',
@@ -12,31 +12,34 @@ import {WebSocketService} from "../../servicios/WebSockets/web-socket.service";
   styleUrls: ['./notificaciones.component.css']
 })
 export class NotificacionesComponent implements OnInit {
+  public identidadTienda;
 
-  constructor(public _socketServicio:WebSocketService, public router: Router,public _tiendaServicio:TiendaServicio,public _notificacionesServicio:NotificacionesServicio) { }
+  constructor(public _socketServicio:WebSocketService, public router: Router, public _tiendaServicio: TiendaServicio, public _notificacionesServicio: NotificacionesServicio) {
+    this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
+  }
 
   ngOnInit() {
-    this.getMisNotificaciones();
+    this.getMisNotificacionesTienda();
     this._socketServicio.ioSocket.on('notificacion', res => {
-      this.getMisNotificaciones();
+      this.getMisNotificacionesTienda();
 
 
     })
   }
 
 
-  public async  direccionar(codigo ,tienda){
+  public async direccionar(codigo, tienda) {
     let identidadTienda = await this._tiendaServicio.getDatosTienda(tienda).toPromise();
     localStorage.setItem("identityTienda", JSON.stringify(identidadTienda.data));
-    this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/gestionar-pedido/',codigo]);
+    this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/gestionar-pedido/', codigo]);
   }
 
   public notificaciones;
 
-  public async getMisNotificaciones() {
+  public async getMisNotificacionesTienda() {
 
     try {
-      let response = await this._notificacionesServicio.getMisNotificaciones().toPromise();
+      let response = await this._notificacionesServicio.getMisNotificacionesTienda(this.identidadTienda.NUM_TIENDA).toPromise();
       this.notificaciones = response.data;
       console.log("notificaciones", this.notificaciones)
 

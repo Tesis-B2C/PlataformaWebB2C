@@ -20,9 +20,9 @@ export class MenuGestionTiendasComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.getMisNotificaciones();
+    this.getMisNotificacionesTienda();
     this._socketServicio.ioSocket.on('notificacion', res => {
-      this.getMisNotificaciones();
+      this.getMisNotificacionesTienda();
 
 
     })
@@ -35,7 +35,7 @@ export class MenuGestionTiendasComponent implements OnInit{
   }
 
   public notificaciones;
-  public async getMisNotificaciones() {
+  public async getMisNotificacionesTienda() {
 
     try {
       let response = await this._notificacionesServicio.getMisNotificacionesTienda(this.identidadTienda.NUM_TIENDA).toPromise();

@@ -28,10 +28,11 @@ import { GestionarPedidoComponent } from './gestionar-pedido/gestionar-pedido.co
 import { ListadoClientesComponent } from './listado-clientes/listado-clientes.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 import { ChartsModule } from 'ng2-charts';
+import { NotificacionesComponent } from './notificaciones/notificaciones.component';
 
 
 @NgModule({
-  declarations: [MenuGestionTiendasComponent, ProductosComponent, MetodosPagoComponent, GeneralTiendaComponent, SucursalesTiendaComponent, PersonalizacionTiendaComponent, MetodosEnvioComponent, InicioAdministracionComponent, ListadoProductosComponent, ModificarProductoComponent, CuponDescuentoComponent, ListadoCuponDescuentoComponent, ModificarCuponDescuentoComponent, ListadoPedidosComponent, GestionarPedidoComponent, ListadoClientesComponent, EstadisticasComponent],
+  declarations: [MenuGestionTiendasComponent, ProductosComponent, MetodosPagoComponent, GeneralTiendaComponent, SucursalesTiendaComponent, PersonalizacionTiendaComponent, MetodosEnvioComponent, InicioAdministracionComponent, ListadoProductosComponent, ModificarProductoComponent, CuponDescuentoComponent, ListadoCuponDescuentoComponent, ModificarCuponDescuentoComponent, ListadoPedidosComponent, GestionarPedidoComponent, ListadoClientesComponent, EstadisticasComponent, NotificacionesComponent],
 
   imports: [
     CommonModule,
