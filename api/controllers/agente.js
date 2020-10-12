@@ -199,7 +199,7 @@ async function resetearContrasenia2(req, res) {
             await bcrypt.hash(req.body.Contrasenia2, null, null, function (err, hash) {
                 let nuevaContrasenia = hash;//aqui e cambio
                 let agenteActualizado = agente.update({CONTRASENIA: nuevaContrasenia});
-                if (agenteActualizado > 0) {
+                if (agenteActualizado) {
                     res.status(200).send({
                         message: "Su contraseña ha sido actualizada"
                     });

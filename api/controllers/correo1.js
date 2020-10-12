@@ -1,4 +1,6 @@
 'use strict'
+const Agente = require('../models/agente');
+const Tienda = require('../models/tienda');
 var bcrypt = require('bcrypt-nodejs');
 var nodemailer = require('nodemailer');
 const jwt = require('../services/jwt');
@@ -29,7 +31,7 @@ function correoActivacion(req, res) {
         if (error) {
             console.log(error);
             res.status(402).send({
-                message: "Al parecer existe un error intentelo nuevamente" + error
+                message: "Al parecer existe un error al enviar el correo, intentelo nuevamente" + error
             });
         } else {
 
@@ -63,8 +65,8 @@ function correoCambioContrasenia(req, res) {
     transporter.sendMail(mailOptions, function (error) {
         if (error) {
             console.log(error);
-            res.status(500).send({
-                message: "Al parecer existe un error intentelo nuevamente" + error
+            res.status(402).send({
+                message: "Al parecer existe un error al enviar el correo, intentelo nuevamente" + error
             });
         } else {
 
@@ -92,8 +94,40 @@ function correoCambioCorreo(req, res) {
     transporter.sendMail(mailOptions, function (error) {
         if (error) {
             console.log(error);
-            res.status(500).send({
-                message: "Al parecer existe un error intentelo nuevamente" + error
+            res.status(402).send({
+                message: "Al parecer existe un error al enviar el correo, intentelo nuevamente" + error
+            });
+        } else {
+            res.status(200).send({
+                message: "El correo ha sido enviado porfavor verifiquelo"
+            });
+        }
+    });
+
+
+}
+
+async function  correoNuevaCompra(req, res) {
+
+    let agente_emisor= await Agente.findOne({where:{COD_AGENTE:req.body.AGENTE_EMISOR}});
+    let agente_receptor= await Agente.findOne({where:{COD_AGENTE:req.body.AGENTE_RECEPTOR}});
+    let tienda= await Tienda.findOne({where:{NUM_TIENDA:req.body.CODIGO_TIENDA}});
+
+    console.log(" datos que entraro a nueva cpmra  ", req.body);
+    var mailOptions = {
+        from: 'doginotificaciones@gmail.com',
+        to: agente_receptor.dataValues.CORREO,
+        cc:tienda.dataValues.CORREO_TIENDA,
+        subject: req.body.ASUNTO,
+        text: req.body.MENSAJE + ' de: ' + agente_emisor.dataValues.NOMBRE+' por favor revisa COMDERO para más detalle de la compra No :'+req.body.CODIGO_COMPRA,
+        html:  req.body.MENSAJE + ' de: ' + agente_emisor.dataValues.NOMBRE+' por favor revisa: &nbsp; <a href="http://localhost:4200/principales/menu/principal">comdero.com/</a> &nbsp; para más detalle de la compra No:'+req.body.CODIGO_COMPRA
+    };
+
+    transporter.sendMail(mailOptions, function (error) {
+        if (error) {
+            console.log(error);
+            res.status(402).send({
+                message: "Al parecer existe un error al enviar el correo de confirmación, intentelo nuevamente" + error
             });
         } else {
             res.status(200).send({
@@ -109,5 +143,6 @@ function correoCambioCorreo(req, res) {
 module.exports = {
     correoActivacion,
     correoCambioContrasenia,
-    correoCambioCorreo
+    correoCambioCorreo,
+    correoNuevaCompra
 };

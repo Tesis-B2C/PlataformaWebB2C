@@ -21,6 +21,8 @@ const {io} = require('../appi.js');
 
 const {vUsuarios} = require('../sockets/socket');
 
+
+
 async function saveComprarProducto(req, res) {
     const t = await db.sequelize.transaction({autocommit: false});
     try {
@@ -159,7 +161,8 @@ async function saveComprarProducto(req, res) {
 
 
                 res.status(200).send({
-                    message: "La compra se ha realizado correctamente su código de compra es: <br>  <strong style='font-size: xx-large'>" + compraGuardada.dataValues.NUM_COMPRA + "</strong>"
+                    message: "La compra se ha realizado correctamente su código de compra es: <br>  <strong style='font-size: xx-large'>" + compraGuardada.dataValues.NUM_COMPRA + "</strong>",
+                    data:notificacionCreada
                 });
 
                 await t.commit();

@@ -8,5 +8,6 @@ const api = express.Router(); // esto sirve para crear las rutas
 api.post('/correoActivacion', CorreoCtroller.correoActivacion);
 api.post('/correoCambioContrasenia', CorreoCtroller.correoCambioContrasenia);
 api.post('/correoCambioCorreo', CorreoCtroller.correoCambioCorreo);
+api.post('/correoNuevaCompra', CorreoCtroller.correoNuevaCompra);
 
 module.exports = api;

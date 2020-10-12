@@ -1,8 +1,7 @@
+import {Injectable} from "@angular/core";
+import {HttpClient, HttpResponse, HttpHeaders} from '@angular/common/http';
+import {GLOBAL} from "./global";
 
-
-import { Injectable } from "@angular/core";
-import { HttpClient,HttpResponse, HttpHeaders } from '@angular/common/http';
-import { GLOBAL } from "./global";
 //import { Http, Headers } from "@angular/http";
 interface objeto {
   data: JSON,
@@ -24,8 +23,8 @@ export class CorreoServicio {
     let json = JSON.stringify(objeto);
     let params = json;
     console.log(params);
-    let headers = new HttpHeaders({ "Content-type": "application/json" });
-    return this._http.post<objeto>(this.url + "correoActivacion/",params , { headers: headers });
+    let headers = new HttpHeaders({"Content-type": "application/json"});
+    return this._http.post<objeto>(this.url + "correoActivacion/", params, {headers: headers});
   }
 
 
@@ -33,8 +32,8 @@ export class CorreoServicio {
     let json = JSON.stringify(objeto);
     let params = json;
     console.log(params);
-    let headers = new HttpHeaders({ "Content-type": "application/json" });
-    return this._http.post<objeto>(this.url + "correoCambioContrasenia/",params , { headers: headers });
+    let headers = new HttpHeaders({"Content-type": "application/json"});
+    return this._http.post<objeto>(this.url + "correoCambioContrasenia/", params, {headers: headers});
   }
 
 
@@ -42,8 +41,26 @@ export class CorreoServicio {
     let json = JSON.stringify(objeto);
     let params = json;
     console.log(params);
-    let headers = new HttpHeaders({ "Content-type": "application/json" });
-    return this._http.post<objeto>(this.url + "correoCambioCorreo/",params , { headers: headers });
+    let headers = new HttpHeaders({"Content-type": "application/json"});
+    return this._http.post<objeto>(this.url + "correoCambioCorreo/", params, {headers: headers});
   }
+
+  correoNuevaCompra(objeto) {
+    let json = JSON.stringify(objeto);
+    let params = json;
+    console.log(params);
+    let headers = new HttpHeaders({ "Content-type": "application/json" });
+    return this._http.post<objeto>(this.url + "correoNuevaCompra/",params , { headers: headers });
+  }
+
+
+  correoPedidoTramitado(objeto) {
+    let json = JSON.stringify(objeto);
+    let params = json;
+    console.log(params);
+    let headers = new HttpHeaders({ "Content-type": "application/json" });
+    return this._http.post<objeto>(this.url + "correoActivacion/",params , { headers: headers });
+  }
+
 
 }

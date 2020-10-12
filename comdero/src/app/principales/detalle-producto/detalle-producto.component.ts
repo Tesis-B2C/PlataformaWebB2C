@@ -20,6 +20,7 @@ import {ValoracionServicio} from "../../servicios/valoracion.servicio";
 import {HttpErrorResponse} from "@angular/common/http";
 import {TiendaServicio} from "../../servicios/tienda.servicio";
 import {CategoriaServicio} from "../../servicios/categoria.servicio";
+import {CorreoServicio} from "../../servicios/correo.servicio";
 
 @Component({
   selector: 'app-detalle-producto',
@@ -130,7 +131,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
 
 
   public bandera:boolean=true;
-  constructor(public _categoriaServicio: CategoriaServicio, public router: Router, public _tiendaServicio: TiendaServicio, public _valoracionServicio: ValoracionServicio, public menu: MenuComponent, public _carritoServicio: CarritoServicio, public _compraServicio: CompraServicio,
+  constructor(public _correoServicio:CorreoServicio, public _categoriaServicio: CategoriaServicio, public router: Router, public _tiendaServicio: TiendaServicio, public _valoracionServicio: ValoracionServicio, public menu: MenuComponent, public _carritoServicio: CarritoServicio, public _compraServicio: CompraServicio,
               public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal, private _sanitizer: DomSanitizer, configRating: NgbRatingConfig, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
     configRating.max = 5;
     configRating.readonly = true;
@@ -1332,6 +1333,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
       console.log('INFORMACION COMPRA' + JSON.stringify(this.informacionCompra));
       let response = await this._compraServicio.saveComprarProducto(this.informacionCompra).toPromise();
       this.mensageCorrecto(response.message);
+      this._correoServicio.correoNuevaCompra(response.data).toPromise();
       this.cerrar();
       this.modalService.dismissAll();
       this.obtenerProducto();
