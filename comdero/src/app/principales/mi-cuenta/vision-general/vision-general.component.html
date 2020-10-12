@@ -50,8 +50,8 @@
     <h5 class="card-title mb-4">Ordenes recientes</h5>
 
              <div class="row">
-               <div class="col-md-6" *ngFor="let pedidos of this.comprasObtenidas ">
-                 <figure class="itemside  mb-3">
+               <div class="col-md-6" *ngFor="let pedidos of this.comprasObtenidas; let i =index ">
+                 <figure class="itemside  mb-3" *ngIf="i<4">
                    <div class="aside"><img [src]="getImagen(pedidos.COMPRA_PRODUCTOs[0].IMAGEN_MOSTRAR)"  class="border img-sm"></div>
                    <figcaption class="info">
                      <time class="text-muted"><i class="fa fa-calendar-alt"></i>&nbsp; {{pedidos.FECHA_COMPRA}}</time>

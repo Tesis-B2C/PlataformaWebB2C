@@ -56,17 +56,17 @@ async function getMisNotificacionesTienda(req, res) {
             });
         } else {
             let NotificacionesObtenidasLimitadas = await Notificacion.findAll({
-                where: {CODIGO_TIENDA: req.params.id}, include: [{model: Agente}],
+                where: {CODIGO_TIENDA: req.params.id,ENVIAR_A:'Tienda'}, include: [{model: Agente}],
                 order: [['ID_NOTIFICACION', 'DESC']], limit: 5
 
             });
             let NotificacionesObtenidas = await Notificacion.findAll({
-                where: {CODIGO_TIENDA: req.params.id, ESTADO_NOTIFICACION: 0}, include: [{model: Agente}],
+                where: {CODIGO_TIENDA: req.params.id, ESTADO_NOTIFICACION: 0,ENVIAR_A:'Tienda'}, include: [{model: Agente}],
                 order: [['ID_NOTIFICACION', 'DESC']],
 
             });
             let NotificacionesObtenidasCompletas = await Notificacion.findAll({
-                where: {AGENTE_RECEPTOR: req.user.id}, include: [{model: Agente}],
+                where: {AGENTE_RECEPTOR: req.user.id,ENVIAR_A:'Tienda'}, include: [{model: Agente}],
                 order: [['ID_NOTIFICACION', 'DESC']],
             });
             let obj = {

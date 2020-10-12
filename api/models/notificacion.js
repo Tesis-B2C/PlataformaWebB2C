@@ -42,6 +42,12 @@ const Notificacion = db.sequelize.define('NOTIFICACION', {
                 allowNull: true
             }
         ,
+        NOMBRE_TIENDA:
+            {
+                type: Sequelize.STRING,
+                allowNull: true
+            }
+        ,
         CODIGO_COMPRA:
             {
                 type: Sequelize.INTEGER,

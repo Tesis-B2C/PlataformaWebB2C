@@ -137,6 +137,7 @@ async function saveComprarProducto(req, res) {
                     ASUNTO: 'Nueva compra',
                     MENSAJE: "Tienes una nueva solicitud  de compra",
                     CODIGO_TIENDA: req.body.ID_TIENDA,
+                    NOMBRE_TIENDA:tiendaReceptora.dataValues.NOMBRE_COMERCIAL,
                     CODIGO_COMPRA: compraGuardada.dataValues.NUM_COMPRA,
                     ESTADO_NOTIFICACION: 0,
                     FECHA_NOTIFICACION: moment(),
@@ -317,6 +318,7 @@ async function saveComprarProductoCarrito(req, res) {
                 ASUNTO: 'Nueva compra',
                 MENSAJE: "Tienes una nueva solicitud  de compra",
                 CODIGO_TIENDA: req.body.ID_TIENDA,
+                NOMBRE_TIENDA:tiendaReceptora.dataValues.NOMBRE_COMERCIAL,
                 CODIGO_COMPRA: compraGuardada.dataValues.NUM_COMPRA,
                 ESTADO_NOTIFICACION: 0,
                 FECHA_NOTIFICACION: moment(),
@@ -335,8 +337,6 @@ async function saveComprarProductoCarrito(req, res) {
                     }
                 }
             }
-
-
 
 
             res.status(200).send({
@@ -541,6 +541,7 @@ async function getPedido(req, res) {
 
 
 async function updateEstadoPedido(req, res) {
+    const t = await db.sequelize.transaction({autocommit: false});
     try {
         let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
 
@@ -554,19 +555,49 @@ async function updateEstadoPedido(req, res) {
                 ESTADO_COMPRA: req.params.estado,
                 FECHA_ENVIO: moment()
             }, {
-                where: {NUM_COMPRA: req.params.id},
+                where: {NUM_COMPRA: req.params.id}, transaction: t
             });
-            if (pedidoActualizado > 0) {
-                res.status(200).send({
-                    message: "El pedido ha sido tramitado"
-                });
-            } else {
-                res.status(402).send({
-                    message: 'Al parecer no existe el pedido en la base de datos'
-                });
+
+            let pedido = await Compra.findOne({
+                where: {NUM_COMPRA: req.params.id}, transaction: t
+            });
+            let tienda = await Tienda.findOne({
+                where: {NUM_TIENDA: pedido.dataValues.TIENDA}, transaction: t
+            });
+
+
+
+            let notificacionCreada = await Notificacion.create({
+                AGENTE_EMISOR: req.user.id,
+                AGENTE_RECEPTOR: pedido.dataValues.COD_AGENTE,
+                ENVIAR_A: 'Usuario',
+                ASUNTO: 'Pedido tramitado',
+                MENSAJE: "Tu pedido ha sido tramitado",
+                CODIGO_TIENDA: pedido.dataValues.TIENDA,
+                NOMBRE_TIENDA:tienda.dataValues.NOMBRE_COMERCIAL,
+                CODIGO_COMPRA: pedido.dataValues.NUM_COMPRA,
+                ESTADO_NOTIFICACION: 0,
+                FECHA_NOTIFICACION: moment(),
+                HORA_NOTIFICACION: moment().format('HH:mm:ss')
+            }, {
+                transaction: t
+            });
+            let bandera = true;
+            let agentes = vUsuarios;
+            for (let agent of agentes) {
+                if (agent.cod_agente == pedido.dataValues.COD_AGENTE && bandera == true) {
+                    io.in(`room_${agent.cod_agente}`).emit("notificacion", {message: "hola"});
+                    bandera = false;
+                }
             }
+            res.status(200).send({
+                message: "El pedido ha sido tramitado"
+            });
+            await t.commit();
+
         }
     } catch (err) {
+        await t.rollback()
         res.status(500).send({
             message: 'error:' + err
         });

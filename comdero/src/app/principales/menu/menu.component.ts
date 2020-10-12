@@ -10,6 +10,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {NotificacionesServicio} from "../../servicios/notificaciones.servicio";
 import {WebSocketService} from "../../servicios/WebSockets/web-socket.service";
 import { NgxPushNotificationService } from 'ngx-push-notification';
+import {PedidosRealizadosComponent} from "../mi-cuenta/pedidos-realizados/pedidos-realizados.component";
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -25,7 +26,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   public datosObtenidos: any;
   public carritoIdentidad;
 
-  constructor(private ngxPushNotificationService: NgxPushNotificationService,public _socketServicio: WebSocketService, public _notificacionesServicio: NotificacionesServicio, public _carritoServicio: CarritoServicio, public _agenteServicio: AgenteServicio, public route: ActivatedRoute, public _tiendaServicio: TiendaServicio, public router: Router) {
+  constructor( public ngxPushNotificationService: NgxPushNotificationService,public _socketServicio: WebSocketService, public _notificacionesServicio: NotificacionesServicio, public _carritoServicio: CarritoServicio, public _agenteServicio: AgenteServicio, public route: ActivatedRoute, public _tiendaServicio: TiendaServicio, public router: Router) {
   }
   notify() {
     this.ngxPushNotificationService.showNotification({
@@ -65,6 +66,23 @@ export class MenuComponent implements OnInit, OnDestroy {
     localStorage.setItem("identityTienda", JSON.stringify(identidadTienda.data));
 
     this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/gestionar-pedido/',codigo]);
+    } catch (e) {
+
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
+    }
+  }
+
+  public async  direccionar2(idNotificacion,estado){
+    try {
+      let response = await this._notificacionesServicio.updateEstadoNotificacion(idNotificacion,estado).toPromise();
+      this.router.navigate(['/principales/menu/mi-cuenta/menu-mi-cuenta/pedidos-realizados']);
+      this.getMisNotificaciones();
     } catch (e) {
 
       if (!(e instanceof HttpErrorResponse)) {

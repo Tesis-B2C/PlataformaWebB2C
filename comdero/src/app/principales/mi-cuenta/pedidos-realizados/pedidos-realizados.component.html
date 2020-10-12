@@ -30,23 +30,24 @@
     id="tap-principal" role="tablist">
 
     <li class="nav-item">
-      <a class="nav-link active py-0  text-primary" id="proceso-tab" data-toggle="tab"
+      <a class="nav-link active py-0  text-secondary" id="proceso-tab" data-toggle="tab"
          aria-controls="proceso" (click)="estado(0)"
          aria-selected="true">En proceso</a>
     </li>
 
     <li class="nav-item">
-      <a class="nav-link py-0 text-primary" id="enviado-tab" data-toggle="tab"
+      <a  class="nav-link py-0 text-secondary" id="enviado-tab" data-toggle="tab"
          aria-controls="enviado" (click)="estado(1)"
-         aria-selected="false">Enviado</a>
+         aria-selected="false">Tramitado</a>
     </li>
+
     <li class="nav-item">
-      <a class="nav-link py-0  text-primary" id="recibido-tab" #recibidos data-toggle="tab"
+      <a class="nav-link py-0  text-secondary" id="recibido-tab" #recibidos data-toggle="tab"
          aria-controls="recibo" (click)="estado(2)"
          aria-selected="false">Recibido</a>
     </li>
 
-    <select (change)="fecha($event.target.value)" class=" btn btn-link py-0 mt-md-n5 mt-2 mt-md-0"
+    <select (change)="fecha($event.target.value)" class=" btn btn-link text-secondary py-0 mt-md-n5 mt-2 mt-md-0"
             style="font-size: small" id="inputGroupSelect01">
       <option selected value="1">últimos 30 días</option>
       <option value="6">últimos 6 meses</option>
@@ -64,10 +65,10 @@
   <div class="card mb-5">
     <div class="card-header ">
       <div class=" mb-0 font-weight-bold row justify-content-between mx-md-auto"><a routerLink="../../../detalle-tienda/tienda/{{compra.COMPRA_PRODUCTOs[0].VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA}}/inicio-tienda"
-        class="col-auto">{{compra.COMPRA_PRODUCTOs[0].VARIANTE.PRODUCTO.OFERTum.TIENDA.NOMBRE_COMERCIAL}}</a>
-        <a *ngIf="compra.ESTADO_COMPRA==0" class="col-auto text-warning font-weight-bold "> En proceso</a>
-        <a *ngIf="compra.ESTADO_COMPRA==1" class="col-auto text-primary font-weight-bold"> Enviado</a>
-        <a *ngIf="compra.ESTADO_COMPRA==2" class="col-auto text-success font-weight-bold"> Recibido</a></div>
+        class="col-auto text-dark">{{compra.COMPRA_PRODUCTOs[0].VARIANTE.PRODUCTO.OFERTum.TIENDA.NOMBRE_COMERCIAL}}</a>
+        <a *ngIf="compra.ESTADO_COMPRA==0" class="col-auto text-primary font-weight-bold "> En proceso</a>
+        <a *ngIf="compra.ESTADO_COMPRA==1" class="col-auto text-success font-weight-bold"> Tramitado</a>
+        <a *ngIf="compra.ESTADO_COMPRA==2" class="col-auto text-secondary font-weight-bold"> Recibido</a></div>
       <ul class="nav nav-tabs card-header-tabs pull-left mx-md-auto pt-2  " id="myTab2" role="tablist">
 
         <li class="nav-item ">
@@ -89,6 +90,14 @@
           </div>
         </li>
 
+        <li class="nav-item " *ngIf="compra.ESTADO_COMPRA==1 || compra.ESTADO_COMPRA==2 ">
+          <div class="nav-link  py-0 pr-1">
+            <p style="color: black">Tramitado el</p>
+            <p>{{compra.FECHA_ENVIO}}</p>
+          </div>
+        </li>
+
+
       </ul>
 
       <ul class="nav nav-pills card-header-pills  float-md-right   float-left  pt-4 pt-md-1"
@@ -106,7 +115,7 @@
              aria-selected="false">Detalle</a>
         </li>
         <li class="nav-item">
-          <a *ngIf="compra.ESTADO_COMPRA==1" class="nav-link py-0 " id="recibo-tab" data-toggle="tab"
+          <a *ngIf="compra.ESTADO_COMPRA==1 || compra.ESTADO_COMPRA==2" class="nav-link py-0 " id="recibo-tab" data-toggle="tab"
              href="#recibo{{i}}"
              role="tab"
              aria-controls="recibo"
