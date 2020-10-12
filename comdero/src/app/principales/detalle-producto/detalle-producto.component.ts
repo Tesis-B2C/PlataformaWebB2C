@@ -128,6 +128,8 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
     'fa fa-car', 'fa fa-dumbbell', 'fa fa-book',
     'fa fa-dog', 'fa fa-gamepad', 'fa fa-grin-stars', 'fa fa-heartbeat', 'fa fa-building', 'fa fa-tractor'];
 
+
+  public bandera:boolean=true;
   constructor(public _categoriaServicio: CategoriaServicio, public router: Router, public _tiendaServicio: TiendaServicio, public _valoracionServicio: ValoracionServicio, public menu: MenuComponent, public _carritoServicio: CarritoServicio, public _compraServicio: CompraServicio,
               public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal, private _sanitizer: DomSanitizer, configRating: NgbRatingConfig, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
     configRating.max = 5;
@@ -139,8 +141,9 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
   public identidadAgente;
   public categorias;
   public c1 = [];
-  public c2=[];
-  public c3=[]
+  public c2 = [];
+  public c3 = []
+
   ngOnInit() {
     this.imagenPrincipal = 'assets/images/no-imagen1.png';
     this.getDpaProvincias("P");
@@ -210,8 +213,6 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
     }
 
   }
-
-
 
 
   async getDpaProvincias(buscar) {
@@ -578,119 +579,124 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
 
   public abrirModalFinalizarPedido(content) {
 
-    this.verificarMetodosTienda();
-    this.identidadComprador = this._agenteServicio.getIdentity();
-    console.log('AGENTE' + JSON.stringify(this.identidadComprador));
+    if (this._agenteServicio.getIdentity()) {
 
-    //DATOS DE COMPRA QUE PUEDEN NO ESTAR
-    if (this.identidadComprador.ID_AGENTE != null) {
-      console.log('SI HAY DIRECCION');
-      this.DatosDireccion = new Agente(this.identidadComprador.ID_AGENTE, this.identidadComprador.NUM_COD_POSTAL, this.identidadComprador.NOMBRE,
-        this.identidadComprador.TELEFONO, null, this.identidadComprador.TIPO, 0, this.identidadComprador.CALLE_PRINCIPAL_AGENTE,
-        this.identidadComprador.CALLE_SECUNDARIA_AGENTE, this.identidadComprador.NUM_CASA_AGENTE, null, this.identidadComprador.COD_DPA,
-        null);
+      this.verificarMetodosTienda();
+      this.identidadComprador = this._agenteServicio.getIdentity();
+      console.log('AGENTE' + JSON.stringify(this.identidadComprador));
 
-      this.DatosFactura = new Agente(this.identidadComprador.ID_AGENTE, null, this.identidadComprador.NOMBRE,
-        this.identidadComprador.TELEFONO, this.identidadComprador.CORREO, this.identidadComprador.TIPO, 0,
-        this.identidadComprador.CALLE_PRINCIPAL_AGENTE + ' ' + this.identidadComprador.CALLE_SECUNDARIA_AGENTE + ',' + this.identidadComprador.DPA.NOMBRE + ',' + this.identidadComprador.DPA.DPAP.NOMBRE,
-        null, null, null, null, null);
+      //DATOS DE COMPRA QUE PUEDEN NO ESTAR
+      if (this.identidadComprador.ID_AGENTE != null) {
+        console.log('SI HAY DIRECCION');
+        this.DatosDireccion = new Agente(this.identidadComprador.ID_AGENTE, this.identidadComprador.NUM_COD_POSTAL, this.identidadComprador.NOMBRE,
+          this.identidadComprador.TELEFONO, null, this.identidadComprador.TIPO, 0, this.identidadComprador.CALLE_PRINCIPAL_AGENTE,
+          this.identidadComprador.CALLE_SECUNDARIA_AGENTE, this.identidadComprador.NUM_CASA_AGENTE, null, this.identidadComprador.COD_DPA,
+          null);
 
-      this.informacionCompra.ID_AGENTE = this.identidadComprador.ID_AGENTE;
+        this.DatosFactura = new Agente(this.identidadComprador.ID_AGENTE, null, this.identidadComprador.NOMBRE,
+          this.identidadComprador.TELEFONO, this.identidadComprador.CORREO, this.identidadComprador.TIPO, 0,
+          this.identidadComprador.CALLE_PRINCIPAL_AGENTE + ' ' + this.identidadComprador.CALLE_SECUNDARIA_AGENTE + ',' + this.identidadComprador.DPA.NOMBRE + ',' + this.identidadComprador.DPA.DPAP.NOMBRE,
+          null, null, null, null, null);
+
+        this.informacionCompra.ID_AGENTE = this.identidadComprador.ID_AGENTE;
 
 
-      this.informacionCompra.DATOS_ENTREGA.TIPO_IDENTIFICACION_ENTREGA = this.identidadComprador.TIPO;
-      this.informacionCompra.DATOS_ENTREGA.IDENTIFICACION_ENTREGA = this.identidadComprador.ID_AGENTE;
-      this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA = this.identidadComprador.CALLE_PRINCIPAL_AGENTE;
-      this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA = this.identidadComprador.CALLE_SECUNDARIA_AGENTE;
-      this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA = this.identidadComprador.NUM_CASA_AGENTE;
-      this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA = this.identidadComprador.COD_DPA;
-      this.informacionCompra.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA = this.identidadComprador.NOMBRE;
-      this.informacionCompra.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA = this.identidadComprador.NUM_COD_POSTAL;
-      this.informacionCompra.DATOS_ENTREGA.TELEFONO_ENTREGA = this.identidadComprador.TELEFONO;
-      this.ciudadDireccionNombre = this.identidadComprador.DPA.NOMBRE;
-      this.provinciaDireccionNombre = this.identidadComprador.DPA.DPAP.NOMBRE;
+        this.informacionCompra.DATOS_ENTREGA.TIPO_IDENTIFICACION_ENTREGA = this.identidadComprador.TIPO;
+        this.informacionCompra.DATOS_ENTREGA.IDENTIFICACION_ENTREGA = this.identidadComprador.ID_AGENTE;
+        this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA = this.identidadComprador.CALLE_PRINCIPAL_AGENTE;
+        this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA = this.identidadComprador.CALLE_SECUNDARIA_AGENTE;
+        this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA = this.identidadComprador.NUM_CASA_AGENTE;
+        this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA = this.identidadComprador.COD_DPA;
+        this.informacionCompra.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA = this.identidadComprador.NOMBRE;
+        this.informacionCompra.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA = this.identidadComprador.NUM_COD_POSTAL;
+        this.informacionCompra.DATOS_ENTREGA.TELEFONO_ENTREGA = this.identidadComprador.TELEFONO;
+        this.ciudadDireccionNombre = this.identidadComprador.DPA.NOMBRE;
+        this.provinciaDireccionNombre = this.identidadComprador.DPA.DPAP.NOMBRE;
 
-      this.informacionCompra.DATOS_FACTURA.TIPO_IDENTIFICACION_FACTURA = this.identidadComprador.TIPO;
-      this.informacionCompra.DATOS_FACTURA.NOMBRE_FACTURA = this.identidadComprador.NOMBRE;
-      this.informacionCompra.DATOS_FACTURA.CORREO = this.identidadComprador.CORREO;
-      this.informacionCompra.DATOS_FACTURA.IDENTIFICACION_FACTURA = this.identidadComprador.ID_AGENTE;
-      this.informacionCompra.DATOS_FACTURA.TELEFONO_FACTURA = this.identidadComprador.TELEFONO;
-      this.informacionCompra.DATOS_FACTURA.DIRECCION_FACTURA = this.identidadComprador.CALLE_PRINCIPAL_AGENTE + ' ' + this.identidadComprador.CALLE_SECUNDARIA_AGENTE + ',' + this.identidadComprador.DPA.NOMBRE + ',' + this.identidadComprador.DPA.DPAP.NOMBRE;
+        this.informacionCompra.DATOS_FACTURA.TIPO_IDENTIFICACION_FACTURA = this.identidadComprador.TIPO;
+        this.informacionCompra.DATOS_FACTURA.NOMBRE_FACTURA = this.identidadComprador.NOMBRE;
+        this.informacionCompra.DATOS_FACTURA.CORREO = this.identidadComprador.CORREO;
+        this.informacionCompra.DATOS_FACTURA.IDENTIFICACION_FACTURA = this.identidadComprador.ID_AGENTE;
+        this.informacionCompra.DATOS_FACTURA.TELEFONO_FACTURA = this.identidadComprador.TELEFONO;
+        this.informacionCompra.DATOS_FACTURA.DIRECCION_FACTURA = this.identidadComprador.CALLE_PRINCIPAL_AGENTE + ' ' + this.identidadComprador.CALLE_SECUNDARIA_AGENTE + ',' + this.identidadComprador.DPA.NOMBRE + ',' + this.identidadComprador.DPA.DPAP.NOMBRE;
 
+      } else {
+        //NO TIENE AGREGADA LA DIRECCION
+        this.DatosDireccion = new Agente(null, null, this.identidadComprador.NOMBRE,
+          null, null, null, 0, null,
+          null, null, null, null,
+          null);
+
+        this.DatosFactura = new Agente(null, null, this.identidadComprador.NOMBRE,
+          null, this.identidadComprador.CORREO, this.identidadComprador.TIPO, 0,
+          null, null, null, null, null, null);
+
+        this.informacionCompra.ID_AGENTE = null;
+
+        this.informacionCompra.DATOS_ENTREGA.TIPO_IDENTIFICACION_ENTREGA = null;
+        this.informacionCompra.DATOS_ENTREGA.IDENTIFICACION_ENTREGA = null;
+        this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA = null;
+        this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA = null;
+        this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA = null;
+        this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA = null;
+        this.informacionCompra.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA = this.identidadComprador.NOMBRE;
+        this.informacionCompra.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA = null;
+        this.informacionCompra.DATOS_ENTREGA.TELEFONO_ENTREGA = null;
+        this.ciudadDireccionNombre = null;
+        this.provinciaDireccionNombre = null;
+
+        this.informacionCompra.DATOS_FACTURA.TIPO_IDENTIFICACION_FACTURA = this.identidadComprador.TIPO;
+        this.informacionCompra.DATOS_FACTURA.NOMBRE_FACTURA = this.identidadComprador.NOMBRE;
+        this.informacionCompra.DATOS_FACTURA.CORREO = this.identidadComprador.CORREO;
+        this.informacionCompra.DATOS_FACTURA.IDENTIFICACION_FACTURA = null;
+        this.informacionCompra.DATOS_FACTURA.TELEFONO_FACTURA = null;
+        this.informacionCompra.DATOS_FACTURA.DIRECCION_FACTURA = null;
+
+      }
+
+      //DATOS DE COMPRA QUE SIEMPRE HABRA
+      this.informacionCompra.COD_AGENTE = this.identidadComprador.COD_AGENTE;
+      this.informacionCompra.ID_PRODUCTO = this.varianteActiva.ID_PRODUCTO;
+      this.informacionCompra.COD_PRODUCTO = this.varianteActiva.COD_PRODUCTO;
+      this.informacionCompra.ID_TIENDA = this.productoDetalle.TIENDA.NUM_TIENDA
+      this.informacionCompra.FECHA_COMPRA = moment().format("YYYY-MM-DD");
+
+      this.informacionCompra.CANTIDAD = this.varianteActiva.CANTIDAD;
+      this.informacionCompra.NUM_VARIANTE = this.varianteActiva.NUM_VARIANTE;
+      this.informacionCompra.IMAGEN_MOSTRAR = this.varianteActiva.IMAGENES[0].IMAGEN;
+      console.log('VARIANTE' + this.informacionCompra.NUM_VARIANTE);
+      this.informacionCompra.METODO_PAGO_COMPRA = null;
+      this.informacionCompra.METODO_ENVIO_COMPRA = null;
+
+      this.informacionCompra.COSTOS.PRECIO_UNITARIO_PRODUCTO = this.varianteActiva.PRECIO_UNITARIO;
+      this.informacionCompra.COSTOS.TOTAL_PRODUCTOS = (this.varianteActiva.CANTIDAD * this.varianteActiva.PRECIO_UNITARIO); //Buscar descuento y menorar
+      this.informacionCompra.COSTOS.IMPUESTOS = (this.informacionCompra.COSTOS.TOTAL_PRODUCTOS * this.varianteActiva.PORCENTAJE_IMPUESTO) / 100;
+      this.informacionCompra.COSTOS.PORCENTAJE_IMPUESTO = this.varianteActiva.PORCENTAJE_IMPUESTO;
+      this.informacionCompra.COSTOS.SUBTOTAL = this.informacionCompra.COSTOS.TOTAL_PRODUCTOS + this.informacionCompra.COSTOS.IMPUESTOS;
+
+      if (this.banderaActivarDescuentoAutomatico == true) {
+        this.informacionCompra.COSTOS.DESCUENTOS = ((this.informacionCompra.COSTOS.SUBTOTAL * this.porcentajeDescuento) / 100);
+        this.informacionCompra.COSTOS.PORCENTAJE_AUTOMATICO = this.porcentajeDescuento;
+      } else {
+        this.informacionCompra.COSTOS.DESCUENTOS = 0;
+        this.informacionCompra.COSTOS.PORCENTAJE_AUTOMATICO = 0;
+      }
+      //cupones
+      this.informacionCompra.COSTOS.CUPON = 0;
+      this.informacionCompra.COSTOS.PORCENTAJE_CUPON = 0;
+
+
+      this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL = 0;
+
+
+      this.informacionCompra.COSTOS.COSTOS_ENVIO = 0;
+      this.informacionCompra.COSTOS.TOTAL_PEDIDO = (this.informacionCompra.COSTOS.SUBTOTAL + this.informacionCompra.COSTOS.RECARGO_PAYPAL + this.informacionCompra.COSTOS.COSTOS_ENVIO) - (this.informacionCompra.COSTOS.DESCUENTOS + this.informacionCompra.COSTOS.CUPON);
+      console.log('VARIANTE COMPRAS' + JSON.stringify(this.informacionCompra));
+      //FIN DATOS DE COMPRA
+      this.modalService.open(content, {centered: true, size: 'lg', backdrop: "static"});
     } else {
-      //NO TIENE AGREGADA LA DIRECCION
-      this.DatosDireccion = new Agente(null, null, this.identidadComprador.NOMBRE,
-        null, null, null, 0, null,
-        null, null, null, null,
-        null);
-
-      this.DatosFactura = new Agente(null, null, this.identidadComprador.NOMBRE,
-        null, this.identidadComprador.CORREO, this.identidadComprador.TIPO, 0,
-        null, null, null, null, null, null);
-
-      this.informacionCompra.ID_AGENTE = null;
-
-      this.informacionCompra.DATOS_ENTREGA.TIPO_IDENTIFICACION_ENTREGA = null;
-      this.informacionCompra.DATOS_ENTREGA.IDENTIFICACION_ENTREGA = null;
-      this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA = null;
-      this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA = null;
-      this.informacionCompra.DATOS_ENTREGA.NUM_CASA_ENTREGA = null;
-      this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA = null;
-      this.informacionCompra.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA = this.identidadComprador.NOMBRE;
-      this.informacionCompra.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA = null;
-      this.informacionCompra.DATOS_ENTREGA.TELEFONO_ENTREGA = null;
-      this.ciudadDireccionNombre = null;
-      this.provinciaDireccionNombre = null;
-
-      this.informacionCompra.DATOS_FACTURA.TIPO_IDENTIFICACION_FACTURA = this.identidadComprador.TIPO;
-      this.informacionCompra.DATOS_FACTURA.NOMBRE_FACTURA = this.identidadComprador.NOMBRE;
-      this.informacionCompra.DATOS_FACTURA.CORREO = this.identidadComprador.CORREO;
-      this.informacionCompra.DATOS_FACTURA.IDENTIFICACION_FACTURA = null;
-      this.informacionCompra.DATOS_FACTURA.TELEFONO_FACTURA = null;
-      this.informacionCompra.DATOS_FACTURA.DIRECCION_FACTURA = null;
-
+      this.router.navigate(['/loguin'])
     }
-
-    //DATOS DE COMPRA QUE SIEMPRE HABRA
-    this.informacionCompra.COD_AGENTE = this.identidadComprador.COD_AGENTE;
-    this.informacionCompra.ID_PRODUCTO = this.varianteActiva.ID_PRODUCTO;
-    this.informacionCompra.COD_PRODUCTO = this.varianteActiva.COD_PRODUCTO;
-    this.informacionCompra.ID_TIENDA = this.productoDetalle.TIENDA.NUM_TIENDA
-    this.informacionCompra.FECHA_COMPRA = moment().format("YYYY-MM-DD");
-
-    this.informacionCompra.CANTIDAD = this.varianteActiva.CANTIDAD;
-    this.informacionCompra.NUM_VARIANTE = this.varianteActiva.NUM_VARIANTE;
-    this.informacionCompra.IMAGEN_MOSTRAR = this.varianteActiva.IMAGENES[0].IMAGEN;
-    console.log('VARIANTE' + this.informacionCompra.NUM_VARIANTE);
-    this.informacionCompra.METODO_PAGO_COMPRA = null;
-    this.informacionCompra.METODO_ENVIO_COMPRA = null;
-
-    this.informacionCompra.COSTOS.PRECIO_UNITARIO_PRODUCTO = this.varianteActiva.PRECIO_UNITARIO;
-    this.informacionCompra.COSTOS.TOTAL_PRODUCTOS = (this.varianteActiva.CANTIDAD * this.varianteActiva.PRECIO_UNITARIO); //Buscar descuento y menorar
-    this.informacionCompra.COSTOS.IMPUESTOS = (this.informacionCompra.COSTOS.TOTAL_PRODUCTOS * this.varianteActiva.PORCENTAJE_IMPUESTO) / 100;
-    this.informacionCompra.COSTOS.PORCENTAJE_IMPUESTO = this.varianteActiva.PORCENTAJE_IMPUESTO;
-    this.informacionCompra.COSTOS.SUBTOTAL = this.informacionCompra.COSTOS.TOTAL_PRODUCTOS + this.informacionCompra.COSTOS.IMPUESTOS;
-
-    if (this.banderaActivarDescuentoAutomatico == true) {
-      this.informacionCompra.COSTOS.DESCUENTOS = ((this.informacionCompra.COSTOS.SUBTOTAL * this.porcentajeDescuento) / 100);
-      this.informacionCompra.COSTOS.PORCENTAJE_AUTOMATICO = this.porcentajeDescuento;
-    } else {
-      this.informacionCompra.COSTOS.DESCUENTOS = 0;
-      this.informacionCompra.COSTOS.PORCENTAJE_AUTOMATICO = 0;
-    }
-    //cupones
-    this.informacionCompra.COSTOS.CUPON = 0;
-    this.informacionCompra.COSTOS.PORCENTAJE_CUPON = 0;
-
-
-    this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL = 0;
-
-
-    this.informacionCompra.COSTOS.COSTOS_ENVIO = 0;
-    this.informacionCompra.COSTOS.TOTAL_PEDIDO = (this.informacionCompra.COSTOS.SUBTOTAL + this.informacionCompra.COSTOS.RECARGO_PAYPAL + this.informacionCompra.COSTOS.COSTOS_ENVIO) - (this.informacionCompra.COSTOS.DESCUENTOS + this.informacionCompra.COSTOS.CUPON);
-    console.log('VARIANTE COMPRAS' + JSON.stringify(this.informacionCompra));
-    //FIN DATOS DE COMPRA
-    this.modalService.open(content, {centered: true, size: 'lg', backdrop: "static"});
   }
 
   public mostrarTiendaEnvioRetiro: boolean = false;
@@ -1118,9 +1124,13 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
 
   public async agregarCarrito() {
     try {
+      if (this._agenteServicio.getIdentity()){
       this.Carrito_Producto = new Carrito_Producto(this.varianteActiva.NUM_VARIANTE, this.varianteActiva.CANTIDAD, this.varianteActiva.IMAGENES[0].IMAGEN);
       let response = await this._carritoServicio.saveCarrito(this.Carrito_Producto).toPromise();
       this.menu.conteoProductosCarrito(true);
+      }else {
+        this.router.navigate(['/loguin'])
+      }
     } catch (e) {
       console.log("error Parseado:" + JSON.stringify(e));
       console.log("error como objeto:" + e);
@@ -1318,6 +1328,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
     this.loading = true;
     try {
 
+
       console.log('INFORMACION COMPRA' + JSON.stringify(this.informacionCompra));
       let response = await this._compraServicio.saveComprarProducto(this.informacionCompra).toPromise();
       this.mensageCorrecto(response.message);
@@ -1325,6 +1336,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
       this.modalService.dismissAll();
       this.obtenerProducto();
       this.loading = false;
+
     } catch (e) {
       this.loading = false;
       if (!(e instanceof HttpErrorResponse)) {
@@ -1361,9 +1373,6 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
     }
 
   }
-
-
-
 
 
   mensageError(mensaje) {
