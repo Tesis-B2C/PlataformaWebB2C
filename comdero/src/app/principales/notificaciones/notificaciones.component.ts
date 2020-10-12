@@ -5,6 +5,7 @@ import {NotificacionesServicio} from "../../servicios/notificaciones.servicio";
 import {TiendaServicio} from "../../servicios/tienda.servicio";
 import {Router} from "@angular/router";
 import {WebSocketService} from "../../servicios/WebSockets/web-socket.service";
+import {MenuComponent} from "../menu/menu.component";
 
 @Component({
   selector: 'app-notificaciones',
@@ -13,7 +14,7 @@ import {WebSocketService} from "../../servicios/WebSockets/web-socket.service";
 })
 export class NotificacionesComponent implements OnInit {
 
-  constructor(public _socketServicio:WebSocketService, public router: Router,public _tiendaServicio:TiendaServicio,public _notificacionesServicio:NotificacionesServicio) { }
+  constructor(public menu: MenuComponent,public _socketServicio:WebSocketService, public router: Router,public _tiendaServicio:TiendaServicio,public _notificacionesServicio:NotificacionesServicio) { }
 
   ngOnInit() {
     this.getMisNotificaciones();
@@ -25,11 +26,25 @@ export class NotificacionesComponent implements OnInit {
   }
 
 
-  public async  direccionar(codigo ,tienda){
-    let identidadTienda = await this._tiendaServicio.getDatosTienda(tienda).toPromise();
-    localStorage.setItem("identityTienda", JSON.stringify(identidadTienda.data));
-    this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/gestionar-pedido/',codigo]);
+  public async  direccionar(codigo ,tienda, idNotificacion,estado){
+    try {
+      let response = await this._notificacionesServicio.updateEstadoNotificacion(idNotificacion,estado).toPromise();
+      let identidadTienda = await this._tiendaServicio.getDatosTienda(tienda).toPromise();
+      localStorage.setItem("identityTienda", JSON.stringify(identidadTienda.data));
+       this.menu.getMisNotificaciones();
+      this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/gestionar-pedido/',codigo]);
+    } catch (e) {
+
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
+    }
   }
+
 
   public notificaciones;
 

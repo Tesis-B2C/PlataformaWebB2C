@@ -17,9 +17,18 @@ export class GestionarPedidoComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.idPedido = this.route.snapshot.params.id;
-    await this.getPedido();
+    this.route.params.subscribe(params => {
+      this.idPedido = params['id'];
+      this.getPedido();
+    })
 
+  }
+
+  ngOnChanges() {
+    this.route.params.subscribe(params => {
+      this.idPedido = params['id'];
+      this.getPedido();
+    })
   }
 
   async getPedido() {

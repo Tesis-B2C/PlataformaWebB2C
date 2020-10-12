@@ -28,7 +28,7 @@
                 <div class="dropdown-divider"></div>
                 <div class="border-bottom " *ngFor="let notificaciones of this.notificaciones?.limitadas">
 
-                  <a class="dropdown-item " (click)="direccionar(notificaciones.CODIGO_COMPRA, notificaciones.CODIGO_TIENDA)">
+                  <a class="dropdown-item " (click)="direccionar(notificaciones.CODIGO_COMPRA, notificaciones.CODIGO_TIENDA,notificaciones.ID_NOTIFICACION,1)">
 
                     <p class="notificaciones text-success"><a class="fa fa-exclamation-circle"></a>
                       &nbsp;&nbsp;{{notificaciones.ASUNTO}}</p>
@@ -103,7 +103,7 @@
                 <div class="dropdown-divider"></div>
                 <div class="border-bottom " *ngFor="let notificaciones of this.notificaciones?.limitadas">
 
-                  <a class="dropdown-item " (click)="direccionar(notificaciones.CODIGO_COMPRA, notificaciones.CODIGO_TIENDA)">
+                  <a class="dropdown-item " (click)="direccionar(notificaciones.CODIGO_COMPRA, notificaciones.CODIGO_TIENDA,notificaciones.ID_NOTIFICACION,1)">
 
                     <p class="notificaciones text-success"><a class="fa fa-exclamation-circle"></a>
                       &nbsp;&nbsp;{{notificaciones.ASUNTO}}</p>

@@ -6,6 +6,8 @@ import {NotificacionesServicio} from "../../../servicios/notificaciones.servicio
 import {Router} from "@angular/router";
 import {WebSocketService} from "../../../servicios/WebSockets/web-socket.service";
 
+import {MenuGestionTiendasComponent} from "../menu-gestion-tiendas/menu-gestion-tiendas.component";
+
 @Component({
   selector: 'app-notificaciones',
   templateUrl: './notificaciones.component.html',
@@ -14,7 +16,7 @@ import {WebSocketService} from "../../../servicios/WebSockets/web-socket.service
 export class NotificacionesComponent implements OnInit {
   public identidadTienda;
 
-  constructor(public _socketServicio:WebSocketService, public router: Router, public _tiendaServicio: TiendaServicio, public _notificacionesServicio: NotificacionesServicio) {
+  constructor(public menu: MenuGestionTiendasComponent, public  _socketServicio: WebSocketService, public router: Router, public _tiendaServicio: TiendaServicio, public _notificacionesServicio: NotificacionesServicio) {
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
   }
 
@@ -28,10 +30,24 @@ export class NotificacionesComponent implements OnInit {
   }
 
 
-  public async direccionar(codigo, tienda) {
-    let identidadTienda = await this._tiendaServicio.getDatosTienda(tienda).toPromise();
-    localStorage.setItem("identityTienda", JSON.stringify(identidadTienda.data));
-    this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/gestionar-pedido/', codigo]);
+  public async direccionar(codigo, tienda, idNotificacion, estado) {
+    try {
+      let response = await this._notificacionesServicio.updateEstadoNotificacion(idNotificacion, estado).toPromise();
+      let identidadTienda = await this._tiendaServicio.getDatosTienda(tienda).toPromise();
+      localStorage.setItem("identityTienda", JSON.stringify(identidadTienda.data));
+      this.menu.getMisNotificacionesTienda();
+
+      this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/gestionar-pedido/', codigo]);
+    } catch (e) {
+
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
+    }
   }
 
   public notificaciones;

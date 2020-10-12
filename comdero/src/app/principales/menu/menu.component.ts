@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import {HttpErrorResponse} from "@angular/common/http";
 import {NotificacionesServicio} from "../../servicios/notificaciones.servicio";
 import {WebSocketService} from "../../servicios/WebSockets/web-socket.service";
-
+import { NgxPushNotificationService } from 'ngx-push-notification';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -25,9 +25,23 @@ export class MenuComponent implements OnInit, OnDestroy {
   public datosObtenidos: any;
   public carritoIdentidad;
 
-  constructor(public _socketServicio: WebSocketService, public _notificacionesServicio: NotificacionesServicio, public _carritoServicio: CarritoServicio, public _agenteServicio: AgenteServicio, public route: ActivatedRoute, public _tiendaServicio: TiendaServicio, public router: Router) {
+  constructor(private ngxPushNotificationService: NgxPushNotificationService,public _socketServicio: WebSocketService, public _notificacionesServicio: NotificacionesServicio, public _carritoServicio: CarritoServicio, public _agenteServicio: AgenteServicio, public route: ActivatedRoute, public _tiendaServicio: TiendaServicio, public router: Router) {
   }
-
+  notify() {
+    this.ngxPushNotificationService.showNotification({
+      title: 'Nueva Notificacion',
+      body: 'Revisa la plataforma COMDERO',
+      icon: 'assets/images/logoValid.png'
+    }).subscribe((res: any) => {
+      if (res.type === 'show') {
+        console.log('show');
+      } else if (res.type === 'click') {
+        console.log('click');
+      } else {
+        console.log('close');
+      }
+    });
+  }
 
   async ngOnInit() {
     console.log("user", JSON.stringify(this._agenteServicio.getIdentity()));
@@ -38,15 +52,29 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.getMisNotificaciones();
     this._socketServicio.ioSocket.on('notificacion', res => {
       this.getMisNotificaciones();
+      this.notify();
 
 
     })
   }
 
-  public async  direccionar(codigo ,tienda){
+  public async  direccionar(codigo ,tienda, idNotificacion,estado){
+    try {
+      let response = await this._notificacionesServicio.updateEstadoNotificacion(idNotificacion,estado).toPromise();
     let identidadTienda = await this._tiendaServicio.getDatosTienda(tienda).toPromise();
     localStorage.setItem("identityTienda", JSON.stringify(identidadTienda.data));
+
     this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/gestionar-pedido/',codigo]);
+    } catch (e) {
+
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
+    }
   }
 
   public notificaciones;

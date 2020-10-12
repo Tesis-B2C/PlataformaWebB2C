@@ -33,4 +33,13 @@ export class NotificacionesServicio {
     });
     return this._http.get<objeto>(this.url + "getMisNotificacionesTienda/"+idTienda, {headers: headers});
   }
+
+
+  updateEstadoNotificacion(idNotificacion, estado_a_cambiar) {
+    debugger;
+    let obj={estado:estado_a_cambiar}
+    let params = JSON.stringify(obj);
+    let headers = new HttpHeaders({"Content-type": "application/json", "Authorization": this._agenteServicio.getToken()});
+    return this._http.put<objeto>(this.url + "updateEstadoNotificacion/"+idNotificacion, params, {headers: headers});
+  }
 }

@@ -2,6 +2,7 @@
 
 const Notificacion = require('../models/notificacion'); //importar el modelo del usuario  o lo que son las clases comunes
 const Agente = require('../models/agente');
+
 async function getMisNotificaciones(req, res) {
     let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
     try {
@@ -11,19 +12,25 @@ async function getMisNotificaciones(req, res) {
             });
         } else {
             let NotificacionesObtenidasLimitadas = await Notificacion.findAll({
-                where: {AGENTE_RECEPTOR: req.user.id, ESTADO_NOTIFICACION:0}, include: [{model: Agente}],
-                order: [['ID_NOTIFICACION', 'DESC']],limit:5
+                where: {AGENTE_RECEPTOR: req.user.id}, include: [{model: Agente}],
+                order: [['ID_NOTIFICACION', 'DESC']], limit: 5
 
             });
             let NotificacionesObtenidas = await Notificacion.findAll({
-                where: {AGENTE_RECEPTOR: req.user.id, ESTADO_NOTIFICACION:0}, include: [{model: Agente}],
+                where: {AGENTE_RECEPTOR: req.user.id, ESTADO_NOTIFICACION: 0}, include: [{model: Agente}],
                 order: [['ID_NOTIFICACION', 'DESC']],
-
             });
 
-            let obj={
-                limitadas:NotificacionesObtenidasLimitadas,
-                todas:NotificacionesObtenidas
+            let NotificacionesObtenidasCompletas = await Notificacion.findAll({
+                where: {AGENTE_RECEPTOR: req.user.id}, include: [{model: Agente}],
+                order: [['ID_NOTIFICACION', 'DESC']],
+            });
+
+
+            let obj = {
+                limitadas: NotificacionesObtenidasLimitadas,
+                todas: NotificacionesObtenidas,
+                completas:NotificacionesObtenidasCompletas
             }
 
             res.status(200).send({
@@ -49,19 +56,23 @@ async function getMisNotificacionesTienda(req, res) {
             });
         } else {
             let NotificacionesObtenidasLimitadas = await Notificacion.findAll({
-                where: {CODIGO_TIENDA: req.params.id, ESTADO_NOTIFICACION:0}, include: [{model: Agente}],
-                order: [['ID_NOTIFICACION', 'DESC']],limit:5
+                where: {CODIGO_TIENDA: req.params.id}, include: [{model: Agente}],
+                order: [['ID_NOTIFICACION', 'DESC']], limit: 5
 
             });
             let NotificacionesObtenidas = await Notificacion.findAll({
-                where: {CODIGO_TIENDA: req.params.id, ESTADO_NOTIFICACION:0}, include: [{model: Agente}],
+                where: {CODIGO_TIENDA: req.params.id, ESTADO_NOTIFICACION: 0}, include: [{model: Agente}],
                 order: [['ID_NOTIFICACION', 'DESC']],
 
             });
-
-            let obj={
-                limitadas:NotificacionesObtenidasLimitadas,
-                todas:NotificacionesObtenidas
+            let NotificacionesObtenidasCompletas = await Notificacion.findAll({
+                where: {AGENTE_RECEPTOR: req.user.id}, include: [{model: Agente}],
+                order: [['ID_NOTIFICACION', 'DESC']],
+            });
+            let obj = {
+                limitadas: NotificacionesObtenidasLimitadas,
+                todas: NotificacionesObtenidas,
+                completas:NotificacionesObtenidasCompletas
             }
 
             res.status(200).send({
@@ -78,7 +89,40 @@ async function getMisNotificacionesTienda(req, res) {
 }
 
 
+async function updateEstadoNotificacion(req, res) {
+
+    try {
+        let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
+
+        if (!verificar) {
+            return res.status(401).send({
+                message: "No tiene los permisos necesarios"
+            });
+        } else {
+            let notificacionActualizada = await Notificacion.update({
+                ESTADO_NOTIFICACION: req.body.estado,
+            }, {
+                where: {ID_NOTIFICACION: req.params.id},
+
+            });
+
+
+            res.status(200).send({
+                message: "La notificación ha sido actualizada correctamente"
+            });
+
+        }
+    } catch (err) {
+
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
+
+
 module.exports = {          // para exportar todas las funciones de este modulo
     getMisNotificaciones,
-    getMisNotificacionesTienda
+    getMisNotificacionesTienda,
+    updateEstadoNotificacion
 };
