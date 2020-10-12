@@ -32,8 +32,8 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   notify() {
     this.ngxPushNotificationService.showNotification({
-      title: 'Nueva Notificacion',
-      body: 'Revisa la plataforma COMDERO',
+      title: 'COMDERO',
+      body: 'Nueva notificación',
       icon: 'assets/images/logoValid.png'
     }).subscribe((res: any) => {
       if (res.type === 'show') {

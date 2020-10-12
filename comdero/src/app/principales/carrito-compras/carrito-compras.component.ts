@@ -13,6 +13,7 @@ import {ICreateOrderRequest, IPayPalConfig} from "ngx-paypal";
 import Swal from "sweetalert2";
 import {CompraServicio} from "../../servicios/compra.servicio";
 import {HttpErrorResponse} from "@angular/common/http";
+import {CorreoServicio} from "../../servicios/correo.servicio";
 @Component({
   selector: 'app-carrito-compras',
   templateUrl: './carrito-compras.component.html',
@@ -51,7 +52,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
   private LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
   private soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
 
-  constructor(public _compraServicio: CompraServicio, public _dpaServicio: DpaServicio, private modalService: NgbModal, public datePipe: DatePipe, public menu: MenuComponent, public toastr: ToastrService, public  _agenteServicio: AgenteServicio, public _carritoServicio: CarritoServicio) {
+  constructor(public _correoServicio:CorreoServicio, public _compraServicio: CompraServicio, public _dpaServicio: DpaServicio, private modalService: NgbModal, public datePipe: DatePipe, public menu: MenuComponent, public toastr: ToastrService, public  _agenteServicio: AgenteServicio, public _carritoServicio: CarritoServicio) {
   }
 
   async ngOnInit() {
@@ -1029,6 +1030,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
       await this.calcularPrecios();
       this.menu.conteoProductosCarrito(true);
       this.loading = false;
+      this._correoServicio.correoNuevaCompra(response.data).toPromise();
     } catch (e) {
       this.loading = false;
       if (!(e instanceof HttpErrorResponse)){

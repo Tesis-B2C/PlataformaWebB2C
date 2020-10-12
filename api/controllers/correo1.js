@@ -140,9 +140,41 @@ async function  correoNuevaCompra(req, res) {
 }
 
 
+async function correoPedidoTramitado(req, res) {
+
+    let agente_emisor= await Agente.findOne({where:{COD_AGENTE:req.body.AGENTE_EMISOR}});
+    let agente_receptor= await Agente.findOne({where:{COD_AGENTE:req.body.AGENTE_RECEPTOR}});
+    let tienda= await Tienda.findOne({where:{NUM_TIENDA:req.body.CODIGO_TIENDA}});
+
+    console.log(" datos que entraro a nueva cpmra  ", req.body);
+    var mailOptions = {
+        from: 'doginotificaciones@gmail.com',
+        to: agente_receptor.dataValues.CORREO,
+        subject: req.body.ASUNTO,
+        text: req.body.MENSAJE + ' por: ' + req.body.NOMBRE_TIENDA+' por favor revisa COMDERO para más detalle de la compra No :'+req.body.CODIGO_COMPRA,
+        html:  req.body.MENSAJE + ' por: ' +req.body.NOMBRE_TIENDA+' por favor revisa: &nbsp; <a href="http://localhost:4200/principales/menu/principal">comdero.com/</a> &nbsp; para más detalle de la compra No:'+req.body.CODIGO_COMPRA
+    };
+
+    transporter.sendMail(mailOptions, function (error) {
+        if (error) {
+            console.log(error);
+            res.status(402).send({
+                message: "Al parecer existe un error al enviar el correo de confirmación, intentelo nuevamente" + error
+            });
+        } else {
+            res.status(200).send({
+                message: "El correo ha sido enviado porfavor verifiquelo"
+            });
+        }
+    });
+
+
+}
+
 module.exports = {
     correoActivacion,
     correoCambioContrasenia,
     correoCambioCorreo,
-    correoNuevaCompra
+    correoNuevaCompra,
+    correoPedidoTramitado
 };

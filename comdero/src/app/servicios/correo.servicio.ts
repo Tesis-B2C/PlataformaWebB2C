@@ -59,7 +59,7 @@ export class CorreoServicio {
     let params = json;
     console.log(params);
     let headers = new HttpHeaders({ "Content-type": "application/json" });
-    return this._http.post<objeto>(this.url + "correoActivacion/",params , { headers: headers });
+    return this._http.post<objeto>(this.url + "correoPedidoTramitado/",params , { headers: headers });
   }
 
 

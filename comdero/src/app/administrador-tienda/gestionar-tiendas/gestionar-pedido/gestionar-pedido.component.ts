@@ -4,6 +4,7 @@ import {CompraServicio} from "../../../servicios/compra.servicio";
 import {GLOBAL} from "../../../servicios/global";
 import Swal from "sweetalert2";
 import {HttpErrorResponse} from "@angular/common/http";
+import {CorreoServicio} from "../../../servicios/correo.servicio";
 @Component({
   selector: 'app-gestionar-pedido',
   templateUrl: './gestionar-pedido.component.html',
@@ -13,7 +14,7 @@ export class GestionarPedidoComponent implements OnInit {
   public idPedido;
   public compra;
 
-  constructor(public _compraServicio: CompraServicio, public router: Router, public route: ActivatedRoute) {
+  constructor(public _correoServicio:CorreoServicio,public _compraServicio: CompraServicio, public router: Router, public route: ActivatedRoute) {
   }
 
   async ngOnInit() {
@@ -88,6 +89,7 @@ export class GestionarPedidoComponent implements OnInit {
     try {
       let response = await this._compraServicio.updateEstadoPedido(this.idPedido, estado).toPromise();
       this.mensageCorrecto(response.message);
+      this._correoServicio.correoPedidoTramitado(response.data).toPromise();
       this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/listado-pedidos'])
       this.loading = false;
     } catch (e) {

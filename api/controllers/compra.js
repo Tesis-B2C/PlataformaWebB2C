@@ -343,7 +343,8 @@ async function saveComprarProductoCarrito(req, res) {
 
 
             res.status(200).send({
-                message: "La compra se ha realizado correctamente su código de compra es: <br>  <strong style='font-size: xx-large'>" + compraGuardada.dataValues.NUM_COMPRA + "</strong>"
+                message: "La compra se ha realizado correctamente su código de compra es: <br>  <strong style='font-size: xx-large'>" + compraGuardada.dataValues.NUM_COMPRA + "</strong>",
+                data:notificacionCreada
             });
 
             await t.commit();
@@ -476,7 +477,6 @@ async function getMisPedidos(req, res) {
                 pedidosObtenidos = await Compra.findAll({
                     where: {
                         TIENDA: req.params.idTienda,
-                        COD_AGENTE: req.user.id,
                         ESTADO_COMPRA: req.params.estado
                     }, order: [['NUM_COMPRA', 'DESC']],
                     include: [{model: Agente}, {
@@ -594,7 +594,8 @@ async function updateEstadoPedido(req, res) {
                 }
             }
             res.status(200).send({
-                message: "El pedido ha sido tramitado"
+                message: "El pedido ha sido tramitado",
+                data:notificacionCreada
             });
             await t.commit();
 
