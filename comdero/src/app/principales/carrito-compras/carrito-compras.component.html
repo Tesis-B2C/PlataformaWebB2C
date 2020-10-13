@@ -900,11 +900,11 @@
               <div class="col-12 col-md-5 text-center text-md-left  mb-md-0 mb-4">
                 <p class="text-uppercase ">Producto</p>
                 <div class="itemside">
-                  <div class="aside"><img [src]="getImagen(producto.IMAGEN_MOSTRAR)" height="125px" width="125px">
+                  <div class="aside" routerLink="../../detalle-producto/{{producto.VARIANTE.PRODUCTO.ID_PRODUCTO}}"><img [src]="getImagen(producto.IMAGEN_MOSTRAR)" height="125px" width="125px">
                   </div>
                   <figcaption class="info text-left">
 
-                    <a href="#" class=" price">{{producto.VARIANTE.PRODUCTO.NOMBRE_PRODUCTO}}</a>
+                    <a routerLink="../../detalle-producto/{{producto.VARIANTE.PRODUCTO.ID_PRODUCTO}}" class=" price">{{producto.VARIANTE.PRODUCTO.NOMBRE_PRODUCTO}}</a>
                     <p class="text-muted small ">Estado:{{producto.VARIANTE.PRODUCTO.CONDICION}}</p>
                     <p class="text-muted small ">Marca: {{producto.VARIANTE.PRODUCTO.MARCA}}</p>
                     <p class="text-muted small "
