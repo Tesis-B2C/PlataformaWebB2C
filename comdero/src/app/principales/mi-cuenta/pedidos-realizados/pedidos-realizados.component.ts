@@ -34,7 +34,7 @@ export class PedidosRealizadosComponent implements OnInit {
   }
 
 
-  pdf(i) {
+  pdf(i, codigo) {
     html2canvas(document.getElementById('recibo'+i), {scale: 2}).then(function (canvas) {
       var img = canvas.toDataURL("image/png");
       var context = canvas.getContext("2d");
@@ -46,7 +46,7 @@ export class PedidosRealizadosComponent implements OnInit {
       const pdfWidth = doc.internal.pageSize.getWidth();
       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
       doc.addImage(img, 'PNG', 15, 20, pdfWidth-30, pdfHeight);
-      doc.save('Reporte_Notas_Alumno.pdf');
+      doc.save('Orden No'+codigo+'.pdf');
     });
   }
 

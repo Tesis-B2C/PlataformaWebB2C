@@ -2,16 +2,16 @@
 
 <div class="container mt-5 ">
   <div class="row  justify-content-center" id="top">
-    <h4 class=" col-11  ">Pedido No {{compra.NUM_COMPRA}} </h4>
-    <hr class="col-11  ">
+    <h4 class=" col-12  ">Pedido No {{compra.NUM_COMPRA}} </h4>
+    <hr class="col-12  ">
   </div>
 
-  <div class="card col-md-11 mx-auto">
-    <div class="  card-body ">
+  <div class="p-md-4   mx-auto">
 
-      <div class="row justify-content-center mb-4 no-gutters  "
+
+      <div class="row justify-content-between mb-4 no-gutters  "
            *ngFor="let producto of compra?.COMPRA_PRODUCTOs; let i= index">
-        <div class="col-12 col-md-5    mb-md-0 mb-4">
+        <div class="col-5 col-md-4    mb-md-0 mb-4 ">
           <p class="text-uppercase text-center mb-0 ">Producto</p>
           <div class="itemside mx-auto">
             <div class="aside"><img [src]="getImagen(producto.IMAGEN_MOSTRAR)" height="50px" width="50px">
@@ -33,13 +33,13 @@
             </figcaption>
           </div>
         </div>
-        <div class="col-6 col-md-3  mb-3 mb-md-0 text-center    ">
+        <div class="col-3 col-md-4  mb-3 mb-md-0 text-center     ">
           <p class="text-uppercase mb-0 ">Cantidad </p>
-          <p class="price mb-0">{{producto.CANTIDAD_PRODUCTO}}</p>
+          <p class="price mb-0 ">{{producto.CANTIDAD_PRODUCTO}}</p>
           <a style="font-size: x-small; text-transform: lowercase">({{producto.VARIANTE.MEDIDA}})</a>
 
         </div>
-        <div class="col-6 col-md-3  text-center   ">
+        <div class="col-3 col-md-4  text-md-right text-center   ">
           <p class="text-uppercase mb-0 ">Precio</p>
           <div class="price-wrap">
             <p
@@ -80,18 +80,18 @@
         <dl class="dlist-align">
           <dt><i class="icon text-success fa fa-truck"></i> &nbsp;Método de envio:</dt>
           <dd class="text-center">
-            <strong *ngIf="compra.METODO_ENVIO=='Acordar'">Acordar con el vendedor</strong>
-            <strong *ngIf="compra.METODO_ENVIO=='Retiro'">Retiro desde la tienda</strong>
-            <strong *ngIf="compra.METODO_ENVIO=='Domicilio'">Envío a domicilio</strong>
+            <strong *ngIf="compra?.METODO_ENVIO=='Acordar'">Acordar con el vendedor</strong>
+            <strong *ngIf="compra?.METODO_ENVIO=='Retiro'">Retiro desde la tienda</strong>
+            <strong *ngIf="compra?.METODO_ENVIO=='Domicilio'">Envío a domicilio</strong>
           </dd>
           <dd class="text-right text-dark b"> {{compra.COSTO_ENVIO | currency}}</dd>
         </dl>
         <dl class="dlist-align">
           <dt><i class="icon text-success fa fa-cash-register"></i> &nbsp;Método de pago:</dt>
           <dd class="text-center">
-            <strong *ngIf="compra.METODO_PAGO=='Efectivo'">Efectivo</strong>
-            <strong *ngIf="compra.METODO_PAGO=='Transferencia'">Transferencia bancaria</strong>
-            <strong *ngIf="compra.METODO_PAGO=='Electrónico'">PayPal</strong>
+            <strong *ngIf="compra?.METODO_PAGO=='Efectivo'">Efectivo</strong>
+            <strong *ngIf="compra?.METODO_PAGO=='Transferencia'">Transferencia bancaria</strong>
+            <strong *ngIf="compra?.METODO_PAGO=='Electrónico'">PayPal</strong>
           </dd>
           <dd class="text-right text-dark b"> {{compra.RECARGO_PAYPAL | currency}}</dd>
         </dl>
@@ -151,10 +151,10 @@
 
 
       </div> <!-- card-body.// -->
-    </div>
+
 
   </div>
-  <div class="container px-md-5 px-0" *ngIf="compra.ESTADO_COMPRA==0">
+  <div class="mt-3" *ngIf="compra.ESTADO_COMPRA==0">
     <button class="btn btn-primary dis-block w-100 " [disabled]="loading" (click)="updatePedido(1)">Tramitar ahora
     </button>
     <p class="text-danger small ">Debes dar click en "Tramitar ahora" cuando tengas listo el pedido</p>

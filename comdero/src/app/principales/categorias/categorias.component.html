@@ -1,23 +1,23 @@
 <body>
 <section class="section-pagetop bg  py-1 py-md-4">
-  <div class="container">
+  <div class="container-fluid px-5">
     <h2 class="title-page text-center text-md-left">Categorías para comprar y vender</h2>
   </div> <!-- container //  -->
 </section>
-<div class="container-fluid mt-5">
+<div class="container-fluid mt-5 ">
 
 
-  <div class="row justify-content-center mt-5">
+  <div class="row justify-content-center mt-5 ">
 
     <div class="col-md-12" id="panelUno">
 
-      <form #formMetodoPago class="card card-body pt-4">
+      <form #formMetodoPago class=" pt-4">
 
         <div *ngFor="let c11 of c1; let i = index">
           <div class="px-md-2">
             <div class="form-row ">
               <div class=" mx-auto d-flex align-items-center col-md-4 ">
-                <div class="mx-auto">
+                <div class="">
                   <p class=" iconos-pagos "><span class="{{this.vectorIconos[i]}} fa-4x" style="color: #2a4c75"></span></p>
                   <h5 class="mb-3  text-center my-3" style="font-weight: bold">{{c11.NOMBRE}}</h5>
                 </div>
