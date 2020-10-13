@@ -154,13 +154,13 @@ async function updateCantidadProducto(req, res) {
                 }, {
                     where: {NUM_VARIANTE: req.params.num_variante, ID_CARRITO: req.body.id_carrito},
                 });
-                if (cantidadActualizada) {
+                
                     res.status(200).send({
                         message: "Se actualizó la cantidad correctamente",
                         data: req.body.cantidad
 
                     });
-                }
+                
             } else {
                 await Carrito_Producto.update({
                     CANTIDAD_PRODUCTO_CARRITO: verificarCantidad.dataValues.STOCK,

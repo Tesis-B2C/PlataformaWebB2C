@@ -384,7 +384,7 @@ async function actualizarContrasenia(req, res) {
             if (result) {
                 await bcrypt.hash(req.body.contraseniaNueva, null, null, async function (err, hash) {
                     let agenteActualizado = await agente.update({CONTRASENIA: hash});
-                    if (agenteActualizado > 0) {
+                    if (agenteActualizado) {
                         res.status(200).send({message: 'La contraseña ha sido actualizada'});
                     } else {
                         res.status(402).send({message: 'No se ha podido actualizar la contraseña'});
