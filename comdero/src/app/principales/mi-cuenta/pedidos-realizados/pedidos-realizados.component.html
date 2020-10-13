@@ -325,11 +325,13 @@
         </div>
 
 
-        <div class="tab-pane fade" id="recibo{{i}}" role="tabpanel" aria-labelledby="recibo-tab">
+        <div class="tab-pane fade" id="recibo{{i}}" #recibo{{i}} role="tabpanel" aria-labelledby="recibo-tab">
           <h6 class="text-center mb-0">Detalles finales del pedido No {{compra.NUM_COMPRA}}</h6>
           <p>
-            <button class="text-center btn btn-link py-0 " style="font-size: small">Imprimir recibo</button>
+            <button class="text-center btn btn-link py-0 " style="font-size: small" (click)="pdf(i)">Imprimir recibo</button>
           </p>
+
+
           <div class="encabezado_recivo">
             <p><strong>Pedido realizado:</strong>&nbsp;&nbsp;{{compra.FECHA_COMPRA | date}}</p>
             <p><strong>Pedido COMDERO No:</strong>&nbsp;&nbsp;{{compra.NUM_COMPRA}}</p>

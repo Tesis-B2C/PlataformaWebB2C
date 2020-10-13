@@ -6,6 +6,10 @@ import Swal from "sweetalert2";
 import {NgbModal, NgbRatingConfig} from "@ng-bootstrap/ng-bootstrap";
 import {ValoracionServicio} from "../../../servicios/valoracion.servicio";
 import {HttpErrorResponse} from "@angular/common/http";
+import jsPDF from 'jspdf';
+
+import html2canvas from 'html2canvas';
+
 @Component({
   selector: 'app-pedidos-realizados',
   templateUrl: './pedidos-realizados.component.html',
@@ -25,9 +29,27 @@ export class PedidosRealizadosComponent implements OnInit {
   public calificacion = 0;
   public comentario;
 
-  constructor(public configRating2: NgbRatingConfig,public modalService: NgbModal, public toastr: ToastrService, public _compraServicio: CompraServicio, public _valoracionServicio: ValoracionServicio) {
- configRating2.readonly=false;
+  constructor(public configRating2: NgbRatingConfig, public modalService: NgbModal, public toastr: ToastrService, public _compraServicio: CompraServicio, public _valoracionServicio: ValoracionServicio) {
+    configRating2.readonly = false;
   }
+
+
+  pdf(i) {
+    html2canvas(document.getElementById('recibo'+i), {scale: 2}).then(function (canvas) {
+      var img = canvas.toDataURL("image/png");
+      var context = canvas.getContext("2d");
+      context.scale(2, 2);
+
+
+      var doc = new jsPDF('p', 'mm', 'a4');
+      const imgProps= doc.getImageProperties(img);
+      const pdfWidth = doc.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      doc.addImage(img, 'PNG', 15, 20, pdfWidth-30, pdfHeight);
+      doc.save('Reporte_Notas_Alumno.pdf');
+    });
+  }
+
 
   async ngOnInit() {
     await this.getMisCompras(this.estadoActivo, this.fechaActiva);
@@ -81,9 +103,9 @@ export class PedidosRealizadosComponent implements OnInit {
         compra.cupon = cupon;
       }
     } catch (e) {
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
@@ -99,9 +121,9 @@ export class PedidosRealizadosComponent implements OnInit {
     return this.noExite;
   }
 
-  public loading: boolean;
+  public  loading: boolean;
 
-  async updatePedido(idPedido, estado) {
+  async  updatePedido(idPedido, estado) {
     this.loading = true;
     try {
       let response = await this._compraServicio.updateEstadoPedido(idPedido, estado).toPromise();
@@ -114,9 +136,9 @@ export class PedidosRealizadosComponent implements OnInit {
       this.loading = false;
     } catch (e) {
       this.loading = false;
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
@@ -126,7 +148,7 @@ export class PedidosRealizadosComponent implements OnInit {
 
 
   abrirModalCalificacion(content) {
-    this.calificacion=0;
+    this.calificacion = 0;
     this.modalService.open(content, {centered: true, windowClass: 'animated backInDown'});
   }
 
@@ -134,8 +156,8 @@ export class PedidosRealizadosComponent implements OnInit {
   public cod_producto;
 
   productoActivo(id_producto, cod_producto) {
-    this.comentario=null;
-    this.calificacion=0;
+    this.comentario = null;
+    this.calificacion = 0;
     this.id_producto = id_producto;
     this.cod_producto = cod_producto;
   }
@@ -153,13 +175,13 @@ export class PedidosRealizadosComponent implements OnInit {
       this.mensageCorrecto(response.message);
       this.id_producto;
       this.cod_producto;
-      this.comentario=null;
+      this.comentario = null;
       this.calificacion = 0;
       await this.getMisCompras(this.estadoActivo, this.fechaActiva);
     } catch (e) {
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
