@@ -10,9 +10,10 @@ import {FormsModule} from "@angular/forms";
 import { CambiarContraseniaComponent } from './cambiar-contrasenia/cambiar-contrasenia.component';
 import { PedidosRealizadosComponent } from './pedidos-realizados/pedidos-realizados.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { DetallePedidoRealizadoComponent } from './detalle-pedido-realizado/detalle-pedido-realizado.component';
 
 @NgModule({
-  declarations: [MenuMiCuentaComponent, VisionGeneralComponent, DatosPersonalesComponent, CambiarContraseniaComponent, PedidosRealizadosComponent],
+  declarations: [MenuMiCuentaComponent, VisionGeneralComponent, DatosPersonalesComponent, CambiarContraseniaComponent, PedidosRealizadosComponent, DetallePedidoRealizadoComponent],
   imports: [
     CommonModule,
     MiCuentaRoutingModule,

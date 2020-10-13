@@ -58,6 +58,18 @@ export class CompraServicio {
 
 
 
+  getCompra(idCompra) {
+    let headers = new HttpHeaders({
+      "Content-type": "application/json",
+      "Authorization": this._agenteServicio.getToken()
+    });
+    return this._http.get<objeto>(this.url + "getCompra/"+idCompra, {headers: headers});
+  }
+
+
+
+
+  //// parte del proveedor
 
   getMisPedidos(estado, fechaInicio,fechaFin,idTienda) {
     let obj={

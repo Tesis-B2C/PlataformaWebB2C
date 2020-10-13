@@ -411,6 +411,41 @@ async function getMisCompras(req, res) {
     }
 }
 
+async function getCompra(req, res) {
+    let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
+    try {
+        if (!verificar) {
+            return res.status(401).send({
+                message: "No tiene los permisos necesarios"
+            });
+        } else {
+
+                let compraObtenida = await Compra.findOne({
+                    where: {
+                        NUM_COMPRA:req.params.id,
+                        COD_AGENTE: req.user.id,
+                    },
+                    include: [{
+                        model: Compra_Producto, include: {
+                            model: Variante,
+                            include: {model: Producto, include: {model: Oferta, include: {model: Tienda}}}
+                        }
+                    }, {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}]
+
+                });
+
+            res.status(200).send({
+                data: compraObtenida,
+                message: "Compra obtenida correcctamente"
+            });
+
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: 'error:' + err
+        });
+    }
+}
 
 async function getMisComprasRecientes(req, res) {
     let verificar = await Agente.findOne({where: {COD_AGENTE: req.user.id}});
@@ -612,8 +647,10 @@ module.exports = {
     saveComprarProducto,
     saveComprarProductoCarrito,
     getMisCompras,
+    getCompra,
+    getMisComprasRecientes,
     getMisPedidos,
     getPedido,
     updateEstadoPedido,
-    getMisComprasRecientes
+
 };

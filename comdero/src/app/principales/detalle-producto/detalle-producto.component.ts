@@ -256,7 +256,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
   }
 
   public banderaTipo: boolean;
-  public banderaTipoEntrega: boolean;
+  public banderaTipoEntrega: boolean=true;
 
   public cambiarTipo(value) {
     this.DatosFactura.Tipo = value;
@@ -624,7 +624,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
       } else {
         //NO TIENE AGREGADA LA DIRECCION
         this.DatosDireccion = new Agente(null, null, this.identidadComprador.NOMBRE,
-          null, null, null, 0, null,
+          null, null, this.identidadComprador.TIPO, 0, null,
           null, null, null, null,
           null);
 
@@ -634,7 +634,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
 
         this.informacionCompra.ID_AGENTE = null;
 
-        this.informacionCompra.DATOS_ENTREGA.TIPO_IDENTIFICACION_ENTREGA = null;
+        this.informacionCompra.DATOS_ENTREGA.TIPO_IDENTIFICACION_ENTREGA = this.identidadComprador.TIPO;
         this.informacionCompra.DATOS_ENTREGA.IDENTIFICACION_ENTREGA = null;
         this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA = null;
         this.informacionCompra.DATOS_ENTREGA.CALLE_SECUNDARIA_ENTREGA = null;

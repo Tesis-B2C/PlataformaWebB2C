@@ -1,0 +1,81 @@
+p {
+  font-size: smaller;
+  margin-top: 0;
+  margin-bottom: 0;
+  text-align: center;
+  font-weight: normal;
+}
+
+dt {
+  font-size: small;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-weight: normal;
+
+}
+
+
+a {
+  font-size: smaller;
+  margin-top: 0;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.nav-item .active {
+  font-size: smaller;
+  font-weight: normal;
+  text-decoration-line: underline;
+  background-color: transparent;
+  color: #007bff;
+
+}
+
+
+button {
+  font-size: small;
+}
+
+.encabezado_recivo > p {
+  text-align: left;
+  font-size: smaller;
+  color: black;
+}
+
+.encabezado_recivo > dl > dd {
+  text-align: left;
+  font-size: smaller;
+  color: black;
+}
+
+.encabezado_recivo > dl > dt {
+  text-align: left;
+  font-size: smaller;
+  color: black;
+}
+
+.nav-principal > li {
+  cursor: pointer;
+}
+
+
+.star {
+  font-size: xx-large;
+
+}
+
+/*
+.star {
+  font-size: xx-large;
+  color: #b0c4de;
+}
+.filled {
+  color: #1e90ff;
+}
+.bad {
+  color: #deb0b0;
+}
+.filled.bad {
+  color: #ff1e1e;
+}
+*/

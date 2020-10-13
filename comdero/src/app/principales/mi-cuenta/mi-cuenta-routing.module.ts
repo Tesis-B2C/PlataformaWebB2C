@@ -7,6 +7,7 @@ import {DatosPersonalesComponent} from "./datos-personales/datos-personales.comp
 
 import {CambiarContraseniaComponent} from "./cambiar-contrasenia/cambiar-contrasenia.component";
 import {PedidosRealizadosComponent} from "./pedidos-realizados/pedidos-realizados.component";
+import {DetallePedidoRealizadoComponent} from "./detalle-pedido-realizado/detalle-pedido-realizado.component";
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
       { path: 'datos-personales', component: DatosPersonalesComponent },
       { path: 'cambiar-contrasenia', component: CambiarContraseniaComponent },
       { path: 'pedidos-realizados', component: PedidosRealizadosComponent },
+      { path: 'detalle-pedido-realizado/:id', component: DetallePedidoRealizadoComponent },
      ]}];
 
 @NgModule({
