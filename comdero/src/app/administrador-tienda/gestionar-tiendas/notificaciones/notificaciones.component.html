@@ -9,7 +9,7 @@
   </div>
   <div class="row justify-content-center ">
 
-    <div *ngFor="let notificaciones of notificaciones?.completas" class="card mb-3 col-10 border-notificaiones noti " (click)="direccionar(notificaciones.CODIGO_COMPRA, notificaciones.CODIGO_TIENDA,notificaciones.ID_NOTIFICACION,1)">
+    <div *ngFor="let notificaciones of notificaciones?.completas"[ngClass]="{'border-notificaiones': notificaciones.ESTADO_NOTIFICACION==1,'border-notificaiones2': notificaciones.ESTADO_NOTIFICACION==0}"class="card mb-3 col-10   noti " (click)="direccionar(notificaciones.CODIGO_COMPRA, notificaciones.CODIGO_TIENDA,notificaciones.ID_NOTIFICACION,1)">
       <div class=" row no-gutters "  *ngIf="notificaciones.ENVIAR_A=='Tienda'">
         <div class="col-2 align-self-center">
 
@@ -17,14 +17,18 @@
 
         </div>
         <div class="col-10">
-          <div class="card-body">
+          <div class="card-body pb-0">
             <h5 class="card-title"  [ngClass]="{'text-success': notificaciones.ESTADO_NOTIFICACION==1, 'text-primary': notificaciones.ESTADO_NOTIFICACION==0}">{{notificaciones.ASUNTO}} <a class="float-right notificaciones" *ngIf="notificaciones.ESTADO_NOTIFICACION==1">Visto</a></h5>
             <p class="text-muted notificaciones"><i>De:{{notificaciones.AGENTE.NOMBRE}}</i></p>
             <p class="card-text notificaciones ">{{notificaciones.MENSAJE}}</p>
             <p class="notificaciones">Orden #: {{notificaciones.CODIGO_COMPRA}}</p>
             <p class="text-muted notificaciones"><i>Para:{{notificaciones.NOMBRE_TIENDA}}</i></p>
-
+            <p class=" mt-3  ">
+              <small class="text-muted text-center"> Emitida: el {{notificaciones.FECHA_NOTIFICACION }} </small>
+              <small class="text-muted text-center"> a las  {{notificaciones.HORA_NOTIFICACION}}</small></p>
           </div>
+
+
         </div>
       </div>
 

@@ -60,9 +60,11 @@ export class MenuComponent implements OnInit, OnDestroy {
     }
   }
 
-  public async direccionar(codigo, tienda, idNotificacion, estado) {
+  public async direccionar(codigo, tienda, idNotificacion, estado, estado_notificacion) {
     try {
-      let response = await this._notificacionesServicio.updateEstadoNotificacion(idNotificacion, estado).toPromise();
+      if (estado_notificacion == 0) {
+        let response = await this._notificacionesServicio.updateEstadoNotificacion(idNotificacion, estado).toPromise();
+      }
       let identidadTienda = await this._tiendaServicio.getDatosTienda(tienda).toPromise();
       localStorage.setItem("identityTienda", JSON.stringify(identidadTienda.data));
 
@@ -79,9 +81,11 @@ export class MenuComponent implements OnInit, OnDestroy {
     }
   }
 
-  public async direccionar2(idNotificacion, estado) {
+  public async direccionar2(idNotificacion, estado,estado_notificacion) {
     try {
-      let response = await this._notificacionesServicio.updateEstadoNotificacion(idNotificacion, estado).toPromise();
+      if (estado_notificacion == 0) {
+        let response = await this._notificacionesServicio.updateEstadoNotificacion(idNotificacion, estado).toPromise();
+      }
       this.router.navigate(['/principales/menu/mi-cuenta/menu-mi-cuenta/pedidos-realizados']);
       this.getMisNotificaciones();
     } catch (e) {

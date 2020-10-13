@@ -52,7 +52,7 @@
                 <div class="border-bottom " *ngFor="let notificaciones of this.notificaciones?.limitadas">
 
                   <a class="dropdown-item " *ngIf="notificaciones.ENVIAR_A=='Tienda'"
-                     (click)="direccionar(notificaciones.CODIGO_COMPRA, notificaciones.CODIGO_TIENDA, notificaciones.ID_NOTIFICACION, 1)">
+                     (click)="direccionar(notificaciones.CODIGO_COMPRA, notificaciones.CODIGO_TIENDA, notificaciones.ID_NOTIFICACION, 1, notificaciones.ESTADO_NOTIFICACION)">
 
                     <p class=" notificaciones text-success" style="text-transform: uppercase"
                        [ngClass]="{'text-success': notificaciones.ESTADO_NOTIFICACION==1, 'text-primary': notificaciones.ESTADO_NOTIFICACION==0}">
@@ -60,18 +60,22 @@
                       &nbsp;{{notificaciones.ASUNTO}}  <a class="float-right notificaciones"
                                                           *ngIf="notificaciones.ESTADO_NOTIFICACION==1">Visto</a>
                     </p>
-                    <div class="container">
+
                       <label class="notificaciones"><i
                         class="text-muted">De: {{notificaciones.AGENTE.NOMBRE}}</i></label>
                       <p class="notificaciones"> {{notificaciones.MENSAJE}}</p>
                       <p class="notificaciones">Orden #: {{notificaciones.CODIGO_COMPRA}}</p>
                       <label class="notificaciones"><i
                         class="text-muted">Para: {{notificaciones.NOMBRE_TIENDA}}</i></label>
-                    </div>
+
+
+                    <div class="form-row mt-2 pl-1">
+                      <small class="text-muted"> {{notificaciones.FECHA_NOTIFICACION }}</small>
+                      <small class="ml-auto text-muted"> {{notificaciones.HORA_NOTIFICACION}}</small></div>
                   </a>
 
                   <a class="dropdown-item " *ngIf="notificaciones.ENVIAR_A=='Usuario'"
-                     (click)="direccionar2(notificaciones.ID_NOTIFICACION, 1)">
+                     (click)="direccionar2(notificaciones.ID_NOTIFICACION, 1,notificaciones.ESTADO_NOTIFICACION)">
 
                     <p class="notificaciones text-success" style="text-transform: uppercase"
                        [ngClass]="{'text-success': notificaciones.ESTADO_NOTIFICACION==1, 'text-primary': notificaciones.ESTADO_NOTIFICACION==0}">
@@ -79,14 +83,18 @@
                       &nbsp;&nbsp;{{notificaciones.ASUNTO}}  <a class="float-right notificaciones"
                                                                 *ngIf="notificaciones.ESTADO_NOTIFICACION==1">Visto</a>
                     </p>
-                    <div class="container">
+
                       <label class="notificaciones"><i
                         class="text-muted">De: {{notificaciones.NOMBRE_TIENDA}}</i></label>
                       <p class="notificaciones"> {{notificaciones.MENSAJE}}</p>
                       <p class="notificaciones">Orden #: {{notificaciones.CODIGO_COMPRA}}</p>
                       <label class="notificaciones"><i
                         class="text-muted">Para: Usuario</i></label>
-                    </div>
+
+
+                    <div class="form-row mt-2 pl-1">
+                      <small class="text-muted"> {{notificaciones.FECHA_NOTIFICACION }}</small>
+                      <small class="ml-auto text-muted"> {{notificaciones.HORA_NOTIFICACION}}</small></div>
                   </a>
 
 
@@ -172,7 +180,7 @@
                 <div class="border-bottom item " *ngFor="let notificaciones of this.notificaciones?.limitadas">
 
                   <a class="dropdown-item " *ngIf="notificaciones.ENVIAR_A=='Tienda'"
-                     (click)="direccionar(notificaciones.CODIGO_COMPRA, notificaciones.CODIGO_TIENDA, notificaciones.ID_NOTIFICACION, 1)">
+                     (click)="direccionar(notificaciones.CODIGO_COMPRA, notificaciones.CODIGO_TIENDA, notificaciones.ID_NOTIFICACION, 1,notificaciones.ESTADO_NOTIFICACION)">
 
                     <p class=" notificaciones text-success" style="text-transform: uppercase"
                        [ngClass]="{'text-success': notificaciones.ESTADO_NOTIFICACION==1, 'text-primary': notificaciones.ESTADO_NOTIFICACION==0}">
@@ -180,14 +188,18 @@
                       &nbsp;{{notificaciones.ASUNTO}}  <a class="float-right notificaciones"
                                                           *ngIf="notificaciones.ESTADO_NOTIFICACION==1">Visto</a>
                     </p>
-                    <div class="container">
+
                       <label class="notificaciones"><i
                         class="text-muted">De: {{notificaciones.AGENTE.NOMBRE}}</i></label>
                       <p class="notificaciones"> {{notificaciones.MENSAJE}}</p>
                       <p class="notificaciones">Orden #: {{notificaciones.CODIGO_COMPRA}}</p>
                       <label class="notificaciones"><i
                         class="text-muted">Para: {{notificaciones.NOMBRE_TIENDA}}</i></label>
-                    </div>
+
+
+                    <div class="form-row mt-2 pl-1">
+                      <small class="text-muted"> {{notificaciones.FECHA_NOTIFICACION }}</small>
+                      <small class="ml-auto text-muted"> {{notificaciones.HORA_NOTIFICACION}}</small></div>
                   </a>
                   <a class="dropdown-item " *ngIf="notificaciones.ENVIAR_A=='Usuario'"
                      (click)="direccionar2(notificaciones.ID_NOTIFICACION, 1)">
@@ -198,7 +210,7 @@
                       &nbsp;&nbsp;{{notificaciones.ASUNTO}}  <a class="float-right notificaciones"
                                                                 *ngIf="notificaciones.ESTADO_NOTIFICACION==1">Visto</a>
                     </p>
-                    <div class="container">
+
                       <label class="notificaciones"><i
                         class="text-muted">De: {{notificaciones.NOMBRE_TIENDA}}</i></label>
                       <p class="notificaciones"> {{notificaciones.MENSAJE}}</p>
@@ -206,7 +218,10 @@
                       <label class="notificaciones"><i
                         class="text-muted">Para: Usuario</i></label>
 
-                    </div>
+                    <div class="form-row mt-2 pl-1">
+                      <small class="text-muted"> {{notificaciones.FECHA_NOTIFICACION }}</small>
+                      <small class="ml-auto text-muted"> {{notificaciones.HORA_NOTIFICACION}}</small></div>
+
                   </a>
                 </div>
                 <p class="text-center mt-1">

@@ -28,7 +28,7 @@
                 <div class="dropdown-divider"></div>
                 <div class="border-bottom " *ngFor="let notificaciones of this.notificaciones?.limitadas">
 
-                  <a class="dropdown-item " (click)="direccionar(notificaciones.CODIGO_COMPRA, notificaciones.CODIGO_TIENDA, notificaciones.ID_NOTIFICACION, 1)">
+                  <a class="dropdown-item " (click)="direccionar(notificaciones.CODIGO_COMPRA, notificaciones.CODIGO_TIENDA, notificaciones.ID_NOTIFICACION, 1,notificaciones.ESTADO_NOTIFICACION)">
 
                     <p class="notificaciones text-success" [ngClass]="{'text-success': notificaciones.ESTADO_NOTIFICACION==1, 'text-primary': notificaciones.ESTADO_NOTIFICACION==0}"><a class="fa fa-exclamation-circle"></a>
                       &nbsp;&nbsp;{{notificaciones.ASUNTO}}  <a class="float-right notificaciones" *ngIf="notificaciones.ESTADO_NOTIFICACION==1">Visto</a></p>
@@ -36,6 +36,10 @@
                     <p class="notificaciones"> {{notificaciones.MENSAJE}}</p>
                     <p class="notificaciones">Orden #: {{notificaciones.CODIGO_COMPRA}}</p>
                     <label class="notificaciones"><i class="text-muted">Para: {{notificaciones.NOMBRE_TIENDA}}</i></label>
+
+                    <div class="form-row mt-2 pl-1">
+                      <small class="text-muted"> {{notificaciones.FECHA_NOTIFICACION }}</small>
+                      <small class="ml-auto text-muted"> {{notificaciones.HORA_NOTIFICACION}}</small></div>
                   </a>
                 </div>
                 <p class="text-center mt-1">
@@ -104,7 +108,7 @@
                 <div class="dropdown-divider"></div>
                 <div class="border-bottom " *ngFor="let notificaciones of this.notificaciones?.limitadas">
 
-                  <a class="dropdown-item " (click)="direccionar(notificaciones.CODIGO_COMPRA, notificaciones.CODIGO_TIENDA, notificaciones.ID_NOTIFICACION, 1)">
+                  <a class="dropdown-item " (click)="direccionar(notificaciones.CODIGO_COMPRA, notificaciones.CODIGO_TIENDA, notificaciones.ID_NOTIFICACION, 1,notificaciones.ESTADO_NOTIFICACION)">
 
                     <p class="notificaciones text-success" [ngClass]="{'text-success': notificaciones.ESTADO_NOTIFICACION==1, 'text-primary': notificaciones.ESTADO_NOTIFICACION==0}"><a class="fa fa-exclamation-circle"></a>
                       &nbsp;&nbsp;{{notificaciones.ASUNTO}}  <a class="float-right notificaciones" *ngIf="notificaciones.ESTADO_NOTIFICACION==1">Visto</a></p>

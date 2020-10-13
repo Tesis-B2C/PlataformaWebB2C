@@ -44,9 +44,11 @@ export class MenuGestionTiendasComponent implements OnInit{
     })
   }
 
-  public async  direccionar(codigo ,tienda, idNotificacion,estado){
+  public async  direccionar(codigo ,tienda, idNotificacion,estado,estado_notificacion){
     try {
+      if(estado_notificacion==0){
       let response = await this._notificacionesServicio.updateEstadoNotificacion(idNotificacion,estado).toPromise();
+      }
       let identidadTienda = await this._tiendaServicio.getDatosTienda(tienda).toPromise();
       localStorage.setItem("identityTienda", JSON.stringify(identidadTienda.data));
       this.getMisNotificacionesTienda();
