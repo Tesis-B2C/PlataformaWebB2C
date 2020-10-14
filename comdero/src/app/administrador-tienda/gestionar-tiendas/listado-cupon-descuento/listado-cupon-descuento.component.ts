@@ -75,7 +75,7 @@ export class ListadoCuponDescuentoComponent implements OnInit {
       }
 
       this.result = this.misDescuentos;
-      console.log("mis productos", this.vectorDescuentos);
+      // console.log("mis productos", this.vectorDescuentos);
       this.loading = false;
     } catch (e) {
       debugger;
@@ -160,7 +160,7 @@ export class ListadoCuponDescuentoComponent implements OnInit {
       for (let i in this.result) {
         this.vectorDescuentos.add(this.result[i].ID_DESCUENTO);
       }
-      console.log("vector productos", this.vectorDescuentos)
+      // console.log("vector productos", this.vectorDescuentos)
 
 
     } else {
@@ -173,7 +173,7 @@ export class ListadoCuponDescuentoComponent implements OnInit {
     if (event.target.checked) {
       debugger
       this.vectorDescuentos.add(cod);
-      console.log("vector productos", this.vectorDescuentos)
+      // console.log("vector productos", this.vectorDescuentos)
     } else {
       //this.vectorDescuentos = new Set();
       this.vectorDescuentos.delete(cod)

@@ -65,7 +65,7 @@ export class EncabezadoTiendaComponent implements OnInit {
       this.idTienda = this.route.snapshot.params.id;
       let response = await this._tiendaServicio.getDetalleTiendaProducto(this.idTienda).toPromise();
       this.Tienda = response.data;
-      console.log("tienda buscada", JSON.stringify(this.Tienda));
+      // console.log("tienda buscada", JSON.stringify(this.Tienda));
     } catch (e) {
       if (!(e instanceof HttpErrorResponse)){
         console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
@@ -87,7 +87,7 @@ export class EncabezadoTiendaComponent implements OnInit {
 
     if (pathImagen) {
       this.Logo = GLOBAL.urlImagen + pathImagen;
-      console.log("direccion", this.Logo)
+      // console.log("direccion", this.Logo)
     }
     return this.Logo;
   }
@@ -97,7 +97,7 @@ export class EncabezadoTiendaComponent implements OnInit {
     let pathImagen = this.Tienda.BANNER;
     if (pathImagen) {
       this.Banner = GLOBAL.urlImagen + pathImagen;
-      console.log("direccion", this.Banner)
+      // console.log("direccion", this.Banner)
     }
     return this.Banner;
   }
@@ -136,7 +136,7 @@ export class EncabezadoTiendaComponent implements OnInit {
       this.categorias.add(c.PRODUCTO.PRODUCTO_CATEGORIA[0].CATEGORIum.NOMBRE);
 
     }
-    console.log("categorias", this.categorias);
+    // console.log("categorias", this.categorias);
 
   }
 

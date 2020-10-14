@@ -22,7 +22,7 @@ export class CorreoServicio {
   correoActivacion(objeto) {
     let json = JSON.stringify(objeto);
     let params = json;
-    console.log(params);
+  
     let headers = new HttpHeaders({"Content-type": "application/json"});
     return this._http.post<objeto>(this.url + "correoActivacion/", params, {headers: headers});
   }
@@ -31,7 +31,7 @@ export class CorreoServicio {
   correoCambioContrasenia(objeto) {
     let json = JSON.stringify(objeto);
     let params = json;
-    console.log(params);
+  
     let headers = new HttpHeaders({"Content-type": "application/json"});
     return this._http.post<objeto>(this.url + "correoCambioContrasenia/", params, {headers: headers});
   }
@@ -40,7 +40,7 @@ export class CorreoServicio {
   correoCambioCorreo(objeto) {
     let json = JSON.stringify(objeto);
     let params = json;
-    console.log(params);
+
     let headers = new HttpHeaders({"Content-type": "application/json"});
     return this._http.post<objeto>(this.url + "correoCambioCorreo/", params, {headers: headers});
   }
@@ -48,7 +48,7 @@ export class CorreoServicio {
   correoNuevaCompra(objeto) {
     let json = JSON.stringify(objeto);
     let params = json;
-    console.log(params);
+
     let headers = new HttpHeaders({ "Content-type": "application/json" });
     return this._http.post<objeto>(this.url + "correoNuevaCompra/",params , { headers: headers });
   }
@@ -57,7 +57,7 @@ export class CorreoServicio {
   correoPedidoTramitado(objeto) {
     let json = JSON.stringify(objeto);
     let params = json;
-    console.log(params);
+  
     let headers = new HttpHeaders({ "Content-type": "application/json" });
     return this._http.post<objeto>(this.url + "correoPedidoTramitado/",params , { headers: headers });
   }

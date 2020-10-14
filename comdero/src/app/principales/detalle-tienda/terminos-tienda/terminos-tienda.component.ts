@@ -26,7 +26,7 @@ export class TerminosTiendaComponent implements OnInit {
       this.idTienda = this.route.parent.snapshot.params.id;
       let response = await this._tiendaServicio.getDetalleTiendaProducto(this.idTienda).toPromise();
       this.Tienda = response.data;
-      console.log("tienda buscada INFORMACION ", this.Tienda);
+      // console.log("tienda buscada INFORMACION ", this.Tienda);
 
 
     } catch (e) {

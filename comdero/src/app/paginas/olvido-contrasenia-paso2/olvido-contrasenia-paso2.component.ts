@@ -27,7 +27,7 @@ export class OlvidoContraseniaPaso2Component implements OnInit {
         console.log("this.token",this.tokenTemporal);
       });*/
     this.tokenTemporal=this.route.snapshot.params.token;
-      console.log("this.token",this.tokenTemporal);
+      // console.log("this.token",this.tokenTemporal);
       let response = await this._agenteServicio.resetearContrasenia2(this.tokenTemporal, this.obj).toPromise();
        this.mensageCorrecto(response.message);
       this.router.navigate(['loguin']);

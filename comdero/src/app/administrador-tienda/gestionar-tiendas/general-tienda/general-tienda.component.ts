@@ -131,14 +131,14 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
       this.banderaDisableLunes = false;
       this.btnMasLunes = true;
       this.Editar_Dia_Atencion[0].Dia = 'Lunes';
-      console.log("Ya me llene el LUNES DIA" + JSON.stringify(this.Editar_Dia_Atencion));
+      // console.log("Ya me llene el LUNES DIA" + JSON.stringify(this.Editar_Dia_Atencion));
     } else {
       this.banderaCheckLunes = false;
       this.banderaDisableLunes = true;
       this.btnMasLunes = false;
       this.banderaActivaLunesJ2 = false;
       this.Editar_Dia_Atencion[0].Dia = null;
-      console.log("Ya me llene el LUNES DIA ME BORRE" + JSON.stringify(this.Editar_Dia_Atencion));
+      // console.log("Ya me llene el LUNES DIA ME BORRE" + JSON.stringify(this.Editar_Dia_Atencion));
     }
   }
 
@@ -314,7 +314,7 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
 
   /*-----------FIN HORARIO ATENCION--------------*/
   public cancelarModificacion() {
-    console.log('estoy pasando por cancelar');
+    // console.log('estoy pasando por cancelar');
     this.horario = null;
     this.banderaEdicionDeshabilitada = true;
 
@@ -366,7 +366,7 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
     this.Editar_Dia_Atencion = [];
     for (let i = 0; i < 7; i++)
       this.Editar_Dia_Atencion.push(new Horario_Atencion(null, null, null, null, null));
-    console.log('CAMCELAR' + JSON.stringify(this.Editar_Dia_Atencion));
+    // console.log('CAMCELAR' + JSON.stringify(this.Editar_Dia_Atencion));
     this.iniciarEdicion();
   }
 
@@ -429,7 +429,7 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
   }
 
   public iniciarEdicion() {
-    console.log('TERMINOS'+this.identidadTienda.TERMINOS_CONDICIONES);
+    // console.log('TERMINOS'+this.identidadTienda.TERMINOS_CONDICIONES);
     this.EditarTienda.Razon_Social = this.identidadTienda.RAZON_SOCIAL;
     this.EditarTienda.Nombre_Comercial = this.identidadTienda.NOMBRE_COMERCIAL;
     this.EditarTienda.Descripcion_Tienda = this.identidadTienda.DESCRIPCION_TIENDA;
@@ -460,7 +460,7 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
       this.banderaHoraConcreta = true;
       this.verConcretoBase();
     }
-    console.log("SOY LA TIENDA" + this.identidadTienda.HORARIO_ATENCION);
+    // console.log("SOY LA TIENDA" + this.identidadTienda.HORARIO_ATENCION);
     this.banderaEdicionDeshabilitada = true;
     this.editorConfig.editable = false;
   }
@@ -609,7 +609,7 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
       if (this.almenosUnDia() == true) {
         if (this.horarioObligatorio() == true) {
           this.Tienda_Editar_Enviar.Editar_Dias_Atencion = this.Editar_Dia_Atencion;
-          console.log("DIAS DE ATENCION A ENVIAR AL BACKLOCAL " + JSON.stringify(this.Editar_Dia_Atencion));
+          // console.log("DIAS DE ATENCION A ENVIAR AL BACKLOCAL " + JSON.stringify(this.Editar_Dia_Atencion));
           if (this.validarFormulario()) {
             this.actualizarGeneral();
           } else {
@@ -634,7 +634,7 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
 
   public validarFormulario() {
     debugger
-    console.log('hola check' + document.forms["FormGeneralTienda"].checkValidity());
+    // console.log('hola check' + document.forms["FormGeneralTienda"].checkValidity());
     if (document.forms["FormGeneralTienda"].checkValidity()) {
       return true;
     } else {
@@ -646,7 +646,7 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
     try {
       this.loading = true;
       this.Tienda_Editar_Enviar.EditarTienda = this.EditarTienda;
-      console.log("Esto quiero enviar de la TIENDA-----------" + JSON.stringify(this.Tienda_Editar_Enviar));
+      // console.log("Esto quiero enviar de la TIENDA-----------" + JSON.stringify(this.Tienda_Editar_Enviar));
       let response = await this._tiendaServicio.actualizarTiendaGeneral(this.Tienda_Editar_Enviar, this.identidadTienda.NUM_TIENDA).toPromise();
       let data = await this._tiendaServicio.getDatosTienda(this.identidadTienda.NUM_TIENDA).toPromise();
       debugger

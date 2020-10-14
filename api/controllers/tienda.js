@@ -103,11 +103,11 @@ async function registrarTienda(req, res) {
         }
     } catch (err) {
         if (fs.exists(path.resolve(req.files.logo[0].path))) {
-            console.log('existe');
+            // console.log('existe');
             await fs.unlink(path.resolve(req.files.logo[0].path));
         }
         if (fs.exists(path.resolve(req.files.banner[0].path))) {
-            console.log('existe');
+            // console.log('existe');
             await fs.unlink(path.resolve(req.files.banner[0].path));
         }
         await t.rollback();
@@ -263,7 +263,7 @@ async function updateEstadoTienda(req, res) {
 
 
 async function updatePersonalizacionTienda(req, res) {
-    console.log("files ", req.files);
+    // console.log("files ", req.files);
     try {
         let tiendaObtenida = await TIENDA.findOne({
             where: {NUM_TIENDA: req.params.id}
@@ -287,13 +287,13 @@ async function updatePersonalizacionTienda(req, res) {
         if (tiendaGuardado) {
             if (tiendaObtenida.dataValues.LOGO && req.files.logo) {
                 if (fs.exists(path.resolve(tiendaObtenida.dataValues.LOGO))) {
-                    console.log('existe');
+                    // console.log('existe');
                     await fs.unlink(path.resolve(tiendaObtenida.dataValues.LOGO));
                 }
             }
             if (tiendaObtenida.dataValues.BANNER && req.files.banner) {
                 if (fs.exists(path.resolve(tiendaObtenida.dataValues.BANNER))) {
-                    console.log('existe');
+                    // console.log('existe');
                     await fs.unlink(path.resolve(tiendaObtenida.dataValues.BANNER));
                 }
             }
@@ -843,7 +843,7 @@ async function obtenerFiltroBusquedaTodos(req, res) {
             },
             transaction: t
         });
-        console.log('TIENDAS OBTENDAD' + tiendasObtenidos);
+        // console.log('TIENDAS OBTENDAD' + tiendasObtenidos);
 
         vectorEnviar.push(tiendasObtenidos);
         vectorEnviar.push(productosObtenidos);

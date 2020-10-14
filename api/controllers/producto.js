@@ -32,8 +32,8 @@ async function saveProducto(req, res) {
         let variantes = JSON.parse(req.body.variantes);
         let vimagenes = JSON.parse(req.body.vimagenes);
         let categorias = JSON.parse(req.body.categorias);
-        console.log("imagenes", req.files);
-        console.log("objetos", oferta, producto, variantes, vimagenes, categorias);
+        // console.log("imagenes", req.files);
+        // console.log("objetos", oferta, producto, variantes, vimagenes, categorias);
         if (!oferta.Iva) {
             oferta.Iva = 0;
         }
@@ -108,7 +108,7 @@ async function saveProducto(req, res) {
 
         for (let i = 0; i < vvariantesGuardas.length; i++) {
             for (let j = 0; j < vimagenes[i].length; j++) {
-                console.log(vimagenes[i][j].Tamanio_Imagen);
+                // console.log(vimagenes[i][j].Tamanio_Imagen);
                 await Imagen_Producto.create({
                     NUM_VARIANTE: vvariantesGuardas[i].dataValues.NUM_VARIANTE,
                     NOMBRE_IMAGEN: vimagenes[i][j].Nombre_Imagen,
@@ -137,7 +137,7 @@ async function saveProducto(req, res) {
     } catch (err) {
         for (let h = 0; h < req.files.length; h++) {
             if (fs.exists(path.resolve(req.files[h].path))) {
-                console.log('existe');
+                // console.log('existe');
                 await fs.unlink(path.resolve(req.files[h].path));
             }
         }
@@ -235,8 +235,8 @@ async function updateProducto(req, res) {
         let variantes = JSON.parse(req.body.variantes);
         let vimagenes = JSON.parse(req.body.vimagenes);
         let categorias = JSON.parse(req.body.categorias);
-        console.log("imagenes", req.files);
-        console.log("objetos", oferta, producto, variantes, vimagenes, categorias);
+        // console.log("imagenes", req.files);
+        // console.log("objetos", oferta, producto, variantes, vimagenes, categorias);
 
         let ofertaActualizada = await Oferta.update({
                 NUM_TIENDA: oferta.Num_Tienda,
@@ -350,7 +350,7 @@ async function updateProducto(req, res) {
         }
         for (let i = 0; i < vvariantesGuardas.length; i++) {
             for (let j = 0; j < vimagenes[i].length; j++) {
-                console.log(vimagenes[i][j].Tamanio_Imagen);
+                // console.log(vimagenes[i][j].Tamanio_Imagen);
                 let num = vvariantesGuardas[i].NUM_VARIANTE;
 
                 if (vimagenes[i][j].Estado_Imagen == 1 && (vimagenes[i][j].Tipo_Imagen == 'video' || vimagenes[i][j].Tipo_Imagen == 'youtube')) {
@@ -396,7 +396,7 @@ async function updateProducto(req, res) {
                 console.log("vector imagene spor borrar2", vimagenesporborrar);
                 for (let ipb of vimagenesporborrar) {
                     if (fs.exists(path.resolve(ipb))) {
-                        console.log('existe');
+                        // console.log('existe');
                         await fs.unlink(path.resolve(ipb));
                     }
                 }
@@ -415,7 +415,7 @@ async function updateProducto(req, res) {
     } catch (err) {
         for (let h = 0; h < req.files.length; h++) {
             if (fs.exists(path.resolve(req.files[h].path))) {
-                console.log('existe');
+                // console.log('existe');
                 await fs.unlink(path.resolve(req.files[h].path));
             }
         }

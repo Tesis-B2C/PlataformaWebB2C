@@ -29,7 +29,7 @@ export class ListadoPedidosComponent implements OnInit {
   }
 
   async ngOnInit() {
-    console.log("leng", this.misPedidos.length)
+    // console.log("leng", this.misPedidos.length)
 
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
     await this.getMisPedidos(this.estadoActivo, this.fechaActivaInicio, this.fechaActivaFin);
@@ -63,7 +63,7 @@ export class ListadoPedidosComponent implements OnInit {
 
   async fecha(value: Date) {
     this.page = 1;
-    console.log("fecha inicio", value)
+    // console.log("fecha inicio", value)
     if (value) {
       this.fechaActivaInicio = this.obtenerFecha(value[0]);
       this.fechaActivaFin = this.obtenerFecha(value[1]);
@@ -76,7 +76,7 @@ export class ListadoPedidosComponent implements OnInit {
 
   public obtenerFecha(fecha) {
     fecha.setHours(0, 0, 0);
-    console.log("fecha ", fecha)
+    // console.log("fecha ", fecha)
     return fecha.toISOString().split('T')[0]
 
   }
@@ -88,7 +88,7 @@ export class ListadoPedidosComponent implements OnInit {
     try {
       let response = await this._compraServicio.getMisPedidos(estado, fechaInicio, fechaFin, this.identidadTienda.NUM_TIENDA).toPromise();
       this.misPedidos = response.data;
-      console.log("PEDIDOS obtenidas", this.misPedidos);
+      // console.log("PEDIDOS obtenidas", this.misPedidos);
       this.result = this.misPedidos;
       for (let compra of this.misPedidos) {
         let total_final = 0;

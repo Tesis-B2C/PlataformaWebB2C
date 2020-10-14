@@ -197,7 +197,7 @@ this.borrarVideo();
 
   ngOnChanges(): void {
     this.panelDos.style.maxHeight = this.panelUno.offsetHeight + 'px';
-    console.log("height |", this.panelUno.offsetHeight + 'px');
+    // console.log("height |", this.panelUno.offsetHeight + 'px');
 
   }
 
@@ -291,7 +291,7 @@ this.borrarVideo();
     //  document.forms["formVariaciones"].reset();
     debugger;
     this.Imagenes_Producto[indice].splice(imagen, 1);
-    console.log("vector imagenes", this.imagenes[indice]);
+    // console.log("vector imagenes", this.imagenes[indice]);
     if (this.imagenes[indice].length == 0)
       this.vectorBanderaAgregarImagen[indice] = false;
   }
@@ -325,7 +325,7 @@ this.borrarVideo();
 
 
   public opcionGarantia(garantia) {
-    console.log("Garantia", garantia)
+    // console.log("Garantia", garantia)
     this.Oferta.Garantia = garantia;
   }
 
@@ -345,7 +345,7 @@ this.borrarVideo();
     this.Variantes.push(new Variante( this.color[this.Variantes.length-1],this.Variantes[this.Variantes.length-1].Talla, this.Variantes[this.Variantes.length-1].Material,null, this.Variantes[this.Variantes.length-1].Stock, this.Variantes[this.Variantes.length-1].Cod_Unidad, 0));
     this.Imagenes_Producto.push([]);
     this.imagenes.push([]);
-    console.log("asdasd");
+    // console.log("asdasd");
   }
 
   public borrarOpcionesProducto(pocicion: number) {
@@ -457,10 +457,10 @@ this.borrarVideo();
   public cambiarColor(color: string, indice): Cmyk {
     const hsva = this.cpService.stringToHsva(color);
     const rgba = this.cpService.hsvaToRgba(hsva);
-    console.log(color);
-    console.log(rgba);
+    // console.log(color);
+    // console.log(rgba);
     this.Variantes[indice].Color = color;
-    console.log("Variante despuez de color", this.Variantes[indice]);
+    // console.log("Variante despuez de color", this.Variantes[indice]);
     return this.cpService.rgbaToCmyk(rgba);
   }
 

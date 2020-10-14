@@ -44,7 +44,7 @@ export class WebSocketService extends Socket {
 
     this.ioSocket.on('connect', res => {
       this.ioSocket.emit('entrarChat', this.identidad, res => {
-        console.log("--------------Usuario conectado", res.agente);
+        console.log("--------------Usuario conectado");
       });
     });
     this.ioSocket.on('disconect', res => {

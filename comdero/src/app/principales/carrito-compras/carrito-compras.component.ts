@@ -132,7 +132,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
         this.obj.idTienda = element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA;
         tiendas.add(element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA)
       });
-      console.log("tiendas", this.carritoIdentidad);
+      // console.log("tiendas", this.carritoIdentidad);
       tiendas.forEach(element2 => {
         this.obj = {
           idTienda: null,
@@ -154,7 +154,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
 
         }
         this.carritoIdentidad.data.CARRITO_PRODUCTOs.forEach(element => {
-          console.log("tienda", element2);
+          // console.log("tienda", element2);
 
           if (element.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == element2) {
             this.obj.idTienda = element2;
@@ -179,7 +179,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
         this.vTiendas.add(this.obj);
       });
 
-      console.log("por tienda", this.vTiendas);
+      // console.log("por tienda", this.vTiendas);
 
     } catch (e) {
       if (!(e instanceof HttpErrorResponse)){
@@ -206,7 +206,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
   public async incrementar(cantidad, stock, num_variante, id_carrito, idTienda) {
     cantidad = cantidad + 1;
     let response = await this.actualizarCantidad(num_variante, id_carrito, cantidad);
-    console.log("response incrementar", response)
+    // console.log("response incrementar", response)
     this.carritoIdentidad.data.CARRITO_PRODUCTOs.forEach(element => {
       if (num_variante == element.NUM_VARIANTE) {
         element.CANTIDAD_PRODUCTO_CARRITO = response;
@@ -244,7 +244,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
       cantidad = cantidad - 1;
 
     let response = await this.actualizarCantidad(num_variante, id_carrito, cantidad);
-    console.log("response incrementar", response)
+    // console.log("response incrementar", response)
     this.carritoIdentidad.data.CARRITO_PRODUCTOs.forEach(element => {
       if (num_variante == element.NUM_VARIANTE) {
         element.CANTIDAD_PRODUCTO_CARRITO = response;
@@ -285,7 +285,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
       await this.verificarDescuentoAutomatico();
       this.verificarNuevamenteCupon(tienda.idTienda);
       await this.menu.conteoProductosCarrito(true);
-      console.log("despues de borrar", this.vTiendas);
+      // console.log("despues de borrar", this.vTiendas);
 
     } catch (e) {
       if (!(e instanceof HttpErrorResponse)){
@@ -304,7 +304,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
       this.subTotal = 0;
       this.totalConIva = 0;
 
-      console.log("ver tienda para calcular", element['producto_carrito']);
+      // console.log("ver tienda para calcular", element['producto_carrito']);
       for (let element2 of element['producto_carrito']) {
         if (element2.VARIANTE.PRODUCTO.OFERTum.TIENDA.NUM_TIENDA == element['idTienda']) {
           this.subTotal = this.subTotal + element2.precio_productos_sin_iva;
@@ -350,7 +350,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
                         element.descuentos_cupon = (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
                         element.porcentaje_descuento_cupon = descuento.DESCUENTO.PORCENTAJE_DESCUENTO;
                         d = d + ((precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100) * element.CANTIDAD_PRODUCTO_CARRITO));
-                        console.log("descuento", d);
+                        // console.log("descuento", d);
                         bandera2 = true;
                       }
                     }
@@ -365,7 +365,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
                           element.descuentos_cupon = (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
                           element.porcentaje_descuento_cupon = descuento.DESCUENTO.PORCENTAJE_DESCUENTO;
                           d = d + ((precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100) * element.CANTIDAD_PRODUCTO_CARRITO));
-                          console.log("descuento", d);
+                          // console.log("descuento", d);
                           bandera2 = true;
                         }
                       }
@@ -376,7 +376,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
                         element.descuentos_cupon = (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
                         element.porcentaje_descuento_cupon = descuento.DESCUENTO.PORCENTAJE_DESCUENTO;
                         d = d + ((precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100) * element.CANTIDAD_PRODUCTO_CARRITO));
-                        console.log("descuento", d);
+                        // console.log("descuento", d);
                         bandera2 = true;
                       }
                     }
@@ -428,7 +428,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
                     element.descuentos_cupon = (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
                     element.porcentaje_descuento_cupon = descuento.DESCUENTO.PORCENTAJE_DESCUENTO;
                     d = d + ((precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100) * element.CANTIDAD_PRODUCTO_CARRITO));
-                    console.log("descuento", d);
+                    // console.log("descuento", d);
                     elemnt2['cuentas'].descuentoCupon = 0;
                     elemnt2['cuentas'].descuentoCupon = elemnt2['cuentas'].descuentoCupon + d;
                   }
@@ -469,7 +469,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
                       element.descuentos = (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
                       element.porcentaje_descuento = descuento.DESCUENTO.PORCENTAJE_DESCUENTO;
                       d = d + (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
-                      console.log("descuento automatico", d);
+                      // console.log("descuento automatico", d);
                     }
                   } else {
                     if (this.datePipe.transform(this.hoy, "yyyy-MM-dd") == descuento.DESCUENTO.FECHA_FIN) {
@@ -479,14 +479,14 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
                         element.porcentaje_descuento = descuento.DESCUENTO.PORCENTAJE_DESCUENTO;
                         element.descuentos = (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
                         d = d + (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
-                        console.log("descuento automatico", d);
+                        // console.log("descuento automatico", d);
                       }
                     } else {
                       let precio = element.VARIANTE.PRECIO_UNITARIO + (element.VARIANTE.PRECIO_UNITARIO * (element.VARIANTE.PRODUCTO.OFERTum.IVA / 100))
                       element.porcentaje_descuento = descuento.DESCUENTO.PORCENTAJE_DESCUENTO;
                       element.descuentos = (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
                       d = d + (precio * (descuento.DESCUENTO.PORCENTAJE_DESCUENTO / 100)) * element.CANTIDAD_PRODUCTO_CARRITO;
-                      console.log("descuento automatico", d);
+                      // console.log("descuento automatico", d);
                     }
                   }
                 }
@@ -525,7 +525,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
     this.varianteActiva.CONTACTO_WHATSAPP = tienda.contacto_whatsapp;
     this.varianteActiva.TIENDA = tienda.producto_carrito[0].VARIANTE.PRODUCTO.OFERTum.TIENDA
 
-    console.log("variante activa", this.varianteActiva);
+    // console.log("variante activa", this.varianteActiva);
   }
 
 
@@ -607,11 +607,11 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
     this.asignarVariableActiva(tienda);
     this.verificarMetodosTienda();
     this.identidadComprador = this._agenteServicio.getIdentity();
-    console.log('AGENTE' + JSON.stringify(this.identidadComprador));
+    // console.log('AGENTE' + JSON.stringify(this.identidadComprador));
 
     //DATOS DE COMPRA QUE PUEDEN NO ESTAR
     if (this.identidadComprador.ID_AGENTE != null) {
-      console.log('SI HAY DIRECCION');
+      // console.log('SI HAY DIRECCION');
       this.DatosDireccion = new Agente(null, this.identidadComprador.NUM_COD_POSTAL, this.identidadComprador.NOMBRE,
         this.identidadComprador.TELEFONO, null, null, 0, this.identidadComprador.CALLE_PRINCIPAL_AGENTE,
         this.identidadComprador.CALLE_SECUNDARIA_AGENTE, this.identidadComprador.NUM_CASA_AGENTE, null, this.identidadComprador.COD_DPA,
@@ -684,7 +684,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
     this.informacionCompra.ID_TIENDA = this.varianteActiva.TIENDA.NUM_TIENDA;
     this.informacionCompra.FECHA_COMPRA = moment().format("YYYY-MM-DD");
     this.informacionCompra.NUM_VARIANTE = this.varianteActiva.VARIANTES;
-    console.log("variantes que van a ir-----------", this.informacionCompra.NUM_VARIANTE);
+    // console.log("variantes que van a ir-----------", this.informacionCompra.NUM_VARIANTE);
     this.informacionCompra.METODO_PAGO_COMPRA = null;
     this.informacionCompra.METODO_ENVIO_COMPRA = null;
 
@@ -771,7 +771,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
       for (let opSucursales of this.varianteActiva.SUCURSALES) {
         if (opSucursales.DPA.COD_DPA == this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA && banderaEncontroDireccion == false) {
           //ENCONTRE UN DIRECCION QUE COINCIDE ES LOCAL
-          console.log('//ENCONTRE UN DIRECCION QUE COINCIDE ES LOCAL');
+          // console.log('//ENCONTRE UN DIRECCION QUE COINCIDE ES LOCAL');
           banderaEncontroDireccion = true;
         }
       }
@@ -786,14 +786,14 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
 
             if (envioDomicilio.TIPO_MEDIDA == 'Precio') {
               //DE ACUERDO AL PRECIO DEL PEDIDO
-              console.log('//DE ACUERDO AL PRECIO DEL PEDIDO');
+              // console.log('//DE ACUERDO AL PRECIO DEL PEDIDO');
               if (this.informacionCompra.COSTOS.TOTAL_PEDIDO >= envioDomicilio.MINIMO && this.informacionCompra.COSTOS.TOTAL_PEDIDO <= envioDomicilio.MAXIMO) {
                 this.arrayPreciosEnvioAux.push(envioDomicilio.PRECIO);
               }
             }
             if (envioDomicilio.TIPO_MEDIDA == 'Peso') {
               //DE ACUERDO AL PESO DEL PEDIDO
-              console.log('//DE ACUERDO AL PESO DEL PEDIDO', this.pesoPedidoTotalKg);
+              // console.log('//DE ACUERDO AL PESO DEL PEDIDO', this.pesoPedidoTotalKg);
               if (this.pesoPedidoTotalKg >= envioDomicilio.MINIMO && this.pesoPedidoTotalKg <= envioDomicilio.MAXIMO) {
                 this.arrayPreciosEnvioAux.push(envioDomicilio.PRECIO);
               }
@@ -801,7 +801,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
           }
         })
 
-        console.log('/ENVIO LOCAL');
+        // console.log('/ENVIO LOCAL');
       } else {
         //FUERA DE LA CIUDAD
         this.varianteActiva.OPCION_ENVIO.forEach(envioDomicilio => {
@@ -811,7 +811,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
 
             if (envioDomicilio.TIPO_MEDIDA == 'Precio') {
               //DE ACUERDO AL PRECIO DEL PEDIDO
-              console.log('//DE ACUERDO AL PRECIO DEL PEDIDO');
+              // console.log('//DE ACUERDO AL PRECIO DEL PEDIDO');
               if (this.informacionCompra.COSTOS.TOTAL_PEDIDO >= envioDomicilio.MINIMO && this.informacionCompra.COSTOS.TOTAL_PEDIDO <= envioDomicilio.MAXIMO) {
                 this.arrayPreciosEnvioAux.push(envioDomicilio.PRECIO);
               }
@@ -819,14 +819,14 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
 
             if (envioDomicilio.TIPO_MEDIDA == 'Peso') {
               //DE ACUERDO AL PESO DEL PEDIDO
-              console.log('//DE ACUERDO AL PESO DEL PEDIDO');
+              // console.log('//DE ACUERDO AL PESO DEL PEDIDO');
               if (this.pesoPedidoTotalKg >= envioDomicilio.MINIMO && this.pesoPedidoTotalKg <= envioDomicilio.MAXIMO) {
                 this.arrayPreciosEnvioAux.push(envioDomicilio.PRECIO);
               }
             }
           }
         })
-        console.log('//FUERA DE LA CIUDAD');
+        // console.log('//FUERA DE LA CIUDAD');
       }
 
       let precioFinalEntregaMenor = 0;
@@ -840,24 +840,24 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
           }
         }
         this.noExisteEnvioEstaArea = false;
-        console.log('PRECIO MENOR' + precioFinalEntregaMenor);
+        // console.log('PRECIO MENOR' + precioFinalEntregaMenor);
       } else {
         if (localExisteUno == 'No Existe Local' && restoExisteUno == 'No Existe Resto') {
           //MANDAR MENSAJE DE NO EXISTE EL ENVIO A ESA ZONA.
           this.noExisteEnvioEstaArea = true;
-          console.log('//MANDAR MENSAJE DE NO EXISTE EL ENVIO A ESA ZONA.');
+          // console.log('//MANDAR MENSAJE DE NO EXISTE EL ENVIO A ESA ZONA.');
         } else {
           //NO HAY COINCIDENCIAS DE COSTOS DE ENVIO
-          console.log('//NO HAY COINCIDENCIAS DE COSTOS DE ENVIO');
+          // console.log('//NO HAY COINCIDENCIAS DE COSTOS DE ENVIO');
           this.noExisteEnvioEstaArea = false;
           precioFinalEntregaMenor = 0;
         }
       }
 
       this.informacionCompra.COSTOS.COSTOS_ENVIO = precioFinalEntregaMenor;
-      console.log('=======================' + precioFinalEntregaMenor);
-      console.log('+++++++++++++++++++++++' + this.arrayPreciosEnvioAux);
-      console.log('COMPRA A ENVIAR COSOTOS DOMICILIO' + this.informacionCompra.COSTOS.COSTOS_ENVIO);
+      // console.log('=======================' + precioFinalEntregaMenor);
+      // console.log('+++++++++++++++++++++++' + this.arrayPreciosEnvioAux);
+      // console.log('COMPRA A ENVIAR COSOTOS DOMICILIO' + this.informacionCompra.COSTOS.COSTOS_ENVIO);
     } else {
       //DIRECCION DE ENTREGA ESTA VACIO.
     }
@@ -928,7 +928,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
         if (pago.TIPO_PAGO == 'Electrónico') {
           this.informacionCompra.COSTOS.PORCENTAJE_RECARGO_PAYPAL = pago.PORCENTAJE_RECARGO;
           this.apikeyPaypal = pago.API_KEY_PAYPAL;
-          console.log("api paypal", this.apikeyPaypal);
+          // console.log("api paypal", this.apikeyPaypal);
         }
       });
       this.banderaRecargoPaypal = true;
@@ -1020,7 +1020,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
     try {
 
       /*console.log('INFORMACION COMPRA' + JSON.stringify(this.informacionCompra));*/
-      console.log("contacto whatsaap", this.contactoWhatsapp);
+      // console.log("contacto whatsaap", this.contactoWhatsapp);
       let response = await this._compraServicio.saveComprarProductoCarrito(this.informacionCompra).toPromise();
       this.mensageCorrecto(response.message);
       this.cerrar();
@@ -1104,18 +1104,18 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
           if (provincia.COD_DPA == this.provinciaDireccion)
             this.provinciaDireccionNombre = provincia.NOMBRE;
         })
-        console.log(JSON.stringify(this.provinciasDireccion));
+        // console.log(JSON.stringify(this.provinciasDireccion));
         this.ciudadesDireccion.forEach(ciudad => {
           if (ciudad.COD_DPA == this.DatosDireccion.Ciudad.toString().trim()) {
             this.ciudadDireccionNombre = ciudad.NOMBRE;
           }
         })
-        console.log(JSON.stringify(this.ciudadesDireccion) + this.ciudadDireccion + this.DatosDireccion.Ciudad);
+        // console.log(JSON.stringify(this.ciudadesDireccion) + this.ciudadDireccion + this.DatosDireccion.Ciudad);
         this.informacionCompra.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA = this.DatosDireccion.Nombre;
         this.informacionCompra.DATOS_ENTREGA.NUM_COD_POSTAL_ENTREGA = this.DatosDireccion.Num_Cod_Postal;
         this.informacionCompra.DATOS_ENTREGA.TELEFONO_ENTREGA = this.DatosDireccion.Telefono;
 
-        console.log('DDDDDDDDDDDDDDDDD' + this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA + 'DDDDDDDDDDDD');
+        // console.log('DDDDDDDDDDDDDDDDD' + this.informacionCompra.DATOS_ENTREGA.COD_DPA_ENTREGA + 'DDDDDDDDDDDD');
 
         this.banderaDireccionEnvio = true;
         this.calcularCostosEnvioDomicilio();
@@ -1302,7 +1302,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
         TOTAL_PEDIDO: null
       }
     };
-    console.log(this.DatosDireccion + this.DatosFactura + JSON.stringify(this.informacionCompra));
+    // console.log(this.DatosDireccion + this.DatosFactura + JSON.stringify(this.informacionCompra));
   }
 
 

@@ -75,7 +75,7 @@ export class PedidosRealizadosComponent implements OnInit {
     try {
       let response = await this._compraServicio.getMisCompras(estado, fecha).toPromise();
       this.comprasObtenidas = response.data;
-      console.log("comra obtenidas", this.comprasObtenidas);
+      // console.log("comra obtenidas", this.comprasObtenidas);
       this.result = this.comprasObtenidas;
       for (let compra of this.comprasObtenidas) {
         let total_final = 0;

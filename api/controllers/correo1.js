@@ -15,7 +15,7 @@ var transporter = nodemailer.createTransport({
 
 function correoActivacion(req, res) {
 
-    console.log(" datos que entraro a correo ", req.body);
+    // console.log(" datos que entraro a correo ", req.body);
     let token = jwt.createToken24h(req.body);
     var mailOptions = {
         from: 'doginotificaciones@gmail.com',
@@ -46,7 +46,7 @@ function correoActivacion(req, res) {
 function correoCambioContrasenia(req, res) {
 
 
-    console.log(" datos que entraro a correo de cambio de contrasenia  ", req.body);
+    // console.log(" datos que entraro a correo de cambio de contrasenia  ", req.body);
     let token = jwt.createToken24h(req.body);
 
     var mailOptions = {
@@ -82,7 +82,7 @@ function correoCambioContrasenia(req, res) {
 
 function correoCambioCorreo(req, res) {
 
-    console.log(" datos que entraro a correo de cambio de contrasenia  ", req.body);
+    // console.log(" datos que entraro a correo de cambio de contrasenia  ", req.body);
     var mailOptions = {
         from: 'doginotificaciones@gmail.com',
         to: req.body.correo,
@@ -113,7 +113,7 @@ async function  correoNuevaCompra(req, res) {
     let agente_receptor= await Agente.findOne({where:{COD_AGENTE:req.body.AGENTE_RECEPTOR}});
     let tienda= await Tienda.findOne({where:{NUM_TIENDA:req.body.CODIGO_TIENDA}});
 
-    console.log(" datos que entraro a nueva cpmra  ", req.body);
+    // console.log(" datos que entraro a nueva cpmra  ", req.body);
     var mailOptions = {
         from: 'doginotificaciones@gmail.com',
         to: agente_receptor.dataValues.CORREO,
@@ -146,7 +146,7 @@ async function correoPedidoTramitado(req, res) {
     let agente_receptor= await Agente.findOne({where:{COD_AGENTE:req.body.AGENTE_RECEPTOR}});
     let tienda= await Tienda.findOne({where:{NUM_TIENDA:req.body.CODIGO_TIENDA}});
 
-    console.log(" datos que entraro a nueva cpmra  ", req.body);
+    // console.log(" datos que entraro a nueva cpmra  ", req.body);
     var mailOptions = {
         from: 'doginotificaciones@gmail.com',
         to: agente_receptor.dataValues.CORREO,

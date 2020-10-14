@@ -67,7 +67,7 @@ export class ListadoProductosComponent implements OnInit {
       this.misProductos = null;
       this.misProductos = response.data;
       this.result = this.misProductos;
-      console.log("mis productos 2", this.misProductos);
+      // console.log("mis productos 2", this.misProductos);
 
     } catch (e) {
 
@@ -96,7 +96,7 @@ export class ListadoProductosComponent implements OnInit {
       this.misProductos = null;
       this.misProductos = response.data;
       this.result = this.misProductos;
-      console.log("mis productos 2", this.misProductos);
+      // console.log("mis productos 2", this.misProductos);
 
     } catch (e) {
 
@@ -118,7 +118,7 @@ export class ListadoProductosComponent implements OnInit {
       for (let i in this.result) {
         this.vectorProductos.add(this.result[i].ID_OFERTA);
       }
-      console.log("vector productos", this.vectorProductos)
+      // console.log("vector productos", this.vectorProductos)
 
 
     } else {
@@ -132,7 +132,7 @@ export class ListadoProductosComponent implements OnInit {
     if (event.target.checked) {
       debugger
       this.vectorProductos.add(cod);
-      console.log("vector productos", this.vectorProductos)
+      // console.log("vector productos", this.vectorProductos)
     } else {
       //this.vectorProductos = new Set();
       this.vectorProductos.delete(cod);

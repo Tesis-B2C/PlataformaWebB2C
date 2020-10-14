@@ -148,7 +148,7 @@ export class EstadisticasComponent implements OnInit {
   public async getVentas() {
     try {
       let response = await this._estadisticasServicio.getVentas(this.identidadTienda.NUM_TIENDA).toPromise();
-      console.log("count", response.data);
+      // console.log("count", response.data);
       this.ventas = response.data;
     } catch (e) {
       if (!(e instanceof HttpErrorResponse)){
@@ -166,7 +166,7 @@ export class EstadisticasComponent implements OnInit {
    this.calificacion=0;
     try {
       let response = await this._estadisticasServicio.getCalificaciones(this.identidadTienda.NUM_TIENDA).toPromise();
-      console.log("avg", response.data);
+      // console.log("avg", response.data);
       let calificacion ;
       if(response.data[0]['PRODUCTO']){
         calificacion= response.data[0]['PRODUCTO'].CALIFICACIONs[0].CALIFICACION_AVG;
@@ -189,7 +189,7 @@ export class EstadisticasComponent implements OnInit {
   public async getProductos() {
     try {
       let response = await this._estadisticasServicio.getProductos(this.identidadTienda.NUM_TIENDA).toPromise();
-      console.log("productoscount", response.data);
+      // console.log("productoscount", response.data);
       this.productos = response.data
 
     } catch (e) {
@@ -207,7 +207,7 @@ export class EstadisticasComponent implements OnInit {
   public async getVisitas() {
     try {
       let response = await this._estadisticasServicio.getVisitas(this.identidadTienda.NUM_TIENDA).toPromise();
-      console.log("visitas", response.data);
+      // console.log("visitas", response.data);
       this.visitas = response.data['VISITAS'];
 
     } catch (e) {
@@ -225,7 +225,7 @@ export class EstadisticasComponent implements OnInit {
   public async getMetodosPago() {
     try {
       let response = await this._estadisticasServicio.getMetodosPago(this.identidadTienda.NUM_TIENDA).toPromise();
-      console.log("metodos pago", response.data);
+      // console.log("metodos pago", response.data);
       this.metodosPago=response.data;
       this.pieChartData = [response.data['Efectivo'], response.data['Transferencia'], response.data['PayPal']]
 
@@ -247,7 +247,7 @@ export class EstadisticasComponent implements OnInit {
   public async getMetodosEnvio() {
     try {
       let response = await this._estadisticasServicio.getMetodosEnvio(this.identidadTienda.NUM_TIENDA).toPromise();
-      console.log("metodos pago", response.data);
+      // console.log("metodos pago", response.data);
       this.metodosEnvio=response.data;
       this.pieChartData1 = [response.data['Retiro'], response.data['Acordar'], response.data['Domicilio']]
 
@@ -267,7 +267,7 @@ export class EstadisticasComponent implements OnInit {
   public async getDescuentos() {
     try {
       let response = await this._estadisticasServicio.getDescuentos(this.identidadTienda.NUM_TIENDA).toPromise();
-      console.log("descuentos", response.data);
+      // console.log("descuentos", response.data);
       this.descuentos=response.data;
       this.doughnutChartData = [response.data['Cupon'], response.data['Automatico']]
 
@@ -324,7 +324,7 @@ export class EstadisticasComponent implements OnInit {
     this.contDiciembre = 0;
     try {
       let response = await this._estadisticasServicio.getVentasMensuales(this.identidadTienda.NUM_TIENDA).toPromise();
-      console.log("ventas mensuales", response.data);
+      // console.log("ventas mensuales", response.data);
       let fechas = response.data
       for (let i in response.data) {
         let fecha = fechas[i].FECHA_COMPRA.split('-');
@@ -390,14 +390,14 @@ export class EstadisticasComponent implements OnInit {
 
   cambiarAnio(value) {
     this.anioActual = value;
-    console.log("value", value);
+    // console.log("value", value);
     this.getVentasMensuales();
   }
 
   public async ventasVsVisitas() {
     try {
       let response = await this._estadisticasServicio.getVentasVisitas(this.identidadTienda.NUM_TIENDA).toPromise();
-      console.log("Ventas", response.data);
+      // console.log("Ventas", response.data);
       this.barChartData = [
         {data: [response.data['Ventas'], 0], label: 'Ventas'},
         {data: [response.data['Visitas'], 0], label: 'Visitas'},
@@ -421,14 +421,14 @@ export class EstadisticasComponent implements OnInit {
   public async getProductoMasVendido() {
     try {
       let response = await this._estadisticasServicio.getProductoMasVendido(this.identidadTienda.NUM_TIENDA).toPromise();
-      console.log("mas vendido variantes inicial", response.data);
+      // console.log("mas vendido variantes inicial", response.data);
       let vVariantes = []
       for (let i in response.data) {
         vVariantes.push(response.data[i].COMPRA_PRODUCTOs[0].NUM_VARIANTE)
       }
       let response2 = await this._estadisticasServicio.getProductoDetalleMasVendido(this.mode(vVariantes)).toPromise();
       this.productoMasVendido = response2.data;
-      console.log("mas vendido", this.productoMasVendido);
+      // console.log("mas vendido", this.productoMasVendido);
 
     } catch (e) {
       if (!(e instanceof HttpErrorResponse)){
@@ -455,7 +455,7 @@ export class EstadisticasComponent implements OnInit {
         this.maxValue = a[i];
       }
     }
-    console.log("modaaaa", this.maxValue);
+    // console.log("modaaaa", this.maxValue);
     return this.maxValue;
   }
 

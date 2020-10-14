@@ -59,7 +59,7 @@ export class LoguinComponent {
     try {
       this.loading = true;
       this.tokenTemporal = this.route.snapshot.params.token;
-      console.log("this.token", this.tokenTemporal);
+      // console.log("this.token", this.tokenTemporal);
       if (!this.tokenTemporal) {
         this.response = await this._agenteServicio.autenticarAgente(this.obj, "").toPromise();
       } else {

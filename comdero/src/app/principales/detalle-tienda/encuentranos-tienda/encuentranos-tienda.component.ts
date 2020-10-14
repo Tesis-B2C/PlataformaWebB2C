@@ -31,7 +31,7 @@ export class EncuentranosTiendaComponent implements OnInit {
       this.idTienda = this.route.parent.snapshot.params.id;
       let response = await this._tiendaServicio.getDetalleTiendaProducto(this.idTienda).toPromise();
       this.Tienda = response.data;
-      console.log("tienda buscada encuentranos ", this.Tienda.SUCURSALs);
+      // console.log("tienda buscada encuentranos ", this.Tienda.SUCURSALs);
 
 
     } catch (e) {

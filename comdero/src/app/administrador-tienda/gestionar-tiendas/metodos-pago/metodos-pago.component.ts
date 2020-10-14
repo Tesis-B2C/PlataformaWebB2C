@@ -42,7 +42,7 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
-    console.log("destruyendo");
+    // console.log("destruyendo");
     delete this.Metodo_Pago_Electronico;
     delete this.Metodo_Pago_Transferencia;
     delete this.Metodo_Pago_Efectivo;

@@ -13,7 +13,7 @@ export class InicioAdministracionComponent implements OnInit {
 
   ngOnInit() {
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
-    console.log(this.identidadTienda,"tienda identity")
+    // console.log(this.identidadTienda,"tienda identity")
   }
 
 }

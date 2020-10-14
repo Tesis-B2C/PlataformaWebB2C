@@ -18,7 +18,7 @@ async function registrarAgente(req, res) {
                 message: 'Este correo electrónico ya está vinculado a una cuenta'
             });
         } else {
-            console.log("params", req.body);
+            // console.log("params", req.body);
             let agente = AGENTE.build();
             agente.ID_AGENTE = req.body.Id_Agente;
             agente.NOMBRE = req.body.Nombre.toUpperCase();
@@ -378,7 +378,7 @@ async function actualizarContrasenia(req, res) {
 
             let agenteId = req.params.id;
 
-            console.log(req.body);
+            // console.log(req.body);
             let agente = await AGENTE.findOne({where: {ESTADO: '0', CORREO: agenteId}});
             let result = await bcrypt.compareSync(req.body.contraseniaActual, agente.dataValues.CONTRASENIA);
             if (result) {

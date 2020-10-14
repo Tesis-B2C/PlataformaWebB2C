@@ -37,7 +37,7 @@ export class ProductoServicio {
       for (let j = 0; j < imagenes[i].length; j++) {
         debugger;
         if (imagenes[i][j].Tipo_Imagen != 'youtube') {
-          console.log("antes de enviar imagenes", imagenes[i][j].Imagen)
+          // console.log("antes de enviar imagenes", imagenes[i][j].Imagen)
           fd.append("imagenes", imagenes[i][j].Imagen);
         }
       }
@@ -73,7 +73,7 @@ export class ProductoServicio {
       for (let j = 0; j < imagenes[i].length; j++) {
         debugger;
         if (imagenes[i][j].Imagen.size) {
-          console.log("antes de enviar imagenes", imagenes[i][j].Imagen)
+          // console.log("antes de enviar imagenes", imagenes[i][j].Imagen)
           fd.append("imagenes", imagenes[i][j].Imagen);
         }
       }

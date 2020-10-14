@@ -19,8 +19,8 @@ export class AppComponent implements OnInit{
 
     this.identity = this._agenteService.getIdentity();
     this.token = this._agenteService.getToken();
-    console.log("las vaibles del Storage");
-    console.log(this.identity + this.token);
+    // console.log("las vaibles del Storage");
+    // console.log(this.identity + this.token);
 
   }
 

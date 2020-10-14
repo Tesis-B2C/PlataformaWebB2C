@@ -24,7 +24,7 @@ export class TiendasComponent implements OnInit, AfterContentInit {
     this.noExite = 'assets/images/no-imagen1.png';
     if(pathImagen){
     this.noExite= GLOBAL.urlImagen+pathImagen;
-    console.log("direccion", this.noExite)
+    // console.log("direccion", this.noExite)
     }
     return this.noExite;
   }
@@ -40,7 +40,7 @@ export class TiendasComponent implements OnInit, AfterContentInit {
       if(this.misTiendas.length==0){
         this.router.navigate(['/registro-tienda']);
       }
-      console.log("tiendas", this.misTiendas, "url", this.url);
+      // console.log("tiendas", this.misTiendas, "url", this.url);
 
     } catch (e) {
       if (!(e instanceof HttpErrorResponse)){

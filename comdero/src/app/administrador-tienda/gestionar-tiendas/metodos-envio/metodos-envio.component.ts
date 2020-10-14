@@ -134,11 +134,11 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
       this.banderaTarifaLocalPeso = false;
       this.banderaTarifaLocalPrecio = true;
     }
-    console.log('VESTOR TARIFA LOCAL' + JSON.stringify(this.objetoAuxiliarLocal));
+    // console.log('VESTOR TARIFA LOCAL' + JSON.stringify(this.objetoAuxiliarLocal));
     this.objetoAuxiliarLocal.Precio = this.vectorTarifasLocal[indice].Precio;
     this.objetoAuxiliarLocal.Minimo = this.vectorTarifasLocal[indice].Minimo;
     this.objetoAuxiliarLocal.Maximo = this.vectorTarifasLocal[indice].Maximo;
-    console.log('VESTOR ' + JSON.stringify(this.objetoAuxiliarLocal));
+    // console.log('VESTOR ' + JSON.stringify(this.objetoAuxiliarLocal));
 
     this.banderaTipoAccionLocal = 'Editar';
     this.modalService.open(modalLocal, {centered: true, size: 'md', backdrop: "static"});
@@ -235,7 +235,7 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
     this.banderaslideRetiroLocal = document.getElementById('slideRetiroLocal') as HTMLInputElement;
     this.banderaslideEnvioDomicilio = document.getElementById('slideEnvioDomicilio') as HTMLInputElement;
 
-    console.log(this.banderaslideRetiroLocal + this.banderaslideEnvioDomicilio + 'ESTO ES EL SLIDE');
+    // console.log(this.banderaslideRetiroLocal + this.banderaslideEnvioDomicilio + 'ESTO ES EL SLIDE');
 
     this.objetoRetiroLocal = new Opcion_Envio('Retiro', null, null, null, 'Debes traer tu mensaje de confirmación e identificación cuando vengas a retirar tu pedido.', null, null, null);
 
@@ -296,7 +296,7 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
           debugger
 
           this.loading = true;
-          console.log("VECTOR CON TODO" + JSON.stringify(this.vectorTotal));
+          // console.log("VECTOR CON TODO" + JSON.stringify(this.vectorTotal));
           let response = await this._metodoEnvioServicio.guardarMetodoEnvio(this.identidadTienda.NUM_TIENDA, this.vectorTotal).toPromise();
           debugger
           let data = await this._tiendaServicio.getDatosTienda(this.identidadTienda.NUM_TIENDA).toPromise();

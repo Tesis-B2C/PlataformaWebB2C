@@ -97,7 +97,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
   async getDpaProvincias(buscar) {
     try {
       let response = await this._dpaServicio.getDpaProvincias(buscar).toPromise();
-      console.log("RESPONSE provincia" + response.data);
+      // console.log("RESPONSE provincia" + response.data);
       this.provincias = response.data;
     } catch (e) {
       if (!(e instanceof HttpErrorResponse)){
@@ -113,7 +113,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
   async getDpaCiudades(buscar, indiceCiudad) {
     try {
       let response = await this._dpaServicio.getDpaCiudades(buscar).toPromise();
-      console.log("RESPONSE" + response.data);
+      // console.log("RESPONSE" + response.data);
       this.ciudades[indiceCiudad] = response.data;
     } catch (e) {
       if (!(e instanceof HttpErrorResponse)){
@@ -133,7 +133,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
       var i;
       var total = 0;
       var longitud = cad.length - 3;
-      console.log("longitus" + longitud);
+      // console.log("longitus" + longitud);
       var longcheck = longitud - 1;
       if (cad !== "" && longitud === 10) {
         for (i = 0; i < longcheck; i++) {
@@ -146,19 +146,19 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
           }
         }
         total = total % 10 ? 10 - total % 10 : 0;
-        console.log(this.Sucursales.length + "TOTAL" + this.Sucursales[j].Ruc);
+        // console.log(this.Sucursales.length + "TOTAL" + this.Sucursales[j].Ruc);
 
         if (cad.charAt(longitud - 1) == total) {
           resultado[j] = true;
-          console.log("TRUE" + resultado[j]);
+          // console.log("TRUE" + resultado[j]);
         } else {
           resultado[j] = false;
-          console.log("FALSE" + resultado[j]);
+          // console.log("FALSE" + resultado[j]);
         }
       }
     }
     for (var j = 0; j < resultado.length; j++) {
-      console.log("RUC" + resultado[j]);
+      // console.log("RUC" + resultado[j]);
       if (resultado[j] == false)
         return false;
     }
@@ -168,7 +168,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
   public async ValidarPaso1(validador) {
     if (validador == "1") {
       this.banderaToast = false;
-      console.log("PASO1" + JSON.stringify(this.Tienda));
+      // console.log("PASO1" + JSON.stringify(this.Tienda));
     } else {
       this.banderaToast = true;
     }
@@ -180,11 +180,11 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
       this.banderaToast = false;
       let vacioCiudad: boolean = false;
       for (let i in this.Sucursales) {
-        console.log("SUCURSAL CIUDAD" + this.Sucursales[i].Ciudad);
+        // console.log("SUCURSAL CIUDAD" + this.Sucursales[i].Ciudad);
         if (this.Sucursales[i].Ciudad == "" || this.Sucursales[i].Ciudad == null)
           vacioCiudad = true;
       }
-      console.log("vacioCiudad" + vacioCiudad);
+      // console.log("vacioCiudad" + vacioCiudad);
       if (!vacioCiudad) {
         if (this.validarCedula() == true) {
           this.banderaToastRuc = false;
@@ -197,7 +197,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
     } else {
       this.banderaToast = true;
     }
-    console.log("NEGOCIO" + JSON.stringify(this.Sucursales));
+    // console.log("NEGOCIO" + JSON.stringify(this.Sucursales));
     this.mensajeToast(2);
   }
 
@@ -236,7 +236,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
     try {
       this.Tienda_Enviar.Tienda = this.Tienda;
       this.Tienda_Enviar.Sucursal = this.Sucursales;
-      console.log("Objeto a enviar al backend:" + this.Tienda_Enviar);
+      // console.log("Objeto a enviar al backend:" + this.Tienda_Enviar);
       this.tiendaRegistrada = await this._tiendaServicio.registrarTienda(this.Tienda_Enviar, this.filesToUpload, this.filesToUpload2).toPromise();
       // let responseLogo = await this.subirImagenesServidor(this.filesToUpload, tienda['NUM_TIENDA'], "Logo");
       // let responseBanner = await this.subirImagenesServidor(this.filesToUpload2, tienda['NUM_TIENDA'], "Banner");
@@ -280,7 +280,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
     this.btnCasa = false;
 
     this.Sucursales.push(new Sucursal(null, null, null, null, null, null, null, null, "Negocio"));
-    console.log("NEGOCIO" + JSON.stringify(this.Sucursales));
+    // console.log("NEGOCIO" + JSON.stringify(this.Sucursales));
   }
 
   public desdeCasa() {
@@ -295,20 +295,20 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
     this.btnCasa = true;
 
     this.Sucursales.push(new Sucursal(null, null, null, null, null, null, null, null, "Casa"));
-    console.log("CASA" + JSON.stringify(this.Sucursales));
+    // console.log("CASA" + JSON.stringify(this.Sucursales));
   }
 
 
   public agregarSucursal() {
     this.vectorOpciones.push(1);
     this.Sucursales.push(new Sucursal(null, null, null, null, null, null, null, null, "Negocio"));
-    console.log("negocio" + JSON.stringify(this.Sucursales));
+    // console.log("negocio" + JSON.stringify(this.Sucursales));
   }
 
   public borrarOpciones(pocicion: number) {
     this.vectorOpciones.splice(pocicion, 1);
     this.Sucursales.splice(pocicion, 1);
-    console.log("NEGOCIO" + JSON.stringify(this.Sucursales));
+    // console.log("NEGOCIO" + JSON.stringify(this.Sucursales));
   }
 
   //Logo

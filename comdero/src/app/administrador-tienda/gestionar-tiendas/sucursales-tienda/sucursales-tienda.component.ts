@@ -144,9 +144,7 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
         this.banderaEspacioFisico = true;
         this.btnEspacioFisico = true;
         this.btnCasa = false;
-        console.log("=================");
       } else {
-        console.log("=================+++++++++++++++++++");
         this.iniciarEdicion();
       }
     }
@@ -173,12 +171,12 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
 
   public agregarSucursal() {
     this.Sucursales.push(new Sucursal(null, null, null, null, null, null, null, null, "Negocio"));
-    console.log("negocio" + JSON.stringify(this.Sucursales));
+    // console.log("negocio" + JSON.stringify(this.Sucursales));
   }
 
   public borrarOpciones(pocicion: number) {
     this.Sucursales.splice(pocicion, 1);
-    console.log("NEGOCIO" + JSON.stringify(this.Sucursales));
+    // console.log("NEGOCIO" + JSON.stringify(this.Sucursales));
   }
 
   async seleccionarCiudad(event) {
@@ -187,7 +185,7 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
 
   async seleccionarCiudadSucursal(event, i) {
     this.Sucursales[i].Ciudad = event;
-    console.log('DPA DPA DPA DPA' + JSON.stringify(this.Sucursales[i].Ciudad));
+    // console.log('DPA DPA DPA DPA' + JSON.stringify(this.Sucursales[i].Ciudad));
   }
 
   public iniciarEdicion() {
@@ -196,7 +194,7 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
         this.provinciaCasa = this.identidadTienda.SUCURSALs[i].DPA.DPAP.NOMBRE + ' (Actual)';
         this.ciudadCasa = this.identidadTienda.SUCURSALs[i].DPA.NOMBRE + ' (Actual)';
         this.vectorCasa = new Sucursal(this.identidadTienda.SUCURSALs[i].RUC, this.identidadTienda.SUCURSALs[i].DIRECCION_SUCURSAL, this.identidadTienda.SUCURSALs[i].TELEFONO_SUCURSAL, null, null, this.identidadTienda.SUCURSALs[i].NUM_COD_POSTAL_SUCURSAL, this.identidadTienda.SUCURSALs[i].NUM_REFERENCIA, this.identidadTienda.SUCURSALs[i].DPA.COD_DPA, this.identidadTienda.SUCURSALs[i].TIPO_SUCURSAL);
-        console.log('pase por casa' + JSON.stringify(this.vectorCasa));
+        // console.log('pase por casa' + JSON.stringify(this.vectorCasa));
 
         this.bandAgregarSuc = false;
         this.banderaCasa = true;
@@ -207,7 +205,7 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
         this.provinciaNegocio[i] = this.identidadTienda.SUCURSALs[i].DPA.DPAP.NOMBRE + ' (Actual)';
         this.ciudadNegocio[i] = this.identidadTienda.SUCURSALs[i].DPA.NOMBRE + ' (Actual)';
         this.Sucursales.push(new Sucursal(this.identidadTienda.SUCURSALs[i].RUC, this.identidadTienda.SUCURSALs[i].DIRECCION_SUCURSAL, this.identidadTienda.SUCURSALs[i].TELEFONO_SUCURSAL, null, null, this.identidadTienda.SUCURSALs[i].NUM_COD_POSTAL_SUCURSAL, this.identidadTienda.SUCURSALs[i].NUM_REFERENCIA, this.identidadTienda.SUCURSALs[i].DPA.COD_DPA, this.identidadTienda.SUCURSALs[i].TIPO_SUCURSAL));
-        console.log('pase por negocio' + JSON.stringify(this.Sucursales));
+        // console.log('pase por negocio' + JSON.stringify(this.Sucursales));
 
         this.bandAgregarSuc = true;
         this.banderaCasa = false;
@@ -216,7 +214,7 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
         this.btnCasa = false;
       }
     }
-    console.log(this.Sucursales.length + JSON.stringify(this.Sucursales));
+    // console.log(this.Sucursales.length + JSON.stringify(this.Sucursales));
   }
 
   public habilitarEdicionNeg() {
@@ -234,7 +232,7 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
           }
 
           if (aprobarCiudades) {
-            console.log('hola bebe' + JSON.stringify(this.Sucursales));
+            // console.log('hola bebe' + JSON.stringify(this.Sucursales));
             this.loading = true;
             let response = await this._tiendaServicio.actualizarTiendaSucursal(this.Sucursales, this.identidadTienda.NUM_TIENDA).toPromise();
             let data = await this._tiendaServicio.getDatosTienda(this.identidadTienda.NUM_TIENDA).toPromise();
@@ -310,11 +308,11 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
        if (aprobarCiudades) {
          this.Sucursales[0] = this.vectorCasa;
          if (this.validarCedula(this.Sucursales) == true) {
-           console.log("CASITAS -------" + JSON.stringify(this.Sucursales));
+          //  console.log("CASITAS -------" + JSON.stringify(this.Sucursales));
            this.loading = true;
            let response = await this._tiendaServicio.actualizarTiendaSucursal(this.Sucursales, this.identidadTienda.NUM_TIENDA).toPromise();
            debugger
-           console.log('CASASASAS CIUDADES ====' + this.ciudadesCasa);
+          //  console.log('CASASASAS CIUDADES ====' + this.ciudadesCasa);
 
            let data = await this._tiendaServicio.getDatosTienda(this.identidadTienda.NUM_TIENDA).toPromise();
 
@@ -351,7 +349,7 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
       var i;
       var total = 0;
       var longitud = cad.length - 3;
-      console.log("longitus" + longitud);
+      // console.log("longitus" + longitud);
       var longcheck = longitud - 1;
       if (cad !== "" && longitud === 10) {
         for (i = 0; i < longcheck; i++) {
@@ -364,19 +362,19 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
           }
         }
         total = total % 10 ? 10 - total % 10 : 0;
-        console.log(vectorLocales.length + "TOTAL" + vectorLocales[j].Ruc);
+        // console.log(vectorLocales.length + "TOTAL" + vectorLocales[j].Ruc);
 
         if (cad.charAt(longitud - 1) == total) {
           resultado[j] = true;
-          console.log("TRUE" + resultado[j]);
+          // console.log("TRUE" + resultado[j]);
         } else {
           resultado[j] = false;
-          console.log("FALSE" + resultado[j]);
+          // console.log("FALSE" + resultado[j]);
         }
       }
     }
     for (var j = 0; j < resultado.length; j++) {
-      console.log("RUC" + resultado[j]);
+      // console.log("RUC" + resultado[j]);
       if (resultado[j] == false)
         return false;
     }

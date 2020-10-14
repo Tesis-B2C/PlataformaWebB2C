@@ -74,7 +74,7 @@ export class ModificarCuponDescuentoComponent implements OnInit {
       this.idDescuento = this.route.snapshot.params.id;
       let response = await this._descuentoServicio.getDescuento(this.idDescuento).toPromise();
       this.identidadDescuento = response.data
-      console.log("el descuento que trae", this.identidadDescuento, this.idDescuento);
+      // console.log("el descuento que trae", this.identidadDescuento, this.idDescuento);
 
     } catch (e) {
       if (!(e instanceof HttpErrorResponse)){
@@ -194,7 +194,7 @@ export class ModificarCuponDescuentoComponent implements OnInit {
       this.vectorProductos.add(producto);
     }
 
-    console.log("set vector productos", this.vectorProductos)
+    // console.log("set vector productos", this.vectorProductos)
   }
 
   async filtrar() {
@@ -215,7 +215,7 @@ export class ModificarCuponDescuentoComponent implements OnInit {
       for (let i in this.result) {
         this.vectorProductos.add(this.result[i]);
       }
-      console.log("vector productos", this.vectorProductos)
+      // console.log("vector productos", this.vectorProductos)
 
 
     } else {
@@ -245,7 +245,7 @@ export class ModificarCuponDescuentoComponent implements OnInit {
     if (event.target.checked) {
       debugger
       this.vectorProductos.add(cod);
-      console.log("vector productos", this.vectorProductos)
+      // console.log("vector productos", this.vectorProductos)
     } else {
       this.vectorProductos.delete(cod);
     }
@@ -262,7 +262,7 @@ export class ModificarCuponDescuentoComponent implements OnInit {
           if (this.vectorProductosEnviar.length > 0) {
             this.Descuento.Fecha_Inicio = this.obtenerFecha(this.bsRangeValue[0]);
             this.Descuento.Fecha_FIn = this.obtenerFecha(this.bsRangeValue[1]);
-            console.log("Descuento antes de enviar ", this.Descuento, "productos", this.vectorProductosEnviar);
+            // console.log("Descuento antes de enviar ", this.Descuento, "productos", this.vectorProductosEnviar);
             this.objDescuento.Descuento = this.Descuento;
             this.objDescuento.vProductos = this.vectorProductosEnviar;
             let response = await this._descuentoServicio.updateDescuento(this.identidadDescuento.ID_DESCUENTO, this.objDescuento).toPromise();
@@ -281,10 +281,10 @@ export class ModificarCuponDescuentoComponent implements OnInit {
         } else {
           this.Descuento.Fecha_Inicio = this.obtenerFecha(this.bsRangeValue[0]);
           this.Descuento.Fecha_FIn = this.obtenerFecha(this.bsRangeValue[1]);
-          console.log("Descuento antes de enviar ", this.Descuento, "productos", this.vectorProductosEnviar);
+          // console.log("Descuento antes de enviar ", this.Descuento, "productos", this.vectorProductosEnviar);
           this.objDescuento.Descuento = this.Descuento;
           this.objDescuento.vProductos = this.vectorProductosEnviar;
-          console.log("Descuento antes de enviar ", this.Descuento, "productos", this.vectorProductosEnviar);
+          // console.log("Descuento antes de enviar ", this.Descuento, "productos", this.vectorProductosEnviar);
           let response = await this._descuentoServicio.updateDescuento(this.identidadDescuento.ID_DESCUENTO, this.objDescuento).toPromise();
           this.mensageCorrecto(response.message);
           this.loading = false;
@@ -315,7 +315,7 @@ export class ModificarCuponDescuentoComponent implements OnInit {
 
   public obtenerFecha(fecha) {
     fecha.setHours(0, 0, 0);
-    console.log("fecha antes", this.bsRangeValue, "fecha entrante", fecha.toISOString());
+    // console.log("fecha antes", this.bsRangeValue, "fecha entrante", fecha.toISOString());
     return fecha.toISOString().split('T')[0]
 
   }

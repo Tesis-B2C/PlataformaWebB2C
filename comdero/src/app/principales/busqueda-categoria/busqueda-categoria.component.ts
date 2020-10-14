@@ -214,7 +214,7 @@ export class BusquedaCategoriaComponent implements OnInit {
   public buscarDescuentoAutomatico(PRODUCTO_DESCUENTOs, PRECIO_CON_IVA) {
     let fechaHoy = moment().format("YYYY-MM-DD");
     let horaActual = moment().format("HH:mm:ss");
-    console.log('horaHoy' + horaActual + fechaHoy)
+    // console.log('horaHoy' + horaActual + fechaHoy)
     if (PRODUCTO_DESCUENTOs.length > 0) {
       this.porcentajeDescuento = 0;
       this.PRECIO_UNITARIO_CON_IVA_DESCUENTO = 0;
@@ -224,14 +224,14 @@ export class BusquedaCategoriaComponent implements OnInit {
             if ((this.obtenerMinutos(horaActual) >= this.obtenerMinutos(descuentoAut.DESCUENTO.HORA_INICIO))) {
               //CUPON VALIDO
               this.porcentajeDescuento = this.porcentajeDescuento + descuentoAut.DESCUENTO.PORCENTAJE_DESCUENTO;
-              console.log('1XX' + horaActual + fechaHoy)
+              // console.log('1XX' + horaActual + fechaHoy)
             }
           } else {
             if (descuentoAut.DESCUENTO.FECHA_FIN == fechaHoy) {
               if ((this.obtenerMinutos(horaActual) <= this.obtenerMinutos(descuentoAut.DESCUENTO.HORA_FIN))) {
                 //CUPON VALIDO
                 this.porcentajeDescuento = this.porcentajeDescuento + descuentoAut.DESCUENTO.PORCENTAJE_DESCUENTO;
-                console.log('2XX' + horaActual + fechaHoy);
+                // console.log('2XX' + horaActual + fechaHoy);
               } else {
                 //CUPON FUERA DE LA HORA
                 this.porcentajeDescuento = this.porcentajeDescuento + 0;
@@ -239,7 +239,7 @@ export class BusquedaCategoriaComponent implements OnInit {
             } else {
               //CUPON VALIDO
               this.porcentajeDescuento = this.porcentajeDescuento + descuentoAut.DESCUENTO.PORCENTAJE_DESCUENTO;
-              console.log('3XX' + horaActual + fechaHoy);
+              // console.log('3XX' + horaActual + fechaHoy);
             }
           }
         }
@@ -254,9 +254,9 @@ export class BusquedaCategoriaComponent implements OnInit {
       this.porcentajeDescuento = null;
       this.PRECIO_UNITARIO_CON_IVA_DESCUENTO = null;
     }
-    console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' + this.PRECIO_UNITARIO_CON_IVA_DESCUENTO + 'PRECIO DESCUENTO' + this.porcentajeDescuento + 'DESCUENTO');
+    // console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' + this.PRECIO_UNITARIO_CON_IVA_DESCUENTO + 'PRECIO DESCUENTO' + this.porcentajeDescuento + 'DESCUENTO');
     return this.PRECIO_UNITARIO_CON_IVA_DESCUENTO;
-    console.log(this.PRECIO_UNITARIO_CON_IVA_DESCUENTO + 'PRECIO DESCUENTO' + this.porcentajeDescuento + 'DESCUENTO');
+    // console.log(this.PRECIO_UNITARIO_CON_IVA_DESCUENTO + 'PRECIO DESCUENTO' + this.porcentajeDescuento + 'DESCUENTO');
   }
 
   public obtenerMinutos(hora) {

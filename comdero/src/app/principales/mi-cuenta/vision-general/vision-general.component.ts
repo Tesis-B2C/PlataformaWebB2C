@@ -29,7 +29,7 @@ export class VisionGeneralComponent implements OnInit {
   async getEstadisticaCarrito() {
     try {
       let response = await this._estadisticasServicio.getEstadisticaCarrito(this.identidad.COD_AGENTE).toPromise();
-      console.log("esatdstica carrito", response.data);
+      // console.log("esatdstica carrito", response.data);
       this.carrito = response.data;
     } catch (e) {
       if (!(e instanceof HttpErrorResponse)){
@@ -47,7 +47,7 @@ export class VisionGeneralComponent implements OnInit {
   async getEstadisticaPedidosRealizados() {
     try {
       let response = await this._estadisticasServicio.getEstadisticaPedidosRealizados(this.identidad.COD_AGENTE).toPromise();
-      console.log("esatdstica carrito", response.data);
+      // console.log("esatdstica carrito", response.data);
       this.pedidos = response.data;
     } catch (e) {
       if (!(e instanceof HttpErrorResponse)){
@@ -72,7 +72,7 @@ export class VisionGeneralComponent implements OnInit {
     try {
       let response = await this._compraServicio.getMisComprasRecientes().toPromise();
       this.comprasObtenidas = response.data;
-      console.log("compras recientes", this.comprasObtenidas);
+      // console.log("compras recientes", this.comprasObtenidas);
       for (let compra of this.comprasObtenidas) {
         let total_final = 0;
 

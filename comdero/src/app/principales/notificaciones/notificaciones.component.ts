@@ -53,7 +53,7 @@ export class NotificacionesComponent implements OnInit {
     try {
       let response = await this._notificacionesServicio.getMisNotificaciones().toPromise();
       this.notificaciones = response.data;
-      console.log("notificaciones", this.notificaciones)
+      // console.log("notificaciones", this.notificaciones)
 
     } catch (e) {
 

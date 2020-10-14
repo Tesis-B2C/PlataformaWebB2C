@@ -125,7 +125,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
       this.idProducto = this.route.snapshot.params.id;
       let response = await this._productoServicio.getProducto(this.idProducto).toPromise();
       this.identidadProducto = response.data
-      console.log("producto", this.identidadProducto);
+      // console.log("producto", this.identidadProducto);
     } catch (e) {
       if (!(e instanceof HttpErrorResponse)){
         console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
@@ -222,7 +222,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
           this.Imagenes_Producto[i].push(this.videoPorGuardar);
         }
       }
-      console.log("variantes", this.imagenes)
+      // console.log("variantes", this.imagenes)
 
     }
 
@@ -491,7 +491,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
   }
 
   public opcionGarantia(garantia) {
-    console.log("Garantia", garantia)
+    // console.log("Garantia", garantia)
     this.Oferta.Garantia = garantia;
   }
 
@@ -514,10 +514,10 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
   public cambiarColor(color: string, indice): Cmyk {
     const hsva = this.cpService.stringToHsva(color);
     const rgba = this.cpService.hsvaToRgba(hsva);
-    console.log(color);
-    console.log(rgba);
+    // console.log(color);
+    // console.log(rgba);
     this.Variantes[indice].Color = color;
-    console.log("Variante despuez de color", this.Variantes[indice]);
+    // console.log("Variante despuez de color", this.Variantes[indice]);
     return this.cpService.rgbaToCmyk(rgba);
   }
 
@@ -527,7 +527,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
     this.Variantes.push(new Variante(null, null, null, null, 1, "unidades", 1));
     this.Imagenes_Producto.push([]);
     this.imagenes.push([]);
-    console.log("asdasd");
+    // console.log("asdasd");
   }
 
   public quitarImagenes(indice: any, imagen) {
@@ -536,7 +536,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
       this.imagenes[indice].splice(imagen, 1);
       document.forms["form"].reset();
       this.Imagenes_Producto[indice].splice(imagen, 1);
-      console.log("vector imagenes", this.imagenes[indice]);
+      // console.log("vector imagenes", this.imagenes[indice]);
     } else if (this.Imagenes_Producto[indice][imagen].Estado_Imagen == 0) {
       this.Imagenes_Producto[indice][imagen].Estado_Imagen = 2;
 
@@ -695,7 +695,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
     }).then(async (result) => {
       if (result.value) {
         try {
-          console.log("oferta", this.Oferta, "producto", this.Producto, "Variantes", this.Variantes, "Imagen producto", this.Imagenes_Producto, "video producto", this.videoPorGuardar, "categoria", this.categoriasSeleccionadas)
+          // console.log("oferta", this.Oferta, "producto", this.Producto, "Variantes", this.Variantes, "Imagen producto", this.Imagenes_Producto, "video producto", this.videoPorGuardar, "categoria", this.categoriasSeleccionadas)
           let response = await this._productoServicio.updateProducto(this.identidadProducto.ID_OFERTA, this.Oferta, this.Producto, this.Variantes, this.Imagenes_Producto, this.categoriasEnviar).toPromise();
           this.mensageCorrecto(response['message']);
           this.iniciarModificarProducto();

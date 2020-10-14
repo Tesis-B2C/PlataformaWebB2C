@@ -67,7 +67,7 @@ export class CuponDescuentoComponent implements OnInit , OnDestroy{
     this.misProductos = response.data;
     debugger;
     this.result = this.misProductos;
-    console.log("mis productos", this.misProductos);
+    // console.log("mis productos", this.misProductos);
     for (let i in this.result) {
       this.vectorProductos.add(this.result[i]);
     }
@@ -90,7 +90,7 @@ export class CuponDescuentoComponent implements OnInit , OnDestroy{
   public obtenerFecha(fecha) {
 
     fecha.setHours(0, 0, 0);
-    console.log("fecha ", fecha)
+    // console.log("fecha ", fecha)
     return fecha.toISOString().split('T')[0]
 
   }
@@ -155,7 +155,7 @@ export class CuponDescuentoComponent implements OnInit , OnDestroy{
       for (let i in this.result) {
         this.vectorProductos.add(this.result[i]);
       }
-      console.log("vector productos", this.vectorProductos)
+      // console.log("vector productos", this.vectorProductos)
 
 
     } else {
@@ -169,7 +169,7 @@ export class CuponDescuentoComponent implements OnInit , OnDestroy{
     if (event.target.checked) {
       debugger
       this.vectorProductos.add(cod);
-      console.log("vector productos", this.vectorProductos)
+      // console.log("vector productos", this.vectorProductos)
     } else {
       this.vectorProductos.delete(cod);
     }
@@ -206,7 +206,7 @@ export class CuponDescuentoComponent implements OnInit , OnDestroy{
           if (this.vectorProductosEnviar.length > 0) {
             this.Descuento.Fecha_Inicio = this.obtenerFecha(this.bsRangeValue[0]);
             this.Descuento.Fecha_FIn = this.obtenerFecha(this.bsRangeValue[1]);
-            console.log("Descuento antes de enviar ", this.Descuento, "productos", this.vectorProductosEnviar);
+            // console.log("Descuento antes de enviar ", this.Descuento, "productos", this.vectorProductosEnviar);
             this.objDescuento.Descuento = this.Descuento;
             this.objDescuento.vProductos = this.vectorProductosEnviar;
             let response = await this._descuentoServicio.saveDescuento(this.identidadTienda.NUM_TIENDA, this.objDescuento).toPromise();
@@ -221,10 +221,10 @@ export class CuponDescuentoComponent implements OnInit , OnDestroy{
         } else {
           this.Descuento.Fecha_Inicio = this.obtenerFecha(this.bsRangeValue[0]);
           this.Descuento.Fecha_FIn = this.obtenerFecha(this.bsRangeValue[1]);
-          console.log("Descuento antes de enviar ", this.Descuento, "productos", this.vectorProductosEnviar);
+          // console.log("Descuento antes de enviar ", this.Descuento, "productos", this.vectorProductosEnviar);
           this.objDescuento.Descuento = this.Descuento;
           this.objDescuento.vProductos = this.vectorProductosEnviar;
-          console.log("Descuento antes de enviar ", this.Descuento, "productos", this.vectorProductosEnviar);
+          // console.log("Descuento antes de enviar ", this.Descuento, "productos", this.vectorProductosEnviar);
           let response = await this._descuentoServicio.saveDescuento(this.identidadTienda.NUM_TIENDA, this.objDescuento).toPromise();
           this.mensageCorrecto(response.message);
           this.loading = false;

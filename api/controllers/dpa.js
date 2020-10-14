@@ -29,7 +29,7 @@ async function getDpaProvincias(req, res) {
 
 async function getDpaCiudades(req, res) {
     let busqueda = req.params.id;
-    console.log(busqueda);
+    // console.log(busqueda);
     try {
         let ciudadesObtenidas = await DPA.findAll({where: {DPA_COD_DPA: req.params.id}, order: [['NOMBRE', 'ASC']]});
 

@@ -29,12 +29,12 @@ export class AgenteServicio {
 
   autenticarAgente(agente, getHash) {
     if (getHash) {
-      console.log("aqui va el hash", getHash);
+      
       agente.getHash = getHash;
       console.log(agente.getHash);
     }
     let params = JSON.stringify(agente);
-    console.log(params);
+   
     let headers = new HttpHeaders({"Content-type": "application/json"});
     return this._http.post<objeto>(this.url + "autenticarAgente", params, {headers: headers});
 
@@ -42,12 +42,12 @@ export class AgenteServicio {
 
   autenticarActivarAgente(agente, getHash, token) {
     if (getHash) {
-      console.log("aqui va el hash", getHash);
+      // console.log("aqui va el hash", getHash);
       agente.getHash = getHash;
-      console.log(agente.getHash);
+      // console.log(agente.getHash);
     }
     let params = JSON.stringify(agente);
-    console.log(params);
+    // console.log(params);
     let headers = new HttpHeaders({"Content-type": "application/json", "Authorization": token});
     return this._http.post<objeto>(this.url + "autenticarActivarAgente", params, {headers: headers});
 

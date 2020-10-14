@@ -72,7 +72,7 @@ export class MenuGestionTiendasComponent implements OnInit{
     try {
       let response = await this._notificacionesServicio.getMisNotificacionesTienda(this.identidadTienda.NUM_TIENDA).toPromise();
        this.notificaciones = response.data;
-      console.log("notificaciones", this.notificaciones)
+      // console.log("notificaciones", this.notificaciones)
 
     } catch (e) {
 
@@ -92,7 +92,7 @@ export class MenuGestionTiendasComponent implements OnInit{
 
   cerrarSideBar(){
     let body=document.getElementById('body') as HTMLElement;
-    console.log("tamanio",body.offsetWidth);
+    // console.log("tamanio",body.offsetWidth);
     if(body.offsetWidth<720){
       this.banderaSideBar = !this.banderaSideBar;
     }

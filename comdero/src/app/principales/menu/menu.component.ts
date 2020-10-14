@@ -47,7 +47,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    console.log("user", JSON.stringify(this._agenteServicio.getIdentity()));
+    // console.log("user", JSON.stringify(this._agenteServicio.getIdentity()));
     if (this._agenteServicio.getIdentity()) {
       this.conteoProductosCarrito(false);
 
@@ -107,7 +107,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     try {
       let response = await this._notificacionesServicio.getMisNotificaciones().toPromise();
       this.notificaciones = response.data;
-      console.log("notificaciones", this.notificaciones)
+      // console.log("notificaciones", this.notificaciones)
 
     } catch (e) {
 
@@ -128,7 +128,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.banderaCarrito = bandera;
     try {
       this.carritoIdentidad = await this._carritoServicio.getCarrito().toPromise();
-      console.log("OBTENIENDO carrito", this.carritoIdentidad.data);
+      // console.log("OBTENIENDO carrito", this.carritoIdentidad.data);
 
     } catch (e) {
 
@@ -177,7 +177,7 @@ export class MenuComponent implements OnInit, OnDestroy {
       if (this.tipoBuscador == 'Todos' && palabraBuscar != '') {
         let response = await this._tiendaServicio.obtenerFiltroPrincipalTodos(palabraBuscar).toPromise();
         this.datosObtenidos = response.data;
-        console.log('DATOS' + JSON.stringify(this.datosObtenidos))
+        // console.log('DATOS' + JSON.stringify(this.datosObtenidos))
         this.datosObtenidos[0].forEach(elemnt => {
           this.objetoDatos.push(elemnt.NOMBRE_COMERCIAL);
         })
@@ -189,7 +189,7 @@ export class MenuComponent implements OnInit, OnDestroy {
 
       }
     }
-    console.log("ordenado", this.objetoDatos.sort());
+    // console.log("ordenado", this.objetoDatos.sort());
   }
 
   buscarDatosTerm = (text$: Observable<string>) =>

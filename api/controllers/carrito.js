@@ -115,7 +115,7 @@ async function saveCarrito(req, res) {
                     }, transaction: t,
                     attributes: ['ID_CARRITO', [Carrito_Producto.sequelize.fn('COUNT', Carrito_Producto.sequelize.col('ID_CARRITO')), 'TOTAL_COM']],
                 });
-                console.log("conmt", cont.dataValues.TOTAL_COM);
+                // console.log("conmt", cont.dataValues.TOTAL_COM);
 
                 let carritoActualizado = await Carrito.update({CANTIDAD_TOTAL_PRODUCTOS: cont.dataValues.TOTAL_COM}, {
                     where: {COD_AGENTE: req.user.id}, transaction: t,
@@ -207,7 +207,7 @@ async function deleteProductoCarrito(req, res) {
                         },
                         attributes: ['ID_CARRITO', [Carrito_Producto.sequelize.fn('COUNT', Carrito_Producto.sequelize.col('ID_CARRITO')), 'TOTAL_COM']],
                     });
-                    console.log("conmt", cont.dataValues.TOTAL_COM);
+                    // console.log("conmt", cont.dataValues.TOTAL_COM);
 
                     let carritoActualizado = await Carrito.update({CANTIDAD_TOTAL_PRODUCTOS: cont.dataValues.TOTAL_COM}, {
                         where: {COD_AGENTE: req.user.id}
