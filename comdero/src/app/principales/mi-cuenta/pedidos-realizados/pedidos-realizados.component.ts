@@ -52,6 +52,7 @@ export class PedidosRealizadosComponent implements OnInit {
 
 
   async ngOnInit() {
+
     await this.getMisCompras(this.estadoActivo, this.fechaActiva);
   }
 

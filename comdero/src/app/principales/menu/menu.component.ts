@@ -81,12 +81,12 @@ export class MenuComponent implements OnInit, OnDestroy {
     }
   }
 
-  public async direccionar2(idNotificacion, estado,estado_notificacion) {
+  public async direccionar2( idCompra, idNotificacion, estado,estado_notificacion) {
     try {
       if (estado_notificacion == 0) {
         let response = await this._notificacionesServicio.updateEstadoNotificacion(idNotificacion, estado).toPromise();
       }
-      this.router.navigate(['/principales/menu/mi-cuenta/menu-mi-cuenta/pedidos-realizados']);
+      this.router.navigate(['/principales/menu/mi-cuenta/menu-mi-cuenta/detalle-pedido-realizado/',idCompra]);
       this.getMisNotificaciones();
     } catch (e) {
 

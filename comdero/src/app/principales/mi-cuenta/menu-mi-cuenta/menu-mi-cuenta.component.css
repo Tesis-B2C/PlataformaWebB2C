@@ -6,3 +6,11 @@ body{
 a{
   font-size: small;
 }
+
+.active2{
+  display: none;
+}
+
+.active{
+  display: block;
+}

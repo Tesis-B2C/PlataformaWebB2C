@@ -75,7 +75,7 @@
                   </a>
 
                   <a class="dropdown-item " *ngIf="notificaciones.ENVIAR_A=='Usuario'"
-                     (click)="direccionar2(notificaciones.ID_NOTIFICACION, 1,notificaciones.ESTADO_NOTIFICACION)">
+                     (click)="direccionar2(notificaciones.CODIGO_COMPRA,notificaciones.ID_NOTIFICACION, 1,notificaciones.ESTADO_NOTIFICACION)">
 
                     <p class="notificaciones text-success" style="text-transform: uppercase"
                        [ngClass]="{'text-success': notificaciones.ESTADO_NOTIFICACION==1, 'text-primary': notificaciones.ESTADO_NOTIFICACION==0}">
@@ -202,7 +202,7 @@
                       <small class="ml-auto text-muted"> {{notificaciones.HORA_NOTIFICACION}}</small></div>
                   </a>
                   <a class="dropdown-item " *ngIf="notificaciones.ENVIAR_A=='Usuario'"
-                     (click)="direccionar2(notificaciones.ID_NOTIFICACION, 1,notificaciones.ESTADO_NOTIFICACION)">
+                     (click)="direccionar2(notificaciones.CODIGO_COMPRA,notificaciones.ID_NOTIFICACION, 1,notificaciones.ESTADO_NOTIFICACION)">
 
                     <p class="notificaciones text-success" style="text-transform: uppercase"
                        [ngClass]="{'text-success': notificaciones.ESTADO_NOTIFICACION==1, 'text-primary': notificaciones.ESTADO_NOTIFICACION==0}">

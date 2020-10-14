@@ -4,6 +4,8 @@ import Swal from "sweetalert2";
 import {CompraServicio} from "../../../servicios/compra.servicio";
 import {ActivatedRoute} from "@angular/router";
 import {GLOBAL} from "../../../servicios/global";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 @Component({
   selector: 'app-detalle-pedido-realizado',
@@ -12,20 +14,24 @@ import {GLOBAL} from "../../../servicios/global";
 })
 export class DetallePedidoRealizadoComponent implements OnInit {
   public comprasObtenida;
-
+  public bandera:boolean=true;
   constructor(public route: ActivatedRoute,public _compraServicio: CompraServicio) {
   }
 
+  public idCompra;
   ngOnInit() {
-    let idProducto = this.route.snapshot.params.id;
-    this.getCompra(idProducto)
+    this.route.params.subscribe(params => {
+      this.idCompra = params['id'];
+      this.getCompra();
+      this.bandera=true;
+    });
+
   }
 
   public compra;
-  public async getCompra(idCompra) {
-
+  public async getCompra() {
     try {
-      let response = await this._compraServicio.getCompra(idCompra).toPromise();
+      let response = await this._compraServicio.getCompra(this.idCompra).toPromise();
       this.comprasObtenida = response.data;
       this.compra = this.comprasObtenida;
       let total_final = 0;
@@ -34,7 +40,6 @@ export class DetallePedidoRealizadoComponent implements OnInit {
       let subtotal = 0;
       let descuento = 0;
       let cupon = 0;
-
 
       for (let producto of this.compra.COMPRA_PRODUCTOs) {
         total_final = total_final + producto.SUBTOTAL - producto.DESCUENTOS - producto.CUPON;
@@ -72,6 +77,23 @@ export class DetallePedidoRealizadoComponent implements OnInit {
     }
     return this.noExite;
   }
+
+
+  pdf(codigo) {
+    html2canvas(document.getElementById('recibo'), {scale: 2}).then(function (canvas) {
+      var img = canvas.toDataURL("image/png");
+      var context = canvas.getContext("2d");
+      context.scale(2, 2);
+
+      var doc = new jsPDF('p', 'mm', 'a4');
+      const imgProps= doc.getImageProperties(img);
+      const pdfWidth = doc.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      doc.addImage(img, 'PNG', 15, 20, pdfWidth-30, pdfHeight);
+      doc.save('Orden No'+codigo+'.pdf');
+    });
+  }
+
 
   mensageError(mensaje) {
     Swal.fire({
