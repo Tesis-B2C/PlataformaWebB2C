@@ -231,20 +231,19 @@
             </dl>
 
             <dl class="dlist-align">
-              <dt><i class="icon text-success fa fa-truck"></i> &nbsp;Método de envio:</dt>
-              <dd class="text-center">
-                <strong *ngIf="compra.METODO_ENVIO=='Acordar'">Acordar con el vendedor</strong>
-                <strong *ngIf="compra.METODO_ENVIO=='Retiro'">Retiro desde la tienda</strong>
-                <strong *ngIf="compra.METODO_ENVIO=='Domicilio'">Envío a domicilio</strong>
+              <dd><i class="icon text-success fa fa-truck"></i> :&nbsp;
+                <label *ngIf="compra.METODO_ENVIO=='Acordar'">Acordar con el vendedor</label>
+                <label *ngIf="compra.METODO_ENVIO=='Retiro'">Retiro desde la tienda</label>
+                <label *ngIf="compra.METODO_ENVIO=='Domicilio'">Envío a domicilio</label>
               </dd>
               <dd class="text-right text-dark b"> {{compra.COSTO_ENVIO | currency}}</dd>
             </dl>
             <dl class="dlist-align">
-              <dt><i class="icon text-success fa fa-cash-register"></i> &nbsp;Método de pago:</dt>
-              <dd class="text-center">
-                <strong *ngIf="compra.METODO_PAGO=='Efectivo'">Efectivo</strong>
-                <strong *ngIf="compra.METODO_PAGO=='Transferencia'">Transferencia bancaria</strong>
-                <strong *ngIf="compra.METODO_PAGO=='Electrónico'">PayPal</strong>
+              <dd><i class="icon text-success fa fa-cash-register">:</i> &nbsp;
+
+                <label *ngIf="compra.METODO_PAGO=='Efectivo'">Efectivo</label>
+                <label *ngIf="compra.METODO_PAGO=='Transferencia'">Transferencia bancaria</label>
+                <label *ngIf="compra.METODO_PAGO=='Electrónico'">PayPal</label>
               </dd>
               <dd class="text-right text-dark b"> {{compra.RECARGO_PAYPAL | currency}}</dd>
             </dl>

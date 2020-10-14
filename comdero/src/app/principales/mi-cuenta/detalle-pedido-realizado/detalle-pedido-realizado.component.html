@@ -1,14 +1,14 @@
-<div id="detalle" *ngIf="bandera">
-  <button class="float-right btn btn-link" (click)="bandera=!bandera">Recibo</button>
-<h5 class="text-center mb-0">Detalles  del pedido No {{compra.NUM_COMPRA}}</h5>
+<div id="detalle" *ngIf="bandera" >
+  <button class="text-right btn btn-link w-100" style="font-size: medium" (click)="bandera=!bandera">Recibo</button>
+<h5 class="text-center mb-0">Detalles  del pedido No {{compra?.NUM_COMPRA}}</h5>
 <br>
 <div class="card card-body">
 
-<div class="row justify-content-center mb-4 no-gutters "
-     *ngFor="let producto of compra.COMPRA_PRODUCTOs; let i= index">
-  <div class="col-9 col-md-4 mb-md-0 mb-4">
-    <p class="text-uppercase text-center ">Producto</p>
-    <div class="itemside ">
+<div class="row justify-content-between mb-4 no-gutters "
+     *ngFor="let producto of compra?.COMPRA_PRODUCTOs; let i= index">
+  <div class="col-12 col-md-4 mb-md-0 mb-4">
+    <p class="text-uppercase text-center price ">Producto</p>
+    <div class="itemside mx-auto ">
       <div class="aside"><img [src]="getImagen(producto.IMAGEN_MOSTRAR)" height="50px" width="50px"
                               routerLink="../../../detalle-producto/{{producto.VARIANTE.PRODUCTO.OFERTum.ID_OFERTA}}">
       </div>
@@ -32,16 +32,15 @@
     </div>
   </div>
   <div class="col-6 col-md-3  mb-3 mb-md-0 text-center    ">
-    <p class="text-uppercase mb-0 ">Cantidad </p>
+    <p class="text-uppercase mb-0 price">Cantidad </p>
     <p class="price">{{producto.CANTIDAD_PRODUCTO}}</p>
-    <a style="font-size: x-small; text-transform: lowercase">({{producto.VARIANTE.MEDIDA}})</a>
+    <a style="font-size: small; text-transform: lowercase">({{producto.VARIANTE.MEDIDA}})</a>
 
   </div>
   <div class="col-6 col-md-3 ">
-    <p class="text-uppercase mb-0 ">Precio</p>
+    <p class="text-uppercase mb-0 price">Precio</p>
     <div class="price-wrap">
-      <p
-        class="price">{{(producto.SUBTOTAL)  | currency}} </p>
+      <p style="font-size: medium">{{(producto.SUBTOTAL)  | currency}} </p>
 
     </div> <!-- price-wrap .// -->
   </div>
@@ -54,102 +53,102 @@
 <div class="">
   <dl class="dlist-align">
     <dd>Productos:</dd>
-    <dd class="text-right">{{compra.productos | currency}}</dd>
+    <dd class="text-right">{{compra?.productos | currency}}</dd>
   </dl>
   <dl class="dlist-align">
     <dd>Impuestos</dd>
-    <dd class="text-right text-danger">{{compra.impuestos | currency}} </dd>
+    <dd class="text-right text-danger">{{compra?.impuestos | currency}} </dd>
 
   </dl>
 
   <dl class="dlist-align">
     <dd>Subtotal:</dd>
-    <dd class="text-right text-dark b"><strong>{{compra.subtotal | currency}}</strong></dd>
+    <dd class="text-right text-dark b"><strong>{{compra?.subtotal | currency}}</strong></dd>
   </dl>
 
   <dl class="dlist-align">
     <dd>Descuento</dd>
-    <dd class="text-right text-dark b">(-) &nbsp; <strong>{{compra.descuento | currency}}</strong></dd>
+    <dd class="text-right text-dark b">(-) &nbsp; <strong>{{compra?.descuento | currency}}</strong></dd>
   </dl>
   <dl class="dlist-align">
     <dd>Descuento Cupón</dd>
-    <dd class="text-right text-dark b">(-) &nbsp; <strong>{{compra.cupon | currency}}</strong></dd>
+    <dd class="text-right text-dark b">(-) &nbsp; <strong>{{compra?.cupon | currency}}</strong></dd>
   </dl>
 
   <dl class="dlist-align">
-    <dd><i class="icon text-success fa fa-truck"></i> &nbsp;Método de envio:</dd>
-    <dd class="text-center">
-      <strong *ngIf="compra.METODO_ENVIO=='Acordar'">Acordar con el vendedor</strong>
-      <strong *ngIf="compra.METODO_ENVIO=='Retiro'">Retiro desde la tienda</strong>
-      <strong *ngIf="compra.METODO_ENVIO=='Domicilio'">Envío a domicilio</strong>
+    <dd><i class="icon text-success fa fa-truck">: &nbsp;</i>
+
+      <label *ngIf="compra?.METODO_ENVIO=='Acordar'">Acordar con el vendedor</label>
+      <label *ngIf="compra?.METODO_ENVIO=='Retiro'">Retiro desde la tienda</label>
+      <label *ngIf="compra?.METODO_ENVIO=='Domicilio'">Envío a domicilio</label>
     </dd>
-    <dd class="text-right text-dark b"> {{compra.COSTO_ENVIO | currency}}</dd>
+    <dd class="text-right text-dark b"> {{compra?.COSTO_ENVIO | currency}}</dd>
   </dl>
   <dl class="dlist-align">
-    <dd><i class="icon text-success fa fa-cash-register"></i> &nbsp;Método de pago:</dd>
-    <dd class="text-center">
-      <strong *ngIf="compra.METODO_PAGO=='Efectivo'">Efectivo</strong>
-      <strong *ngIf="compra.METODO_PAGO=='Transferencia'">Transferencia bancaria</strong>
-      <strong *ngIf="compra.METODO_PAGO=='Electrónico'">PayPal</strong>
+    <dd><i class="icon text-success fa fa-cash-register">: &nbsp;</i>
+
+      <label *ngIf="compra?.METODO_PAGO=='Efectivo'">Efectivo</label>
+      <label *ngIf="compra?.METODO_PAGO=='Transferencia'">Transferencia bancaria</label>
+      <label *ngIf="compra?.METODO_PAGO=='Electrónico'">PayPal</label>
     </dd>
-    <dd class="text-right text-dark b"> {{compra.RECARGO_PAYPAL | currency}}</dd>
+    <dd class="text-right text-dark b"> {{compra?.RECARGO_PAYPAL | currency}}</dd>
   </dl>
 
   <hr>
   <button href="#" class="btn btn-light btn-block font-weight-bold text-right">Total del
-    pedido:{{compra.total_final| currency}} </button>
+    pedido:{{compra?.total_final| currency}} </button>
   <br>
 
 </div> <!-- card-body.// -->
 
-<div *ngIf="compra.IDENTIFICACION_ENTREGA">
+<div *ngIf="compra?.IDENTIFICACION_ENTREGA">
   <label class="font-weight-bold">Enviado a</label>
 
 
   <div class="row  justify-content-between mx-md-auto">
 
-    <label class="col-md-4 text-md-left text-left">Tipo de persona:</label>
-    <label class="col-md-7 text-md-right text-left" *ngIf="compra.TIPO_IDENTIFICACION_ENTREGA=='Persona'">Persona
+    <label class="col-6 text-md-left text-left">Tipo de persona:</label>
+    <label class="col-6 text-md-right text-left" *ngIf="compra?.TIPO_IDENTIFICACION_ENTREGA=='Persona'">Persona
       Natural</label>
-    <label class="col-md-7 text-md-right text-left" *ngIf="compra.TIPO_IDENTIFICACION_ENTREGA=='Empresa'">
+    <label class="col-6 text-md-right text-left" *ngIf="compra?.TIPO_IDENTIFICACION_ENTREGA=='Empresa'">
       Empresa</label>
-    <label class="col-md-4 text-md-left text-left">Idetentificación:</label>
-    <label class="col-md-7 text-md-right text-left">{{compra.IDENTIFICACION_ENTREGA}}</label>
-    <label class="col-md-4 text-md-left text-left">Nombres y Apellidos:</label>
-    <label class="col-md-7 text-md-right text-left">{{compra.NOMBRE_PERSONA_ENTREGA}}</label>
-    <label class="col-md-4 text-md-left text-left">Telefono:</label>
-    <label class="col-md-7 text-md-right text-left">{{compra.TELEFONO_ENTREGA}}</label>
-    <label class="col-md-4 text-md-left text-left">Provincia:</label>
-    <label class="col-md-7 text-md-right text-left">{{compra.DPA?.DPAP.NOMBRE}}</label>
-    <label class="col-md-4 text-md-left text-left">Ciudad:</label>
-    <label class="col-md-7 text-md-right text-left">{{compra.DPA?.NOMBRE}}</label>
-    <label class="col-md-4 text-md-left text-left">Calle pricipal:</label>
-    <label class="col-md-7 text-md-right text-left">{{compra.CALLE_PRINCIPAL_ENTREGA}}</label>
-    <label class="col-md-4 text-md-left text-left">Calle secundaria:</label>
-    <label class="col-md-7 text-md-right text-left">{{compra.CALLE_SECUNDARIA_ENTREGA}}</label>
-    <label class="col-md-4 text-md-left text-left">Número de referencia:</label>
-    <label class="col-md-7 text-md-right text-left">{{compra.NUM_CASA_ENTREGA}}</label>
-    <label class="col-md-4 text-md-left text-left">Código postal:</label>
-    <label class="col-md-7 text-md-right text-left">{{compra.NUM_COD_POSTAL_ENTREGA}}</label>
+    <label class="col-6 text-md-left text-left">Idetentificación:</label>
+    <label class="col-6 text-md-right text-left">{{compra?.IDENTIFICACION_ENTREGA}}</label>
+    <label class="col-6 text-md-left text-left">Nombres y Apellidos:</label>
+    <label class="col-6 text-md-right text-left">{{compra?.NOMBRE_PERSONA_ENTREGA}}</label>
+    <label class="col-6 text-md-left text-left">Telefono:</label>
+    <label class="col-6 text-md-right text-left">{{compra?.TELEFONO_ENTREGA}}</label>
+    <label class="col-6 text-md-left text-left">Provincia:</label>
+    <label class="col-6 text-md-right text-left">{{compra.DPA?.DPAP.NOMBRE}}</label>
+    <label class="col-6 text-md-left text-left">Ciudad:</label>
+    <label class="col-6 text-md-right text-left">{{compra.DPA?.NOMBRE}}</label>
+    <label class="col-6 text-md-left text-left">Calle pricipal:</label>
+    <label class="col-6 text-md-right text-left">{{compra?.CALLE_PRINCIPAL_ENTREGA}}</label>
+    <label class="col-6 text-md-left text-left">Calle secundaria:</label>
+    <label class="col-6 text-md-right text-left">{{compra?.CALLE_SECUNDARIA_ENTREGA}}</label>
+    <label class="col-6 text-md-left text-left">Número de referencia:</label>
+    <label class="col-6 text-md-right text-left">{{compra?.NUM_CASA_ENTREGA}}</label>
+    <label class="col-6 text-md-left text-left">Código postal:</label>
+    <label class="col-6 text-md-right text-left">{{compra?.NUM_COD_POSTAL_ENTREGA}}</label>
   </div>
 </div>
 <hr>
 <label class="font-weight-bold">Facturado a</label>
 <div class="row  justify-content-between  mx-md-auto">
 
-  <label class="col-md-4 text-md-left text-left"><strong>Tipo de persona:</strong></label>
-  <label class="col-md-7 text-md-right text-left" *ngIf="compra.TIPO_IDENTIFICACION_FACTURA=='Persona'">Persona
+  <label class="col-6 text-md-left text-left"><strong>Tipo de persona:</strong></label>
+  <label class="col-6 text-md-right text-left" *ngIf="compra?.TIPO_IDENTIFICACION_FACTURA=='Persona'">Persona
     Natural</label>
-  <label class="col-md-7 text-md-right text-left" *ngIf="compra.TIPO_IDENTIFICACION_FACTURA=='Empresa'">
+  <label class="col-6 text-md-right text-left" *ngIf="compra?.TIPO_IDENTIFICACION_FACTURA=='Empresa'">
     Empresa</label>
-  <label class="col-md-4 text-md-left text-left">Idetentificación:</label>
-  <label class="col-md-7 text-md-right text-left">{{compra.IDENTIFICACION_FACTURA}}</label>
-  <label class="col-md-4 text-md-left text-left">Nombres y Apellidos:</label>
-  <label class="col-md-7 text-md-right text-left">{{compra.NOMBRE_FACTURA}}</label>
-  <label class="col-md-4 text-md-left text-left">Telefono:</label>
-  <label class="col-md-7 text-md-right text-left">{{compra.TELEFONO_FACTURA}}</label>
-  <label class="col-md-4 text-md-left text-left">Dirección:</label>
-  <label class="col-md-8 text-md-right text-left">{{compra.DIRECCION_FACTURA}}</label>
+  <label class="col-6 text-md-left text-left">Idetentificación:</label>
+  <label class="col-6 text-md-right text-left">{{compra?.IDENTIFICACION_FACTURA}}</label>
+  <label class="col-6 text-md-left text-left">Nombres y Apellidos:</label>
+  <label class="col-6 text-md-right text-left">{{compra?.NOMBRE_FACTURA}}</label>
+  <label class="col-6 text-md-left text-left">Telefono:</label>
+  <label class="col-6 text-md-right text-left">{{compra?.TELEFONO_FACTURA}}</label>
+  <label class="col-6 text-md-left text-left">Dirección:</label>
+  <label class="col-6 text-md-right text-left">{{compra?.DIRECCION_FACTURA}}</label>
 </div>
 
 </div>
@@ -158,7 +157,7 @@
 
 
 <div id="recibo" #recibo *ngIf="!bandera">
-  <button class="float-right btn btn-link" (click)="bandera=!bandera">Detalle</button>
+  <button class="text-right btn btn-link w-100" style="font-size: medium" (click)="bandera=!bandera">Detalle</button>
   <h5 class="text-center mb-0">Detalles del pedido No {{compra.NUM_COMPRA}}</h5>
   <p>
     <button class="text-center btn btn-link py-0 " style="font-size: small" (click)="pdf(compra.NUM_COMPRA)">Imprimir recibo</button>
