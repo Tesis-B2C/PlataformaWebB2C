@@ -604,7 +604,6 @@ async function updateEstadoPedido(req, res) {
             });
 
 
-
             let notificacionCreada = await Notificacion.create({
                 AGENTE_EMISOR: req.user.id,
                 AGENTE_RECEPTOR: pedido.dataValues.COD_AGENTE,

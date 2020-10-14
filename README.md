@@ -122,6 +122,9 @@ https://dev.to/susomejias/automatic-page-loading-progress-bar-for-angular-3ann
 https://github.com/aitboudad/ngx-loading-bar/blob/main/packages/http-client/src/loading-bar.interceptor.ts
 
 
+
+
+
 ----- NOTIFICACIONES SOCKET
 -- CLIENTE ANGULAR
 npm i ngx-socket-io
@@ -130,3 +133,14 @@ npm i socket.io
 https://medium.com/@leifer33/manejar-eventos-socket-io-y-angular-ad8c8f340be1
 https://sodocumentation.net/es/node-js/topic/10892/notificaciones-push
 VIDEO DE FERNANDO HERRERA NODEJS DE CERO A EXPERTO UDEMY
+
+
+
+
+--- para imprimir pdf
+npm install jspdf
+npm install html2canvas
+no se importa en el module principal solo donde se va a ocupar
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+https://www.youtube.com/watch?v=PgT2tnmDzzU
