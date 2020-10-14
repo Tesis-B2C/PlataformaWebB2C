@@ -3,6 +3,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AgenteServicio} from "../../servicios/agente.servicio";
 import Swal from "sweetalert2";
 import {HttpErrorResponse} from "@angular/common/http";
+import{GLOBAL} from "../../servicios/global";
+  import { from } from 'rxjs';
 @Component({
   selector: 'app-olvido-contrasenia-paso2',
   templateUrl: './olvido-contrasenia-paso2.component.html',
@@ -70,7 +72,7 @@ export class OlvidoContraseniaPaso2Component implements OnInit {
       position: 'center',
       width: 600,
       buttonsStyling: false,
-      footer: '<a href="http://localhost:4200/loguin"><b><u>Autentificate Ahora</u></b></a>',
+      footer: '<a href="'+GLOBAL.url+'loguin"><b><u>Autentificate Ahora</u></b></a>',
       customClass: {
         confirmButton: 'btn btn-primary px-5',
         //icon:'sm'

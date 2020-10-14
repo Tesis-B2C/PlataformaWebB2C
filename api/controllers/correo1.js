@@ -4,6 +4,10 @@ const Tienda = require('../models/tienda');
 var bcrypt = require('bcrypt-nodejs');
 var nodemailer = require('nodemailer');
 const jwt = require('../services/jwt');
+
+const {GLOBAL}= require('../global');
+
+
 // email sender function
 var transporter = nodemailer.createTransport({
     service: 'Gmail',
@@ -21,10 +25,10 @@ function correoActivacion(req, res) {
         from: 'doginotificaciones@gmail.com',
         to: req.body.CORREO,
         subject: 'Activación de cuenta',
-        text: 'Hola' + req.body.NOMBRE + ', Gracias por registrarte en "COMDERO". ' + 'Porfavor da click en el siguiente link para completar la activacion: http://192.168.0.104:4200/loguin/',
+        text: 'Hola' + req.body.NOMBRE + ', Gracias por registrarte en "COMDERO". ' + 'Porfavor da click en el siguiente link para completar la activacion:'+GLOBAL.url+'loguin',
         html: 'Hola<strong> ' + req.body.NOMBRE + '</strong>,<br><br>Gracias por registrarte en ' +
             '"COMDERO". Porfavor da click en el siguiente link para completar la activacion:<br><br><a ' +
-            'href="http://192.168.0.104:4200/loguin/' + token + '">http://192.168.0.104:4200/loguin/</a>'
+            'href="'+GLOBAL.url+'loguin/' + token + '">'+GLOBAL.url+'loguin/</a>'
     };
 
     transporter.sendMail(mailOptions, function (error) {
@@ -53,11 +57,11 @@ function correoCambioContrasenia(req, res) {
         from: 'doginotificaciones@gmail.com',
         to: req.body.CORREO,
         subject: 'Cambio de contraseña',
-        text: 'Hola' + req.body.NOMBRE + ', Gracias por registrarte en "COMDERO". Porfavor da click en el siguiente link para poder cambiar su contraseña: http://192.168.0.104:4200/olvido-contrasenia-paso2/' + token,
+        text: 'Hola' + req.body.NOMBRE + ', Gracias por registrarte en "COMDERO". Porfavor da click en el siguiente link para poder cambiar su contraseña:' +GLOBAL.url+'olvido-contrasenia-paso2/' + token,
         html: 'Hola<strong> ' + req.body.NOMBRE + '</strong>,<br><br>Gracias por registrarte en "COMDERO". ' +
             'Porfavor da click en el siguiente link para poder cambiar su contraseña:<br><br>' +
-            '<a href="http://192.168.0.104:4200/olvido-contrasenia-paso2/' + token + '">' +
-            'http://192.168.0.104:4200/olvido-contrasenia-paso2/</a>'
+            '<a href="'+GLOBAL.url+'olvido-contrasenia-paso2/' + token + '">' +
+            GLOBAL.url+'olvido-contrasenia-paso2/</a>'
 
     };
 
@@ -120,7 +124,7 @@ async function  correoNuevaCompra(req, res) {
         cc:tienda.dataValues.CORREO_TIENDA,
         subject: req.body.ASUNTO,
         text: req.body.MENSAJE + ' de: ' + agente_emisor.dataValues.NOMBRE+' por favor revisa COMDERO para más detalle de la compra No :'+req.body.CODIGO_COMPRA,
-        html:  req.body.MENSAJE + ' de: ' + agente_emisor.dataValues.NOMBRE+' por favor revisa: &nbsp; <a href="http://localhost:4200/principales/menu/principal">comdero.com/</a> &nbsp; para más detalle de la compra No:'+req.body.CODIGO_COMPRA
+        html:  req.body.MENSAJE + ' de: ' + agente_emisor.dataValues.NOMBRE+' por favor revisa: &nbsp; <a href="'+GLOBAL.url+'principales/menu/principal">comdero.com/</a> &nbsp; para más detalle de la compra No:'+req.body.CODIGO_COMPRA
     };
 
     transporter.sendMail(mailOptions, function (error) {
@@ -152,7 +156,7 @@ async function correoPedidoTramitado(req, res) {
         to: agente_receptor.dataValues.CORREO,
         subject: req.body.ASUNTO,
         text: req.body.MENSAJE + ' por: ' + req.body.NOMBRE_TIENDA+' por favor revisa COMDERO para más detalle de la compra No :'+req.body.CODIGO_COMPRA,
-        html:  req.body.MENSAJE + ' por: ' +req.body.NOMBRE_TIENDA+' por favor revisa: &nbsp; <a href="http://localhost:4200/principales/menu/principal">comdero.com/</a> &nbsp; para más detalle de la compra No:'+req.body.CODIGO_COMPRA
+        html:  req.body.MENSAJE + ' por: ' +req.body.NOMBRE_TIENDA+' por favor revisa: &nbsp; <a href="'+GLOBAL.url+'principales/menu/principal">comdero.com/</a> &nbsp; para más detalle de la compra No:'+req.body.CODIGO_COMPRA
     };
 
     transporter.sendMail(mailOptions, function (error) {

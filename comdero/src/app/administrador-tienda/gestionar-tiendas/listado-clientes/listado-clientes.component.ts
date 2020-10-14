@@ -119,7 +119,7 @@ export class ListadoClientesComponent implements OnInit {
       position: 'center',
       width: 600,
       buttonsStyling: false,
-      //footer: '<a href="http://localhost:4200/loguin"><b><u>Autentificate Ahora</u></b></a>',
+
       customClass: {
         confirmButton: 'btn btn-primary px-5',
         //icon:'sm'
