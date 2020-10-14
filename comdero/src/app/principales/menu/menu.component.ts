@@ -9,8 +9,9 @@ import Swal from "sweetalert2";
 import {HttpErrorResponse} from "@angular/common/http";
 import {NotificacionesServicio} from "../../servicios/notificaciones.servicio";
 import {WebSocketService} from "../../servicios/WebSockets/web-socket.service";
-import {NgxPushNotificationService} from 'ngx-push-notification';
-import {PedidosRealizadosComponent} from "../mi-cuenta/pedidos-realizados/pedidos-realizados.component";
+import { NgxPushNotificationService } from 'ngx-push-notification';
+import { PushNotificationOptions, PushNotificationService } from 'ngx-push-notifications';
+
 
 @Component({
   selector: 'app-menu',
@@ -27,10 +28,55 @@ export class MenuComponent implements OnInit, OnDestroy {
   public datosObtenidos: any;
   public carritoIdentidad;
 
-  constructor(public ngxPushNotificationService: NgxPushNotificationService, public _socketServicio: WebSocketService, public _notificacionesServicio: NotificacionesServicio, public _carritoServicio: CarritoServicio, public _agenteServicio: AgenteServicio, public route: ActivatedRoute, public _tiendaServicio: TiendaServicio, public router: Router) {
+  constructor(private _pushNotificationService: PushNotificationService,public ngxPushNotificationService: NgxPushNotificationService, public _socketServicio: WebSocketService, public _notificacionesServicio: NotificacionesServicio, public _carritoServicio: CarritoServicio, public _agenteServicio: AgenteServicio, public route: ActivatedRoute, public _tiendaServicio: TiendaServicio, public router: Router) {
   }
 
+
+
+
+  async ngOnInit() {
+    this._pushNotificationService.requestPermission();
+
+    // console.log("user", JSON.stringify(this._agenteServicio.getIdentity()));
+    if (this._agenteServicio.getIdentity()) {
+      this.conteoProductosCarrito(false);
+
+
+      this.getMisNotificaciones();
+      this._socketServicio.ioSocket.on('notificacion', res => {
+        this.getMisNotificaciones();
+       // this.notify();
+      })
+    }
+  }
+
+
+  myFunction() {
+    const title = 'Hello';
+    const options = new PushNotificationOptions();
+    options.body = 'Native Push Notification';
+
+    this._pushNotificationService.create(title, options).subscribe((notif) => {
+        if (notif.event.type === 'show') {
+          console.log('onshow');
+          setTimeout(() => {
+            notif.notification.close();
+          }, 3000);
+        }
+        if (notif.event.type === 'click') {
+          console.log('click');
+          notif.notification.close();
+        }
+        if (notif.event.type === 'close') {
+          console.log('close');
+        }
+      },
+      (err) => {
+        console.log(err);
+      });
+  }
   notify() {
+
     this.ngxPushNotificationService.showNotification({
       title: 'COMDERO',
       body: 'Nueva notificación',
@@ -45,21 +91,6 @@ export class MenuComponent implements OnInit, OnDestroy {
       }
     });
   }
-
-  async ngOnInit() {
-    // console.log("user", JSON.stringify(this._agenteServicio.getIdentity()));
-    if (this._agenteServicio.getIdentity()) {
-      this.conteoProductosCarrito(false);
-
-
-      this.getMisNotificaciones();
-      this._socketServicio.ioSocket.on('notificacion', res => {
-        this.getMisNotificaciones();
-        this.notify();
-      })
-    }
-  }
-
   public async direccionar(codigo, tienda, idNotificacion, estado, estado_notificacion) {
     try {
       if (estado_notificacion == 0) {

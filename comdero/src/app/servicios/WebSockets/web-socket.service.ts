@@ -33,7 +33,7 @@ export class WebSocketService extends Socket {
 
 
     super({
-      url: 'http://localhost:5000',
+      url: 'http://192.168.0.102:5000',
       options: {
         query: {
           payload:localStorage.getItem('payload'),

@@ -42,7 +42,7 @@ import {Interceptors2Service} from "./servicios/interceptors/interceptors2.servi
 
 import { SocketIoModule } from 'ngx-socket-io';
 import { WebSocketService } from './servicios/WebSockets/web-socket.service';
-
+import { PushNotificationService } from 'ngx-push-notifications';
 @NgModule({
   declarations: [
     AppComponent,
@@ -86,6 +86,7 @@ import { WebSocketService } from './servicios/WebSockets/web-socket.service';
     EstadisticasServicio,
     WebSocketService,
     NotificacionesServicio,
+    PushNotificationService,
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: Interceptors2Service, multi: true }
   ],
