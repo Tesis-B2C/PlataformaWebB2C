@@ -80,13 +80,12 @@
                     <p class="notificaciones text-success" style="text-transform: uppercase"
                        [ngClass]="{'text-success': notificaciones.ESTADO_NOTIFICACION==1, 'text-primary': notificaciones.ESTADO_NOTIFICACION==0}">
                       <a class="fa fa-exclamation-circle"></a>
-                      &nbsp;&nbsp;{{notificaciones.ASUNTO}}  <a class="float-right notificaciones"
-                                                                *ngIf="notificaciones.ESTADO_NOTIFICACION==1">Visto</a>
+                      &nbsp;&nbsp;{{notificaciones.ASUNTO}} <a class="notificaciones float-right" *ngIf="notificaciones.ESTADO_NOTIFICACION==1">Visto</a>
                     </p>
 
                       <label class="notificaciones"><i
                         class="text-muted">De: {{notificaciones.NOMBRE_TIENDA}}</i></label>
-                      <p class="notificaciones"> {{notificaciones.MENSAJE}}</p>
+                      <p class="notificaciones"> {{notificaciones.MENSAJE}}  </p>
                       <p class="notificaciones">Orden #: {{notificaciones.CODIGO_COMPRA}}</p>
                       <label class="notificaciones"><i
                         class="text-muted">Para: Usuario</i></label>
@@ -207,8 +206,7 @@
                     <p class="notificaciones text-success" style="text-transform: uppercase"
                        [ngClass]="{'text-success': notificaciones.ESTADO_NOTIFICACION==1, 'text-primary': notificaciones.ESTADO_NOTIFICACION==0}">
                       <a class="fa fa-exclamation-circle"></a>
-                      &nbsp;&nbsp;{{notificaciones.ASUNTO}}  <a class="float-right notificaciones"
-                                                                *ngIf="notificaciones.ESTADO_NOTIFICACION==1">Visto</a>
+                      &nbsp;&nbsp;{{notificaciones.ASUNTO}}  <a class="float-right notificaciones" *ngIf="notificaciones.ESTADO_NOTIFICACION==1">Visto</a>
                     </p>
 
                       <label class="notificaciones"><i

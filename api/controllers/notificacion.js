@@ -13,7 +13,7 @@ async function getMisNotificaciones(req, res) {
         } else {
             let NotificacionesObtenidasLimitadas = await Notificacion.findAll({
                 where: {AGENTE_RECEPTOR: req.user.id}, include: [{model: Agente}],
-                order: [['ID_NOTIFICACION', 'DESC']], limit: 5
+                order: [['ID_NOTIFICACION', 'DESC']], limit: 3
 
             });
             let NotificacionesObtenidas = await Notificacion.findAll({
@@ -57,7 +57,7 @@ async function getMisNotificacionesTienda(req, res) {
         } else {
             let NotificacionesObtenidasLimitadas = await Notificacion.findAll({
                 where: {CODIGO_TIENDA: req.params.id,ENVIAR_A:'Tienda'}, include: [{model: Agente}],
-                order: [['ID_NOTIFICACION', 'DESC']], limit: 5
+                order: [['ID_NOTIFICACION', 'DESC']], limit: 3
 
             });
             let NotificacionesObtenidas = await Notificacion.findAll({

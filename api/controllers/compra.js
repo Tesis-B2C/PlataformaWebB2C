@@ -610,7 +610,7 @@ async function updateEstadoPedido(req, res) {
                 AGENTE_RECEPTOR: pedido.dataValues.COD_AGENTE,
                 ENVIAR_A: 'Usuario',
                 ASUNTO: 'Pedido tramitado',
-                MENSAJE: "Tu pedido ha sido tramitado",
+                MENSAJE: "Tu pedido realizado a "+ tienda.dataValues.NOMBRE_COMERCIAL+" ha sido tramitado",
                 CODIGO_TIENDA: pedido.dataValues.TIENDA,
                 NOMBRE_TIENDA:tienda.dataValues.NOMBRE_COMERCIAL,
                 CODIGO_COMPRA: pedido.dataValues.NUM_COMPRA,
