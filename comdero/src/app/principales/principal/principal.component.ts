@@ -21,7 +21,7 @@ import {WebSocketService} from "../../servicios/WebSockets/web-socket.service";
 })
 export class PrincipalComponent implements OnInit {
   /*images = [1055, 194, 368].map((n) => `https://picsum.photos/id/${n}/2000/400`);*/
-  images = ["assets/estilos-principal/images/bannerPrincipal.png", "assets/images/comdero-01.png", "assets/images/comdero-02.png", "assets/images/comdero-03.png"];
+  images = ["assets/images/comdero-01.png", "assets/images/comdero-02.png", "assets/images/comdero-03.png"];
   showNavigationArrows = false;
   showNavigationIndicators = true;
 
@@ -284,7 +284,7 @@ export class PrincipalComponent implements OnInit {
     }
 
     return this.PRECIO_UNITARIO_CON_IVA_DESCUENTO;
- 
+
   }
 
   public obtenerMinutos(hora) {
