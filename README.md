@@ -113,7 +113,7 @@ npm i ng2-charts@2.0.0-beta.9
 
 
 --- BARRA DE CARGA
-  npm install @ngx-loading-bar/core --save
+  npm i @ngx-loading-bar/core@4.2.0 --save
   import { AppComponent } from './app';
  -- En app.component.html
   <ngx-loading-bar color="#CD67BA" height="4px"></ngx-loading-bar>
@@ -144,3 +144,11 @@ no se importa en el module principal solo donde se va a ocupar
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 https://www.youtube.com/watch?v=PgT2tnmDzzU
+
+
+--problema de que no buildea
+"paths": {
+      "@angular/*": [ "node_modules/@angular/*"]
+    },
+    
+    agregar en tsconfig.json

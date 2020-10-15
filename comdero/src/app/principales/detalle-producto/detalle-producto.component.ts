@@ -29,10 +29,10 @@ import {CorreoServicio} from "../../servicios/correo.servicio";
 })
 
 export class DetalleProductoComponent implements OnInit, OnDestroy {
-  private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
+  public emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
   public soloLetrasPattern: any = "[ a-zA-ZÑñáéíóúÁÉÍÓÚ ][ a-zA-ZÑñáéíóúÁÉÍÓÚ ]*$[0-9]{0}";
-  private LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
-  private soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
+  public LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
+  public soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
 
   public identidadComprador;
   @Input() id_Producto: any;
@@ -132,7 +132,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
 
   public bandera:boolean=true;
   constructor(public _correoServicio:CorreoServicio, public _categoriaServicio: CategoriaServicio, public router: Router, public _tiendaServicio: TiendaServicio, public _valoracionServicio: ValoracionServicio, public menu: MenuComponent, public _carritoServicio: CarritoServicio, public _compraServicio: CompraServicio,
-              public toastr: ToastrService, private _dpaServicio: DpaServicio, private _agenteServicio: AgenteServicio, private modalService: NgbModal, private _sanitizer: DomSanitizer, configRating: NgbRatingConfig, private route: ActivatedRoute, private _productoServicio: ProductoServicio) {
+              public toastr: ToastrService, public _dpaServicio: DpaServicio, public _agenteServicio: AgenteServicio, public modalService: NgbModal, public _sanitizer: DomSanitizer, configRating: NgbRatingConfig, public route: ActivatedRoute, public _productoServicio: ProductoServicio) {
     configRating.max = 5;
     configRating.readonly = true;
     this.varianteActiva.CANTIDAD = 1;

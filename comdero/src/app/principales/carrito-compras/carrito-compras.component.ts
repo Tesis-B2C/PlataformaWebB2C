@@ -47,12 +47,12 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
   public totalConIva: number = 0;
 
   public cupon;
-  private emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
+  public emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
   public soloLetrasPattern: any = "[ a-zA-ZÑñáéíóúÁÉÍÓÚ ][ a-zA-ZÑñáéíóúÁÉÍÓÚ ]*$[0-9]{0}";
-  private LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
-  private soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
+  public LetrasNumerosPattern: any = "[ .aA-zZ 0-9 ][ .aA-zZ 0-9 ]*$";
+  public soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
 
-  constructor(public _correoServicio:CorreoServicio, public _compraServicio: CompraServicio, public _dpaServicio: DpaServicio, private modalService: NgbModal, public datePipe: DatePipe, public menu: MenuComponent, public toastr: ToastrService, public  _agenteServicio: AgenteServicio, public _carritoServicio: CarritoServicio) {
+  constructor(public _correoServicio:CorreoServicio, public _compraServicio: CompraServicio, public _dpaServicio: DpaServicio, public modalService: NgbModal, public datePipe: DatePipe, public menu: MenuComponent, public toastr: ToastrService, public  _agenteServicio: AgenteServicio, public _carritoServicio: CarritoServicio) {
   }
 
   async ngOnInit() {
@@ -1339,7 +1339,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
       position: 'center',
       width: 600,
       buttonsStyling: false,
- 
+
       customClass: {
         confirmButton: 'btn btn-primary px-5',
         //icon:'sm'
