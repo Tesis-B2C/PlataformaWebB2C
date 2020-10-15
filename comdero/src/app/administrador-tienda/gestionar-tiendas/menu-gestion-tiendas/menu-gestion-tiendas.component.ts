@@ -120,8 +120,6 @@ export class MenuGestionTiendasComponent implements OnInit{
           this.mensageCorrecto(responseUpdate['menssage']);
           localStorage.removeItem("identityTienda");
           this.router.navigate(['/administrador/administrador-tienda/mis-tiendas'])
-
-
         } catch (e) {
           if (!(e instanceof HttpErrorResponse)){
             console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));

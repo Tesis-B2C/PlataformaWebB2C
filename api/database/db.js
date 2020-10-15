@@ -2,23 +2,10 @@
 const Sequelize = require("sequelize");
 const db = {}
 
-const sequelize = new Sequelize("basetesis", "root", "", {
-//const sequelize = new Sequelize("basetesis", "root", "12345678", {
-    host: '192.168.65.128',
-   // host: '192.168.245.129',
-    dialect: "mysql",
-    operatorsAliase: false,
-    define:
-        {
-            freezeTableName: true,
-        },
-    pool:
-        {
-            max: 5,
-            min: 0,
-            acquire: 30000,
-            idle: 10000
-        }
+//const sequelize = new Sequelize("basetesis", "root", "", {
+const sequelize = new Sequelize("basetesis", "root", "12345678", {host: '192.168.245.129', dialect: "mysql", operatorsAliase: false,
+    define: {freezeTableName: true,},
+    pool: {max: 5, min: 0, acquire: 30000, idle: 10000}
 });
 
 db.sequelize = sequelize;
