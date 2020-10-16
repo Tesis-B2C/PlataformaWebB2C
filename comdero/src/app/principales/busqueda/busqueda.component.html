@@ -109,7 +109,7 @@
   <!-- ========================= SECTION PAGETOP ========================= -->
   <section *ngIf="this.vectorProductos.length > 0" class="section-pagetop bg">
     <div class="container">
-      <p class="title-page">{{paginaTamano + 1}} - {{this.ultimoSerie}}  de {{this.vectorProductos.length}} resultados
+      <p class="title-page"> {{this.vectorProductos.length}} resultados encontrados
         para <strong>"{{this.palabraBuscada}}"</strong></p>
     </div> <!-- container //  -->
   </section>
@@ -218,7 +218,7 @@
 
         <ngb-pagination id="paginacionTienda" [collectionSize]="this.vectorProductos.length" #numPagina
                         [(page)]="paginaActual"
-                        [pageSize]="datosXpagina" [maxSize]="4" [rotate]="true" [ellipses]="true"
+                        [pageSize]="datosXpagina"  [rotate]="true" [ellipses]="true"
                         [boundaryLinks]="false" (pageChange)="onPageChange(paginaActual)">
           <ng-template ngbPaginationPrevious>Anterior</ng-template>
           <ng-template ngbPaginationNext>Siguiente</ng-template>
