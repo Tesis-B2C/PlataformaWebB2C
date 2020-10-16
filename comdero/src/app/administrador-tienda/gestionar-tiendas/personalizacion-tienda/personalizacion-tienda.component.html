@@ -12,7 +12,7 @@
     <div class="card py-4 row justify-content-center mb-5 ">
       <div class="col-md-11 mx-auto">
         <br>
-        <div class="">
+        <div class="w-100">
           <div class=" form-row justify-content-between m-0 pb-3">  <!-- TABLA DE DOS COLUMNAS -->
             <div class="col-md-5 form-group px-1 m-0" id="panelUno">    <!-- COLUMNA 1 -->
               <form class="card card-body p-0 columnas" name="form">
@@ -66,10 +66,10 @@
                       </div>
 
                       <div *ngIf="!urlBanner" class="mx-auto">
-                        <div class="col-auto p-0">
+                        <div class=" p-0">
                           <label class="imagen-agregar">
                             <img style="width:100%; height: 130px" class="p-0"
-                                 src="assets/estilos-registroTienda/montanas3.png">
+                                 src="assets/estilos-registroTienda/montanas3.png"  style="width:100%; height: 130px">
                             <input (change)="subirBanner($event)" accept="image/*" class="file"
                                    type="file">
                           </label>
@@ -93,7 +93,7 @@
                   <div class="form-group posicion-logo mt-1">  <!-- F2 BANNER-->
 
                     <div *ngIf="urlBanner" class="mx-auto">
-                      <div class="col-auto p-0">
+                      <div class=" p-0">
                         <label>
                           <img style="width:100%; height: 100px" class="p-0"
                                [src]="urlBanner">
@@ -101,10 +101,10 @@
                       </div>
                     </div>
                     <div *ngIf="!urlBanner" class="mx-auto">
-                      <div class="col-auto p-0">
+                      <div class=" p-0">
                         <label>
                           <img style="width:100%; height: 100px" class="p-0"
-                               src="assets/estilos-registroTienda/montanas.png">
+                               src="assets/estilos-registroTienda/montanas.png"  >
                         </label>
                       </div>
                     </div>

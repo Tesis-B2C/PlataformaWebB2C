@@ -274,52 +274,52 @@
 
 
         </div>
-        <div class="tab-pane fade container" id="entrega{{i}}" role="tabpanel" aria-labelledby="entrega-tab">
+        <div class="tab-pane fade " id="entrega{{i}}" role="tabpanel" aria-labelledby="entrega-tab">
           <label class="font-weight-bold">Enviado a</label>
           <div class="row  justify-content-between mx-md-auto">
 
-            <p class="col-md-4 text-md-left text-left"><strong>Tipo de persona:</strong></p>
-            <p class="col-md-7 text-md-right text-left" *ngIf="compra.TIPO_IDENTIFICACION_ENTREGA=='Persona'">Persona
+            <p class="col-6 text-md-left text-left"><strong>Tipo de persona:</strong></p>
+            <p class="col-6 text-md-right text-left" *ngIf="compra.TIPO_IDENTIFICACION_ENTREGA=='Persona'">Persona
               Natural</p>
-            <p class="col-md-7 text-md-right text-left" *ngIf="compra.TIPO_IDENTIFICACION_ENTREGA=='Empresa'">
+            <p class="col-6 text-md-right text-left" *ngIf="compra.TIPO_IDENTIFICACION_ENTREGA=='Empresa'">
               Empresa</p>
-            <p class="col-md-4 text-md-left text-left"><strong>Idetentificación:</strong></p>
-            <p class="col-md-7 text-md-right text-left">{{compra.IDENTIFICACION_ENTREGA}}</p>
-            <p class="col-md-4 text-md-left text-left"><strong>Nombres y Apellidos:</strong></p>
-            <p class="col-md-7 text-md-right text-left">{{compra.NOMBRE_PERSONA_ENTREGA}}</p>
-            <p class="col-md-4 text-md-left text-left"><strong>Telefono:</strong></p>
-            <p class="col-md-7 text-md-right text-left">{{compra.TELEFONO_ENTREGA}}</p>
-            <p class="col-md-4 text-md-left text-left"><strong>Provincia:</strong></p>
-            <p class="col-md-7 text-md-right text-left">{{compra.DPA?.DPAP.NOMBRE}}</p>
-            <p class="col-md-4 text-md-left text-left"><strong>Ciudad:</strong></p>
-            <p class="col-md-7 text-md-right text-left">{{compra.DPA?.NOMBRE}}</p>
-            <p class="col-md-4 text-md-left text-left"><strong>Calle pricipal:</strong></p>
-            <p class="col-md-7 text-md-right text-left">{{compra.CALLE_PRINCIPAL_ENTREGA}}</p>
-            <p class="col-md-4 text-md-left text-left"><strong>Calle secundaria:</strong></p>
-            <p class="col-md-7 text-md-right text-left">{{compra.CALLE_SECUNDARIA_ENTREGA}}</p>
-            <p class="col-md-4 text-md-left text-left"><strong>Número de referencia:</strong></p>
-            <p class="col-md-7 text-md-right text-left">{{compra.NUM_CASA_ENTREGA}}</p>
-            <p class="col-md-4 text-md-left text-left"><strong>Código postal:</strong></p>
-            <p class="col-md-7 text-md-right text-left">{{compra.NUM_COD_POSTAL_ENTREGA}}</p>
+            <p class="col-6 text-md-left text-left"><strong>Idetentificación:</strong></p>
+            <p class="col-6 text-md-right text-left">{{compra.IDENTIFICACION_ENTREGA}}</p>
+            <p class="col-6 text-md-left text-left"><strong>Nombres y Apellidos:</strong></p>
+            <p class="col-6 text-md-right text-left">{{compra.NOMBRE_PERSONA_ENTREGA}}</p>
+            <p class="col-6 text-md-left text-left"><strong>Telefono:</strong></p>
+            <p class="col-6 text-md-right text-left">{{compra.TELEFONO_ENTREGA}}</p>
+            <p class="col-6 text-md-left text-left"><strong>Provincia:</strong></p>
+            <p class="col-6 text-md-right text-left">{{compra.DPA?.DPAP.NOMBRE}}</p>
+            <p class="col-6 text-md-left text-left"><strong>Ciudad:</strong></p>
+            <p class="col-6 text-md-right text-left">{{compra.DPA?.NOMBRE}}</p>
+            <p class="col-6 text-md-left text-left"><strong>Calle pricipal:</strong></p>
+            <p class="col-6 text-md-right text-left">{{compra.CALLE_PRINCIPAL_ENTREGA}}</p>
+            <p class="col-6 text-md-left text-left"><strong>Calle secundaria:</strong></p>
+            <p class="col-6 text-md-right text-left">{{compra.CALLE_SECUNDARIA_ENTREGA}}</p>
+            <p class="col-6 text-md-left text-left"><strong>Número de referencia:</strong></p>
+            <p class="col-6 text-md-right text-left">{{compra.NUM_CASA_ENTREGA}}</p>
+            <p class="col-6 text-md-left text-left"><strong>Código postal:</strong></p>
+            <p class="col-6 text-md-right text-left">{{compra.NUM_COD_POSTAL_ENTREGA}}</p>
           </div>
         </div>
         <div class="tab-pane fade" id="factura{{i}}" role="tabpanel" aria-labelledby="factura-tab">
           <label class="font-weight-bold">Facturado a</label>
-          <div class="row  justify-content-between  mx-md-auto">
+          <div class="row  justify-content-between  mx-md-auto ">
 
-            <p class="col-md-4 text-md-left text-left"><strong>Tipo de persona:</strong></p>
-            <p class="col-md-7 text-md-right text-left" *ngIf="compra.TIPO_IDENTIFICACION_FACTURA=='Persona'">Persona
+            <p class="col-6 text-md-left text-left"><strong>Tipo de persona:</strong></p>
+            <p class="col-6 text-md-right text-left" *ngIf="compra.TIPO_IDENTIFICACION_FACTURA=='Persona'">Persona
               Natural</p>
-            <p class="col-md-7 text-md-right text-left" *ngIf="compra.TIPO_IDENTIFICACION_FACTURA=='Empresa'">
+            <p class="col-6 text-md-right text-left" *ngIf="compra.TIPO_IDENTIFICACION_FACTURA=='Empresa'">
               Empresa</p>
-            <p class="col-md-4 text-md-left text-left"><strong>Idetentificación:</strong></p>
-            <p class="col-md-7 text-md-right text-left">{{compra.IDENTIFICACION_FACTURA}}</p>
-            <p class="col-md-4 text-md-left text-left"><strong>Nombres y Apellidos:</strong></p>
-            <p class="col-md-7 text-md-right text-left">{{compra.NOMBRE_FACTURA}}</p>
-            <p class="col-md-4 text-md-left text-left"><strong>Telefono:</strong></p>
-            <p class="col-md-7 text-md-right text-left">{{compra.TELEFONO_FACTURA}}</p>
-            <p class="col-md-4 text-md-left text-left"><strong>Dirección:</strong></p>
-            <p class="col-md-8 text-md-right text-left">{{compra.DIRECCION_FACTURA}}</p>
+            <p class="col-6 text-md-left text-left"><strong>Idetentificación:</strong></p>
+            <p class="col-6 text-md-right text-left">{{compra.IDENTIFICACION_FACTURA}}</p>
+            <p class="col-6 text-md-left text-left"><strong>Nombres y Apellidos:</strong></p>
+            <p class="col-6 text-md-right text-left">{{compra.NOMBRE_FACTURA}}</p>
+            <p class="col-6 text-md-left text-left"><strong>Telefono:</strong></p>
+            <p class="col-6 text-md-right text-left">{{compra.TELEFONO_FACTURA}}</p>
+            <p class="col-6 text-md-left text-left"><strong>Dirección:</strong></p>
+            <p class="col-6 text-md-right text-left">{{compra.DIRECCION_FACTURA}}</p>
           </div>
         </div>
 

@@ -1,3 +1,5 @@
+/*
+!*
 .catalogo-tiendas{
   background-image: url("../../../../assets/images/Localidad-tienda.png");
   -webkit-background-size: 100% 100%;
@@ -13,6 +15,7 @@
   background-position: center;
 
 }
+*!
 
 
 @media (max-width: 720px) {
@@ -32,3 +35,4 @@
 
   }
 }
+*/
