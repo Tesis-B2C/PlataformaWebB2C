@@ -58,12 +58,7 @@ a[data-toggle="collapse"] {
   #sidebar.active {
     margin-left: 0;
   }
-  #content{
 
-    width: 100% !important;
-    position: absolute !important;
-
-  }
 }
 
 body {
