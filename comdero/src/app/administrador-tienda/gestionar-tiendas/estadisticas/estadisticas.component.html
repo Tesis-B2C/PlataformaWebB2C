@@ -14,7 +14,8 @@
             <p class="text-right text-danger font-weight-light mb-2 font-weight-bold" style="font-size: 1rem">Ventas</p>
             <h3 class=" text-right  font-weight-normal">{{ventas}}</h3>
           </div>
-          <p routerLink="../listado-pedidos" class="pl-3 pb-2 text-muted link" style="font-size: small"><span class="fa fa-warning text-danger "></span>
+          <p routerLink="../listado-pedidos" class="pl-3 pb-2 text-muted link" style="font-size: small"><span
+            class="fa fa-warning text-danger "></span>
             &nbsp; Obtener más información</p>
         </div>
       </div>
@@ -59,83 +60,116 @@
   <div class=" mx-auto ">
     <div class="row mx-md-5 ">
 
-      <div class="col-md-4">
-        <div class="chart card card-body shadow" >
+      <div class="col-md-3">
+        <div class="chart card card-body shadow">
           <p class="mb-0">Métodos de pago</p>
           <p style="font-size: x-small" class="text-muted">Ventas realizadas según los métodos de pago</p>
-          <p class="text-info" *ngIf="metodosPago?.Efectivo==0 && metodosPago?.Transferencia==0 && metodosPago?.PayPal==0">No existen productos comprados por estos medios</p>
-          <div style="display: block; width: 100%; height: 400px;">
-          <canvas   *ngIf="metodosPago?.Efectivo!=0 || metodosPago?.Transferencia!=0 || metodosPago?.PayPal!=0" baseChart
-                  [data]="pieChartData"
-                  [labels]="pieChartLabels"
-                  [chartType]="pieChartType"
-                  [options]="pieChartOptions"
-                  [colors]="pieChartColors"
-                  [legend]="pieChartLegend">
-          </canvas>
+          <p class="text-info"
+             *ngIf="metodosPago?.Efectivo==0 && metodosPago?.Transferencia==0 && metodosPago?.PayPal==0">No existen
+            productos comprados por estos medios</p>
+          <div style="display: block; width: 100%; height: 400px;" class="mx-auto px-5">
+            <canvas *ngIf="metodosPago?.Efectivo!=0 || metodosPago?.Transferencia!=0 || metodosPago?.PayPal!=0"
+                    baseChart
+                    [data]="pieChartData"
+                    [labels]="pieChartLabels"
+                    [chartType]="pieChartType"
+                    [options]="pieChartOptions"
+                    [colors]="pieChartColors"
+                    [legend]="pieChartLegend">
+            </canvas>
           </div>
 
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="chart card card-body shadow" >
+      <div class="col-md-3">
+        <div class="chart card card-body shadow">
           <p class="mb-0">Métodos de envío</p>
           <p style="font-size: x-small" class="text-muted">Ventas realizadas según los métodos de envío</p>
-          <p class="text-info" *ngIf="metodosEnvio?.Retiro==0 && metodosEnvio?.Acordar==0 && metodosEnvio?.Domicilio==0">No existen productos comprados por estos medios</p>
-          <div style="display: block; width: 100%; height: 400px;">
-          <canvas height="40px" width="80px"*ngIf="metodosEnvio?.Retiro!=0 || metodosEnvio?.Acordar!=0 || metodosEnvio?.Domicilio!=0" baseChart
-                  [data]="pieChartData1"
-                  [labels]="pieChartLabels1"
-                  [chartType]="pieChartType"
-                  [options]="pieChartOptions"
-                  [colors]="pieChartColors"
-                  [legend]="pieChartLegend">
-          </canvas>
+          <p class="text-info"
+             *ngIf="metodosEnvio?.Retiro==0 && metodosEnvio?.Acordar==0 && metodosEnvio?.Domicilio==0">No existen
+            productos comprados por estos medios</p>
+          <div style="display: block; width: 100%; height: 400px;" class="mx-auto px-5">
+            <canvas height="40px" width="80px"
+                    *ngIf="metodosEnvio?.Retiro!=0 || metodosEnvio?.Acordar!=0 || metodosEnvio?.Domicilio!=0" baseChart
+                    [data]="pieChartData1"
+                    [labels]="pieChartLabels1"
+                    [chartType]="pieChartType"
+                    [options]="pieChartOptions"
+                    [colors]="pieChartColors"
+                    [legend]="pieChartLegend">
+            </canvas>
           </div>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
 
-        <div class="chart card card-body shadow" >
+        <div class="chart card card-body shadow">
           <p class="mb-0">Descuentos</p>
           <p style="font-size: x-small" class="text-muted">Total de descuentos generados</p>
-          <p class="text-info" *ngIf="descuentos?.Cupon==0 && descuentos?.Automatico==0">No existen descuentos creados</p>
-          <div style="display: block; width: 100%; height: 400px;">
-          <canvas  height="40px" width="80px" *ngIf="descuentos?.Cupon!=0 || descuentos?.Automatico!=0" baseChart
-                  [colors]="doughnuChartColors"
-                  [data]="doughnutChartData"
-                  [labels]="doughnutChartLabels"
-                  [chartType]="doughnutChartType"
-                  [options]="doughnutChartOptions">
-          </canvas>
+          <p class="text-info" *ngIf="descuentos?.Cupon==0 && descuentos?.Automatico==0">No existen descuentos
+            creados</p>
+          <div style="display: block; width: 100%; height: 400px;" class="mx-auto px-5">
+            <canvas height="40px" width="80px" *ngIf="descuentos?.Cupon!=0 || descuentos?.Automatico!=0" baseChart
+                    [colors]="doughnuChartColors"
+                    [data]="doughnutChartData"
+                    [labels]="doughnutChartLabels"
+                    [chartType]="doughnutChartType"
+                    [options]="doughnutChartOptions">
+            </canvas>
           </div>
         </div>
       </div>
-
-      <div class="col-12 mt-4" >
-
-        <div class="card card-body shadow-lg">
-        <div class="row px-5">
-          <div class="col-md-auto">
-            <h4 class="mb-0">Ventas</h4>
-            <p>Ventas realizadas por mes</p>
-          </div>
-          <div class="dropdown float-right align-content-center ml-auto col-md-auto btn-sm">
-            <select class="form-control small" (change)="cambiarAnio($event.target.value)">
-              <option disabled>{{anioActual}} Actual</option>
-              <option *ngFor="let anio of anios" [value]="anio">{{anio}}</option>
-            </select>
+      <div class="col-md-3">
+        <div class="card card-body shadow  " style="max-width: 100%; height: 100%">
+          <h4 class="mb-0   ">Más vendido </h4>
+          <p class="text-muted">El producto más vendido</p>
+          <div class="row no-gutters align-content-center">
+            <div class="col-md-4">
+              <img [src]="getImagen(this.productoMasVendido?.IMAGEN_PRODUCTOs[0].IMAGEN)" class="card-img" alt="imagen"
+                   height="250px">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <p class="text-info" *ngIf="!this.productoMasVendido?.PRODUCTO.NOMBRE_PRODUCTO">No se han realizado
+                  compras a tu tienda </p>
+                <h5 class="title-card">{{this.productoMasVendido?.PRODUCTO.NOMBRE_PRODUCTO}}</h5>
+                <p *ngIf="this.productoMasVendido?.PRODUCTO.MARCA"><strong>Marca:</strong>
+                  &nbsp;&nbsp;{{this.productoMasVendido?.PRODUCTO.MARCA}}</p>
+                <p *ngIf="this.productoMasVendido?.COLOR"><strong>Color:</strong>&nbsp; &nbsp; <a
+                  [style.background-color]="this.productoMasVendido?.COLOR" class="px-2"></a></p>
+                <p *ngIf="this.productoMasVendido?.TALLA"><strong>Talla:</strong> &nbsp;
+                  &nbsp;{{this.productoMasVendido?.TALLA}}</p>
+                <p *ngIf="this.productoMasVendido?.MATERIAL"><strong>Material:</strong>&nbsp;
+                  &nbsp;{{this.productoMasVendido?.MATERIAL}}</p>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
+      <div class="col-12 mt-4">
 
-        <br>
-        <div style="display: block; width: 100%; height: 400px;">
-          <canvas   height="40px" width="80px" baseChart [colors]="curveChartColors" [datasets]="curveChartData"
+        <div class="card card-body shadow-lg">
+          <div class="row px-5">
+            <div class="col-md-auto">
+              <h4 class="mb-0">Ventas</h4>
+              <p>Ventas realizadas por mes</p>
+            </div>
+            <div class="dropdown float-right align-content-center ml-auto col-md-auto btn-sm">
+              <select class="form-control small" (change)="cambiarAnio($event.target.value)">
+                <option disabled>{{anioActual}} Actual</option>
+                <option *ngFor="let anio of anios" [value]="anio">{{anio}}</option>
+              </select>
+            </div>
+          </div>
+
+          <br>
+          <div style="display: block; width: 100%; height: 400px;" >
+            <canvas height="40px" width="80px" baseChart [colors]="curveChartColors" [datasets]="curveChartData"
                     [labels]="curveChartLabels"
                     [options]="curveChartOptions"
                     [legend]="curveChartLegend" [chartType]="curveChartType" (chartHover)="chartHovered($event)"
                     (chartClick)="chartClicked($event)"></canvas>
-        </div>
+          </div>
         </div>
       </div>
 
@@ -144,54 +178,31 @@
     <br>
 
 
-
-
-
   </div>
   <div class="row mx-md-5 justify-content-between ">
-    <div class="col-md-7">
-      <div class="card card-body shadow-lg"  >
+    <div class="col-md-12">
+      <div class="card card-body shadow-lg">
 
 
-          <h4 class="mb-0">Ventas vs Visitas</h4>
-          <p>Ventas y visitas realizadas por mes</p>
+        <h4 class="mb-0">Ventas vs Visitas</h4>
+        <p>Ventas y visitas realizadas por mes</p>
 
 
-       <div style="display: block; width: 100%; height: 400px;">
-        <canvas   baseChart
-                 [colors]="barChartColors"
-                 [datasets]="barChartData"
-                 [labels]="barChartLabels"
-                 [options]="barChartOptions"
-                 [legend]="barChartLegend"
-                 [chartType]="barChartType">
-        </canvas>
-      </div>
+        <div style="display: block; width: 100%; height: 400px;">
+          <canvas baseChart
+                  [colors]="barChartColors"
+                  [datasets]="barChartData"
+                  [labels]="barChartLabels"
+                  [options]="barChartOptions"
+                  [legend]="barChartLegend"
+                  [chartType]="barChartType">
+          </canvas>
+        </div>
 
       </div>
 
     </div>
-    <div class="col-md-5  mt-md-0 mt-3" >
-      <div class="card card-body shadow-lg " style="max-width: 100%; height: 100%"  >
-        <h4 class="mb-0   ">Más vendido   </h4>
-        <p class="text-muted">El producto más vendido</p>
-        <div class="row no-gutters align-content-center">
-          <div class="col-md-4">
-            <img [src]="getImagen(this.productoMasVendido?.IMAGEN_PRODUCTOs[0].IMAGEN)" class="card-img" alt="imagen"
-                 height="250px">
-          </div>
-          <div class="col-md-8">
-            <div class="card-body" >
-              <p class="text-info" *ngIf="!this.productoMasVendido?.PRODUCTO.NOMBRE_PRODUCTO">No se han realizado compras a tu tienda </p>
-              <h5 class="title-card">{{this.productoMasVendido?.PRODUCTO.NOMBRE_PRODUCTO}}</h5>
-              <p *ngIf="this.productoMasVendido?.PRODUCTO.MARCA"><strong>Marca:</strong> &nbsp;&nbsp;{{this.productoMasVendido?.PRODUCTO.MARCA}}</p>
-              <p *ngIf="this.productoMasVendido?.COLOR"><strong>Color:</strong>&nbsp; &nbsp; <a [style.background-color]="this.productoMasVendido?.COLOR" class="px-2"></a></p>
-              <p *ngIf="this.productoMasVendido?.TALLA"><strong>Talla:</strong> &nbsp; &nbsp;{{this.productoMasVendido?.TALLA}}</p>
-              <p *ngIf="this.productoMasVendido?.MATERIAL"><strong>Material:</strong>&nbsp; &nbsp;{{this.productoMasVendido?.MATERIAL}}</p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="col-md-5  mt-md-0 mt-3">
 
 
     </div>

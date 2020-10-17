@@ -41,71 +41,75 @@
       </div>
     </div>
   </div>-->
-  <div class="container-fluid mx-auto px-md-5 ">
-    <div class="row mb-2  ">
-      <div class=" input-group col-lg-4  pr-0">
-        <input class="form-control " style="font-size: small" type="text" #busquedaasd="ngModel"
-               placeholder="Número de pedido, Realizado por"
-               [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="filtrar()"/>
-        <div class="input-group-append ">
-          <span class="input-group-text  "><li class="fas fa-search"></li></span>
-        </div>
-        &nbsp; &nbsp; &nbsp;
 
-
+  <div class="row mb-2  px-5">
+    <div class=" input-group col-lg-4  pr-0">
+      <input class="form-control " style="font-size: small" type="text" #busquedaasd="ngModel"
+             placeholder="Número de pedido, Realizado por"
+             [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="filtrar()"/>
+      <div class="input-group-append ">
+        <span class="input-group-text  "><li class="fas fa-search"></li></span>
       </div>
-
-      <div class="bg-light col-md-4">
-        <ul
-          class="nav nav-pills card-header-pills  nav-principal py-3 py-md-0 pt-md-1 mx-auto text-center justify-content-center align-content-center"
-          id="tap-principal" role="tablist">
-
-          <li class="nav-item">
-            <a class="nav-link active py-0  " id="proceso-tab" data-toggle="tab"
-               aria-controls="proceso" (click)="estado(0)"
-               aria-selected="true">En proceso</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link py-0 " id="enviado-tab" data-toggle="tab"
-               aria-controls="enviado" (click)="estado(1)"
-               aria-selected="false">Enviado</a>
-          </li>
+      &nbsp; &nbsp; &nbsp;
 
 
-        </ul>
-      </div>
+    </div>
 
-      <div class="input-group col-md-4">
-        <input type="text" class="form-control "  placement="left" bsDaterangepicker
-               #Calendario="ngModel"
-               style="border-right: none"
-               (bsValueChange)="fecha($event)"
-               [(ngModel)]="bsRangeValue" name="calendario"
+    <div class="bg-light col-md-4">
+      <ul
+        class="nav nav-pills card-header-pills  nav-principal py-3 py-md-0 pt-md-1 mx-auto text-center justify-content-center align-content-center"
+        id="tap-principal" role="tablist">
 
-               [bsConfig]='{ adaptivePosition: true,rangeInputFormat: "YYYY-MM-DD", locale: "es",  containerClass:"theme-orange" }'
-               #dpr="bsDaterangepicker" required>
-        <div class="input-group-append">
+        <li class="nav-item">
+          <a class="nav-link active py-0  " id="proceso-tab" data-toggle="tab"
+             aria-controls="proceso" (click)="estado(0)"
+             aria-selected="true">En proceso</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link py-0 " id="enviado-tab" data-toggle="tab"
+             aria-controls="enviado" (click)="estado(1)"
+             aria-selected="false">Enviado</a>
+        </li>
+
+
+      </ul>
+    </div>
+
+    <div class="input-group col-md-4">
+      <input type="text" class="form-control "  placement="left" bsDaterangepicker
+             #Calendario="ngModel"
+             style="border-right: none"
+             (bsValueChange)="fecha($event)"
+             [(ngModel)]="bsRangeValue" name="calendario"
+
+             [bsConfig]='{ adaptivePosition: true,rangeInputFormat: "YYYY-MM-DD", locale: "es",  containerClass:"theme-orange" }'
+             #dpr="bsDaterangepicker" required>
+      <div class="input-group-append">
                   <span class="input-group-text fa fa-calendar"
                         style="background-color: white; font-size: small"></span>
-        </div>
-        <div class="input-group-append" placement="top" ngbTooltip="Sin fecha">
-          <p class="input-group-text"    style="background-color: white; font-size: small" (click)="limpiarFecha()">
-            <i class=" fas fa-ban"></i>
-          </p>
-        </div>
       </div>
-
-
-    </div>
-    <div *ngIf="loading">
-      <label>Buscando . . .</label>
-      &nbsp; &nbsp; &nbsp;
-      <div class="progress">
-        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
-             aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+      <div class="input-group-append" placement="top" ngbTooltip="Sin fecha">
+        <p class="input-group-text"    style="background-color: white; font-size: small" (click)="limpiarFecha()">
+          <i class=" fas fa-ban"></i>
+        </p>
       </div>
     </div>
+
+
+  </div>
+  <div *ngIf="loading">
+    <label>Buscando . . .</label>
+    &nbsp; &nbsp; &nbsp;
+    <div class="progress">
+      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
+           aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+    </div>
+  </div>
+
+
+  <div class="container-fluid mx-auto px-md-5 ">
+
 
 
     <div *ngIf="this.result.length==0" class="ml-1"><p>No se encontraron resultados.</p></div>
