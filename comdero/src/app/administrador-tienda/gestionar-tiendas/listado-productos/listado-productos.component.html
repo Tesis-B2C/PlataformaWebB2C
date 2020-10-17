@@ -49,7 +49,7 @@
 </div>
 
 
-<div *ngIf="misProductos.length>0" class="row mb-2 px-5 ">
+<div *ngIf="misProductos.length>0" class="form-row mb-2 mx-auto  container-fluid px-md-5 px-3">
   <div class=" input-group col-lg-6 mr-lg-auto pr-0" >
     <input class="form-control " style="font-size: small" type="text" #busquedaasd="ngModel"
            [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="filtrar()"/>
