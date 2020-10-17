@@ -17,6 +17,7 @@ export class EstadisticasComponent implements OnInit {
   // Pie
   public pieChartOptions: ChartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     legend: {
       position: 'bottom',
 
@@ -49,7 +50,8 @@ export class EstadisticasComponent implements OnInit {
 
   public barChartOptions = {
     scaleShowVerticalLines: false,
-    responsive: true
+    responsive: true,
+    maintainAspectRatio: false
 
   };
   public barChartLabels = ['Estadística'];
@@ -68,6 +70,7 @@ export class EstadisticasComponent implements OnInit {
   ////// curveChart
   public curveChartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     legend: false,
     scales: {
       // We use this empty structure as a placeholder for dynamic theming.
@@ -102,6 +105,7 @@ export class EstadisticasComponent implements OnInit {
 //dona
   doughnutChartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     legend: {
       position: 'bottom',
     },
