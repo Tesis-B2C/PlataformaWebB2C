@@ -42,20 +42,19 @@
     </div>
   </div>-->
 
-  <div class="row mb-2  px-5">
-    <div class=" input-group col-lg-4  pr-0">
+  <div class="row mb-2  px-md-5 px-3">
+    <div class=" input-group col-lg-4  px-0 px-md-3">
       <input class="form-control " style="font-size: small" type="text" #busquedaasd="ngModel"
              placeholder="Número de pedido, Realizado por"
              [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="filtrar()"/>
       <div class="input-group-append ">
         <span class="input-group-text  "><li class="fas fa-search"></li></span>
       </div>
-      &nbsp; &nbsp; &nbsp;
 
 
     </div>
 
-    <div class="bg-light col-md-4">
+    <div class="bg-light col-md-4 ">
       <ul
         class="nav nav-pills card-header-pills  nav-principal py-3 py-md-0 pt-md-1 mx-auto text-center justify-content-center align-content-center"
         id="tap-principal" role="tablist">
@@ -76,7 +75,7 @@
       </ul>
     </div>
 
-    <div class="input-group col-md-4">
+    <div class="input-group col-md-4 px-0 px-md-3">
       <input type="text" class="form-control "  placement="left" bsDaterangepicker
              #Calendario="ngModel"
              style="border-right: none"
@@ -91,7 +90,7 @@
       </div>
       <div class="input-group-append" placement="top" ngbTooltip="Sin fecha">
         <p class="input-group-text"    style="background-color: white; font-size: small" (click)="limpiarFecha()">
-          <i class=" fas fa-ban"></i>
+          <i class=" fas fa-close"></i>
         </p>
       </div>
     </div>
@@ -108,7 +107,7 @@
   </div>
 
 
-  <div class="container-fluid mx-auto px-md-5 ">
+  <div class="container-fluid mx-auto px-0  px-md-5">
 
 
 

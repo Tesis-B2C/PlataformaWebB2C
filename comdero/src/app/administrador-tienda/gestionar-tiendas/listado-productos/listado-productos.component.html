@@ -50,15 +50,15 @@
 
 
 <div *ngIf="misProductos.length>0" class="form-row mb-2 mx-auto  container-fluid px-md-5 px-3">
-  <div class=" input-group col-lg-6 mr-lg-auto pr-0" >
+  <div class=" input-group col-lg-6 mr-lg-auto px-0" >
     <input class="form-control " style="font-size: small" type="text" #busquedaasd="ngModel"
            [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="filtrar()"/>
     <div class="input-group-append ">
       <span class="input-group-text  "><li class="fas fa-search"></li></span>
     </div>
-    &nbsp; &nbsp; &nbsp;
+
   </div>
-  <div class="col-md-auto ">
+  <div class="col-md-auto px-0 ">
     <button class="btn btn-primary w-100 mt-md-0 mt-2" style="font-size:small"  routerLink="../productos">Nuevo Producto</button>
   </div>
 </div>

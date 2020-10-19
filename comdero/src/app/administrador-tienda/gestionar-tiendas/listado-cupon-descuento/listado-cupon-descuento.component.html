@@ -1,9 +1,9 @@
 <body id="body">
 
-<div class="mt-5 " [ngClass]="{'container':misDescuentos.length==0, 'container-fluid':misDescuentos.length>0}">
+<div class="mt-5" [ngClass]="{'container':misDescuentos.length==0, 'container-fluid':misDescuentos.length>0}">
 
   <div class="row  justify-content-center" id="top">
-    <h4 class=" col-11">Cupones de Descuento</h4>
+    <h4 class=" col-11 px-0" >Cupones de Descuento</h4>
     <hr class="col-11">
   </div>
 
@@ -52,14 +52,14 @@
       </div>
     </div>
   </div>
-  <div *ngIf="misDescuentos.length>0 " class="row mb-2 px-5 ">
-    <div class=" input-group col-md-6 mr-md-auto pr-0">
+  <div *ngIf="misDescuentos.length>0 " class="row mb-2 px-md-5 ">
+    <div class=" input-group col-md-6 mr-md-auto px-3">
       <input class="form-control" style="font-size: small" type="text" #Busquedaasd="ngModel"
              [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="filtrar()"/>
       <div class="input-group-append">
         <span class="input-group-text  small"><li class="fas fa-search"></li></span>
       </div>
-      &nbsp; &nbsp; &nbsp;
+
     </div>
     <div class="col-md-auto ">
       <button class="btn btn-primary w-100 mt-md-0 mt-2" style="font-size:small" routerLink="../cupon-descuento">Nuevo
@@ -77,7 +77,7 @@
   </div>
 
 
-  <div *ngIf="misDescuentos.length>0 " class="container-fluid mx-auto px-md-5 ">
+  <div *ngIf="misDescuentos.length>0 " class="container-fluid mx-auto px-0 px-md-5 ">
 
 
     <div class="btn-group mb-2 animated  "
