@@ -1,18 +1,18 @@
 p{
-  font-size:smaller;
+  font-size:small;
   margin-top: 0;
   margin-bottom: 0;
   text-align: center;
 }
 a{
-  font-size:smaller;
+  font-size:small;
   margin-top: 0;
   margin-bottom: 0;
   text-align: center;
 }
 
 .nav-item .active{
-  font-size: smaller;
+  font-size: small;
   font-weight: normal;
   text-decoration-line: underline;
   background-color: transparent;
@@ -21,23 +21,27 @@ a{
 }
 
 
+dt, dd{
+  font-size: small;
+}
+
 button{
   font-size: small;
 }
 
 .encabezado_recivo > p {
   text-align: left;
-  font-size: smaller;
+  font-size: small;
   color: black;
 }
 .encabezado_recivo  > dl >dd {
   text-align: left;
-  font-size: smaller;
+  font-size: larger;
   color: black;
 }
 .encabezado_recivo  > dl >dt {
   text-align: left;
-  font-size: smaller;
+  font-size: larger;
   color: black;
 }
 .nav-principal > li{
