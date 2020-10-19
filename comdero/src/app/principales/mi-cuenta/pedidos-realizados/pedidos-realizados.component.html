@@ -182,9 +182,9 @@
 
                   </div> <!-- price-wrap .// -->
                 </div>
-                <div class="col-12 col-md-2 text-center text-md-left   ">
+                <div class="col-12 col-md-2 text-center text-md-left   " *ngIf="compra.ESTADO_COMPRA==1 || compra.ESTADO_COMPRA==2">
                   <p class="text-uppercase  white d-md-block d-none">.</p>
-                  <button class="btn btn-light w-100 btn-sm"
+                  <button  class="btn btn-light w-100 btn-sm"
                           (click)="productoActivo(producto.VARIANTE.PRODUCTO.ID_PRODUCTO,producto.VARIANTE.PRODUCTO.COD_PRODUCTO);abrirModalCalificacion(contentCalificacion)">
                     Agregar opinion
                   </button>

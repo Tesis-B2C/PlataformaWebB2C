@@ -293,12 +293,12 @@
     <button class="px-3" (click)="habilitarDireccionDiferente('Envio')"><label class="nuevaDireccionEnvio"> <a
       class="text-primary p-0"><i class="fas fa-chevron-left"></i>&nbsp;&nbsp;Regresar</a></label></button>
     <div class="form-row px-5" *ngIf="this.informacionCompra?.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA != null">
-      <div class="form-group col-1 mb-0">
+      <div class="form-group col-auto mb-0">
         <div>
           <label class="text-center">Actual</label>
         </div>
       </div>
-      <div class="form-group col-11 mb-0">
+      <div class="form-group col-auto mb-0">
         <label
           class="text-justify mb-0">{{this.informacionCompra?.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA}}
           ({{this.informacionCompra?.DATOS_ENTREGA.IDENTIFICACION_ENTREGA}})</label>
@@ -543,13 +543,13 @@
       class="text-primary p-0"><i class="fas fa-chevron-left"></i>&nbsp;&nbsp;Regresar</a></label></button>
 
     <div class="form-row px-5" *ngIf="this.informacionCompra?.DATOS_FACTURA.IDENTIFICACION_FACTURA != null">
-      <div class="form-group col-1 mb-0">
+      <div class="form-group col-auto mb-0">
         <div>
           <label class="text-center">Actual</label>
         </div>
       </div>
 
-      <div class="form-group col-11 mb-0">
+      <div class="form-group col-auto mb-0">
         <label class="text-justify mb-0">{{this.informacionCompra?.DATOS_FACTURA.NOMBRE_FACTURA }}
           ({{this.informacionCompra?.DATOS_FACTURA.IDENTIFICACION_FACTURA}})</label>
         <p class="text-justify mb-0">{{this.informacionCompra?.DATOS_FACTURA.CORREO}}</p>
