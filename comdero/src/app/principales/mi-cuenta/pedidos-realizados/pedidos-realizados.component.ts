@@ -317,7 +317,7 @@ export class PedidosRealizadosComponent implements OnInit {
 
 
     /*doc.fromHTML(element, 2, 2);*/
-    doc.output('save', 'Reporte_Notas_Alumno.pdf');
+    doc.output('save', 'Pedido#'+compra.NUM_COMPRA+'.pdf');
     /*  html2canvas(document.getElementById('recibo'+i), {scale: 2}).then(function (canvas) {
         var img = canvas.toDataURL("image/png");
         var context = canvas.getContext("2d");
