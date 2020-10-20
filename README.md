@@ -142,7 +142,7 @@ npm install jspdf
 npm install html2canvas
 no se importa en el module principal solo donde se va a ocupar
 import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
+import jsPDF from "jspdf@1.5.3";
 https://www.youtube.com/watch?v=PgT2tnmDzzU
 
 
