@@ -17,7 +17,7 @@
           <div class="widgets-wrap float-md-right">
 
             <div class="widget-header mr-3" *ngIf="this._agenteServicio.getIdentity()">
-              <a data-toggle="dropdown" href="#"  data-toggle="tooltip" data-placement="top"  title="Notificaciones"
+              <a data-toggle="dropdown"
                  aria-expanded="false" aria-haspopup="true" class="icon icon-sm rounded-circle border"><i
                 class="fa fa-bell" aria-hidden="true"></i></a>
               <span class="badge badge-pill badge-danger notify" *ngIf="this.notificaciones?.todas.length>0">{{this.notificaciones?.todas.length}}</span>
@@ -97,7 +97,7 @@
           <div class="widgets-wrap ml-auto ">
 
             <div class="widget-header mr-3" *ngIf="this._agenteServicio.getIdentity()">
-              <a data-toggle="dropdown" href="#"  data-toggle="tooltip" data-placement="top"  title="Notificaciones"
+              <a data-toggle="dropdown"
                  aria-expanded="false" aria-haspopup="true" class="icon icon-xs rounded-circle border"><i
                 class="fa fa-bell" aria-hidden="true"></i></a>
               <span class="badge badge-pill badge-danger notify" *ngIf="this.notificaciones?.todas.length>0">{{this.notificaciones?.todas.length}}</span>
@@ -185,7 +185,7 @@
 
     <ul class="list-unstyled  mx-2">
       <br>
-      <li class="mb-2" routerLink="inicio-administracion" routerLinkActive="active"
+      <li class="mb-2" routerLink="inicio-administracion" routerLinkActive="active2"
           [routerLinkActiveOptions]="{exact: true}">
         <a>
           <i class="fas fa-home mr-2"></i>
@@ -199,11 +199,11 @@
           Productos
         </a>
         <ul class="collapse list-unstyled" id="producto">
-          <li (click)="cerrarSideBar()" routerLink="productos" routerLinkActive="active"
+          <li (click)="cerrarSideBar()" routerLink="productos" routerLinkActive="active2"
               [routerLinkActiveOptions]="{exact: true}">
             <a>Nuevo</a>
           </li>
-          <li (click)="cerrarSideBar()" routerLink="listado-productos" routerLinkActive="active"
+          <li (click)="cerrarSideBar()" routerLink="listado-productos" routerLinkActive="active2"
               [routerLinkActiveOptions]="{exact: true}">
             <a>Listado</a>
           </li>
@@ -218,7 +218,7 @@
         </a>
         <ul class="collapse list-unstyled" id="pedidos">
           <li>
-            <a (click)="cerrarSideBar()" routerLink="listado-pedidos" routerLinkActive="active"
+            <a (click)="cerrarSideBar()" routerLink="listado-pedidos" routerLinkActive="active2"
                [routerLinkActiveOptions]="{exact: true}">Listado</a>
           </li>
 
@@ -231,7 +231,7 @@
           Clientes
         </a>
         <ul class="collapse list-unstyled" id="clientes">
-          <li (click)="cerrarSideBar()" routerLink="listado-clientes" routerLinkActive="active">
+          <li (click)="cerrarSideBar()" routerLink="listado-clientes" routerLinkActive="active2">
             <a  >Listado</a>
           </li>
 
@@ -243,11 +243,11 @@
           Descuentos
         </a>
         <ul class="collapse list-unstyled" id="descuento">
-          <li (click)="cerrarSideBar()" routerLink="cupon-descuento" routerLinkActive="active"
+          <li (click)="cerrarSideBar()" routerLink="cupon-descuento" routerLinkActive="active2"
               [routerLinkActiveOptions]="{exact: true}">
             <a>Nuevo</a>
           </li>
-          <li (click)="cerrarSideBar()" routerLink="listado-cupon-descuento" routerLinkActive="active"
+          <li (click)="cerrarSideBar()" routerLink="listado-cupon-descuento" routerLinkActive="active2"
               [routerLinkActiveOptions]="{exact: true}">
             <a>Listado</a>
           </li>
@@ -260,7 +260,7 @@
           Estadísticas
         </a>
         <ul class="collapse list-unstyled" id="estadisticas">
-          <li  (click)="cerrarSideBar()" routerLink="estadisticas" routerLinkActive="active"
+          <li  (click)="cerrarSideBar()" routerLink="estadisticas" routerLinkActive="active2"
                [routerLinkActiveOptions]="{exact: true}">
             <a>General</a>
           </li>

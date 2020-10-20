@@ -129,6 +129,10 @@ a, a:hover, a:focus {
   background-color: #d3d3d4;
 }
 
+.active2{
+  color: #ca6900;
+  background-color: #d3d3d4;
+}
 
 
 #sidebar ul li.active > a, a[aria-expanded="true"] {/*pilas*/

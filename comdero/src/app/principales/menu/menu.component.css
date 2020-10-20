@@ -7,7 +7,7 @@
   float: none;
 }
 
-.logo {
+.logo2 {
   max-height: 55px;
   align-items: center;
   position: center;
@@ -86,7 +86,7 @@ input[type="text"]:focus
   .computadora{
     display: none;
   }
-  .logo{
+  .logo2{
     width: 100%;
   }
 
