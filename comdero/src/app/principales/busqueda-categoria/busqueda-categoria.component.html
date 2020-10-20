@@ -127,7 +127,7 @@
 
   <section *ngIf="this.vectorProductos.length > 0" class="section-content padding-y-sm bg">
     <div class="container   ">
-      <article class="card card-product-list col-12  "
+      <article class="card card-product-list col-11 col-md-12 mx-auto  "
                *ngFor="let p of this.vectorProductos | slice: paginaTamano | slice: 0:datosXpagina">
         <div *ngIf="p.TIPO=='Producto'" class="row no-gutters">
           <aside class="col-lg-3 col-md-3 col-12">
