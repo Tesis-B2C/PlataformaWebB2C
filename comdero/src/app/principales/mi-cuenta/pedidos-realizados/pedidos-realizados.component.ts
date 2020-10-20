@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import {NgbModal, NgbRatingConfig} from "@ng-bootstrap/ng-bootstrap";
 import {ValoracionServicio} from "../../../servicios/valoracion.servicio";
 import {HttpErrorResponse} from "@angular/common/http";
-import jsPDF from 'jspdf';
+import * as jsPDF from 'jspdf'
 
 import html2canvas from 'html2canvas';
 
@@ -34,20 +34,157 @@ export class PedidosRealizadosComponent implements OnInit {
   }
 
 
-  pdf(i, codigo) {
-    html2canvas(document.getElementById('recibo'+i), {scale: 2}).then(function (canvas) {
-      var img = canvas.toDataURL("image/png");
-      var context = canvas.getContext("2d");
-      context.scale(2, 2);
+  pdf(i, compra) {
+    var doc = new jsPDF('p', 'px', 'a4');
+    let element = document.getElementById('recibo' + i) as HTMLElement;
+    doc.fromHTML("<h2> Detalles  del pedido No" + compra.NUM_COMPRA + "</h2>", 140, 0)
+    doc.fromHTML("<p><strong>Pedido realizado:</strong>&nbsp;&nbsp;" + compra.FECHA_COMPRA + "</p>", 7, 30)
+    doc.fromHTML("<p><strong>Pedido COMDERO No:</strong>&nbsp;&nbsp;" + compra.NUM_COMPRA + "</p>", 7, 50);
+    doc.fromHTML("<p class='btn btn-link'><strong>Total del pedido:</strong>&nbsp;&nbsp;"+compra.total_final+"$</p>",7,70);
+    doc.fromHTML("<p><strong> Enviado el: &nbsp;</strong>"+compra.FECHA_ENVIO+"</p>",170, 90)
+    doc.fromHTML("<p><strong>&nbsp;&nbsp;Productos comprados</strong></p>",7,120);
+
+    for(let i in compra.COMPRA_PRODUCTOs){
+      if(compra.COMPRA_PRODUCTOs[i].VARIANTE.MATERIAL==null){
+        compra.COMPRA_PRODUCTOs[i].VARIANTE.MATERIAL="";
+      }
+      if(compra.COMPRA_PRODUCTOs[i].VARIANTE.TALLA==null){
+        compra.COMPRA_PRODUCTOs[i].VARIANTE.TALLA=""
+      }
+
+      if(compra.COMPRA_PRODUCTOs[i].VARIANTE.COLOR==null){
+        compra.COMPRA_PRODUCTOs[i].VARIANTE.COLOR=""
+      }
+    }
 
 
-      var doc = new jsPDF('p', 'mm', 'a4');
-      const imgProps= doc.getImageProperties(img);
-      const pdfWidth = doc.internal.pageSize.getWidth();
-      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-      doc.addImage(img, 'PNG', 15, 20, pdfWidth-30, pdfHeight);
-      doc.save('Orden No'+codigo+'.pdf');
-    });
+    for(let producto of compra.COMPRA_PRODUCTOs){
+      doc.fromHTML("<p>&nbsp;&nbsp;<strong>"+producto.VARIANTE.PRODUCTO.NOMBRE_PRODUCTO+ "</strong>&nbsp;"+producto.VARIANTE.PRODUCTO.MARCA+" &nbsp; x &nbsp;"+producto.CANTIDAD_PRODUCTO+"<a> &nbsp;"+producto.VARIANTE.MEDIDA+"</a>,"+" <a>&nbsp;"+producto.VARIANTE.MATERIAL+",</a>"
+        +" <a>&nbsp;"+producto.VARIANTE.MATERIAL+",</a>"+" <a>"+producto.VARIANTE.TALLA+",</a>&nbsp;"+" <a>"+producto.VARIANTE.COLOR+",</a>"+" <strong> &nbsp;&nbsp;Estado:</strong>&nbsp;"+producto.VARIANTE.PRODUCTO.CONDICION+"</p>",7,140);
+
+    }
+    doc.fromHTML('<p><strong>&nbsp;&nbsp;Vendido por:</strong>&nbsp;'+compra.COMPRA_PRODUCTOs[0].VARIANTE.PRODUCTO.OFERTum.TIENDA.NOMBRE_COMERCIAL+"</p>",7,160);
+
+
+    doc.fromHTML(" <p><strong>Información de envío</strong></p>",7,200)
+
+
+    if(compra.METODO_ENVIO=='Acordar'){
+      compra.METODO_ENVIO="Acordar con el vendedor"
+    }
+
+    if(compra.METODO_ENVIO=='Retiro'){
+      compra.METODO_ENVIO="Retiro desde la tienda"
+    }
+
+    if(compra.METODO_ENVIO=='Domicilio'){
+      compra.METODO_ENVI='Envío a domicilio'
+    }
+
+    doc.fromHTML(" <p><strong>&nbsp;&nbsp;Método de envío:</strong>&nbsp;&nbsp;"+"<label>"+compra.METODO_ENVIO+"</label>",7,220);
+    let cont=220;
+    if(compra.METODO_ENVIO=='Domicilio'){
+      if(compra.TIPO_IDENTIFICACION_ENTREGA=='Persona'){
+        compra.TIPO_IDENTIFICACION_ENTREGA="Persona natural"
+      }
+
+      cont+=20;
+      doc.fromHTML("<p><strong>Enviado a:</strong>&nbsp;</p>",7,cont);
+      cont+=20;
+      doc.fromHTML(" <p>"+compra.TIPO_IDENTIFICACION_ENTREGA+"</p>",7,cont);
+      cont+=20;
+      doc.fromHTML(" <p>"+compra.IDENTIFICACION_ENTREGA+"</p>",7,cont)
+      cont+=20;
+      doc.fromHTML(" <p>"+compra.NOMBRE_PERSONA_ENTREGA+"</p>",7,cont)
+      cont+=20;
+      doc.fromHTML(" <p>"+compra.TELEFONO_ENTREGA+"</p>",7,cont)
+      cont+=20;
+      doc.fromHTML(" <p>"+compra.DPA.DPAP.NOMBRE+"</p>",7,cont)
+      cont+=20;
+      doc.fromHTML(" <p>"+compra.DPA.NOMBRE+"</p>",7,cont)
+      cont+=20;
+      doc.fromHTML(" <p>"+compra.CALLE_PRINCIPAL_ENTREGA+",&nbsp;"+compra.CALLE_SECUNDARIA_ENTREGA+",&nbsp;"+compra.NUM_CASA_ENTREGA+"</p>",7,cont)
+      cont+=20;
+      doc.fromHTML(" <p><strong>Cod postal</strong> &nbsp;"+compra.NUM_COD_POSTAL_ENTREGA+"</p>",7,cont)
+
+    }
+
+
+    if(compra.METODO_PAGO=='Transferencia'){
+      compra.METODO_PAGO="Transferencia bancaria"
+    }
+    if(compra.METODO_PAGO=='Electrónico'){
+
+      compra.METODO_PAGO='PayPal';
+
+    }
+    cont+=30;
+    doc.fromHTML(" <p><strong>Información de pago</strong></p>",7,cont)
+    cont+=20;
+    doc.fromHTML("<p><strong>&nbsp;&nbsp;Método de pago:</strong> <label>"+compra.METODO_PAGO+"</label></p>",7,cont);
+
+    if(compra.TIPO_IDENTIFICACION_FACTURA=='Persona'){
+      compra.TIPO_IDENTIFICACION_FACTURA="Persona natural"
+    }
+    cont+=20;
+    doc.fromHTML("<p><strong>&nbsp;&nbsp;Facturado a:</strong>&nbsp;</p>",7,cont)
+    cont+=20;
+    doc.fromHTML(" <p>"+compra.TIPO_IDENTIFICACION_FACTURA+"</p>",7,cont);
+    cont+=20;
+    doc.fromHTML("<p>"+compra.NOMBRE_FACTURA+"</p>",7,cont)
+    cont+=20;
+    doc.fromHTML("<p>"+compra.TELEFONO_FACTURA+"</p>",7,cont)
+    cont+=20;
+    doc.fromHTML("<p>"+compra.DIRECCION_FACTURA+"</p>",7,cont)
+
+
+
+    cont+=300;
+    let pageHeight= doc.internal.pageSize.height;
+    let y = cont // Height position of new content
+    if (y >= pageHeight)
+    {
+      doc.addPage();
+      y = 0 // Restart height position
+      cont=7
+      doc.fromHTML("<div><p><strong>Productos:</strong>..............................................................." +compra.productos+"$</p>",7,cont)
+      cont+=20;
+      doc.fromHTML("<p><strong>Impuestos:</strong>..............................................................." +compra.impuestos+"$</p>",7,cont)
+      cont+=20;
+      doc.fromHTML("<p><strong>Subtotal:</strong>..............................................................." +compra.subtotal+"$</p>",7,cont)
+      cont+=20;
+      doc.fromHTML("<p><strong>Descuento:</strong>...............................................................(-)" +compra.descuento+"$</p>",7,cont)
+      cont+=20;
+      doc.fromHTML("<p><strong>Descuento Cupón:</strong>...............................................................(-)" +compra.cupon+"$</p>",7,cont)
+      cont+=20;
+      doc.fromHTML("<p><strong>Método de envio:</strong>..............................................................." +compra.COSTO_ENVIO+"$</p>",7,cont)
+      cont+=20;
+      doc.fromHTML("<p><strong>Método de pago:</strong>..............................................................." +compra.RECARGO_PAYPAL+"$</p>",7,cont)
+      cont+=20;
+      doc.fromHTML("<p><strong>Total del pedid:</strong>..............................................................." +compra.total_finalL+"$</p></div>",7,cont)
+    }
+
+
+
+
+// Before adding new content
+
+
+        /*doc.fromHTML(element, 2, 2);*/
+    doc.output('save','Reporte_Notas_Alumno.pdf');
+    /*  html2canvas(document.getElementById('recibo'+i), {scale: 2}).then(function (canvas) {
+        var img = canvas.toDataURL("image/png");
+        var context = canvas.getContext("2d");
+        context.scale(2, 2);
+
+
+        var doc = new jsPDF('p', 'px', 'a4');
+        const imgProps= doc.getImageProperties(img);
+        const pdfWidth = doc.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        doc.addImage(img, 'PNG', 15, 20);
+        doc.save('Orden No'+codigo+'.pdf');
+      });*/
   }
 
 
@@ -122,9 +259,9 @@ export class PedidosRealizadosComponent implements OnInit {
     return this.noExite;
   }
 
-  public  loading: boolean;
+  public loading: boolean;
 
-  async  updatePedido(idPedido, estado) {
+  async updatePedido(idPedido, estado) {
     this.loading = true;
     try {
       let response = await this._compraServicio.updateEstadoPedido(idPedido, estado).toPromise();

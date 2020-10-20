@@ -36,12 +36,12 @@ button{
 }
 .encabezado_recivo  > dl >dd {
   text-align: left;
-  font-size: larger;
+  font-size: small;
   color: black;
 }
 .encabezado_recivo  > dl >dt {
   text-align: left;
-  font-size: larger;
+  font-size: small;
   color: black;
 }
 .nav-principal > li{

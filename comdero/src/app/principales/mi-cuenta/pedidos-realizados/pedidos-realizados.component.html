@@ -327,7 +327,7 @@
         <div class="tab-pane fade" id="recibo{{i}}" #recibo{{i}} role="tabpanel" aria-labelledby="recibo-tab">
           <h5 class="text-center mb-0">Detalles finales del pedido No {{compra.NUM_COMPRA}}</h5>
           <p>
-            <button class="text-center btn btn-link py-0 " style="font-size: small" (click)="pdf(i,compra.NUM_COMPRA)">Imprimir recibo</button>
+            <button class="text-center btn btn-link py-0 " style="font-size: small" (click)="pdf(i,compra)">Imprimir recibo</button>
           </p>
 
 
@@ -338,7 +338,7 @@
           </div>
           <div class="card ">
             <div class="card-body p-0 encabezado_recivo" style="border: 1px solid #000000">
-              <p class="border-bottom border-dark text-center"><strong> Enviado
+              <p class="border-bottom border-dark text-center" ><strong> Enviado
                 el {{compra.FECHA_ENVIO| date}}</strong></p>
               <div class="encabezado_recivo">
                 <p class="pt-2 "><strong>&nbsp;&nbsp;Productos comprados</strong></p>
@@ -392,6 +392,8 @@
                   <p>&nbsp;&nbsp;{{compra.TELEFONO_FACTURA}}</p>
                   <p>&nbsp;&nbsp;{{compra.DIRECCION_FACTURA}}</p>
                 </div>
+
+
                 <div class="border-top border-dark mt-2 ">
                   <div class=" encabezado_recivo  px-2">
                     <dl class="dlist-align">
