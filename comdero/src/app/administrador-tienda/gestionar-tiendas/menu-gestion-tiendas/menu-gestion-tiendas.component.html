@@ -17,7 +17,7 @@
           <div class="widgets-wrap float-md-right">
 
             <div class="widget-header mr-3" *ngIf="this._agenteServicio.getIdentity()">
-              <a data-toggle="dropdown" href="#"
+              <a data-toggle="dropdown" href="#"  data-toggle="tooltip" data-placement="top"  title="Notificaciones"
                  aria-expanded="false" aria-haspopup="true" class="icon icon-sm rounded-circle border"><i
                 class="fa fa-bell" aria-hidden="true"></i></a>
               <span class="badge badge-pill badge-danger notify" *ngIf="this.notificaciones?.todas.length>0">{{this.notificaciones?.todas.length}}</span>
@@ -51,9 +51,9 @@
 
 
             <div class="widget-header icontext">
-              <li class="nav-item dropdown">
-                <a href="#" class="icon icon-sm rounded-circle border" data-toggle="dropdown" href="#"
-                   aria-expanded="false"><i class="fa fa-user"></i>
+              <li class="nav-item dropdown" >
+                <a href="#" class="icon icon-sm rounded-circle border"  data-toggle="dropdown" href="#"
+                   aria-expanded="false"  data-toggle="tooltip" data-placement="top"  title="Cuenta"><i class="fa fa-user"></i>
                 </a>
 
                 <div class="dropdown-menu ">
@@ -97,7 +97,7 @@
           <div class="widgets-wrap ml-auto ">
 
             <div class="widget-header mr-3" *ngIf="this._agenteServicio.getIdentity()">
-              <a data-toggle="dropdown" href="#"
+              <a data-toggle="dropdown" href="#"  data-toggle="tooltip" data-placement="top"  title="Notificaciones"
                  aria-expanded="false" aria-haspopup="true" class="icon icon-xs rounded-circle border"><i
                 class="fa fa-bell" aria-hidden="true"></i></a>
               <span class="badge badge-pill badge-danger notify" *ngIf="this.notificaciones?.todas.length>0">{{this.notificaciones?.todas.length}}</span>
@@ -128,7 +128,7 @@
 
             <div class="widget-header  icontext">
               <li class="nav-item dropdown">
-                <a href="#" class="icon icon-xs rounded-circle border" data-toggle="dropdown" href="#"
+                <a href="#" data-toggle="tooltip" data-placement="top" title="Cuenta" class="icon icon-xs rounded-circle border" data-toggle="dropdown" href="#"
                    aria-expanded="false"><i class="fa fa-user"></i>
                 </a>
 

@@ -42,9 +42,9 @@
         <div class="col-lg-3 col-md-4 col-sm-4 col-12 mx-auto">
           <div class="widgets-wrap float-md-right">
             <div class="widget-header mr-3" *ngIf="this._agenteServicio.getIdentity()">
-              <a data-toggle="dropdown" href="#"
+              <a data-toggle="dropdown" href="#" data-toggle="tooltip" data-placement="top" title="Notificaciones"
                  aria-expanded="false" aria-haspopup="true" class="icon icon-sm rounded-circle border"><i
-                class="fa fa-bell" aria-hidden="true"></i></a>
+                class="fa fa-bell" aria-hidden="true" ></i></a>
               <span class="badge badge-pill badge-danger notify"  *ngIf="this.notificaciones?.todas.length>0">{{this.notificaciones?.todas.length}}</span>
 
 
@@ -110,7 +110,7 @@
             </div>
             <div class="widget-header  mr-3  " [ngClass]="{'heartBeat animated':banderaCarrito==true}"
                  *ngIf="this._agenteServicio.getIdentity()">
-              <a routerLink="carrito-compras/{{this._agenteServicio.getIdentity().COD_AGENTE}}"
+              <a  data-toggle="tooltip" data-placement="top" title="Carrito compras" routerLink="carrito-compras/{{this._agenteServicio.getIdentity().COD_AGENTE}}"
                  class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
               <span
                 class="badge badge-pill badge-danger notify"  *ngIf="this.carritoIdentidad?.data.CANTIDAD_TOTAL_PRODUCTOS>0">{{this.carritoIdentidad?.data.CANTIDAD_TOTAL_PRODUCTOS}}</span>
@@ -118,14 +118,14 @@
             <div class="widget-header icontext">
 
               <li class="nav-item dropdown">
-                <a href="#" class="icon icon-sm rounded-circle border" data-toggle="dropdown" href="#"
+                <a href="#" data-toggle="tooltip" data-placement="top" title="Cuenta" data-toggle="tooltip" data-placement="top" title="Cuenta" class="icon icon-sm rounded-circle border" data-toggle="dropdown" href="#"
                    aria-expanded="false" aria-haspopup="true"><i class="fa fa-user"></i>
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right" *ngIf="this._agenteServicio.getIdentity()">
                   <small class="dropdown-item">{{this._agenteServicio.getIdentity().NOMBRE}}</small>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" routerLink="mi-cuenta/menu-mi-cuenta/vision-general"><span
+                  <a  class="dropdown-item" routerLink="mi-cuenta/menu-mi-cuenta/vision-general"><span
                     class="fa fa-user "></span> &nbsp;Mi cuenta</a>
 
                   <a class="dropdown-item" routerLink="/administrador/administrador-tienda/mis-tiendas">
@@ -168,7 +168,7 @@
         <div class="col-lg-3 col-md-4 col-sm-4 col-6 text-right ">
           <div class="widgets-wrap float-md-right">
             <div class="widget-header mr-3" *ngIf="this._agenteServicio.getIdentity()">
-              <a data-toggle="dropdown" href="#"
+              <a data-toggle="dropdown" href="#" data-toggle="tooltip" data-placement="top" title="Notificaciones"
                  aria-expanded="false" aria-haspopup="true" class="icon icon-xs rounded-circle border"><i
                 class="fa fa-bell" aria-hidden="true"></i></a>
               <span class="badge badge-pill badge-danger notify"
@@ -233,7 +233,7 @@
               </div>
             </div>
             <div class="widget-header  mr-3" *ngIf="this._agenteServicio.getIdentity()">
-              <a routerLink="carrito-compras/{{this._agenteServicio.getIdentity().COD_AGENTE}}"
+              <a data-toggle="tooltip" data-placement="top" title="Carrito de compras" routerLink="carrito-compras/{{this._agenteServicio.getIdentity().COD_AGENTE}}"
                  class="icon icon-xs rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
               <span
                 class="badge badge-pill badge-danger notify" *ngIf="this.carritoIdentidad?.data.CANTIDAD_TOTAL_PRODUCTOS>0">{{this.carritoIdentidad?.data.CANTIDAD_TOTAL_PRODUCTOS}}</span>
