@@ -398,12 +398,17 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
       position: 'center',
       width: 600,
       buttonsStyling: false,
-     
+
       customClass: {
         confirmButton: 'btn btn-primary px-5',
         //icon:'sm'
       }
     });
+  }
+
+  public minusCorreo() {
+    if (this.Tienda.Correo_Tienda != '' || this.Tienda.Correo_Tienda != null)
+      this.Tienda.Correo_Tienda = this.Tienda.Correo_Tienda.toLowerCase();
   }
 
 }

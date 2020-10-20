@@ -25,15 +25,15 @@
     </header>
     <form #FormRegistro id="formRegistro" class="login100-form  validate-form">
       <div class="form-group">
-        <label class="custom-control custom-radio custom-control-inline">
-          <input (change)="selectTipoAgente($event)" checked="" class="custom-control-input" name="gender" type="radio"
+        <label>
+          <input (change)="selectTipoAgente($event)" checked="" name="gender" type="radio"
                  value="Persona">
-          <span class="custom-control-label"> Persona Natural  </span>
-        </label>
-        <label class="custom-control custom-radio custom-control-inline">
-          <input (change)="selectTipoAgente($event)" class="custom-control-input" name="gender" type="radio"
+          <span> Persona Natural  </span>
+        </label> &nbsp;
+        <label>
+          <input (change)="selectTipoAgente($event)"  name="gender" type="radio"
                  value="Empresa">
-          <span class="custom-control-label"> Empresa </span>
+          <span> Empresa </span>
         </label>
       </div> <!-- form-group end.// -->
       <div *ngIf="banderaTipo" class="form-row">

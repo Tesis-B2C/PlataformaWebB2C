@@ -132,7 +132,7 @@
 
               <div class="form-group col-md-6">
                 <label>* Correo</label>
-                <input #Correo_Tienda="ngModel" style="text-transform: lowercase;"
+                <input #Correo_Tienda="ngModel" (keyup)="minusCorreo()" style="text-transform: lowercase;"
                        [(ngModel)]="this.Tienda.Correo_Tienda" [ngClass]="{'is-invalid': Correo_Tienda.invalid && (Correo_Tienda.dirty || Correo_Tienda.touched),
                  'is-valid': Correo_Tienda.valid && (Correo_Tienda.dirty || Correo_Tienda.touched)}"
                        [pattern]='this.emailPattern'
