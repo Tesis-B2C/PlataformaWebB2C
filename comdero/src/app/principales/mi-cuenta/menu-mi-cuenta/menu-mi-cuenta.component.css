@@ -14,3 +14,11 @@ a{
 .active{
   display: block;
 }
+
+
+@media (max-width:720px){
+  .title-page{
+    font-size: larger;
+    font-weight: bold;
+  }
+}

@@ -277,12 +277,12 @@
             <div class="col-xs-12 col-12 col-sm-5 col-md-6 col-lg-4 form-group">
               <label>Rango de duración</label>
               <div class="input-group ">
-                <input type="text" class="form-control" bsDaterangepicker
+                <input type="text" class="form-control" placement="bottom" bsDaterangepicker
                        #Calendario="ngModel"
                        style="border-right: none"
                        [(ngModel)]="bsRangeValue" name="calendario"
                        [minDate]="minDate" placeholder="2020-05-05 - 2020-06-06"
-                       [bsConfig]='{ rangeInputFormat: "YYYY-MM-DD", locale: "es", adaptivePosition: true, containerClass:"theme-orange" }'
+                       [bsConfig]='{ rangeInputFormat: "YYYY-MM-DD", locale: "es",  containerClass:"theme-orange" }'
                        #dpr="bsDaterangepicker" required
                        [ngClass]="{'borderr-red': Calendario.invalid && banderaValidaciones}">
                 <div class="input-group-append">

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {CategoriaServicio} from "../../servicios/categoria.servicio";
 import Swal from "sweetalert2";
 import {HttpErrorResponse} from "@angular/common/http";
+import {Router} from "@angular/router";
 @Component({
   selector: 'app-categorias',
   templateUrl: './categorias.component.html',
@@ -17,7 +18,7 @@ export class CategoriasComponent implements OnInit {
     'fa fa-gem', 'fa fa-palette', 'fa fa-laptop',
     'fa fa-car', 'fa fa-dumbbell', 'fa fa-book',
     'fa fa-dog', 'fa fa-gamepad', 'fa fa-grin-stars', 'fa fa-heartbeat', 'fa fa-building', 'fa fa-tractor'];
-  constructor(public _categoriaServicio: CategoriaServicio) { }
+  constructor( public router: Router,public _categoriaServicio: CategoriaServicio) { }
 
   ngOnInit() {
     this.getCategorias();
@@ -47,6 +48,21 @@ export class CategoriasComponent implements OnInit {
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
       }
+    }
+
+  }
+
+  verificar(codigo, nombre) {
+    let bandera:boolean=false;
+    this.categorias.forEach(elemnt => {
+      if (elemnt.CAT_ID_CATEGORIA == codigo) {
+        bandera=true
+      }
+    });
+
+    if(!bandera){
+      this.router.navigate(['/principales/menu/busqueda-categoria',codigo,nombre])
+
     }
 
   }

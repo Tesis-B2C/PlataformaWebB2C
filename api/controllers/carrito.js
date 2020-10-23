@@ -3,7 +3,7 @@
 
 const Carrito = require('../models/carrito'); //importar el modelo del usuario  o lo que son las clases comunes
 const Carrito_Producto = require('../models/carrito_producto'); //importar el modelo del usuario  o lo que son las clases comunes
-const Agente = require("../models/Agente");
+const Agente = require("../models/agente");
 const Producto = require("../models/producto");
 const Variante = require("../models/variante");
 const Imagen_Producto = require("../models/imagen_producto");

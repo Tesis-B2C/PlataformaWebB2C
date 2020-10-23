@@ -97,13 +97,14 @@
           <div class="widgets-wrap ml-auto ">
 
             <div class="widget-header mr-3" *ngIf="this._agenteServicio.getIdentity()">
+              <a routerLink="notificaciones">
               <a data-toggle="dropdown"
                  aria-expanded="false" aria-haspopup="true" class="icon icon-xs rounded-circle border"><i
                 class="fa fa-bell" aria-hidden="true"></i></a>
               <span class="badge badge-pill badge-danger notify" *ngIf="this.notificaciones?.todas.length>0">{{this.notificaciones?.todas.length}}</span>
+             </a>
 
-
-              <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+             <!-- <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
                 <h3 class="dropdown-header">Notificaciones</h3>
                 <div class="dropdown-divider"></div>
                 <div class="border-bottom " *ngFor="let notificaciones of this.notificaciones?.limitadas">
@@ -122,7 +123,7 @@
                   <button class=" notificaciones text-center btn btn-link text-secondary" routerLink="notificaciones">Ver todas</button>
                 </p>
 
-              </div>
+              </div>-->
             </div>
 
 

@@ -11,9 +11,10 @@ const {GLOBAL}= require('../global');
 // email sender function
 var transporter = nodemailer.createTransport({
     service: 'Gmail',
+    secure:false,
     auth: {
-        user: 'doginotificaciones@gmail.com',
-        pass: 'dogi12345.'
+        user: 'comdero.notificaciones@gmail.com',
+        pass: 'comdero1234'
     }
 });
 

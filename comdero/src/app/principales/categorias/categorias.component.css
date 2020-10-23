@@ -8,6 +8,22 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  margin:0px auto;
+  margin: 0px auto;
 
+}
+
+p {
+  cursor: pointer;
+}
+
+p:hover {
+  color: #1a56e9;
+  text-decoration-line: underline;
+}
+
+@media (max-width: 720px) {
+  .title-page {
+    font-size: larger;
+    font-weight: bold;
+  }
 }

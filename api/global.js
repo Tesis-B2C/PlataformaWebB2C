@@ -1,5 +1,5 @@
 module.exports.GLOBAL = {
-    url: "http://192.168.0.102:4200/",
+    url: "https://www.comdero.com/",
     //urlImagen: "http://localhost:3977/"
     //url: "http://www.dogipaseoscaninos.com:3977/api/"
     //url:"http://192.168.1.8:3977/api/"

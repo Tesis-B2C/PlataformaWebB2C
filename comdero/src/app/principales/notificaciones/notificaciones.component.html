@@ -20,9 +20,9 @@
         </div>
         <div class="col-10">
           <div class="card-body">
-            <h5 class="card-title"
+            <h6 class=""
                 [ngClass]="{'text-success': notificaciones.ESTADO_NOTIFICACION==1, 'text-primary': notificaciones.ESTADO_NOTIFICACION==0}">{{notificaciones.ASUNTO}}
-              <a class="float-right notificaciones" *ngIf="notificaciones.ESTADO_NOTIFICACION==1">Visto</a></h5>
+              <a class="float-right notificaciones" *ngIf="notificaciones.ESTADO_NOTIFICACION==1">Visto</a></h6>
             <p class="text-muted notificaciones"><i>De:{{notificaciones.AGENTE.NOMBRE}}</i></p>
             <p class="card-text notificaciones ">{{notificaciones.MENSAJE}}</p>
             <p class="notificaciones">Orden #: {{notificaciones.CODIGO_COMPRA}}</p>
@@ -41,9 +41,9 @@
         </div>
         <div class="col-10">
           <div class="card-body pb-0">
-            <h5 class="card-title"
+            <h6 class=""
                 [ngClass]="{'text-success': notificaciones.ESTADO_NOTIFICACION==1, 'text-primary': notificaciones.ESTADO_NOTIFICACION==0}">{{notificaciones.ASUNTO}}
-              <a class="float-right notificaciones" *ngIf="notificaciones.ESTADO_NOTIFICACION==1">Visto</a></h5>
+              <a class="float-right notificaciones" *ngIf="notificaciones.ESTADO_NOTIFICACION==1">Visto</a></h6>
             <p class="text-muted notificaciones"><i>De:{{notificaciones.NOMBRE_TIENDA }}</i></p>
             <p class="card-text notificaciones ">{{notificaciones.MENSAJE}}</p>
             <p class="notificaciones">Orden #: {{notificaciones.CODIGO_COMPRA}}</p>

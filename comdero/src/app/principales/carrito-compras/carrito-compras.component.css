@@ -109,3 +109,12 @@ h3{
   font-size: 16px;
 }
 
+@media (max-width:720px){
+  .title-page{
+    font-size: larger;
+    font-weight: bold;
+  }
+}
+
+
+

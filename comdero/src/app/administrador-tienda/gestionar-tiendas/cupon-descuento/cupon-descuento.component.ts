@@ -21,6 +21,8 @@ defineLocale('es', esLocale);
 
 })
 export class CuponDescuentoComponent implements OnInit , OnDestroy{
+
+
   public Descuento: Descuento
   public banderaValidaciones: boolean = false;
   public banderaOpcionAplicarA: boolean = true;

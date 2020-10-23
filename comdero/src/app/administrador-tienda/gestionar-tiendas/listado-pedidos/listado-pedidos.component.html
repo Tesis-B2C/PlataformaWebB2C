@@ -76,13 +76,12 @@
     </div>
 
     <div class="input-group col-md-4 px-0 px-md-3">
-      <input type="text" class="form-control "  placement="left" bsDaterangepicker
+      <input type="text" class="form-control "   placement="bottom" bsDaterangepicker
              #Calendario="ngModel"
              style="border-right: none"
              (bsValueChange)="fecha($event)"
              [(ngModel)]="bsRangeValue" name="calendario"
-
-             [bsConfig]='{ adaptivePosition: true,rangeInputFormat: "YYYY-MM-DD", locale: "es",  containerClass:"theme-orange" }'
+             [bsConfig]='{  rangeInputFormat: "YYYY-MM-DD", locale: "es",  containerClass:"theme-orange" }'
              #dpr="bsDaterangepicker" required>
       <div class="input-group-append">
                   <span class="input-group-text fa fa-calendar"

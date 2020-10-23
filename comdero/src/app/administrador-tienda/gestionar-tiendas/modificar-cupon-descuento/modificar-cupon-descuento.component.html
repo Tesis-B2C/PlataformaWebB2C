@@ -266,12 +266,12 @@
               <label>Rango de duración</label>
               <div class="input-group ">
 
-                <input type="text" class="form-control" bsDaterangepicker
+                <input type="text" class="form-control" bsDaterangepicker placement="bottom"
                        #Calendario="ngModel"
                        style="border-right: none"
                        [(ngModel)]="bsRangeValue" name="calendario" [disabled]="!this.banderaModificar"
                        [minDate]="minDate"
-                       [bsConfig]='{ rangeInputFormat: "YYYY-MM-DD", locale: "es", adaptivePosition: true, containerClass:"theme-orange" }'
+                       [bsConfig]='{ rangeInputFormat: "YYYY-MM-DD", locale: "es",  containerClass:"theme-orange" }'
                        #dpr="bsDaterangepicker" required
                        [ngClass]="{'borderr-red': Calendario.invalid && banderaValidaciones}">
                 <div class="input-group-append">

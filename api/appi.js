@@ -8,11 +8,30 @@ const chalk = require('chalk');
 //Notificaciones
 const  socketIO = require('socket.io');
 
-const http= require('http');
+
+
+var fs = require('fs');
+var https = require('https');
+const PORT = 5000;
+
+
+let server =https.createServer({
+    key: fs.readFileSync('/etc/server.key'),
+    cert: fs.readFileSync('/etc/comdero_com.crt')
+}, app).listen(PORT, function(){
+    console.log('\n')
+    console.log(`>> Socket listo y escuchando por el puerto: ${chalk.green('5000')}`)
+});
+
+let io=socketIO(server);
+module.exports.io=socketIO(server);
+
+//----------------------------------------
+/*const http= require('http');
 let server =http.createServer(http);
 let io=socketIO(server);
 
-module.exports.io=socketIO(server);
+module.exports.io=socketIO(server);*/
 
 require('./sockets/socket');
 
@@ -74,10 +93,15 @@ app.use('/api',email);*/
 
 //app.use('/api',paypal);
 
+
+
+//-----------------------------------------
+/*
 server.listen(5000, function () {
     console.log('\n')
     console.log(`>> Socket listo y escuchando por el puerto: ${chalk.green('5000')}`)
-})
+});
+*/
 
 
 module.exports = app; // hace referencia a la variable de express
