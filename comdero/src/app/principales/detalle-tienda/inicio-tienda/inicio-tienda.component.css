@@ -25,3 +25,10 @@ input[type="text"]:focus
   outline: none;
   box-shadow: none;
 }
+
+.contenidoMax100 {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: justify
+}

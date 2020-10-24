@@ -201,7 +201,7 @@
 
   <!-- ========================= SECTION CONTENT COMDERO PRODUCTOS ========================= -->
 
-  <section class="section-content" *ngIf="this.nuevos?.length > 0">
+  <section class="section-content" *ngIf="this.nuevos?.length > 3">
     <div class="container">
       <header class="section-heading">
         <h3 class="section-title">Productos</h3>
@@ -239,8 +239,8 @@
                       </ngb-rating>
                     </ul>
                     <span *ngIf="p.TOTAL_COM != null"
-                          class="label-rating text-muted">{{p.TOTAL_COM}} comentarios</span>
-                    <span *ngIf="p.TOTAL_COM == null" class="label-rating text-muted">0 Comentarios </span>
+                          class="label-rating text-muted ml-0">{{p.TOTAL_COM}} comentarios</span>
+                    <span *ngIf="p.TOTAL_COM == null" class="label-rating text-muted ml-0">0 Comentarios </span>
                   </div> <!-- rating-wrap.// -->
 
                   <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO == null">
@@ -254,7 +254,7 @@
 
                   <!-- price-wrap.// -->
                   <a routerLink="../detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda"
-                     class="title tituloTienda">{{p.NOMBRE_COMERCIAL}}</a>
+                     class="title tituloTienda contenidoMax100">{{p.NOMBRE_COMERCIAL}}</a>
                 </figcaption>
               </div>
             </ng-template>
@@ -285,8 +285,7 @@
                   <img [src]="getImagen(p.IMAGEN)" width="100%"
                        height="200rem"></a>
                 <figcaption class="info-wrap">
-                  <a routerLink="../detalle-producto/{{p.ID_OFERTA}}" class="title"
-                     style="overflow:hidden; white-space: nowrap; text-overflow: ellipsis; text-align: justify">{{p.NOMBRE_PRODUCTO}}</a>
+                  <a routerLink="../detalle-producto/{{p.ID_OFERTA}}" class="title contenidoMax100">{{p.NOMBRE_PRODUCTO}}</a>
                   <div class="rating-wrap">
                     <ul class="rating-stars">
                       <ngb-rating *ngIf="p.PROMEDIO_CAL != null"
@@ -301,9 +300,9 @@
                         </ng-template>
                       </ngb-rating>
                     </ul>
-                    <span *ngIf="p.TOTAL_COM != null"
-                          class="label-rating text-muted">{{p.TOTAL_COM}} comentarios</span>
-                    <span *ngIf="p.TOTAL_COM == null" class="label-rating text-muted">0 Comentarios </span>
+                   <span *ngIf="p.TOTAL_COM != null"
+                          class="label-rating text-muted ml-0 ">{{p.TOTAL_COM}} comentarios</span>
+                    <span *ngIf="p.TOTAL_COM == null" class="label-rating text-muted ml-0 ">0 comentarios </span>
                   </div> <!-- rating-wrap.// -->
 
                   <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO == null">
@@ -317,7 +316,7 @@
 
                   <!-- price-wrap.// -->
                   <a routerLink="../detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda"
-                     class="title tituloTienda">{{p.NOMBRE_COMERCIAL}}</a>
+                     class="title tituloTienda contenidoMax100">{{p.NOMBRE_COMERCIAL}}</a>
                 </figcaption>
               </div>
             </ng-template>
@@ -348,8 +347,8 @@
                   <img [src]="getImagen(p.IMAGEN)" width="100%"
                        height="200rem"></a>
                 <figcaption class="info-wrap">
-                  <a routerLink="../detalle-producto/{{p.ID_OFERTA}}" class="title"
-                     style="overflow:hidden; white-space: nowrap; text-overflow: ellipsis; text-align: justify">{{p.NOMBRE_PRODUCTO}}</a>
+                  <a routerLink="../detalle-producto/{{p.ID_OFERTA}}" class="title contenidoMax100"
+                     >{{p.NOMBRE_PRODUCTO}}</a>
                   <div class="rating-wrap">
                     <ul class="rating-stars">
                       <ngb-rating *ngIf="p.PROMEDIO_CAL != null"
@@ -365,8 +364,8 @@
                       </ngb-rating>
                     </ul>
                     <span *ngIf="p.TOTAL_COM != null"
-                          class="label-rating text-muted">{{p.TOTAL_COM}} comentarios</span>
-                    <span *ngIf="p.TOTAL_COM == null" class="label-rating text-muted">0 Comentarios </span>
+                          class="label-rating text-muted ml-0">{{p.TOTAL_COM}} comentarios</span>
+                    <span *ngIf="p.TOTAL_COM == null" class="label-rating text-muted ml-0">0 Comentarios </span>
                   </div> <!-- rating-wrap.// -->
 
                   <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO == null">
@@ -380,7 +379,7 @@
 
                   <!-- price-wrap.// -->
                   <a routerLink="../detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda"
-                     class="title tituloTienda">{{p.NOMBRE_COMERCIAL}}</a>
+                     class="title tituloTienda contenidoMax100">{{p.NOMBRE_COMERCIAL}}</a>
                 </figcaption>
               </div>
             </ng-template>

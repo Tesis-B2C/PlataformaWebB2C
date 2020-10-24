@@ -9,7 +9,7 @@ const chalk = require('chalk');
 const  socketIO = require('socket.io');
 
 
-
+//--------------------------------------servidor
 var fs = require('fs');
 var https = require('https');
 const PORT = 5000;
@@ -26,12 +26,17 @@ let server =https.createServer({
 let io=socketIO(server);
 module.exports.io=socketIO(server);
 
-//----------------------------------------
+//---------------------------------------- local
 /*const http= require('http');
 let server =http.createServer(http);
 let io=socketIO(server);
 
 module.exports.io=socketIO(server);*/
+
+
+
+
+
 
 require('./sockets/socket');
 
@@ -95,7 +100,7 @@ app.use('/api',email);*/
 
 
 
-//-----------------------------------------
+//----------------------------------------- local
 /*
 server.listen(5000, function () {
     console.log('\n')

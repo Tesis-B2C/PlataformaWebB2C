@@ -7,14 +7,20 @@ const Sequelize= require("sequelize");
 // coenxion base
 var app = require('./appi');
 var mysql = require('mysql');
-/*var port = process.env.PORT || 3977;
 
 
-/!*
+// ----------local
+/*
+var port = process.env.PORT || 3977;
 app.listen(port, function () {
     console.log("Servidor corriendo", port);
 });
-*!/*/
+
+*/
+
+
+
+//----------------------servidor
 
 
 var fs = require('fs');
@@ -28,6 +34,7 @@ https.createServer({
 }, app).listen(PORT, function(){
     console.log("My https server listening on port " + PORT + "...");
 });
+
 
 
 
