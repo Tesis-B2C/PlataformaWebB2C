@@ -98,9 +98,8 @@
 
             <div class="widget-header mr-3" *ngIf="this._agenteServicio.getIdentity()">
               <a routerLink="notificaciones">
-              <a data-toggle="dropdown"
-                 aria-expanded="false" aria-haspopup="true" class="icon icon-xs rounded-circle border"><i
-                class="fa fa-bell" aria-hidden="true"></i></a>
+              <a  class="icon icon-xs rounded-circle border"><i
+                class="fa fa-bell"></i></a>
               <span class="badge badge-pill badge-danger notify" *ngIf="this.notificaciones?.todas.length>0">{{this.notificaciones?.todas.length}}</span>
              </a>
 

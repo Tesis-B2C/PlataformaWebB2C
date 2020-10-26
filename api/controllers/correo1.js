@@ -157,7 +157,7 @@ async function correoPedidoTramitado(req, res) {
         to: agente_receptor.dataValues.CORREO,
         subject: req.body.ASUNTO,
         text: req.body.MENSAJE + ' por: ' + req.body.NOMBRE_TIENDA+' por favor revisa COMDERO para más detalle de la compra No :'+req.body.CODIGO_COMPRA,
-        html:  req.body.MENSAJE + ' por: ' +req.body.NOMBRE_TIENDA+' por favor revisa: &nbsp; <a href="'+GLOBAL.url+'principales/menu/principal">comdero.com/</a> &nbsp; para más detalle de la compra No:'+req.body.CODIGO_COMPRA
+        html:  req.body.MENSAJE + ' por: ' +req.body.NOMBRE_TIENDA+' por favor revisa: &nbsp; <a href="'+GLOBAL.url+'principales/menu/mi-cuenta/menu-mi-cuenta/detalle-pedido-realizado/'+req.body.NUM_COMPRA+'>comdero.com/</a> &nbsp; para más detalle de la compra No:'+req.body.CODIGO_COMPRA
     };
 
     transporter.sendMail(mailOptions, function (error) {

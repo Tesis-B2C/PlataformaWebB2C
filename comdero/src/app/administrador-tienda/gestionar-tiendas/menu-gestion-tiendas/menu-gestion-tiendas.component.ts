@@ -109,9 +109,9 @@ export class MenuGestionTiendasComponent implements OnInit{
       cancelButtonText: 'Cancelar',
       buttonsStyling: false,
       customClass: {
-        confirmButton: 'btn btn-primary px-5',
+        confirmButton: 'btn btn-primary ',
         container: 'my-swal',
-        cancelButton: 'btn btn-secondary px-5 ml-5',
+        cancelButton: 'btn btn-secondary  ml-5',
       }
     }).then(async (result) => {
       if (result.value) {

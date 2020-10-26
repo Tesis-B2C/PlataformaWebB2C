@@ -9,7 +9,7 @@
   </div>
   <div class="row justify-content-center ">
 
-    <div *ngFor="let notificaciones of notificaciones?.completas"[ngClass]="{'border-notificaiones': notificaciones.ESTADO_NOTIFICACION==1,'border-notificaiones2': notificaciones.ESTADO_NOTIFICACION==0}"class="card mb-3 col-10   noti " (click)="direccionar(notificaciones.CODIGO_COMPRA, notificaciones.CODIGO_TIENDA,notificaciones.ID_NOTIFICACION,1)">
+    <div *ngFor="let notificaciones of notificaciones?.completas"[ngClass]="{'border-notificaiones': notificaciones.ESTADO_NOTIFICACION==1,'border-notificaiones2': notificaciones.ESTADO_NOTIFICACION==0}"class="card mb-3 col-md-10 col-12   noti " (click)="direccionar(notificaciones.CODIGO_COMPRA, notificaciones.CODIGO_TIENDA,notificaciones.ID_NOTIFICACION,1)">
       <div class=" row no-gutters "  *ngIf="notificaciones.ENVIAR_A=='Tienda'">
         <div class="col-2 align-self-center">
 
