@@ -47,7 +47,7 @@
             <label for="envioDomicilio">&nbsp;&nbsp;Envío a domicilio</label>
             <br class="m-0">
             <span *ngIf="this.noExisteEnvioEstaArea" class="text-danger small">Por el momento no se puede calcular el envío a esta zona, pero usted
-              puede acordar con el vendedor y realizar su compra.</span>
+              puede elegir la opción "Acordar con el vendedor" y realizar su compra.</span>
             <span
               *ngIf="this.banderaDireccionEnvio && this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA == null && !this.noExisteEnvioEstaArea"
               class="text-danger small">Es importante que ingrese la direccion de envío para continuar con su compra.</span>
@@ -1016,13 +1016,12 @@
 
             <dl class="dlist-align">
               <dt>Descuento</dt>
-              <dd class="text-center">(-)</dd>
-              <dd class="text-right text-dark b"><strong>{{tienda.cuentas.descuentoAutomatico | currency}}</strong></dd>
+
+              <dd class="text-right text-dark b"><strong>(-)&nbsp;{{tienda.cuentas.descuentoAutomatico | currency}}</strong></dd>
             </dl>
             <dl class="dlist-align">
               <dt>Descuento Cupón</dt>
-              <dd class="text-center">(-)</dd>
-              <dd class="text-right text-dark b"><strong>{{tienda.cuentas.descuentoCupon | currency}}</strong></dd>
+              <dd class="text-right text-dark b"><strong>(-)&nbsp;{{tienda.cuentas.descuentoCupon | currency}}</strong></dd>
             </dl>
             <dl class="dlist-align">
               <dt>Total del pedido:</dt>

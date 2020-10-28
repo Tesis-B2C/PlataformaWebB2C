@@ -186,7 +186,7 @@
       </tbody>
     </table>
 
-    <div class="d-flex justify-content-between p-2">
+    <div *ngIf="this.result.length>0" class="d-flex justify-content-between p-2">
       <ngb-pagination id="paginacion"
                       [(page)]="page"
                       [pageSize]="pageSize"

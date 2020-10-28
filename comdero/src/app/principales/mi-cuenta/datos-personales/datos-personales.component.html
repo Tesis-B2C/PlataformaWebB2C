@@ -36,7 +36,7 @@
         <label>Código</label>
         <input type="text" #Codigo="ngModel" [(ngModel)]="this.codigo"
                class="form-control tamanioInputs">
-        <label> Si no recibio ningun correo porfavor click
+        <label> Si no recibio ningun correo por favor click
           <button (click)="reEnviar()" class="btn btn-link px-0 pt-0">aquí</button>
         </label>
       </div>
@@ -314,7 +314,7 @@
             </div>
           </div>
           <div class=" col-lg-6 form-group">
-            <label>Codigo Postal</label>
+            <label>Código Postal</label>
             <input [disabled]="banderaEdicionDeshabilitada" #CodigoPostal="ngModel"
                    [(ngModel)]="this.EditarAgente.Num_Cod_Postal" class="tamanioInputs form-control"
                    name="codigoPostal" type="text">

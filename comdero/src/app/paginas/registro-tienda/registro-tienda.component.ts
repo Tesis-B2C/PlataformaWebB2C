@@ -192,7 +192,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
         } else
           this.banderaToastRuc = true;
       } else {
-        this.mostrarToast("Asegurate de ingresar la provincia y ciudad", "");
+        this.mostrarToast("Asegúrate de ingresar la provincia y ciudad", "");
       }
     } else {
       this.banderaToast = true;
@@ -216,7 +216,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
 
   public mensajeToast(paso) {
     if (this.banderaToast && !document.forms["formPaso" + paso].checkValidity()) {
-      this.mostrarToast("Asegurate de llenar todos los campos obligatorios marcados con *", "");
+      this.mostrarToast("Asegúrate de llenar todos los campos obligatorios marcados con *", "");
     }
 
     if (this.banderaToastRuc) {

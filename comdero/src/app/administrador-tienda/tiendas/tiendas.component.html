@@ -20,7 +20,7 @@
 
             <div class="widget-header icontext">
               <li class="nav-item dropdown">
-                <a href="#" class="icon icon-sm rounded-circle border" data-toggle="dropdown" href="#"
+                <a href="#" class="icon icon-sm rounded-circle border" data-toggle="dropdown"
                    aria-expanded="false"><i class="fa fa-user"></i>
                 </a>
 
@@ -67,7 +67,7 @@
 
             <div class="widget-header  icontext">
               <li class="nav-item dropdown">
-                <a href="#" class="icon icon-xs rounded-circle border" data-toggle="dropdown" href="#"
+                <a href="#" class="icon icon-xs rounded-circle border" data-toggle="dropdown"
                    aria-expanded="false"><i class="fa fa-user"></i>
                 </a>
 
@@ -162,7 +162,7 @@
                   </div>
                 </div>
               </div>
-            <a (click)="tienda.Estado=true;irAdministracionTienda(tienda.NUM_TIENDA)" class="mb-0 ">
+            <a (click)="tienda.Estado=true;irAdministracionTienda(tienda.NUM_TIENDA)" class="mb-0 "  [ngClass]="{'desactivado':tienda.ESTADO_TIENDA==1}">
 
               <img class=" mx-auto " [src]="getImagen(tienda.LOGO)" width="100%" height="190px">
               <!--  <img class=" mx-auto " [src]="this.url + 'obtenerImagenTienda/'+tienda.LOGO" width="100%" height="190px">-->

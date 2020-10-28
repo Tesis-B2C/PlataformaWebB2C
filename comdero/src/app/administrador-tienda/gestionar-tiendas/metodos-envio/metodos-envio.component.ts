@@ -306,7 +306,7 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
           this.loading = false;
         }
       } else {
-        this.mostrarToastError("Al parecer existe errores en el formulario, porfavor reviselo nuevamente", "");
+        this.mostrarToastError("Al parecer existe errores en el formulario, por favor reviselo nuevamente", "");
         this.loading = false;
       }
     } catch (e) {

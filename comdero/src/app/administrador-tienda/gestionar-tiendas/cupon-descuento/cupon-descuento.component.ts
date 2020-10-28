@@ -234,7 +234,7 @@ export class CuponDescuentoComponent implements OnInit , OnDestroy{
 
         }
       } else {
-        this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
+        this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario por favor revísalo nuevamente</p></div>', "Error!",
           {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
         let body = document.getElementById('body') as HTMLElement;
         body.scrollTo(0, 0);

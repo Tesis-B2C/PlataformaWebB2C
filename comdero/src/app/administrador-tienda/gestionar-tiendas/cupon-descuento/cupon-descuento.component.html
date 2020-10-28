@@ -6,10 +6,10 @@
       <span aria-hidden="true" style="font-size: x-large">&times;</span>
     </button>
   </div>
-  <div class="modal-body" style="height: 100vh">
-    <div class="mx-auto ">
-      <div class="form-row mb-2  ">
-        <div class=" input-group col-md-12 mr-md-auto">
+  <div class="modal-body" style="height: auto; max-height: 100vh">
+    <div class="w-100 ">
+
+        <div class=" input-group ">
           <input class="form-control" style="font-size: small" type="text" #busquedaasd="ngModel"
                  [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="filtrar()"/>
           <div class="input-group-append">
@@ -17,9 +17,8 @@
           </div>
 
         </div>
-      </div>
-      <br>
-      <label class="">Seleccione los productos que desea agregar</label>
+
+      <label class="mx-auto">Seleccione los productos que desea agregar</label>
       <table class="table table-bordered table-responsive-sm bg-white small w-100 text-center">
         <thead>
         <tr>

@@ -133,7 +133,7 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
 
   public desdeNegocio() {
     if (this.banderaEspacioFisico == false && this.banderaEdicionDeshabilitadaCasa == false) {
-      this.mostrarToast("Asegurate de guardar los cambios", "")
+      this.mostrarToast("Asegúrate de guardar los cambios", "")
     } else {
       this.vectorCasa = '';
       this.Sucursales = [];
@@ -152,7 +152,7 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
 
   public desdeCasa() {
     if (this.banderaCasa == false && this.banderaEdicionDeshabilitadaNeg == false) {
-      this.mostrarToast("Asegurate de guardar los cambios", "");
+      this.mostrarToast("Asegúrate de guardar los cambios", "");
     } else {
       this.vectorCasa = '';
       this.Sucursales = [];
@@ -242,13 +242,13 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
             this.cancelarModificacion();
             this.mensageCorrecto(response['message']);
           } else {
-            this.mostrarToastError("Asegurate de seleccionar la ciudad de tu negocio.", "");
+            this.mostrarToastError("Asegúrate de seleccionar la ciudad de tu negocio.", "");
           }
         } else {
           this.mostrarToastError("Al parecer no ingresó un RUC válido", "");
         }
       }else {
-        this.mostrarToastError("Al parecer existe errores en el formulario, porfavor reviselo nuevamente", "");
+        this.mostrarToastError("Al parecer existe errores en el formulario, por favor reviselo nuevamente", "");
       }
     } catch (e) {
       this.loading = false;
@@ -323,7 +323,7 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
            this.mostrarToastError("Al parecer no ingresó un RUC válido", "");
          }
        } else {
-         this.mostrarToastError("Asegurate de seleccionar la ciudad de tu negocio.", "");
+         this.mostrarToastError("Asegúrate de seleccionar la ciudad de tu negocio.", "");
        }
      }else {
        this.mostrarToastError("Al parecer existe errores en el formulario, reviselo nuevamente", "");

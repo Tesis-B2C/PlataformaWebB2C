@@ -122,10 +122,10 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     this.panelUno = document.getElementById('panelUno') as HTMLElement;
     this.panelDos = document.getElementById('panelDos') as HTMLElement;
     if (this.identidadTienda.OPCION_ENVIOs.length == 0) {
-      this.mostrarToast("Asegurate de tener configurado tus métodos de envio antes de empezar a publicar tus productos", "fa fa-truck fa-2x");
+      this.mostrarToast("Asegúrate de tener configurado tus métodos de envio antes de empezar a publicar tus productos", "fa fa-truck fa-2x");
     }
     if (this.identidadTienda.METODO_PAGOs.length == 0) {
-      this.mostrarToast("Asegurate de tener configurado tus métodos de pago antes de empezar a publicar tus productos", "fas fa-credit-card fa-2x");
+      this.mostrarToast("Asegúrate de tener configurado tus métodos de pago antes de empezar a publicar tus productos", "fas fa-credit-card fa-2x");
     }
   }
 
@@ -509,11 +509,11 @@ this.borrarVideo();
     try {
       if (this.identidadTienda.OPCION_ENVIOs.length == 0) {
         banderaConfiguracion=false;
-        this.mostrarToast("Asegurate de tener configurado tus métodos de envio antes de empezar a publicar tus productos", "fa fa-truck fa-2x");
+        this.mostrarToast("Asegúrate de tener configurado tus métodos de envio antes de empezar a publicar tus productos", "fa fa-truck fa-2x");
       }
       if (this.identidadTienda.METODO_PAGOs.length == 0) {
         banderaConfiguracion=false;
-        this.mostrarToast("Asegurate de tener configurado tus métodos de pago antes de empezar a publicar tus productos", "fas fa-credit-card fa-2x");
+        this.mostrarToast("Asegúrate de tener configurado tus métodos de pago antes de empezar a publicar tus productos", "fas fa-credit-card fa-2x");
       }
       this.loading = true;
       if(banderaConfiguracion){
@@ -551,8 +551,8 @@ this.borrarVideo();
   public async guardarProducto() {
 
     Swal.fire({
-      title: '<header class="login100-form-title-registro mb-o"><h5 class="card-title"><strong>!Estas seguro</strong></h5></header>',
-      text: "El producto será registrado y publicado en su tienda asegurate de que los datos sean correctos",
+      title: '<header class="login100-form-title-registro mb-o"><h5 class="card-title"><strong>¿Estas seguro?</strong></h5></header>',
+      text: "El producto será registrado y publicado en su tienda asegúrate de que los datos sean correctos",
       icon: 'warning',
       position: 'center',
       width: 600,
@@ -616,7 +616,7 @@ this.borrarVideo();
           window.scrollTo(0, 0);
           body.scrollTo(0, 0);
 
-          this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
+          this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario por favor revísalo nuevamente</p></div>', "Error!",
             {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
           return false
         }
@@ -627,7 +627,7 @@ this.borrarVideo();
       let body = document.getElementById('body') as HTMLElement;
       body.scrollTo(0, 0);
       window.scrollTo(0, 0);
-      this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
+      this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario por favor revísalo nuevamente</p></div>', "Error!",
         {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
       return false
     }

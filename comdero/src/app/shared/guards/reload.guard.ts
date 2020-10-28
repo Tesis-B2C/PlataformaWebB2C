@@ -26,7 +26,7 @@ export class ReloadGuard implements CanDeactivate<ProductosComponent> {
     } else {
     //  return window.confirm('Esta seguro que desea abandonar el formulario ?');
      return  Swal.fire({
-        title: '<header class="login100-form-title-registro mb-0"><h5 class="card-title"><strong>!Estas seguro que deseas abandonar la página</strong></h5></header>',
+        title: '<header class="login100-form-title-registro mb-0"><h5 class="card-title"><strong>¿Estas seguro que deseas abandonar la página?</strong></h5></header>',
         text: "Los datos introducidos no se guardaran ",
         icon: 'warning',
         position: 'center',

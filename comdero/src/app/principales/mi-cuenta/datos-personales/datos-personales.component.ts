@@ -261,7 +261,7 @@ export class DatosPersonalesComponent implements OnInit {
             this.mensageCorrecto(response['message']);
           } else {
             this.select_ciudad = true;
-            this.mostrarToastError("Asegurate de seleccionar la ciudad de tu negocio.", "");
+            this.mostrarToastError("Asegúrate de seleccionar la ciudad de tu negocio.", "");
           }
         } else {
           if (this.banderaTipo) {
@@ -271,7 +271,7 @@ export class DatosPersonalesComponent implements OnInit {
           }
         }
       } else {
-        this.mostrarToast("Al parecer existe errores en su formulario porfavor reviselo nuevamente", "");
+        this.mostrarToast("Al parecer existe errores en su formulario por favor reviselo nuevamente", "");
       }
     } catch (e) {
       this.loading = false;
@@ -301,7 +301,7 @@ export class DatosPersonalesComponent implements OnInit {
         this.iniciarEdicion();
         this.mensageCorrecto(response['message']);
       } else {
-        this.mensageError('Codigo incorrecto');
+        this.mensageError('Código incorrecto');
       }
     } catch (e) {
       if (!(e instanceof HttpErrorResponse)){

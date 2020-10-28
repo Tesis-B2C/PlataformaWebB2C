@@ -172,7 +172,7 @@ export class EstadisticasComponent implements OnInit {
       let response = await this._estadisticasServicio.getCalificaciones(this.identidadTienda.NUM_TIENDA).toPromise();
       // console.log("avg", response.data);
       let calificacion ;
-      if(response.data[0]['PRODUCTO']){
+      if(response.data[0]['PRODUCTO'] &&  response.data[0]['PRODUCTO'].CALIFICACIONs[0]){
         calificacion= response.data[0]['PRODUCTO'].CALIFICACIONs[0].CALIFICACION_AVG;
         this.calificacion = parseFloat(calificacion).toFixed(2);
       }

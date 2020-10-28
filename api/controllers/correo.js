@@ -13,9 +13,9 @@ exports.EnviarCorreo = async (correo, asunto, nombre, token) => {
             from: 'doginotificaciones@gmail.com',
             to: correo,
             subject: asunto,
-            text: 'Hola' + nombre + ', Gracias por registrarte en "COMDERO". ' + 'Porfavor da click en el siguiente link para completar la activacion: http://localhost:4200/loguin/',
+         // text: 'Hola' + nombre + ', Gracias por registrarte en "COMDERO". ' + 'Por favor da clic en el siguiente link para completar la activación: http://localhost:4200/loguin/',
             html: 'Hola<strong> ' + nombre + '</strong>,<br><br>Gracias por registrarte en ' +
-                '"COMDERO". Porfavor da click en el siguiente link para completar la activacion:<br><br><a ' +
+                '"COMDERO". Por favor da clic en el siguiente link para completar la activación:<br><br><a ' +
                 'href="http://localhost:4200/loguin/' + token + '">http://localhost:4200/loguin/</a>'
         };
     } else if (asunto == 'Cambio de contraseña') {

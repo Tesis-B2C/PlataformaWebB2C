@@ -113,7 +113,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
       this.loading = false;
     }
     if (this.banderaToast && !document.forms["formRegistro"].checkValidity()) {
-      this.mostrarToast("Asegurate de llenar todos los campos obligatorios marcados con *", "");
+      this.mostrarToast("Asegúrate de llenar todos los campos obligatorios marcados con *", "");
     }
 
     if (this.banderaToastCedula) {

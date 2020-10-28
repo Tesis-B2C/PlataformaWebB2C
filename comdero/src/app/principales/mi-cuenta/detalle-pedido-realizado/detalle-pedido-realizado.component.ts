@@ -100,7 +100,7 @@ export class DetallePedidoRealizadoComponent implements OnInit {
     doc.fromHTML("<h2> Detalles  del pedido No" + compra.NUM_COMPRA + "</h2>", 140, 10)
     doc.fromHTML("<p><strong>Pedido realizado:</strong>&nbsp;&nbsp;" + compra.FECHA_COMPRA + "</p>", 20, 50)
     doc.fromHTML("<p><strong>Pedido COMDERO No:</strong>&nbsp;&nbsp;" + compra.NUM_COMPRA + "</p>", 20, 70);
-    doc.fromHTML("<p class='btn btn-link'><strong>Total del pedido:</strong>&nbsp;&nbsp;" + compra.total_final + "$</p>", 20, 90);
+    doc.fromHTML("<p class='btn btn-link'><strong>Total del pedido:</strong>&nbsp;&nbsp;$" + compra.total_final.toFixed(2) + "</p>", 20, 90);
     doc.fromHTML("<h3><strong> Enviado el: &nbsp;</strong>" + compra.FECHA_ENVIO + "</h3>", 170, 110)
     doc.fromHTML("<h3><strong>&nbsp;&nbsp;Productos comprados</strong></h3>", 20, 140);
 
@@ -314,7 +314,7 @@ export class DetallePedidoRealizadoComponent implements OnInit {
     }
 
     doc.fromHTML("<div><p><strong>Productos:</strong></p>", 40, cont)
-    doc.fromHTML("<p>" + compra.productos + "$</p>", pageWith - 60, cont)
+    doc.fromHTML("<p>$" + compra.productos + "</p>", pageWith - 60, cont)
     cont += 20;
     if(cont>500){
       doc.addPage();
@@ -322,15 +322,15 @@ export class DetallePedidoRealizadoComponent implements OnInit {
     }
 
     doc.fromHTML("<p><strong>Impuestos:</strong></p>", 40, cont);
-    doc.fromHTML("<p>" + compra.impuestos + "$</p>", pageWith - 60, cont)
+    doc.fromHTML("<p>$" + compra.impuestos + "</p>", pageWith - 60, cont)
     cont += 20;
     if(cont>550){
       doc.addPage();
       cont=10;
     }
 
-    doc.fromHTML("<p><strong>Subtotal:</strong>$</p>", 40, cont)
-    doc.fromHTML("<p>" + compra.subtotal + "$</p>", pageWith - 60, cont)
+    doc.fromHTML("<p><strong>Subtotal:</strong></p>", 40, cont)
+    doc.fromHTML("<p>$" + compra.subtotal + "</p>", pageWith - 60, cont)
     cont += 20;
     if(cont>550){
       doc.addPage();
@@ -338,15 +338,17 @@ export class DetallePedidoRealizadoComponent implements OnInit {
     }
 
     doc.fromHTML("<p><strong>Descuento:</strong></p>", 40, cont)
-    doc.fromHTML("<p>(-)&nbsp;" + compra.descuento + "$</p>", pageWith - 60, cont);
+    doc.fromHTML("<p>(-)</p>", pageWith - 80, cont);
+    doc.fromHTML("<p>$" + compra.descuento + "</p>", pageWith - 60, cont);
     cont += 20;
     if(cont>550){
       doc.addPage();
       cont=10;
     }
 
-    doc.fromHTML("<p><strong>Descuento Cupón:</strong> </p>", 40, cont)
-    doc.fromHTML("<p>(-)&nbsp;" + compra.cupon + "$</p>", pageWith - 60, cont)
+    doc.fromHTML("<p><strong>Descuento Cupón:</strong> </p>", 40, cont);
+    doc.fromHTML("<p>(-)</p>", pageWith - 80, cont);
+    doc.fromHTML("<p>$" + compra.cupon + "</p>", pageWith - 60, cont)
     cont += 20;
     if(cont>550){
       doc.addPage();
@@ -354,7 +356,7 @@ export class DetallePedidoRealizadoComponent implements OnInit {
     }
 
     doc.fromHTML("<p><strong>Método de envio:</strong></p>", 40, cont)
-    doc.fromHTML("<p>" + compra.COSTO_ENVIO + "$</p>", pageWith - 60, cont)
+    doc.fromHTML("<p>$" + compra.COSTO_ENVIO + "</p>", pageWith - 60, cont)
     cont += 20;
     if(cont>550){
       doc.addPage();
@@ -362,7 +364,7 @@ export class DetallePedidoRealizadoComponent implements OnInit {
     }
 
     doc.fromHTML("<p><strong>Método de pago:</strong></p>", 40, cont)
-    doc.fromHTML("<p>" + compra.RECARGO_PAYPAL + "$</p>", pageWith - 60, cont)
+    doc.fromHTML("<p>$" + compra.RECARGO_PAYPAL + "</p>", pageWith - 60, cont)
     cont += 20;
     if(cont>550){
       doc.addPage();
@@ -370,7 +372,7 @@ export class DetallePedidoRealizadoComponent implements OnInit {
     }
 
     doc.fromHTML("<p><strong>Total del pedido:</strong></p>", 40, cont)
-    doc.fromHTML("<p>" + compra.total_final + "$</p></div>", pageWith - 60, cont)
+    doc.fromHTML("<p><strong>$" + compra.total_final.toFixed(2) + "</strong></p></div>", pageWith - 60, cont)
 
 
 // Before adding new content
