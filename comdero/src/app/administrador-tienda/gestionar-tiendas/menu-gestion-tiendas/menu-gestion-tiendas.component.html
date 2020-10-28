@@ -17,7 +17,7 @@
           <div class="widgets-wrap float-md-right">
 
             <div class="widget-header mr-3" *ngIf="this._agenteServicio.getIdentity()">
-              <a data-toggle="dropdown"
+              <a href="#" data-toggle="dropdown"
                  aria-expanded="false" aria-haspopup="true" class="icon icon-sm rounded-circle border"><i
                 class="fa fa-bell" aria-hidden="true"></i></a>
               <span class="badge badge-pill badge-danger notify" *ngIf="this.notificaciones?.todas.length>0">{{this.notificaciones?.todas.length}}</span>
@@ -52,8 +52,8 @@
 
             <div class="widget-header icontext">
               <li class="nav-item dropdown" >
-                <a href="#" class="icon icon-sm rounded-circle border"  data-toggle="dropdown" href="#"
-                   aria-expanded="false"  data-toggle="tooltip" data-placement="top"  title="Cuenta"><i class="fa fa-user"></i>
+                <a href="#" data-toggle="tooltip" data-placement="top" title="Cuenta" data-toggle="tooltip" data-placement="top" title="Cuenta" class="icon icon-sm rounded-circle border" data-toggle="dropdown" href="#"
+                   aria-expanded="false" aria-haspopup="true"><i class="fa fa-user"></i>
                 </a>
 
                 <div class="dropdown-menu ">
