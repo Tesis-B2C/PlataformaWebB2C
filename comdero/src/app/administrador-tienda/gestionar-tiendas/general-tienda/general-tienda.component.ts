@@ -53,6 +53,8 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
   public checkSiempre: boolean = false;
   public checkNoDisponible: boolean = false;
 
+  public banderaValidaciones: boolean = false;
+
   constructor(public toastr: ToastrService, public _tiendaServicio: TiendaServicio) {
     this.EditarTienda = new Tienda(null, null, null, null, null,
       null, null, null, null, null, null, null, null);
@@ -577,7 +579,7 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
 
   public almenosUnDia() {
     for (let objeto of this.Editar_Dia_Atencion) {
-      if (objeto.Dia != null && objeto.Inicio_Jornada1 != null && objeto.Fin_Jornada1 != null) {
+      if (objeto.Dia != null) {
         return true;
       }
     }
@@ -586,7 +588,8 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
 
   public horarioObligatorio() {
     for (let objeto of this.Editar_Dia_Atencion) {
-      if (objeto.Dia != null && (objeto.Inicio_Jornada1 == null || objeto.Fin_Jornada1 == null)) {
+      debugger
+      if (objeto.Dia != null && (objeto.Inicio_Jornada1 == null || objeto.Fin_Jornada1 == null) || ((objeto.Inicio_Jornada2 != null && objeto.Fin_Jornada2 == null) || (objeto.Inicio_Jornada2 == null && objeto.Fin_Jornada2 != null))) {
         return false;
       }
     }
@@ -596,7 +599,6 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
   public banderaErrorHorario: boolean = false;
 
   public errorMensajeToast(mensaje) {
-    this.banderaErrorHorario = true;
     let body = document.getElementById('body') as HTMLElement;
     body.scrollTo(0, 0);
     window.scroll(0, 0);
@@ -610,15 +612,20 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
         if (this.horarioObligatorio() == true) {
           this.Tienda_Editar_Enviar.Editar_Dias_Atencion = this.Editar_Dia_Atencion;
           // console.log("DIAS DE ATENCION A ENVIAR AL BACKLOCAL " + JSON.stringify(this.Editar_Dia_Atencion));
+            this.banderaValidaciones=true;
           if (this.validarFormulario()) {
             this.actualizarGeneral();
           } else {
+            this.banderaErrorHorario = false;
             this.errorMensajeToast("Al parecer existe errores en el formulario reviselo nuevamente");
           }
-        } else
+        } else {
+          this.banderaErrorHorario = true;
           this.errorMensajeToast("Debe ingresar el inicio y final de la jornada");
+        }
       } else {
         debugger
+        this.banderaErrorHorario = true;
         this.errorMensajeToast("Debe tener al menos un horario");
       }
     } else {
@@ -626,6 +633,7 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
       if (this.validarFormulario()) {
         this.actualizarGeneral();
       } else {
+        this.banderaErrorHorario = false;
         this.errorMensajeToast("Al parecer existe errores en el formulario reviselo nuevamente");
       }
     }
@@ -653,11 +661,12 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
       localStorage.setItem("identityTienda", JSON.stringify(data['data']));
       this.cancelarModificacion();
       this.mensageCorrecto(response['message']);
+      this.loading = false;
     } catch (e) {
       this.loading = false;
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
@@ -675,7 +684,7 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
       position: 'center',
       width: 600,
       buttonsStyling: false,
-   
+
       customClass: {
         confirmButton: 'btn btn-primary px-5'
         //icon:'sm'
@@ -696,6 +705,11 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
         //icon:'sm'
       }
     });
+  }
+
+  public minusCorreo() {
+    if (this.EditarTienda.Correo_Tienda != '' || this.EditarTienda.Correo_Tienda != null)
+      this.EditarTienda.Correo_Tienda = this.EditarTienda.Correo_Tienda.toLowerCase();
   }
 
 }
