@@ -180,14 +180,16 @@
           <ng-template carouselSlide id="sliderTiendas{{i}}">
             <div class="mx-2 mx-md-5">
               <figure class=" item-logo ">
-                <a routerLink="../detalle-tienda/tienda/{{tienda.NUM_TIENDA}}/inicio-tienda"><img
-                  [src]="getImagen(tienda.LOGO) " style="width: 100%; min-height: 8rem"></a>
+                <a routerLink="../detalle-tienda/tienda/{{tienda.NUM_TIENDA}}/inicio-tienda"><img class="mx-auto"
+                  [src]="getImagen(tienda.LOGO) " style="width: 120px; min-height: 8rem"></a>
                 <figcaption class=" pt-2 small  "
-                            routerLink="../detalle-tienda/tienda/{{tienda.NUM_TIENDA}}/inicio-tienda"> {{tienda.NOMBRE_COMERCIAL}}</figcaption>
+                            routerLink="../detalle-tienda/tienda/{{tienda.NUM_TIENDA}}/inicio-tienda"> {{tienda.NOMBRE_COMERCIAL}} </figcaption>
               </figure> <!-- item-logo.// -->
             </div>
 
           </ng-template>
+
+
 
 
         </ng-container>
@@ -201,7 +203,7 @@
 
   <!-- ========================= SECTION CONTENT COMDERO PRODUCTOS ========================= -->
 
-  <section class="section-content" *ngIf="this.nuevos?.length > 3">
+  <section class="section-content" *ngIf="this.nuevos">
     <div class="container">
       <header class="section-heading">
         <h3 class="section-title">Productos</h3>
@@ -217,13 +219,13 @@
         <owl-carousel-o [options]="opcionesCarrouselFilaUno" #carrouselFilaUno>
           <ng-container *ngFor="let p of this.nuevos;index as i">
             <ng-template dataHash="one" carouselSlide id="slider+{{i}}">
-              <div class="card card-product-grid mx-2">
+              <div class="card card-product-grid mx-auto " style="width: 200px">
                 <a routerLink="../detalle-producto/{{p.ID_OFERTA}}">
-                  <img [src]="getImagen(p.IMAGEN)" width="100%"
+                  <img [src]="getImagen(p.IMAGEN)"
                        height="200rem"></a>
                 <figcaption class="info-wrap">
-                  <a routerLink="../detalle-producto/{{p.ID_OFERTA}}" class="title"
-                     style="overflow:hidden; white-space: nowrap; text-overflow: ellipsis; text-align: justify">{{p.NOMBRE_PRODUCTO}}</a>
+                  <a routerLink="../detalle-producto/{{p.ID_OFERTA}}" class="title contenidoMax100"
+                    >{{p.NOMBRE_PRODUCTO}}</a>
                   <div class="rating-wrap">
                     <ul class="rating-stars">
                       <ngb-rating *ngIf="p.PROMEDIO_CAL != null"
@@ -280,7 +282,7 @@
         <owl-carousel-o [options]="opcionesCarrouselFilaUno" #carrouselFilaUno>
           <ng-container *ngFor="let p of this.populares;index as i">
             <ng-template dataHash="one" carouselSlide id="slider2+{{i}}">
-              <div class="card card-product-grid mx-2">
+              <div class="card card-product-grid mx-auto " style="width: 200px">
                 <a routerLink="../detalle-producto/{{p.ID_OFERTA}}">
                   <img [src]="getImagen(p.IMAGEN)" width="100%"
                        height="200rem"></a>
@@ -342,7 +344,7 @@
         <owl-carousel-o [options]="opcionesCarrouselFilaUno" #carrouselFilaUno>
           <ng-container *ngFor="let p of this.recomendados;index as i">
             <ng-template dataHash="one" carouselSlide id="slider3+{{i}}">
-              <div class="card card-product-grid mx-2">
+              <div class="card card-product-grid mx-auto " style="width: 200px">
                 <a routerLink="../detalle-producto/{{p.ID_OFERTA}}">
                   <img [src]="getImagen(p.IMAGEN)" width="100%"
                        height="200rem"></a>

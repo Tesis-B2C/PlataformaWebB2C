@@ -34,16 +34,16 @@
                               class="mx-auto boton-cerrar btn-outline-danger px-0 py-0 ">Eliminar
                       </button>
 
-                      <div *ngIf="!urlLogo" class="mx-auto">
-                        <div class="col-auto pt-4">
-                          <label class="imagen-agregar">
+                      <div *ngIf="!urlLogo" class="mx-auto align-self-center">
+
+                          <label>
                             <i class="fa fa-store fa-3x color-fa"></i>
                             <i class="fa fa-plus-circle fa-2x ml-1 color-fa"></i>
 
                             <input (change)="subirLogo($event)" accept="image/*" class="file" type="file"
                                    name="logoImagen">
                           </label>
-                        </div>
+
                       </div>
                     </div>
                   </div>
