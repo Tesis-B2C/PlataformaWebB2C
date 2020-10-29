@@ -1,5 +1,5 @@
 <body class="bg" id="body">
-<div class="mt-5">
+<div class=" container-fluid mt-5">
   <div class="row  justify-content-center" id="top">
     <h4 class=" col-11">Listado de clientes</h4>
     <hr class="col-11">
@@ -25,7 +25,7 @@
       </div>
     </div>
   </div>
-  <div *ngIf="loading">
+  <div *ngIf="loading" class="px-5">
     <label>Buscando  . . .</label>
     &nbsp;  &nbsp;  &nbsp;
     <div class="progress">
@@ -36,7 +36,7 @@
 
   <div class="container-fluid mx-auto px-md-5 ">
 
-    <div *ngIf="this.result.length==0" class="ml-1"><p>No se encontraron resultados.</p></div>
+    <div *ngIf="this.result.length==0" class="ml-1"><p class="text-left">No se encontraron resultados.</p></div>
   <table id="tablaUsuarios" class="table table-bordered table-responsive-sm bg-white small w-100 text-center" *ngIf="this.result.length>0">
     <thead>
     <tr>

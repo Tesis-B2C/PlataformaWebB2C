@@ -71,13 +71,55 @@
 
 <body id="body" class="bg">
 
-<div class="container mt-5 ">
+<div class="container mt-5 mt-3">
   <div class="row  justify-content-center" id="top">
-    <h4 class=" col-11  ">Modificar Descuento</h4>
-    <hr class="col-11  ">
+    <h4 class=" col-11  text-md-left text-center">Modificar Descuento</h4>
+    <hr class="col-11  mb-md-1 mb-0">
+
+    <form class="col-md-11 py-md-2 py-3 ">
+
+
+        <div class="text-md-right text-center">
+          <button *ngIf="banderaModificar" (click)="this.guardarDescuento()" [disabled]="loading"
+                  class="btn btn-primary text-nowrap   col-auto mr-md-2"
+                  type="button">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+            Guardar Cambios &nbsp;&nbsp;
+            <span class="fa fa-save"></span>
+          </button>
+
+          <button *ngIf="banderaModificar" class="btn btn-light text-nowrap   col-auto mr-md-2"
+                  (click)="iniciarModificarDescuento()">
+            Cancelar
+            <span class="fa fa-close"></span></button>
+
+          <button *ngIf="!banderaModificar &&  this.Descuento.Estado_Descuento ==0"
+                  class="btn btn-warning text-nowrap   col-auto mr-md-2" (click)="iniciarEdicion()">
+            Modificar
+            <span class="fa fa-edit"></span></button>
+
+          <button *ngIf="!banderaModificar &&  this.Descuento.Estado_Descuento ==0" [disabled]="loading"
+                  class="btn btn-light text-nowrap   col-auto mr-md-2" (click)="cambiarEstadoDescuento(1)">
+            Desactivar
+            <span class="fa fa-ban"></span></button>
+
+          <button *ngIf="!banderaModificar &&   this.Descuento.Estado_Descuento ==1" [disabled]="loading"
+                  class="btn btn-light text-nowrap   col-auto mr-md-2" (click)="cambiarEstadoDescuento(0)">
+            Mostrar
+            <span class="fa fa-check"></span></button>
+          &nbsp;&nbsp;
+          <button *ngIf="!banderaModificar" class="btn btn-danger text-nowrap  col-auto mr-md-2" [disabled]="loading"
+                  (click)="cambiarEstadoDescuento(2)">
+            Eliminar &nbsp;&nbsp;
+            <span class="fa fa-trash"></span></button>
+        </div>
+
+    </form>
   </div>
 
-  <div class="row justify-content-center">
+
+
+  <div class=" mt-4 row justify-content-center">
     <div class=" col-md-10  ">
       <div class="form-row">
         <div class="col-12  form-group ">
@@ -313,50 +355,57 @@
           </div>
         </div>
       </form>
-      <hr>
 
-      <form class="card card-body  col-md-12  mt-4">
-        <div class=" container">
-          <h6>Acciones</h6>
-          <hr>
-          <div class="text-md-right text-center">
-            <button *ngIf="banderaModificar" (click)="this.guardarDescuento()" [disabled]="loading"
-                    class="btn btn-primary text-nowrap mb-4  col-auto"
-                    type="button">
-              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
-              Guardar Cambios &nbsp;&nbsp;
-              <span class="fa fa-save"></span>
-            </button>
-            &nbsp;&nbsp;
-            <button *ngIf="banderaModificar" class="btn btn-light text-nowrap mb-4  col-auto"
-                    (click)="iniciarModificarDescuento()">
-              Cancelar &nbsp;&nbsp;
-              <span class="fa fa-close"></span></button>
-            &nbsp;&nbsp;
-            <button *ngIf="!banderaModificar &&  this.Descuento.Estado_Descuento ==0"
-                    class="btn btn-warning text-nowrap mb-4  col-auto" (click)="iniciarEdicion()">
-              Modificar &nbsp;&nbsp;
-              <span class="fa fa-edit"></span></button>
-            &nbsp;&nbsp;
-            <button *ngIf="!banderaModificar &&  this.Descuento.Estado_Descuento ==0" [disabled]="loading"
-                    class="btn btn-light text-nowrap mb-4  col-auto" (click)="cambiarEstadoDescuento(1)">
-              Desactivar &nbsp;&nbsp;
-              <span class="fa fa-ban"></span></button>
 
-            <button *ngIf="!banderaModificar &&   this.Descuento.Estado_Descuento ==1" [disabled]="loading"
-                    class="btn btn-light text-nowrap mb-4  col-auto" (click)="cambiarEstadoDescuento(0)">
-              Mostrar &nbsp;&nbsp;
-              <span class="fa fa-check"></span></button>
-            &nbsp;&nbsp;
-            <button *ngIf="!banderaModificar" class="btn btn-danger text-nowrap mb-4  col-auto" [disabled]="loading"
-                    (click)="cambiarEstadoDescuento(2)">
-              Eliminar &nbsp;&nbsp;
-              <span class="fa fa-trash"></span></button>
-          </div>
-        </div>
-      </form>
+
     </div>
   </div>
+
+
+  <div class="row justify-content-center mt-3">
+    <hr class="col-11 mb-md-1 mb-0 ">
+    <form class="col-md-11 py-md-2 py-3 ">
+
+
+      <div class="text-md-right text-center">
+        <button *ngIf="banderaModificar" (click)="this.guardarDescuento()" [disabled]="loading"
+                class="btn btn-primary text-nowrap mb-4  col-auto mr-md-2"
+                type="button">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+          Guardar Cambios &nbsp;&nbsp;
+          <span class="fa fa-save"></span>
+        </button>
+
+        <button *ngIf="banderaModificar" class="btn btn-light text-nowrap mb-4  col-auto mr-md-2"
+                (click)="iniciarModificarDescuento()">
+          Cancelar &nbsp;&nbsp;
+          <span class="fa fa-close"></span></button>
+
+        <button *ngIf="!banderaModificar &&  this.Descuento.Estado_Descuento ==0"
+                class="btn btn-warning text-nowrap mb-4  col-auto mr-md-2" (click)="iniciarEdicion()">
+          Modificar &nbsp;&nbsp;
+          <span class="fa fa-edit"></span></button>
+
+        <button *ngIf="!banderaModificar &&  this.Descuento.Estado_Descuento ==0" [disabled]="loading"
+                class="btn btn-light text-nowrap mb-4  col-auto mr-md-2" (click)="cambiarEstadoDescuento(1)">
+          Desactivar &nbsp;&nbsp;
+          <span class="fa fa-ban"></span></button>
+
+        <button *ngIf="!banderaModificar &&   this.Descuento.Estado_Descuento ==1" [disabled]="loading"
+                class="btn btn-light text-nowrap mb-4  col-auto mr-md-2" (click)="cambiarEstadoDescuento(0)">
+          Mostrar &nbsp;&nbsp;
+          <span class="fa fa-check"></span></button>
+
+        <button *ngIf="!banderaModificar" class="btn btn-danger text-nowrap mb-4  col-auto mr-md-2" [disabled]="loading"
+                (click)="cambiarEstadoDescuento(2)">
+          Eliminar &nbsp;&nbsp;
+          <span class="fa fa-trash"></span></button>
+      </div>
+
+  </form>
+  </div>
+
+
 </div>
 <br><br>
 </body>

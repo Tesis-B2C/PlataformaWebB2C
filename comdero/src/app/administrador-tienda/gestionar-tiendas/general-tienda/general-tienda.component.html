@@ -1,12 +1,37 @@
 <body id="body" class="bg">
 <form #FormGeneralTienda id="formGeneralTienda" name="FormGeneralTienda" class="general-tienda" validate-form>
-  <div class="container mt-5">
+  <div class="container mt-md-5 mt-3">
     <div class="row justify-content-center">
-      <h4 class="col-11">General</h4>
-      <hr class="col-11">
+      <h4 class="col-11 text-md-left text-center">General</h4>
+      <hr class="col-11 mb-md-1 mb-0 ">
+
+      <form class="col-md-11 py-md-2 py-3 ">
+
+        <div class="text-md-right text-center">
+          <button *ngIf="!banderaEdicionDeshabilitada" [disabled]="loading"
+                  (click)="verificarHorarioAtencion()" class="btn btn-primary text-nowrap   col-auto mr-md-2"
+                  type="button">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+            Guardar Cambios &nbsp;&nbsp;
+            <span class="fa fa-save"></span>
+          </button>
+
+          <button *ngIf="!banderaEdicionDeshabilitada" (click)="cancelarModificacion();"
+                  class="btn btn-light text-nowrap   col-auto mr-md-2">
+            Cancelar &nbsp;&nbsp;
+            <span class="fa fa-close"></span></button>
+
+
+          <button *ngIf="banderaEdicionDeshabilitada" (click)="habilitarEdicion()"
+                  class="btn btn-warning text-nowrap   col-auto mr-md-2">
+            Modificar &nbsp;&nbsp;
+            <span class="fa fa-edit"></span></button>
+        </div>
+
+      </form>
     </div>
 
-    <div class="row justify-content-center mb-5">
+    <div class="row justify-content-center ">
       <div class="col-md-11">
         <div id="detalle-tienda">
           <h6>Detalles de la tienda</h6>
@@ -648,37 +673,35 @@
             </div> <!-- form-group end.// -->
           </div>
         </div>
-
-        <br>
-
-        <form class="card card-body  col-md-12  mt-4">
-          <div class=" container">
-            <h6>Acciones</h6>
-            <hr>
-            <div class="text-md-right text-center">
-              <button *ngIf="!banderaEdicionDeshabilitada" [disabled]="loading"
-                      (click)="verificarHorarioAtencion()" class="btn btn-primary text-nowrap mb-4  col-auto"
-                      type="button">
-                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
-                Guardar Cambios &nbsp;&nbsp;
-                <span class="fa fa-save"></span>
-              </button>
-              &nbsp;&nbsp;
-              <button *ngIf="!banderaEdicionDeshabilitada" (click)="cancelarModificacion();"
-                      class="btn btn-light text-nowrap mb-4  col-auto">
-                Cancelar &nbsp;&nbsp;
-                <span class="fa fa-close"></span></button>
-
-              &nbsp;&nbsp;
-              <button *ngIf="banderaEdicionDeshabilitada" (click)="habilitarEdicion()"
-                      class="btn btn-warning text-nowrap mb-4  col-auto">
-                Modificar &nbsp;&nbsp;
-                <span class="fa fa-edit"></span></button>
-            </div>
-          </div>
-        </form>
-        <br>
       </div>
+    </div>
+
+    <div class="row justify-content-center mt-3">
+      <hr class="col-11 mb-md-1 mb-0 ">
+      <form class="col-md-11 py-md-2 py-3 ">
+
+      <div class="text-md-right text-center">
+        <button *ngIf="!banderaEdicionDeshabilitada" [disabled]="loading"
+                (click)="verificarHorarioAtencion()" class="btn btn-primary text-nowrap mb-4  col-auto mr-md-2"
+                type="button">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+          Guardar Cambios &nbsp;&nbsp;
+          <span class="fa fa-save"></span>
+        </button>
+
+        <button *ngIf="!banderaEdicionDeshabilitada" (click)="cancelarModificacion();"
+                class="btn btn-light text-nowrap mb-4  col-auto mr-md-2">
+          Cancelar &nbsp;&nbsp;
+          <span class="fa fa-close"></span></button>
+
+
+        <button *ngIf="banderaEdicionDeshabilitada" (click)="habilitarEdicion()"
+                class="btn btn-warning text-nowrap mb-4  col-auto mr-md-2">
+          Modificar &nbsp;&nbsp;
+          <span class="fa fa-edit"></span></button>
+      </div>
+
+    </form>
     </div>
   </div>
 </form>
