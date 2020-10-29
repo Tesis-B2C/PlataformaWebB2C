@@ -83,6 +83,11 @@
   display: block;
 }
 
+
+.ancho-cards{
+  width: 13rem;
+}
+
 @media (max-width: 720px) {
   .alto-banner {
     height: 200px;
@@ -104,6 +109,11 @@
 
   #sidebar {
     margin-left: -250px;
+  }
+
+  .ancho-cards{
+    width: 10rem
+
   }
 }
 
@@ -137,3 +147,4 @@ body {
   text-overflow: ellipsis;
   text-align: justify
 }
+

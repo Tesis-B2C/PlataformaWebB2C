@@ -219,7 +219,7 @@
         <owl-carousel-o [options]="opcionesCarrouselFilaUno" #carrouselFilaUno>
           <ng-container *ngFor="let p of this.nuevos;index as i">
             <ng-template dataHash="one" carouselSlide id="slider+{{i}}">
-              <div class="card card-product-grid mx-auto " style="width: 200px">
+              <div class="card card-product-grid mx-auto  ancho-cards" >
                 <a routerLink="../detalle-producto/{{p.ID_OFERTA}}">
                   <img [src]="getImagen(p.IMAGEN)"
                        height="200rem"></a>
@@ -282,7 +282,7 @@
         <owl-carousel-o [options]="opcionesCarrouselFilaUno" #carrouselFilaUno>
           <ng-container *ngFor="let p of this.populares;index as i">
             <ng-template dataHash="one" carouselSlide id="slider2+{{i}}">
-              <div class="card card-product-grid mx-auto " style="width: 200px">
+              <div class="card card-product-grid mx-auto ancho-cards" >
                 <a routerLink="../detalle-producto/{{p.ID_OFERTA}}">
                   <img [src]="getImagen(p.IMAGEN)" width="100%"
                        height="200rem"></a>
@@ -344,7 +344,7 @@
         <owl-carousel-o [options]="opcionesCarrouselFilaUno" #carrouselFilaUno>
           <ng-container *ngFor="let p of this.recomendados;index as i">
             <ng-template dataHash="one" carouselSlide id="slider3+{{i}}">
-              <div class="card card-product-grid mx-auto " style="width: 200px">
+              <div class="card card-product-grid mx-auto ancho-cards" >
                 <a routerLink="../detalle-producto/{{p.ID_OFERTA}}">
                   <img [src]="getImagen(p.IMAGEN)" width="100%"
                        height="200rem"></a>
