@@ -3,7 +3,7 @@ const {v4 :uuidv4} =require('uuid');
 const path = require('path');
 
 const storage =multer.diskStorage({
-    destination:'/home/api/uploads/productos',
+    destination:'uploads/productos',
     filename(req, file, callback) {
         callback(null,uuidv4() + path.extname(file.originalname) )
     }
