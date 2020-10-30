@@ -38,12 +38,12 @@
 
 <div class="">
   <section class="section-name padding-y-sm row ">
-    <div class="col-md-3 col-6"
+    <div class="col-md-3 col-6 px-md-5"
          *ngFor="let producto of this.result | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
 
-      <div class="card  card-product-grid mx-md-4">
+      <div class="card  card-product-grid mx-md-4 ">
         <a routerLink="../../../../detalle-producto/{{producto.ID_OFERTA}}">
-          <img [src]="getImagen(producto.IMAGEN)" width="100%" height="200rem">
+          <img [src]="getImagen(producto.IMAGEN)" width="100%" height="220rem">
         </a>
         <figcaption class="info-wrap">
           <a class="title" routerLink="../../../../detalle-producto/{{producto.ID_OFERTA}}" class="title contenidoMax100"
