@@ -411,4 +411,14 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
       this.Tienda.Correo_Tienda = this.Tienda.Correo_Tienda.toLowerCase();
   }
 
+  public minusPagina() {
+    if (this.Tienda.Link_Pagina != '' || this.Tienda.Link_Pagina != null)
+      this.Tienda.Link_Pagina = this.Tienda.Link_Pagina.toLowerCase();
+  }
+
+  public minusFacebook() {
+    if (this.Tienda.Link_Facebook != '' || this.Tienda.Link_Facebook != null)
+      this.Tienda.Link_Facebook = this.Tienda.Link_Facebook.toLowerCase();
+  }
+
 }

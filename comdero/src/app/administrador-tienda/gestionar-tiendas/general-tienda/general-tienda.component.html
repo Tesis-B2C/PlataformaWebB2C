@@ -147,15 +147,15 @@
             <div class="form-row">
               <div class="form-group col-sm-6">
                 <label>Sitio Web</label>
-                <input [disabled]="banderaEdicionDeshabilitada" #Link_Pagina="ngModel"
+                <input [disabled]="banderaEdicionDeshabilitada" #Link_Pagina="ngModel" (keyup)="minusPagina()"
                        style="text-transform: lowercase;"
                        [(ngModel)]="this.EditarTienda.Link_Pagina"
-                       [ngClass]="{'is-invalid': Link_Pagina.invalid && (Link_Pagina.dirty || Link_Pagina.touched)}"
+                       [ngClass]="{'is-invalid': Link_Pagina.invalid &&  banderaValidaciones}"
                        [pattern]='this.urlPattern'
                        class="tamanioInputs form-control"
-                       name="link_Pagina" placeholder="www.comdero.com" type="text">
+                       name="link_Pagina" placeholder="https://www.comdero.com" type="text">
 
-                <div *ngIf="Link_Pagina.invalid && (Link_Pagina.dirty || Link_Pagina.touched)">
+                <div *ngIf="Link_Pagina.invalid &&  banderaValidaciones">
                   <div *ngIf="Link_Pagina.errors.pattern">
                     <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                       Debe cumplir con el formato</p>
@@ -165,14 +165,14 @@
 
               <div class="col-sm-6 form-group">
                 <label>Link Facebook</label>
-                <input [disabled]="banderaEdicionDeshabilitada" #Link_Facebook="ngModel"
+                <input [disabled]="banderaEdicionDeshabilitada" #Link_Facebook="ngModel" (keyup)="minusFacebook()"
                        style="text-transform: lowercase;"
                        [(ngModel)]="this.EditarTienda.Link_Facebook" [ngClass]="{
-          'is-invalid': Link_Facebook.invalid && (Link_Facebook.dirty || Link_Facebook.touched)}"
+          'is-invalid': Link_Facebook.invalid && banderaValidaciones}"
                        [pattern]='this.urlPattern' class="tamanioInputs form-control"
-                       name="link_Facebook" placeholder="www.facebook.com/comdero" type="text">
+                       name="link_Facebook" placeholder="https://www.facebook.com/comdero" type="text">
 
-                <div *ngIf="Link_Facebook.invalid && (Link_Facebook.dirty || Link_Facebook.touched)">
+                <div *ngIf="Link_Facebook.invalid &&  banderaValidaciones">
                   <div *ngIf="Link_Facebook.errors.pattern">
                     <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                       Debe cumplir con el formato</p>

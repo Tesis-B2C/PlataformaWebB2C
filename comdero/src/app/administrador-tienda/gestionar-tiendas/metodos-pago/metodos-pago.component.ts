@@ -48,7 +48,9 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
     delete this.Metodo_Pago_Efectivo;
   }
 
+  public banderaValidaciones: boolean = false;
   cancelar() {
+  this.banderaValidaciones= false;
   debugger
     this.banderaPagoEfectivo = false;
     this.banderaPagoTransferencia = false;
@@ -64,6 +66,7 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
 
 
+
   }
 
   iniciarEdicion() {
@@ -76,6 +79,8 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
           this.Metodo_Pago_Efectivo.Porcentaje_Descuento = mp.PORCENTAJE_DESCUENTO;
           this.banderaSlidePagoEfectivo.checked = true;
           this.banderaPagoEfectivo = true;
+        }else {
+          this.banderaSlidePagoEfectivo.checked = false;
         }
 
         if (mp.TIPO_PAGO == 'Transferencia') {
@@ -85,6 +90,8 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
           this.Metodo_Pago_Transferencia.Porcentaje_Descuento = mp.PORCENTAJE_DESCUENTO;
           this.banderaSlidePagoTransferencia.checked = true;
           this.banderaPagoTransferencia = true;
+        }else {
+          this.banderaSlidePagoTransferencia.checked = false;
         }
 
         if (mp.TIPO_PAGO == 'Electrónico') {
@@ -92,6 +99,8 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
           this.Metodo_Pago_Electronico.Porcentaje_Recargo = mp.PORCENTAJE_RECARGO;
           this.banderaSlidePagoElectronico.checked = true;
           this.banderaPagoElectronico = true;
+        }else {
+          this.banderaSlidePagoElectronico.checked = false;
         }
       }
     } else {
@@ -163,6 +172,7 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
 
   public async saveMetodoPago() {
     try {
+      this.banderaValidaciones=true;
       debugger;
       this.loading=true;
       if (document.forms["formMetodoPagoEfectivo"].checkValidity() && document.forms["formMetodoPagoTransferenciaBancaria"].checkValidity() && document.forms["formMetodoPagoElectronico"].checkValidity()) {
@@ -217,7 +227,7 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
       position: 'center',
       width: 600,
       buttonsStyling: false,
-      
+
       customClass: {
         confirmButton: 'btn btn-primary px-5',
         //icon:'sm'

@@ -269,6 +269,7 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
   }
 
   public cancelarModificacion() {
+    this.banderaValidaciones=false;
     /*Variables Input*/
     this.provinciaCasa = "";
     this.ciudadCasa = "";

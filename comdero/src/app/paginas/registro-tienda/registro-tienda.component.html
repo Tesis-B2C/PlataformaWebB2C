@@ -153,11 +153,11 @@
             <div class="form-row">
               <div class="form-group col-sm-6">
                 <label>Link Página Web</label>
-                <input #Link_Pagina="ngModel" style="text-transform: lowercase;" [(ngModel)]="this.Tienda.Link_Pagina"
+                <input #Link_Pagina="ngModel" style="text-transform: lowercase;" [(ngModel)]="this.Tienda.Link_Pagina" (keyup)="minusPagina()"
                        [ngClass]="{'is-invalid': Link_Pagina.invalid && (Link_Pagina.dirty || Link_Pagina.touched),
           'is-valid': Link_Pagina.valid && (Link_Pagina.dirty || Link_Pagina.touched)}" [pattern]='this.urlPattern'
                        class="tamanioInputs form-control"
-                       name="link_Pagina" placeholder="www.comdero.com" type="text">
+                       name="link_Pagina" placeholder="https://www.comdero.com" type="text">
 
                 <div *ngIf="Link_Pagina.invalid && (Link_Pagina.dirty || Link_Pagina.touched)">
                   <div *ngIf="Link_Pagina.errors.pattern">
@@ -169,12 +169,12 @@
 
               <div class="col-sm-6 form-group">
                 <label>Link Facebook</label>
-                <input #Link_Facebook="ngModel" style="text-transform: lowercase;"
+                <input #Link_Facebook="ngModel" style="text-transform: lowercase;" (keyup)="minusFacebook()"
                        [(ngModel)]="this.Tienda.Link_Facebook" [ngClass]="{
           'is-invalid': Link_Facebook.invalid && (Link_Facebook.dirty || Link_Facebook.touched),
           'is-valid': Link_Facebook.valid && (Link_Facebook.dirty || Link_Facebook.touched)}"
                        [pattern]='this.urlPattern' class="tamanioInputs form-control"
-                       name="link_Facebook" placeholder="www.facebook.com/comdero" type="text">
+                       name="link_Facebook" placeholder="https://www.facebook.com/comdero" type="text">
 
                 <div *ngIf="Link_Facebook.invalid && (Link_Facebook.dirty || Link_Facebook.touched)">
                   <div *ngIf="Link_Facebook.errors.pattern">

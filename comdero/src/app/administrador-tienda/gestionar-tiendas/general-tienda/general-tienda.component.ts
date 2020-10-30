@@ -316,6 +316,7 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
 
   /*-----------FIN HORARIO ATENCION--------------*/
   public cancelarModificacion() {
+    this.banderaValidaciones=false;
     // console.log('estoy pasando por cancelar');
     this.horario = null;
     this.banderaEdicionDeshabilitada = true;
@@ -607,6 +608,7 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
   }
 
   public verificarHorarioAtencion() {
+    this.banderaValidaciones=true;
     if (this.EditarTienda.Horario_Atencion == 'Concreto') {
       if (this.almenosUnDia() == true) {
         if (this.horarioObligatorio() == true) {
@@ -710,6 +712,16 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
   public minusCorreo() {
     if (this.EditarTienda.Correo_Tienda != '' || this.EditarTienda.Correo_Tienda != null)
       this.EditarTienda.Correo_Tienda = this.EditarTienda.Correo_Tienda.toLowerCase();
+  }
+
+  public minusPagina() {
+    if (this.EditarTienda.Link_Pagina != '' || this.EditarTienda.Link_Pagina!= null)
+      this.EditarTienda.Link_Pagina = this.EditarTienda.Link_Pagina.toLowerCase();
+  }
+
+  public minusFacebook() {
+    if (this.EditarTienda.Link_Facebook != '' || this.EditarTienda.Link_Facebook != null)
+      this.EditarTienda.Link_Facebook = this.EditarTienda.Link_Facebook.toLowerCase();
   }
 
 }

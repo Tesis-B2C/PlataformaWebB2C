@@ -246,6 +246,8 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
           this.objetoRetiroLocal.Instruccion_Retiro = me.INSTRUCCION_RETIRO;
           this.banderaslideRetiroLocal.checked = true;
           this.banderaRetiroLocal = true;
+        }else {
+          this.banderaslideRetiroLocal.checked = false;
         }
 
         if (me.TIPO_ENVIO == 'Domicilio') {
@@ -259,6 +261,8 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
 
           this.banderaslideEnvioDomicilio.checked = true;
           this.banderaEnvioDomicilio = true;
+        }else {
+          this.banderaslideEnvioDomicilio.checked = false;
         }
       }
     } else {
@@ -273,6 +277,7 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
 
   public async modificarMetodoEnvio() {
     try {
+      this.banderaValidaciones=true;
       debugger
       if (document.forms['formMetodoEnvio'].checkValidity()) {
         if (!this.vectorTarifasLocal.length && !this.vectorTarifasResto.length && this.banderaslideEnvioDomicilio.checked == true)
@@ -320,8 +325,9 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
       }
     }
   }
-
+  public banderaValidaciones: boolean = false;
   public cancelarModificacion() {
+    this.banderaValidaciones=false;
     this.banderaRetiroLocal = false;
     this.banderaEnvioDomicilio = false;
     //this.banderaslideRetiroLocal = "";

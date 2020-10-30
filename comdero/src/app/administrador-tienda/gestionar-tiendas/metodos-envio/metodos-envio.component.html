@@ -98,11 +98,11 @@
               <textarea [disabled]="!this.banderaRetiroLocal || !banderaEdicionDeshabilitada" rows="3"
                         style="font-size: small; resize: none;"
                         #Instruccion_Retiro="ngModel" [(ngModel)]="this.objetoRetiroLocal.Instruccion_Retiro"
-                        [ngClass]="{'is-invalid': Instruccion_Retiro.invalid && banderaEdicionDeshabilitada}"
+                        [ngClass]="{'is-invalid': Instruccion_Retiro.invalid && banderaEdicionDeshabilitada && banderaValidaciones}"
                         class="tamanioInputs form-control" name="instruccion_retiro"
                         placeholder="Ejemplo: Debe traer su identificación para retirar su pedido."
                         required type="text" aria-label="With textarea" maxlength="255"></textarea>
-              <div *ngIf="Instruccion_Retiro.errors?.required && banderaEdicionDeshabilitada">
+              <div *ngIf="Instruccion_Retiro.errors?.required && banderaEdicionDeshabilitada && banderaValidaciones">
                 <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
               </div>
               <p class="p">Si estás ofreciendo retiro en la tienda, puedes indicar a los clientes qué

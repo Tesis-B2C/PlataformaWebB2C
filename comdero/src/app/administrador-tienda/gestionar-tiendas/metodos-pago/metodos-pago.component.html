@@ -143,9 +143,9 @@
                   <input class="form-control" name="numeroCuenta" type="number" #NumeroCuenta="ngModel"
                          [(ngModel)]="this.Metodo_Pago_Transferencia.Numero_Cuenta"
                          [disabled]="!this.banderaPagoTransferencia || !banderaModificar" required
-                         [ngClass]="{'is-invalid': NumeroCuenta.invalid && banderaModificar}" min="0" step="1"
+                         [ngClass]="{'is-invalid': NumeroCuenta.invalid && banderaModificar && banderaValidaciones}" min="0" step="1"
                          oninput="validity.valid||(value='');">
-                  <div *ngIf="NumeroCuenta.errors?.required && banderaModificar">
+                  <div *ngIf="NumeroCuenta.errors?.required && banderaModificar && banderaValidaciones">
                     <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
                   </div>
                 </div>
@@ -168,8 +168,8 @@
                          #BancoPertenece="ngModel"
                          [(ngModel)]="this.Metodo_Pago_Transferencia.Banco_Pertenece"
                          [disabled]="!this.banderaPagoTransferencia || !banderaModificar" required
-                         [ngClass]="{'is-invalid': BancoPertenece.invalid && banderaModificar}">
-                  <div *ngIf="BancoPertenece.errors?.required && banderaModificar">
+                         [ngClass]="{'is-invalid': BancoPertenece.invalid && banderaModificar  && banderaValidaciones}">
+                  <div *ngIf="BancoPertenece.errors?.required && banderaModificar && banderaValidaciones">
                     <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
                   </div>
                 </div>
@@ -212,7 +212,7 @@
         <div class="col-2 text-right">
           <label class="switch mt-2">
             <input type="checkbox" (click)="opcionPagoElectronico($event)" [disabled]="!banderaModificar"
-                   id="slidePagoElectronico">
+                   id="slidePagoElectronico" >
             <span class="slider round"></span>
           </label>
         </div>
@@ -229,8 +229,8 @@
                   <input class="form-control" name="apiPayPal" type="text" #ApiPayPal="ngModel"
                          [(ngModel)]="this.Metodo_Pago_Electronico.Api_Key_Paypal"
                          [disabled]="!this.banderaPagoElectronico || !banderaModificar"
-                         [ngClass]="{'is-invalid': ApiPayPal.invalid && banderaModificar}" required="">
-                  <div *ngIf="ApiPayPal.errors?.required && banderaModificar">
+                         [ngClass]="{'is-invalid': ApiPayPal.invalid && banderaModificar && banderaValidaciones}" required="">
+                  <div *ngIf="ApiPayPal.errors?.required && banderaModificar && banderaValidaciones">
                     <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
                   </div>
                   <a (click)="abrirContentVideosAyuda(contentComoRecivirPagos)" style="color: #1a56e9"
@@ -244,7 +244,7 @@
                     <input class="form-control" name="recargoElectronico" #RecargoElectronico="ngModel"
                            [(ngModel)]="this.Metodo_Pago_Electronico.Porcentaje_Recargo" required
                            [disabled]="!this.banderaPagoElectronico || !banderaModificar"
-                           [ngClass]="{'is-invalid': RecargoElectronico.invalid && banderaModificar}"
+                           [ngClass]="{'is-invalid': RecargoElectronico.invalid && banderaModificar && banderaValidaciones}"
                            type="number" min="0" step="1" oninput="validity.valid||(value='');">
                     <div class="input-group-append">
                       <span class="input-group-text unidades">%</span>
