@@ -29,7 +29,7 @@ function correoActivacion(req, res) {
        // text: 'Hola' + req.body.NOMBRE + ', Gracias por registrarte en "COMDERO". ' + 'Porfavor da click en el siguiente link para completar la activacion:'+GLOBAL.url+'loguin',
         html: 'Hola<strong> ' + req.body.NOMBRE + '</strong>,<br><br>Gracias por registrarte en ' +
             '"COMDERO". Por favor da clic en el siguiente link para completar la activación:<br><br><a ' +
-            'href="'+GLOBAL.url+'loguin/' + token + '">'+GLOBAL.url+'loguin/</a>'
+            'href="'+GLOBAL.url+'login/' + token + '">'+GLOBAL.url+'login/</a>'
     };
 
     transporter.sendMail(mailOptions, function (error) {

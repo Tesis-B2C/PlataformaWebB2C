@@ -15,8 +15,8 @@ const routes: Routes = [
 
   {path: 'principales', loadChildren:'./principales/principales.module#PrincipalesModule'},
   {path: 'administrador', loadChildren:'./administrador-tienda/administrador-tienda.module#AdministradorTiendaModule',canActivate:[AuthGuard]},
-  {path: 'loguin/:token', component: LoguinComponent},
-  {path: 'loguin', component: LoguinComponent},
+  {path: 'login/:token', component: LoguinComponent},
+  {path: 'login', component: LoguinComponent},
  // {path:'principal', component:PrincipalComponent},
   {path: 'registro', component: RegistroComponent},
   {path: 'registro-tienda', component: RegistroTiendaComponent,canActivate:[AuthGuard]},

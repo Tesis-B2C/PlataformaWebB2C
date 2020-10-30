@@ -701,7 +701,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
       //FIN DATOS DE COMPRA
       this.modalService.open(content, {centered: true, size: 'lg', backdrop: "static"});
     } else {
-      this.router.navigate(['/loguin'])
+      this.router.navigate(['/login'])
     }
   }
 
@@ -1135,7 +1135,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
         let response = await this._carritoServicio.saveCarrito(this.Carrito_Producto).toPromise();
         this.menu.conteoProductosCarrito(true);
       } else {
-        this.router.navigate(['/loguin'])
+        this.router.navigate(['/login'])
       }
     } catch (e) {
       console.log("error Parseado:" + JSON.stringify(e));

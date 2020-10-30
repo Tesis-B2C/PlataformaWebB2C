@@ -191,6 +191,11 @@ i {
   align-items: center;
 }
 
+.tituloPanelAdministrativo{
+  display: block;
+}
+
+
 @media (min-width: 1035px) {
   .container-menu {
     padding-right: 150px;
@@ -217,6 +222,10 @@ i {
   .logo{
     width: 65%;
   }
+  .tituloPanelAdministrativo{
+    display: none;
+  }
+
 
 }
 
@@ -257,6 +266,5 @@ i {
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 50px;
 }
-
 
 

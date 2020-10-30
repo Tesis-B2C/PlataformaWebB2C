@@ -32,7 +32,7 @@ export class OlvidoContraseniaPaso2Component implements OnInit {
       // console.log("this.token",this.tokenTemporal);
       let response = await this._agenteServicio.resetearContrasenia2(this.tokenTemporal, this.obj).toPromise();
        this.mensageCorrecto(response.message);
-      this.router.navigate(['loguin']);
+      this.router.navigate(['login']);
        this.loading=false;
 
     }catch (e) {
@@ -72,7 +72,7 @@ export class OlvidoContraseniaPaso2Component implements OnInit {
       position: 'center',
       width: 600,
       buttonsStyling: false,
-      footer: '<a href="'+GLOBAL.url+'loguin"><b><u>Autentificate Ahora</u></b></a>',
+      footer: '<a href="'+GLOBAL.url+'login"><b><u>Autentificate Ahora</u></b></a>',
       customClass: {
         confirmButton: 'btn btn-primary px-5',
         //icon:'sm'

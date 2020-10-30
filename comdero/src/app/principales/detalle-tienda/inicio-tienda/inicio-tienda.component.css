@@ -27,8 +27,29 @@ input[type="text"]:focus
 }
 
 .contenidoMax100 {
+  width: 10rem;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   text-align: justify
+}
+
+.ancho-cards{
+  width: 13rem;
+}
+
+@media (max-width: 720px) {
+
+  .ancho-cards{
+    width: 10rem
+
+  }
+
+  .contenidoMax100 {
+    width: 7rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: justify
+  }
 }

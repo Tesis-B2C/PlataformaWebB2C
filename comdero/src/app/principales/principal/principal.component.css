@@ -88,6 +88,15 @@
   width: 13rem;
 }
 
+.contenidoMax100 {
+  width: 10rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: justify
+}
+
+
 @media (max-width: 720px) {
   .alto-banner {
     height: 200px;
@@ -115,6 +124,16 @@
     width: 10rem
 
   }
+
+  .contenidoMax100 {
+    width: 7rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: justify
+  }
+
+
 }
 
 
@@ -139,13 +158,5 @@ footer p, li, a {
 body {
   height: 100vh !important;
   overflow: auto;
-}
-
-.contenidoMax100 {
-  width: 7rem;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  text-align: justify
 }
 
