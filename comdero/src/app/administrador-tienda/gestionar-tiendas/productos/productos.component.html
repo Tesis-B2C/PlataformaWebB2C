@@ -1,4 +1,4 @@
-                                                   <ng-template #modalVideoYoutube let-modal>
+<ng-template #modalVideoYoutube let-modal>
 
   <div class="modal-header">
     <h4 class="modal-title">Subir video de Youtube</h4>
@@ -25,6 +25,39 @@
 
 </ng-template>
 
+
+<ng-template #modalInicio let-modal id="modalInicio">
+
+
+  <div class="modal-body py-0  card card-body ">
+    <div class="row justify-content-center     py-5">
+      <div  *ngIf="this.identidadTienda.OPCION_ENVIOs.length == 0" class="card col-md-4 mx-4 shadow-lg" >
+        <img class=" mx-auto img-md " src="assets/images/delivery.png" alt="Método de envío">
+        <hr class="mb-0">
+        <div class="card-body text-center px-0 ">
+          <h5 class="card-title">Método de envío</h5>
+          <p class="card-text ">Asegúrate de tener configurado tus métodos de envío antes de empezar a publicar tus productos.</p>
+          <button routerLink="../metodos-envio" class="btn-sm btn-primary  w-100 mx-auto"><i class="fa fa-cog"></i> Configurar ahora</button>
+
+        </div>
+      </div>
+      <div *ngIf="this.identidadTienda.METODO_PAGOs.length == 0" class="card col-md-4 mx-4 shadow-lg" >
+        <img class=" mx-auto img-md" src="assets/images/money.png" alt="Card image cap">
+        <hr class="mb-0">
+        <div class="card-body text-center px-0">
+          <h5 class="card-title">Método de pago</h5>
+          <p class="card-text">Asegúrate de tener configurado tus métodos de pago antes de empezar a publicar tus productos.</p>
+          <button  routerLink="../metodos-pago" class="btn-sm btn-primary w-100 mx-auto"><i class="fa fa-cog"></i> Configurar ahora</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+</ng-template>
+
+
 <body id="body" class="bg">
 
 <div class="container mt-md-5 mt-3">
@@ -37,14 +70,14 @@
       <form class=" py-md-2 py-3 " (change)="recargar()">
 
 
-          <div class="text-md-right text-center">
-            <button (click)="this.publicarProducto()" [disabled]="loading" class="btn btn-primary text-nowrap   col-auto"
-                    type="button">
-              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
-              Guardar producto &nbsp;&nbsp;
-              <span class="fa fa-save"></span>
-            </button>
-          </div>
+        <div class="text-md-right text-center">
+          <button (click)="this.publicarProducto()" [disabled]="loading" class="btn btn-primary text-nowrap   col-auto"
+                  type="button">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+            Guardar producto &nbsp;&nbsp;
+            <span class="fa fa-save"></span>
+          </button>
+        </div>
 
 
       </form>
@@ -58,7 +91,8 @@
 
       <h6>Información</h6>
 
-      <form #FormInformacion id="formInformacion" name="formInformacion" class="mt-3 card card-body validate-form" (change)="recargar()">
+      <form #FormInformacion id="formInformacion" name="formInformacion" class="mt-3 card card-body validate-form"
+            (change)="recargar()">
         <div class="container">
           <div class="form-row ">
             <div class="col-md-6">
@@ -103,7 +137,8 @@
             <label>Descripción del producto </label>
             <textarea #DescripcionProducto="ngModel" [(ngModel)]="this.Producto.Descripcion_Producto"
                       class="form-control" name="descripcionProducto" required
-                      rows="2" type="text" [ngClass]="{'is-invalid': DescripcionProducto.invalid && banderaValidaciones}"></textarea>
+                      rows="2" type="text"
+                      [ngClass]="{'is-invalid': DescripcionProducto.invalid && banderaValidaciones}"></textarea>
             <div *ngIf="DescripcionProducto.errors?.required && banderaValidaciones">
               <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
             </div>
@@ -179,32 +214,32 @@
         </div> <!-- form-group end.// -->
 
 
-
         <div class="form-row ml-1 justify-content-between">
 
 
           <a class="col-auto "><label>Video del producto </label> </a>
-          <button *ngIf="banderaMensajeMaximoVideo && !videoYoutube " class=" col-auto" style="color: red;font-size: small">*Máximo 150MB</button>
+          <button *ngIf="banderaMensajeMaximoVideo && !videoYoutube " class=" col-auto"
+                  style="color: red;font-size: small">*Máximo 150MB
+          </button>
 
-            <div ngbDropdown class="d-inline-block justify-content-end text-right mr-3">
-              <button id="btnCategorias" ngbDropdownToggle  ><i class="fa fa-ellipsis-h" ></i>
+          <div ngbDropdown class="d-inline-block justify-content-end text-right mr-3">
+            <button id="btnCategorias" ngbDropdownToggle><i class="fa fa-ellipsis-h"></i>
+            </button>
+            <div ngbDropdownMenu aria-labelledby="btnCategorias">
+              <button ngbDropdownItem (click)="abrirModalVideoYoutube(modalVideoYoutube)" class="text-primary">
+                Agregar video youtube &nbsp; <span class="fab fa-youtube "></span>
               </button>
-              <div ngbDropdownMenu aria-labelledby="btnCategorias">
-                <button ngbDropdownItem (click)="abrirModalVideoYoutube(modalVideoYoutube)"  class="text-primary">
-                  Agregar video youtube &nbsp; <span class="fab fa-youtube "></span>
-                </button>
-                <button ngbDropdownItem *ngIf="this.videoYoutube" (click)="resetearVideoYoutube()" class="text-dark">
-                  Agregar video desde el ordenador &nbsp; <span class="fa fa-laptop "></span>
-                </button>
+              <button ngbDropdownItem *ngIf="this.videoYoutube" (click)="resetearVideoYoutube()" class="text-dark">
+                Agregar video desde el ordenador &nbsp; <span class="fa fa-laptop "></span>
+              </button>
 
-                <button  ngbDropdownItem *ngIf="videoYoutube || data.video" (click)="borrarVideo()"  style=" border: none; color: red">
-                  Eliminar
-                </button>
+              <button ngbDropdownItem *ngIf="videoYoutube || data.video" (click)="borrarVideo()"
+                      style=" border: none; color: red">
+                Eliminar
+              </button>
 
-              </div>
             </div>
-
-
+          </div>
 
 
         </div>
@@ -323,7 +358,7 @@
                       [ngClass]="{'errorSelect': Stock0.invalid && banderaValidaciones}"
                       class=" form-control col  "
                       id="selectUnidad" name="unidad0">
-                <option *ngFor="let unidad of this.unidades" >{{unidad.COD_UNIDAD_MEDIDA}}</option>
+                <option *ngFor="let unidad of this.unidades">{{unidad.COD_UNIDAD_MEDIDA}}</option>
               </select>
             </div>
             <div *ngIf="Stock0.errors?.required && banderaValidaciones">
@@ -350,21 +385,21 @@
             </div>
           </div>
           <br>
-         <!-- rastreo de inventario-->
-        <!--  <div class="form-group ml-2">
-            <div class="checkbox-item">
-              <input (click)="opcionRastrearStock($event)" id="rastrearCantidad" type="checkbox">
-              <label for="rastrearCantidad">&nbsp;&nbsp;Rastrear la cantidad</label>
+          <!-- rastreo de inventario-->
+          <!--  <div class="form-group ml-2">
+              <div class="checkbox-item">
+                <input (click)="opcionRastrearStock($event)" id="rastrearCantidad" type="checkbox">
+                <label for="rastrearCantidad">&nbsp;&nbsp;Rastrear la cantidad</label>
+              </div>
             </div>
-          </div>
-          <div class="form-group ml-2">
-            <div class="checkbox-item">
-              <input (click)="opcionVenderSinStock($event)" id="venderDespuesAgotado"
-                     type="checkbox">
-              <label for="venderDespuesAgotado">&nbsp;&nbsp;Continuar vendiendo cuando se haya
-                agotado</label>
-            </div>
-          </div>-->
+            <div class="form-group ml-2">
+              <div class="checkbox-item">
+                <input (click)="opcionVenderSinStock($event)" id="venderDespuesAgotado"
+                       type="checkbox">
+                <label for="venderDespuesAgotado">&nbsp;&nbsp;Continuar vendiendo cuando se haya
+                  agotado</label>
+              </div>
+            </div>-->
           <br>
         </div>
       </form>
@@ -417,7 +452,7 @@
 
                 <div class="radio-item">
                   <input (change)="opcionVariaciones(false)" name="variaciones" type="radio"
-                         value="No" id="VariacionNo" checked >
+                         value="No" id="VariacionNo" checked>
                   <label for="VariacionNo">&nbsp;&nbsp; No </label>
                 </div>
               </div>
@@ -428,22 +463,25 @@
             <div class="form-group">
               <div class="alert alert-primary col-12" role="alert">
                 <a class="small"><span class="fa fa-exclamation "></span></a>
-               <a class="text-justify small"> Primero establezca las opciones base del producto, es decir las correspondientes a las imágenes que
-                agregó
-                anteriormente,
-                luego si desea agregar más opciones, además imágenes, y un precio diferente de click en agregar</a>
+                <a class="text-justify small"> Primero establezca las opciones base del producto, es decir las
+                  correspondientes a las imágenes que
+                  agregó
+                  anteriormente,
+                  luego si desea agregar más opciones, además imágenes, y un precio diferente de click en agregar</a>
               </div>
             </div>
 
             <div class="form-group col-md-2 offset-lg-1 justify-content-center">
               <label>Color</label>
 
-              <input (colorPickerChange)="cambiarColor($event,0)" [(colorPicker)]=color[0] [style.background]=color[0] (change)="recargar()"
+              <input (colorPickerChange)="cambiarColor($event,0)" [(colorPicker)]=color[0] [style.background]=color[0]
+                     (change)="recargar()"
                      class="form-control input-colores"/>
             </div>
             <div class="form-group  col-md-4">
               <label> Talla </label>
-              <input #Talla0="ngModel" [(ngModel)]="this.Variantes[0].Talla" class="form-control " name="talla0" (change)="recargar()"
+              <input #Talla0="ngModel" [(ngModel)]="this.Variantes[0].Talla" class="form-control " name="talla0"
+                     (change)="recargar()"
                      maxlength="4"
                      placeholder="Ej. xl o 34 o etc" type="text">
             </div>
@@ -473,12 +511,14 @@
             </div>
             <div class="form-group  col-md-4">
               <label> Talla </label>
-              <input #Talla="ngModel" [(ngModel)]="this.Variantes[i+1].Talla" class="form-control " name="talla{{i+1}}" (change)="recargar()"
+              <input #Talla="ngModel" [(ngModel)]="this.Variantes[i+1].Talla" class="form-control " name="talla{{i+1}}"
+                     (change)="recargar()"
                      placeholder="Ej. xl o 34 o etc" type="text" maxlength="4">
             </div>
             <div class="form-group  col-md-4">
               <label>Material</label>
-              <input #Material="ngModel" [(ngModel)]="this.Variantes[i+1].Material" class="form-control  " (change)="recargar()"
+              <input #Material="ngModel" [(ngModel)]="this.Variantes[i+1].Material" class="form-control  "
+                     (change)="recargar()"
                      name="material{{i+1}}"
                      placeholder="Ej. Gamusa/algodon" type="text">
             </div>
@@ -493,7 +533,8 @@
               <form name="form" (change)="recargar()">
                 <a class=" mt-5">
                   <label>Imágenes de la opción {{i + 1}} </label>
-                  <span *ngIf="vbanderaMensajeMaximoImagenes[i+1]" style="color: red"> *Recuerda máximo 6 imágenes </span></a>
+                  <span *ngIf="vbanderaMensajeMaximoImagenes[i+1]"
+                        style="color: red"> *Recuerda máximo 6 imágenes </span></a>
                 <div
                   [ngClass]="{'borde-imagenes':vectorBanderaAgregarImagen[i+1]==false,'borde-imagenes1':vectorBanderaAgregarImagen[i+1]==true,'borde-error': ((Imagenes_Producto[i+1].length==0 && banderaValidaciones) ||  vbanderaMensajeMaximoImagenes[i+1] )  }"
                   class="row  mt-3 ">
@@ -529,7 +570,8 @@
                       <label class="imagen-agregar">
                         <i class="fa fa-picture-o fa-4x ml-4"></i>
                         <i class="fa fa-plus-circle fa-2x ml-1"></i>
-                        <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file" max="6">
+                        <input (change)="subirImagenes($event,i+1)" accept="image/*" class="file" multiple type="file"
+                               max="6">
                         <br>
                         <p class="pt-1 link-agregar-imagenes2">Agregar imágenes </p>
                         <p class=" link-agregar-imagenes2">máximo 6</p>
@@ -591,7 +633,9 @@
 
           </div>
           <br>
-          <div *ngIf="banderaVariaciones &&(this.Variantes[0].Talla!=null || this.Variantes[0].color!=null || this.Variantes[0].Material!=null  ) " class="form-group col-md-12">
+          <div
+            *ngIf="banderaVariaciones &&(this.Variantes[0].Talla!=null || this.Variantes[0].color!=null || this.Variantes[0].Material!=null  ) "
+            class="form-group col-md-12">
             <p (click)="agregarOpcionesProducto()" class="agregar">
               <span class="fa fa-plus "></span> &nbsp;Agregar opción
             </p>
@@ -677,20 +721,20 @@
     </div>
   </div>
 
-  <div class="row justify-content-center mt-3 " >
+  <div class="row justify-content-center mt-3 ">
 
     <div class=" col-md-11  px-0 justify-content-center">
       <form class=" py-md-2 py-3 " (change)="recargar()">
 
 
-          <div class="text-md-right text-center">
-            <button (click)="this.publicarProducto()" [disabled]="loading" class="btn btn-primary text-nowrap   col-auto"
-                    type="button">
-              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
-              Guardar producto &nbsp;&nbsp;
-              <span class="fa fa-save"></span>
-            </button>
-          </div>
+        <div class="text-md-right text-center">
+          <button (click)="this.publicarProducto()" [disabled]="loading" class="btn btn-primary text-nowrap   col-auto"
+                  type="button">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+            Guardar producto &nbsp;&nbsp;
+            <span class="fa fa-save"></span>
+          </button>
+        </div>
 
 
       </form>
