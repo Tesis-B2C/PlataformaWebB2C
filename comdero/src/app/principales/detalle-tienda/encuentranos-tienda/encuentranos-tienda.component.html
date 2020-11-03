@@ -10,7 +10,8 @@
       <div class="card bg-white ">
 
         <div class="card-body text-center">
-          <h5 class="card-title font-weight-bold">Sucursal &nbsp;{{i + 1}}</h5>
+          <h5 class="card-title font-weight-bold" *ngIf="i!=0">Sucursal &nbsp;{{i + 1}}</h5>
+          <h5 class="card-title font-weight-bold" *ngIf="i==0">Matriz</h5>
           <p class="map fas fa-map-marked-alt fa-4x text-primary"></p>
           <hr>
           <div class="row  no-gutters justify-content-between">
