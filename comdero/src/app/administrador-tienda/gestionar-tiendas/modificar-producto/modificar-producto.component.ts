@@ -404,6 +404,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
         let that = this;
         myReader.onloadend = (loadEvent: any) => {
           //  console.log('video', myReader.result);
+          debugger;
           this.data.video = myReader.result;
           this.data.type = file.type;
           this.banderaAnimacionVideo = false;
@@ -841,7 +842,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
       position: 'center',
       width: 600,
       buttonsStyling: false,
-    
+
       customClass: {
         confirmButton: 'btn btn-primary px-5',
         //icon:'sm'

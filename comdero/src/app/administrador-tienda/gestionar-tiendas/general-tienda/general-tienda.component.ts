@@ -121,7 +121,19 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
   public horarioRadio(Tipo) {
     if (Tipo == "Concreto") {         /*Tipo Horas Concretas*/
       this.banderaHoraConcreta = true;
+      this.checkConcreto = true;
+      this.checkNoDisponible = false;
+      this.checkSiempre = false;
     } else {
+      if(Tipo == "No disponible"){
+        this.checkConcreto = false;
+        this.checkNoDisponible = true;
+        this.checkSiempre = false;
+      }else{
+        this.checkConcreto = false;
+        this.checkNoDisponible = false;
+        this.checkSiempre = true;
+      }
       this.banderaHoraConcreta = false;
     }
     this.EditarTienda.Horario_Atencion = Tipo;
@@ -442,9 +454,11 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
     this.EditarTienda.Terminos_Condiciones = this.identidadTienda.TERMINOS_CONDICIONES;
     this.EditarTienda.Horario_Atencion = this.identidadTienda.HORARIO_ATENCION;
     this.EditarTienda.Contacto_WhatsApp = this.identidadTienda.CONTACTO_WHATSAPP;
+
     if (this.identidadTienda.HORARIO_ATENCION == 'No disponible') {
       this.banderaHoraConcreta = false;
       this.checkNoDisponible = true;
+      console.log("SOY LA TIENDA1"+this.checkNoDisponible);
       this.checkConcreto = false;
       this.checkSiempre = false;
     }
@@ -453,6 +467,7 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
       this.checkNoDisponible = false;
       this.checkConcreto = false;
       this.checkSiempre = true;
+      console.log("SOY LA TIENDA1"+this.checkSiempre);
     }
 
     if (this.identidadTienda.HORARIO_ATENCION == 'Concreto') {
@@ -461,9 +476,10 @@ export class GeneralTiendaComponent implements OnInit, OnDestroy {
       this.checkConcreto = true;
       this.checkSiempre = false;
       this.banderaHoraConcreta = true;
+      console.log("SOY LA TIENDA1"+this.banderaHoraConcreta);
       this.verConcretoBase();
     }
-    // console.log("SOY LA TIENDA" + this.identidadTienda.HORARIO_ATENCION);
+     console.log("SOY LA TIENDA");
     this.banderaEdicionDeshabilitada = true;
     this.editorConfig.editable = false;
   }

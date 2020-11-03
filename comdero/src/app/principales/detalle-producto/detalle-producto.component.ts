@@ -370,8 +370,9 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
         this.getVideoIframeInicio(imagen.IMAGEN);
       }
       if (imagen.TIPO_IMAGEN == 'video') {
-        this.data.video = imagen.IMAGEN;
-        this.data.type = imagen.TIPO_IMAGEN;
+        debugger;
+        this.data.video = GLOBAL.urlImagen +imagen.IMAGEN;
+       // this.data.type = imagen.TIPO_IMAGEN;
       }
     })
 
