@@ -549,6 +549,7 @@ async function getDetalleTiendaProducto(req, res) {
                 include: {model: DPA, include: {model: DPA, as: 'DPAP', required: true}}
             }, {
                 model: OFERTA,
+
                 include: [{
                     model: PRODUCTO,
                     attributes: ['ID_PRODUCTO', 'COD_PRODUCTO', 'ID_OFERTA', 'NOMBRE_PRODUCTO',],

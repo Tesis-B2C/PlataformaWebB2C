@@ -224,7 +224,7 @@ async function getDescuentos(req, res) {
             });
 
             let Automatico = await Descuento.findAndCountAll({ //$or: [{ESTADO_OFERTA: 0},{ESTADO_OFERTA: 1}]
-                where: {NUM_TIENDA: req.params.id, TIPO_DESCUENTO: 'Áutomático',ESTADO_DESCUENTO: {[Op.or]: [0, 1]}},
+                where: {NUM_TIENDA: req.params.id, TIPO_DESCUENTO: 'Áutomático', ESTADO_DESCUENTO: {[Op.or]: [0, 1]}},
             });
 
             let obj = {

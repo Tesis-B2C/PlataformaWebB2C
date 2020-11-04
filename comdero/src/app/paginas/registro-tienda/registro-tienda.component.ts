@@ -16,6 +16,8 @@ import {HttpErrorResponse} from "@angular/common/http";
 })
 
 export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
+
+
   public Tienda;
   public Sucursales = [];
   public htmlcomponent;

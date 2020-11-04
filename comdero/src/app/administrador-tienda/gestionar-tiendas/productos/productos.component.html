@@ -1,3 +1,7 @@
+
+
+
+
 <ng-template #modalVideoYoutube let-modal>
 
   <div class="modal-header">
@@ -30,13 +34,14 @@
 
 
   <div class="modal-body py-0  card card-body ">
+    <button class="btn btn-link w-100 text-right" routerLink="../inicio-administracion"><a class="fa fa-arrow-left"></a> Regresar</button>
     <div class="row justify-content-center     py-5">
       <div  *ngIf="this.identidadTienda.OPCION_ENVIOs.length == 0" class="card col-md-4 mx-4 shadow-lg" >
         <img class=" mx-auto img-md " src="assets/images/delivery.png" alt="Método de envío">
         <hr class="mb-0">
         <div class="card-body text-center px-0 ">
           <h5 class="card-title">Método de envío</h5>
-          <p class="card-text ">Asegúrate de tener configurado tus métodos de envío antes de empezar a publicar tus productos.</p>
+          <p class="card-text  text-justify">Asegúrate de tener configurado tus métodos de envío antes de empezar a publicar tus productos.</p>
           <button routerLink="../metodos-envio" class="btn-sm btn-primary  w-100 mx-auto"><i class="fa fa-cog"></i> &nbsp; Configurar ahora</button>
 
         </div>
@@ -46,7 +51,7 @@
         <hr class="mb-0">
         <div class="card-body text-center px-0">
           <h5 class="card-title">Método de pago</h5>
-          <p class="card-text">Asegúrate de tener configurado tus métodos de pago antes de empezar a publicar tus productos.</p>
+          <p class="card-text  text-justify">Asegúrate de tener configurado tus métodos de pago antes de empezar a publicar tus productos.</p>
           <button  routerLink="../metodos-pago" class="btn-sm btn-primary w-100 mx-auto"><i class="fa fa-cog"></i> &nbsp; Configurar ahora</button>
         </div>
       </div>

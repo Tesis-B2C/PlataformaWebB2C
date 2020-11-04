@@ -36,8 +36,8 @@
   <p *ngIf="this.result.length==0">No se encontraron resultados.</p>
 </section>
 
-<div class="">
-  <section class="section-name padding-y-sm row ">
+
+  <section class="section-name padding-y-sm row no-gutters ">
     <div class="col-md-3 col-6  "
          *ngFor="let producto of this.result | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
 
@@ -45,11 +45,10 @@
         <a routerLink="../../../../detalle-producto/{{producto.ID_OFERTA}}">
           <img [src]="getImagen(producto.IMAGEN)" width="100%" height="220rem">
         </a>
-        <figcaption class="info-wrap">
+        <figcaption class="info-wrap px-3">
           <a class="title" routerLink="../../../../detalle-producto/{{producto.ID_OFERTA}}" class="title contenidoMax100"
             > {{producto.NOMBRE_PRODUCTO}}</a>
-
-
+          
           <div class="rating-wrap">
             <ul class="rating-stars">
               <ngb-rating *ngIf="producto.PROMEDIO_CAL != null"
@@ -96,4 +95,4 @@
     </div>
   </section>
 
-</div>
+

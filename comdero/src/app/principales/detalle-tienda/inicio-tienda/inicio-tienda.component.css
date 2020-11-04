@@ -41,12 +41,12 @@ input[type="text"]:focus
 @media (max-width: 720px) {
 
   .ancho-cards{
-    width: 10rem
+    width: 12rem
 
   }
 
   .contenidoMax100 {
-    width: 7rem;
+    width: 9rem;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
