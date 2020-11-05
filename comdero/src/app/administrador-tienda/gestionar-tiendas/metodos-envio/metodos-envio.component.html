@@ -1,3 +1,36 @@
+<ng-template #modalInicio let-modal id="modalInicio">
+  <div class="modal-header">
+    <h5 class="modal-title">Métodos de envío</h5>
+    <button type="button" class="close " aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true" style="font-size: large">&times;</span>
+    </button>
+  </div>
+
+
+  <div class="modal-body  card card-body ">
+    <div class="container-fluid   ">
+      <div class="row  justify-content-between ">
+        <div class="col-md-7 align-self-center text-center">
+
+
+          <h1 class="display-4">Espera !</h1>
+          <label class=" lead container text-justify" style="font-size: medium">Antes de empezar te sugerimos que des click <a
+            href="">aqui</a> para configurar correctamente los
+            métodos de envio y brindar un mejor servicio a tus clientes </label>
+        </div>
+        <div class="col-md-5 mt-md-0 mt-2   ">
+          <div class=" mx-auto "><img class="mx-auto dis-block" src="../../../assets/images/mascota-condero.png"
+                                      width="80%"></div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+</ng-template>
+
 <body class="bg">
 <div class="container mt-md-5 mt-3">
 
@@ -612,28 +645,28 @@
 
         <form class=" col-md-12  mt-4 px-0">
 
-            <div class="text-md-right text-center">
-              <button *ngIf="banderaEdicionDeshabilitada" [disabled]="loading"
-                      (click)="modificarMetodoEnvio()" class="btn btn-primary text-nowrap mb-4  col-auto mr-md-2"
-                      type="button">
-                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
-                Guardar &nbsp;&nbsp;
-                <span class="fa fa-save"></span>
-              </button>
+          <div class="text-md-right text-center">
+            <button *ngIf="banderaEdicionDeshabilitada" [disabled]="loading"
+                    (click)="modificarMetodoEnvio()" class="btn btn-primary text-nowrap mb-4  col-auto mr-md-2"
+                    type="button">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+              Guardar &nbsp;&nbsp;
+              <span class="fa fa-save"></span>
+            </button>
 
-              <button *ngIf="banderaEdicionDeshabilitada" (click)="cancelarModificacion()"
-                      class="btn btn-light text-nowrap mb-4  col-auto">
-                Cancelar &nbsp;&nbsp;
-                <span class="fa fa-close"></span></button>
-
-
-              <button *ngIf="!banderaEdicionDeshabilitada" (click)="habilitarEdicion()"
-                      class="btn btn-warning text-nowrap mb-4  col-auto">
-                Modificar &nbsp;&nbsp;
-                <span class="fa fa-edit"></span></button>
+            <button *ngIf="banderaEdicionDeshabilitada" (click)="cancelarModificacion()"
+                    class="btn btn-light text-nowrap mb-4  col-auto">
+              Cancelar &nbsp;&nbsp;
+              <span class="fa fa-close"></span></button>
 
 
-            </div>
+            <button *ngIf="!banderaEdicionDeshabilitada" (click)="habilitarEdicion()"
+                    class="btn btn-warning text-nowrap mb-4  col-auto">
+              Modificar &nbsp;&nbsp;
+              <span class="fa fa-edit"></span></button>
+
+
+          </div>
 
 
         </form>
@@ -648,12 +681,15 @@
           <h4 class="alert-heading">Recuerda!</h4>
           <hr class="mb-0">
           <div class="form-row text-justify">
-           <strong class="col-1">*</strong> <p class="col-11"> Configurar los métodos de envío de tu tienda para ofrecer un mejor y cómodo servicio a
+            <strong class="col-1">*</strong>
+            <p class="col-11"> Configurar los métodos de envío de tu tienda para ofrecer un mejor y cómodo servicio a
               tus
               clientes.</p>
 
-            <strong class="col-1">*</strong> <p class="col-11">Si habilitas los métodos de envío, asegúrate de que los rangos que apliques abarquen el precio o el peso de tus productos,
-            de otra manera el precio de envío predeterminado es  <strong>GRATIS</strong> .</p>
+            <strong class="col-1">*</strong>
+            <p class="col-11">Si habilitas los métodos de envío, asegúrate de que los rangos que apliques abarquen el
+              precio o el peso de tus productos,
+              de otra manera el precio de envío predeterminado es <strong>GRATIS</strong> .</p>
           </div>
           <img class="mx-auto pt-md-4 mensaje-mascota" src="assets/images/mascota-condero.png" width="80%">
         </div>

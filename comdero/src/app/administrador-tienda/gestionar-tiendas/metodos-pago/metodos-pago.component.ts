@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DomSanitizer} from '@angular/platform-browser';
 import {Metodo_Pago} from '../../../modelos/metodo-pago'
@@ -12,6 +12,7 @@ import {HttpErrorResponse} from "@angular/common/http";
   templateUrl: './metodos-pago.component.html',
   styleUrls: ['./metodos-pago.component.css']
 })
+
 export class MetodosPagoComponent implements OnInit, OnDestroy {
 
 
@@ -37,6 +38,7 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.iniciarEdicion();
+
 
   }
 

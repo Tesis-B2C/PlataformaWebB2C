@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Opcion_Envio} from "../../../modelos/opcion_envio";
 import {CurrencyPipe} from "@angular/common";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -44,10 +44,15 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
   constructor(public toastr: ToastrService, public _tiendaServicio: TiendaServicio, public _metodoEnvioServicio: MetodoEnvioServicio, public cp: CurrencyPipe, public modalService: NgbModal) {
   }
 
-
+  @ViewChild("modalInicio",{static:true}) modalInicio: ElementRef;
   ngOnInit() {
     this.identidadTienda = this._tiendaServicio.getIdentityTienda();
     this.iniciarEdicion();
+    this.abrirModalInicio();
+  }
+  public abrirModalInicio() {
+
+    this.modalService.open(this.modalInicio, {centered: true, size: 'lg', backdrop: "static",windowClass: 'animated backInDown '});
   }
 
   ngOnDestroy() {
