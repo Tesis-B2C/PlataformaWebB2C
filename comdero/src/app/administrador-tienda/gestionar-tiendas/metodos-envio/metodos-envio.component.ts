@@ -240,10 +240,11 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
     this.banderaslideRetiroLocal = document.getElementById('slideRetiroLocal') as HTMLInputElement;
     this.banderaslideEnvioDomicilio = document.getElementById('slideEnvioDomicilio') as HTMLInputElement;
 
-    // console.log(this.banderaslideRetiroLocal + this.banderaslideEnvioDomicilio + 'ESTO ES EL SLIDE');
+
 
     this.objetoRetiroLocal = new Opcion_Envio('Retiro', null, null, null, 'Debes traer tu mensaje de confirmación e identificación cuando vengas a retirar tu pedido.', null, null, null);
-
+    this.banderaslideRetiroLocal.checked = false;
+    this.banderaslideEnvioDomicilio.checked = false;
     if (this.identidadTienda.OPCION_ENVIOs.length > 0) { //Hay algo en el vector metodo envio
       for (let me of this.identidadTienda.OPCION_ENVIOs) {
         if (me.TIPO_ENVIO == 'Retiro') {
@@ -251,11 +252,13 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
           this.objetoRetiroLocal.Instruccion_Retiro = me.INSTRUCCION_RETIRO;
           this.banderaslideRetiroLocal.checked = true;
           this.banderaRetiroLocal = true;
-        }else {
-          this.banderaslideRetiroLocal.checked = false;
         }
 
         if (me.TIPO_ENVIO == 'Domicilio') {
+          this.banderaslideEnvioDomicilio.checked = true;
+          this.banderaEnvioDomicilio = true;
+          console.log(JSON.stringify(this.identidadTienda.OPCION_ENVIOs));
+
           if (me.TIPO_UBICACION == "Local") {
             this.vectorTarifasLocal.push(new Opcion_Envio(me.TIPO_ENVIO, me.TIPO_UBICACION, me.TIPO_MEDIDA, null, null, me.MINIMO, me.MAXIMO, me.PRECIO));
           }
@@ -264,11 +267,8 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
             this.vectorTarifasResto.push(new Opcion_Envio(me.TIPO_ENVIO, me.TIPO_UBICACION, me.TIPO_MEDIDA, null, null, me.MINIMO, me.MAXIMO, me.PRECIO));
           }
 
-          this.banderaslideEnvioDomicilio.checked = true;
-          this.banderaEnvioDomicilio = true;
-        }else {
-          this.banderaslideEnvioDomicilio.checked = false;
         }
+
       }
     } else {
       this.banderaslideRetiroLocal.checked = false;
