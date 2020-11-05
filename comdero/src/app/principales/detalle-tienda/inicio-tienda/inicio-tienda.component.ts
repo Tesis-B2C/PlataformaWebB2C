@@ -46,7 +46,7 @@ export class InicioTiendaComponent implements OnInit {
       this.idTienda = this.route.parent.snapshot.params.id;
       let response = await this._tiendaServicio.getDetalleTiendaProducto(this.idTienda).toPromise();
       this.Tienda = response.data;
-      // console.log("tienda buscada en inicio pilas", this.Tienda);
+       console.log("tienda buscada en inicio pilas", this.Tienda);
     } catch (e) {
 
       if (!(e instanceof HttpErrorResponse)) {
@@ -283,7 +283,7 @@ export class InicioTiendaComponent implements OnInit {
       position: 'center',
       width: 600,
       buttonsStyling: false,
-   
+
       customClass: {
         confirmButton: 'btn btn-primary px-5',
         //icon:'sm'
