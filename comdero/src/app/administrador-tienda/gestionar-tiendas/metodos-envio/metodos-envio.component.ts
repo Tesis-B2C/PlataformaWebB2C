@@ -7,6 +7,7 @@ import {TiendaServicio} from "../../../servicios/tienda.servicio";
 import Swal from "sweetalert2";
 import {MetodoEnvioServicio} from "../../../servicios/metodo_envio.servicio";
 import {HttpErrorResponse} from "@angular/common/http";
+
 @Component({
   selector: 'app-metodos-envio',
   templateUrl: './metodos-envio.component.html',
@@ -44,15 +45,26 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
   constructor(public toastr: ToastrService, public _tiendaServicio: TiendaServicio, public _metodoEnvioServicio: MetodoEnvioServicio, public cp: CurrencyPipe, public modalService: NgbModal) {
   }
 
-  @ViewChild("modalInicio",{static:true}) modalInicio: ElementRef;
+  @ViewChild("modalInicio", {static: true}) modalInicio: ElementRef;
+
   ngOnInit() {
     this.identidadTienda = this._tiendaServicio.getIdentityTienda();
     this.iniciarEdicion();
-    this.abrirModalInicio();
+
+    if (this.banderaEnvioDomicilio == false || this.banderaRetiroLocal == false) {
+      this.abrirModalInicio();
+    }
+
   }
+
   public abrirModalInicio() {
 
-    this.modalService.open(this.modalInicio, {centered: true, size: 'lg', backdrop: "static",windowClass: 'animated backInDown '});
+    this.modalService.open(this.modalInicio, {
+      centered: true,
+      size: 'lg',
+      backdrop: "static",
+      windowClass: 'animated backInDown '
+    });
   }
 
   ngOnDestroy() {
@@ -241,7 +253,6 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
     this.banderaslideEnvioDomicilio = document.getElementById('slideEnvioDomicilio') as HTMLInputElement;
 
 
-
     this.objetoRetiroLocal = new Opcion_Envio('Retiro', null, null, null, 'Debes traer tu mensaje de confirmación e identificación cuando vengas a retirar tu pedido.', null, null, null);
     this.banderaslideRetiroLocal.checked = false;
     this.banderaslideEnvioDomicilio.checked = false;
@@ -282,7 +293,7 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
 
   public async modificarMetodoEnvio() {
     try {
-      this.banderaValidaciones=true;
+      this.banderaValidaciones = true;
       debugger
       if (document.forms['formMetodoEnvio'].checkValidity()) {
         if (!this.vectorTarifasLocal.length && !this.vectorTarifasResto.length && this.banderaslideEnvioDomicilio.checked == true)
@@ -321,18 +332,20 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
       }
     } catch (e) {
       this.loading = false;
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
       }
     }
   }
+
   public banderaValidaciones: boolean = false;
+
   public cancelarModificacion() {
-    this.banderaValidaciones=false;
+    this.banderaValidaciones = false;
     this.banderaRetiroLocal = false;
     this.banderaEnvioDomicilio = false;
     //this.banderaslideRetiroLocal = "";

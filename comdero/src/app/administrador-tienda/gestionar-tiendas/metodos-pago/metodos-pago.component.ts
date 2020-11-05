@@ -74,16 +74,18 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
   iniciarEdicion() {
 
     this.cancelar();
-
+    this.banderaSlidePagoEfectivo.checked = false;
+    this.banderaSlidePagoTransferencia.checked = false;
+    this.banderaSlidePagoElectronico.checked = false;
     if (this.identidadTienda.METODO_PAGOs.length>0) {
       for (let mp of this.identidadTienda.METODO_PAGOs) {
         if (mp.TIPO_PAGO == 'Efectivo') {
           this.Metodo_Pago_Efectivo.Porcentaje_Descuento = mp.PORCENTAJE_DESCUENTO;
           this.banderaSlidePagoEfectivo.checked = true;
           this.banderaPagoEfectivo = true;
-        }else {
+        }/*else {
           this.banderaSlidePagoEfectivo.checked = false;
-        }
+        }*/
 
         if (mp.TIPO_PAGO == 'Transferencia') {
           this.Metodo_Pago_Transferencia.Numero_Cuenta = mp.NUMERO_CUENTA;
@@ -92,18 +94,18 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
           this.Metodo_Pago_Transferencia.Porcentaje_Descuento = mp.PORCENTAJE_DESCUENTO;
           this.banderaSlidePagoTransferencia.checked = true;
           this.banderaPagoTransferencia = true;
-        }else {
+        }/*else {
           this.banderaSlidePagoTransferencia.checked = false;
-        }
+        }*/
 
         if (mp.TIPO_PAGO == 'Electrónico') {
           this.Metodo_Pago_Electronico.Api_Key_Paypal = mp.API_KEY_PAYPAL;
           this.Metodo_Pago_Electronico.Porcentaje_Recargo = mp.PORCENTAJE_RECARGO;
           this.banderaSlidePagoElectronico.checked = true;
           this.banderaPagoElectronico = true;
-        }else {
+        }/*else {
           this.banderaSlidePagoElectronico.checked = false;
-        }
+        }*/
       }
     } else {
 
