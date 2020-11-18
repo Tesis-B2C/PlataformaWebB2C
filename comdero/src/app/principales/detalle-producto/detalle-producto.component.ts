@@ -716,7 +716,10 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
   public hora_estimada_retiro: String;
   public Banco_Pertenece: String;
   public Tipo_Cuenta: String;
-  public Numero_cuenta: String;
+  public Numero_Cuenta: String;
+  public Nombre_Beneficiario:String;
+  public Correo_Beneficiario:String;
+  public Identificacion_Beneficiario:String
 
   public verificarMetodosTienda() {
     this.varianteActiva.OPCION_ENVIO.forEach(envio => {
@@ -738,7 +741,10 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
         this.mostrarTiendaPagoTransferencia = true;
         this.Banco_Pertenece = pago.BANCO_PERTENECE;
         this.Tipo_Cuenta = pago.TIPO_CUENTA;
-        this.Numero_cuenta = pago.NUMERO_CUENTA;
+        this.Numero_Cuenta = pago.NUMERO_CUENTA;
+        this.Nombre_Beneficiario=pago.NOMBRE_BENEFICIARIO;
+        this.Correo_Beneficiario=pago.CORREO_BENEFICIARIO;
+        this.Identificacion_Beneficiario=pago.IDENTIFICACION_BENEFICIARIO;
       }
       if (pago.TIPO_PAGO == 'Electrónico') {
         this.mostrarTiendaPagoElectronico = true;
@@ -999,7 +1005,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
     this.hora_estimada_retiro = null;
     this.Banco_Pertenece = null;
     this.Tipo_Cuenta = null;
-    this.Numero_cuenta = null;
+    this.Numero_Cuenta = null;
 
     this.DatosDireccion = null;
     this.DatosFactura = null;
@@ -1087,7 +1093,10 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
     Descuento: null,
     Tipo_Cuenta: null,
     Banco_Pertenece: null,
-    Numero_cuenta: null
+    Numero_Cuenta: null,
+    Nombre_Beneficiario:null,
+    Correo_Beneficiario:null,
+    Identificacion_Beneficiario:null
   };
 
   public informacionPagoEnvio() {
@@ -1104,7 +1113,10 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
       Descuento: 0,
       Tipo_Cuenta: null,
       Banco_Pertenece: null,
-      Numero_cuenta: null
+      Numero_Cuenta: null,
+      Nombre_Beneficiario:null,
+      Correo_Beneficiario:null,
+      Identificacion_Beneficiario:null
     };
 
     this.productoDetalle.TIENDA.METODO_PAGOs.forEach(pago => {
@@ -1118,7 +1130,11 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
         this.objTransferencia.Descuento = pago.PORCENTAJE_DESCUENTO;
         this.objTransferencia.Tipo_Cuenta = pago.TIPO_CUENTA;
         this.objTransferencia.Banco_Pertenece = pago.BANCO_PERTENECE;
-        this.objTransferencia.Numero_cuenta = pago.NUMERO_CUENTA;
+        this.objTransferencia.Numero_Cuenta = pago.NUMERO_CUENTA;
+        this.objTransferencia.Nombre_Beneficiario = pago.NOMBRE_BENEFICIARIO;
+        this.objTransferencia.Correo_Beneficiario = pago.CORREO_BENEFICIARIO;
+        this.objTransferencia.Identificacion_Beneficiario = pago.IDENTIFICACION_BENEFICIARIO
+
       }
 
       if (pago.TIPO_PAGO == 'Electrónico') {

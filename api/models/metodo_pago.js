@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 var db = require("../database/db.js");
 
-const Sucursal = db.sequelize.define('METODO_PAGO', {
+const Metodo_Pago = db.sequelize.define('METODO_PAGO', {
         ID_METODO_PAGO: {
             type: Sequelize.BIGINT,
             autoIncrement: true,
@@ -32,6 +32,22 @@ const Sucursal = db.sequelize.define('METODO_PAGO', {
                 type: Sequelize.STRING,
 
             },
+        NOMBRE_BENEFICIARIO:
+            {
+                type: Sequelize.STRING,
+
+            },
+        CORREO_BENEFICIARIO:
+            {
+                type: Sequelize.STRING,
+
+            },
+        IDENTIFICACION_BENEFICIARIO:
+            {
+                type: Sequelize.STRING,
+
+            },
+
         API_KEY_PAYPAL:
             {
                 type: Sequelize.STRING,
@@ -54,4 +70,4 @@ const Sucursal = db.sequelize.define('METODO_PAGO', {
         id: false
     })
 
-module.exports = Sucursal;
+module.exports = Metodo_Pago;

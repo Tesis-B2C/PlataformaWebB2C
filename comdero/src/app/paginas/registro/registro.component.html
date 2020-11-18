@@ -62,17 +62,14 @@
           <label>* Razón Social</label>
           <input #Razon_Social="ngModel" style="text-transform: uppercase;" [(ngModel)]="this.Agente.Nombre" [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched),
                  'is-valid': Razon_Social.valid && (Razon_Social.dirty || Razon_Social.touched)}"
-                 [pattern]='this.LetrasNumerosPattern'
+
                  class="tamanioInputs form-control" name="razon_Social" placeholder=""
                  required type="text">
           <div *ngIf="Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched)">
             <div *ngIf="Razon_Social.errors.required">
               <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
             </div>
-            <div *ngIf="Razon_Social.errors.pattern">
-              <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
-                números.</p>
-            </div>
+
           </div>
 
         </div>

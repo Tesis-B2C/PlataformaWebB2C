@@ -15,7 +15,8 @@ import {HttpErrorResponse} from "@angular/common/http";
 
 export class MetodosPagoComponent implements OnInit, OnDestroy {
 
-
+  public emailPattern: any = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
+  public soloNumerosPattern: any = "[0-9][0-9]*$[A-Z]{0}";
   public banderaPagoEfectivo: boolean = false;
   public banderaPagoTransferencia: boolean = false;
   public banderaPagoElectronico: boolean = false;
@@ -62,9 +63,9 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
     this.banderaSlidePagoElectronico = document.getElementById('slidePagoElectronico') as HTMLInputElement;
     this.banderaSlidePagoTransferencia = document.getElementById('slidePagoTransferencia') as HTMLInputElement;
     this.banderaSlidePagoEfectivo = document.getElementById('slidePagoEfectivo') as HTMLInputElement;
-    this.Metodo_Pago_Efectivo = new Metodo_Pago(0, 0, "", "", "", 0, "Efectivo");
-    this.Metodo_Pago_Transferencia = new Metodo_Pago(0, 0, "Ahorros", "", "", 0, "Transferencia");
-    this.Metodo_Pago_Electronico = new Metodo_Pago(0, 0, "", "", "", 0, "Electrónico");
+    this.Metodo_Pago_Efectivo = new Metodo_Pago(0, 0, "", "", "", 0, "Efectivo",null,null,null);
+    this.Metodo_Pago_Transferencia = new Metodo_Pago(0, 0, "Ahorros", "", "", 0, "Transferencia", "", "", "");
+    this.Metodo_Pago_Electronico = new Metodo_Pago(0, 0, "", "", "", 0, "Electrónico", null,null,null);
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
 
 
@@ -92,6 +93,9 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
           this.Metodo_Pago_Transferencia.Tipo_Cuenta = mp.TIPO_CUENTA;
           this.Metodo_Pago_Transferencia.Banco_Pertenece = mp.BANCO_PERTENECE;
           this.Metodo_Pago_Transferencia.Porcentaje_Descuento = mp.PORCENTAJE_DESCUENTO;
+          this.Metodo_Pago_Transferencia.Nombre_Beneficiario = mp.NOMBRE_BENEFICIARIO;
+          this.Metodo_Pago_Transferencia.Correo_Beneficiario = mp.CORREO_BENEFICIARIO;
+          this.Metodo_Pago_Transferencia.Identificacion_Beneficiario = mp.IDENTIFICACION_BENEFICIARIO;
           this.banderaSlidePagoTransferencia.checked = true;
           this.banderaPagoTransferencia = true;
         }/*else {
@@ -112,9 +116,9 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
       this.banderaSlidePagoElectronico.checked = false;
       this.banderaSlidePagoTransferencia.checked = false;
       this.banderaSlidePagoEfectivo.checked = false;
-      this.Metodo_Pago_Efectivo = new Metodo_Pago(0, null, "", "", "", 0, "Efectivo");
-      this.Metodo_Pago_Transferencia = new Metodo_Pago(0, null, "Ahorros", "", "", 0, "Transferencia");
-      this.Metodo_Pago_Electronico = new Metodo_Pago(0, 0, "", "", "", 0, "Electrónico");
+      this.Metodo_Pago_Efectivo = new Metodo_Pago(0, null, "", "", "", 0, "Efectivo",null,null,null);
+      this.Metodo_Pago_Transferencia = new Metodo_Pago(0, null, "Ahorros", "", "", 0, "Transferencia","","","");
+      this.Metodo_Pago_Electronico = new Metodo_Pago(0, 0, "", "", "", 0, "Electrónico", null,null,null);
 
 
     }
@@ -205,6 +209,11 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
         else this.mensageError(JSON.stringify(e));
       }
     }
+  }
+
+  public minusCorreo() {
+    if (this.Metodo_Pago_Transferencia.Correo_Beneficiario != '' || this.Metodo_Pago_Transferencia.Correo_Beneficiario != null)
+      this.Metodo_Pago_Transferencia.Correo_Beneficiario = this.Metodo_Pago_Transferencia.Correo_Beneficiario.toLowerCase();
   }
 
 

@@ -146,11 +146,11 @@
               </div>
             </div>
             <div class="col-md-3 ">
-              <label>Codigo</label>
+              <label>Código</label>
               <input #CodigoProducto="ngModel" [(ngModel)]="this.Producto.Cod_Producto"
                      class=" form-control py-3 "
                      name="codigoProducto"
-                     type="text" disabled>
+                     type="text"  [disabled]="!banderaModificar"  >
             </div>
             <div class="col-md-3 ">
               <label>Marca </label>

@@ -1,9 +1,6 @@
 <body class="bg">
 
 
-
-
-
 <ng-template #contentComoRecivirPagos let-modal>
 
   <div class="modal-header">
@@ -109,7 +106,8 @@
         <div class="container">
           <div class="form-row ">
             <div class="col-md-8 mx-auto d-flex align-items-center  ">
-              <p>Los pagos en efectivo estarán disponibles para los clientes que elijan la opción de retirar los productos desde la tienda o quienes acuerden la entrega con el vendedor</p>
+              <p>Los pagos en efectivo estarán disponibles para los clientes que elijan la opción de retirar los
+                productos desde la tienda o quienes acuerden la entrega con el vendedor</p>
             </div>
 
             <div class=" mx-auto d-flex align-items-center col-md-2 ">
@@ -143,12 +141,76 @@
 
             <div class="col-md-8">
               <div class="form-row">
-                <div class="form-group  col-md-12">
+                <div class="form-group col-md-12">
+                  <p>Nombre del beneficiario</p>
+                  <input #Razon_Social="ngModel" style="text-transform: uppercase;"
+                         [(ngModel)]="this.Metodo_Pago_Transferencia.Nombre_Beneficiario" [ngClass]="{'is-invalid': Razon_Social.invalid   && banderaValidaciones
+              }"
+                         [disabled]="!this.banderaPagoTransferencia || !banderaModificar"
+                         class="form-control" name="razon_Social" placeholder=""
+                         required type="text">
+                  <div *ngIf="Razon_Social.invalid && banderaValidaciones">
+                    <div *ngIf="Razon_Social.errors.required">
+                      <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.
+                      </p>
+                    </div>
+
+                  </div>
+
+                </div>
+                <div class="form-group col-lg-12">
+                  <p>Correo electrónico</p>
+                  <input #Email="ngModel" [(ngModel)]="this.Metodo_Pago_Transferencia.Correo_Beneficiario"
+                         [disabled]="!this.banderaPagoTransferencia || !banderaModificar"
+                         (keyup)="minusCorreo()"
+                         style="text-transform: lowercase" [ngClass]="{
+          'is-invalid': Email.invalid  && banderaValidaciones}" [pattern]='this.emailPattern'
+                         class="form-control "
+                         name="email" placeholder=""
+                         type="text">
+
+                  <div *ngIf="Email.invalid && banderaValidaciones">
+                    <div *ngIf="Email.errors.pattern">
+                      <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                        Debe cumplir el formato de correo electrónico</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col-lg-6">
+                  <p>Cédula / RUC</p>
+                  <input #Cedula="ngModel" [(ngModel)]="this.Metodo_Pago_Transferencia.Identificacion_Beneficiario"
+                         [disabled]="!this.banderaPagoTransferencia || !banderaModificar"
+                         [ngClass]="{'is-invalid': Cedula.invalid && banderaValidaciones}" [pattern]='this.soloNumerosPattern'
+                         class=" form-control" maxlength="13"
+                         minlength="10" name="cedula" placeholder="" required
+                         type="text">
+                  <div *ngIf="Cedula.invalid && banderaValidaciones">
+                    <div *ngIf="Cedula.errors.required">
+                      <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo
+                        requerido.</p>
+                    </div>
+                    <div *ngIf="Cedula.errors.minlength">
+                      <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                        Mínimo 10 dígitos.</p>
+                    </div>
+                    <div *ngIf="Cedula.errors.maxlength">
+                      <p class="alert1 alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
+                        Máximo 13 dígitos.</p>
+                    </div>
+                    <div *ngIf="Cedula.errors.pattern">
+                      <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
+                        Utilice solo números. </p>
+                    </div>
+                  </div>
+                </div><!--form-group end.;-->
+                <div class="form-group  col-md-6">
                   <p>Número de cuenta </p>
                   <input class="form-control" name="numeroCuenta" type="number" #NumeroCuenta="ngModel"
                          [(ngModel)]="this.Metodo_Pago_Transferencia.Numero_Cuenta"
                          [disabled]="!this.banderaPagoTransferencia || !banderaModificar" required
-                         [ngClass]="{'is-invalid': NumeroCuenta.invalid && banderaModificar && banderaValidaciones}" min="0" step="1"
+                         [ngClass]="{'is-invalid': NumeroCuenta.invalid && banderaModificar && banderaValidaciones}"
+                         min="0" step="1"
                          oninput="validity.valid||(value='');">
                   <div *ngIf="NumeroCuenta.errors?.required && banderaModificar && banderaValidaciones">
                     <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
@@ -217,7 +279,7 @@
         <div class="col-2 text-right">
           <label class="switch mt-2">
             <input type="checkbox" (click)="opcionPagoElectronico($event)" [disabled]="!banderaModificar"
-                   id="slidePagoElectronico" >
+                   id="slidePagoElectronico">
             <span class="slider round"></span>
           </label>
         </div>
@@ -234,7 +296,8 @@
                   <input class="form-control" name="apiPayPal" type="text" #ApiPayPal="ngModel"
                          [(ngModel)]="this.Metodo_Pago_Electronico.Api_Key_Paypal"
                          [disabled]="!this.banderaPagoElectronico || !banderaModificar"
-                         [ngClass]="{'is-invalid': ApiPayPal.invalid && banderaModificar && banderaValidaciones}" required="">
+                         [ngClass]="{'is-invalid': ApiPayPal.invalid && banderaModificar && banderaValidaciones}"
+                         required="">
                   <div *ngIf="ApiPayPal.errors?.required && banderaModificar && banderaValidaciones">
                     <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
                   </div>
@@ -280,25 +343,25 @@
 
       <form class="col-md-12 px-0  mt-4">
 
-          <div class="text-md-right text-center">
-            <button *ngIf="banderaModificar" [disabled]="loading" (click)="saveMetodoPago()"
-                    class="btn btn-primary text-nowrap mb-4  col-auto mr-md-2"
-                    type="button">
-              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2 "></span>
-              Guardar &nbsp;&nbsp;
-              <span class="fa fa-save"></span>
-            </button>
+        <div class="text-md-right text-center">
+          <button *ngIf="banderaModificar" [disabled]="loading" (click)="saveMetodoPago()"
+                  class="btn btn-primary text-nowrap mb-4  col-auto mr-md-2"
+                  type="button">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2 "></span>
+            Guardar &nbsp;&nbsp;
+            <span class="fa fa-save"></span>
+          </button>
 
-            <button *ngIf="banderaModificar" (click)="banderaModificar=false;iniciarEdicion();"
-                    class="btn btn-light text-nowrap mb-4  col-auto ">
-              Cancelar &nbsp;&nbsp;
-              <span class="fa fa-close"></span></button>
+          <button *ngIf="banderaModificar" (click)="banderaModificar=false;iniciarEdicion();"
+                  class="btn btn-light text-nowrap mb-4  col-auto ">
+            Cancelar &nbsp;&nbsp;
+            <span class="fa fa-close"></span></button>
 
-            <button *ngIf="!banderaModificar" (click)="banderaModificar=true"
-                    class="btn btn-warning text-nowrap mb-4  col-auto">
-              Modificar &nbsp;&nbsp;
-              <span class="fa fa-edit"></span></button>
-          </div>
+          <button *ngIf="!banderaModificar" (click)="banderaModificar=true"
+                  class="btn btn-warning text-nowrap mb-4  col-auto">
+            Modificar &nbsp;&nbsp;
+            <span class="fa fa-edit"></span></button>
+        </div>
 
       </form>
 

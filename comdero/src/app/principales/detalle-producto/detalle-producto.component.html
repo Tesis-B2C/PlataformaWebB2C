@@ -754,14 +754,15 @@
 
         <div *ngIf="this.informacionCompra.METODO_ENVIO_COMPRA == 'Acordar'" class="form-row">
           <div class="form-group col-sm-3 col-md-4 mb-0">
-            <label class="font-weight-bold">Método de Envío</label>
+            <p class="font-weight-bold text-dark text-center">Método de Envío</p>
+            <p class=" iconos-pagos  mt-2  "><img src="assets/images/delivery.png" width="50px"
+                                                  alt="..."></p>
           </div>
           <div class="form-group col-sm-9 col-md-8">
             <div class="form-row">
               <div class="form-group col-12 mb-0">
-                <label class="my-0 text-justify">Usted podrá acordar con el vendedor sobre el proceso de envío de su
-                  compra,
-                  de acuerdo a su necesidad a través de WhatsApp.</label>
+                <label class="my-0 text-justify">Podrás acordar con el vendedor sobre el proceso de envío de la
+                  compra, de acuerdo a su necesidad a través de WhatsApp.</label>
                 <div class="form-row">
                   <div class="form-group col-12 mb-0">
                     <div class="template-demo">
@@ -781,7 +782,9 @@
 
         <div *ngIf="this.informacionCompra.METODO_ENVIO_COMPRA == 'Retiro'" class="form-row">
           <div class="form-group col-sm-3 col-md-4 mb-0">
-            <label class="font-weight-bold">Método de Envío</label>
+            <p class="font-weight-bold text-dark text-center">Método de Envío</p>
+            <p class=" iconos-pagos  mt-2  "><img src="assets/images/delivery.png" width="50px"
+                                                  alt="..."></p>
           </div>
           <div class="form-group col-sm-9 col-md-8">
             <div class="form-row ">
@@ -801,7 +804,7 @@
                     más días.</p>
                   <p class=" text-justify">{{this.instruccion_retiro}}</p>
                 </div>
-                <label class=" mt-3 text-justify">Puede contactarnos a través de nuestro WhatsApp para información
+                <label class=" mt-3 text-justify">Puede contactarnos a través de nuestro WhatsApp para más información
                   sobre su pedido.</label>
               </div>
             </div>
@@ -823,14 +826,17 @@
 
         <div *ngIf="this.informacionCompra.METODO_ENVIO_COMPRA == 'Domicilio'" class="form-row">
           <div class="form-group col-sm-3 col-md-4 mb-0">
-            <label class="font-weight-bold">Método de Envío</label>
+            <p class="font-weight-bold text-dark text-center">Método de Envío</p>
+            <p class=" iconos-pagos  mt-2  "><img src="assets/images/delivery.png" width="50px"
+                                                  alt="..."></p>
           </div>
+
           <div class="form-group col-sm-9 col-md-8">
             <div class="form-row">
               <div class="form-group col-12 mb-0">
-                <label class="my-0 text-justify">Usted a seleccionado el envío a domicilio, el costo de envío se ha
+                <label class="my-0 text-justify">Usted ha seleccionado el envío a domicilio, el costo se ha
                   recargado a su pedido.
-                  para información contactanos a través de WhatsApp.</label>
+                  para más información contáctanos a través de WhatsApp.</label>
                 <div class="form-row">
                   <div class="form-group col-12 mb-0">
                     <div class="template-demo">
@@ -851,8 +857,11 @@
 
         <div *ngIf="this.informacionCompra.METODO_PAGO_COMPRA == 'Efectivo'" class="form-row">
           <div class="form-group col-sm-3 col-md-4 mb-0">
-            <label class="font-weight-bold">Método de Pago</label>
+            <p class="font-weight-bold text-center text-dark">Método de Pago</p>
+            <p class=" iconos-pagos  mt-2  "><img src="assets/images/icon-efectivo.png" width="80px"
+                                                  alt="..."></p>
           </div>
+
           <div class="form-group col-sm-9 col-md-8">
             <div class="form-row">
               <div class="form-group col-12 mb-0">
@@ -865,26 +874,35 @@
 
         <div *ngIf="this.informacionCompra.METODO_PAGO_COMPRA == 'Transferencia'" class="form-row">
           <div class="form-group col-sm-3 col-md-4 mb-0">
-            <label class="font-weight-bold">Método de Pago</label>
+            <p class="font-weight-bold text-center text-dark">Método de Pago</p>
+            <p class=" iconos-pagos  mt-2  "><img src="assets/images/icon-transferencia.png" width="80px"
+                                                  alt="..."></p>
           </div>
           <div class="form-group col-sm-9 col-md-8">
             <div class="form-row">
               <div class="form-group col-12 mb-0">
-                <div class="box">
+                <div class="box py-1">
 
-                  <div class="box-title mb-1 text-center">
-                    <label class="my-0 text-center">Datos para la transferencia bancaria</label>
+                  <div class="box-title  text-center">
+                    <label class="text-center font-weight-bold">Datos para la transferencia bancaria</label>
                   </div>
-                  <p class=" iconos-pagos "><img src="assets/images/icon-transferencia.png"
-                                                 alt="..."></p>
+                  <!--  <p class=" iconos-pagos "><img src="assets/images/icon-transferencia.png"
+                                                   alt="..."></p>-->
                   <div class="box-text mt-2 text-md-left text-center">
-                    <div class="row justify-content-center mx-auto">
-                      <p class="card-text col-md-5 mb-0 font-weight-bold">Banco:</p>
-                      <p class="col-md-6 mb-0">{{this.Banco_Pertenece}}</p>
-                      <p class="card-text col-md-5 mb-0 font-weight-bold">Tipo:</p>
-                      <p class="col-md-6 mb-0">{{this.Tipo_Cuenta}}</p>
-                      <p class="card-text col-md-5  mb-0 font-weight-bold">#Cuenta:</p>
-                      <p class="col-md-6 mb-0">{{this.Numero_cuenta}}</p>
+                    <div class="row  no-gutters ">
+                      <span class="card-text col-4  text-left dis-block">Beneficiario:</span>
+                      <span class="col-8 text-right dis-block">{{this.Nombre_Beneficiario}}</span>
+                      <span class="card-text col-5 text-left dis-block">Identificación:</span>
+                      <span class="col-7 text-right dis-block">{{this.Identificacion_Beneficiario}}</span>
+                      <span class="card-text col-4 text-left dis-block">Correo:</span>
+                      <span class="col-8 text-right dis-block">{{this.Correo_Beneficiario}}</span>
+                      <span class="card-text col-4 text-left dis-block">Banco:</span>
+                      <span class="col-8 text-right dis-block">{{this.Banco_Pertenece}}</span>
+                      <span class="card-text col-4 text-left dis-block">Tipo:</span>
+                      <span class="col-8 text-right dis-block">{{this.Tipo_Cuenta}}</span>
+                      <span class="card-text col-4  text-left dis-block">#Cuenta:</span>
+                      <span class="col-8 text-right dis-block">{{this.Numero_Cuenta}}</span>
+
                     </div>
 
                   </div>
@@ -901,11 +919,13 @@
 
         <div *ngIf="this.informacionCompra.METODO_PAGO_COMPRA == 'Electrónico'" class="form-row">
           <div class="form-group col-sm-3 col-md-4 mb-0">
-            <label class="font-weight-bold">Método de Pago</label>
+            <p class="font-weight-bold text-center text-dark">Método de Pago</p>
+            <p class=" iconos-pagos  mt-2  "><img src="assets/images/icon-electronico.png" width="80px"
+                                                  alt="..."></p>
           </div>
           <div class="form-group col-sm-9 col-md-8">
             <div class="form-row ">
-              <div class="form-group col-md-10 mb-0 ">
+              <div class="form-group col-md-12 mb-0 ">
 
                 <label>Has escogido pagar a través de PayPal, podrás realizar el pago con tu
                   cuenta PayPal o con una tarjeta de crédito o Débito</label>
@@ -919,7 +939,7 @@
         <hr>
         <div *ngIf="this.informacionCompra.METODO_PAGO_COMPRA == 'Electrónico'" class="form-row">
           <div class="form-group col-sm-3 col-md-4 mb-0">
-            <label class="font-weight-bold">Pagar ahora</label>
+            <p class="font-weight-bold text-center">Pagar ahora</p>
           </div>
           <div class="col-sm-9 col-md-8 ">
             <div class="form-row ">
@@ -965,7 +985,8 @@
               <span
                 class="fa fa-caret-down"></span></a>
 
-            <a class="categoriaNormal nav-link pl-0 text-white" style="cursor: pointer" (click)="bandera=!bandera"> <span
+            <a class="categoriaNormal nav-link pl-0 text-white" style="cursor: pointer"
+               (click)="bandera=!bandera"> <span
               class="fa fa-bars"></span> &nbsp;Categorías</a>
 
             <div class="dropdown-menu " style="height: 300px; overflow: auto">
@@ -977,12 +998,14 @@
                   <h5 class="mb-3  text-center my-1" style="font-weight: bold">{{c11.NOMBRE}}</h5>
                   <div *ngFor="let c22 of c2">
                     <div class="" *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA">
-                      <p  (click)="verificar(c22.ID_CATEGORIA,c22.NOMBRE);btnBarra.click() " style="color: black; ">{{c22.NOMBRE}}</p>
+                      <p (click)="verificar(c22.ID_CATEGORIA,c22.NOMBRE);btnBarra.click() "
+                         style="color: black; ">{{c22.NOMBRE}}</p>
 
                       <div *ngFor="let c33 of c3">
                         <div class=""
                              *ngIf=" (c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA) && (c22.ID_CATEGORIA==c33.CAT_ID_CATEGORIA)">
-                          <p (click)="verificar(c33.ID_CATEGORIA, c33.NOMBRE);btnBarra.click()" style="font-size: smaller">{{c33.NOMBRE}}</p>
+                          <p (click)="verificar(c33.ID_CATEGORIA, c33.NOMBRE);btnBarra.click()"
+                             style="font-size: smaller">{{c33.NOMBRE}}</p>
                         </div>
                       </div>
 
@@ -1019,467 +1042,486 @@
 </section>
 <!-- ========================= SECTION FRANJA AZUL END ========================= -->
 <section class="bg wrapper">
-<nav id="sidebar" class="scrollbar2  bg-white " [ngClass]="{'active':bandera}">
+  <nav id="sidebar" class="scrollbar2  bg-white " [ngClass]="{'active':bandera}">
 
-  <div class="px-4 py-2" *ngFor="let c11 of c1; let i = index">
+    <div class="px-4 py-2" *ngFor="let c11 of c1; let i = index">
 
-    <p class=" iconos-pagos mx-auto "><span class="{{this.vectorIconos[i]}} fa-2x" style="color: #2a4c75"></span>
-    </p>
-    <h5 class="mb-3  text-center my-1" style="font-weight: bold">{{c11.NOMBRE}}</h5>
+      <p class=" iconos-pagos mx-auto "><span class="{{this.vectorIconos[i]}} fa-2x" style="color: #2a4c75"></span>
+      </p>
+      <h5 class="mb-3  text-center my-1" style="font-weight: bold">{{c11.NOMBRE}}</h5>
 
 
-    <div *ngFor="let c22 of c2">
-      <div class="" *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA">
-        <li class="btn btn-link" style="color: black; "
-            (click)="verificar(c22.ID_CATEGORIA, c22.NOMBRE)">{{c22.NOMBRE}}</li>
+      <div *ngFor="let c22 of c2">
+        <div class="" *ngIf="c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA">
+          <li class="btn btn-link" style="color: black; "
+              (click)="verificar(c22.ID_CATEGORIA, c22.NOMBRE)">{{c22.NOMBRE}}</li>
 
-        <div *ngFor="let c33 of c3" class="mb-3">
-          <div *ngIf=" (c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA) && (c22.ID_CATEGORIA==c33.CAT_ID_CATEGORIA)">
-            <li class="btn btn-link ml-3" (click)="verificar(c33.ID_CATEGORIA, c33.NOMBRE)"
-                style="font-size: smaller">{{c33.NOMBRE}}</li>
+          <div *ngFor="let c33 of c3" class="mb-3">
+            <div *ngIf=" (c11.ID_CATEGORIA==c22.CAT_ID_CATEGORIA) && (c22.ID_CATEGORIA==c33.CAT_ID_CATEGORIA)">
+              <li class="btn btn-link ml-3" (click)="verificar(c33.ID_CATEGORIA, c33.NOMBRE)"
+                  style="font-size: smaller">{{c33.NOMBRE}}</li>
+            </div>
           </div>
-        </div>
 
+        </div>
       </div>
+
+
+      <hr>
     </div>
 
 
-    <hr>
-  </div>
+  </nav>
+
+  <body class="bg w-100">
+  <form #FormDetalleProducto id="formDetalleProducto" name="formDetalleProducto">
+    <!-- ============================ COMPONENT 1 ================================= -->
+    <section class="section-content padding-y-sm">
+      <div class="container">
+        <div class="card">
+          <div class="row no-gutters">
+            <aside class="col-lg-7 col-md-7">
+
+              <article class="gallery-wrap">
+                <div class="img-big-wrap ">
+                  <a>
+                    <img *ngIf="this.imagenPrincipal != null" [src]="this.imagenPrincipal">
+                    <iframe *ngIf="this.imagenPrincipal == null && this.videoYoutube" width="100%" height="380"
+                            [src]="this.videoYoutube" frameborder="0"
+                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+
+                    <div *ngIf="data.video && this.imagenPrincipal == null">
+                      <div class="mx-auto fondo-animacion-carga-video">
+                        <video class="video-carga" controls autoplay width="100%" height="380">
+                          <source [src]="data.video" type="{{ data.type }}">
+                        </video>
+                      </div>
+                    </div>
+
+                  </a>
+
+                </div> <!-- img-big-wrap.// -->
+                <div class="thumbs-wrap">
+                  <a *ngFor="let imagen of this.varianteActiva.IMAGENES">
+                    <div class="item-thumb" *ngIf="imagen.TIPO_IMAGEN != 'youtube' && imagen.TIPO_IMAGEN != 'video'">
+                      <img (click)="asignarImgPrincipal(imagen.IMAGEN)" [src]="getImagen(imagen.IMAGEN)">
+                    </div>
+                    <div class="item-thumb" *ngIf="imagen.TIPO_IMAGEN == 'youtube'">
+                      <button (click)="this.imagenPrincipal = null" class="clvideo"><i class="fab fa-youtube fa-3x"
+                                                                                       aria-hidden="true"></i></button>
+                    </div>
+                    <div class="item-thumb" *ngIf="imagen.TIPO_IMAGEN == 'video'">
+                      <button (click)="this.imagenPrincipal = null" class="clvideo"><i class="fas fa-video fa-3x"
+                                                                                       aria-hidden="true"></i></button>
+                    </div>
+                  </a>
+                </div> <!-- thumbs-wrap.// -->
+              </article>  <!--gallery-wrap .end//-->
+            </aside>
+            <main class="col-lg-5 col-md-5 border-left">
+              <article class="content-body px-4 pt-2">
+                <p class="mb-0 text-center mb-2">
+                  <a
+                    routerLink="../../detalle-tienda/tienda/{{this.productoDetalle?.TIENDA.NUM_TIENDA}}/inicio-tienda"
+                    class="title tituloTienda text-primary p-0"> {{this.productoDetalle?.TIENDA.NOMBRE_COMERCIAL}}</a>
+                </p>
+
+                <div class="form-row justify-content-center text-center">
+
+                  <label
+                    class=" m-0 col-md-4  align-self-center"><strong>{{this.productoDetalle?.PRODUCTO.CONDICION}}</strong></label>
+                  <div class="rating-wrap mb-0 col-md-4">
+
+                    <div class="row no-gutters justify-content-center">
 
 
-</nav>
+                      <ul class="rating-stars col-auto">
+                        <label class=" text-center  mr-2">
+                          <strong>{{this.productoDetalle?.PRODUCTO.CALIFICACIONs[0]?.PROMEDIO_CAL | number}}</strong></label>
+                        <ngb-rating *ngIf="this.productoDetalle?.PRODUCTO.CALIFICACIONs.length != 0"
+                                    [(rate)]="this.productoDetalle?.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL">
+                          <ng-template let-fill="fill">
+                            <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                          </ng-template>
+                        </ngb-rating>
 
-<body class="bg w-100" >
-<form #FormDetalleProducto id="formDetalleProducto" name="formDetalleProducto">
-  <!-- ============================ COMPONENT 1 ================================= -->
-  <section class="section-content padding-y-sm">
-    <div class="container">
-      <div class="card">
-        <div class="row no-gutters">
-          <aside class="col-lg-7 col-md-7">
+                        <ngb-rating *ngIf="this.productoDetalle?.PRODUCTO.CALIFICACIONs.length == 0"
+                                    [(rate)]="currentRate">
+                          <ng-template let-fill="fill">
+                            <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                          </ng-template>
+                        </ngb-rating>
 
-            <article class="gallery-wrap">
-              <div class="img-big-wrap ">
-                <a>
-                  <img *ngIf="this.imagenPrincipal != null" [src]="this.imagenPrincipal"  >
-                  <iframe *ngIf="this.imagenPrincipal == null && this.videoYoutube" width="100%" height="380"
-                          [src]="this.videoYoutube" frameborder="0"
-                          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                          allowfullscreen></iframe>
-
-                  <div *ngIf="data.video && this.imagenPrincipal == null">
-                    <div class="mx-auto fondo-animacion-carga-video">
-                      <video class="video-carga" controls autoplay width="100%" height="380">
-                        <source [src]="data.video" type="{{ data.type }}">
-                      </video>
+                      </ul>
                     </div>
                   </div>
-
-                </a>
-
-              </div> <!-- img-big-wrap.// -->
-              <div class="thumbs-wrap">
-                <a *ngFor="let imagen of this.varianteActiva.IMAGENES">
-                  <div class="item-thumb" *ngIf="imagen.TIPO_IMAGEN != 'youtube' && imagen.TIPO_IMAGEN != 'video'">
-                    <img (click)="asignarImgPrincipal(imagen.IMAGEN)" [src]="getImagen(imagen.IMAGEN)">
-                  </div>
-                  <div class="item-thumb" *ngIf="imagen.TIPO_IMAGEN == 'youtube'">
-                    <button (click)="this.imagenPrincipal = null" class="clvideo"><i class="fab fa-youtube fa-3x"
-                                                                                     aria-hidden="true"></i></button>
-                  </div>
-                  <div class="item-thumb" *ngIf="imagen.TIPO_IMAGEN == 'video'">
-                    <button (click)="this.imagenPrincipal = null" class="clvideo"><i class="fas fa-video fa-3x"
-                                                                                     aria-hidden="true"></i></button>
-                  </div>
-                </a>
-              </div> <!-- thumbs-wrap.// -->
-            </article>  <!--gallery-wrap .end//-->
-          </aside>
-          <main class="col-lg-5 col-md-5 border-left">
-            <article class="content-body px-4 pt-2">
-              <p class="mb-0 text-center mb-2">
-                <a
-                  routerLink="../../detalle-tienda/tienda/{{this.productoDetalle?.TIENDA.NUM_TIENDA}}/inicio-tienda"
-                  class="title tituloTienda text-primary p-0"> {{this.productoDetalle?.TIENDA.NOMBRE_COMERCIAL}}</a>
-              </p>
-
-              <div class="form-row justify-content-center text-center">
-
-                <label class=" m-0 col-md-4  align-self-center"><strong>{{this.productoDetalle?.PRODUCTO.CONDICION}}</strong></label>
-                <div class="rating-wrap mb-0 col-md-4">
-
-                  <div class="row no-gutters justify-content-center">
-
-
-                    <ul class="rating-stars col-auto">
-                      <label class=" text-center  mr-2"> <strong>{{this.productoDetalle?.PRODUCTO.CALIFICACIONs[0]?.PROMEDIO_CAL | number}}</strong></label>
-                      <ngb-rating *ngIf="this.productoDetalle?.PRODUCTO.CALIFICACIONs.length != 0"
-                                  [(rate)]="this.productoDetalle?.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL">
-                        <ng-template let-fill="fill">
-                          <span class="star" [class.filled]="fill === 100">&#9733;</span>
-                        </ng-template>
-                      </ngb-rating>
-
-                      <ngb-rating *ngIf="this.productoDetalle?.PRODUCTO.CALIFICACIONs.length == 0"
-                                  [(rate)]="currentRate">
-                        <ng-template let-fill="fill">
-                          <span class="star" [class.filled]="fill === 100">&#9733;</span>
-                        </ng-template>
-                      </ngb-rating>
-
-                    </ul>
-                  </div>
-                </div>
-                <div class="col-md-4">
+                  <div class="col-md-4">
                 <span *ngIf="this.productoDetalle?.PRODUCTO.COMENTARIOs.length > 0"
                       class="label-rating text-muted">{{this.productoDetalle?.PRODUCTO.COMENTARIOs.length}}
                   comentarios</span>
 
-                  <span *ngIf="this.productoDetalle?.PRODUCTO.COMENTARIOs.length == 0" class="label-rating text-muted">0 Comentarios </span>
+                    <span *ngIf="this.productoDetalle?.PRODUCTO.COMENTARIOs.length == 0"
+                          class="label-rating text-muted">0 Comentarios </span>
+                  </div>
+                </div> <!-- rating-wrap.// -->
+
+                <hr class="mt-2">
+
+                <div class="mt-2">
+                  <h3 class="title m-0  mb-2">{{this.productoDetalle?.PRODUCTO.NOMBRE_PRODUCTO}}</h3>
                 </div>
-              </div> <!-- rating-wrap.// -->
 
-              <hr class="mt-2">
+                <div class="my-3">
+                  <var
+                    *ngIf="this.banderaNoDisponible == false && this.varianteActiva?.STOCK != 0 && !this.banderaActivarDescuentoAutomatico"
+                    class="price h3">{{this.varianteActiva?.PRECIO_UNITARIO_CON_IVA | currency}}</var>
 
-              <div class="mt-2">
-                <h3 class="title m-0  mb-2">{{this.productoDetalle?.PRODUCTO.NOMBRE_PRODUCTO}}</h3>
-              </div>
+                  <var *ngIf="this.banderaActivarDescuentoAutomatico" class="price h3">
+                    {{this.varianteActiva.PRECIO_UNITARIO_CON_IVA_DESCUENTO | currency}}
+                  </var>
+                  <del *ngIf="this.banderaActivarDescuentoAutomatico" class="price-old">
+                    {{this.varianteActiva?.PRECIO_UNITARIO_CON_IVA | currency}}
+                  </del>
 
-              <div class="my-3">
-                <var
-                  *ngIf="this.banderaNoDisponible == false && this.varianteActiva?.STOCK != 0 && !this.banderaActivarDescuentoAutomatico"
-                  class="price h3">{{this.varianteActiva?.PRECIO_UNITARIO_CON_IVA | currency}}</var>
-
-                <var *ngIf="this.banderaActivarDescuentoAutomatico" class="price h3">
-                  {{this.varianteActiva.PRECIO_UNITARIO_CON_IVA_DESCUENTO | currency}}
-                </var>
-                <del *ngIf="this.banderaActivarDescuentoAutomatico" class="price-old">
-                  {{this.varianteActiva?.PRECIO_UNITARIO_CON_IVA | currency}}
-                </del>
-
-                <var *ngIf="this.banderaNoDisponible == true" class="text-danger h5">No disponible</var>
-                <var *ngIf="this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0"
-                     class="text-success h5">
-                  Agotado
-                </var>
-              </div>
-
-              <article class="gallery-wrap">
-                <div *ngIf="this.existeColor == true">
-                  <div class="thumbs-wrap">
-                    <div class="item-thumbDetalle" *ngFor="let color of this.arrayColor"
-                         [ngClass]="{'item-Activo':color==this.varianteActiva.COLOR}">
-                      <button id="btnValueColor+{{color}}" (click)="this.asignarColor(color)" class="item-opciones"
-                              [style.background-color]="color"></button>
-                    </div>
-                  </div> <!-- thumbs-wrap.// -->
+                  <var *ngIf="this.banderaNoDisponible == true" class="text-danger h5">No disponible</var>
+                  <var *ngIf="this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0"
+                       class="text-success h5">
+                    Agotado
+                  </var>
                 </div>
-                <div class="fontTamano">
-                  <dl class="row mb-3">
-                    <dt class="col-sm-3 col-4" *ngIf="this.productoDetalle?.PRODUCTO.MARCA">Marca</dt>
-                    <dd class="col-sm-9 col-8 mb-2" *ngIf="this.productoDetalle?.PRODUCTO.MARCA">{{this.productoDetalle?.PRODUCTO.MARCA}}</dd>
 
-                    <dt *ngIf="this.existeTalla == true" class="col-sm-3 col-4 mt-2">Talla</dt>
-                    <dd *ngIf="this.existeTalla == true" class="col-sm-9 col-8">
-
-                      <div class="form-group col-lg-6 col-md-6 col-10 my-2 p-0">
-                        <select (change)="this.verificarVariante()" class=" tamanioInputs form-control form-control-sm"
-                                data-size="4"
-                                name="tallaSelect" id="tallaSelect">
-                          <option *ngFor="let talla of this.arrayTalla"
-                                  [selected]="talla == this.varianteActiva.TALLA"
-                                  value="{{talla}}">{{talla}}</option>
-                        </select>
+                <article class="gallery-wrap">
+                  <div *ngIf="this.existeColor == true">
+                    <div class="thumbs-wrap">
+                      <div class="item-thumbDetalle" *ngFor="let color of this.arrayColor"
+                           [ngClass]="{'item-Activo':color==this.varianteActiva.COLOR}">
+                        <button id="btnValueColor+{{color}}" (click)="this.asignarColor(color)" class="item-opciones"
+                                [style.background-color]="color"></button>
                       </div>
+                    </div> <!-- thumbs-wrap.// -->
+                  </div>
+                  <div class="fontTamano">
+                    <dl class="row mb-3">
+                      <dt class="col-sm-3 col-4" *ngIf="this.productoDetalle?.PRODUCTO.MARCA">Marca</dt>
+                      <dd class="col-sm-9 col-8 mb-2"
+                          *ngIf="this.productoDetalle?.PRODUCTO.MARCA">{{this.productoDetalle?.PRODUCTO.MARCA}}</dd>
 
-                    </dd>
+                      <dt *ngIf="this.existeTalla == true" class="col-sm-3 col-4 mt-2">Talla</dt>
+                      <dd *ngIf="this.existeTalla == true" class="col-sm-9 col-8">
 
-                    <dt *ngIf="this.existeMaterial == true" class="col-sm-3 col-4 mt-2">Material</dt>
-                    <dd *ngIf="this.existeMaterial == true" class="col-sm-9 col-8">
+                        <div class="form-group col-lg-6 col-md-6 col-10 my-2 p-0">
+                          <select (change)="this.verificarVariante()"
+                                  class=" tamanioInputs form-control form-control-sm"
+                                  data-size="4"
+                                  name="tallaSelect" id="tallaSelect">
+                            <option *ngFor="let talla of this.arrayTalla"
+                                    [selected]="talla == this.varianteActiva.TALLA"
+                                    value="{{talla}}">{{talla}}</option>
+                          </select>
+                        </div>
 
-                      <div class="form-group col-lg-6 col-md-6 col-10 my-2 p-0">
-                        <select (change)="this.verificarVariante()" class="tamanioInputs form-control form-control-sm"
-                                data-size="4"
-                                name="materialSelect" id="materialSelect">
-                          <option *ngFor="let material of this.arrayMaterial"
-                                  [selected]="material == this.varianteActiva.MATERIAL"
-                                  value="{{material}}">{{material}}</option>
-                        </select>
-                      </div>
-                    </dd>
+                      </dd>
 
-                    <dt class="col-sm-3 col-4 mt-4">Cantidad <a class="m-0 pt-0 text-center"
-                                                                style="font-size: 11px">({{this.varianteActiva.MEDIDA}})</a></dt>
+                      <dt *ngIf="this.existeMaterial == true" class="col-sm-3 col-4 mt-2">Material</dt>
+                      <dd *ngIf="this.existeMaterial == true" class="col-sm-9 col-8">
 
-                    <dd class="col-sm-9 col-8">
-                      <div class="form-group form-control-sm col-lg-6 col-md-6 col-10 my-2 p-0">
+                        <div class="form-group col-lg-6 col-md-6 col-10 my-2 p-0">
+                          <select (change)="this.verificarVariante()" class="tamanioInputs form-control form-control-sm"
+                                  data-size="4"
+                                  name="materialSelect" id="materialSelect">
+                            <option *ngFor="let material of this.arrayMaterial"
+                                    [selected]="material == this.varianteActiva.MATERIAL"
+                                    value="{{material}}">{{material}}</option>
+                          </select>
+                        </div>
+                      </dd>
 
-                        <div class="input-group input-spinner mt-4">
-                          <div class="input-group-prepend">
-                            <button
-                              [disabled]="this.banderaNoDisponible || (this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0)"
-                              (click)="this.decrementar()" class="btn btn-light  tamanioInputs m-0 px-1"
-                              style="border-color: darkgray" type="button"
-                              id="button-plus"> -
-                            </button>
-                          </div>
-                          <input type="number" disabled [(ngModel)]="this.varianteActiva.CANTIDAD"
-                                 class="form-control tamanioInputs m-0"
-                                 style="border-color: darkgray; background-color: white" value="1"
-                                 name="cantidadProducto">
-                          <div class="input-group-append">
-                            <button
-                              [disabled]="this.banderaNoDisponible || (this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0)"
-                              (click)="this.incrementar()" class="btn btn-light tamanioInputs m-0 px-1"
-                              style="border-color: darkgray" type="button"
-                              id="button-minus"> +
-                            </button>
-                          </div>
-                        </div> <!-- input-group.// -->
+                      <dt class="col-sm-3 col-4 mt-4">Cantidad <a class="m-0 pt-0 text-center"
+                                                                  style="font-size: 11px">({{this.varianteActiva.MEDIDA}}
+                        )</a></dt>
 
-                      </div>
-                    </dd>
-                  </dl>
-                </div>
-              </article> <!-- gallery-wrap .end// -->
+                      <dd class="col-sm-9 col-8">
+                        <div class="form-group form-control-sm col-lg-6 col-md-6 col-10 my-2 p-0">
 
+                          <div class="input-group input-spinner mt-4">
+                            <div class="input-group-prepend">
+                              <button
+                                [disabled]="this.banderaNoDisponible || (this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0)"
+                                (click)="this.decrementar()" class="btn btn-light  tamanioInputs m-0 px-1"
+                                style="border-color: darkgray" type="button"
+                                id="button-plus"> -
+                              </button>
+                            </div>
+                            <input type="number" disabled [(ngModel)]="this.varianteActiva.CANTIDAD"
+                                   class="form-control tamanioInputs m-0"
+                                   style="border-color: darkgray; background-color: white" value="1"
+                                   name="cantidadProducto">
+                            <div class="input-group-append">
+                              <button
+                                [disabled]="this.banderaNoDisponible || (this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0)"
+                                (click)="this.incrementar()" class="btn btn-light tamanioInputs m-0 px-1"
+                                style="border-color: darkgray" type="button"
+                                id="button-minus"> +
+                              </button>
+                            </div>
+                          </div> <!-- input-group.// -->
 
-              <div class="form-row justify-content-around mt-md-2">
-                <div class="form-group col-md-7 col-12 mb-md-0 mb-2">
-                  <button (click)="this.abrirModalFinalizarPedido(contentPedido)"
-                          [disabled]="this.banderaNoDisponible || (this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0)"
-                          class="btn btn-primary col-12 mt-md-0 mt-2"> Comprar
-                  </button>
-                </div><!--form-group end.-->
-                <div class="form-group col-md-5 col-12 mb-0">
-                  <button (click)="agregarCarrito()"
-                          [disabled]="this.banderaNoDisponible || (this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0)"
-                          class="btn btn-outline-primary col-12">
-                    <span class="text">Agregar al carrito</span>
-                    <i class="fas fa-shopping-cart"></i>
-                  </button>
-                </div><!--form-group end.-->
-
-              </div><!--form-row.-->
-            </article> <!-- product-info-aside .// -->
-          </main> <!-- col.// -->
-        </div> <!-- row.// -->
-      </div> <!-- card.// -->
-    </div> <!-- container.// -->
-  </section>
-  <!-- ============================ COMPONENT 1 END .// ================================= -->
-
-  <!-- ============================ COMPONENT SECCION INFORMACION  ================================= -->
-  <section class="section-content padding-y-sm pt-0">
-    <div class="container">
-
-      <ngb-tabset [destroyOnHide]="false">
-        <ngb-tab title="Información">
-          <ng-template ngbTabContent>
-            <article class="card">
-              <div class="card-body">
-                <h5>Descripción del producto</h5>
-                <p class=" text-justify">
-                  {{this.productoDetalle?.PRODUCTO.DESCRIPCION_PRODUCTO}}
-                </p>
-                <hr>
-                <div class="row">
-                  <aside class="col">
-                    <h5>Información adicional</h5>
-                    <dl class="row">
-                      <dt class="col-sm-3 col-4">Código:</dt>
-                      <dd class="col-sm-9 col-8"> {{this.productoDetalle?.PRODUCTO.COD_PRODUCTO}}</dd>
-
-                      <dt class="col-sm-3 col-4">Peso:</dt>
-                      <dd class="col-sm-9 col-8"> {{this.productoDetalle?.PRODUCTO.PESO_PRODUCTO}} kg</dd>
-
-                      <dt class="col-sm-3 col-4">Garantía:</dt>
-                      <dd class="col-sm-9 col-8"> {{this.productoDetalle?.GARANTIA}}</dd>
+                        </div>
+                      </dd>
                     </dl>
-                  </aside>
-                </div> <!-- row.// -->
-                <hr>
+                  </div>
+                </article> <!-- gallery-wrap .end// -->
 
-                <h5 *ngIf="this.productoDetalle?.PRODUCTO.DETALLE_PRODUCTO">Detalle del producto</h5>
-                <div [innerHTML]=this.productoDetalle?.PRODUCTO.DETALLE_PRODUCTO></div>
 
-              </div> <!-- card-body.// -->
-            </article> <!-- card.// -->
-          </ng-template>
-        </ngb-tab>
+                <div class="form-row justify-content-around mt-md-2">
+                  <div class="form-group col-md-7 col-12 mb-md-0 mb-2">
+                    <button (click)="this.abrirModalFinalizarPedido(contentPedido)"
+                            [disabled]="this.banderaNoDisponible || (this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0)"
+                            class="btn btn-primary col-12 mt-md-0 mt-2"> Comprar
+                    </button>
+                  </div><!--form-group end.-->
+                  <div class="form-group col-md-5 col-12 mb-0">
+                    <button (click)="agregarCarrito()"
+                            [disabled]="this.banderaNoDisponible || (this.banderaNoDisponible == false && this.varianteActiva.STOCK == 0)"
+                            class="btn btn-outline-primary col-12">
+                      <span class="text">Agregar al carrito</span>
+                      <i class="fas fa-shopping-cart"></i>
+                    </button>
+                  </div><!--form-group end.-->
 
-        <ngb-tab>
-          <ng-template ngbTabTitle>Envíos y pagos</ng-template>
-          <ng-template ngbTabContent>
+                </div><!--form-row.-->
+              </article> <!-- product-info-aside .// -->
+            </main> <!-- col.// -->
+          </div> <!-- row.// -->
+        </div> <!-- card.// -->
+      </div> <!-- container.// -->
+    </section>
+    <!-- ============================ COMPONENT 1 END .// ================================= -->
 
-            <article class="card">
-              <div id="cardMetodosEnvioInformacion">
-                <div class="row justify-content-center ">
-                  <h4 class="card-title text-center mt-3">Opciones de Pago</h4>
+    <!-- ============================ COMPONENT SECCION INFORMACION  ================================= -->
+    <section class="section-content padding-y-sm pt-0">
+      <div class="container">
 
-                </div>
-                <p class="text-center px-2">Contamos con varios métodos de pago para facilitar la compra de tus
-                  productos,
-                  al momento de realizar la
-                  transacción.</p>
+        <ngb-tabset [destroyOnHide]="false">
+          <ngb-tab title="Información">
+            <ng-template ngbTabContent>
+              <article class="card">
+                <div class="card-body">
+                  <h5>Descripción del producto</h5>
+                  <p class=" text-justify">
+                    {{this.productoDetalle?.PRODUCTO.DESCRIPCION_PRODUCTO}}
+                  </p>
+                  <hr>
+                  <div class="row">
+                    <aside class="col">
+                      <h5>Información adicional</h5>
+                      <dl class="row">
+                        <dt class="col-sm-3 col-4">Código:</dt>
+                        <dd class="col-sm-9 col-8"> {{this.productoDetalle?.PRODUCTO.COD_PRODUCTO}}</dd>
 
-                <div class="social-box"
-                     *ngIf="this.objTransferencia.Tipo_Pago!=null || this.objEfectivo.Tipo_Pago!=null || this.objElectronico.Tipo_Pago!=null">
-                  <div class="container">
-                    <div class="row justify-content-center">
+                        <dt class="col-sm-3 col-4">Peso:</dt>
+                        <dd class="col-sm-9 col-8"> {{this.productoDetalle?.PRODUCTO.PESO_PRODUCTO}} kg</dd>
 
-                      <div class="col-lg-4 col-xs-12  text-center" *ngIf="this.objEfectivo.Tipo_Pago!=null">
-                        <div class="box py-2">
-                          <div class="box-title mb-2">
-                            <h5>Efectivo</h5>
-                          </div>
-                          <p class=" iconos-pagos "><img src="assets/images/icon-efectivo.png" alt="..."></p>
-                          <div class="box-text">
-                            <span>Usted puede pagar con efectivo en nuestra tienda, realiza la compra en la plataforma y puedes pagarlo al momento de la entrega.</span>
+                        <dt class="col-sm-3 col-4">Garantía:</dt>
+                        <dd class="col-sm-9 col-8"> {{this.productoDetalle?.GARANTIA}}</dd>
+                      </dl>
+                    </aside>
+                  </div> <!-- row.// -->
+                  <hr>
+
+                  <h5 *ngIf="this.productoDetalle?.PRODUCTO.DETALLE_PRODUCTO">Detalle del producto</h5>
+                  <div [innerHTML]=this.productoDetalle?.PRODUCTO.DETALLE_PRODUCTO></div>
+
+                </div> <!-- card-body.// -->
+              </article> <!-- card.// -->
+            </ng-template>
+          </ngb-tab>
+
+          <ngb-tab>
+            <ng-template ngbTabTitle>Envíos y pagos</ng-template>
+            <ng-template ngbTabContent>
+
+              <article class="card">
+                <div id="cardMetodosEnvioInformacion">
+                  <div class="row justify-content-center ">
+                    <h4 class="card-title text-center mt-3">Opciones de Pago</h4>
+
+                  </div>
+                  <p class="text-center px-2">Contamos con varios métodos de pago para facilitar la compra de tus
+                    productos,
+                    al momento de realizar la
+                    transacción.</p>
+
+                  <div class="social-box"
+                       *ngIf="this.objTransferencia.Tipo_Pago!=null || this.objEfectivo.Tipo_Pago!=null || this.objElectronico.Tipo_Pago!=null">
+                    <div class="container">
+                      <div class="row justify-content-center">
+
+                        <div class="col-lg-4 col-xs-12  text-justify" *ngIf="this.objEfectivo.Tipo_Pago!=null">
+                          <div class="box py-2">
+                            <div class="box-title mb-2 text-center">
+                              <h5>Efectivo</h5>
+                            </div>
+                            <p class=" iconos-pagos "><img src="assets/images/icon-efectivo.png" alt="..."></p>
+                            <div class="box-text">
+                              <span>Usted puede pagar con efectivo en nuestra tienda, realiza la compra en la plataforma y puedes pagarlo al momento de la entrega.</span>
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div class="col-lg-4 col-xs-12  text-center" *ngIf="this.objTransferencia.Tipo_Pago!=null">
-                        <div class="box py-2">
-                          <div class="box-title mb-2">
-                            <h5>Transferencia bancaria</h5>
+                        <div class="col-lg-4 col-xs-12  text-justify" *ngIf="this.objTransferencia.Tipo_Pago!=null">
+                          <div class="box py-2">
+                            <div class="box-title mb-2 text-center">
+                              <h5>Transferencia bancaria</h5>
+                            </div>
+                            <p class=" iconos-pagos "><img src="assets/images/icon-transferencia.png" alt="..."></p>
+                            <div class="box-text">
+                              <span>Usted puede pagar con transferencia bancaria luego de realizar la compra en la plataforma.</span>
+                              <hr>
+
+                              <div class=" row  no-gutters ">
+                                <span class="card-text col-4  text-left dis-block">Beneficiario:</span>
+                                <span
+                                  class="col-8 text-right dis-block">{{this.objTransferencia.Nombre_Beneficiario}}</span>
+                                <span class="card-text col-5 text-left dis-block">Identificación:</span>
+                                <span
+                                  class="col-7 text-right dis-block">{{this.objTransferencia.Identificacion_Beneficiario}}</span>
+                                <span class="card-text col-4 text-left dis-block">Correo:</span>
+                                <span
+                                  class="col-8 text-right dis-block">{{this.objTransferencia.Correo_Beneficiario}}</span>
+                                <span class="card-text col-4 text-left dis-block">Banco:</span>
+                                <span
+                                  class="col-8 text-right dis-block">{{this.objTransferencia.Banco_Pertenece}}</span>
+                                <span class="card-text col-4 text-left dis-block">Tipo:</span>
+                                <span class="col-8 text-right dis-block">{{this.objTransferencia.Tipo_Cuenta}}</span>
+                                <span class="card-text col-4  text-left dis-block">#Cuenta:</span>
+                                <span class="col-8 text-right dis-block">{{this.objTransferencia.Numero_Cuenta}}</span>
+
+                              </div>
+                            </div>
                           </div>
-                          <p class=" iconos-pagos "><img src="assets/images/icon-transferencia.png" alt="..."></p>
-                          <div class="box-text">
-                            <span>Usted puede pagar con transferencia bancaria luego de realizar la compra en la plataforma.</span>
-                            <hr>
-                            <div class="row justify-content-center mx-auto">
-                              <p class="card-text col-5 ">Banco:</p>
-                              <p class="col-6 ">{{this.objTransferencia.Banco_Pertenece}}</p>
-                              <p class="card-text col-5 ">Tipo:</p>
-                              <p class="col-6 ">{{this.objTransferencia.Tipo_Cuenta}}</p>
-                              <p class="card-text col-5  ">#Cuenta:</p>
-                              <p class="col-6 ">{{this.objTransferencia.Numero_cuenta}}</p>
+                        </div>
+
+                        <div class="col-lg-4 col-xs-12  text-justify" *ngIf="this.objElectronico.Tipo_Pago!=null">
+                          <div class="box py-2">
+                            <div class="box-title mb-2 text-center">
+                              <h5>Electrónico</h5>
+                            </div>
+                            <p class=" iconos-pagos "><img src="assets/images/icon-electronico.png" alt="..."></p>
+                            <div class="box-text">
+                              <span>Usted puede pagar todas sus compras a través de la plataforma Paypal de manera rápida y segura.</span>
+                            </div>
+                            <div class="box-btn text-primary text-center">
+                              <a>Porcentaje de recargo:  {{objElectronico.Recargo}}%</a>
                             </div>
                           </div>
                         </div>
                       </div>
-
-                      <div class="col-lg-4 col-xs-12  text-center" *ngIf="this.objElectronico.Tipo_Pago!=null">
-                        <div class="box py-2">
-                          <div class="box-title mb-2">
-                            <h5>Electrónico</h5>
-                          </div>
-                          <p class=" iconos-pagos "><img src="assets/images/icon-electronico.png" alt="..."></p>
-                          <div class="box-text">
-                            <span>Usted puede pagar todas sus compras a traves de la plataforma Paypal de manera rápida y segura.</span>
-                          </div>
-                          <div class="box-btn text-primary">
-                            <a>Porcentaje de recargo:  {{objElectronico.Recargo}}%</a>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <hr>
+                <hr>
 
-              <div id="cardMetodosPagoInformacion">
+                <div id="cardMetodosPagoInformacion">
 
-                <h4 class="card-title text-center ">Opciones de Entrega</h4>
-                <p class=" text-center px-2">Contamos con algunas opciones para facilitar la entrega de
-                  nuestros productos, si no encuentras una opción que se ajuste a tus necesidades de seguro llegaremos
-                  a un acuerdo </p>
+                  <h4 class="card-title text-center ">Opciones de Entrega</h4>
+                  <p class=" text-center px-2">Contamos con algunas opciones para facilitar la entrega de
+                    nuestros productos, si no encuentras una opción que se ajuste a tus necesidades de seguro llegaremos
+                    a un acuerdo </p>
 
-                <div class="social-box"
-                     *ngIf="this.objTransferencia.Tipo_Pago!=null || this.objEfectivo.Tipo_Pago!=null || this.objElectronico.Tipo_Pago!=null">
-                  <div class="container">
-                    <div class="row justify-content-center px-3">
+                  <div class="social-box"
+                       *ngIf="this.objTransferencia.Tipo_Pago!=null || this.objEfectivo.Tipo_Pago!=null || this.objElectronico.Tipo_Pago!=null">
+                    <div class="container">
+                      <div class="row justify-content-center px-3">
 
-                      <div class="card col-md-4" *ngFor="let envio of this.productoDetalle.TIENDA.OPCION_ENVIOs">
-                        <div class="card-body" *ngIf="envio.TIPO_ENVIO=='Domicilio'">
-                          <h5 class="card-title">Entrega a {{envio.TIPO_ENVIO}}</h5>
-                          <h6 class="card-subtitle mb-2 text-muted" *ngIf="envio.TIPO_UBICACION=='Resto'">Otras
-                            provincias <i class="fas fa-map-marker-alt"></i></h6>
-                          <h6 class="card-subtitle mb-2 text-muted"
-                              *ngIf="envio.TIPO_UBICACION!='Resto'">{{envio.TIPO_UBICACION}}   <i
-                            class="fas fa-map-marker-alt"></i></h6>
-                          <p class="card-text">{{envio.TIPO_MEDIDA}}   Mínimo del pedido: {{envio.MINIMO}}<a
-                            *ngIf="envio.TIPO_MEDIDA=='Peso'">Kg</a> <a *ngIf="envio.TIPO_MEDIDA=='Precio'">$</a></p>
-                          <p>{{envio.TIPO_MEDIDA}} Máximo: {{envio.MAXIMO}}<a *ngIf="envio.TIPO_MEDIDA=='Peso'">Kg</a>
-                            <a *ngIf="envio.TIPO_MEDIDA=='Precio'">$</a></p>
-                          <p style="font-weight: bold" class="text-primary">Costo de envío: <a
-                            *ngIf="envio.PRECIO!=0"> {{envio.PRECIO}}$</a> <span *ngIf="envio.PRECIO==0"
-                                                                                 class="badge badge-pill badge-primary">Gratis</span>
-                          </p>
-                          <p *ngIf="envio.INSTRUCCION_RETIRO">Instrucciones de envío {{envio.INSTRUCCION_RETIRO}} </p>
+                        <div class="card col-md-4" *ngFor="let envio of this.productoDetalle.TIENDA.OPCION_ENVIOs">
+                          <div class="card-body" *ngIf="envio.TIPO_ENVIO=='Domicilio'">
+                            <h5 class="card-title mb-3">Entrega a {{envio.TIPO_ENVIO}}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted" *ngIf="envio.TIPO_UBICACION=='Resto'">Otras
+                              provincias <i class="fas fa-map-marker-alt"></i></h6>
+                            <h6 class="card-subtitle mb-2 text-muted"
+                                *ngIf="envio.TIPO_UBICACION!='Resto'">{{envio.TIPO_UBICACION}}   <i
+                              class="fas fa-map-marker-alt"></i></h6>
+                            <p class="card-text mb-0">{{envio.TIPO_MEDIDA}}   Mínimo del pedido: {{envio.MINIMO}}<a
+                              *ngIf="envio.TIPO_MEDIDA=='Peso'">Kg</a> <a *ngIf="envio.TIPO_MEDIDA=='Precio'">$</a></p>
+                            <p>{{envio.TIPO_MEDIDA}} Máximo: {{envio.MAXIMO}}<a *ngIf="envio.TIPO_MEDIDA=='Peso'">Kg</a>
+                              <a *ngIf="envio.TIPO_MEDIDA=='Precio'">$</a></p>
+                            <p style="font-weight: bold" class="text-primary">Costo de envío: <a
+                              *ngIf="envio.PRECIO!=0"> {{envio.PRECIO}}$</a> <span *ngIf="envio.PRECIO==0"
+                                                                                   class="badge badge-pill badge-primary">Gratis</span>
+                            </p>
+                            <p *ngIf="envio.INSTRUCCION_RETIRO">Instrucciones de envío {{envio.INSTRUCCION_RETIRO}} </p>
 
+                          </div>
+
+                          <div class="card-body" *ngIf="envio.TIPO_ENVIO=='Retiro'">
+                            <h5 class="card-title"> {{envio.TIPO_ENVIO}} en el local</h5>
+                            <p *ngIf="envio.INSTRUCCION_RETIRO">Instrucciones de
+                              envío:  {{envio.INSTRUCCION_RETIRO}} </p>
+
+                          </div>
                         </div>
 
-                        <div class="card-body" *ngIf="envio.TIPO_ENVIO=='Retiro'">
-                          <h5 class="card-title"> {{envio.TIPO_ENVIO}} en el local</h5>
-                          <p *ngIf="envio.INSTRUCCION_RETIRO">Instrucciones de envío:  {{envio.INSTRUCCION_RETIRO}} </p>
-
-                        </div>
                       </div>
-
                     </div>
                   </div>
+
                 </div>
+              </article> <!-- card.// -->
 
-              </div>
-            </article> <!-- card.// -->
+            </ng-template>
+          </ngb-tab>
+        </ngb-tabset>
 
-          </ng-template>
-        </ngb-tab>
-      </ngb-tabset>
-
-    </div> <!-- container.// -->
-  </section>
-  <!-- ============================ COMPONENT SECCION INFORMACION  .//END ================================= -->
+      </div> <!-- container.// -->
+    </section>
+    <!-- ============================ COMPONENT SECCION INFORMACION  .//END ================================= -->
 
 
-  <hr>
-  <br>
-  <div class="container ">
-    <h4 class="font-weight-bold">Opiniones de clientes</h4>
+    <hr>
     <br>
-    <div *ngIf="this.productoDetalle?.PRODUCTO.COMENTARIOs.length==0">
-      <p>No existen comentarios</p>
-    </div>
-    <div *ngFor="let comentario of this.productoDetalle?.PRODUCTO.COMENTARIOs">
-      <hr class="my-0">
-      <div class="row no-gutters ">
-        <div class="col-md-1 mt-md-0 mt-2 justify-content-center align-items-center dis-flex ">
-          <img src="assets/images/user.png" class="card-img " style="width: 50px" alt="usuario">
-        </div>
-        <div class="col-md-9 col-10">
-          <div class="card-body py-2">
-            <label class="font-weight-bold mb-0">{{comentario.AGENTE.NOMBRE}}</label>
-            <label class="card-text mb-0 w-100">{{comentario.COMENTARIO}}</label>
-            <p class="card-text mb-0"><small class="text-muted">{{comentario.FECHA_COMENTARIO | date}}</small></p>
-
-          </div>
-        </div>
-        <div class="col-2 justify-content-center align-items-center dis-flex ml-auto"
-             *ngIf="comentario.AGENTE.COD_AGENTE==identidadAgente?.COD_AGENTE">
-          <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class=" btn text-primary"
-                    (click)="abrirModalComentario(contentComentario,comentario.ID_COMENTARIO)">
-              <li class=" fa fa-pen"></li>
-            </button>
-            <button type="button" class="btn text-danger" (click)="deleteComentario(comentario.ID_COMENTARIO)">
-              <li class="fa fa-trash"></li>
-            </button>
-          </div>
-        </div>
+    <div class="container ">
+      <h4 class="font-weight-bold">Opiniones de clientes</h4>
+      <br>
+      <div *ngIf="this.productoDetalle?.PRODUCTO.COMENTARIOs.length==0">
+        <p>No existen comentarios</p>
       </div>
+      <div *ngFor="let comentario of this.productoDetalle?.PRODUCTO.COMENTARIOs">
+        <hr class="my-0">
+        <div class="row no-gutters ">
+          <div class="col-md-1 mt-md-0 mt-2 justify-content-center align-items-center dis-flex ">
+            <img src="assets/images/user.png" class="card-img " style="width: 50px" alt="usuario">
+          </div>
+          <div class="col-md-9 col-10">
+            <div class="card-body py-2">
+              <label class="font-weight-bold mb-0">{{comentario.AGENTE.NOMBRE}}</label>
+              <label class="card-text mb-0 w-100">{{comentario.COMENTARIO}}</label>
+              <p class="card-text mb-0"><small class="text-muted">{{comentario.FECHA_COMENTARIO | date}}</small></p>
 
-      <hr class="my-0">
+            </div>
+          </div>
+          <div class="col-2 justify-content-center align-items-center dis-flex ml-auto"
+               *ngIf="comentario.AGENTE.COD_AGENTE==identidadAgente?.COD_AGENTE">
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <button type="button" class=" btn text-primary"
+                      (click)="abrirModalComentario(contentComentario,comentario.ID_COMENTARIO)">
+                <li class=" fa fa-pen"></li>
+              </button>
+              <button type="button" class="btn text-danger" (click)="deleteComentario(comentario.ID_COMENTARIO)">
+                <li class="fa fa-trash"></li>
+              </button>
+            </div>
+          </div>
+        </div>
 
+        <hr class="my-0">
+
+      </div>
     </div>
-  </div>
-  <br>
-  <br><br><br><br><br><br>
-</form>
-</body>
+    <br>
+    <br><br><br><br><br><br>
+  </form>
+  </body>
 
 </section>

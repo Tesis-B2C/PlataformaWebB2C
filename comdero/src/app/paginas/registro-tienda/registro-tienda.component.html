@@ -45,7 +45,7 @@
 </div>
 
 <div class="alert alert-warning alert-dismissible fade show  text-center mb-0" role="alert">
-  <strong>¿Necesitas ayuda?</strong> Deberias revisar nuestro tutorial dando click  <a  target="_blank" href="https://www.youtube.com/watch?v=W---rQHKqqs">aquí</a>.
+  <strong>¿Necesitas ayuda?</strong> Deberias revisar nuestro tutorial dando click  <a  target="_blank" href="https://www.youtube.com/watch?v=W---rQHKqqs&t=1">aquí</a>.
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -75,7 +75,7 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label>* Razón Social</label>
-                <input #Razon_Social="ngModel" style="text-transform: uppercase;" [(ngModel)]="this.Tienda.Razon_Social"
+                <input #Razon_Social="ngModel"  [(ngModel)]="this.Tienda.Razon_Social"
                        [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched),
                  'is-valid': Razon_Social.valid && (Razon_Social.dirty || Razon_Social.touched)}"
 
@@ -85,15 +85,12 @@
                   <div *ngIf="Razon_Social.errors.required">
                     <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
                   </div>
-                  <div *ngIf="Razon_Social.errors.pattern">
-                    <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
-                      números.</p>
-                  </div>
+
                 </div>
               </div> <!-- form-group end.// -->
               <div class="form-group col-md-6">
                 <label>* Nombre comercial de su empresa o negocio</label>
-                <input #Nombre_Comercial="ngModel" style="text-transform: uppercase;"
+                <input #Nombre_Comercial="ngModel"
                        [(ngModel)]="this.Tienda.Nombre_Comercial" [ngClass]="{'is-invalid': Nombre_Comercial.invalid && (Nombre_Comercial.dirty || Nombre_Comercial.touched),
                  'is-valid': Nombre_Comercial.valid && (Nombre_Comercial.dirty || Nombre_Comercial.touched)}"
 
@@ -103,10 +100,7 @@
                   <div *ngIf="Nombre_Comercial.errors.required">
                     <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
                   </div>
-                  <div *ngIf="Nombre_Comercial.errors.pattern">
-                    <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
-                      números.</p>
-                  </div>
+
                 </div>
               </div>
             </div>

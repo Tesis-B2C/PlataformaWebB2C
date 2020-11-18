@@ -37,6 +37,9 @@ async function saveMetodosPago(req, res) {
 
                 if (mp.Tipo_Pago == 'Transferencia') {
                     await Metodo_Pago.create({
+                            NOMBRE_BENEFICIARIO:mp.Nombre_Beneficiario,
+                            CORREO_BENEFICIARIO:mp.Correo_Beneficiario,
+                            IDENTIFICACION_BENEFICIARIO:mp.Identificacion_Beneficiario,
                             NUMERO_CUENTA: mp.Numero_Cuenta,
                             TIPO_CUENTA: mp.Tipo_Cuenta,
                             BANCO_PERTENECE: mp.Banco_Pertenece,

@@ -4,6 +4,7 @@ import {ToastrService} from "ngx-toastr";
 import {TiendaServicio} from "../../../servicios/tienda.servicio";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpErrorResponse} from "@angular/common/http";
+
 @Component({
   selector: 'app-informacion-tienda',
   templateUrl: './informacion-tienda.component.html',
@@ -30,9 +31,9 @@ export class InformacionTiendaComponent implements OnInit {
       // console.log("tienda buscada INFORMACION ", this.Tienda);
     } catch (e) {
 
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
@@ -55,7 +56,10 @@ export class InformacionTiendaComponent implements OnInit {
     Descuento: null,
     Tipo_Cuenta: null,
     Banco_Pertenece: null,
-    Numero_cuenta: null
+    Numero_cuenta: null,
+    Nombre_Beneficiario: null,
+    Correo_Beneficiario: null,
+    Identificacion_Beneficiario: null
   };
 
   iniciar() {
@@ -72,7 +76,10 @@ export class InformacionTiendaComponent implements OnInit {
       Descuento: 0,
       Tipo_Cuenta: null,
       Banco_Pertenece: null,
-      Numero_cuenta: null
+      Numero_cuenta: null,
+      Nombre_Beneficiario: null,
+      Correo_Beneficiario: null,
+      Identificacion_Beneficiario: null
 
     };
     for (let pago of this.Tienda.METODO_PAGOs) {
@@ -88,6 +95,9 @@ export class InformacionTiendaComponent implements OnInit {
         this.objTransferencia.Tipo_Cuenta = pago.TIPO_CUENTA;
         this.objTransferencia.Banco_Pertenece = pago.BANCO_PERTENECE;
         this.objTransferencia.Numero_cuenta = pago.NUMERO_CUENTA;
+        this.objTransferencia.Nombre_Beneficiario = pago.NOMBRE_BENEFICIARIO;
+        this.objTransferencia.Correo_Beneficiario = pago.CORREO_BENEFICIARIO;
+        this.objTransferencia.Identificacion_Beneficiario = pago.IDENTIFICACION_BENEFICIARIO
       }
 
       if (pago.TIPO_PAGO == 'Electrónico') {

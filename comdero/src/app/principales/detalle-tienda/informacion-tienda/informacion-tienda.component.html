@@ -52,10 +52,10 @@
       <div class="row justify-content-center">
 
 
-        <div class="col-lg-4 col-xs-12  text-center" *ngIf="this.objEfectivo.Tipo_Pago!=null">
+        <div class="col-lg-4 col-xs-12  text-justify" *ngIf="this.objEfectivo.Tipo_Pago!=null">
           <div class="box">
 
-            <div class="box-title mb-2">
+            <div class="box-title mb-2 text-center">
               <h3>Efectivo</h3>
             </div>
             <p class=" iconos-pagos "><img src="assets/images/icon-efectivo.png"
@@ -64,17 +64,14 @@
               <span>Usted puede pagar con efectivo en nuestra tienda, realiza la compra en la plataforma y puedes pagarlo al momento de la entrega.
            </span>
             </div>
-            <div class="box-btn text-primary">
-              <a>Porcentaje de descuento:   {{objEfectivo.Descuento}}%</a>
-            </div>
 
 
           </div>
         </div>
-        <div class="col-lg-4 col-xs-12  text-center" *ngIf="this.objTransferencia.Tipo_Pago!=null">
+        <div class="col-lg-4 col-xs-12  text-justify" *ngIf="this.objTransferencia.Tipo_Pago!=null">
           <div class="box">
 
-            <div class="box-title mb-2">
+            <div class="box-title mb-2 text-center">
               <h3>Transferencia bancaria</h3>
             </div>
             <p class=" iconos-pagos "><img src="assets/images/icon-transferencia.png"
@@ -83,29 +80,29 @@
               <span>Usted puede pagar con transferencia bancaria luego de realizar la compra en la
                 plataforma.
            </span>
-              <hr>
-              <div class="row justify-content-center mx-auto">
-
-                <p class="card-text col-5 ">Banco:</p>
-                <p class="col-6 ">{{this.objTransferencia.Banco_Pertenece}}</p>
-                <p class="card-text col-5 ">Tipo:</p>
-                <p class="col-6 ">{{this.objTransferencia.Tipo_Cuenta}}</p>
-                <p class="card-text col-5  ">#Cuenta:</p>
-                <p class="col-6 ">{{this.objTransferencia.Numero_cuenta}}</p>
+              <hr class="mb-0">
+              <div class="row  no-gutters " >
+                <span class="card-text col-4  text-left dis-block">Beneficiario:</span>
+                <span class="col-8 text-right dis-block">{{this.objTransferencia.Nombre_Beneficiario}}</span>
+                <span class="card-text col-5 text-left dis-block">Identificación:</span>
+                <span class="col-7 text-right dis-block">{{this.objTransferencia.Identificacion_Beneficiario}}</span>
+                <span class="card-text col-4 text-left dis-block">Correo:</span>
+                <span class="col-8 text-right dis-block">{{this.objTransferencia.Correo_Beneficiario}}</span>
+                <span class="card-text col-4 text-left dis-block">Banco:</span>
+                <span class="col-8 text-right dis-block">{{this.objTransferencia.Banco_Pertenece}}</span>
+                <span class="card-text col-4 text-left dis-block">Tipo:</span>
+                <span class="col-8 text-right dis-block">{{this.objTransferencia.Tipo_Cuenta}}</span>
+                <span class="card-text col-4  text-left dis-block">#Cuenta:</span>
+                <span class="col-8 text-right dis-block">{{this.objTransferencia.Numero_cuenta}}</span>
 
               </div>
             </div>
-            <div class="box-btn text-primary">
-              <a>Porcentaje de descuento:  {{objTransferencia.Descuento}}%</a>
-            </div>
-
-
-          </div>
+                      </div>
         </div>
-        <div class="col-lg-4 col-xs-12  text-center" *ngIf="this.objElectronico.Tipo_Pago!=null">
+        <div class="col-lg-4 col-xs-12  text-justify" *ngIf="this.objElectronico.Tipo_Pago!=null">
           <div class="box">
 
-            <div class="box-title mb-2">
+            <div class="box-title mb-2 text-center">
               <h3>Electrónico</h3>
             </div>
             <p class=" iconos-pagos "><img src="assets/images/icon-electronico.png"
@@ -154,10 +151,10 @@
 
         <div class="card col-md-4" *ngFor="let envio of this.Tienda.OPCION_ENVIOs" >
           <div class="card-body" *ngIf="envio.TIPO_ENVIO=='Domicilio'">
-            <h5 class="card-title">Entrega a {{envio.TIPO_ENVIO}}</h5>
+            <h5 class="card-title mb-3">Entrega a {{envio.TIPO_ENVIO}}</h5>
             <h6 class="card-subtitle mb-2 text-muted" *ngIf="envio.TIPO_UBICACION=='Resto'">Otras provincias <i class="fas fa-map-marker-alt"></i></h6>
             <h6 class="card-subtitle mb-2 text-muted" *ngIf="envio.TIPO_UBICACION!='Resto'">{{envio.TIPO_UBICACION}}   <i class="fas fa-map-marker-alt"></i></h6>
-            <p class="card-text "  >{{envio.TIPO_MEDIDA}}   Mínimo del pedido: {{envio.MINIMO}}<a *ngIf="envio.TIPO_MEDIDA=='Peso'">Kg</a> <a   *ngIf="envio.TIPO_MEDIDA=='Precio'">$</a>  </p>
+            <p class="card-text mb-0"  >{{envio.TIPO_MEDIDA}}   Mínimo del pedido: {{envio.MINIMO}}<a *ngIf="envio.TIPO_MEDIDA=='Peso'">Kg</a> <a   *ngIf="envio.TIPO_MEDIDA=='Precio'">$</a>  </p>
             <p>{{envio.TIPO_MEDIDA}} Máximo: {{envio.MAXIMO}}<a *ngIf="envio.TIPO_MEDIDA=='Peso'">Kg</a> <a   *ngIf="envio.TIPO_MEDIDA=='Precio'">$</a></p>
             <p style="font-weight: bold" class="text-primary">Costo de envío: <a *ngIf="envio.PRECIO!=0"> {{envio.PRECIO}}$</a> <span *ngIf="envio.PRECIO==0" class="badge badge-pill badge-primary">Gratis</span> </p>
             <p *ngIf="envio.INSTRUCCION_RETIRO">Instrucciones de envío {{envio.INSTRUCCION_RETIRO}} </p>

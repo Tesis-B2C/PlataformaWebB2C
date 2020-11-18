@@ -42,7 +42,7 @@
               <div class="form-group col-md-6">
                 <label>* Razón Social</label>
                 <input [disabled]="banderaEdicionDeshabilitada" #Razon_Social="ngModel"
-                       style="text-transform: uppercase;"
+
                        [(ngModel)]="this.EditarTienda.Razon_Social"
                        [ngClass]="{'is-invalid': Razon_Social.invalid && banderaValidaciones}"
                        class="tamanioInputs form-control" name="razon_Social" placeholder="COMDERO S.A"
@@ -58,7 +58,7 @@
               <div class="form-group col-md-6">
                 <label>* Nombre comercial de su negocio</label>
                 <input [disabled]="banderaEdicionDeshabilitada" #Nombre_Comercial="ngModel"
-                       style="text-transform: uppercase;"
+
                        [(ngModel)]="this.EditarTienda.Nombre_Comercial"
                        [ngClass]="{'is-invalid': Nombre_Comercial.invalid && banderaValidaciones}"
 
