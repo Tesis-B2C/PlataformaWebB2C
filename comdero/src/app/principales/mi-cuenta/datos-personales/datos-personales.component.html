@@ -36,7 +36,7 @@
         <label>Código</label>
         <input type="text" #Codigo="ngModel" [(ngModel)]="this.codigo"
                class="form-control tamanioInputs">
-        <label> Si no recibio ningun correo porfavor click
+        <label> Si no recibio ningun correo por favor click
           <button (click)="reEnviar()" class="btn btn-link px-0 pt-0">aquí</button>
         </label>
       </div>
@@ -112,7 +112,7 @@
               </div>
               <div *ngIf="Razon_Social.errors.pattern">
                 <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
-                  numeros.</p>
+                  números.</p>
               </div>
             </div>
 
@@ -165,15 +165,15 @@
                 </div>
                 <div *ngIf="Cedula.errors.minlength">
                   <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                    Minimo 10 digitos.</p>
+                    Minimo 10 dígitos.</p>
                 </div>
                 <div *ngIf="Cedula.errors.maxlength">
                   <p class="alert alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
-                    Maximo 10 digitos.</p>
+                    Maximo 10 dígitos.</p>
                 </div>
                 <div *ngIf="Cedula.errors.pattern">
                   <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                    Utilice solo numeros. </p>
+                    Utilice solo números. </p>
 
                 </div>
               </div>
@@ -193,16 +193,16 @@
                 </div>
                 <div *ngIf="Ruc.errors.minlength">
                   <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                    Minimo 13 digitos.</p>
+                    Minimo 13 dígitos.</p>
 
                 </div>
                 <div *ngIf="Ruc.errors.maxlength">
                   <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                    Maximo 13 digitos.</p>
+                    Maximo 13 dígitos.</p>
                 </div>
                 <div *ngIf="Ruc.errors.pattern">
                   <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                    Use solo numeros.</p>
+                    Use solo números.</p>
                 </div>
               </div>
             </div>
@@ -221,7 +221,7 @@
 
                 <div *ngIf="Telefono.errors.pattern">
                   <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                    Utilice solo numeros.</p>
+                    Utilice solo números.</p>
                 </div>
               </div>
             </div>
@@ -314,7 +314,7 @@
             </div>
           </div>
           <div class=" col-lg-6 form-group">
-            <label>Codigo Postal</label>
+            <label>Código Postal</label>
             <input [disabled]="banderaEdicionDeshabilitada" #CodigoPostal="ngModel"
                    [(ngModel)]="this.EditarAgente.Num_Cod_Postal" class="tamanioInputs form-control"
                    name="codigoPostal" type="text">

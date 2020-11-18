@@ -98,8 +98,10 @@ export class MenuGestionTiendasComponent implements OnInit{
     }
   }
   public async updateEstadoTienda(estado) {
+
+  if(estado==1){
     Swal.fire({
-      title: '<header class="login100-form-title-registro mb-o"><h5 class="card-title"><strong>!Estas seguro</strong></h5></header>',
+      title: '<header class="login100-form-title-registro mb-o"><h5 class="card-title"><strong>¿Estas seguro?</strong></h5></header>',
       text: "Al ocultar la tienda, esta no será visible para los usuarios de la plataforma al igual que los productos que contenga, por otro lado la tienda podra ser recuperada en cualquier momento incluyendo sus productos",
       icon: 'warning',
       position: 'center',
@@ -109,9 +111,43 @@ export class MenuGestionTiendasComponent implements OnInit{
       cancelButtonText: 'Cancelar',
       buttonsStyling: false,
       customClass: {
-        confirmButton: 'btn btn-primary px-5',
+        confirmButton: 'btn btn-primary ',
         container: 'my-swal',
-        cancelButton: 'btn btn-secondary px-5 ml-5',
+        cancelButton: 'btn btn-secondary  ml-5',
+      }
+    }).then(async (result) => {
+      if (result.value) {
+        try {
+          let responseUpdate = await this._tiendaServicio.updateEstadoTienda(this.identidadTienda.NUM_TIENDA, estado).toPromise();
+          this.mensageCorrecto(responseUpdate['menssage']);
+          localStorage.removeItem("identityTienda");
+          this.router.navigate(['/administrador/administrador-tienda/mis-tiendas'])
+        } catch (e) {
+          if (!(e instanceof HttpErrorResponse)){
+            console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+            console.log("error como objeto:"+ e);
+            if (JSON.stringify(e) === '{}')
+              this.mensageError(e);
+            else this.mensageError(JSON.stringify(e));
+          }
+        }
+      }
+    })
+  }else if(estado==0){
+    Swal.fire({
+      title: '<header class="login100-form-title-registro mb-o"><h5 class="card-title"><strong>¿Estas seguro?</strong></h5></header>',
+      text: "Al reactivar la tienda, esta  será visible para los usuarios de la plataforma al igual que los productos que contenga",
+      icon: 'warning',
+      position: 'center',
+      width: 600,
+      showCancelButton: true,
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar',
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'btn btn-primary ',
+        container: 'my-swal',
+        cancelButton: 'btn btn-secondary  ml-5',
       }
     }).then(async (result) => {
       if (result.value) {
@@ -132,6 +168,41 @@ export class MenuGestionTiendasComponent implements OnInit{
       }
     })
 
+  }else if(estado==2){
+    Swal.fire({
+      title: '<header class="login100-form-title-registro mb-o"><h5 class="card-title"><strong>¿Estas seguro?</strong></h5></header>',
+      text: "Al eliminar la tienda, esta no será visible para los usuarios de la plataforma al igual que los productos que contenga y no podra volver a ser activada ",
+      icon: 'warning',
+      position: 'center',
+      width: 600,
+      showCancelButton: true,
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar',
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'btn btn-primary ',
+        container: 'my-swal',
+        cancelButton: 'btn btn-secondary  ml-5',
+      }
+    }).then(async (result) => {
+      if (result.value) {
+        try {
+          let responseUpdate = await this._tiendaServicio.updateEstadoTienda(this.identidadTienda.NUM_TIENDA, estado).toPromise();
+          this.mensageCorrecto(responseUpdate['menssage']);
+          localStorage.removeItem("identityTienda");
+          this.router.navigate(['/administrador/administrador-tienda/mis-tiendas'])
+        } catch (e) {
+          if (!(e instanceof HttpErrorResponse)){
+            console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
+            console.log("error como objeto:"+ e);
+            if (JSON.stringify(e) === '{}')
+              this.mensageError(e);
+            else this.mensageError(JSON.stringify(e));
+          }
+        }
+      }
+    })
+  }
 
   }
 

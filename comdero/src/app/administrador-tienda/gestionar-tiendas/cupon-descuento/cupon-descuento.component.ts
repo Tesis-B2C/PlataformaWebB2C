@@ -21,6 +21,8 @@ defineLocale('es', esLocale);
 
 })
 export class CuponDescuentoComponent implements OnInit , OnDestroy{
+
+
   public Descuento: Descuento
   public banderaValidaciones: boolean = false;
   public banderaOpcionAplicarA: boolean = true;
@@ -100,6 +102,8 @@ export class CuponDescuentoComponent implements OnInit , OnDestroy{
     this.banderaOpcionAplicarA = value;
     if (this.banderaOpcionAplicarA) {
       this.Descuento.AplicarA = 'todos';
+      //this.vectorProductos = new Set();
+      this.vectorProductosEnviar = [];
       for (let i in this.result) {
         this.vectorProductos.add(this.result[i]);
       }
@@ -155,7 +159,7 @@ export class CuponDescuentoComponent implements OnInit , OnDestroy{
       for (let i in this.result) {
         this.vectorProductos.add(this.result[i]);
       }
-      // console.log("vector productos", this.vectorProductos)
+      //console.log("vector productos", this.vectorProductos)
 
 
     } else {
@@ -219,20 +223,25 @@ export class CuponDescuentoComponent implements OnInit , OnDestroy{
             this.loading = false;
           }
         } else {
-          this.Descuento.Fecha_Inicio = this.obtenerFecha(this.bsRangeValue[0]);
-          this.Descuento.Fecha_FIn = this.obtenerFecha(this.bsRangeValue[1]);
-          // console.log("Descuento antes de enviar ", this.Descuento, "productos", this.vectorProductosEnviar);
-          this.objDescuento.Descuento = this.Descuento;
-          this.objDescuento.vProductos = this.vectorProductosEnviar;
-          // console.log("Descuento antes de enviar ", this.Descuento, "productos", this.vectorProductosEnviar);
-          let response = await this._descuentoServicio.saveDescuento(this.identidadTienda.NUM_TIENDA, this.objDescuento).toPromise();
-          this.mensageCorrecto(response.message);
-          this.loading = false;
-          this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/listado-cupon-descuento'])
-
+          if (this.vectorProductosEnviar.length > 0) {
+            this.Descuento.Fecha_Inicio = this.obtenerFecha(this.bsRangeValue[0]);
+            this.Descuento.Fecha_FIn = this.obtenerFecha(this.bsRangeValue[1]);
+            // console.log("Descuento antes de enviar ", this.Descuento, "productos", this.vectorProductosEnviar);
+            this.objDescuento.Descuento = this.Descuento;
+            this.objDescuento.vProductos = this.vectorProductosEnviar;
+            // console.log("Descuento antes de enviar ", this.Descuento, "productos", this.vectorProductosEnviar);
+            let response = await this._descuentoServicio.saveDescuento(this.identidadTienda.NUM_TIENDA, this.objDescuento).toPromise();
+            this.mensageCorrecto(response.message);
+            this.loading = false;
+            this.router.navigate(['/administrador/administrador-tienda/gestion-tienda/menu-gestion-tienda/listado-cupon-descuento'])
+          }else {
+            this.toastr.error('<div class="row no-gutters"><p class="col-10 LetrasToastInfo">Al parecer no existen productos registrados en tu tienda</p></div>', "Error!",
+              {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
+            this.loading = false;
+          }
         }
       } else {
-        this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
+        this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario por favor revísalo nuevamente</p></div>', "Error!",
           {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
         let body = document.getElementById('body') as HTMLElement;
         body.scrollTo(0, 0);

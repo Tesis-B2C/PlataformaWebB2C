@@ -3,7 +3,7 @@
     <div class="container-fluid   computadora">
       <div class="row ">
         <div class="col-lg-3  col-sm-12 mx-auto">
-          <a class="mb-4" href="#">
+          <a class="mb-3" href="#">
             <img class="logo" src="../../../assets/images/logoValid4.png">
           </a> <!-- brand-wrap.// -->
         </div>
@@ -12,15 +12,11 @@
             <h4>Catálogo de tiendas</h4>
           </div>
         </div> <!-- col.// -->
-        <div class="col-lg-3 col-sm-6 ">
+        <div class="col-lg-3 col-sm-6 mt-2">
           <div class="widgets-wrap mx-auto">
-
-
-
-
             <div class="widget-header icontext">
               <li class="nav-item dropdown">
-                <a href="#" class="icon icon-sm rounded-circle border" data-toggle="dropdown" href="#"
+                <a href="#" class="icon icon-sm rounded-circle border" data-toggle="dropdown"
                    aria-expanded="false"><i class="fa fa-user"></i>
                 </a>
 
@@ -67,7 +63,7 @@
 
             <div class="widget-header  icontext">
               <li class="nav-item dropdown">
-                <a href="#" class="icon icon-xs rounded-circle border" data-toggle="dropdown" href="#"
+                <a href="#" class="icon icon-xs rounded-circle border" data-toggle="dropdown"
                    aria-expanded="false"><i class="fa fa-user"></i>
                 </a>
 
@@ -98,11 +94,6 @@
             </div>
 
           </div> <!-- widgets-wrap.// -->
-        </div> <!-- col.// -->
-        <div class="col-12 ">
-          <div class="input-group w-100  mx-auto py-1">
-            <h4>Panel Administrativo</h4>
-          </div>
         </div> <!-- col.// -->
 
       </div> <!-- row.// -->
@@ -162,7 +153,7 @@
                   </div>
                 </div>
               </div>
-            <a (click)="tienda.Estado=true;irAdministracionTienda(tienda.NUM_TIENDA)" class="mb-0 ">
+            <a (click)="tienda.Estado=true;irAdministracionTienda(tienda.NUM_TIENDA)" class="mb-0 "  [ngClass]="{'desactivado':tienda.ESTADO_TIENDA==1}">
 
               <img class=" mx-auto " [src]="getImagen(tienda.LOGO)" width="100%" height="190px">
               <!--  <img class=" mx-auto " [src]="this.url + 'obtenerImagenTienda/'+tienda.LOGO" width="100%" height="190px">-->

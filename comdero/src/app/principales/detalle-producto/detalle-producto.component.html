@@ -293,12 +293,12 @@
     <button class="px-3" (click)="habilitarDireccionDiferente('Envio')"><label class="nuevaDireccionEnvio"> <a
       class="text-primary p-0"><i class="fas fa-chevron-left"></i>&nbsp;&nbsp;Regresar</a></label></button>
     <div class="form-row px-5" *ngIf="this.informacionCompra?.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA != null">
-      <div class="form-group col-1 mb-0">
+      <div class="form-group col-auto mb-0">
         <div>
           <label class="text-center">Actual</label>
         </div>
       </div>
-      <div class="form-group col-11 mb-0">
+      <div class="form-group col-auto mb-0">
         <label
           class="text-justify mb-0">{{this.informacionCompra?.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA}}
           ({{this.informacionCompra?.DATOS_ENTREGA.IDENTIFICACION_ENTREGA}})</label>
@@ -359,7 +359,7 @@
             </div>
             <div *ngIf="Razon_Social.errors.pattern">
               <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
-                numeros.</p>
+                números.</p>
             </div>
           </div>
         </div>
@@ -383,15 +383,15 @@
               </div>
               <div *ngIf="Cedula.errors.minlength">
                 <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Minimo 10 digitos.</p>
+                  Minimo 10 dígitos.</p>
               </div>
               <div *ngIf="Cedula.errors.maxlength">
                 <p class="alert alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Maximo 10 digitos.</p>
+                  Maximo 10 dígitos.</p>
               </div>
               <div *ngIf="Cedula.errors.pattern">
                 <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Utilice solo numeros. </p>
+                  Utilice solo números. </p>
               </div>
             </div>
           </div>
@@ -410,11 +410,11 @@
               </div>
               <div *ngIf="Ruc.errors.minlength">
                 <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Mínimo 13 digitos.</p>
+                  Mínimo 13 dígitos.</p>
               </div>
               <div *ngIf="Ruc.errors.maxlength">
                 <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Máximo 13 digitos.</p>
+                  Máximo 13 dígitos.</p>
               </div>
               <div *ngIf="Ruc.errors.pattern">
                 <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
@@ -543,13 +543,13 @@
       class="text-primary p-0"><i class="fas fa-chevron-left"></i>&nbsp;&nbsp;Regresar</a></label></button>
 
     <div class="form-row px-5" *ngIf="this.informacionCompra?.DATOS_FACTURA.IDENTIFICACION_FACTURA != null">
-      <div class="form-group col-1 mb-0">
+      <div class="form-group col-auto mb-0">
         <div>
           <label class="text-center">Actual</label>
         </div>
       </div>
 
-      <div class="form-group col-11 mb-0">
+      <div class="form-group col-auto mb-0">
         <label class="text-justify mb-0">{{this.informacionCompra?.DATOS_FACTURA.NOMBRE_FACTURA }}
           ({{this.informacionCompra?.DATOS_FACTURA.IDENTIFICACION_FACTURA}})</label>
         <p class="text-justify mb-0">{{this.informacionCompra?.DATOS_FACTURA.CORREO}}</p>
@@ -604,7 +604,7 @@
             </div>
             <div *ngIf="Razon_Social_Factura.errors.pattern">
               <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
-                numeros.</p>
+                números.</p>
             </div>
           </div>
         </div>
@@ -649,15 +649,15 @@
               </div>
               <div *ngIf="CedulaFactura.errors.minlength">
                 <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Minimo 10 digitos.</p>
+                  Minimo 10 dígitos.</p>
               </div>
               <div *ngIf="CedulaFactura.errors.maxlength">
                 <p class="alert alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Maximo 10 digitos.</p>
+                  Maximo 10 dígitos.</p>
               </div>
               <div *ngIf="CedulaFactura.errors.pattern">
                 <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Utilice solo numeros. </p>
+                  Utilice solo números. </p>
 
               </div>
             </div>
@@ -677,12 +677,12 @@
               </div>
               <div *ngIf="RucFactura.errors.minlength">
                 <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Mínimo 13 digitos.</p>
+                  Mínimo 13 dígitos.</p>
 
               </div>
               <div *ngIf="RucFactura.errors.maxlength">
                 <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Máximo 13 digitos.</p>
+                  Máximo 13 dígitos.</p>
               </div>
               <div *ngIf="RucFactura.errors.pattern">
                 <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
@@ -955,7 +955,7 @@
     <div class="mx-lg-auto">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav" #btnBarra
               aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="fa fa-bars" style="color: white"></span>
+        <span class="fa fa-bars" style="color: white; font-size: large; font-weight: bolder"></span>
       </button>
 
       <div class="collapse navbar-collapse " id="main_nav">
@@ -1062,16 +1062,20 @@
             <article class="gallery-wrap">
               <div class="img-big-wrap ">
                 <a>
-                  <img *ngIf="this.imagenPrincipal != null" [src]="this.imagenPrincipal">
-                  <iframe *ngIf="this.imagenPrincipal == null" width="100%" height="380"
+                  <img *ngIf="this.imagenPrincipal != null" [src]="this.imagenPrincipal"  >
+                  <iframe *ngIf="this.imagenPrincipal == null && this.videoYoutube" width="100%" height="380"
                           [src]="this.videoYoutube" frameborder="0"
                           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                           allowfullscreen></iframe>
-                  <video *ngIf="this.imagenPrincipal==null && this.videoYoutube == null && data.video!=null"
-                         class="video-carga" controls
-                         height="auto" width="auto">
-                    <source [src]="data.video" type="{{ data.type }}">
-                  </video>
+
+                  <div *ngIf="data.video && this.imagenPrincipal == null">
+                    <div class="mx-auto fondo-animacion-carga-video">
+                      <video class="video-carga" controls autoplay width="100%" height="380">
+                        <source [src]="data.video" type="{{ data.type }}">
+                      </video>
+                    </div>
+                  </div>
+
                 </a>
 
               </div> <!-- img-big-wrap.// -->
@@ -1085,7 +1089,7 @@
                                                                                      aria-hidden="true"></i></button>
                   </div>
                   <div class="item-thumb" *ngIf="imagen.TIPO_IMAGEN == 'video'">
-                    <button (click)="this.imagenPrincipal = null" class="clvideo"><i class="fab fa-video fa-3x"
+                    <button (click)="this.imagenPrincipal = null" class="clvideo"><i class="fas fa-video fa-3x"
                                                                                      aria-hidden="true"></i></button>
                   </div>
                 </a>
@@ -1102,15 +1106,14 @@
 
               <div class="form-row justify-content-center text-center">
 
-                <label class=" m-0 col-md-4 "><strong>{{this.productoDetalle?.PRODUCTO.CONDICION}}</strong></label>
+                <label class=" m-0 col-md-4  align-self-center"><strong>{{this.productoDetalle?.PRODUCTO.CONDICION}}</strong></label>
                 <div class="rating-wrap mb-0 col-md-4">
 
                   <div class="row no-gutters justify-content-center">
-                    <h3
-                      class=" text-center col-auto mr-2">{{this.productoDetalle?.PRODUCTO.CALIFICACIONs[0]?.PROMEDIO_CAL | number}}</h3>
+
 
                     <ul class="rating-stars col-auto">
-
+                      <label class=" text-center  mr-2"> <strong>{{this.productoDetalle?.PRODUCTO.CALIFICACIONs[0]?.PROMEDIO_CAL | number}}</strong></label>
                       <ngb-rating *ngIf="this.productoDetalle?.PRODUCTO.CALIFICACIONs.length != 0"
                                   [(rate)]="this.productoDetalle?.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL">
                         <ng-template let-fill="fill">
@@ -1174,8 +1177,8 @@
                 </div>
                 <div class="fontTamano">
                   <dl class="row mb-3">
-                    <dt class="col-sm-3 col-4">Marca</dt>
-                    <dd class="col-sm-9 col-8 mb-2">{{this.productoDetalle?.PRODUCTO.MARCA}}</dd>
+                    <dt class="col-sm-3 col-4" *ngIf="this.productoDetalle?.PRODUCTO.MARCA">Marca</dt>
+                    <dd class="col-sm-9 col-8 mb-2" *ngIf="this.productoDetalle?.PRODUCTO.MARCA">{{this.productoDetalle?.PRODUCTO.MARCA}}</dd>
 
                     <dt *ngIf="this.existeTalla == true" class="col-sm-3 col-4 mt-2">Talla</dt>
                     <dd *ngIf="this.existeTalla == true" class="col-sm-9 col-8">
@@ -1207,8 +1210,7 @@
                     </dd>
 
                     <dt class="col-sm-3 col-4 mt-4">Cantidad <a class="m-0 pt-0 text-center"
-                                                                style="font-size: 11px">({{this.varianteActiva.MEDIDA}}
-                      )</a></dt>
+                                                                style="font-size: 11px">({{this.varianteActiva.MEDIDA}})</a></dt>
 
                     <dd class="col-sm-9 col-8">
                       <div class="form-group form-control-sm col-lg-6 col-md-6 col-10 my-2 p-0">
@@ -1290,7 +1292,7 @@
                       <dd class="col-sm-9 col-8"> {{this.productoDetalle?.PRODUCTO.COD_PRODUCTO}}</dd>
 
                       <dt class="col-sm-3 col-4">Peso:</dt>
-                      <dd class="col-sm-9 col-8"> {{this.productoDetalle?.PRODUCTO.PESO_PRODUCTO}}</dd>
+                      <dd class="col-sm-9 col-8"> {{this.productoDetalle?.PRODUCTO.PESO_PRODUCTO}} kg</dd>
 
                       <dt class="col-sm-3 col-4">Garantía:</dt>
                       <dd class="col-sm-9 col-8"> {{this.productoDetalle?.GARANTIA}}</dd>
@@ -1299,7 +1301,7 @@
                 </div> <!-- row.// -->
                 <hr>
 
-                <h5>Detalle del producto</h5>
+                <h5 *ngIf="this.productoDetalle?.PRODUCTO.DETALLE_PRODUCTO">Detalle del producto</h5>
                 <div [innerHTML]=this.productoDetalle?.PRODUCTO.DETALLE_PRODUCTO></div>
 
               </div> <!-- card-body.// -->
@@ -1479,4 +1481,5 @@
   <br><br><br><br><br><br>
 </form>
 </body>
+
 </section>

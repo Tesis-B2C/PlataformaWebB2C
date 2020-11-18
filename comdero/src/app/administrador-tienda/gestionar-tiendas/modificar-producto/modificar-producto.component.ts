@@ -404,6 +404,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
         let that = this;
         myReader.onloadend = (loadEvent: any) => {
           //  console.log('video', myReader.result);
+          debugger;
           this.data.video = myReader.result;
           this.data.type = file.type;
           this.banderaAnimacionVideo = false;
@@ -640,7 +641,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
           let body = document.getElementById('body') as HTMLElement;
           body.scrollTo(0, 0);
           window.scroll(0, 0);
-          this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
+          this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario por favor revísalo nuevamente</p></div>', "Error!",
             {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
           return false
         }
@@ -651,7 +652,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
       let body = document.getElementById('body') as HTMLElement;
       body.scrollTo(0, 0);
       window.scroll(0, 0);
-      this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
+      this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario por favor revísalo nuevamente</p></div>', "Error!",
         {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
       return false
     }
@@ -678,8 +679,8 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
   public async guardarProducto() {
 
     Swal.fire({
-      title: '<header class="login100-form-title-registro mb-o"><h5 class="card-title"><strong>!Estas seguro</strong></h5></header>',
-      text: "El producto será registrado y publicado en su tienda asegurate de que los datos sean correctos",
+      title: '<header class="login100-form-title-registro mb-o"><h5 class="card-title"><strong>¿Estas seguro?</strong></h5></header>',
+      text: "El producto será registrado y publicado en su tienda asegúrate de que los datos sean correctos",
       icon: 'warning',
       position: 'center',
       width: 600,
@@ -719,7 +720,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
   public async guardarCambiarEstadoProducto(estado) {
 
     Swal.fire({
-      title: '<header class="login100-form-title-registro mb-o"><h5 class="card-title"><strong>!Estas seguro</strong></h5></header>',
+      title: '<header class="login100-form-title-registro mb-o"><h5 class="card-title"><strong>¿Estas seguro?</strong></h5></header>',
       text: "Estas seguro que deseas cambiar de estado a este producto",
       icon: 'warning',
       position: 'center',
@@ -841,7 +842,7 @@ export class ModificarProductoComponent implements OnInit, OnDestroy {
       position: 'center',
       width: 600,
       buttonsStyling: false,
-    
+
       customClass: {
         confirmButton: 'btn btn-primary px-5',
         //icon:'sm'

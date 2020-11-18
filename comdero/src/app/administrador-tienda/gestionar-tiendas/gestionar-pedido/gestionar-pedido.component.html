@@ -6,10 +6,10 @@
     <hr class="col-11  ">
   </div>
 
-  <div class="p-md-5    mx-auto">
+  <div class="px-md-5    mx-auto">
 
 
-      <div class="form-row justify-content-between mb-4 no-gutters  "
+      <div class="form-row justify-content-between mb-4  w-100 "
            *ngFor="let producto of compra?.COMPRA_PRODUCTOs; let i= index">
         <div class="col-5 col-md-4    mb-md-0 mb-4 ">
           <p class="text-uppercase text-center mb-0 ">Producto</p>
@@ -109,11 +109,11 @@
             <label class="col-md-7 text-md-right text-left" *ngIf="compra.TIPO_IDENTIFICACION_ENTREGA=='Persona'">Persona
               Natural</label>
             <label class="col-md-7 text-md-right text-left" *ngIf="compra.TIPO_IDENTIFICACION_ENTREGA=='Empresa'">Empresa</label>
-            <label class="col-md-4 text-md-left text-left"><strong>Idetentificación:</strong></label>
+            <label class="col-md-4 text-md-left text-left"><strong>Idententificación:</strong></label>
             <label class="col-md-7 text-md-right text-left">{{compra.IDENTIFICACION_ENTREGA}}</label>
             <label class="col-md-4 text-md-left text-left"><strong>Nombres y Apellidos:</strong></label>
             <label class="col-md-7 text-md-right text-left">{{compra.NOMBRE_PERSONA_ENTREGA}}</label>
-            <label class="col-md-4 text-md-left text-left"><strong>Telefono:</strong></label>
+            <label class="col-md-4 text-md-left text-left"><strong>Teléfono:</strong></label>
             <label class="col-md-7 text-md-right text-left">{{compra.TELEFONO_ENTREGA}}</label>
             <label class="col-md-4 text-md-left text-left"><strong>Provincia:</strong></label>
             <label class="col-md-7 text-md-right text-left">{{compra.DPA?.DPAP.NOMBRE}}</label>
@@ -138,11 +138,11 @@
             <label class="col-md-7 text-md-right text-left" *ngIf="compra?.TIPO_IDENTIFICACION_FACTURA=='Persona'">Persona
               Natural</label>
             <label class="col-md-7 text-md-right text-left" *ngIf="compra?.TIPO_IDENTIFICACION_FACTURA=='Empresa'">Empresa</label>
-            <label class="col-md-4 text-md-left text-left"><strong>Idetentificación:</strong></label>
+            <label class="col-md-4 text-md-left text-left"><strong>Idententificación:</strong></label>
             <label class="col-md-7 text-md-right text-left">{{compra?.IDENTIFICACION_FACTURA}}</label>
             <label class="col-md-4 text-md-left text-left"><strong>Nombres y Apellidos:</strong></label>
             <label class="col-md-7 text-md-right text-left">{{compra?.NOMBRE_FACTURA}}</label>
-            <label class="col-md-4 text-md-left text-left"><strong>Telefono:</strong></label>
+            <label class="col-md-4 text-md-left text-left"><strong>Teléfono:</strong></label>
             <label class="col-md-7 text-md-right text-left">{{compra?.TELEFONO_FACTURA}}</label>
             <label class="col-md-4 text-md-left text-left"><strong>Dirección:</strong></label>
             <label class="col-md-8 text-md-right text-left">{{compra?.DIRECCION_FACTURA}}</label>

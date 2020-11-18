@@ -11,7 +11,7 @@
     <div class="media container ">
       <img class="mr-3 rounded-circle"
            [src]="getImagen(this.varianteActiva.TIENDA.LOGO)" alt="logo tienda"
-           width="50px">
+           width="50px" height="50px">
 
       <div class="media-body">
         <h5 class="mt-3">{{this.varianteActiva.TIENDA.NOMBRE_COMERCIAL}}</h5>
@@ -47,7 +47,7 @@
             <label for="envioDomicilio">&nbsp;&nbsp;Envío a domicilio</label>
             <br class="m-0">
             <span *ngIf="this.noExisteEnvioEstaArea" class="text-danger small">Por el momento no se puede calcular el envío a esta zona, pero usted
-              puede acordar con el vendedor y realizar su compra.</span>
+              puede elegir la opción "Acordar con el vendedor" y realizar su compra.</span>
             <span
               *ngIf="this.banderaDireccionEnvio && this.informacionCompra.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA == null && !this.noExisteEnvioEstaArea"
               class="text-danger small">Es importante que ingrese la direccion de envío para continuar con su compra.</span>
@@ -219,12 +219,12 @@
     <button class="px-3" (click)="habilitarDireccionDiferente('Envio')"><label class="nuevaDireccionEnvio"> <a
       class="text-primary p-0"><i class="fas fa-chevron-left"></i>&nbsp;&nbsp;Regresar</a></label></button>
     <div class="form-row px-5" *ngIf="this.informacionCompra?.DATOS_ENTREGA.CALLE_PRINCIPAL_ENTREGA != null">
-      <div class="form-group col-1 mb-0">
+      <div class="form-group col-auto mb-0">
         <div>
           <label class="text-center"><strong>Actual</strong></label>
         </div>
       </div>
-      <div class="form-group col-md-11 mb-0">
+      <div class="form-group col-auto mb-0">
         <label
           class="text-justify mb-0">{{this.informacionCompra?.DATOS_ENTREGA.NOMBRE_PERSONA_ENVIO_ENTREGA}}</label>
         <p class="text-justify mb-0">{{this.informacionCompra?.DATOS_ENTREGA.TELEFONO_ENTREGA}}</p>
@@ -308,15 +308,15 @@
               </div>
               <div *ngIf="Cedula.errors.minlength">
                 <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Minimo 10 digitos.</p>
+                  Minimo 10 dígitos.</p>
               </div>
               <div *ngIf="Cedula.errors.maxlength">
                 <p class="alert alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Maximo 10 digitos.</p>
+                  Maximo 10 dígitos.</p>
               </div>
               <div *ngIf="Cedula.errors.pattern">
                 <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Utilice solo numeros. </p>
+                  Utilice solo números. </p>
               </div>
             </div>
           </div>
@@ -335,11 +335,11 @@
               </div>
               <div *ngIf="Ruc.errors.minlength">
                 <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Mínimo 13 digitos.</p>
+                  Mínimo 13 dígitos.</p>
               </div>
               <div *ngIf="Ruc.errors.maxlength">
                 <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Máximo 13 digitos.</p>
+                  Máximo 13 dígitos.</p>
               </div>
               <div *ngIf="Ruc.errors.pattern">
                 <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
@@ -468,13 +468,13 @@
       class="text-primary p-0"><i class="fas fa-chevron-left"></i>&nbsp;&nbsp;Regresar</a></label></button>
 
     <div class="form-row px-5" *ngIf="this.informacionCompra?.DATOS_FACTURA.IDENTIFICACION_FACTURA != null">
-      <div class="form-group col-1 mb-0">
+      <div class="form-group col-auto mb-0">
         <div>
           <label class="text-center">Actual</label>
         </div>
       </div>
 
-      <div class="form-group col-11 mb-0">
+      <div class="form-group col-auto mb-0">
         <label class="text-justify mb-0">{{this.informacionCompra?.DATOS_FACTURA.NOMBRE_FACTURA }}
           ({{this.informacionCompra?.DATOS_FACTURA.IDENTIFICACION_FACTURA}})</label>
         <p class="text-justify mb-0">{{this.informacionCompra?.DATOS_FACTURA.CORREO}}</p>
@@ -573,15 +573,15 @@
               </div>
               <div *ngIf="CedulaFactura.errors.minlength">
                 <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Minimo 10 digitos.</p>
+                  Minimo 10 dígitos.</p>
               </div>
               <div *ngIf="CedulaFactura.errors.maxlength">
                 <p class="alert alert-danger"> &nbsp; <i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Maximo 10 digitos.</p>
+                  Maximo 10 dígitos.</p>
               </div>
               <div *ngIf="CedulaFactura.errors.pattern">
                 <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Utilice solo numeros. </p>
+                  Utilice solo números. </p>
 
               </div>
             </div>
@@ -601,12 +601,12 @@
               </div>
               <div *ngIf="RucFactura.errors.minlength">
                 <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Mínimo 13 digitos.</p>
+                  Mínimo 13 dígitos.</p>
 
               </div>
               <div *ngIf="RucFactura.errors.maxlength">
                 <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
-                  Máximo 13 digitos.</p>
+                  Máximo 13 dígitos.</p>
               </div>
               <div *ngIf="RucFactura.errors.pattern">
                 <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
@@ -862,7 +862,7 @@
 <body class="">
 <section class="section-pagetop bg py-1 py-md-4">
   <div class="container bg">
-    <h2 class="title-page">Carrito de compras</h2>
+    <h2 class="title-page text-md-left text-center">Carrito de compras</h2>
   </div> <!-- container //  -->
 </section>
 
@@ -875,7 +875,7 @@
     <div class="media">
       <img class="mr-3 rounded-circle"
            [src]="getImagen(tienda.producto_carrito[0].VARIANTE.PRODUCTO.OFERTum.TIENDA.LOGO)" alt="logo tienda"
-           width="50px">
+           width="50px"  height="50px">
 
       <div class="media-body">
         <h5 class="mt-3">{{tienda.producto_carrito[0].VARIANTE.PRODUCTO.OFERTum.TIENDA.NOMBRE_COMERCIAL}}</h5>
@@ -1016,13 +1016,12 @@
 
             <dl class="dlist-align">
               <dt>Descuento</dt>
-              <dd class="text-center">(-)</dd>
-              <dd class="text-right text-dark b"><strong>{{tienda.cuentas.descuentoAutomatico | currency}}</strong></dd>
+
+              <dd class="text-right text-dark b"><strong>(-)&nbsp;{{tienda.cuentas.descuentoAutomatico | currency}}</strong></dd>
             </dl>
             <dl class="dlist-align">
               <dt>Descuento Cupón</dt>
-              <dd class="text-center">(-)</dd>
-              <dd class="text-right text-dark b"><strong>{{tienda.cuentas.descuentoCupon | currency}}</strong></dd>
+              <dd class="text-right text-dark b"><strong>(-)&nbsp;{{tienda.cuentas.descuentoCupon | currency}}</strong></dd>
             </dl>
             <dl class="dlist-align">
               <dt>Total del pedido:</dt>

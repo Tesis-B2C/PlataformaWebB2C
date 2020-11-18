@@ -1,7 +1,7 @@
 <body id="body" class="bg">
 <div class="mt-5 container-fluid">
   <div class="row  justify-content-center" id="top">
-    <h4 class=" col-11">Estadisticas</h4>
+    <h4 class=" col-11">Estadísticas</h4>
     <hr class="col-11">
   </div>
   <div class=" mt-3 ">
@@ -28,7 +28,7 @@
             <h3 class=" text-right  font-weight-normal">{{calificacion| number}}</h3>
           </div>
           <p class="pl-3 pb-2 text-muted " style="font-size: small"><span
-            class="fa fa-info-circle text-warning "></span> &nbsp; Calificacion promedio</p>
+            class="fa fa-info-circle text-warning "></span> &nbsp; Calificación promedio</p>
         </div>
       </div>
       <div class="col-lg-3">
@@ -57,17 +57,17 @@
     </div>
   </div>
   <br>
-  <div class=" mx-auto ">
-    <div class="row mx-md-5 ">
 
-      <div class="col-md-3">
+  <div class="  ">
+    <div class="row mx-md-5 ">
+      <div class="col-md-3 ">
         <div class="chart card card-body shadow">
-          <p class="mb-0">Métodos de pago</p>
-          <p style="font-size: x-small" class="text-muted">Ventas realizadas según los métodos de pago</p>
-          <p class="text-info"
+          <label class="mb-0 font-weight-bold">Métodos de pago</label>
+          <p  *ngIf="metodosPago?.Efectivo!=0 || metodosPago?.Transferencia!=0 || metodosPago?.PayPal!=0" style="font-size: x-small" class="text-muted">Ventas realizadas según los métodos de pago</p>
+          <p class="text-info small"
              *ngIf="metodosPago?.Efectivo==0 && metodosPago?.Transferencia==0 && metodosPago?.PayPal==0">No existen
             productos comprados por estos medios</p>
-          <div style="display: block; width: 100%; height: 400px;" class="mx-auto px-5">
+          <div style="display: block; width: 80%; height: 400px;" class="mx-auto ">
             <canvas *ngIf="metodosPago?.Efectivo!=0 || metodosPago?.Transferencia!=0 || metodosPago?.PayPal!=0"
                     baseChart
                     [data]="pieChartData"
@@ -81,14 +81,14 @@
 
         </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-3 ">
         <div class="chart card card-body shadow">
-          <p class="mb-0">Métodos de envío</p>
-          <p style="font-size: x-small" class="text-muted">Ventas realizadas según los métodos de envío</p>
-          <p class="text-info"
+          <label class="mb-0 font-weight-bold">Métodos de envío</label>
+          <p  *ngIf="metodosEnvio?.Retiro!=0 || metodosEnvio?.Acordar!=0 || metodosEnvio?.Domicilio!=0"  class="text-muted small">Ventas realizadas según los métodos de envío</p>
+          <p class="text-info small"
              *ngIf="metodosEnvio?.Retiro==0 && metodosEnvio?.Acordar==0 && metodosEnvio?.Domicilio==0">No existen
             productos comprados por estos medios</p>
-          <div style="display: block; width: 100%; height: 400px;" class="mx-auto px-5">
+          <div style="display: block; width: 80%; height: 400px;" class="mx-auto ">
             <canvas height="40px" width="80px"
                     *ngIf="metodosEnvio?.Retiro!=0 || metodosEnvio?.Acordar!=0 || metodosEnvio?.Domicilio!=0" baseChart
                     [data]="pieChartData1"
@@ -101,14 +101,14 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-3 ">
 
         <div class="chart card card-body shadow">
-          <p class="mb-0">Descuentos</p>
-          <p style="font-size: x-small" class="text-muted">Total de descuentos generados</p>
-          <p class="text-info" *ngIf="descuentos?.Cupon==0 && descuentos?.Automatico==0">No existen descuentos
+          <label class="mb-0 font-weight-bold">Descuentos</label>
+          <p *ngIf="descuentos?.Cupon!=0 || descuentos?.Automatico!=0"  class=" small">Total de descuentos y cupones  generados</p>
+          <p class="text-info small" *ngIf="descuentos?.Cupon==0 && descuentos?.Automatico==0">No existen descuentos
             creados</p>
-          <div style="display: block; width: 100%; height: 400px;" class="mx-auto px-5">
+          <div style="display: block; width: 80%; height: 400px;" class="mx-auto ">
             <canvas height="40px" width="80px" *ngIf="descuentos?.Cupon!=0 || descuentos?.Automatico!=0" baseChart
                     [colors]="doughnuChartColors"
                     [data]="doughnutChartData"
@@ -119,18 +119,18 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-3 ">
         <div class="card card-body shadow  " style="max-width: 100%; height: 100%">
           <h4 class="mb-0   ">Más vendido </h4>
-          <p class="text-muted">El producto más vendido</p>
+          <p class="text-muted small">El producto más vendido</p>
           <div class="row no-gutters align-content-center">
             <div class="col-md-4">
               <img [src]="getImagen(this.productoMasVendido?.IMAGEN_PRODUCTOs[0].IMAGEN)" class="card-img" alt="imagen"
-                   height="250px">
+                   height="auto">
             </div>
             <div class="col-md-8">
-              <div class="card-body">
-                <p class="text-info" *ngIf="!this.productoMasVendido?.PRODUCTO.NOMBRE_PRODUCTO">No se han realizado
+              <div class="card-body pt-0">
+                <p class="text-info small" *ngIf="!this.productoMasVendido?.PRODUCTO.NOMBRE_PRODUCTO">No se han realizado
                   compras a tu tienda </p>
                 <h5 class="title-card">{{this.productoMasVendido?.PRODUCTO.NOMBRE_PRODUCTO}}</h5>
                 <p *ngIf="this.productoMasVendido?.PRODUCTO.MARCA"><strong>Marca:</strong>
@@ -146,11 +146,16 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+    <div class="row mx-md-5  justify-content-between">
+
       <div class="col-12 mt-4">
 
         <div class="card card-body shadow-lg">
           <div class="row px-5">
-            <div class="col-md-auto">
+            <div class="col">
               <h4 class="mb-0">Ventas</h4>
               <p>Ventas realizadas por mes</p>
             </div>
@@ -163,8 +168,8 @@
           </div>
 
           <br>
-          <div style="display: block; width: 100%; height: 400px;" >
-            <canvas height="40px" width="80px" baseChart [colors]="curveChartColors" [datasets]="curveChartData"
+          <div style="display: block; width: 100%; height: 400px;">
+            <canvas baseChart [colors]="curveChartColors" [datasets]="curveChartData"
                     [labels]="curveChartLabels"
                     [options]="curveChartOptions"
                     [legend]="curveChartLegend" [chartType]="curveChartType" (chartHover)="chartHovered($event)"
@@ -172,13 +177,16 @@
           </div>
         </div>
       </div>
+      <div class="col-md-5  mt-md-0 mt-3">
 
+
+      </div>
 
     </div>
     <br>
 
 
-  </div>
+
   <div class="row mx-md-5 justify-content-between ">
     <div class="col-md-12">
       <div class="card card-body shadow-lg">

@@ -21,6 +21,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {TiendaServicio} from "../../servicios/tienda.servicio";
 import {CategoriaServicio} from "../../servicios/categoria.servicio";
 import {CorreoServicio} from "../../servicios/correo.servicio";
+import {toNumber} from "ngx-bootstrap/timepicker/timepicker.utils";
 
 @Component({
   selector: 'app-detalle-producto',
@@ -130,8 +131,9 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
     'fa fa-dog', 'fa fa-gamepad', 'fa fa-grin-stars', 'fa fa-heartbeat', 'fa fa-building', 'fa fa-tractor'];
 
 
-  public bandera:boolean=true;
-  constructor(public _correoServicio:CorreoServicio, public _categoriaServicio: CategoriaServicio, public router: Router, public _tiendaServicio: TiendaServicio, public _valoracionServicio: ValoracionServicio, public menu: MenuComponent, public _carritoServicio: CarritoServicio, public _compraServicio: CompraServicio,
+  public bandera: boolean = true;
+
+  constructor(public _correoServicio: CorreoServicio, public _categoriaServicio: CategoriaServicio, public router: Router, public _tiendaServicio: TiendaServicio, public _valoracionServicio: ValoracionServicio, public menu: MenuComponent, public _carritoServicio: CarritoServicio, public _compraServicio: CompraServicio,
               public toastr: ToastrService, public _dpaServicio: DpaServicio, public _agenteServicio: AgenteServicio, public modalService: NgbModal, public _sanitizer: DomSanitizer, configRating: NgbRatingConfig, public route: ActivatedRoute, public _productoServicio: ProductoServicio) {
     configRating.max = 5;
     configRating.readonly = true;
@@ -256,7 +258,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
   }
 
   public banderaTipo: boolean;
-  public banderaTipoEntrega: boolean=true;
+  public banderaTipoEntrega: boolean = true;
 
   public cambiarTipo(value) {
     this.DatosFactura.Tipo = value;
@@ -281,6 +283,9 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
       this.id_Producto = this.route.snapshot.params.idProducto;
       let response = await this._productoServicio.obtenerProductoDetalle(this.id_Producto).toPromise();
       this.productoDetalle = response.data;
+      if (this.productoDetalle.PRODUCTO.CALIFICACIONs[0]!=undefined) {
+        this.productoDetalle.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL = parseFloat(this.productoDetalle.PRODUCTO.CALIFICACIONs[0].PROMEDIO_CAL).toFixed(2)
+      }
       let contacto = this.productoDetalle.TIENDA.CONTACTO_WHATSAPP.slice(1, 10);
       this.contactoWhatsapp = '593' + contacto;
 
@@ -365,8 +370,9 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
         this.getVideoIframeInicio(imagen.IMAGEN);
       }
       if (imagen.TIPO_IMAGEN == 'video') {
-        this.data.video = imagen.IMAGEN;
-        this.data.type = imagen.TIPO_IMAGEN;
+        debugger;
+        this.data.video = GLOBAL.urlImagen +imagen.IMAGEN;
+       // this.data.type = imagen.TIPO_IMAGEN;
       }
     })
 
@@ -696,7 +702,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
       //FIN DATOS DE COMPRA
       this.modalService.open(content, {centered: true, size: 'lg', backdrop: "static"});
     } else {
-      this.router.navigate(['/loguin'])
+      this.router.navigate(['/login'])
     }
   }
 
@@ -1125,12 +1131,12 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
 
   public async agregarCarrito() {
     try {
-      if (this._agenteServicio.getIdentity()){
-      this.Carrito_Producto = new Carrito_Producto(this.varianteActiva.NUM_VARIANTE, this.varianteActiva.CANTIDAD, this.varianteActiva.IMAGENES[0].IMAGEN);
-      let response = await this._carritoServicio.saveCarrito(this.Carrito_Producto).toPromise();
-      this.menu.conteoProductosCarrito(true);
-      }else {
-        this.router.navigate(['/loguin'])
+      if (this._agenteServicio.getIdentity()) {
+        this.Carrito_Producto = new Carrito_Producto(this.varianteActiva.NUM_VARIANTE, this.varianteActiva.CANTIDAD, this.varianteActiva.IMAGENES[0].IMAGEN);
+        let response = await this._carritoServicio.saveCarrito(this.Carrito_Producto).toPromise();
+        this.menu.conteoProductosCarrito(true);
+      } else {
+        this.router.navigate(['/login'])
       }
     } catch (e) {
       console.log("error Parseado:" + JSON.stringify(e));

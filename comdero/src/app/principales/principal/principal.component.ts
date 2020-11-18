@@ -11,7 +11,8 @@ import * as moment from "moment";
 import {ProductoServicio} from "../../servicios/producto.servicio";
 import Swal from "sweetalert2";
 import {HttpErrorResponse} from "@angular/common/http";
-import {WebSocketService} from "../../servicios/WebSockets/web-socket.service";
+import {element} from "protractor";
+
 
 @Component({
   selector: 'app-principal',
@@ -44,9 +45,9 @@ export class PrincipalComponent implements OnInit {
     touchDrag: true,
     pullDrag: true,
     dots: false,
-    navSpeed: 700,
+    navSpeed: 2000,
     autoplay: true,
-    autoplaySpeed: 1000,
+    autoplaySpeed: 2000,
 
     animateOut: 'slideOutDown',
     animateIn: 'flipInX',
@@ -74,11 +75,10 @@ export class PrincipalComponent implements OnInit {
     touchDrag: true,
     pullDrag: true,
     dots: false,
-    navSpeed: 1000,
+    navSpeed: 2000,
 
     autoplay: true,
-    autoplayTimeout: 2000,
-    autoplaySpeed: 1000,
+    autoplaySpeed: 2000,
     fluidSpeed: true,
 
     animateOut: 'slideOutDown',
@@ -125,6 +125,10 @@ export class PrincipalComponent implements OnInit {
     this.populares = await this.obtenerTodosProductos(1); //populares o con mas estrellas
     this.recomendados = await this.obtenerTodosProductos(2);// recomendados o con mas
     this.obtenerTodasTiendas();
+
+
+
+
 
   }
 
@@ -301,7 +305,8 @@ export class PrincipalComponent implements OnInit {
   public async obtenerTodasTiendas() {
     try {
       let response = await this._tiendaServicio.obtenerTodasTiendas().toPromise();
-      // console.log("tiendas" + response.data);
+
+
       this.tiendasObtenidas = response.data;
       for (let element of this.tiendasObtenidas) {
         this.vectorTiendasObtenidas.push(element);
@@ -351,7 +356,7 @@ export class PrincipalComponent implements OnInit {
       let identidad = this._agenteServicio.getIdentity();
 
       if (!identidad) {
-        this.router.navigate(['/loguin']);
+        this.router.navigate(['/login']);
       } else {
         let response = await this._tiendaServicio.getMisTiendas(identidad.COD_AGENTE).toPromise();
         let mistiendas: any = response.data;

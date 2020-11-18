@@ -10,13 +10,14 @@
       <div class="card bg-white ">
 
         <div class="card-body text-center">
-          <h5 class="card-title font-weight-bold">Sucursal &nbsp;{{i + 1}}</h5>
+          <h5 class="card-title font-weight-bold" *ngIf="i!=0">Sucursal &nbsp;{{i + 1}}</h5>
+          <h5 class="card-title font-weight-bold" *ngIf="i==0">Matriz</h5>
           <p class="map fas fa-map-marked-alt fa-4x text-primary"></p>
           <hr>
           <div class="row  no-gutters justify-content-between">
             <p class="col-4 text-left mb-0"><strong>Dirección:</strong></p>
             <p class="card-text col-8 text-left mb-0">{{sucursal.DIRECCION_SUCURSAL}}</p>
-            <p class="col-4 text-left mb-0"><strong>Telefono:</strong></p>
+            <p class="col-4 text-left mb-0"><strong>Teléfono:</strong></p>
             <p class="card-text col-8 text-left mb-0">{{sucursal.TELEFONO_SUCURSAL}}</p>
             <p class="col-4 text-left mb-0"><strong>Cod Postal:</strong></p>
             <p class="card-text col-8 text-left mb-0">{{sucursal.NUM_COD_POSTAL_SUCURSAL}}</p>
@@ -40,7 +41,7 @@
           <p class="map fas fa-home fa-4x text-primary"></p>
           <hr>
           <div class="row  no-gutters justify-content-between">
-            <p class="col-4 text-left mb-0"><strong>Telefono:</strong></p>
+            <p class="col-4 text-left mb-0"><strong>Teléfono:</strong></p>
             <p class="card-text col-8 text-left mb-0">{{sucursal.TELEFONO_SUCURSAL}}</p>
             <p class="col-4 text-left mb-0"><strong>Provincia:</strong></p>
             <p class="card-text col-8 text-left mb-0">{{sucursal.DPA.NOMBRE}}</p>

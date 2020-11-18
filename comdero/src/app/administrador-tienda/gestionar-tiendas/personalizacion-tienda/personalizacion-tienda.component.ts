@@ -95,6 +95,7 @@ export class PersonalizacionTiendaComponent implements OnInit {
       this.mensageCorrecto(response['message']);
       let identidadTienda = await this._tiendaServicio.getDatosTienda(this.identidadTienda.NUM_TIENDA).toPromise();
       localStorage.setItem("identityTienda", JSON.stringify(identidadTienda.data));
+      this.loading=false;
     } catch (e) {
       this.loading = false;
       if (!(e instanceof HttpErrorResponse)){
@@ -131,7 +132,7 @@ export class PersonalizacionTiendaComponent implements OnInit {
       position: 'center',
       width: 600,
       buttonsStyling: false,
- 
+
       customClass: {
         confirmButton: 'btn btn-primary px-5',
         //icon:'sm'

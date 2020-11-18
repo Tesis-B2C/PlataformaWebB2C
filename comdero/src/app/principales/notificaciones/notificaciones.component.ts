@@ -45,6 +45,25 @@ export class NotificacionesComponent implements OnInit {
     }
   }
 
+  public async direccionar2( idCompra, idNotificacion, estado,estado_notificacion) {
+    try {
+      if (estado_notificacion == 0) {
+        let response = await this._notificacionesServicio.updateEstadoNotificacion(idNotificacion, estado).toPromise();
+      }
+      this.router.navigate(['/principales/menu/mi-cuenta/menu-mi-cuenta/detalle-pedido-realizado/',idCompra]);
+      this.getMisNotificaciones();
+    } catch (e) {
+
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
+        if (JSON.stringify(e) === '{}')
+          this.mensageError(e);
+        else this.mensageError(JSON.stringify(e));
+      }
+    }
+  }
+
 
   public notificaciones;
 

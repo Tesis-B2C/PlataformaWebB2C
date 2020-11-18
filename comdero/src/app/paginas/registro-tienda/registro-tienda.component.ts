@@ -16,6 +16,8 @@ import {HttpErrorResponse} from "@angular/common/http";
 })
 
 export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
+
+
   public Tienda;
   public Sucursales = [];
   public htmlcomponent;
@@ -192,7 +194,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
         } else
           this.banderaToastRuc = true;
       } else {
-        this.mostrarToast("Asegurate de ingresar la provincia y ciudad", "");
+        this.mostrarToast("Asegúrate de ingresar la provincia y ciudad", "");
       }
     } else {
       this.banderaToast = true;
@@ -216,7 +218,7 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
 
   public mensajeToast(paso) {
     if (this.banderaToast && !document.forms["formPaso" + paso].checkValidity()) {
-      this.mostrarToast("Asegurate de llenar todos los campos obligatorios marcados con *", "");
+      this.mostrarToast("Asegúrate de llenar todos los campos obligatorios marcados con *", "");
     }
 
     if (this.banderaToastRuc) {
@@ -398,12 +400,27 @@ export class RegistroTiendaComponent implements OnInit, OnDestroy, DoCheck {
       position: 'center',
       width: 600,
       buttonsStyling: false,
-     
+
       customClass: {
         confirmButton: 'btn btn-primary px-5',
         //icon:'sm'
       }
     });
+  }
+
+  public minusCorreo() {
+    if (this.Tienda.Correo_Tienda != '' || this.Tienda.Correo_Tienda != null)
+      this.Tienda.Correo_Tienda = this.Tienda.Correo_Tienda.toLowerCase();
+  }
+
+  public minusPagina() {
+    if (this.Tienda.Link_Pagina != '' || this.Tienda.Link_Pagina != null)
+      this.Tienda.Link_Pagina = this.Tienda.Link_Pagina.toLowerCase();
+  }
+
+  public minusFacebook() {
+    if (this.Tienda.Link_Facebook != '' || this.Tienda.Link_Facebook != null)
+      this.Tienda.Link_Facebook = this.Tienda.Link_Facebook.toLowerCase();
   }
 
 }

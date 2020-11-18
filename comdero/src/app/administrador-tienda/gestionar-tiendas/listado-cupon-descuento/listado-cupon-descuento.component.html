@@ -1,9 +1,9 @@
 <body id="body">
 
-<div class="mt-5 " [ngClass]="{'container':misDescuentos.length==0, 'container-fluid':misDescuentos.length>0}">
+<div class="mt-5" [ngClass]="{'container':misDescuentos.length==0, 'container-fluid':misDescuentos.length>0}">
 
   <div class="row  justify-content-center" id="top">
-    <h4 class=" col-11">Cupones de Descuento</h4>
+    <h4 class=" col-11 px-0" >Descuentos</h4>
     <hr class="col-11">
   </div>
 
@@ -52,14 +52,14 @@
       </div>
     </div>
   </div>
-  <div *ngIf="misDescuentos.length>0 " class="row mb-2 px-5 ">
-    <div class=" input-group col-md-6 mr-md-auto pr-0">
+  <div *ngIf="misDescuentos.length>0 " class="row mb-2 px-md-5 ">
+    <div class=" input-group col-md-6 mr-md-auto px-3">
       <input class="form-control" style="font-size: small" type="text" #Busquedaasd="ngModel"
              [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="filtrar()"/>
       <div class="input-group-append">
         <span class="input-group-text  small"><li class="fas fa-search"></li></span>
       </div>
-      &nbsp; &nbsp; &nbsp;
+
     </div>
     <div class="col-md-auto ">
       <button class="btn btn-primary w-100 mt-md-0 mt-2" style="font-size:small" routerLink="../cupon-descuento">Nuevo
@@ -67,7 +67,7 @@
       </button>
     </div>
   </div>
-  <div *ngIf="loading">
+  <div *ngIf="loading" [ngClass]="{'container':misDescuentos.length==0, 'container-fluid':misDescuentos.length>0}" >
     <label>Buscando . . .</label>
     &nbsp; &nbsp; &nbsp;
     <div class="progress">
@@ -77,27 +77,27 @@
   </div>
 
 
-  <div *ngIf="misDescuentos.length>0 " class="container-fluid mx-auto px-md-5 ">
+  <div *ngIf="misDescuentos.length>0 " class="container-fluid mx-auto px-0 px-md-5 ">
 
 
     <div class="btn-group mb-2 animated  "
          [ngClass]="{'fadeOut':vectorDescuentos.size==0,'fadeIn':vectorDescuentos.size>0 }"
          *ngIf="vectorDescuentos.size>0">
-      <button class="btn btn-primary mr-1 " style="font-size: small; font-weight: normal">
+      <button class="btn btn-primary  " style="font-size: small; font-weight: normal">
         Seleccionados &nbsp;<span class="badge badge-light">{{vectorDescuentos.size}}</span>
       </button>
       <button (click)="cambiarEstadoDescuentos(0)" placement="top" ngbTooltip="Mostrar"
-              class="btn btn-secondary  mt-md-0 mt-1" style="font-size: x-small">
+              class="btn btn-secondary  mt-md-0 " style="font-size: x-small">
         <span class="fa fa-check"></span>
       </button>
 
       <button (click)="cambiarEstadoDescuentos(1)" placement="top" ngbTooltip="Ocultar"
-              class="btn btn-dark   mt-md-0 mt-1"
+              class="btn btn-dark   mt-md-0 "
               style="font-size: x-small"
       ><span class="fa fa-ban"></span></button>
 
       <button (click)="cambiarEstadoDescuentos(2)" placement="top" ngbTooltip="Borrar"
-              class="btn btn-danger   mt-md-0 mt-1"
+              class="btn btn-danger   mt-md-0 "
               style="font-size: x-small"
       ><span class="fa fa-trash"></span></button>
     </div>
@@ -186,7 +186,7 @@
       </tbody>
     </table>
 
-    <div class="d-flex justify-content-between p-2">
+    <div *ngIf="this.result.length>0" class="d-flex justify-content-between p-2">
       <ngb-pagination id="paginacion"
                       [(page)]="page"
                       [pageSize]="pageSize"

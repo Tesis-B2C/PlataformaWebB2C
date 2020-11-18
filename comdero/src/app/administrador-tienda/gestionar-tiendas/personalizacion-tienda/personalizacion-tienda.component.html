@@ -1,184 +1,200 @@
 <body class="bg">
 
-<div class="container mt-5">
-  <form #FormPaso3 id="formPaso3" class="datosregistro" validate-form>
-    <div class="row justify-content-center">
-      <h4 class="col-12">Personalización de tu tienda</h4>
-      <hr class="col-12">
-    </div>
-    <h6>Comienza con la personalización de la tienda</h6>
-    <p class="p">Así verán los clientes tu tienda cuando la visiten</p>
-    <br>
-    <div class="card py-4 row justify-content-center mb-5 ">
-      <div class="col-md-11 mx-auto">
-        <br>
-        <div class="w-100">
-          <div class=" form-row justify-content-between m-0 pb-3">  <!-- TABLA DE DOS COLUMNAS -->
-            <div class="col-md-5 form-group px-1 m-0" id="panelUno">    <!-- COLUMNA 1 -->
-              <form class="card card-body p-0 columnas" name="form">
+<div class="container mt-md-5 mt-3 ">
 
-                <div class="form-group centered-content m-0">  <!-- F1 LOGO-->
-                  <a class="ml-0 mt-5 text-center">
-                    <label class="mb-0 pt-3 pb-2">Agregue el logo de su tienda</label>
-                  </a>
+  <div class="row justify-content-center">
+    <h4 class="col-11 text-md-left text-center ">Personalización de tu tienda</h4>
+    <hr class="col-11 mb-md-1 mb-0 ">
 
-                  <div class="form-group">
-                    <div [ngClass]="{'borde-imagenesL':!urlLogo,'borde-imagenes1L':urlLogo}"
-                         class="row mt-3 mx-0 mx-auto">
-                      <div *ngIf="urlLogo">
-                        <label style="border: none;">
-                          <img [src]="urlLogo" class="px-0 rounded-circle" height="116px" width="116px">
-                        </label>
-                      </div>
-                      <button *ngIf="urlLogo" (click)="quitarLogo()"
-                              class="mx-auto boton-cerrar btn-outline-danger px-0 py-0 ">Eliminar
-                      </button>
 
-                      <div *ngIf="!urlLogo" class="mx-auto">
-                        <div class="col-auto pt-4">
-                          <label class="imagen-agregar">
-                            <i class="fa fa-store fa-3x color-fa"></i>
-                            <i class="fa fa-plus-circle fa-2x ml-1 color-fa"></i>
-
-                            <input (change)="subirLogo($event)" accept="image/*" class="file" type="file"
-                                   name="logoImagen">
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>  <!-- F1 LOGO-->
-
-                <div class="form-group centered-content m-0">  <!-- F2 BANNER-->
-                  <a class="ml-0 mt-5 text-center">
-                    <label class="mb-0 pt-3 pb-3">Agregue una imagen de portada para su tienda</label>
-                  </a>
-
-                  <div class="form-group px-2">
-                    <div
-                      [ngClass]="{'borde-imagenesB':!urlBanner,'borde-imagenes1B':urlBanner }"
-                      class="row mx-0 ">
-
-                      <div *ngIf="urlBanner">
-                        <label style="border: none;">
-                          <img [src]="urlBanner" class="px-0" style="width:100%; height: 130px">
-                        </label>
-                      </div>
-
-                      <div *ngIf="!urlBanner" class="mx-auto">
-                        <div class=" p-0">
-                          <label class="imagen-agregar">
-                            <img style="width:100%; height: 130px" class="p-0"
-                                 src="assets/estilos-registroTienda/montanas3.png"  style="width:100%; height: 130px">
-                            <input (change)="subirBanner($event)" accept="image/*" class="file"
-                                   type="file">
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-
-                    <button *ngIf="urlBanner" (click)="quitarBanner()"
-                            class="mx-auto boton-cerrar btn-outline-danger px-0 py-0">Eliminar
-                    </button>
-                    <br *ngIf="urlBanner">
-
-                  </div>
-                </div>  <!-- F2 BANNER-->
-              </form>
-            </div>
-
-            <div class=" col-md-5 form-group px-1 m-0 mt-md-0 mt-4" id="panelDos">    <!-- COLUMNA 1 -->
-              <form class="p-0" name="form">
-                <div style="position: relative;">
-                  <div class="form-group posicion-logo mt-1">  <!-- F2 BANNER-->
-
-                    <div *ngIf="urlBanner" class="mx-auto">
-                      <div class=" p-0">
-                        <label>
-                          <img style="width:100%; height: 100px" class="p-0"
-                               [src]="urlBanner">
-                        </label>
-                      </div>
-                    </div>
-                    <div *ngIf="!urlBanner" class="mx-auto">
-                      <div class=" p-0">
-                        <label>
-                          <img style="width:100%; height: 100px" class="p-0"
-                               src="assets/estilos-registroTienda/montanas.png"  >
-                        </label>
-                      </div>
-                    </div>
-                  </div>  <!-- F2 BANNER-->
-
-                  <div class="centered-content posicion-logo mt-md-5 mt-2">
-                    <div class="row mx-auto">
-                      <div *ngIf="urlLogo">
-                        <div>
-                          <label style="border: none;">
-                            <img [src]="urlLogo" class="px-0 rounded-circle"
-                                 style=" border: rgba(0, 0, 0, 0.3) 2px solid;" height="90px" width="90px">
-                          </label>
-                        </div>
-                      </div>
-                      <div *ngIf="!urlLogo" class="mx-auto">
-                        <div class="borde-imagenes1L2 bg-white">
-                          <div class="col-auto pt-4">
-                            <label>
-                              <i class="fa fa-store fa-3x color-fa"></i>
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div> <!--logo muestra-->
-                  <div class="dis-flex justify-content-end">
-                    <p style="z-index: 200; font-size:1.2rem; color: white; font-weight: bold"><span
-                      class="fa fa-eye fa-1x"></span></p>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
+    <div class="col-md-11  py-md-2 py-3 px-3 ">
+      <div class="text-md-right text-center ">
+        <button
+          (click)="this.updatePersonalizacionTienda()" [disabled]="loading"
+          class="btn btn-primary text-nowrap   col-auto mr-md-2"
+          type="button">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+          Guardar Cambios &nbsp;&nbsp;
+          <span class="fa fa-save"></span>
+        </button>
+        <button (click)="cancelar();"
+                class="btn btn-light text-nowrap   col-auto">
+          Cancelar &nbsp;&nbsp;
+          <span class="fa fa-close"></span></button>
 
       </div>
 
     </div>
 
-  </form>
 
-  <form class="  mt-4">
-    <div class="row  justify-content-between">
-      <div class="card  mb-5 w-100 ">
-        <div class="col-md-12 ">
-          <br>
-          <h6>Acciones</h6>
-          <hr>
-          <div class="text-right">
-            <button
-              (click)="this.updatePersonalizacionTienda()" [disabled]="loading" class="btn btn-primary text-nowrap mb-4  col-auto"
-              type="button">
-              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
-              Guardar Cambios &nbsp;&nbsp;
-              <span class="fa fa-save"></span>
-            </button>
-            &nbsp;&nbsp;
-            <button (click)="cancelar();"
-                    class="btn btn-light text-nowrap mb-4  col-auto">
-              Cancelar &nbsp;&nbsp;
-              <span class="fa fa-close"></span></button>
-
-            &nbsp;&nbsp;
+  </div>
 
 
-          </div>
+  <div class="col-md-11 px-md-5">
+    <label class="font-weight-bold">Escoge un banner y un logo para tu tienda</label>
+
+  </div>
+
+
+  <div class="col-11 mx-auto card py-4 row justify-content-center">
+
+    <br>
+    <div class="w-100">
+      <div class=" form-row justify-content-between m-0 pb-3">  <!-- TABLA DE DOS COLUMNAS -->
+        <div class="col-md-5 form-group px-1 m-0" id="panelUno">    <!-- COLUMNA 1 -->
+          <form class="card card-body p-0 columnas" name="form">
+
+            <div class="form-group centered-content m-0">  <!-- F1 LOGO-->
+              <a class="ml-0 mt-5 text-center">
+                <label class="mb-0 pt-3 pb-2">Agregue el logo de su tienda</label>
+              </a>
+
+              <div class="form-group">
+                <div [ngClass]="{'borde-imagenesL':!urlLogo,'borde-imagenes1L':urlLogo}"
+                     class="row mt-3 mx-0 mx-auto">
+                  <div *ngIf="urlLogo">
+                    <label style="border: none;">
+                      <img [src]="urlLogo" class="px-0 rounded-circle" height="116px" width="116px">
+                    </label>
+                  </div>
+                  <button *ngIf="urlLogo" (click)="quitarLogo()"
+                          class="mx-auto boton-cerrar btn-outline-danger px-0 py-0 ">Eliminar
+                  </button>
+
+                  <div *ngIf="!urlLogo" class="mx-auto align-self-center">
+
+                    <label>
+                      <i class="fa fa-store fa-3x color-fa"></i>
+                      <i class="fa fa-plus-circle fa-2x ml-1 color-fa"></i>
+
+                      <input (change)="subirLogo($event)" accept="image/*" class="file" type="file"
+                             name="logoImagen">
+                    </label>
+
+                  </div>
+                </div>
+              </div>
+            </div>  <!-- F1 LOGO-->
+
+            <div class="form-group centered-content m-0">  <!-- F2 BANNER-->
+              <a class="ml-0 mt-5 text-center">
+                <label class="mb-0 pt-3 pb-3">Agregue una imagen de portada para su tienda</label>
+              </a>
+
+              <div class="form-group px-2">
+                <div
+                  [ngClass]="{'borde-imagenesB':!urlBanner,'borde-imagenes1B':urlBanner }"
+                  class="row mx-0 ">
+
+                  <div *ngIf="urlBanner">
+                    <label style="border: none;">
+                      <img [src]="urlBanner" class="px-0" style="width:100%; height: 130px">
+                    </label>
+                  </div>
+
+                  <div *ngIf="!urlBanner" class="mx-auto">
+                    <div class=" p-0">
+                      <label class="imagen-agregar">
+                        <img style="width:100%; height: 130px" class="p-0"
+                             src="assets/estilos-registroTienda/montanas3.png" style="width:100%; height: 130px">
+                        <input (change)="subirBanner($event)" accept="image/*" class="file"
+                               type="file">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <button *ngIf="urlBanner" (click)="quitarBanner()"
+                        class="mx-auto boton-cerrar btn-outline-danger px-0 py-0">Eliminar
+                </button>
+                <br *ngIf="urlBanner">
+
+              </div>
+            </div>  <!-- F2 BANNER-->
+          </form>
         </div>
 
+        <div class=" col-md-5 form-group px-1 m-0 mt-md-0 mt-4" id="panelDos">    <!-- COLUMNA 1 -->
+          <form class="p-0" name="form">
+            <div style="position: relative;">
+              <div class="form-group posicion-logo mt-1">  <!-- F2 BANNER-->
+
+                <div *ngIf="urlBanner" class="mx-auto">
+                  <div class=" p-0">
+                    <label>
+                      <img style="width:100%; height: 100px" class="p-0"
+                           [src]="urlBanner">
+                    </label>
+                  </div>
+                </div>
+                <div *ngIf="!urlBanner" class="mx-auto">
+                  <div class=" p-0">
+                    <label>
+                      <img style="width:100%; height: 100px" class="p-0"
+                           src="assets/estilos-registroTienda/montanas.png">
+                    </label>
+                  </div>
+                </div>
+              </div>  <!-- F2 BANNER-->
+
+              <div class="centered-content posicion-logo mt-md-5 mt-2">
+                <div class="row mx-auto">
+                  <div *ngIf="urlLogo">
+                    <div>
+                      <label style="border: none;">
+                        <img [src]="urlLogo" class="px-0 rounded-circle"
+                             style=" border: rgba(0, 0, 0, 0.3) 2px solid;" height="90px" width="90px">
+                      </label>
+                    </div>
+                  </div>
+                  <div *ngIf="!urlLogo" class="mx-auto">
+                    <div class="borde-imagenes1L2 bg-white">
+                      <div class="col-auto pt-4">
+                        <label>
+                          <i class="fa fa-store fa-3x color-fa"></i>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> <!--logo muestra-->
+              <div class="dis-flex justify-content-end">
+                <p style="z-index: 200; font-size:1.2rem; color: white; font-weight: bold"><span
+                  class="fa fa-eye fa-1x"></span></p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <form class="  mt-4">
+    <div class="row  justify-content-center">
+
+      <div class="col-md-11 ">
+        <div class="text-md-right text-center ">
+          <button
+            (click)="this.updatePersonalizacionTienda()" [disabled]="loading"
+            class="btn btn-primary text-nowrap mb-4  col-auto mr-md-2"
+            type="button">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+            Guardar Cambios &nbsp;&nbsp;
+            <span class="fa fa-save"></span>
+          </button>
+          <button (click)="cancelar();"
+                  class="btn btn-light text-nowrap mb-4  col-auto">
+            Cancelar &nbsp;&nbsp;
+            <span class="fa fa-close"></span></button>
+
+        </div>
       </div>
 
     </div>
   </form>
 
 </div>
-<br><br><br><br><br><br>
+<br>
 </body>

@@ -40,6 +40,7 @@
 .ancho-banner {
   width: 65%;
 }
+
 #sidebar {
   background: white;
   color: #2a4c75;
@@ -74,13 +75,28 @@
   border-radius: 50px;
 }
 
-.categoriaCelular{
-   display: none;
- }
+.categoriaCelular {
+  display: none;
+}
 
-.categoriaNormal{
+.categoriaNormal {
   display: block;
 }
+
+
+.ancho-cards{
+  width: 13rem;
+}
+
+.contenidoMax100 {
+  width: 10rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: justify
+}
+
+
 @media (max-width: 720px) {
   .alto-banner {
     height: 200px;
@@ -91,16 +107,33 @@
     width: 100%;
   }
 
-  .categoriaNormal{
+  .categoriaNormal {
     display: none;
   }
-  .categoriaCelular{
+
+  .categoriaCelular {
     display: block;
 
   }
+
   #sidebar {
     margin-left: -250px;
   }
+
+  .ancho-cards{
+    width: 12rem
+
+  }
+
+  .contenidoMax100 {
+    width: 9rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: justify
+  }
+
+
 }
 
 
@@ -120,8 +153,6 @@ footer p, li, a {
 #sidebar.active {
   margin-left: -250px;
 }
-
-
 
 
 body {

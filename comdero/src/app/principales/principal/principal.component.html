@@ -1,5 +1,9 @@
 <!--</header> &lt;!&ndash; section-header.// &ndash;&gt;-->
 
+
+
+
+
 <nav class=" stick-top navbar navbar-main navbar-expand-md  border-bottom colorNavbar mx-0">
   <div class="mx-lg-auto">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav"
@@ -10,7 +14,7 @@
     <div class="collapse navbar-collapse " id="main_nav">
       <ul class="navbar-nav ">
         <li class="nav-item dropdown">
-          <a class=" categoriaCelular nav-link pl-0" data-toggle="dropdown" href="#" aria-expanded="false"> &nbsp;Categorías <span
+          <a class=" categoriaCelular nav-link pl-0" [routerLink]="['/principales/menu/categorias']" data-toggle="dropdown" href="#" aria-expanded="false"> &nbsp;Categorías <span
             class="fa fa-caret-down"></span></a>
 
           <a class="categoriaNormal nav-link pl-0 text-white" style="cursor: pointer" (click)="banera=!banera"> <span class="fa fa-bars"></span> &nbsp;Categorías</a>
@@ -180,14 +184,16 @@
           <ng-template carouselSlide id="sliderTiendas{{i}}">
             <div class="mx-2 mx-md-5">
               <figure class=" item-logo ">
-                <a routerLink="../detalle-tienda/tienda/{{tienda.NUM_TIENDA}}/inicio-tienda"><img
-                  [src]="getImagen(tienda.LOGO) " style="width: 100%; min-height: 8rem"></a>
+                <a routerLink="../detalle-tienda/tienda/{{tienda.NUM_TIENDA}}/inicio-tienda"><img class="mx-auto"
+                  [src]="getImagen(tienda.LOGO) " style="width: 120px; min-height: 8rem"></a>
                 <figcaption class=" pt-2 small  "
-                            routerLink="../detalle-tienda/tienda/{{tienda.NUM_TIENDA}}/inicio-tienda"> {{tienda.NOMBRE_COMERCIAL}}</figcaption>
+                            routerLink="../detalle-tienda/tienda/{{tienda.NUM_TIENDA}}/inicio-tienda"> {{tienda.NOMBRE_COMERCIAL}} </figcaption>
               </figure> <!-- item-logo.// -->
             </div>
 
           </ng-template>
+
+
 
 
         </ng-container>
@@ -201,7 +207,7 @@
 
   <!-- ========================= SECTION CONTENT COMDERO PRODUCTOS ========================= -->
 
-  <section class="section-content" *ngIf="this.nuevos?.length > 0">
+  <section class="section-content" *ngIf="this.nuevos?.length>0">
     <div class="container">
       <header class="section-heading">
         <h3 class="section-title">Productos</h3>
@@ -217,13 +223,13 @@
         <owl-carousel-o [options]="opcionesCarrouselFilaUno" #carrouselFilaUno>
           <ng-container *ngFor="let p of this.nuevos;index as i">
             <ng-template dataHash="one" carouselSlide id="slider+{{i}}">
-              <div class="card card-product-grid mx-2">
+              <div class="card card-product-grid mx-auto  ancho-cards" >
                 <a routerLink="../detalle-producto/{{p.ID_OFERTA}}">
-                  <img [src]="getImagen(p.IMAGEN)" width="100%"
+                  <img [src]="getImagen(p.IMAGEN)"
                        height="200rem"></a>
-                <figcaption class="info-wrap">
-                  <a routerLink="../detalle-producto/{{p.ID_OFERTA}}" class="title"
-                     style="overflow:hidden; white-space: nowrap; text-overflow: ellipsis; text-align: justify">{{p.NOMBRE_PRODUCTO}}</a>
+                <figcaption class="info-wrap px-3">
+                  <a routerLink="../detalle-producto/{{p.ID_OFERTA}}" class="title contenidoMax100"
+                    >{{p.NOMBRE_PRODUCTO}}</a>
                   <div class="rating-wrap">
                     <ul class="rating-stars">
                       <ngb-rating *ngIf="p.PROMEDIO_CAL != null"
@@ -239,8 +245,8 @@
                       </ngb-rating>
                     </ul>
                     <span *ngIf="p.TOTAL_COM != null"
-                          class="label-rating text-muted">{{p.TOTAL_COM}} comentarios</span>
-                    <span *ngIf="p.TOTAL_COM == null" class="label-rating text-muted">0 Comentarios </span>
+                          class="label-rating text-muted ml-0">{{p.TOTAL_COM}} comentarios</span>
+                    <span *ngIf="p.TOTAL_COM == null" class="label-rating text-muted ml-0">0 Comentarios </span>
                   </div> <!-- rating-wrap.// -->
 
                   <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO == null">
@@ -254,7 +260,7 @@
 
                   <!-- price-wrap.// -->
                   <a routerLink="../detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda"
-                     class="title tituloTienda">{{p.NOMBRE_COMERCIAL}}</a>
+                     class="title tituloTienda contenidoMax100">{{p.NOMBRE_COMERCIAL}}</a>
                 </figcaption>
               </div>
             </ng-template>
@@ -280,13 +286,12 @@
         <owl-carousel-o [options]="opcionesCarrouselFilaUno" #carrouselFilaUno>
           <ng-container *ngFor="let p of this.populares;index as i">
             <ng-template dataHash="one" carouselSlide id="slider2+{{i}}">
-              <div class="card card-product-grid mx-2">
+              <div class="card card-product-grid mx-auto ancho-cards" >
                 <a routerLink="../detalle-producto/{{p.ID_OFERTA}}">
                   <img [src]="getImagen(p.IMAGEN)" width="100%"
                        height="200rem"></a>
                 <figcaption class="info-wrap">
-                  <a routerLink="../detalle-producto/{{p.ID_OFERTA}}" class="title"
-                     style="overflow:hidden; white-space: nowrap; text-overflow: ellipsis; text-align: justify">{{p.NOMBRE_PRODUCTO}}</a>
+                  <a routerLink="../detalle-producto/{{p.ID_OFERTA}}" class="title contenidoMax100">{{p.NOMBRE_PRODUCTO}}</a>
                   <div class="rating-wrap">
                     <ul class="rating-stars">
                       <ngb-rating *ngIf="p.PROMEDIO_CAL != null"
@@ -301,9 +306,9 @@
                         </ng-template>
                       </ngb-rating>
                     </ul>
-                    <span *ngIf="p.TOTAL_COM != null"
-                          class="label-rating text-muted">{{p.TOTAL_COM}} comentarios</span>
-                    <span *ngIf="p.TOTAL_COM == null" class="label-rating text-muted">0 Comentarios </span>
+                   <span *ngIf="p.TOTAL_COM != null"
+                          class="label-rating text-muted ml-0 ">{{p.TOTAL_COM}} comentarios</span>
+                    <span *ngIf="p.TOTAL_COM == null" class="label-rating text-muted ml-0 ">0 comentarios </span>
                   </div> <!-- rating-wrap.// -->
 
                   <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO == null">
@@ -317,7 +322,7 @@
 
                   <!-- price-wrap.// -->
                   <a routerLink="../detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda"
-                     class="title tituloTienda">{{p.NOMBRE_COMERCIAL}}</a>
+                     class="title tituloTienda contenidoMax100">{{p.NOMBRE_COMERCIAL}}</a>
                 </figcaption>
               </div>
             </ng-template>
@@ -343,13 +348,13 @@
         <owl-carousel-o [options]="opcionesCarrouselFilaUno" #carrouselFilaUno>
           <ng-container *ngFor="let p of this.recomendados;index as i">
             <ng-template dataHash="one" carouselSlide id="slider3+{{i}}">
-              <div class="card card-product-grid mx-2">
+              <div class="card card-product-grid mx-auto ancho-cards" >
                 <a routerLink="../detalle-producto/{{p.ID_OFERTA}}">
                   <img [src]="getImagen(p.IMAGEN)" width="100%"
                        height="200rem"></a>
                 <figcaption class="info-wrap">
-                  <a routerLink="../detalle-producto/{{p.ID_OFERTA}}" class="title"
-                     style="overflow:hidden; white-space: nowrap; text-overflow: ellipsis; text-align: justify">{{p.NOMBRE_PRODUCTO}}</a>
+                  <a routerLink="../detalle-producto/{{p.ID_OFERTA}}" class="title contenidoMax100"
+                     >{{p.NOMBRE_PRODUCTO}}</a>
                   <div class="rating-wrap">
                     <ul class="rating-stars">
                       <ngb-rating *ngIf="p.PROMEDIO_CAL != null"
@@ -365,8 +370,8 @@
                       </ngb-rating>
                     </ul>
                     <span *ngIf="p.TOTAL_COM != null"
-                          class="label-rating text-muted">{{p.TOTAL_COM}} comentarios</span>
-                    <span *ngIf="p.TOTAL_COM == null" class="label-rating text-muted">0 Comentarios </span>
+                          class="label-rating text-muted ml-0">{{p.TOTAL_COM}} comentarios</span>
+                    <span *ngIf="p.TOTAL_COM == null" class="label-rating text-muted ml-0">0 Comentarios </span>
                   </div> <!-- rating-wrap.// -->
 
                   <div class="price-wrap" *ngIf="p.DESCUENTO_AUTOMATICO == null">
@@ -380,7 +385,7 @@
 
                   <!-- price-wrap.// -->
                   <a routerLink="../detalle-tienda/tienda/{{p.NUM_TIENDA}}/inicio-tienda"
-                     class="title tituloTienda">{{p.NOMBRE_COMERCIAL}}</a>
+                     class="title tituloTienda contenidoMax100">{{p.NOMBRE_COMERCIAL}}</a>
                 </figcaption>
               </div>
             </ng-template>
@@ -402,7 +407,7 @@
             <h6 class="title">Contáctanos</h6>
             <p></p>
             <ul class="list-icon">
-              <li><a class="icon fa fa-map-marker"> </a>Diego de Ibarra 30-18 entre Nueva York y Ferbescordero</li>
+              <li><a class="icon fa fa-map-marker"> </a>Diego de Ibarra 30-18 entre Nueva York y Febres Cordero</li>
               <li><a class="icon fa fa-envelope"> </a> tefo.aguayo@gmail.com</li>
               <li><a class="icon fa fa-phone"> </a>(03) 2940959</li>
               <li><a class="icon fa fa-clock"> </a>Lunes-Viernes 10:00am - 7:00pm</li>
@@ -421,7 +426,7 @@
           <aside class="col-6  col-md-2  mt-md-0 mt-2">
             <h6 class="title">Para usuarios</h6>
             <ul class="list-unstyled">
-              <li><a routerLink="/loguin"> Usuario Login </a></li>
+              <li><a routerLink="/login"> Usuario Login </a></li>
               <li><a routerLink="/registro"> Usuario registro </a></li>
               <li><a routerLink="../mi-cuenta/menu-mi-cuenta/vision-general"> Configuración de cuenta </a></li>
               <li><a routerLink="../mi-cuenta/menu-mi-cuenta/pedidos-realizados"> Mis Pedidos </a></li>

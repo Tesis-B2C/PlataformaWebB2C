@@ -3,7 +3,7 @@
   <article>
 
     <div class="row justify-content-center ">
-      <div class="col-12 col-md-12">
+      <div class="col-12 px-0">
         <form class="card card-sm" style="border-radius:50px 0px 0px 50px;">
           <div class="card-body row no-gutters align-items-center py-0">
             <div class="col-auto">
@@ -11,9 +11,9 @@
             </div>
             <!--end of col-->
             <div class="col">
-              <input class="form-control form-control-lg form-control-borderless" type="search"
+              <input class="form-control   form-control-md form-control-borderless " type="search"
                      name="busqueda" [(ngModel)]="this.busqueda" name="Busquedaasd" (input)="filtrar()"
-                     placeholder="ENCUENTRA LO QUE NECESITAS EN {{this.Tienda?.NOMBRE_COMERCIAL}}">
+                     placeholder="Encuentra lo que necesitas en {{this.Tienda?.NOMBRE_COMERCIAL}}">
             </div>
             <!--end of col-->
 
@@ -36,19 +36,18 @@
   <p *ngIf="this.result.length==0">No se encontraron resultados.</p>
 </section>
 
-<div class="">
-  <section class="section-name padding-y-sm row ">
-    <div class="col-md-3"
+
+  <section class="section-name padding-y-sm row no-gutters ">
+    <div class="col-md-3 col-6  "
          *ngFor="let producto of this.result | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
 
-      <div class="card  card-product-grid mx-4">
+      <div class="card  card-product-grid  ancho-cards mx-auto">
         <a routerLink="../../../../detalle-producto/{{producto.ID_OFERTA}}">
-          <img [src]="getImagen(producto.IMAGEN)" width="100%" height="200rem">
+          <img [src]="getImagen(producto.IMAGEN)" width="100%" height="220rem">
         </a>
-        <figcaption class="info-wrap">
-          <a class="title" routerLink="../../../../detalle-producto/{{producto.ID_OFERTA}}" class="title"
-             style="overflow:hidden; white-space: nowrap; text-overflow: ellipsis; text-align: justify"> {{producto.NOMBRE_PRODUCTO}}</a>
-
+        <figcaption class="info-wrap px-3">
+          <a class="title" routerLink="../../../../detalle-producto/{{producto.ID_OFERTA}}" class="title contenidoMax100"
+            > {{producto.NOMBRE_PRODUCTO}}</a>
 
           <div class="rating-wrap">
             <ul class="rating-stars">
@@ -65,8 +64,8 @@
               </ngb-rating>
             </ul>
             <span *ngIf="producto.TOTAL_COM != null"
-                  class="label-rating text-muted">{{producto.TOTAL_COM}} comentarios</span>
-            <span *ngIf="producto.TOTAL_COM == null" class="label-rating text-muted">0 Comentarios </span>
+                  class="label-rating text-muted ml-0">{{producto.TOTAL_COM}} comentarios</span>
+            <span *ngIf="producto.TOTAL_COM == null" class="label-rating text-muted ml-0">0 Comentarios </span>
           </div> <!-- rating-wrap.// -->
 
           <div class="price-wrap" *ngIf="producto.DESCUENTO_AUTOMATICO == null">
@@ -96,4 +95,4 @@
     </div>
   </section>
 
-</div>
+

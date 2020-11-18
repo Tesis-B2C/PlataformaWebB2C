@@ -9,3 +9,7 @@ body {
   font-weight: normal;
   color: black;
 }
+
+dd, dt, p, label{
+  font-size: small;
+}

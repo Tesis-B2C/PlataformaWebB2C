@@ -1,4 +1,13 @@
-import {ChangeDetectionStrategy, Component, DoCheck, OnChanges, OnDestroy, OnInit} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DoCheck,
+  ElementRef,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import {CategoriaServicio} from "../../../servicios/categoria.servicio";
 import {UnidadMedidaServicio} from "../../../servicios/unidad_medida.servicio";
 import {Cmyk, ColorPickerService} from "ngx-color-picker";
@@ -15,24 +24,25 @@ import {CurrencyPipe, Location} from '@angular/common'
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpErrorResponse} from "@angular/common/http";
 
+
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css'],
   providers: [CurrencyPipe],
-  changeDetection:ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
 
 
-  public vBanderaAgregarImagenesVariante=[];
+  public vBanderaAgregarImagenesVariante = [];
   public videoPorGuardar;
   public Imagenes_Producto = [[]];
   public imagenes = [[]];
   public unidades: any;
   public vectorBanderaAgregarImagen = [false];
   public banderaMaximoImagenes: boolean = true;
-  public vbanderaMensajeMaximoImagenes=[];
+  public vbanderaMensajeMaximoImagenes = [];
   public banderaMensajeMaximoVideo: boolean = false;
   public data: any = [];
   public banderaAnimacionVideo: boolean = false;
@@ -104,7 +114,9 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   public categoriasEnviar = [];
 
   public loading: boolean = false;
- public permisorecargar:boolean=true;
+  public permisorecargar: boolean = true;
+
+  @ViewChild("modalInicio",{static:true}) modalInicio: ElementRef;
 
   constructor(public router: Router, private route: ActivatedRoute, private location: Location, private cp: CurrencyPipe, public toastr: ToastrService, private _productoServicio: ProductoServicio, private _sanitizer: DomSanitizer, private modalService: NgbModal, private _categoriaServicio: CategoriaServicio, private _unidadesMedidaServicio: UnidadMedidaServicio, private cpService: ColorPickerService) {
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
@@ -112,27 +124,39 @@ export class ProductosComponent implements OnInit, DoCheck, OnChanges, OnDestroy
     this.Producto = new Producto("000000", null, null, null, null, 1, 1, "Nuevo", null);
     this.Variantes.push(new Variante(null, null, null, null, null, "unidades", 0));
   }
-  public recargar(){
-    this.permisorecargar=false;
+
+  public recargar() {
+    this.permisorecargar = false;
   }
+
   ngOnInit() {
 
     this.getCategorias();
     this.getUnidadesMedida();
     this.panelUno = document.getElementById('panelUno') as HTMLElement;
     this.panelDos = document.getElementById('panelDos') as HTMLElement;
-    if (this.identidadTienda.OPCION_ENVIOs.length == 0) {
-      this.mostrarToast("Asegurate de tener configurado tus métodos de envio antes de empezar a publicar tus productos", "fa fa-truck fa-2x");
+    if (this.identidadTienda.OPCION_ENVIOs.length == 0 || this.identidadTienda.METODO_PAGOs.length == 0) {
+     // this.mostrarToast("Asegúrate de tener configurado tus métodos de envio antes de empezar a publicar tus productos", "fa fa-truck fa-2x");
+      this.abrirModalInicio();
     }
-    if (this.identidadTienda.METODO_PAGOs.length == 0) {
-      this.mostrarToast("Asegurate de tener configurado tus métodos de pago antes de empezar a publicar tus productos", "fas fa-credit-card fa-2x");
-    }
+  /*  if (this.identidadTienda.METODO_PAGOs.length == 0) {
+      this.mostrarToast("Asegúrate de tener configurado tus métodos de pago antes de empezar a publicar tus productos", "fas fa-credit-card fa-2x");
+    }*/
+
+
   }
 
+
+  public abrirModalInicio() {
+
+    this.modalService.open(this.modalInicio, {centered: true, size: 'lg', backdrop: "static",windowClass: 'animated backInDown '});
+  }
+
+
   public cancelar() {
-this.borrarVideo();
-    this.vBanderaAgregarImagenesVariante=[];
-    this.permisorecargar=false;
+    this.borrarVideo();
+    this.vBanderaAgregarImagenesVariante = [];
+    this.permisorecargar = false;
     document.forms["formInformacion"].reset();
     document.forms["formInventario"].reset();
     document.forms["formPrecios"].reset();
@@ -209,6 +233,7 @@ this.borrarVideo();
     delete this.Imagenes_Producto;
     delete this.videoYoutubeGuardar;
     delete this.videoPorGuardar;
+    this.modalService.dismissAll();
 
 
   }
@@ -338,11 +363,11 @@ this.borrarVideo();
 
   public agregarOpcionesProducto() {
     this.vectorOpciones.push(1);
-    this.color.push(this.Variantes[this.Variantes.length-1].Color);
+    this.color.push(this.Variantes[this.Variantes.length - 1].Color);
 
     this.vectorBanderaAgregarImagen.push(false);
     debugger;
-    this.Variantes.push(new Variante( this.color[this.Variantes.length-1],this.Variantes[this.Variantes.length-1].Talla, this.Variantes[this.Variantes.length-1].Material,null, this.Variantes[this.Variantes.length-1].Stock, this.Variantes[this.Variantes.length-1].Cod_Unidad, 0));
+    this.Variantes.push(new Variante(this.color[this.Variantes.length - 1], this.Variantes[this.Variantes.length - 1].Talla, this.Variantes[this.Variantes.length - 1].Material, null, this.Variantes[this.Variantes.length - 1].Stock, this.Variantes[this.Variantes.length - 1].Cod_Unidad, 0));
     this.Imagenes_Producto.push([]);
     this.imagenes.push([]);
     // console.log("asdasd");
@@ -378,9 +403,9 @@ this.borrarVideo();
 
 
     } catch (e) {
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
@@ -393,8 +418,8 @@ this.borrarVideo();
   public busquedaCategoria3(busqueda, event, c22, i) {
 
     let elemento = document.getElementById('labelcheckCategoria2' + i) as HTMLElement;
-    let banderaSeleccionarCategoria:boolean = false;
-    this.c3.forEach( c33 => {
+    let banderaSeleccionarCategoria: boolean = false;
+    this.c3.forEach(c33 => {
       if (c33.CAT_ID_CATEGORIA == busqueda) {
         this.categoriaEncontrada.add(c33);
         banderaSeleccionarCategoria = true;
@@ -444,9 +469,9 @@ this.borrarVideo();
       this.unidades = response.data;
 
     } catch (e) {
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
@@ -505,42 +530,42 @@ this.borrarVideo();
 
 
   public async publicarProducto() {
-    let banderaConfiguracion:boolean=true;
+    let banderaConfiguracion: boolean = true;
     try {
       if (this.identidadTienda.OPCION_ENVIOs.length == 0) {
-        banderaConfiguracion=false;
-        this.mostrarToast("Asegurate de tener configurado tus métodos de envio antes de empezar a publicar tus productos", "fa fa-truck fa-2x");
+        banderaConfiguracion = false;
+        this.mostrarToast("Asegúrate de tener configurado tus métodos de envio antes de empezar a publicar tus productos", "fa fa-truck fa-2x");
       }
       if (this.identidadTienda.METODO_PAGOs.length == 0) {
-        banderaConfiguracion=false;
-        this.mostrarToast("Asegurate de tener configurado tus métodos de pago antes de empezar a publicar tus productos", "fas fa-credit-card fa-2x");
+        banderaConfiguracion = false;
+        this.mostrarToast("Asegúrate de tener configurado tus métodos de pago antes de empezar a publicar tus productos", "fas fa-credit-card fa-2x");
       }
       this.loading = true;
-      if(banderaConfiguracion){
-      if (this.validar()) {
-        if (this.videoYoutube) {
-          this.videoYoutubeGuardar = new Imagen_Producto('Video', 'youtube', this.direccionVideoYoutube, 0);
-          debugger;
-          this.Imagenes_Producto[0].push(this.videoYoutubeGuardar);
-          this.videoPorGuardar = "";
-        } else if (this.videoPorGuardar) {
-          this.Imagenes_Producto[0].push(this.videoPorGuardar);
-        }
-        this.categoriasEnviar = [];
-        for (let categorias of this.categoriasSeleccionadas) {
-          this.categoriasEnviar.push(categorias['ID_CATEGORIA']);
-        }
-        this.guardarProducto();
+      if (banderaConfiguracion) {
+        if (this.validar()) {
+          if (this.videoYoutube) {
+            this.videoYoutubeGuardar = new Imagen_Producto('Video', 'youtube', this.direccionVideoYoutube, 0);
+            debugger;
+            this.Imagenes_Producto[0].push(this.videoYoutubeGuardar);
+            this.videoPorGuardar = "";
+          } else if (this.videoPorGuardar) {
+            this.Imagenes_Producto[0].push(this.videoPorGuardar);
+          }
+          this.categoriasEnviar = [];
+          for (let categorias of this.categoriasSeleccionadas) {
+            this.categoriasEnviar.push(categorias['ID_CATEGORIA']);
+          }
+          this.guardarProducto();
 
-      }
+        }
       }
       this.loading = false;
     } catch
       (e) {
       this.loading = false;
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
@@ -551,8 +576,8 @@ this.borrarVideo();
   public async guardarProducto() {
 
     Swal.fire({
-      title: '<header class="login100-form-title-registro mb-o"><h5 class="card-title"><strong>!Estas seguro</strong></h5></header>',
-      text: "El producto será registrado y publicado en su tienda asegurate de que los datos sean correctos",
+      title: '<header class="login100-form-title-registro mb-o"><h5 class="card-title"><strong>¿Estas seguro?</strong></h5></header>',
+      text: "El producto será registrado y publicado en su tienda asegúrate de que los datos sean correctos",
       icon: 'warning',
       position: 'center',
       width: 600,
@@ -574,9 +599,9 @@ this.borrarVideo();
           this.loading = false;
         } catch (e) {
           this.loading = false;
-          if (!(e instanceof HttpErrorResponse)){
-            console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-            console.log("error como objeto:"+ e);
+          if (!(e instanceof HttpErrorResponse)) {
+            console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+            console.log("error como objeto:" + e);
             if (JSON.stringify(e) === '{}')
               this.mensageError(e);
             else this.mensageError(JSON.stringify(e));
@@ -589,24 +614,24 @@ this.borrarVideo();
   }
 
   validarFormularios() {
-    let bandera=true;
-   for(let i in this.vectorOpciones){
-     if(document.forms["formVariaciones" + i]!=null) {
-       if (document.forms["formVariaciones" + i].checkValidity()) {
-         bandera = true;
-       } else {
-         bandera = false;
-       }
-     }
-   }
+    let bandera = true;
+    for (let i in this.vectorOpciones) {
+      if (document.forms["formVariaciones" + i] != null) {
+        if (document.forms["formVariaciones" + i].checkValidity()) {
+          bandera = true;
+        } else {
+          bandera = false;
+        }
+      }
+    }
 
-   return bandera;
+    return bandera;
   }
 
   public validar(): boolean {
     this.banderaValidaciones = true;
     debugger;
-    if (/*this.imagenes.filter(v => v.length > 0).length == this.imagenes.length */this.imagenes[0].length>0 && this.categoriasSeleccionadas.size > 0 && document.forms["formInformacion"].checkValidity()
+    if (/*this.imagenes.filter(v => v.length > 0).length == this.imagenes.length */this.imagenes[0].length > 0 && this.categoriasSeleccionadas.size > 0 && document.forms["formInformacion"].checkValidity()
       && document.forms["formInventario"].checkValidity() && document.forms["formPrecios"].checkValidity()) {
       if (document.forms["formVariaciones0"] != null) {
         if (this.validarFormularios()) {
@@ -616,7 +641,7 @@ this.borrarVideo();
           window.scrollTo(0, 0);
           body.scrollTo(0, 0);
 
-          this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
+          this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario por favor revísalo nuevamente</p></div>', "Error!",
             {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
           return false
         }
@@ -627,7 +652,7 @@ this.borrarVideo();
       let body = document.getElementById('body') as HTMLElement;
       body.scrollTo(0, 0);
       window.scrollTo(0, 0);
-      this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
+      this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario por favor revísalo nuevamente</p></div>', "Error!",
         {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
       return false
     }
@@ -658,7 +683,7 @@ this.borrarVideo();
       position: 'center',
       width: 600,
       buttonsStyling: false,
-    
+
       customClass: {
         confirmButton: 'btn btn-primary px-5',
         //icon:'sm'
@@ -677,15 +702,13 @@ this.borrarVideo();
   }
 
 
-
-
-  agregarImagenesVariante(event, i){
+  agregarImagenesVariante(event, i) {
     if (event.target.checked) {
-      this.vBanderaAgregarImagenesVariante[i] =true;
+      this.vBanderaAgregarImagenesVariante[i] = true;
     } else {
-      this.vBanderaAgregarImagenesVariante[i] =false;
-      this.imagenes[i+1]=[];
-     this.vectorBanderaAgregarImagen[i+1]=false
+      this.vBanderaAgregarImagenesVariante[i] = false;
+      this.imagenes[i + 1] = [];
+      this.vectorBanderaAgregarImagen[i + 1] = false
     }
 
   }

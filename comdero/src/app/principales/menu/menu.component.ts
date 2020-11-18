@@ -45,7 +45,7 @@ export class MenuComponent implements OnInit, OnDestroy {
       this.getMisNotificaciones();
       this._socketServicio.ioSocket.on('notificacion', res => {
         this.getMisNotificaciones();
-       // this.notify();
+        this.notify();
       })
     }
   }

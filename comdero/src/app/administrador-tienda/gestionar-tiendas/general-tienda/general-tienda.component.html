@@ -1,12 +1,37 @@
 <body id="body" class="bg">
 <form #FormGeneralTienda id="formGeneralTienda" name="FormGeneralTienda" class="general-tienda" validate-form>
-  <div class="container mt-5">
+  <div class="container mt-md-5 mt-3">
     <div class="row justify-content-center">
-      <h4 class="col-11">General</h4>
-      <hr class="col-11">
+      <h4 class="col-11 text-md-left text-center">General</h4>
+      <hr class="col-11 mb-md-1 mb-0 ">
+
+      <form class="col-md-11 py-md-2 py-3 px-2">
+
+        <div class="text-md-right text-center">
+          <button *ngIf="!banderaEdicionDeshabilitada" [disabled]="loading"
+                  (click)="verificarHorarioAtencion()" class="btn btn-primary text-nowrap   col-auto mr-md-2"
+                  type="button">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+            Guardar Cambios &nbsp;&nbsp;
+            <span class="fa fa-save"></span>
+          </button>
+
+          <button *ngIf="!banderaEdicionDeshabilitada" (click)="cancelarModificacion();"
+                  class="btn btn-light text-nowrap   col-auto mr-md-2">
+            Cancelar &nbsp;&nbsp;
+            <span class="fa fa-close"></span></button>
+
+
+          <button *ngIf="banderaEdicionDeshabilitada" (click)="habilitarEdicion()"
+                  class="btn btn-warning text-nowrap   col-auto mr-md-2">
+            Modificar &nbsp;&nbsp;
+            <span class="fa fa-edit"></span></button>
+        </div>
+
+      </form>
     </div>
 
-    <div class="row justify-content-center mb-5">
+    <div class="row justify-content-center ">
       <div class="col-md-11">
         <div id="detalle-tienda">
           <h6>Detalles de la tienda</h6>
@@ -19,18 +44,14 @@
                 <input [disabled]="banderaEdicionDeshabilitada" #Razon_Social="ngModel"
                        style="text-transform: uppercase;"
                        [(ngModel)]="this.EditarTienda.Razon_Social"
-                       [ngClass]="{'is-invalid': Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched)}"
-                       [pattern]='this.LetrasNumerosPattern'
-                       class="tamanioInputs form-control" name="razon_Social" placeholder=""
+                       [ngClass]="{'is-invalid': Razon_Social.invalid && banderaValidaciones}"
+                       class="tamanioInputs form-control" name="razon_Social" placeholder="COMDERO S.A"
                        required type="text">
-                <div *ngIf="Razon_Social.invalid && (Razon_Social.dirty || Razon_Social.touched)">
+                <div *ngIf="Razon_Social.invalid && banderaValidaciones">
                   <div *ngIf="Razon_Social.errors.required">
                     <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
                   </div>
-                  <div *ngIf="Razon_Social.errors.pattern">
-                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
-                      números.</p>
-                  </div>
+
                 </div>
               </div> <!-- form-group end.// -->
 
@@ -39,18 +60,15 @@
                 <input [disabled]="banderaEdicionDeshabilitada" #Nombre_Comercial="ngModel"
                        style="text-transform: uppercase;"
                        [(ngModel)]="this.EditarTienda.Nombre_Comercial"
-                       [ngClass]="{'is-invalid': Nombre_Comercial.invalid && (Nombre_Comercial.dirty || Nombre_Comercial.touched)}"
-                       [pattern]='this.LetrasNumerosPattern'
-                       class="tamanioInputs form-control" name="nombre_Comercial" placeholder=""
+                       [ngClass]="{'is-invalid': Nombre_Comercial.invalid && banderaValidaciones}"
+
+                       class="tamanioInputs form-control" name="nombre_Comercial" placeholder="COMDERO"
                        required type="text">
-                <div *ngIf="Nombre_Comercial.invalid && (Nombre_Comercial.dirty || Nombre_Comercial.touched)">
+                <div *ngIf="Nombre_Comercial.invalid && banderaValidaciones">
                   <div *ngIf="Nombre_Comercial.errors.required">
                     <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
                   </div>
-                  <div *ngIf="Nombre_Comercial.errors.pattern">
-                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
-                      números.</p>
-                  </div>
+
                 </div>
               </div> <!-- form-group end.// -->
             </div>
@@ -60,10 +78,10 @@
               <textarea [disabled]="banderaEdicionDeshabilitada" rows="3"
                         #Descripcion_Tienda="ngModel"
                         [(ngModel)]="this.EditarTienda.Descripcion_Tienda"
-                        [ngClass]="{'is-invalid': Descripcion_Tienda.invalid && (Descripcion_Tienda.dirty || Descripcion_Tienda.touched)}"
+                        [ngClass]="{'is-invalid': Descripcion_Tienda.invalid && banderaValidaciones}"
                         class=" form-control " name="descripcion_Tienda" placeholder=""
                         required type="text" aria-label="With textarea" style="font-size: 0.8rem"></textarea>
-              <div *ngIf="Descripcion_Tienda.invalid && (Descripcion_Tienda.dirty || Descripcion_Tienda.touched)">
+              <div *ngIf="Descripcion_Tienda.invalid && banderaValidaciones">
                 <div *ngIf="Descripcion_Tienda.errors.required">
                   <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
                 </div>
@@ -83,33 +101,31 @@
             <div class="form-row">
               <div class="form-group col-md-6 px-0">
                 <label>* Correo electrónico</label>
-                <input [disabled]="banderaEdicionDeshabilitada" #Correo_Tienda="ngModel"
+                <input [disabled]="banderaEdicionDeshabilitada" #Correo_Tienda="ngModel" (keyup)="minusCorreo()"
                        style="text-transform: lowercase;"
                        [(ngModel)]="this.EditarTienda.Correo_Tienda"
-                       [ngClass]="{'is-invalid': Correo_Tienda.invalid && (Correo_Tienda.dirty || Correo_Tienda.touched)}"
+                       [ngClass]="{'is-invalid': Correo_Tienda.invalid && banderaValidaciones}"
                        [pattern]='this.emailPattern'
                        class="tamanioInputs form-control" name="correo_tienda" placeholder="negocio@comdero.com"
                        required type="text">
-                <div *ngIf="Correo_Tienda.invalid && (Correo_Tienda.dirty || Correo_Tienda.touched)">
+                <div *ngIf="Correo_Tienda.invalid && banderaValidaciones">
                   <div *ngIf="Correo_Tienda.errors.required">
                     <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
                   </div>
                   <div *ngIf="Correo_Tienda.errors.pattern">
-                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Utilice solo letras y
-                      números.</p>
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; No cumple con el formato.</p>
                   </div>
                 </div>
               </div> <!-- form-group end.// -->
               <div class="form-group col-md-6">
                 <label>* Contacto de WhatsApp</label>
                 <input [disabled]="banderaEdicionDeshabilitada" #ContactoW="ngModel" style="text-transform: uppercase;"
-                       [(ngModel)]="this.EditarTienda.Contacto_WhatsApp" [ngClass]="{'is-invalid': ContactoW.invalid && (ContactoW.dirty || ContactoW.touched),
-                 'is-valid': ContactoW.valid && (ContactoW.dirty || ContactoW.touched)}"
+                       [(ngModel)]="this.EditarTienda.Contacto_WhatsApp" [ngClass]="{'is-invalid': ContactoW.invalid && banderaValidaciones}"
                        [pattern]='this.soloNumerosPattern'
                        class="tamanioInputs form-control" name="contactoW" placeholder="0999999999"
                        required type="text" minlength="10" maxlength="10">
                 <span style="font-size: x-small">Los clientes podrán contactarte a través de WhatsApp</span>
-                <div *ngIf="ContactoW.invalid && (ContactoW.dirty || ContactoW.touched)">
+                <div *ngIf="ContactoW.invalid && banderaValidaciones">
                   <div *ngIf="ContactoW.errors.required">
                     <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
                   </div>
@@ -118,11 +134,11 @@
                     </p>
                   </div>
                   <div *ngIf="ContactoW.errors.minlength">
-                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Mínimo 10 digitos.
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Mínimo 10 dígitos.
                     </p>
                   </div>
                   <div *ngIf="ContactoW.errors.maxlenght">
-                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Mínimo 10 digitos.
+                    <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Mínimo 10 dígitos.
                     </p>
                   </div>
                 </div>
@@ -131,15 +147,15 @@
             <div class="form-row">
               <div class="form-group col-sm-6">
                 <label>Sitio Web</label>
-                <input [disabled]="banderaEdicionDeshabilitada" #Link_Pagina="ngModel"
+                <input [disabled]="banderaEdicionDeshabilitada" #Link_Pagina="ngModel" (keyup)="minusPagina()"
                        style="text-transform: lowercase;"
                        [(ngModel)]="this.EditarTienda.Link_Pagina"
-                       [ngClass]="{'is-invalid': Link_Pagina.invalid && (Link_Pagina.dirty || Link_Pagina.touched)}"
+                       [ngClass]="{'is-invalid': Link_Pagina.invalid &&  banderaValidaciones}"
                        [pattern]='this.urlPattern'
                        class="tamanioInputs form-control"
-                       name="link_Pagina" placeholder="www.comdero.com" type="text">
+                       name="link_Pagina" placeholder="https://www.comdero.com" type="text">
 
-                <div *ngIf="Link_Pagina.invalid && (Link_Pagina.dirty || Link_Pagina.touched)">
+                <div *ngIf="Link_Pagina.invalid &&  banderaValidaciones">
                   <div *ngIf="Link_Pagina.errors.pattern">
                     <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                       Debe cumplir con el formato</p>
@@ -149,14 +165,14 @@
 
               <div class="col-sm-6 form-group">
                 <label>Link Facebook</label>
-                <input [disabled]="banderaEdicionDeshabilitada" #Link_Facebook="ngModel"
+                <input [disabled]="banderaEdicionDeshabilitada" #Link_Facebook="ngModel" (keyup)="minusFacebook()"
                        style="text-transform: lowercase;"
                        [(ngModel)]="this.EditarTienda.Link_Facebook" [ngClass]="{
-          'is-invalid': Link_Facebook.invalid && (Link_Facebook.dirty || Link_Facebook.touched)}"
+          'is-invalid': Link_Facebook.invalid && banderaValidaciones}"
                        [pattern]='this.urlPattern' class="tamanioInputs form-control"
-                       name="link_Facebook" placeholder="www.facebook.com/comdero" type="text">
+                       name="link_Facebook" placeholder="https://www.facebook.com/comdero" type="text">
 
-                <div *ngIf="Link_Facebook.invalid && (Link_Facebook.dirty || Link_Facebook.touched)">
+                <div *ngIf="Link_Facebook.invalid &&  banderaValidaciones">
                   <div *ngIf="Link_Facebook.errors.pattern">
                     <p class="alert alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp;
                       Debe cumplir con el formato</p>
@@ -182,21 +198,21 @@
                 <div class="radio-item">
                   <input [disabled]="banderaEdicionDeshabilitada" [checked]="checkConcreto" type="radio" name="horario"
                          id="concreto" (change)="horarioRadio('Concreto')">
-                  <label for="concreto">&nbsp;&nbsp;Abierto en horas concretas</label>
+                  <label for="concreto">&nbsp;&nbsp;Abierto en horas concretas  </label>
                 </div>
                 <br>
 
                 <div class="radio-item">
                   <input [disabled]="banderaEdicionDeshabilitada" [checked]="checkSiempre" type="radio" name="horario"
                          id="siempre" (change)="horarioRadio('Siempre')">
-                  <label for="siempre">&nbsp;&nbsp;Siempre abierto</label>
+                  <label for="siempre">&nbsp;&nbsp;Siempre abierto </label>
                 </div>
                 <br>
 
                 <div class="radio-item">
                   <input [disabled]="banderaEdicionDeshabilitada" [checked]="checkNoDisponible" type="radio"
                          name="horario" id="noDisponible" (change)="horarioRadio('No disponible')">
-                  <label for="noDisponible">&nbsp;&nbsp; Horario no disponible</label>
+                  <label for="noDisponible">&nbsp;&nbsp; Horario no disponible </label>
                 </div>
                 <br>
 
@@ -657,37 +673,35 @@
             </div> <!-- form-group end.// -->
           </div>
         </div>
-
-        <br>
-
-        <form class="card card-body  col-md-12  mt-4">
-          <div class=" container">
-            <h6>Acciones</h6>
-            <hr>
-            <div class="text-right">
-              <button *ngIf="!banderaEdicionDeshabilitada" [disabled]="loading"
-                      (click)="verificarHorarioAtencion()" class="btn btn-primary text-nowrap mb-4  col-auto"
-                      type="button">
-                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
-                Guardar Cambios &nbsp;&nbsp;
-                <span class="fa fa-save"></span>
-              </button>
-              &nbsp;&nbsp;
-              <button *ngIf="!banderaEdicionDeshabilitada" (click)="cancelarModificacion();"
-                      class="btn btn-light text-nowrap mb-4  col-auto">
-                Cancelar &nbsp;&nbsp;
-                <span class="fa fa-close"></span></button>
-
-              &nbsp;&nbsp;
-              <button *ngIf="banderaEdicionDeshabilitada" (click)="habilitarEdicion()"
-                      class="btn btn-warning text-nowrap mb-4  col-auto">
-                Modificar &nbsp;&nbsp;
-                <span class="fa fa-edit"></span></button>
-            </div>
-          </div>
-        </form>
-        <br>
       </div>
+    </div>
+
+    <div class="row justify-content-center mt-3">
+
+      <form class="col-md-11 py-md-2 py-3 px-2 ">
+
+      <div class="text-md-right text-center">
+        <button *ngIf="!banderaEdicionDeshabilitada" [disabled]="loading"
+                (click)="verificarHorarioAtencion()" class="btn btn-primary text-nowrap mb-4  col-auto mr-md-2"
+                type="button">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+          Guardar Cambios &nbsp;&nbsp;
+          <span class="fa fa-save"></span>
+        </button>
+
+        <button *ngIf="!banderaEdicionDeshabilitada" (click)="cancelarModificacion();"
+                class="btn btn-light text-nowrap mb-4  col-auto mr-md-2">
+          Cancelar &nbsp;&nbsp;
+          <span class="fa fa-close"></span></button>
+
+
+        <button *ngIf="banderaEdicionDeshabilitada" (click)="habilitarEdicion()"
+                class="btn btn-warning text-nowrap mb-4  col-auto mr-md-2">
+          Modificar &nbsp;&nbsp;
+          <span class="fa fa-edit"></span></button>
+      </div>
+
+    </form>
     </div>
   </div>
 </form>

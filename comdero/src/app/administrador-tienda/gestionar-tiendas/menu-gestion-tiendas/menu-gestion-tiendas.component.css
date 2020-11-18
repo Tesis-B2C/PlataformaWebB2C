@@ -61,10 +61,6 @@ a[data-toggle="collapse"] {
 
 }
 
-body {
-  font-family: 'Poppins', sans-serif;
-  background: #fafafa;
-}
 
 
 
@@ -129,6 +125,10 @@ a, a:hover, a:focus {
   background-color: #d3d3d4;
 }
 
+.active2{
+  color: #ca6900;
+  background-color: #d3d3d4;
+}
 
 
 #sidebar ul li.active > a, a[aria-expanded="true"] {/*pilas*/
@@ -187,6 +187,11 @@ i {
   align-items: center;
 }
 
+.tituloPanelAdministrativo{
+  display: block;
+}
+
+
 @media (min-width: 1035px) {
   .container-menu {
     padding-right: 150px;
@@ -213,6 +218,10 @@ i {
   .logo{
     width: 65%;
   }
+  .tituloPanelAdministrativo{
+    display: none;
+  }
+
 
 }
 
@@ -233,3 +242,25 @@ i {
   margin-bottom: 0;
   margin-top: 0;
 }
+
+
+.scrollbar2 {
+  height: 100%;
+  overflow: auto;
+}
+
+.scrollbar2::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.scrollbar2::-webkit-scrollbar-track {
+  background-color: rgba(35, 35, 35, 0.1);
+}
+
+.scrollbar2::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 50px;
+}
+
+

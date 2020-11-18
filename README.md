@@ -15,6 +15,9 @@ npm install @ng-bootstrap/ng-bootstrap --save
 --------Servicio "api" correo----------
 npm install nodemailer // correo electronico
 
+desactivar la seguridad catpchat
+https://accounts.google.com/b/0/DisplayUnlockCaptcha
+
 
 --- libreria para sidebar
 npm i ng-sidebar
@@ -142,7 +145,7 @@ npm install jspdf
 npm install html2canvas
 no se importa en el module principal solo donde se va a ocupar
 import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
+import jsPDF from "jspdf@1.5.3";
 https://www.youtube.com/watch?v=PgT2tnmDzzU
 
 
@@ -152,3 +155,25 @@ https://www.youtube.com/watch?v=PgT2tnmDzzU
     },
     
     agregar en tsconfig.json
+
+
+------------ para crear un servidor node seguro SSL
+npm install fs --save
+npm install https --save
+
+----en el index
+var fs = require('fs');
+var https = require('https');
+var express = require('express');
+const PORT = 443;
+    
+var app = express();
+https.createServer({
+    key: fs.readFileSync('my_cert.key'),
+    cert: fs.readFileSync('my_cert.crt')
+}, app).listen(PORT, function(){
+    console.log("My https server listening on port " + PORT + "...");
+});
+app.get('/foo', function(req, res){
+    console.log('Hello, I am foo.');
+});

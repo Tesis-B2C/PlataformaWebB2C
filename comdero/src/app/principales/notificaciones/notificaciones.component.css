@@ -25,3 +25,9 @@
   background-color: rgba(0,0,0,0.1);
   cursor: pointer;
 }
+@media (max-width:720px){
+  .title-page{
+    font-size: larger;
+    font-weight: bold;
+  }
+}

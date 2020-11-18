@@ -1,4 +1,9 @@
 <body class="bg">
+
+
+
+
+
 <ng-template #contentComoRecivirPagos let-modal>
 
   <div class="modal-header">
@@ -43,19 +48,42 @@
 </ng-template>
 
 
-<div class="container mt-5">
+<div class="container mt-md-5 mt-3">
   <div class="row  justify-content-center">
-    <h4 class=" col-11  ">Métodos de pago</h4>
+    <h4 class=" col-11 text-md-left text-center ">Métodos de pago</h4>
     <hr class="col-11  ">
   </div>
 
   <div class="row justify-content-center">
     <div class="col-md-8" id="panelUno">
+      <form class="col-md-12 px-0  ">
+
+        <div class="text-md-right text-center">
+          <button *ngIf="banderaModificar" [disabled]="loading" (click)="saveMetodoPago()"
+                  class="btn btn-primary text-nowrap mb-4  col-auto mr-md-2"
+                  type="button">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2 "></span>
+            Guardar &nbsp;&nbsp;
+            <span class="fa fa-save"></span>
+          </button>
+
+          <button *ngIf="banderaModificar" (click)="banderaModificar=false;iniciarEdicion();"
+                  class="btn btn-light text-nowrap mb-4  col-auto ">
+            Cancelar &nbsp;&nbsp;
+            <span class="fa fa-close"></span></button>
+
+          <button *ngIf="!banderaModificar" (click)="banderaModificar=true"
+                  class="btn btn-warning text-nowrap mb-4  col-auto">
+            Modificar &nbsp;&nbsp;
+            <span class="fa fa-edit"></span></button>
+        </div>
+
+      </form>
 
       <div class="form-group">
         <div class="alert alert-primary col-12" role="alert">
           <a><span class="fa fa-exclamation fa-1x"></span></a>
-          Establezca los métodos de pago que desea implementar en su tienda, estas opciones se asignaran a todos
+          Establezca los métodos de pago que desea implementar en su tienda, estas opciones se asignarán a todos
           los productos que agregue en la tienda
         </div>
       </div>
@@ -81,7 +109,7 @@
         <div class="container">
           <div class="form-row ">
             <div class="col-md-8 mx-auto d-flex align-items-center  ">
-              <p>Los pagos en efectivo estarán disponibles para los clientes que elijan la opción de retirar los productos desde la tienda o quines acuerden la entrega con el vendedor</p>
+              <p>Los pagos en efectivo estarán disponibles para los clientes que elijan la opción de retirar los productos desde la tienda o quienes acuerden la entrega con el vendedor</p>
             </div>
 
             <div class=" mx-auto d-flex align-items-center col-md-2 ">
@@ -120,9 +148,9 @@
                   <input class="form-control" name="numeroCuenta" type="number" #NumeroCuenta="ngModel"
                          [(ngModel)]="this.Metodo_Pago_Transferencia.Numero_Cuenta"
                          [disabled]="!this.banderaPagoTransferencia || !banderaModificar" required
-                         [ngClass]="{'is-invalid': NumeroCuenta.invalid && banderaModificar}" min="0" step="1"
+                         [ngClass]="{'is-invalid': NumeroCuenta.invalid && banderaModificar && banderaValidaciones}" min="0" step="1"
                          oninput="validity.valid||(value='');">
-                  <div *ngIf="NumeroCuenta.errors?.required && banderaModificar">
+                  <div *ngIf="NumeroCuenta.errors?.required && banderaModificar && banderaValidaciones">
                     <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
                   </div>
                 </div>
@@ -145,8 +173,8 @@
                          #BancoPertenece="ngModel"
                          [(ngModel)]="this.Metodo_Pago_Transferencia.Banco_Pertenece"
                          [disabled]="!this.banderaPagoTransferencia || !banderaModificar" required
-                         [ngClass]="{'is-invalid': BancoPertenece.invalid && banderaModificar}">
-                  <div *ngIf="BancoPertenece.errors?.required && banderaModificar">
+                         [ngClass]="{'is-invalid': BancoPertenece.invalid && banderaModificar  && banderaValidaciones}">
+                  <div *ngIf="BancoPertenece.errors?.required && banderaModificar && banderaValidaciones">
                     <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
                   </div>
                 </div>
@@ -183,19 +211,19 @@
       <div class="form-row mx-2">
         <div class="col-10">
           <h6 class="font-weight-bold">Pagos electrónicos</h6>
-          <p class="p">Permite a los clientes la opción de pagar a traves de metodos electrónicos como paypal.</p>
+          <p class="p">Permite a los clientes la opción de pagar a través de métodos electrónicos como paypal.</p>
         </div>
 
         <div class="col-2 text-right">
           <label class="switch mt-2">
             <input type="checkbox" (click)="opcionPagoElectronico($event)" [disabled]="!banderaModificar"
-                   id="slidePagoElectronico">
+                   id="slidePagoElectronico" >
             <span class="slider round"></span>
           </label>
         </div>
       </div>
       <br>
-      <form #formMetodoPagoElectronico name="formMetodoPagoElectronico" class="card card-body mb-md-5">
+      <form #formMetodoPagoElectronico name="formMetodoPagoElectronico" class="card card-body ">
         <div class="container">
           <div class="form-row ">
             <div class="form-group col-md-8">
@@ -206,8 +234,8 @@
                   <input class="form-control" name="apiPayPal" type="text" #ApiPayPal="ngModel"
                          [(ngModel)]="this.Metodo_Pago_Electronico.Api_Key_Paypal"
                          [disabled]="!this.banderaPagoElectronico || !banderaModificar"
-                         [ngClass]="{'is-invalid': ApiPayPal.invalid && banderaModificar}" required="">
-                  <div *ngIf="ApiPayPal.errors?.required && banderaModificar">
+                         [ngClass]="{'is-invalid': ApiPayPal.invalid && banderaModificar && banderaValidaciones}" required="">
+                  <div *ngIf="ApiPayPal.errors?.required && banderaModificar && banderaValidaciones">
                     <p class="alert1 alert-danger"><i class='fa fa-exclamation-circle'> </i> &nbsp; Campo requerido.</p>
                   </div>
                   <a (click)="abrirContentVideosAyuda(contentComoRecivirPagos)" style="color: #1a56e9"
@@ -221,7 +249,7 @@
                     <input class="form-control" name="recargoElectronico" #RecargoElectronico="ngModel"
                            [(ngModel)]="this.Metodo_Pago_Electronico.Porcentaje_Recargo" required
                            [disabled]="!this.banderaPagoElectronico || !banderaModificar"
-                           [ngClass]="{'is-invalid': RecargoElectronico.invalid && banderaModificar}"
+                           [ngClass]="{'is-invalid': RecargoElectronico.invalid && banderaModificar && banderaValidaciones}"
                            type="number" min="0" step="1" oninput="validity.valid||(value='');">
                     <div class="input-group-append">
                       <span class="input-group-text unidades">%</span>
@@ -250,30 +278,28 @@
 
       </form>
 
-      <form class="card card-body  col-md-12  mt-4">
-        <div class=" container">
-          <h6>Acciones</h6>
-          <hr>
-          <div class="text-right">
+      <form class="col-md-12 px-0  mt-4">
+
+          <div class="text-md-right text-center">
             <button *ngIf="banderaModificar" [disabled]="loading" (click)="saveMetodoPago()"
-                    class="btn btn-primary text-nowrap mb-4  col-auto"
+                    class="btn btn-primary text-nowrap mb-4  col-auto mr-md-2"
                     type="button">
-              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2 "></span>
               Guardar &nbsp;&nbsp;
               <span class="fa fa-save"></span>
             </button>
-            &nbsp;&nbsp;
+
             <button *ngIf="banderaModificar" (click)="banderaModificar=false;iniciarEdicion();"
-                    class="btn btn-light text-nowrap mb-4  col-auto">
+                    class="btn btn-light text-nowrap mb-4  col-auto ">
               Cancelar &nbsp;&nbsp;
               <span class="fa fa-close"></span></button>
-            &nbsp;&nbsp;
+
             <button *ngIf="!banderaModificar" (click)="banderaModificar=true"
                     class="btn btn-warning text-nowrap mb-4  col-auto">
               Modificar &nbsp;&nbsp;
               <span class="fa fa-edit"></span></button>
           </div>
-        </div>
+
       </form>
 
     </div>
@@ -292,7 +318,7 @@
         </div>
         <button type="button" class="alert alert-warning"
                 (click)="abrirContentVideosAyuda(contentBeneficiosRecivirPagos)"><span
-          class="fa fa-info fa-1x d-block"></span>Click aqui para más información a cerca de los métodos de pago
+          class="fa fa-info fa-1x d-block"></span>Click aqui para más información acerca de los métodos de pago
           electrónicos
         </button>
       </div>

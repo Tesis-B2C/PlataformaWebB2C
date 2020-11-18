@@ -5,6 +5,7 @@ import {ToastrService} from "ngx-toastr";
 import {TiendaServicio} from "../../../servicios/tienda.servicio";
 import Swal from "sweetalert2";
 import {HttpErrorResponse} from "@angular/common/http";
+
 @Component({
   selector: 'app-sucursales-tienda',
   templateUrl: './sucursales-tienda.component.html',
@@ -41,6 +42,7 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
   public banderaEspacioFisico: boolean = false;
   public btnEspacioFisico: boolean = false;
   public btnCasa: boolean = false;
+  public banderaValidaciones: boolean = false;
 
   constructor(public _dpaServicio: DpaServicio, public toastr: ToastrService, public _tiendaServicio: TiendaServicio) {
   }
@@ -63,9 +65,9 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
       let response = await this._dpaServicio.getDpaProvincias(buscar).toPromise();
       this.provincias = response.data;
     } catch (e) {
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
@@ -79,9 +81,9 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
       let response = await this._dpaServicio.getDpaCiudades(buscar).toPromise();
       this.ciudades[indiceCiudad] = response.data;
     } catch (e) {
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
@@ -94,9 +96,9 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
       let response = await this._dpaServicio.getDpaProvincias(buscar).toPromise();
       this.provinciasCasa = response.data;
     } catch (e) {
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
@@ -111,9 +113,9 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
       let response = await this._dpaServicio.getDpaCiudades(buscar).toPromise();
       this.ciudadesCasa[0] = response.data;
     } catch (e) {
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
@@ -132,8 +134,9 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
   }
 
   public desdeNegocio() {
+    this.banderaValidaciones=false;
     if (this.banderaEspacioFisico == false && this.banderaEdicionDeshabilitadaCasa == false) {
-      this.mostrarToast("Asegurate de guardar los cambios", "")
+      this.mostrarToast("Asegúrate de guardar los cambios", "")
     } else {
       this.vectorCasa = '';
       this.Sucursales = [];
@@ -151,8 +154,9 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
   }
 
   public desdeCasa() {
+    this.banderaValidaciones=false;
     if (this.banderaCasa == false && this.banderaEdicionDeshabilitadaNeg == false) {
-      this.mostrarToast("Asegurate de guardar los cambios", "");
+      this.mostrarToast("Asegúrate de guardar los cambios", "");
     } else {
       this.vectorCasa = '';
       this.Sucursales = [];
@@ -223,7 +227,8 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
 
   public async guardarSucursalesNeg() {
     try {
-      if(document.forms['formSucursales'].checkValidity()) {
+      this.banderaValidaciones = true;
+      if (document.forms['formSucursales'].checkValidity()) {
         if (this.validarCedula(this.Sucursales) == true) {
           let aprobarCiudades: boolean = true;
           for (let s in this.Sucursales) {
@@ -242,19 +247,19 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
             this.cancelarModificacion();
             this.mensageCorrecto(response['message']);
           } else {
-            this.mostrarToastError("Asegurate de seleccionar la ciudad de tu negocio.", "");
+            this.mostrarToastError("Asegúrate de seleccionar la ciudad de tu negocio.", "");
           }
         } else {
           this.mostrarToastError("Al parecer no ingresó un RUC válido", "");
         }
-      }else {
-        this.mostrarToastError("Al parecer existe errores en el formulario, porfavor reviselo nuevamente", "");
+      } else {
+        this.mostrarToastError("Al parecer existe errores en el formulario, por favor reviselo nuevamente", "");
       }
     } catch (e) {
       this.loading = false;
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
@@ -264,6 +269,7 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
   }
 
   public cancelarModificacion() {
+    this.banderaValidaciones=false;
     /*Variables Input*/
     this.provinciaCasa = "";
     this.ciudadCasa = "";
@@ -300,40 +306,41 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
 
   public async guardarSucursalesCasa() {
     try {
-     if(document.forms['formCasa'].checkValidity()){
-       let aprobarCiudades: boolean = true;
-       if (this.ciudadCasa == "")
-         aprobarCiudades = false;
+      this.banderaValidaciones = true;
+      if (document.forms['formCasa'].checkValidity()) {
+        let aprobarCiudades: boolean = true;
+        if (this.ciudadCasa == "")
+          aprobarCiudades = false;
 
-       if (aprobarCiudades) {
-         this.Sucursales[0] = this.vectorCasa;
-         if (this.validarCedula(this.Sucursales) == true) {
-          //  console.log("CASITAS -------" + JSON.stringify(this.Sucursales));
-           this.loading = true;
-           let response = await this._tiendaServicio.actualizarTiendaSucursal(this.Sucursales, this.identidadTienda.NUM_TIENDA).toPromise();
-           debugger
-          //  console.log('CASASASAS CIUDADES ====' + this.ciudadesCasa);
+        if (aprobarCiudades) {
+          this.Sucursales[0] = this.vectorCasa;
+          if (this.validarCedula(this.Sucursales) == true) {
+            //  console.log("CASITAS -------" + JSON.stringify(this.Sucursales));
+            this.loading = true;
+            let response = await this._tiendaServicio.actualizarTiendaSucursal(this.Sucursales, this.identidadTienda.NUM_TIENDA).toPromise();
+            debugger
+            //  console.log('CASASASAS CIUDADES ====' + this.ciudadesCasa);
 
-           let data = await this._tiendaServicio.getDatosTienda(this.identidadTienda.NUM_TIENDA).toPromise();
+            let data = await this._tiendaServicio.getDatosTienda(this.identidadTienda.NUM_TIENDA).toPromise();
 
-           localStorage.setItem("identityTienda", JSON.stringify(data['data']));
-           this.cancelarModificacion();
-           this.mensageCorrecto(response['message']);
-         } else {
-           this.mostrarToastError("Al parecer no ingresó un RUC válido", "");
-         }
-       } else {
-         this.mostrarToastError("Asegurate de seleccionar la ciudad de tu negocio.", "");
-       }
-     }else {
-       this.mostrarToastError("Al parecer existe errores en el formulario, reviselo nuevamente", "");
-     }
+            localStorage.setItem("identityTienda", JSON.stringify(data['data']));
+            this.cancelarModificacion();
+            this.mensageCorrecto(response['message']);
+          } else {
+            this.mostrarToastError("Al parecer no ingresó un RUC válido", "");
+          }
+        } else {
+          this.mostrarToastError("Asegúrate de seleccionar la ciudad de tu negocio.", "");
+        }
+      } else {
+        this.mostrarToastError("Al parecer existe errores en el formulario, reviselo nuevamente", "");
+      }
 
     } catch (e) {
       this.loading = false;
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
@@ -404,7 +411,7 @@ export class SucursalesTiendaComponent implements OnInit, OnDestroy {
       position: 'center',
       width: 600,
       buttonsStyling: false,
-   
+
       customClass: {
         confirmButton: 'btn btn-primary px-5'
         //icon:'sm'

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DomSanitizer} from '@angular/platform-browser';
 import {Metodo_Pago} from '../../../modelos/metodo-pago'
@@ -12,6 +12,7 @@ import {HttpErrorResponse} from "@angular/common/http";
   templateUrl: './metodos-pago.component.html',
   styleUrls: ['./metodos-pago.component.css']
 })
+
 export class MetodosPagoComponent implements OnInit, OnDestroy {
 
 
@@ -38,6 +39,7 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.iniciarEdicion();
 
+
   }
 
 
@@ -48,7 +50,9 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
     delete this.Metodo_Pago_Efectivo;
   }
 
+  public banderaValidaciones: boolean = false;
   cancelar() {
+  this.banderaValidaciones= false;
   debugger
     this.banderaPagoEfectivo = false;
     this.banderaPagoTransferencia = false;
@@ -64,19 +68,24 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
     this.identidadTienda = JSON.parse(localStorage.getItem("identityTienda"));
 
 
+
   }
 
   iniciarEdicion() {
 
     this.cancelar();
-
+    this.banderaSlidePagoEfectivo.checked = false;
+    this.banderaSlidePagoTransferencia.checked = false;
+    this.banderaSlidePagoElectronico.checked = false;
     if (this.identidadTienda.METODO_PAGOs.length>0) {
       for (let mp of this.identidadTienda.METODO_PAGOs) {
         if (mp.TIPO_PAGO == 'Efectivo') {
           this.Metodo_Pago_Efectivo.Porcentaje_Descuento = mp.PORCENTAJE_DESCUENTO;
           this.banderaSlidePagoEfectivo.checked = true;
           this.banderaPagoEfectivo = true;
-        }
+        }/*else {
+          this.banderaSlidePagoEfectivo.checked = false;
+        }*/
 
         if (mp.TIPO_PAGO == 'Transferencia') {
           this.Metodo_Pago_Transferencia.Numero_Cuenta = mp.NUMERO_CUENTA;
@@ -85,14 +94,18 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
           this.Metodo_Pago_Transferencia.Porcentaje_Descuento = mp.PORCENTAJE_DESCUENTO;
           this.banderaSlidePagoTransferencia.checked = true;
           this.banderaPagoTransferencia = true;
-        }
+        }/*else {
+          this.banderaSlidePagoTransferencia.checked = false;
+        }*/
 
         if (mp.TIPO_PAGO == 'Electrónico') {
           this.Metodo_Pago_Electronico.Api_Key_Paypal = mp.API_KEY_PAYPAL;
           this.Metodo_Pago_Electronico.Porcentaje_Recargo = mp.PORCENTAJE_RECARGO;
           this.banderaSlidePagoElectronico.checked = true;
           this.banderaPagoElectronico = true;
-        }
+        }/*else {
+          this.banderaSlidePagoElectronico.checked = false;
+        }*/
       }
     } else {
 
@@ -163,6 +176,7 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
 
   public async saveMetodoPago() {
     try {
+      this.banderaValidaciones=true;
       debugger;
       this.loading=true;
       if (document.forms["formMetodoPagoEfectivo"].checkValidity() && document.forms["formMetodoPagoTransferenciaBancaria"].checkValidity() && document.forms["formMetodoPagoElectronico"].checkValidity()) {
@@ -178,7 +192,7 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
         this.loading=false;
       } else {
         this.loading=false;
-        this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario porfavor revisalo nuevamente</p></div>', "Error!",
+        this.toastr.error('<div class="row no-gutters"><p class="col-12 LetrasToastInfo">Existe errores en el formulario por favor revísalo nuevamente</p></div>', "Error!",
           {positionClass: 'toast-top-right', enableHtml: true, closeButton: true, disableTimeOut: false});
       }
     } catch (e) {
@@ -217,7 +231,7 @@ export class MetodosPagoComponent implements OnInit, OnDestroy {
       position: 'center',
       width: 600,
       buttonsStyling: false,
-      
+
       customClass: {
         confirmButton: 'btn btn-primary px-5',
         //icon:'sm'

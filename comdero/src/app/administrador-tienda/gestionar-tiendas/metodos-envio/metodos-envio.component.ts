@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Opcion_Envio} from "../../../modelos/opcion_envio";
 import {CurrencyPipe} from "@angular/common";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -7,6 +7,7 @@ import {TiendaServicio} from "../../../servicios/tienda.servicio";
 import Swal from "sweetalert2";
 import {MetodoEnvioServicio} from "../../../servicios/metodo_envio.servicio";
 import {HttpErrorResponse} from "@angular/common/http";
+
 @Component({
   selector: 'app-metodos-envio',
   templateUrl: './metodos-envio.component.html',
@@ -44,10 +45,26 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
   constructor(public toastr: ToastrService, public _tiendaServicio: TiendaServicio, public _metodoEnvioServicio: MetodoEnvioServicio, public cp: CurrencyPipe, public modalService: NgbModal) {
   }
 
+  @ViewChild("modalInicio", {static: true}) modalInicio: ElementRef;
 
   ngOnInit() {
     this.identidadTienda = this._tiendaServicio.getIdentityTienda();
     this.iniciarEdicion();
+
+    if (this.banderaEnvioDomicilio == false || this.banderaRetiroLocal == false) {
+      this.abrirModalInicio();
+    }
+
+  }
+
+  public abrirModalInicio() {
+
+    this.modalService.open(this.modalInicio, {
+      centered: true,
+      size: 'lg',
+      backdrop: "static",
+      windowClass: 'animated backInDown '
+    });
   }
 
   ngOnDestroy() {
@@ -235,10 +252,10 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
     this.banderaslideRetiroLocal = document.getElementById('slideRetiroLocal') as HTMLInputElement;
     this.banderaslideEnvioDomicilio = document.getElementById('slideEnvioDomicilio') as HTMLInputElement;
 
-    // console.log(this.banderaslideRetiroLocal + this.banderaslideEnvioDomicilio + 'ESTO ES EL SLIDE');
 
     this.objetoRetiroLocal = new Opcion_Envio('Retiro', null, null, null, 'Debes traer tu mensaje de confirmación e identificación cuando vengas a retirar tu pedido.', null, null, null);
-
+    this.banderaslideRetiroLocal.checked = false;
+    this.banderaslideEnvioDomicilio.checked = false;
     if (this.identidadTienda.OPCION_ENVIOs.length > 0) { //Hay algo en el vector metodo envio
       for (let me of this.identidadTienda.OPCION_ENVIOs) {
         if (me.TIPO_ENVIO == 'Retiro') {
@@ -249,6 +266,10 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
         }
 
         if (me.TIPO_ENVIO == 'Domicilio') {
+          this.banderaslideEnvioDomicilio.checked = true;
+          this.banderaEnvioDomicilio = true;
+          console.log(JSON.stringify(this.identidadTienda.OPCION_ENVIOs));
+
           if (me.TIPO_UBICACION == "Local") {
             this.vectorTarifasLocal.push(new Opcion_Envio(me.TIPO_ENVIO, me.TIPO_UBICACION, me.TIPO_MEDIDA, null, null, me.MINIMO, me.MAXIMO, me.PRECIO));
           }
@@ -257,9 +278,8 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
             this.vectorTarifasResto.push(new Opcion_Envio(me.TIPO_ENVIO, me.TIPO_UBICACION, me.TIPO_MEDIDA, null, null, me.MINIMO, me.MAXIMO, me.PRECIO));
           }
 
-          this.banderaslideEnvioDomicilio.checked = true;
-          this.banderaEnvioDomicilio = true;
         }
+
       }
     } else {
       this.banderaslideRetiroLocal.checked = false;
@@ -273,6 +293,7 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
 
   public async modificarMetodoEnvio() {
     try {
+      this.banderaValidaciones = true;
       debugger
       if (document.forms['formMetodoEnvio'].checkValidity()) {
         if (!this.vectorTarifasLocal.length && !this.vectorTarifasResto.length && this.banderaslideEnvioDomicilio.checked == true)
@@ -306,14 +327,14 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
           this.loading = false;
         }
       } else {
-        this.mostrarToastError("Al parecer existe errores en el formulario, porfavor reviselo nuevamente", "");
+        this.mostrarToastError("Al parecer existe errores en el formulario, por favor reviselo nuevamente", "");
         this.loading = false;
       }
     } catch (e) {
       this.loading = false;
-      if (!(e instanceof HttpErrorResponse)){
-        console.log("error Parseado:" +typeof(e)+ JSON.stringify(e));
-        console.log("error como objeto:"+ e);
+      if (!(e instanceof HttpErrorResponse)) {
+        console.log("error Parseado:" + typeof (e) + JSON.stringify(e));
+        console.log("error como objeto:" + e);
         if (JSON.stringify(e) === '{}')
           this.mensageError(e);
         else this.mensageError(JSON.stringify(e));
@@ -321,7 +342,10 @@ export class MetodosEnvioComponent implements OnInit, OnDestroy {
     }
   }
 
+  public banderaValidaciones: boolean = false;
+
   public cancelarModificacion() {
+    this.banderaValidaciones = false;
     this.banderaRetiroLocal = false;
     this.banderaEnvioDomicilio = false;
     //this.banderaslideRetiroLocal = "";
