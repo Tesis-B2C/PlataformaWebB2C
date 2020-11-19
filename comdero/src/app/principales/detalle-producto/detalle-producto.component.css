@@ -144,8 +144,10 @@
 }
 
 .gallery-wrap .img-big-wrap img {
-  height: 400px;
-  width: 100%;
+  height: auto;
+  max-height: 400px;
+  width: auto;
+  max-width: 100%;
   cursor: none;
 }
 
@@ -355,8 +357,17 @@ body {
     margin-left: -250px;
   }
 
-  .gallery-wrap .img-big-wrap img {
+  .gallery-wrap .img-big-wrap {
     height: 400px;
+    /*IMPORTANTE*/
+    display: flex;
+    align-items: center;
+  }
+
+  .gallery-wrap .img-big-wrap img {
+
+    height: auto;
+    max-height: 400px;
     width: 100%;
     display: inline-block;
     cursor: pointer;

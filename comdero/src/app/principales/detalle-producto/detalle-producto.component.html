@@ -132,7 +132,7 @@
         </div>
 
         <div class="form-group col-sm-9 col-12">
-          <div *ngIf="this.mostrarTiendaPagoEfectivo && !this.banderaDireccionEnvio" class="radio-item">
+          <div *ngIf="this.mostrarTiendaPagoEfectivo && this.EfectivoLocalExiste" class="radio-item">
             <input [checked]="this.informacionCompra.METODO_PAGO_COMPRA == 'Efectivo'"
                    (change)="selectMetodoPago($event)" type="radio"
                    name="metodoPago" id="pagoEfectivo" value="Efectivo">
@@ -789,22 +789,22 @@
           <div class="form-group col-sm-9 col-md-8">
             <div class="form-row ">
               <div class="form-group col-12 mb-0">
-                <label class="mb-3 text-justify">Recuerde la siguiente información al momento de retirar su compra en
+                <label class="mb-3 ">Recuerde la siguiente información al momento de retirar su compra en
                   la tienda.</label>
                 <div class="card card-body ">
-                  <p class=" text-justify" *ngIf="this.hora_estimada_retiro == '1hora'">Su pedido estará listo
+                  <p class="" *ngIf="this.hora_estimada_retiro == '1hora'">Su pedido estará listo
                     aproximadamente en 1 hora.</p>
-                  <p class=" text-justify" *ngIf="this.hora_estimada_retiro == '4horas'">Su pedido estará listo
+                  <p class="" *ngIf="this.hora_estimada_retiro == '4horas'">Su pedido estará listo
                     aproximadamente en 4 horas.</p>
-                  <p class=" text-justify" *ngIf="this.hora_estimada_retiro == '24horas'">Su pedido estará listo
+                  <p class="" *ngIf="this.hora_estimada_retiro == '24horas'">Su pedido estará listo
                     aproximadamente en 24 horas.</p>
-                  <p class=" text-justify" *ngIf="this.hora_estimada_retiro == '4dias'">Su pedido estará listo
+                  <p class="" *ngIf="this.hora_estimada_retiro == '4dias'">Su pedido estará listo
                     aproximadamente en 4 días.</p>
-                  <p class=" text-justify" *ngIf="this.hora_estimada_retiro == '5dias'">Su pedido estará listo de 5 o
+                  <p class="" *ngIf="this.hora_estimada_retiro == '5dias'">Su pedido estará listo de 5 o
                     más días.</p>
-                  <p class=" text-justify">{{this.instruccion_retiro}}</p>
+                  <p class="">{{this.instruccion_retiro}}</p>
                 </div>
-                <label class=" mt-3 text-justify">Puede contactarnos a través de nuestro WhatsApp para más información
+                <label class=" mt-3">Puede contactarnos a través de nuestro WhatsApp para más información
                   sobre su pedido.</label>
               </div>
             </div>
@@ -835,8 +835,7 @@
             <div class="form-row">
               <div class="form-group col-12 mb-0">
                 <label class="my-0 text-justify">Usted ha seleccionado el envío a domicilio, el costo se ha
-                  recargado a su pedido.
-                  para más información contáctanos a través de WhatsApp.</label>
+                  recargado a su pedido. Para más información contáctanos a través de WhatsApp.</label>
                 <div class="form-row">
                   <div class="form-group col-12 mb-0">
                     <div class="template-demo">
@@ -890,18 +889,18 @@
                                                    alt="..."></p>-->
                   <div class="box-text mt-2 text-md-left text-center">
                     <div class="row  no-gutters ">
-                      <span class="card-text col-4  text-left dis-block">Beneficiario:</span>
-                      <span class="col-8 text-right dis-block">{{this.Nombre_Beneficiario}}</span>
-                      <span class="card-text col-5 text-left dis-block">Identificación:</span>
-                      <span class="col-7 text-right dis-block">{{this.Identificacion_Beneficiario}}</span>
-                      <span class="card-text col-4 text-left dis-block">Correo:</span>
-                      <span class="col-8 text-right dis-block">{{this.Correo_Beneficiario}}</span>
-                      <span class="card-text col-4 text-left dis-block">Banco:</span>
-                      <span class="col-8 text-right dis-block">{{this.Banco_Pertenece}}</span>
-                      <span class="card-text col-4 text-left dis-block">Tipo:</span>
-                      <span class="col-8 text-right dis-block">{{this.Tipo_Cuenta}}</span>
-                      <span class="card-text col-4  text-left dis-block">#Cuenta:</span>
-                      <span class="col-8 text-right dis-block">{{this.Numero_Cuenta}}</span>
+                      <span class="card-text col-md-4  text-md-left dis-block">Beneficiario:</span>
+                      <span class="col-md-8 text-md-right dis-block">{{this.Nombre_Beneficiario}}</span>
+                      <span class="card-text col-md-5 text-md-left dis-block">Identificación:</span>
+                      <span class="col-md-7 text-md-right dis-block">{{this.Identificacion_Beneficiario}}</span>
+                      <span class="card-text col-md-4 text-md-left dis-block">Correo:</span>
+                      <span class="col-md-8 text-md-right dis-block">{{this.Correo_Beneficiario}}</span>
+                      <span class="card-text col-md-4 text-md-left dis-block">Banco:</span>
+                      <span class="col-md-8 text-md-right dis-block">{{this.Banco_Pertenece}}</span>
+                      <span class="card-text col-md-4 text-md-left dis-block">Tipo:</span>
+                      <span class="col-md-8 text-md-right dis-block">{{this.Tipo_Cuenta}}</span>
+                      <span class="card-text col-md-4  text-md-left dis-block">#Cuenta:</span>
+                      <span class="col-md-8 text-md-right dis-block">{{this.Numero_Cuenta}}</span>
 
                     </div>
 
@@ -1348,17 +1347,14 @@
                     <h4 class="card-title text-center mt-3">Opciones de Pago</h4>
 
                   </div>
-                  <p class="text-center px-2">Contamos con varios métodos de pago para facilitar la compra de tus
-                    productos,
-                    al momento de realizar la
-                    transacción.</p>
+                  <p class="text-center px-2">Contamos con varios métodos de pago para facilitar la compra de tus productos, al momento de realizar la transacción.</p>
 
                   <div class="social-box"
                        *ngIf="this.objTransferencia.Tipo_Pago!=null || this.objEfectivo.Tipo_Pago!=null || this.objElectronico.Tipo_Pago!=null">
                     <div class="container">
                       <div class="row justify-content-center">
 
-                        <div class="col-lg-4 col-xs-12  text-justify" *ngIf="this.objEfectivo.Tipo_Pago!=null">
+                        <div class="col-lg-4 col-xs-12  text-justify" *ngIf="this.objEfectivo.Tipo_Pago != null">
                           <div class="box py-2">
                             <div class="box-title mb-2 text-center">
                               <h5>Efectivo</h5>

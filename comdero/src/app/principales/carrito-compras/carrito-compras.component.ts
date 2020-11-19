@@ -597,6 +597,10 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
   public Banco_Pertenece: String;
   public Tipo_Cuenta: String;
   public Numero_cuenta: String;
+  public Nombre_Beneficiario:String;
+  public Correo_Beneficiario:String;
+  public Identificacion_Beneficiario:String;
+
   public identidadComprador;
   public DatosDireccion;
   public DatosFactura;
@@ -725,6 +729,9 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
         this.Banco_Pertenece = pago.BANCO_PERTENECE;
         this.Tipo_Cuenta = pago.TIPO_CUENTA;
         this.Numero_cuenta = pago.NUMERO_CUENTA;
+        this.Nombre_Beneficiario=pago.NOMBRE_BENEFICIARIO;
+        this.Correo_Beneficiario=pago.CORREO_BENEFICIARIO;
+        this.Identificacion_Beneficiario=pago.IDENTIFICACION_BENEFICIARIO;
       }
       if (pago.TIPO_PAGO == 'Electrónico') {
         this.mostrarTiendaPagoElectronico = true;
@@ -740,6 +747,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
   public banderaRecargoPaypal: boolean = false;
 
   public selectMetodoEnvio(event) {
+    this.EfectivoLocalExiste = true;
     this.banderaDireccionEnvio = false;
     this.noExisteEnvioEstaArea = false;
     this.informacionCompra.METODO_ENVIO_COMPRA = event.target.value;
@@ -755,6 +763,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
 
   public arrayPreciosEnvioAux = [];
   public pesoPedidoTotalKg = 0;
+  public EfectivoLocalExiste: boolean = true;
 
   public calcularCostosEnvioDomicilio() {
     let localExisteUno = 'No Existe Local';
@@ -782,7 +791,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
         this.varianteActiva.OPCION_ENVIO.forEach(envioDomicilio => {
           if (envioDomicilio.TIPO_UBICACION == 'Local') {
             localExisteUno = 'Existe Local';
-
+            this.EfectivoLocalExiste = true;
 
             if (envioDomicilio.TIPO_MEDIDA == 'Precio') {
               //DE ACUERDO AL PRECIO DEL PEDIDO
@@ -804,6 +813,7 @@ export class CarritoComprasComponent implements OnInit, OnDestroy {
         // console.log('/ENVIO LOCAL');
       } else {
         //FUERA DE LA CIUDAD
+        this.EfectivoLocalExiste = false;
         this.varianteActiva.OPCION_ENVIO.forEach(envioDomicilio => {
           if (envioDomicilio.TIPO_UBICACION == 'Resto') {
 

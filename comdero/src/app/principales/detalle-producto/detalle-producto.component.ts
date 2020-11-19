@@ -753,10 +753,11 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
   }
 
   public selectMetodoEnvio(event) {
+    this.EfectivoLocalExiste = true;
     this.banderaDireccionEnvio = false;
     this.noExisteEnvioEstaArea = false;
     this.informacionCompra.METODO_ENVIO_COMPRA = event.target.value;
-    this.informacionCompra.METODO_PAGO_COMPRA = null
+    this.informacionCompra.METODO_PAGO_COMPRA = null;
     this.informacionCompra.COSTOS.RECARGO_PAYPAL = 0;
     this.banderaRecargoPaypal = false;
     this.informacionCompra.COSTOS.COSTOS_ENVIO = 0;
@@ -1236,7 +1237,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
   public arrayPreciosEnvioAux = [];
   public pesoPedidoTotalKg = 0;
   public noExisteEnvioEstaArea: boolean = false;
-
+  public EfectivoLocalExiste: boolean = true;
   public calcularCostosEnvioDomicilio() {
     let Costo_Comparativo = ((this.informacionCompra.COSTOS.SUBTOTAL + this.informacionCompra.COSTOS.RECARGO_PAYPAL) - (this.informacionCompra.COSTOS.DESCUENTOS + this.informacionCompra.COSTOS.CUPON))
     // console.log('VALOR A COMPRAR CON TODO ' + Costo_Comparativo);
@@ -1261,7 +1262,7 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
         this.varianteActiva.OPCION_ENVIO.forEach(envioDomicilio => {
           if (envioDomicilio.TIPO_UBICACION == 'Local') {
             localExisteUno = 'Existe Local';
-
+            this.EfectivoLocalExiste = true;
 
             if (envioDomicilio.TIPO_MEDIDA == 'Precio') {
               //DE ACUERDO AL PRECIO DEL PEDIDO
@@ -1285,9 +1286,9 @@ export class DetalleProductoComponent implements OnInit, OnDestroy {
         // console.log('/ENVIO LOCAL');
       } else {
         //FUERA DE LA CIUDAD
+        this.EfectivoLocalExiste = false;
         this.varianteActiva.OPCION_ENVIO.forEach(envioDomicilio => {
           if (envioDomicilio.TIPO_UBICACION == 'Resto') {
-
             restoExisteUno = 'Existe Resto';
 
             if (envioDomicilio.TIPO_MEDIDA == 'Precio') {
