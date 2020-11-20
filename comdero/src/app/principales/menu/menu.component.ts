@@ -9,8 +9,9 @@ import Swal from "sweetalert2";
 import {HttpErrorResponse} from "@angular/common/http";
 import {NotificacionesServicio} from "../../servicios/notificaciones.servicio";
 import {WebSocketService} from "../../servicios/WebSockets/web-socket.service";
-import { NgxPushNotificationService } from 'ngx-push-notification';
-import { PushNotificationOptions, PushNotificationService } from 'ngx-push-notifications';
+import {NgxPushNotificationService} from 'ngx-push-notification';
+import {PushNotificationOptions, PushNotificationService} from 'ngx-push-notifications';
+import {element} from "protractor";
 
 
 @Component({
@@ -28,10 +29,8 @@ export class MenuComponent implements OnInit, OnDestroy {
   public datosObtenidos: any;
   public carritoIdentidad;
 
-  constructor(private _pushNotificationService: PushNotificationService,public ngxPushNotificationService: NgxPushNotificationService, public _socketServicio: WebSocketService, public _notificacionesServicio: NotificacionesServicio, public _carritoServicio: CarritoServicio, public _agenteServicio: AgenteServicio, public route: ActivatedRoute, public _tiendaServicio: TiendaServicio, public router: Router) {
+  constructor(private _pushNotificationService: PushNotificationService, public ngxPushNotificationService: NgxPushNotificationService, public _socketServicio: WebSocketService, public _notificacionesServicio: NotificacionesServicio, public _carritoServicio: CarritoServicio, public _agenteServicio: AgenteServicio, public route: ActivatedRoute, public _tiendaServicio: TiendaServicio, public router: Router) {
   }
-
-
 
 
   async ngOnInit() {
@@ -75,6 +74,7 @@ export class MenuComponent implements OnInit, OnDestroy {
         console.log(err);
       });
   }
+
   notify() {
 
     this.ngxPushNotificationService.showNotification({
@@ -91,6 +91,7 @@ export class MenuComponent implements OnInit, OnDestroy {
       }
     });
   }
+
   public async direccionar(codigo, tienda, idNotificacion, estado, estado_notificacion) {
     try {
       if (estado_notificacion == 0) {
@@ -112,12 +113,12 @@ export class MenuComponent implements OnInit, OnDestroy {
     }
   }
 
-  public async direccionar2( idCompra, idNotificacion, estado,estado_notificacion) {
+  public async direccionar2(idCompra, idNotificacion, estado, estado_notificacion) {
     try {
       if (estado_notificacion == 0) {
         let response = await this._notificacionesServicio.updateEstadoNotificacion(idNotificacion, estado).toPromise();
       }
-      this.router.navigate(['/principales/menu/mi-cuenta/menu-mi-cuenta/detalle-pedido-realizado/',idCompra]);
+      this.router.navigate(['/principales/menu/mi-cuenta/menu-mi-cuenta/detalle-pedido-realizado/', idCompra]);
       this.getMisNotificaciones();
     } catch (e) {
 
@@ -185,10 +186,13 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   public async buscarDatos(palabraBuscar) {
+    delete this.objetoDatos;
     this.objetoDatos = [];
     this.datosObtenidos = '';
     palabraBuscar = palabraBuscar.trim();
+
     if (palabraBuscar != 0) {
+
       if (this.tipoBuscador == 'Tiendas' && palabraBuscar != '') {
         let response = await this._tiendaServicio.obtenerFiltroPrincipalTienda(palabraBuscar).toPromise();
         this.datosObtenidos = response.data;
@@ -198,6 +202,7 @@ export class MenuComponent implements OnInit, OnDestroy {
       }
 
       if (this.tipoBuscador == 'Productos' && palabraBuscar != '') {
+
         let response = await this._tiendaServicio.obtenerFiltroPrincipalProductos(palabraBuscar).toPromise();
         this.datosObtenidos = response.data;
         this.datosObtenidos.forEach(elemnt => {
@@ -206,6 +211,7 @@ export class MenuComponent implements OnInit, OnDestroy {
       }
 
       if (this.tipoBuscador == 'Todos' && palabraBuscar != '') {
+
         let response = await this._tiendaServicio.obtenerFiltroPrincipalTodos(palabraBuscar).toPromise();
         this.datosObtenidos = response.data;
         // console.log('DATOS' + JSON.stringify(this.datosObtenidos))
@@ -220,10 +226,22 @@ export class MenuComponent implements OnInit, OnDestroy {
 
       }
     }
-    // console.log("ordenado", this.objetoDatos.sort());
+
+    let aux = this.objetoDatos.sort();
+    this.objetoDatos = [];
+
+    aux.forEach(element => {
+      if (!this.objetoDatos.includes(element)) {
+        this.objetoDatos.push(element)
+      }
+    })
+
+    //console.log(" loq ue busco  ordenado", this.objetoDatos.sort());
   }
 
+
   buscarDatosTerm = (text$: Observable<string>) =>
+
     text$.pipe(
       debounceTime(200),
       distinctUntilChanged(),

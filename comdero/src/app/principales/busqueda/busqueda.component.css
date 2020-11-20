@@ -1,3 +1,21 @@
+.line-clamp-descripcion {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.4;
+  text-align: justify;
+}
+
+.line-clamp-descri-tienda {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.4;
+  text-align: justify;
+}
+
 .section-pagetop {
   padding: 12px 0;
 }
@@ -108,7 +126,13 @@ body {
   display: block;
 }
 @media (max-width: 720px) {
-
+  .line-nombre-producto {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.4;
+  }
 
   .categoriaNormal{
     display: none;
