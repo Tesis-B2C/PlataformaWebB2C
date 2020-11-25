@@ -34,7 +34,7 @@
 }
 
 .alto-banner {
-  height: auto;
+  height:  auto;
 }
 
 .ancho-banner {
@@ -98,14 +98,9 @@
 
 
 @media (max-width: 720px) {
-  .alto-banner {
-    height: 200px;
-    width: 100%;
-  }
 
-  .ancho-banner2 {
-    width: 100%;
-  }
+
+
 
   .categoriaNormal {
     display: none;

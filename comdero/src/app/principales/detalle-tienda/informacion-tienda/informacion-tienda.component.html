@@ -13,7 +13,7 @@
           <h4 class="card-title black text-center">¿ Quienes somos ?</h4>
 
 
-            <p class="texto  text-dark text-justify "> {{this.Tienda?.DESCRIPCION_TIENDA}}</p>
+            <p class="texto  text-dark text-center "> {{this.Tienda?.DESCRIPCION_TIENDA}}</p>
 
         </div>
 
@@ -34,7 +34,7 @@
           <div class="px-3" >
           <h3 class="card-title black text-center ">¿ Problemas al pagar ?</h3>
 
-            <p class="texto  text-dark text-justify ">Olvídate de ello, nosotros contamos con varios métodos de pago para
+            <p class="texto  text-dark text-center ">Olvídate de ello, nosotros contamos con varios métodos de pago para
               facilitar la compra de tus productos </p>
 
 
@@ -56,12 +56,12 @@
           <div class="box">
 
             <div class="box-title mb-2 text-center">
-              <h3>Efectivo</h3>
+              <h4>Efectivo</h4>
             </div>
             <p class=" iconos-pagos "><img src="assets/images/icon-efectivo.png"
                                            alt="..."></p>
-            <div class="box-text">
-              <span>Usted puede pagar con efectivo en nuestra tienda, realiza la compra en la plataforma y puedes pagarlo al momento de la entrega.
+            <div class="box-text text-justify">
+              <span>Paga con efectivo en nuestra tienda, realiza la compra en la plataforma y puedes pagarlo al momento de la entrega.
            </span>
             </div>
 
@@ -72,30 +72,15 @@
           <div class="box">
 
             <div class="box-title mb-2 text-center">
-              <h3>Transferencia bancaria</h3>
+              <h4>Transferencia bancaria</h4>
             </div>
             <p class=" iconos-pagos "><img src="assets/images/icon-transferencia.png"
                                            alt="..."></p>
-            <div class="box-text">
-              <span>Usted puede pagar con transferencia bancaria luego de realizar la compra en la
-                plataforma.
+            <div class="box-text text-justify">
+              <span >Paga con transferencia bancaria, luego de realizar la compra en la
+                plataforma recibirás los datos necesarios para la transferencia.
            </span>
-              <hr class="mb-0">
-              <div class="row  no-gutters " >
-                <span class="card-text col-4  text-left dis-block">Beneficiario:</span>
-                <span class="col-8 text-right dis-block">{{this.objTransferencia.Nombre_Beneficiario}}</span>
-                <span class="card-text col-5 text-left dis-block">Identificación:</span>
-                <span class="col-7 text-right dis-block">{{this.objTransferencia.Identificacion_Beneficiario}}</span>
-                <span class="card-text col-4 text-left dis-block">Correo:</span>
-                <span class="col-8 text-right dis-block">{{this.objTransferencia.Correo_Beneficiario}}</span>
-                <span class="card-text col-4 text-left dis-block">Banco:</span>
-                <span class="col-8 text-right dis-block">{{this.objTransferencia.Banco_Pertenece}}</span>
-                <span class="card-text col-4 text-left dis-block">Tipo:</span>
-                <span class="col-8 text-right dis-block">{{this.objTransferencia.Tipo_Cuenta}}</span>
-                <span class="card-text col-4  text-left dis-block">#Cuenta:</span>
-                <span class="col-8 text-right dis-block">{{this.objTransferencia.Numero_cuenta}}</span>
 
-              </div>
             </div>
                       </div>
         </div>
@@ -103,15 +88,15 @@
           <div class="box">
 
             <div class="box-title mb-2 text-center">
-              <h3>Electrónico</h3>
+              <h4>Electrónico</h4>
             </div>
             <p class=" iconos-pagos "><img src="assets/images/icon-electronico.png"
                                            alt="..."></p>
-            <div class="box-text">
-              <span>Usted puede pagar todas sus compras a través de la plataforma Paypal de manera rápida y segura.
+            <div class="box-text text-justify">
+              <span>Paga todas sus compras a través de la plataforma Paypal de manera rápida y segura.
            </span>
             </div>
-            <div class="box-btn text-primary">
+            <div class="box-btn text-primary text-center">
               <a>Porcentaje de descuento:  {{objElectronico.Recargo}}%</a>
             </div>
 
@@ -131,7 +116,7 @@
           <div class="jumbotron jumbotron-fluid" style="background-color: rgba(255,255,255,0.8)">
           <h3 class="card-title black text-center ">Opciones de Entrega</h3>
 
-            <p class=" texto  text-dark   text-justify">Contamos con algunas opciones para facilitar la entrega de
+            <p class=" texto  text-dark   text-center">Contamos con algunas opciones para facilitar la entrega de
               nuestros productos, si no encuentras una opción que se ajuste a tus necesidades de seguro llegaremos a un acuerdo </p>
 
 
