@@ -8,7 +8,10 @@
 
 .img-modal {
   width: auto;
-  height: 110px;
+  max-width: 100%;
+  height: auto;
+  max-height: 150px;
+
 }
 
 .section-pagetop {
@@ -149,6 +152,7 @@
   width: auto;
   max-width: 100%;
   cursor: none;
+
 }
 
 .input-spinner input[type=number]::-webkit-inner-spin-button,

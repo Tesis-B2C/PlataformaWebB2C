@@ -35,7 +35,7 @@
        class="modal-body px-0">
     <div class="form-row px-3">
       <div class="form-group col-lg-3 col-12 text-center">
-        <img [src]="getImagen(this.varianteActiva.IMAGENES[0].IMAGEN)" alt="..." class="img-modal">
+        <img [src]="getImagen(this.varianteActiva.IMAGENES[0].IMAGEN)" alt="producto seleccionado" class="img-modal">
       </div>
       <div class="form-group col-lg-9 col-12">
         <p class="modal-title text-justify"><strong>{{this.productoDetalle?.PRODUCTO.NOMBRE_PRODUCTO}}</strong></p>
@@ -942,8 +942,8 @@
           </div>
           <div class="col-sm-9 col-md-8 ">
             <div class="form-row ">
-              <div class="form-group col-md-10 mb-0 ">
-                <div class="w-75 ">
+              <div class="form-group col-md-10 mb-0 mx-auto ">
+                <div class=" ">
                   <ngx-paypal [config]="payPalConfig"></ngx-paypal>
                 </div>
               </div>
@@ -1082,7 +1082,7 @@
             <aside class="col-lg-7 col-md-7">
 
               <article class="gallery-wrap">
-                <div class="img-big-wrap ">
+                <div class="img-big-wrap mx-auto ">
                   <a>
                     <img *ngIf="this.imagenPrincipal != null" [src]="this.imagenPrincipal">
                     <iframe *ngIf="this.imagenPrincipal == null && this.videoYoutube" width="100%" height="380"
@@ -1374,10 +1374,7 @@
                             <p class=" iconos-pagos "><img src="assets/images/icon-transferencia.png" alt="..."></p>
                             <div class="box-text text-justify">
                               <span>Realiza tus pagos con transferencia bancaria, luego de realizar la compra en la plataforma recibirás los datos necesarios para la transferencia.</span>
-                              <hr>
-
-
-                            </div>
+                                                       </div>
                           </div>
                         </div>
 
