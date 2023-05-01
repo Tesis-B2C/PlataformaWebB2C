@@ -59,6 +59,7 @@ export class AgenteServicio {
     let headers = new HttpHeaders({"Content-type": "application/json"});
     return this._http.post<objeto>(this.url + "resetearContrasenia", params, {headers: headers});
   }
+  
 
   resetearContrasenia2(token, obj) {
     let params = JSON.stringify(obj);
